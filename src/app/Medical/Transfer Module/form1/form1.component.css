@@ -1,0 +1,44 @@
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+.header {
+  position: absolute;
+  top: 0px;
+  /* bottom: 0px; */
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  /* left: 0px; */
+  right: 0px;
+  /* background: #fff; */
+}
+
+/* nz-form-item nz-select nz-option nz-option-item{
+    font-size: 11px !important;
+  
+  }
+  
+  nz-form-item nz-select,input,textarea,nz-date-picker {
+    font-size: 11px !important;
+  }
+  
+  nz-radio-group label {
+    font-size: 11px !important;
+  
+  }
+  
+  
+  button{
+    font-size: 11px !important;
+  
+  } */
+
+.my-scroll td,
+th {
+  font-size: 11px !important;
+}

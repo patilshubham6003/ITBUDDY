@@ -1,0 +1,154 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8" nzXl="8">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="16"
+    nzLg="16"
+    nzXl="16"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New File hierarchy
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzSize]="'small'"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      [nzScroll]="{ x: '1000px', y: '55vh' }"
+    >
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th style="font-weight: bold; text-align: center">Action</th>
+
+          <!-- <th *ngFor="let column of columns" nzShowSort nzSortKey={{column[0]}} >{{column[1]}}</th> -->
+          <th
+            style="font-weight: bold; text-align: center"
+            nzShowSort
+            nzSortKey="PARENT_NAME"
+          >
+            Parent Name
+          </th>
+          <th
+            style="font-weight: bold; text-align: center"
+            nzShowSort
+            nzSortKey="NAME"
+          >
+            Name
+          </th>
+          <th
+            style="font-weight: bold; text-align: center"
+            nzShowSort
+            nzSortKey="CODE"
+          >
+            Code
+          </th>
+          <th
+            style="font-weight: bold; text-align: center"
+            nzShowSort
+            nzSortKey="IS_LAST"
+          >
+            Is last
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center">
+            <a (click)="edit(data)">Edit</a>
+          </td>
+
+          <!-- <td *ngFor="let column of columns">{{data[column[0]]}}</td> -->
+          <td>
+            <span *ngIf="data.PARENT_NAME == null"> None </span>
+            <span *ngIf="data.PARENT_NAME != null">
+              {{ data.PARENT_NAME }}
+            </span>
+          </td>
+          <td>{{ data.NAME }}</td>
+          <td>{{ data.CODE }}</td>
+          <td style="text-align: center">
+            <i
+              nz-icon
+              *ngIf="data.IS_LAST == 1"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="data.IS_LAST == 0"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="440"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-filehierarchies
+      [IS_ADVANCE]="IS_ADVANCE"
+      [IS_LAST]="IS_LAST"
+      [drawerClose]="closeCallback"
+      [data]="drawerData"
+      [listdata2]="listdata2"
+      [FileHierarchy]="FileHierarchy"
+    ></app-filehierarchies>
+  </ng-container>
+</nz-drawer>

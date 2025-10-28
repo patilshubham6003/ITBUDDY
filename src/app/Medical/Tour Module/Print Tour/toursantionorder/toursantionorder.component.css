@@ -1,0 +1,17 @@
+td,
+th {
+    border: 1px solid black;
+    padding: 10px 0 10px 0;
+
+}
+
+.pading {
+    padding-left: 10px;
+}
+
+nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}

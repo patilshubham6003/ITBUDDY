@@ -1,0 +1,202 @@
+<div nz-row nzType="flex" nzJustify="space-between" style="align-items: center;">
+  <div nz-col nzSpan="24" style="display: flex; align-items: center;margin-bottom: 5px;" class="formname">
+    <span style="color: #006699;font-weight: 600;cursor: pointer;font-size: 14px;" nz-tooltip
+      nzTooltipTitle="Back To Reports List" nzTooltipPlacement="top" (click)="showdash()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="20px" viewBox="0 0 512 512" fill="#000000">
+        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+        <g id="SVGRepo_iconCarrier">
+          <title>ionicons-v5-a</title>
+          <polyline points="244 400 100 256 244 112"
+            style="fill:none;stroke:#006699;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px" />
+          <line x1="120" y1="256" x2="412" y2="256"
+            style="fill:none;stroke:#006699;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px" />
+        </g>
+      </svg>&nbsp;Back
+    </span>
+  </div>
+</div>
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+          (click)="importInExcel()" [nzLoading]="exportLoading">
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" [(ngModel)]="searchText" (keydown.enter)="onKeypressEvent($event)"
+            (keyup)="keyup($event)" nz-input placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-label nzNoColon>Month </nz-form-label>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a month" name="month" [(ngModel)]="MONTH">
+                    <nz-option [nzValue]="01" [nzLabel]="'January'"></nz-option>
+                    <nz-option [nzValue]="02" [nzLabel]="'February'"></nz-option>
+                    <nz-option [nzValue]="03" [nzLabel]="'March'"></nz-option>
+                    <nz-option [nzValue]="04" [nzLabel]="'April'"></nz-option>
+                    <nz-option [nzValue]="05" [nzLabel]="'May'"></nz-option>
+                    <nz-option [nzValue]="06" [nzLabel]="'June'"></nz-option>
+                    <nz-option [nzValue]="07" [nzLabel]="'July'"></nz-option>
+                    <nz-option [nzValue]="08" [nzLabel]="'August'"></nz-option>
+                    <nz-option [nzValue]="09" [nzLabel]="'September'"></nz-option>
+                    <nz-option [nzValue]="10" [nzLabel]="'October'"></nz-option>
+                    <nz-option [nzValue]="11" [nzLabel]="'November'"></nz-option>
+                    <nz-option [nzValue]="12" [nzLabel]="'December'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-label nzNoColon>Year </nz-form-label>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-date-picker name="date1" nzMode="year" [(ngModel)]="YEAR1" style="width: 100%"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-select name="ResidenceType" nzShowSearch nzMode="multiple" nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Residence Type" [(ngModel)]="ResidenceType">
+                  <nz-option *ngFor="let res of ResidenceTypeData" [nzValue]="res.ID" [nzLabel]="res.TYPE">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Occupancy Type</nz-form-label>
+                <nz-form-control>
+                  <nz-select name=" OccupancyType" [(ngModel)]="OccupancyTypeData" nzAllowClear nzShowSearch
+                    nzPlaceHolder="Choose  Occupancy Type">
+                    <nz-option [nzValue]="'P'" [nzLabel]="'Physical '"></nz-option>
+                    <nz-option [nzValue]="'T'" [nzLabel]="' Technical'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="display: flex">
+                <button style="margin-right: 10px" nz-button [nzLoading]="isSpinning" nzType="primary"
+                  (click)="applyFilter()">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table id="excel-table" class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      [nzScroll]="{ x: '900px', y: '55vh' }" (nzPageSizeChange)="search()" (nzQueryParams)="sort($event)">
+      <thead nzSingleSort>
+        <tr>
+          <th nzWidth="120px" style="font-weight: bold; text-align: center" nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true">
+            Employee Name
+          </th>
+          <th nzWidth="100px" style="font-weight: bold; text-align: center" nzColumnKey="RESIDENCE_TYPE_NAME"
+            [nzSortFn]="true">
+            Residence Type
+          </th>
+
+          <th nzWidth="70px" nzColumnKey="OCCUPANCY_TYPE" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Occupancy Type
+          </th>
+
+          <th nzWidth="30px" style="font-weight: bold; text-align: center" nzColumnKey="MONTH" [nzSortFn]="true">
+            Month
+          </th>
+
+          <th nzWidth="30px" style="font-weight: bold; text-align: center" nzColumnKey="YEAR" [nzSortFn]="true">
+            Year
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: left; white-space: pre-line">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.RESIDENCE_TYPE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.OCCUPANCY_TYPE == 'T'">Technical</span>
+            <span *ngIf="data.OCCUPANCY_TYPE == 'P'">Physical</span>
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.MONTH == 1">January</span>
+            <span *ngIf="data.MONTH == 2">February</span>
+            <span *ngIf="data.MONTH == 3">March</span>
+            <span *ngIf="data.MONTH == 4">April</span>
+            <span *ngIf="data.MONTH == 5">May</span>
+            <span *ngIf="data.MONTH == 6">June</span>
+            <span *ngIf="data.MONTH == 7">July</span>
+            <span *ngIf="data.MONTH == 8">August</span>
+            <span *ngIf="data.MONTH == 9">September</span>
+            <span *ngIf="data.MONTH == 10">October</span>
+            <span *ngIf="data.MONTH == 11">November</span>
+            <span *ngIf="data.MONTH == 12">December</span>
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["YEAR"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

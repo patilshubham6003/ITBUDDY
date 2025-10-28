@@ -1,0 +1,398 @@
+<div>
+    <form nz-form #designation="ngForm" >
+      <nz-spin [nzSpinning]="isSpinning" *ngIf="ddoid==null || ddoid=='' || ddoid==undefined">
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <div nz-row class="my-box">
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Head Of Office</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip=" Please Enter Head Of Office"
+                  >
+                    <input
+                      nz-input
+                      name="HEAD_OF_OFFICE"
+                      [pattern]="namepatt"
+                      placeholder="Enter Head Of Office"
+                      [(ngModel)]="data.HEAD_OF_OFFICE"
+                      (ngModelChange)="namechange($event)"
+                      required
+                    />
+                  </nz-form-control>
+                  <!-- <span style="color: red; font-size: 10px" *ngIf="data.NAME"
+                    >{{ data.NAME.length }}/256</span
+                  > -->
+                </nz-form-item>
+              </div>
+  
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Location</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip=" Please Enter Location "
+                  >
+                    <input
+                      nz-input
+                      name="LOCATION"
+                      [pattern]="namepatt"
+                      placeholder="Enter Location"
+                      (keypress)="alphaOnly($event)"
+                      [(ngModel)]="data.LOCATION"
+                      required
+                    />
+                  </nz-form-control>
+                  <!-- <span style="color: red; font-size: 10px" *ngIf="data.NAME"
+                    >{{ data.NAME.length }}/256</span
+                  > -->
+                </nz-form-item>
+              </div>
+  
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Position Number</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Position Number">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      name="POSITION_NO"
+                      (keypress)="omit($event)"
+                      type="text"
+                      maxlength="10"
+                      [(ngModel)]="data.POSITION_NO"
+                      placeHolder="Enter Position Number"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+  
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Mobile No</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Mobile No">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      name="MobileNo"
+                      [pattern]="mobpattern"
+                      (keypress)="omit($event)"
+                      type="text"
+                      maxlength="10"
+                      [(ngModel)]="data.MOBILE_NO"
+                      placeHolder="Enter Mobile Number"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+  
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Pr. CCIT</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip=" Please Enter Pr. CCIT "
+                  >
+                    <input
+                      nz-input
+                      name="PR_CCIT"
+                      [pattern]="namepatt"
+                      placeholder="Enter Pr. CCIT"
+                      (keypress)="alphaOnly($event)"
+                      [(ngModel)]="data.PR_CCIT"
+                      required
+                    />
+                  </nz-form-control>
+                  <!-- <span style="color: red; font-size: 10px" *ngIf="data.NAME"
+                      >{{ data.NAME.length }}/256</span
+                    > -->
+                </nz-form-item>
+              </div>
+  
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Description</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Description">
+                    <textarea
+                      nz-input
+                      name="DESCRIPTION"
+                      required
+                      maxlength="256"
+                      placeHolder="Enter Description"
+                      [(ngModel)]="data.DESCRIPTION"
+                      required
+                    ></textarea>
+                    <h6
+                      style="color: red; font-size: 0.67rem; font-weight: 400"
+                      *ngIf="data.DESCRIPTION != undefined"
+                    >
+                      {{ data.DESCRIPTION.length }}/256
+                    </h6>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+  
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Sequence Number</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Sequence Number"
+                  >
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      name="SEQ_NO"
+                      (keypress)="omit($event)"
+                      type="text"
+                      maxlength="10"
+                      [(ngModel)]="data.SEQ_NO"
+                      placeHolder="Enter Valid Mobile Number"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="12">
+                <nz-form-item style="margin-left: 5px">
+                  <nz-form-label nzNoColon>Status</nz-form-label>
+                  <nz-form-control>
+                    <nz-switch
+                      name="is_active"
+                      [(ngModel)]="data.STATUS"
+                    ></nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-spin>
+    </form>
+
+    <div nz-row >
+      <div nz-col nzSpan="24" style="text-align: end">
+          
+      <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="opensignature()"
+    >
+      <span> Add Signature </span>
+    </button>
+      </div>
+    </div>
+    <form nz-form #form2="ngForm">
+      <div nz-row>
+        <div
+          nz-col
+          nzXs="24"
+          nzSm="24"
+          nzMd="24"
+          nzLg="24"
+          nzXl="24"
+          class="my-box"
+        >
+          <div nz-row>
+            <div nz-col nzXs="24" nzSm="24" nzMd="10" nzLg="6" nzXl="20">
+              <nz-form-item>
+                <div nz-col>
+                  <nz-form-label nzRequired nzNoColon>
+                   Map Signature To {{ HEAD_OF_OFFICE }}
+                  </nz-form-label>
+                </div>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Select Signature"
+                >
+                  <nz-select
+                    [nzLoading]="Signatureitemload"
+                    [(ngModel)]="data2.SIGNATURE_ID"
+                    nzPlaceHolder="Select Signature"
+                    (ngModelChange)="selectchange2($event)"
+                    required
+                    name="SIGNATURE_ID"
+                    nzShowSearch
+                    nzAllowClear
+                  >
+                    <nz-option
+                      *ngFor="let f of Signaturedata"
+                      [nzValue]="f['ID']"
+                      [nzLabel]="f['NAME']"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!--  -->
+  
+        
+            <!--  -->
+            <div nz-col nzXs="6" nzSm="6" nzMd="6" nzLg="6" nzXl="4">
+                <nz-form-item>
+                  <nz-form-label
+                   
+                    nzNoColon
+                  ></nz-form-label>
+                  <nz-form-control>
+                    <button [disabled]="this.data2.SIGNATURE_ID == null || this.data2.SIGNATURE_ID == undefined || this.data2.SIGNATURE_ID == '' "
+                      nz-button
+                      nzType="primary"
+                      [nzLoading]="loadingRecords"
+                      (click)="addData(true, form2)"
+                    >
+                      <span><i nz-icon nzType="plus"></i></span>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+      
+          </div>
+          
+          <br />
+          <div nz-row style="padding: 0px 10px">
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+              <nz-table
+                class="my-scroll no-wrap1"
+                nzBordered
+                #maptrainpoint
+                nzShowSizeChanger
+                [nzData]="[' ']"
+                [nzBordered]="true"
+                [nzFrontPagination]="false"
+                [nzTotal]="totaldata"
+              
+                [nzShowPagination]="false"
+                [nzScroll]="{ y: '200px' }"
+                nzSize="small"
+              >
+                <thead>
+                  <tr>
+                    <th style="text-align: center;" nzWidth="30px">Action</th>
+  
+                    <th style="text-align: center;" nzWidth="115px">Signature Name</th>
+              
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of SignatureData; let i = index">
+                    <td style="text-align: center;">
+                      <a nz-tooltip nzTooltipTitle="Delete">
+                        <span style="cursor: pointer" (click)="delete(data, i)">
+                          <span
+                            nz-icon
+                            nzType="delete"
+                            nzTheme="twotone"
+                            nz-tooltip
+                            nzTooltipTitle="Delete"
+                          ></span>
+                        </span>
+                      </a>
+                    </td>
+                    <td style="white-space: pre-line; text-align: left">
+                      {{ data["SIGNATURE_NAME"] }}
+                    </td>
+                  </tr>
+                  <tr *ngIf="SignatureData.length === 0" >
+  
+                    <td colspan="2"></td>
+                  </tr>
+                  
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  
+    <div class="footer">
+      <button
+        type="button"
+        nz-button
+        (click)="close()"
+        class="ant-btn"
+        style="margin-right: 8px"
+      >
+        <span> Cancel </span>
+      </button>
+      <button
+        type="button"
+        class="ant-btn ant-btn-primary"
+        *ngIf="!data.ID"
+        nz-button
+        nz-dropdown
+        [nzDropdownMenu]="menu"
+        (click)="save(false, designation)"
+      >
+        <span> Save & Close </span>
+      </button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li
+            nz-menu-item
+            class="menuc"
+            style="border-radius: 4px; background-color: #40a9ff"
+          >
+            <a style="color: white" (click)="save(true, designation)">
+              Save & New
+            </a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+      <button
+        type="button"
+        class="ant-btn ant-btn-primary"
+        nz-button
+        [nzLoading]="isSpinning"
+        *ngIf="data.ID"
+        (click)="save(false, designation)"
+      >
+        <span> Update & Close </span>
+      </button>
+    </div>
+  
+    <div class="header">
+      <button
+        type="button"
+        nz-button
+        (click)="close()"
+        class="ant-btn"
+        style="margin-right: 8px"
+      >
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+      </button>
+    </div>
+  </div>
+  
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="450"
+  [nzVisible]="drawerVisiblesign"
+  [nzTitle]="'Add Signature'"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-addsignaturemaster
+      [drawerClose]="closeCallback"
+    ></app-addsignaturemaster>
+  </ng-container>
+</nz-drawer>
+</div>

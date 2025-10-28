@@ -1,0 +1,181 @@
+<div nz-row nzType="flex">
+    <div nz-col nz-col nzXs="20" nzSm="20" nzMd="16" nzLg="16" nzXl="8">
+      <b>
+        <div class="formname">{{ formTitle }}</div>
+      </b>
+    </div>
+    <div
+      nz-col
+      nzXs="24"
+      nzSm="24"
+      nzMd="8"
+      nzLg="8"
+      nzXl="16"
+      style="display: flex; justify-content: flex-end"
+    >
+      <form nz-form [nzLayout]="'inline'">
+        <nz-form-item style="margin-right: 0px;">
+          <button nz-button nzTooltipTitle="Download Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+              (click)="convertInExcel()" style="margin-right: 6px;" [nzLoading]="loadexcel">
+              <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+          </button>&nbsp;
+          <!-- <button [nzType]="isFilterApplied" style="margin-right: 10px;" nz-button (click)="showFilter()"
+              nz-tooltip nzTooltipTitle="Filter ">
+              <i nz-icon nzType="filter"></i>
+          </button> -->
+      </nz-form-item>
+        <nz-form-item>
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input
+              type="text"
+              name="search"
+              nz-input
+              placeholder="Search Records"
+              [(ngModel)]="searchText"
+              (keydown.enter)="search(true)"
+            />
+          </nz-input-group>
+  
+          <ng-template #suffixIconButton>
+            <button
+              nz-button
+              nzType="primary"
+              (click)="search()"
+              nzSearch
+              id="searchBtn"
+            >
+              <i nz-icon nzType="search"></i>
+            </button>
+          </ng-template>
+        </nz-form-item>
+        <!-- <nz-form-item style="margin-right: 0px">
+          <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+            <i nz-icon nzType="plus"></i>Add New Employee
+          </button>
+        </nz-form-item> -->
+      </form>
+    </div>
+
+  </div>
+
+  <div nz-row>
+    <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+            <div class="filter-box">
+                <form nz-form>
+                    <div nz-row>
+                        <div nz-col nzSpan="6">
+                            <nz-form-item style="margin-right: 10px!important;">
+                                <nz-form-label nzRequired nzNoColon>Submitted Date
+                                </nz-form-label>
+                                <nz-range-picker style="width: 100%" [nzFormat]="'dd/MM/yyyy'" [nzRanges]="ranges"
+                                    (nzOnCalendarChange)="changeDate($event)" name="selectedDate"
+                                    [(ngModel)]="selectedDate">
+                                </nz-range-picker>
+                            </nz-form-item>
+                        </div>
+                       
+                        <div nz-col nzSpan="6" style="display: flex; gap: 10px;padding-top: 0px;margin-top: 30px;">
+                            <button nz-button [nzLoading]="loadingRecords" nzType="primary" class="flexicons"
+                                (click)="applyFilter()">
+                                <i nz-icon nzType="filter"></i>Apply Filter
+                            </button>
+                            <button nz-button nzType="primary" class="flexicons" (click)="clearFilter()">
+                                <i nz-icon nzType="delete"></i>Clear filter
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  <div nz-row>
+    <div nz-col nzSpan="24">
+      <nz-table
+        class="my-scroll no-wrap1"
+        nzBordered
+        #table
+        nzShowSizeChanger
+        [nzFrontPagination]="false"
+        [nzData]="dataList"
+        [nzLoading]="loadingRecords"
+        [nzTotal]="totalRecords"
+        [(nzPageIndex)]="pageIndex"
+        [(nzPageSize)]="pageSize"
+        (nzQueryParams)="sort($event)"
+        [nzScroll]="{ y: '60vh' }"
+        [nzSize]="'small'"
+        style="white-space: inherit; padding-top: 20px"
+      >
+        <thead>
+          <tr>
+            <th nzWidth="40px" nzAlign="center" nzLeft><b>View</b></th>
+            <th nzWidth="80px" nzAlign="center" nzLeft><b>Download</b></th>
+            <th
+              nzWidth="200px"
+              nzColumnKey="NAME"
+              nzAlign="center"
+              [nzSortFn]="true"
+            >
+              <b>Name</b>
+            </th>
+            <th
+              nzWidth="80px"
+              [nzColumnKey]="'EMPLOYEE_CODE'"
+              nzAlign="center"
+              [nzSortFn]="true"
+            >
+              <b>Employee Code</b>
+            </th>
+            <th
+              nzWidth="200px"
+              [nzColumnKey]="'CURRENT_POSTING'"
+              nzAlign="center"
+              [nzSortFn]="true"
+            >
+              <b>Current designation</b>
+            </th>
+            <th
+              nzWidth="80px"
+         
+              nzAlign="center"
+          
+            >
+              <b>Submitted Date</b>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data">
+            <td nzWidth="40px" nzLeft nzAlign="center">
+              <a *ngIf="data.IPR_SIGNED_COPY!=null && data.IPR_SIGNED_COPY!='' && data.IPR_SIGNED_COPY!=undefined" nz-button nzType="link"  (click)="viewidproof(data.IPR_SIGNED_COPY)"
+                ><span nz-icon nzType="eye" nzTheme="outline" ></span
+              ></a>
+            </td>
+            <td nzWidth="40px" nzLeft nzAlign="center">
+              <a nz-button nzType="link"  (click)="downloadPdf(data.IPR_SIGNED_COPY,data.EMPLOYEE_CODE)"
+                ><span nz-icon nzType="download" nzTheme="outline"></span
+              ></a>
+              
+            </td>
+            <td nzWidth="200px" style="white-space: pre-line">
+              {{ data.NAME ? data.NAME : "-" }}
+            </td>
+            <td nzWidth="80px" nzAlign="center">
+              {{ data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : "-" }}
+            </td>
+            <td nzWidth="200px" style="white-space: pre-line">
+              {{ data.CURRENT_POSTING ? data.CURRENT_POSTING : "-" }}
+            </td>
+            <td nzWidth="80px" nzAlign="center">
+              {{ data.SUBMITTED_DATE_TIME ? data.SUBMITTED_DATE_TIME : "-" }}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+ 
+  

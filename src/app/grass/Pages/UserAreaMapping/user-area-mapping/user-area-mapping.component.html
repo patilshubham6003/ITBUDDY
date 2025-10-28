@@ -1,0 +1,197 @@
+<div nz-row nzType="flex">
+  <div nz-col nzSpan="8">
+    <div class="formname">
+      <span
+        (click)="back()"
+        nz-icon
+        nzType="arrow-left"
+        nzTheme="outline"
+        style="font-weight: bold; cursor: pointer"
+      ></span
+      >&nbsp;&nbsp;{{ formTitle }}
+    </div>
+  </div>
+
+  <div nz-col nzSpan="16" style="display: flex; justify-content: flex-end">
+    <form nz-form nzLayout="inline">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            autocomplete="off"
+            id="button"
+            placeholder="Min 3 chars required."
+            [(ngModel)]="searchText"
+            (keydown.enter)="onEnterKey($event)"
+            (keyup)="onKeypressEvent($event)"
+          />
+        </nz-input-group>
+      </nz-form-item>
+
+      <ng-template #suffixIconButton>
+        <button
+          nz-button
+          nzType="primary"
+          id="button"
+          nzSearch
+          (click)="search()"
+        >
+          <i nz-icon nzType="search"></i>
+        </button>
+      </ng-template>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      #headerTable
+      [nzScroll]="{ x: '70vw', y: '50vh' }"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzQueryParams)="sort($event)"
+      [nzSize]="'small'"
+    >
+      <thead>
+        <tr>
+          <th style="font-weight: bold" nzWidth="50px">Area Map</th>
+          <th
+            nzWidth="130px"
+            nzShowSort
+            align="center"
+            nzColumnKey="{{ 'NAME' }}"
+            [nzSortFn]="true"
+          >
+            Name
+          </th>
+          <th
+            nzWidth="130px"
+            nzShowSort
+            align="center"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+          >
+            Email ID
+          </th>
+
+          <th
+            nzWidth="70px"
+            nzShowSort
+            align="center"
+            nzColumnKey="{{ 'MOBILE_NUMBER' }}"
+            [nzSortFn]="true"
+          >
+            Mobile Number
+          </th>
+          <th
+            style="font-weight: bold"
+            nzColumnKey="IS_ACTIVE"
+            nzWidth="60px"
+            [nzSortFn]="true"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data" style="white-space: pre-line">
+          <td style="text-align: center">
+            <nz-tag
+              nzColor="#2db7f5"
+              (click)="MapInventory(data)"
+              style="cursor: pointer"
+            >
+              <span
+                nz-icon
+                nzType="form"
+                nzTheme="outline"
+                style="font-size: 15px"
+              ></span>
+              &nbsp;&nbsp;Map
+            </nz-tag>
+            <ng-template #elseblock>-</ng-template>
+          </td>
+          <td
+            align="left"
+            [nzTooltipTitle]="isTextOverflow ? data['NAME'] : null"
+            #tooltipRef1="nzTooltip"
+            nz-tooltip
+          >
+            <div
+              #textContainer1
+              class="truncate-text"
+              (mouseenter)="checkOverflow(textContainer1, tooltipRef1)"
+            >
+              {{ data["NAME"] ? data["NAME"] : "-" }}
+            </div>
+          </td>
+          <td
+            align="left"
+            [nzTooltipTitle]="isTextOverflow ? data['EMAIL_ID'] : null"
+            #tooltipRef="nzTooltip"
+            nz-tooltip
+          >
+            <div
+              #textContainer
+              class="truncate-text"
+              (mouseenter)="checkOverflow(textContainer, tooltipRef)"
+            >
+              {{ data["EMAIL_ID"] ? data["EMAIL_ID"] : "-" }}
+            </div>
+          </td>
+          <td align="center">
+            {{ data.MOBILE_NUMBER }}
+          </td>
+          <td align="center">
+            <i
+              nz-icon
+              *ngIf="data.IS_ACTIVE"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="!data.IS_ACTIVE"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div *ngIf="drawerVisibleInventoryMapping">
+  <nz-drawer
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="'100%'"
+    [nzVisible]="drawerVisibleInventoryMapping"
+    [nzTitle]="drawerTitleInventoryMap"
+    (nzOnClose)="drawerCloseInventorymapping()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-userareamappingdrawer
+        [drawerClose]="closeCallbackInventorymapping"
+        [drawerVisible]="drawerVisibleInventoryMapping"
+        [data]="drawerData"
+      ></app-userareamappingdrawer>
+    </ng-container>
+  </nz-drawer>
+</div>

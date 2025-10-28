@@ -1,0 +1,1439 @@
+<div>
+  <nz-spin [nzSpinning]="loadingRecords">
+    <div nz-row [nzGutter]="10" *ngIf="placeorderdata != undefined">
+      <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+        <div class="my-box" style="height: 75vh; overflow-y: auto">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Prepared By </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid Prepared By"
+                >
+                  <input
+                    nz-input
+                    name="PREPARED_BY_TOUR_ORDER"
+                    maxlength="256"
+                    [(ngModel)]="placeorderdata.PREPARED_BY"
+                    placeHolder="Enter Prepared By"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid"
+                    [(ngModel)]="
+                      PlaceOrderMapCheckList.TOUR_PLACE_ORDER_SIGNATURE_1
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 2</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid2"
+                    [(ngModel)]="
+                      PlaceOrderMapCheckList.TOUR_PLACE_ORDER_SIGNATURE_2
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature1($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 3</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid3"
+                    [(ngModel)]="
+                      PlaceOrderMapCheckList.TOUR_PLACE_ORDER_SIGNATURE_3
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature2($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Bill Number</nz-form-label>
+                <nz-form-control nzHasFeedback>
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    name="BillNumber"
+                    [(ngModel)]="placeorderdata.FILE_ID"
+                    nzPlaceHolder="Select Bill Number"
+                  >
+                    <nz-option
+                      *ngFor="let option of fileList"
+                      [nzLabel]="option.FILE_NUMBER"
+                      [nzValue]="option.ID"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Bill Number </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Bill Number"
+                >
+                  <input
+                    nz-input
+                    name="BILL_NO"
+                    maxlength="62"
+                    [(ngModel)]="placeorderdata.BILL_NO"
+                    placeHolder="Enter Prepared By"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="24" *ngIf="airtotal != 0 && airtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Air Amount claimed </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Air Amount claimed  is required"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      style="width: 100%"
+                      name="Air Amount claimed"
+                      nz-input
+                      placeholder="Enter Air Amount claimed "
+                      autocomplete="off"
+                      type="text"
+                      disabled="true"
+                      (keypress)="omit($event)"
+                      maxlength="10"
+                      (ngModelChange)="changeamount1($event)"
+                      [(ngModel)]="airtotal1"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="24" *ngIf="airtotal != 0 && airtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Air Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Air Remark is required"
+                >
+                  <!-- <nz-input-group> -->
+                  <textarea
+                    style="width: 100%"
+                    name="AirAmountAdmissible"
+                    nz-input
+                    placeholder="Enter Air Remark "
+                    maxlength="250"
+                    autocomplete="off"
+                    type="text"
+                    [(ngModel)]="placeorderdata.PLACE_ORDER_AIR_REMARK"
+                  >
+                  </textarea>
+                  <!-- </nz-input-group> -->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div
+              nz-col
+              nzSpan="24"
+              *ngIf="ShipBoattotal != 0 && ShipBoattotal != ''"
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Ship/boat Amount claimed
+                </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="ship/boat Amount claimed  is required"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      style="width: 100%"
+                      name="ship/boat Amount claimed"
+                      nz-input
+                      placeholder="Enter ship/boat Amount claimed "
+                      autocomplete="off"
+                      type="text"
+                      disabled="true"
+                      (ngModelChange)="changeamount2($event)"
+                      (keypress)="omit($event)"
+                      maxlength="10"
+                      [(ngModel)]="ShipBoattotal1"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="ShipBoattotal != 0 && ShipBoattotal != ''"
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>Ship/boat Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="ship/boat Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="ship/boatAmountRemark"
+                    nz-input
+                    maxlength="250"
+                    placeholder="Enter ship/boat Remark "
+                    autocomplete="off"
+                    type="text"
+                    [(ngModel)]="placeorderdata.PLACE_ORDER_SHIP_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col nzSpan="24" *ngIf="Roadtotal != 0 && Roadtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Road Amount claimed </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Road Amount claimed  is required"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      style="width: 100%"
+                      name="Road Amount claimed"
+                      nz-input
+                      maxlength="10"
+                      disabled="true"
+                      (ngModelChange)="changeamount3($event)"
+                      placeholder="Enter Road Amount claimed "
+                      autocomplete="off"
+                      type="text"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="Roadtotal1"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="24" *ngIf="Roadtotal != 0 && Roadtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Road Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Road Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="RoadAmountAdmissible"
+                    nz-input
+                    placeholder="Enter Road Remark "
+                    autocomplete="off"
+                    type="text"
+                    maxlength="250"
+                    [(ngModel)]="placeorderdata.PLACE_ORDER_ROAD_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="24" *ngIf="Railtotal != 0 && Railtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Rail Amount claimed </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Rail Amount claimed  is required"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      style="width: 100%"
+                      name="Rail Amount claimed"
+                      nz-input
+                      maxlength="10"
+                      (ngModelChange)="changeamount4($event)"
+                      placeholder="Enter Rail Amount claimed "
+                      disabled="true"
+                      autocomplete="off"
+                      type="text"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="Railtotal1"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="24" *ngIf="Railtotal != 0 && Railtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Rail Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Rail Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="RailAmountAdmissible"
+                    nz-input
+                    placeholder="Enter Rail Remark "
+                    autocomplete="off"
+                    type="text"
+                    maxlength="250"
+                    [(ngModel)]="placeorderdata.PLACE_ORDER_RAIL_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="24" *ngIf="accototal != 0 && accototal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Accommodation Amount claimed
+                </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Accommodation Amount claimed  is required"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      style="width: 100%"
+                      name="Accommodation Amount claimed"
+                      nz-input
+                      placeholder="Enter Accommodation Amount claimed "
+                      autocomplete="off"
+                      type="text"
+                      disabled="true"
+                      (ngModelChange)="changeamount5($event)"
+                      (keypress)="omit($event)"
+                      maxlength="10"
+                      disabled="true"
+                      [(ngModel)]="acctotal1"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="
+                accommodationAdmissibleAmount != 0 &&
+                accommodationAdmissibleAmount != ''
+              "
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>Accommodation Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Accommodation Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="AccommodationAmountRemark"
+                    nz-input
+                    placeholder="Enter Accommodation Remark "
+                    autocomplete="off"
+                    type="text"
+                    maxlength="250"
+                    [(ngModel)]="placeorderdata.PLACE_ORDER_ACCOMODATION_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col nzSpan="24" *ngIf="foodtotal != 0 && foodtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Food Amount claimed </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Food Amount claimed  is required"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      style="width: 100%"
+                      name="Food Amount claimed"
+                      nz-input
+                      disabled="true"
+                      placeholder="Enter Food Amount claimed "
+                      autocomplete="off"
+                      type="text"
+                      (ngModelChange)="changeamount6($event)"
+                      (keypress)="omit($event)"
+                      maxlength="10"
+                      [(ngModel)]="foodtotal1"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <div nz-col nzSpan="24" *ngIf="foodtotal != 0 && foodtotal != ''">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Food Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Food Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="FoodAmountAdmissible"
+                    nz-input
+                    placeholder="Enter Food Remark "
+                    autocomplete="off"
+                    type="text"
+                    maxlength="250"
+                    [(ngModel)]="placeorderdata.FOOD_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="hotelAdmissibleAmount != 0 && hotelAdmissibleAmount != ''"
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>Hotel Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Hotel Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="HotelRemark"
+                    nz-input
+                    placeholder="Enter Hotel Remark "
+                    autocomplete="off"
+                    type="text"
+                    maxlength="250"
+                    [(ngModel)]="placeorderdata.HOTEL_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="
+                intercityAdmissibleAmount != 0 &&
+                intercityAdmissibleAmount != ''
+              "
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>Intercity Remark </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Intercity Remark is required"
+                >
+                  <textarea
+                    style="width: 100%"
+                    name="IntercityRemark"
+                    nz-input
+                    placeholder="Enter Intercity Remark "
+                    autocomplete="off"
+                    type="text"
+                    maxlength="250"
+                    [(ngModel)]="placeorderdata.INTERCITY_REMARK"
+                  >
+                  </textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16" nzSpan="16">
+        <div class="my-box" style="height: 75vh; overflow-y: auto">
+          <div>
+            <form nz-form>
+              <div style="padding-left: 7%; margin-right: 2%">
+                <!-- //Place along side -->
+
+                <p>Date :</p>
+                <br />
+                <p>
+                  Placed alongside is a Travelling Allowance Bill for tour
+                  received from
+                  <b
+                    >{{ placeorderdata.EMPLOYEE_NAME }},
+                    {{ placeorderdata.DESIGNATION }},
+                    {{ placeorderdata.ADDRESS }}
+                  </b>
+                  for the tour
+                  <span *ngIf="detailsandpurpose.length == 0">.</span>
+                  <span *ngIf="detailsandpurpose.length > 0">
+                    from
+                    <span *ngFor="let data of detailsandpurpose; let k = index">
+                      {{ data.DEPARTURE_FROM }} to {{ data.ARRIVAL_TO }}
+                      <span *ngIf="detailsandpurpose.length > 1">,</span>
+                    </span>
+                    for
+                    <span *ngFor="let data of detailsandpurpose; let k = index">
+                      {{ data.PURPOSE_OF_JOURNEY }}
+                      <span *ngIf="detailsandpurpose.length > 1">,</span>
+                    </span>
+                    from
+                    <span *ngFor="let data of detailsandpurpose; let k = index">
+                      {{ data.DEPARTURE_DATETIME | date : "dd/MM/yyyy" }}
+                      to {{ data.ARRIVAL_DATETIME | date : "dd/MM/yyyy" }}
+                      <span *ngIf="detailsandpurpose.length > 1">,</span>
+                    </span>
+                  </span>
+
+                  The copy of the order is enclosed along with the bill.
+                </p>
+                <br />
+                <span *ngIf="placeorderdata.IS_ADVANCE_TAKEN == 1">
+                  <p>
+                    The official declared that he has claimed advance of Rs.({{
+                      placeorderdata.AMOUNT_OF_T_A
+                    }})
+                  </p>
+                </span>
+                <span *ngIf="placeorderdata.IS_ADVANCE_TAKEN == 0">
+                  <p>
+                    The official declared that he has not claimed any advance.
+                  </p>
+                </span>
+                <br />
+                <p>
+                  The amount incurred and admissible to the official has been
+                  calculated as under :
+                </p>
+                <br />
+                <table style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th>Expenditure Heads</th>
+                      <th>Amount Claimed</th>
+                      <th>Amount Admissible</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngIf="airtotal != 0 && airtotal != ''"
+                      style="text-align: center"
+                    >
+                      <td>Air</td>
+                      <!-- <td>
+                        {{ placeorderdata.PLACE_ORDER_AIR_ADMISSIBLE_AMOUNT }}
+                      </td> -->
+                      <td>{{ airtotal1 }}</td>
+                      <td>{{ airtotal }}</td>
+
+                      <td>{{ placeorderdata.PLACE_ORDER_AIR_REMARK }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="ShipBoattotal != 0 && ShipBoattotal != ''"
+                      style="text-align: center"
+                    >
+                      <td>Ship/Boat</td>
+                      <!-- <td>
+                        {{ placeorderdata.PLACE_ORDER_SHIP_ADMISSIBLE_AMOUNT }}
+                      </td> -->
+
+                      <td>{{ ShipBoattotal1 }}</td>
+                      <td>{{ ShipBoattotal }}</td>
+
+                      <td>{{ placeorderdata.PLACE_ORDER_SHIP_REMARK }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="Roadtotal != 0 && Roadtotal != ''"
+                      style="text-align: center"
+                    >
+                      <td>Road</td>
+                      <!-- <td>
+                        {{ placeorderdata.PLACE_ORDER_ROAD_ADMISSIBLE_AMOUNT }}
+                      </td> -->
+                      <td>{{ Roadtotal1 }}</td>
+                      <td>{{ Roadtotal }}</td>
+
+                      <td>{{ placeorderdata.PLACE_ORDER_ROAD_REMARK }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="Railtotal != 0 && Railtotal != ''"
+                      style="text-align: center"
+                    >
+                      <td>Rail</td>
+                      <!-- <td>
+                        {{ placeorderdata.PLACE_ORDER_RAIL_ADMISSIBLE_AMOUNT }}
+                      </td> -->
+                      <td>{{ Railtotal1 }}</td>
+                      <td>{{ Railtotal }}</td>
+
+                      <td>{{ placeorderdata.PLACE_ORDER_RAIL_REMARK }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="
+                        accommodationAdmissibleAmount != 0 &&
+                        accommodationAdmissibleAmount != ''
+                      "
+                      style="text-align: center"
+                    >
+                      <td>Accommodation</td>
+                      <td>
+                        {{ accommodationClaimedAmount }}
+                      </td>
+                      <td>{{ accommodationAdmissibleAmount }}</td>
+
+                      <td>
+                        {{ placeorderdata.PLACE_ORDER_ACCOMODATION_REMARK }}
+                      </td>
+                    </tr>
+
+                    <tr
+                      *ngIf="foodtotal != 0 && foodtotal != ''"
+                      style="text-align: center"
+                    >
+                      <td>Food</td>
+                      <!-- <td>
+                        {{ placeorderdata.FOOD_ADMISIBLE_AMOUNT }}
+                      </td> -->
+                      <td>{{ foodtotal1 }}</td>
+                      <td>{{ foodtotal }}</td>
+
+                      <td>{{ placeorderdata.FOOD_REMARK }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="
+                        hotelAdmissibleAmount != 0 &&
+                        hotelAdmissibleAmount != ''
+                      "
+                      style="text-align: center"
+                    >
+                      <td>Hotel</td>
+                      <!-- <td>
+                  {{ placeorderdata.PLACE_ORDER_AIR_ADMISSIBLE_AMOUNT }}
+                </td> -->
+                      <td>{{ acctotal1 }}</td>
+                      <td>{{ hotelAdmissibleAmount }}</td>
+
+                      <td>{{ placeorderdata.HOTEL_REMARK }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="
+                        intercityAdmissibleAmount != 0 &&
+                        intercityAdmissibleAmount != ''
+                      "
+                      style="text-align: center"
+                    >
+                      <td>Intercity</td>
+                      <!-- <td>
+                {{ placeorderdata.PLACE_ORDER_RAIL_ADMISSIBLE_AMOUNT }}
+              </td> -->
+                      <td>{{ intercityClaimedAmount }}</td>
+                      <td>{{ intercityAdmissibleAmount }}</td>
+
+                      <td>{{ placeorderdata.INTERCITY_REMARK }}</td>
+                    </tr>
+                    <tr>
+                      <td><b> Gross Amount</b></td>
+                      <td>{{ totalOfClaimedAmount }}</td>
+                      <!-- <td>{{ placeorderdata.PLACE_ORDER_GROSS_AMOUNT }}</td> -->
+                      <td
+                        *ngIf="
+                          totalOfAdmissibleAmount != 0 &&
+                          totalOfAdmissibleAmount != ''
+                        "
+                      >
+                        <b>{{ totalOfAdmissibleAmount }}</b>
+                      </td>
+                      <!-- <td *ngIf="alltotal != 0 && alltotal != ''">
+                        <b>{{ alltotal }}</b>
+                      </td> -->
+
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><b> Less :- Advance Taken</b></td>
+                      <td></td>
+                      <td>{{ advanceamountta }}</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><b> Net Amount</b></td>
+                      <td>{{ totalOfClaimedAmount }}</td>
+                      <!-- <td>{{ placeorderdata.PLACE_ORDER_GROSS_AMOUNT }}</td> -->
+                      <td>
+                        <!-- <b>{{ nettotalamountplaceorder }}</b> -->
+                        <b>{{ nettotalamountplaceorder }}</b>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <p>
+                  Tickets have been verified and they are found to be in order.
+                  Certificate for TA Tour Bill has been enclosed & duly signed
+                  by the official. The T.A. tour Bill No.
+                  <B>{{ placeorderdata.BILL_NO }}</B> of
+                  <b
+                    >{{ placeorderdata.EMPLOYEE_NAME }},
+                    {{ placeorderdata.DESIGNATION }},
+                    {{ placeorderdata.ADDRESS }} </b
+                  >, for the tour from
+                  <span *ngFor="let data of detailsandpurpose; let k = index">
+                    {{ data.DEPARTURE_FROM }} to {{ data.ARRIVAL_TO }}
+                    <span *ngIf="detailsandpurpose.length > 1">,</span>
+                  </span>
+                  for
+                  <span *ngFor="let data of detailsandpurpose; let k = index">
+                    {{ data.PURPOSE_OF_JOURNEY }}
+                    <span *ngIf="detailsandpurpose.length > 1">,</span>
+                  </span>
+                  for an amount of Rs.<b>{{ nettotalamountplaceorder }}/-</b>
+                  payable to the official, is put up for approval and signature
+                  please.
+                </p>
+                <br />
+                <p>
+                  <b>Prepared by: {{ placeorderdata.PREPARED_BY }}</b>
+                </p>
+                <!-- <br />
+                <br />
+                <p>
+                  <b>Checked by: </b>
+                </p> -->
+                <br />
+                <br />
+                <br />
+
+                <div>
+                  <div>
+                    <div
+                      *ngIf="NAME_HN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      ({{ NAME_HN }})
+                    </div>
+                    <div
+                      *ngIf="SIGNNAME"
+                      style="font-weight: bold; font-size: 15px"
+                    >
+                      ({{ SIGNNAME }})
+                    </div>
+                    <div
+                      *ngIf="POST_HIN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      {{ POST_HIN }}
+                    </div>
+                    <div
+                      *ngIf="POST"
+                      style="font-weight: bold; font-size: 15px"
+                    >
+                      {{ POST }}
+                    </div>
+                    <div
+                      *ngIf="OFFICE_NAME_HIN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      {{ OFFICE_NAME_HIN }}
+                    </div>
+                    <div *ngIf="OFFICE_NAME" style="font-weight: bold">
+                      {{ OFFICE_NAME }}
+                    </div>
+                  </div>
+                </div>
+                <br /><br />
+                <br />
+
+                <div>
+                  <div>
+                    <div
+                      *ngIf="NAME_HN1"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      ({{ NAME_HN1 }})
+                    </div>
+                    <div
+                      *ngIf="SIGNNAME1"
+                      style="font-weight: bold; font-size: 15px"
+                    >
+                      ({{ SIGNNAME1 }})
+                    </div>
+                    <div
+                      *ngIf="POST1_HIN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      {{ POST1_HIN }}
+                    </div>
+                    <div
+                      *ngIf="POST1"
+                      style="font-weight: bold; font-size: 15px"
+                    >
+                      {{ POST1 }}
+                    </div>
+                    <div
+                      *ngIf="OFFICE_NAME1_HIN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      {{ OFFICE_NAME1_HIN }}
+                    </div>
+                    <div *ngIf="OFFICE_NAME1" style="font-weight: bold">
+                      {{ OFFICE_NAME1 }}
+                    </div>
+                  </div>
+                </div>
+                <br /><br />
+                <br />
+
+                <div>
+                  <div>
+                    <div
+                      *ngIf="NAME_HN2"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      ({{ NAME_HN2 }})
+                    </div>
+                    <div
+                      *ngIf="SIGNNAME2"
+                      style="font-weight: bold; font-size: 15px"
+                    >
+                      ({{ SIGNNAME2 }})
+                    </div>
+                    <div
+                      *ngIf="POST2_HIN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      {{ POST2_HIN }}
+                    </div>
+                    <div
+                      *ngIf="POST2"
+                      style="font-weight: bold; font-size: 15px"
+                    >
+                      {{ POST2 }}
+                    </div>
+                    <div
+                      *ngIf="OFFICE_NAME2_HIN"
+                      style="font-weight: bold; font-size: 11px"
+                    >
+                      {{ OFFICE_NAME2_HIN }}
+                    </div>
+                    <div *ngIf="OFFICE_NAME2" style="font-weight: bold">
+                      {{ OFFICE_NAME2 }}
+                    </div>
+                  </div>
+                </div>
+                <br /><br />
+
+                <!-- <div>
+                  <p>
+                    <b>Income Tax Officer,</b> <br /><b>
+                      Gaz Pay Bill-II, Mumbai</b
+                    ><br />
+                    <br />
+                    राजपत्रित वेतन बिल कक्ष -२, मुंबई
+                  </p>
+                </div>
+                <br /><br />
+
+                <div>
+       
+                  <b>Addl. Commissioner of Income Tax (HQ), </b><br />
+                  <b>Personnel, Mumbai</b>
+                  <br />
+                  <br />
+                  <p>अपर आयकर आयुक्त (मुख्या.) कार्मिक, मुंबई</p>
+                  <br />
+                  <br />
+                  <b>Commissioner of Income Tax,</b><br />
+                  <p><b>Admn and TPS Mumbai</b></p>
+                  <P> आयकर आयुक्त व्यवस्थापक एव करदाता सेवाएँ, मुंबई</P>
+         
+                </div> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nz-spin>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Save and Preview</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Place Order'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding-right: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <!-- //Place along side -->
+
+            <p>Date :</p>
+            <br />
+            <p>
+              Placed alongside is a Travelling Allowance Bill for tour received
+              from
+              <b
+                >{{ placeorderdata.EMPLOYEE_NAME }},
+                {{ placeorderdata.DESIGNATION }},
+                {{ placeorderdata.ADDRESS }}
+              </b>
+              for the tour
+              <span *ngIf="detailsandpurpose.length == 0">.</span>
+              <span *ngIf="detailsandpurpose.length > 0">
+                from
+                <span *ngFor="let data of detailsandpurpose; let k = index">
+                  {{ data.DEPARTURE_FROM }} to {{ data.ARRIVAL_TO }}
+                  <span *ngIf="detailsandpurpose.length > 1">,</span>
+                </span>
+                for
+                <span *ngFor="let data of detailsandpurpose; let k = index">
+                  {{ data.PURPOSE_OF_JOURNEY }}
+                  <span *ngIf="detailsandpurpose.length > 1">,</span>
+                </span>
+                from
+                <span *ngFor="let data of detailsandpurpose; let k = index">
+                  {{ data.DEPARTURE_DATETIME | date : "dd/MM/yyyy" }}
+                  to {{ data.ARRIVAL_DATETIME | date : "dd/MM/yyyy" }}
+                  <span *ngIf="detailsandpurpose.length > 1">,</span>
+                </span>
+              </span>
+
+              The copy of the order is enclosed along with the bill.
+            </p>
+            <br />
+            <span *ngIf="placeorderdata.IS_ADVANCE_TAKEN == 1">
+              <p>
+                The official declared that he has claimed advance of Rs.({{
+                  placeorderdata.AMOUNT_OF_T_A
+                }})
+              </p>
+            </span>
+            <span *ngIf="placeorderdata.IS_ADVANCE_TAKEN == 0">
+              <p>The official declared that he has not claimed any advance.</p>
+            </span>
+            <br />
+            <p style="margin-bottom: 0px">
+              The amount incurred and admissible to the official has been
+              calculated as under :
+            </p>
+            <br />
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th>Expenditure Heads</th>
+                  <th>Amount Claimed</th>
+                  <th>Amount Admissible</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngIf="airtotal != 0 && airtotal != ''"
+                  style="text-align: center"
+                >
+                  <td>Air</td>
+                  <!-- <td>
+                    {{ placeorderdata.PLACE_ORDER_AIR_ADMISSIBLE_AMOUNT }}
+                  </td> -->
+                  <td>{{ airtotal1 }}</td>
+                  <td>{{ airtotal }}</td>
+
+                  <td>{{ placeorderdata.PLACE_ORDER_AIR_REMARK }}</td>
+                </tr>
+
+                <tr
+                  *ngIf="ShipBoattotal != 0 && ShipBoattotal != ''"
+                  style="text-align: center"
+                >
+                  <td>Ship/Boat</td>
+                  <!-- <td>
+                    {{ placeorderdata.PLACE_ORDER_SHIP_ADMISSIBLE_AMOUNT }}
+                  </td> -->
+
+                  <td>{{ ShipBoattotal1 }}</td>
+                  <td>{{ ShipBoattotal }}</td>
+
+                  <td>{{ placeorderdata.PLACE_ORDER_SHIP_REMARK }}</td>
+                </tr>
+
+                <tr
+                  *ngIf="Roadtotal != 0 && Roadtotal != ''"
+                  style="text-align: center"
+                >
+                  <td>Road</td>
+                  <!-- <td>
+                    {{ placeorderdata.PLACE_ORDER_ROAD_ADMISSIBLE_AMOUNT }}
+                  </td> -->
+                  <td>{{ Roadtotal1 }}</td>
+                  <td>{{ Roadtotal }}</td>
+
+                  <td>{{ placeorderdata.PLACE_ORDER_ROAD_REMARK }}</td>
+                </tr>
+
+                <tr
+                  *ngIf="Railtotal != 0 && Railtotal != ''"
+                  style="text-align: center"
+                >
+                  <td>Rail</td>
+                  <!-- <td>
+                    {{ placeorderdata.PLACE_ORDER_RAIL_ADMISSIBLE_AMOUNT }}
+                  </td> -->
+                  <td>{{ Railtotal1 }}</td>
+                  <td>{{ Railtotal }}</td>
+
+                  <td>{{ placeorderdata.PLACE_ORDER_RAIL_REMARK }}</td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    accommodationAdmissibleAmount != 0 &&
+                    accommodationAdmissibleAmount != ''
+                  "
+                  style="text-align: center"
+                >
+                  <td>Accommodation</td>
+                  <td>
+                    {{ accommodationClaimedAmount }}
+                  </td>
+                  <td>{{ accommodationAdmissibleAmount }}</td>
+
+                  <td>
+                    {{ placeorderdata.PLACE_ORDER_ACCOMODATION_REMARK }}
+                  </td>
+                </tr>
+
+                <tr
+                  *ngIf="foodtotal != 0 && foodtotal != ''"
+                  style="text-align: center"
+                >
+                  <td>Food</td>
+                  <!-- <td>
+                    {{ placeorderdata.FOOD_ADMISIBLE_AMOUNT }}
+                  </td> -->
+                  <td>{{ foodtotal1 }}</td>
+                  <td>{{ foodtotal }}</td>
+
+                  <td>{{ placeorderdata.FOOD_REMARK }}</td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    hotelAdmissibleAmount != 0 && hotelAdmissibleAmount != ''
+                  "
+                  style="text-align: center"
+                >
+                  <td>Hotel</td>
+                  <!-- <td>
+              {{ placeorderdata.PLACE_ORDER_AIR_ADMISSIBLE_AMOUNT }}
+            </td> -->
+                  <td>{{ acctotal1 }}</td>
+                  <td>{{ hotelAdmissibleAmount }}</td>
+
+                  <td>{{ placeorderdata.HOTEL_REMARK }}</td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    intercityAdmissibleAmount != 0 &&
+                    intercityAdmissibleAmount != ''
+                  "
+                  style="text-align: center"
+                >
+                  <td>Intercity</td>
+                  <!-- <td>
+            {{ placeorderdata.PLACE_ORDER_RAIL_ADMISSIBLE_AMOUNT }}
+          </td> -->
+                  <td>{{ intercityClaimedAmount }}</td>
+                  <td>{{ intercityAdmissibleAmount }}</td>
+
+                  <td>{{ placeorderdata.INTERCITY_REMARK }}</td>
+                </tr>
+                <tr>
+                  <td><b> Gross Amount</b></td>
+                  <td>{{ totalOfClaimedAmount }}</td>
+                  <!-- <td>{{ placeorderdata.PLACE_ORDER_GROSS_AMOUNT }}</td> -->
+                  <td
+                    *ngIf="
+                      totalOfAdmissibleAmount != 0 &&
+                      totalOfAdmissibleAmount != ''
+                    "
+                  >
+                    <b>{{ totalOfAdmissibleAmount }}</b>
+                  </td>
+                  <!-- <td *ngIf="alltotal != 0 && alltotal != ''">
+                    <b>{{ alltotal }}</b>
+                  </td> -->
+
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><b> Less :- Advance Taken</b></td>
+                  <td></td>
+                  <td>{{ advanceamountta }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><b> Net Amount</b></td>
+                  <td>{{ totalOfClaimedAmount }}</td>
+                  <!-- <td>{{ placeorderdata.PLACE_ORDER_GROSS_AMOUNT }}</td> -->
+                  <td>
+                    <!-- <b>{{ nettotalamountplaceorder }}</b> -->
+                    <b>{{ nettotalamountplaceorder }}</b>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <p style="margin-bottom: 0px">
+              Tickets have been verified and they are found to be in order.
+              Certificate for TA Tour Bill has been enclosed & duly signed by
+              the official. The T.A. tour Bill No.
+              <B>{{ placeorderdata.BILL_NO }}</B> of
+              <b
+                >{{ placeorderdata.EMPLOYEE_NAME }},
+                {{ placeorderdata.DESIGNATION }},
+                {{ placeorderdata.ADDRESS }} </b
+              >, for the tour from
+              <span *ngFor="let data of detailsandpurpose; let k = index">
+                {{ data.DEPARTURE_FROM }} to {{ data.ARRIVAL_TO }}
+                <span *ngIf="detailsandpurpose.length > 1">,</span>
+              </span>
+              for
+              <span *ngFor="let data of detailsandpurpose; let k = index">
+                {{ data.PURPOSE_OF_JOURNEY }}
+                <span *ngIf="detailsandpurpose.length > 1">,</span>
+              </span>
+              for an amount of Rs.<b>{{ nettotalamountplaceorder }}/-</b>
+              payable to the official, is put up for approval and signature
+              please.
+            </p>
+            <br />
+            <p>
+              <b>Prepared by: {{ placeorderdata.PREPARED_BY }}</b>
+            </p>
+            <!-- <br />
+            <br />
+            <p>
+              <b>Checked by: </b>
+            </p> -->
+            <br />
+            <br />
+            <br />
+
+            <div>
+              <div>
+                <div *ngIf="NAME_HN" style="font-weight: bold; font-size: 11px">
+                  ({{ NAME_HN }})
+                </div>
+                <div
+                  *ngIf="SIGNNAME"
+                  style="font-weight: bold; font-size: 15px"
+                >
+                  ({{ SIGNNAME }})
+                </div>
+                <div
+                  *ngIf="POST_HIN"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  {{ POST_HIN }}
+                </div>
+                <div *ngIf="POST" style="font-weight: bold; font-size: 15px">
+                  {{ POST }}
+                </div>
+                <div
+                  *ngIf="OFFICE_NAME_HIN"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  {{ OFFICE_NAME_HIN }}
+                </div>
+                <div *ngIf="OFFICE_NAME" style="font-weight: bold">
+                  {{ OFFICE_NAME }}
+                </div>
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <div>
+              <div>
+                <div
+                  *ngIf="NAME_HN1"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  ({{ NAME_HN1 }})
+                </div>
+                <div
+                  *ngIf="SIGNNAME1"
+                  style="font-weight: bold; font-size: 15px"
+                >
+                  ({{ SIGNNAME1 }})
+                </div>
+                <div
+                  *ngIf="POST1_HIN"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  {{ POST1_HIN }}
+                </div>
+                <div *ngIf="POST1" style="font-weight: bold; font-size: 15px">
+                  {{ POST1 }}
+                </div>
+                <div
+                  *ngIf="OFFICE_NAME1_HIN"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  {{ OFFICE_NAME1_HIN }}
+                </div>
+                <div *ngIf="OFFICE_NAME1" style="font-weight: bold">
+                  {{ OFFICE_NAME1 }}
+                </div>
+              </div>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <div>
+              <div>
+                <div
+                  *ngIf="NAME_HN2"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  ({{ NAME_HN2 }})
+                </div>
+                <div
+                  *ngIf="SIGNNAME2"
+                  style="font-weight: bold; font-size: 15px"
+                >
+                  ({{ SIGNNAME2 }})
+                </div>
+                <div
+                  *ngIf="POST2_HIN"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  {{ POST2_HIN }}
+                </div>
+                <div *ngIf="POST2" style="font-weight: bold; font-size: 15px">
+                  {{ POST2 }}
+                </div>
+                <div
+                  *ngIf="OFFICE_NAME2_HIN"
+                  style="font-weight: bold; font-size: 11px"
+                >
+                  {{ OFFICE_NAME2_HIN }}
+                </div>
+                <div *ngIf="OFFICE_NAME2" style="font-weight: bold">
+                  {{ OFFICE_NAME2 }}
+                </div>
+              </div>
+            </div>
+            <br /><br />
+            <!-- <div>
+              <p>
+                <b>Income Tax Officer,</b> <br /><b> Gaz Pay Bill-II, Mumbai</b
+                ><br />
+                <br />
+                राजपत्रित वेतन बिल कक्ष -२, मुंबई
+              </p>
+            </div>
+            <br /><br />
+
+            <div>
+      
+              <b>Addl. Commissioner of Income Tax (HQ), </b><br />
+              <b>Personnel, Mumbai</b>
+              <br />
+              <br />
+              <p>अपर आयकर आयुक्त (मुख्या.) कार्मिक, मुंबई</p>
+              <br />
+              <br />
+              <b>Commissioner of Income Tax,</b><br />
+              <p><b>Admn and TPS Mumbai</b></p>
+              <P> आयकर आयुक्त व्यवस्थापक एव करदाता सेवाएँ, मुंबई</P>
+            
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

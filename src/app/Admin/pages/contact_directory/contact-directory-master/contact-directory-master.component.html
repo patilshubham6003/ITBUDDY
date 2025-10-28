@@ -1,0 +1,229 @@
+<div class="my-boxxxxxxx">
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Contact Directory Name"
+            >
+              <input
+                nz-input
+                name="ContactName"
+                required
+                [(ngModel)]="data.NAME"
+                maxlength="256"
+                required
+                placeHolder="Enter Contact Directory Name"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Designation</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Designation"
+            >
+              <input
+                nz-input
+                name="Designation"
+                required
+                [(ngModel)]="data.DESIGNATION"
+                maxlength="256"
+                required
+                placeHolder="Enter Designation"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Mobile Number </nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip=" Please Enter Correct Mobile Number "
+            >
+              <input
+                nz-input
+                name="contactno"
+                [pattern]="mobpattern"
+                [(ngModel)]="data.MOBILE_NO"
+                maxlength="10"
+                minlength="10"
+                placeholder="Please Enter Mobile Number"
+                (keypress)="omit($event)"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Email ID</nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip=" Please Enter Correct Email ID "
+            >
+              <input
+                nz-input
+                name="contactemail"
+                [pattern]="emailpattern"
+                [(ngModel)]="data.EMAIL_ID"
+                placeholder="Please Enter Email ID"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Service Name</nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Select Service Name"
+            >
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Please Select Service Name "
+                name="Service Name"
+                [(ngModel)]="data.SERVICE_ID"
+                required
+              >
+                <nz-option
+                  *ngFor="let data of serviceName"
+                  [nzValue]="data.ID"
+                  [nzLabel]="data.TITLE"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Office Name</nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Select Office Name"
+            >
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Please Select Office Name "
+                name="Office Name"
+                [(ngModel)]="data.OFFICE_ID"
+                required
+              >
+                <nz-option
+                  *ngFor="let data of OfficeName"
+                  [nzValue]="data.ID"
+                  [nzLabel]="data.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- </div> -->
+
+        <!-- <div nz-row> -->
+        <div nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Sequence No"
+            >
+              <input
+                nz-input
+                autocomplete="off"
+                name="sequenceNo"
+                (keypress)="omit($event)"
+                type="text"
+                maxlength="6"
+                [(ngModel)]="data.SEQUENCE_NO"
+                placeHolder="Enter Sequence No"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+
+            <nz-form-control nzErrorTip="Status is required">
+              <nz-switch
+                name="status"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.STATUS"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close(websitebannerPage)"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    *ngIf="!data.ID"
+    nz-button
+    nz-dropdown
+    [nzDropdownMenu]="menu"
+    [nzLoading]="isSpinning"
+    (click)="save(false, websitebannerPage)"
+  >
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li
+        nz-menu-item
+        class="menuc"
+        style="border-radius: 4px; background-color: #40a9ff"
+      >
+        <a style="color: white" (click)="save(true, websitebannerPage)"
+          >Save & New</a
+        >
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    [nzLoading]="isSpinning"
+    *ngIf="data.ID"
+    (click)="save(false, websitebannerPage)"
+  >
+    <span>Update & Close</span>
+  </button>
+</div>

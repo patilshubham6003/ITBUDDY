@@ -1,0 +1,103 @@
+
+
+<div nz-row nzType="flex" style="justify-content: space-between;">
+  <div nz-col style="margin: 0 10px 0 0;">
+      <div class="formname"> Building Mapping</div>
+  </div>
+<div nz-col style="display: flex;justify-content: flex-end">
+  <form nz-form [nzLayout]="'inline'">
+    <nz-form-item>
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" name="webbannersearch" (keyup)="keyup($event)" [(ngModel)]="searchText" nz-input
+            placeholder="Search " />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+        <i nz-icon nzType="search"></i>
+      </button>
+    </ng-template>
+  </nz-form-item>
+  </form>
+</div>
+
+<div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #Floortable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="roles1" >
+      <thead>
+        <tr>
+          <th nzWidth="30px" style="font-weight: bold; text-align: center">
+            Map Building
+          </th>
+       
+          <th nzWidth="100px" nzColumnKey="{{ 'USER_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Name
+          </th>
+          
+          <th nzWidth="100px" nzColumnKey="{{ 'BUILDING_NAMES' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Mapped  Buildings 
+          </th>
+          <th nzWidth="100px" nzColumnKey="{{ 'USER_EMAIL_ID' }}" [nzSortFn]="true"
+          style="font-weight: bold; text-align: center">
+          E-Mail Id
+        </th>
+        <th nzWidth="100px" nzColumnKey="{{ 'USER_MOBILE' }}" [nzSortFn]="true"
+        style="font-weight: bold; text-align: center">
+        Password
+      </th>
+      <th nzWidth="100px" nzColumnKey="{{ 'ROLE_NAME' }}" [nzSortFn]="true"
+      style="font-weight: bold; text-align: center">
+      Role Name
+    </th>
+        
+      
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of Floortable.data" style="text-align: center">
+          <td style="text-align: center;"> <a nzType="link" nz-button (click)="MapBuilding(data)">Map</a> 
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+        {{data.USER_NAME}}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{data.BUILDING_NAMES}}
+              </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{data.USER_EMAIL_ID}}
+              </td>
+              <td style="text-align: center; white-space: pre-line">
+                {{data.USER_MOBILE}}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{data.ROLE_NAME}}
+                      </td>
+        
+    
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Map Buildings" (nzOnCancel)="handleCancel()" (nzOnOk)="save()">
+    <ng-container *nzModalContent>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div nz-col nzSpan="24" style="margin-top: 10px;text-align: center;">
+            <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Select Buildings</nz-form-label>
+      
+                <nz-form-control>
+                  <!-- {{BUILDING_ID}} -->
+                    <nz-select style="width: 384px" name="parentid"nzPlaceHolder="Select Buildings"
+                        [(ngModel)]="BUILDING_ID" nzMode="multiple">
+                    
+                        <nz-option *ngFor="let parentid of roles" [nzValue]="parentid.BUILDING_ID" [nzLabel]="parentid.NAME">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+      </nz-spin>
+     </ng-container>
+  </nz-modal>

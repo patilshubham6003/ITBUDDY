@@ -1,0 +1,73 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="10" nzLg="10" nzXl="10">
+    <div class="formname"> <b> {{formTitle}} </b></div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="14" nzLg="14" nzXl="14" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" nz-input placeholder="Search Records" (keyup)="keyup($event)"
+            [(ngModel)]="searchText" />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search(true)" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>New Import Table
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #inductionareaTable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzSize]="'small'"
+      (nzQueryParams)="sort($event)">
+
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th style="width: 70px;"><b>Action</b></th>
+          <th *ngFor="let column of columns" nzShowSort nzColumnKey={{column[0]}}><b>{{column[1]}}</b></th>
+          <th nzShowSort nzColumnKey="STATUS"><b>Status</b></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of inductionareaTable.data"  style="align-items: center;">
+          <td align="center">
+            <a (click)="edit(data)">Edit</a>
+          </td>
+          <td align="center" *ngFor="let column of columns">{{data[column[0]]}}</td>
+          <!-- <td style="white-space: pre-line">{{ data["NAME"] }}</td>
+          <td style="white-space: pre-line">{{ data["SEQUENCE_NO"] }}</td> -->
+          <td align="center">
+            <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+
+            <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1050" [nzVisible]="drawerVisible"
+[nzTitle]="drawerTitle" [nzClosable]="false" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+<ng-container *nzDrawerContent>
+<app-adddatabasetablemaster [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData">
+</app-adddatabasetablemaster>
+</ng-container>
+</nz-drawer>

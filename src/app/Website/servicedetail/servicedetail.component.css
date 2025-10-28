@@ -1,0 +1,439 @@
+.banner-section {
+  position: relative;
+  overflow: hidden;
+}
+
+::-webkit-input-placeholder {
+  font-size: 13px;
+}
+
+.banner-section .single-banner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 1;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #fff;
+  padding: 225px 0;
+}
+
+@media (max-width: 991px) {
+  .banner-section .single-banner {
+    padding: 170px 0;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .banner-section .single-banner {
+    padding: 90px 0;
+  }
+}
+
+@media (max-width: 399px) {
+  .banner-section .single-banner {
+    padding: 80px 0;
+  }
+}
+
+.banner-section .single-banner::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: #14212b;
+  opacity: 0.10;
+  z-index: -2;
+}
+
+@media screen and (max-width:380px) {
+  .slick-slide {
+    height: 40px !important;
+  }
+}
+
+@media screen and (min-width:381px) {
+  .slick-slide {
+    height: 70px !important;
+  }
+}
+
+@media screen and (min-width:501px) {
+  .slick-slide {
+    height: 110px !important;
+  }
+}
+
+@media (min-width:768px) {
+  .slick-slide {
+    height: 170px !important;
+  }
+}
+
+@media (min-width:900px) {
+  .slick-slide {
+    height: 200px !important;
+  }
+}
+
+@media (min-width:1200px) {
+  .slick-slide {
+    height: 270px !important;
+  }
+}
+
+@media (min-width:1400px) {
+  .slick-slide {
+    height: 340px !important;
+  }
+}
+
+@media (min-width:1500px) {
+  .slick-slide {
+    height: 500px !important;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+a {
+  color: black;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.card11 {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 0px;
+  background-color: white;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(173, 172, 172);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #006699;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006699;
+}
+
+.card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 347px;
+}
+
+.header {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+.btnnn {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 10px;
+  border: 2px solid #006699;
+  text-transform: uppercase;
+  color: #006699;
+}
+
+.btnnn:hover {
+  background-color: #006699;
+  color: white;
+}
+
+.limit1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+.limit {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 5;
+}
+
+.icon-box1 {
+  padding: 25px;
+  height: 196px;
+  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+  margin: 15px 0;
+  position: relative;
+  z-index: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  -moz-transition: ease all 0.35s;
+  -o-transition: ease all 0.35s;
+  -webkit-transition: ease all 0.35s;
+  transition: ease all 0.35s;
+  top: 0;
+}
+
+.icon-box1 * {
+  -moz-transition: ease all 0.35s;
+  -o-transition: ease all 0.35s;
+  -webkit-transition: ease all 0.35s;
+  transition: ease all 0.35s;
+}
+
+.icon-box1:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  border-radius: 10px;
+  width: 0;
+  background-image: linear-gradient(180deg, #a5ed235c 0%, #ffffffb5 100%);
+  z-index: -1;
+  -moz-transition: ease all 0.35s;
+  -o-transition: ease all 0.35s;
+  -webkit-transition: ease all 0.35s;
+  transition: ease all 0.35s;
+}
+
+.icon-box1:hover {
+  top: -5px;
+}
+
+.icon-box1:hover:after {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  left: 0;
+  right: auto;
+}
+
+.icon-box1 h3 {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.icon-box1:hover h3 {
+  font-weight: 600;
+}
+
+.icon-box1 p {
+  color: black;
+  font-weight: 500;
+}
+
+.icon-box1:hover .read-more {
+  font-weight: 700 !important;
+}
+
+.mgt {
+  text-align: center;
+  margin-bottom: 13px;
+}
+
+.mggg {
+  text-align: center;
+  font-size: 28px;
+  font-family: 'Poppins', sans-serif !important;
+  line-height: 24px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: black;
+}
+
+.sttext {
+  text-align: center;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+}
+
+.btnnn1 {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 10px;
+  border: 2px solid #006699;
+  text-transform: uppercase;
+  color: #006699;
+}
+
+.btnnn1:hover {
+  background-color: #006699;
+  color: white;
+}
+
+.scrolll {
+  animation: slide 15s linear infinite;
+}
+
+.card:hover .scrolll {
+  animation-play-state: paused;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.card-footer__events {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  padding: 7px 19px 8px 0px;
+  height: 46px;
+}
+
+.btnloadm {
+  background-color: #006699;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.btnloadm:hover {
+  background-color: #ff7100;
+  font-weight: 600;
+}
+
+.fscroll {
+  height: 220px;
+  max-height: 220px;
+  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+input:focus,
+select:focus {
+  border: 2px solid #006699;
+  box-shadow: none;
+}
+
+@media only screen and (max-width: 400px) {
+  .slick-list {
+    height: 156px !important;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .abouttextt {
+    font-size: 15px;
+  }
+
+  .abouttextt1 {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .abouttextt {
+    font-size: 23px;
+  }
+
+  .abouttextt1 {
+    font-size: 15px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+
+/* Add animation effect to underline on hover for elements with the "datahover" class */
+.datahover {
+  position: relative;
+  text-decoration: none;
+  /* Set your desired text color */
+}
+
+.datahover::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #f68831;
+  /* Set your desired underline color */
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: visibility 0s, transform 0.3s ease;
+}
+
+.datahover:hover::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.datahover:hover::before,
+.datahover:hover {
+  margin-top: 7px;
+  color: #f68831;
+  /* Adjust the margin as needed */
+}
+
+
+div,a,footer,li,ui,p,h4,h1,h2,h3,h5,section,span,main{
+  font-family: 'Hanken Grotesk', sans-serif !important;
+  
+}

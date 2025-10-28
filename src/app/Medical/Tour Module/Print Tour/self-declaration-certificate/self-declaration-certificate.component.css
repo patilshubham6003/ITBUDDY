@@ -1,0 +1,14 @@
+/* .footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: center;
+    left: 0px;
+    background: #fff;
+  } */
+
+.pading {
+    padding-left: 10px;
+}

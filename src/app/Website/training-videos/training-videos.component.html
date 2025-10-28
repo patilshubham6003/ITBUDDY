@@ -1,0 +1,129 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<main id="main" *ngIf="!isSpinning">
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="breadcrumb-hero" style="padding: 10px 0;">
+      <div class="container">
+        <div class="breadcrumb-hero">
+          <h2 style="font-weight: 500;color: white;">Training Videos</h2>
+          <ol>
+            <li><a routerLink="/" style="text-decoration: None;color: white;">Home</a></li>
+            <li *ngIf="servDEtailcondition!='T'">Training Videos</li>
+            <li *ngIf="servDEtailcondition=='T'" routerLink="/service/service-detail" style="cursor: pointer;">Service
+              Details</li>
+            <li *ngIf="servDEtailcondition=='T'">Training Videos</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="blog" class="blog" style="padding-top: 40px;padding-bottom: 40px;">
+    <div class="container" data-aos="fade-up">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="sidebar" style="margin: 0px;">
+            <h3 class="sidebar-title" style="display: flex;justify-content: space-between;font-weight: 600;">
+              <span>Filter</span>
+              <span (click)="clearfilt()" *ngIf="filt" style="cursor: pointer;font-weight: 600;">Clear</span>
+            </h3>
+            <hr>
+            <h3 class="sidebar-title" style="font-size: 15px;font-weight: 500;">Service</h3>
+            <div class="sidebar-item categories">
+              <nz-select nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="Select Services"
+                [(ngModel)]="SERVICE_IDS" name="service_name2" style="width:100%;"
+                (ngModelChange)="selectservice($event)">
+                <nz-option *ngFor="let role of servises" [nzLabel]="role.TITLE" [nzValue]="role.ID"
+                  style="width:100%;"></nz-option>
+              </nz-select>
+            </div>
+            <hr>
+            <h3 class="sidebar-title" style="font-size: 15px;font-weight: 500;">From Date</h3>
+            <div class="sidebar-item categories">
+              <nz-date-picker name="nmbcnks" nzFormat="dd/MM/yyyy" [(ngModel)]="date" (ngModelChange)="datefilt($event)"
+                style="width: 100%;"></nz-date-picker>
+            </div>
+            <hr>
+            <h3 class="sidebar-title" style="font-size: 15px;font-weight: 500;">To Date</h3>
+            <div class="sidebar-item categories">
+              <nz-date-picker name="nmbcnkss" nzFormat="dd/MM/yyyy" [(ngModel)]="date1"
+                (ngModelChange)="datefilt($event)" style="width: 100%;"></nz-date-picker>
+            </div>
+            <hr>
+          </div>
+        </div>
+        <div class="col-lg-9 entries">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-lg-12" style="padding-left: 0px;padding-right: 0px;">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="fm-search">
+                      <div class="mb-0">
+                        <div class="input-group input-group-lg">
+                          <span *ngIf="!showx" (click)="searchBlogs(searchText)"
+                            class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
+                          <span *ngIf="showx" (click)="searchBlogs1()" class="input-group-text bg-transparent"><i
+                              class="bi bi-x"></i></span>
+                          <input autocomplete="off" placeholder="Search" class="form-control" name="fsearchh"
+                            (keyup)="searchBlogs(searchText)" [(ngModel)]="searchText">
+                        </div>
+                      </div>
+                    </div>
+                    <section id="portfolio" class="portfolio fscroll" style="margin-top: 10px;padding-bottom: 10px;">
+                      <div class="container">
+                        <div class="row " data-aos="fade-up">
+                          <div class="col-lg-4 col-md-6 portfolio-item filter-app" *ngFor="let data of typeTV"
+                            style="margin-bottom: 20px;">
+                            <div>
+                              <div class="gallery-content">
+                                <div class="fc-icon text-center">
+                                  <video *ngIf="typeTV!=undefined" width="100%" (playing)="onPlayingVideo($event)"
+                                    height="195" controls>
+                                    <source src="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}" type="video/mp4">
+                                    <source src="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}" type="video/webm">
+                                    <source src="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}" type="video/ogg">
+                                  </video>
+                                </div>
+                              </div>
+                              <div class="portfolio-info"
+                                style="padding: 5px 13px;box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;">
+                                <h5 *ngIf="typeTV!=undefined"
+                                  style="font-size: 15px;font-weight: 400; color: black; text-align: justify;cursor: pointer;"
+                                  class="limit" nz-popover nzPopoverTitle="Description" [nzPopoverContent]="drscti">
+                                  {{data.TITLE}}</h5>
+                                <h5 style="font-size: 15px;font-weight: 400; color: black; text-align: justify;"><i
+                                    class="bx bx-calendar"
+                                    style="color: #006699;"></i>{{data.CREATED_MODIFIED_DATE|date:'mediumDate'}}</h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" *ngIf="ncounts == 0" style="width: 100%;">
+                          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                            style="text-align: center; height: 130px;margin-top: 100px;">
+                            <h3 style="color: #006699;">Data Not Found</h3>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>

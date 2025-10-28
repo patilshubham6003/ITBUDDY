@@ -1,0 +1,110 @@
+<div>
+    <form nz-form>
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row>
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Role </nz-form-label>
+
+                        <nz-input-group>
+                            <nz-select name="role_name" nzMode="multiple" style="width: 100%;" nzShowSearch
+                                [(ngModel)]="data.ROLE_DATA">
+                                <nz-option *ngFor="let role of roles" [nzValue]="role.ID" [nzLabel]="role.NAME">
+                                </nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Category </nz-form-label>
+
+                        <nz-input-group>
+                            <nz-select name="categoryName" style="width: 100%;" nzShowSearch
+                                [(ngModel)]="data.TASK_CATEGORY_ID">
+                                <nz-option [nzValue]="0" nzLabel="None"></nz-option>
+                                <nz-option *ngFor="let category of categoryList" [nzValue]="category.ID"
+                                    [nzLabel]="category.NAME"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+                        <nz-form-control nzErrorTip="Input is required">
+                            <input nz-input autocomplete="off" name="name" type="text" [(ngModel)]="data.NAME"
+                                required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Email ID</nz-form-label>
+                        <nz-form-control nzErrorTip="Input is required">
+                            <input type="text" autocomplete="off" name="search"
+                                pattern="^[_a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$"
+                                nz-input [(ngModel)]="data.EMAIL_ID" required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Mobile No.</nz-form-label>
+                        <nz-form-control nzErrorTip="Input is required">
+                            <input nz-input name="mobile" maxlength="10" pattern="[0-9]{10}"
+                                [(ngModel)]="data.MOBILE_NUMBER" required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Password</nz-form-label>
+                        <nz-form-control nzErrorTip="Input is required">
+                            <nz-input-group [nzSuffix]="suffixTemplate">
+                                <input [type]="passwordVisible ? 'text' : 'password'" nz-input name="password"
+                                    [(ngModel)]="data.PASSWORD" required />
+                            </nz-input-group>
+
+                            <ng-template #suffixTemplate>
+                                <i nz-icon [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
+                                    (click)="passwordVisible = !passwordVisible"></i>
+                            </ng-template>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzNoColon>Status</nz-form-label>
+                        <nz-form-control>
+                            <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                                [(ngModel)]="data.IS_ACTIVE"></nz-switch>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+
+    <div class="footer">
+        <button type="button" nz-button (click)="close()" class="ant-btn"
+            style="margin-right: 8px;"><span>Cancel</span></button>
+        <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+            (click)="save(false)"><span>Update & close</span></button>
+        <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" (click)="save(false)"><span>Save & Close</span></button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px;background-color: #40a9ff;">
+                    <a (click)="save(true)">Save & New</a>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+    </div>
+</div>

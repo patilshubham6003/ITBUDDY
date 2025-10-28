@@ -1,0 +1,24 @@
+<div nz-row nzType="flex" style="justify-content: space-between;">
+    <div nz-col style="margin: 0 10px 0 0;">
+        <div class="formname"> Find Allotment </div>
+    </div>
+
+    <div nz-col style="display: flex;justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+
+            <nz-form-item>
+                <button nz-button nzType="primary" (click)="add()" class="flexicons">
+                    <i nz-icon nzType="plus"></i> Add Allotment
+                </button>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1000" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-find-form [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"></app-find-form>
+    </ng-container>
+</nz-drawer>

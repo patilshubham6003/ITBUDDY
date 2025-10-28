@@ -1,0 +1,501 @@
+<nz-radio-group [(ngModel)]="radioValue">
+  <label nz-radio-button nzValue="LTC">LTC</label>
+  <label nz-radio-button nzValue="TOUR">TOUR</label>
+  <label nz-radio-button nzValue="TATR">TATR</label>
+</nz-radio-group>
+<br />
+
+<div nz-row *ngIf="radioValue == 'LTC'">
+  <div nz-col nzSpan="24">
+    <h4 style="text-align: center; text-decoration: underline">
+      APPLICATION FOR L.T.C. ADVANCE
+    </h4>
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 5%; text-align: center">1.</td>
+        <td colSpan="2" style="width: 45%">
+          Name of the official (in Block Letters).
+        </td>
+        <td style="width: 3%">:</td>
+        <td colSpan="2" style="width: 42%"></td>
+      </tr>
+      <tr>
+        <td rowSpan="2" style="text-align: center">2.</td>
+        <td>(a)</td>
+        <td>Designation and Staff No.</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td>(b)</td>
+        <td>
+          Permanent or Temporary. [If not permanent, Surety Bond from a
+          permanent official to be enclosed with the Application]
+        </td>
+        <td colSpan="3"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">3.</td>
+        <td colSpan="2">Unit/Office to which attached.</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">4.</td>
+        <td colSpan="2">Basic Pay+NPA + SI in the present Grade.</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">5.</td>
+        <td colSpan="2">Date of appointment in the Department.</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">6.</td>
+        <td colSpan="2">Place of home town as declared in the Service Book.</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">7.</td>
+        <td colSpan="2">
+          Particulars of LTC availed for previous Block Years.
+        </td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">8.</td>
+        <td colSpan="2">Block Year for which now proposed to avail.</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">9.</td>
+        <td colSpan="2">
+          Whether avails CL or EL (Nature of Leave to be mentioned).
+        </td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">10.</td>
+        <td colSpan="2">
+          Whether LTC advance already taken has been settled in full or pending
+          settlement, date of the settlement of the previous case.
+        </td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">11.</td>
+        <td colSpan="2">Place of visit (farthest point).</td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">12.</td>
+        <td colSpan="2">Proposed Date of onward journey.</td>
+        <td>:</td>
+        <td colSpan="3"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">13.</td>
+        <td colSpan="2">Probable Date of return journey.</td>
+        <td colSpan="3"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">14.</td>
+        <td colSpan="2">
+          Particulars of family members availing the facility.
+        </td>
+        <td>:</td>
+        <td colSpan="2"></td>
+      </tr>
+      <tr>
+        <th></th>
+        <th>S.No.</th>
+        <th>Name</th>
+        <th>Relationship</th>
+        <th>Age</th>
+        <th>Whether dependant</th>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">15.</td>
+        <td colSpan="2">
+          Class of accommodation proposed to be availed in the Railway journey.
+        </td>
+        <td colSpan="3"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">16.</td>
+        <td colSpan="2">Amount of advance required.</td>
+        <td colSpan="3"></td>
+      </tr>
+    </table>
+    <h4 style="text-align: center; text-decoration: underline">DECLARATIONS</h4>
+    <p>
+      I,___________________________ hereby certify that the above particulars
+      furnished by me are true and correct.
+    </p>
+    <p>
+      I also undertake to refund the LTC advance in full immediately in case of
+      failure to perform the proposed journey for which advance was taken.
+    </p>
+    <p>
+      I also declare that I will not visit other than the place mentioned in the
+      application without obtaining prior approval of the competent authority.
+    </p>
+    <p>
+      I also agree to refund one half of the advance if the return journey could
+      not be performed within 60 days from the date of the advance.
+    </p>
+    <p>
+      I also agree to credit forthwith to the office any excess amount of
+      advance left with me for any reason whatsoever.
+    </p>
+    <p>
+      I also agree to produce evidence of purchase of tickets, etc., for
+      myself/members of my family, as the case may be, for the forward journey
+      within 10 days or before the commencement of the journey, whichever is
+      earlier, from the date of drawing the advance. I am aware that failure to
+      comply with the above requirement will entail recovery of the advance in
+      one lumpsumfrom the next drawal of my salary, together with the penal
+      interest @ 212 % over and above the normal interest.
+    </p>
+    <p>
+      I am aware that if I do not submit LTC bills within one month from the
+      date of return journey the outstanding LTC advance is recoverable in one
+      lumpsum from my next salary together with the penal interest @ over and
+      above the normal interest.
+    </p>
+    <p>
+      I am also aware that my claim will be forfeited if I fail to submit the
+      bills within 1 month from the date of completion of journey.
+    </p>
+    <p>
+      I also understand that if the LTC is availed for self, the cost is
+      reimbursable only whenthe journey is performed after availing any kind of
+      leave and not during week- end holidays/other holidays/RH alone.
+    </p>
+    <div nz-row>
+      <div nz-col nzSpan="16"></div>
+      <div nz-col nzSpan="8">
+        <p>Signature :</p>
+        <p>Designation :</p>
+        <p>Section :</p>
+      </div>
+    </div>
+    <h5 style="text-align: center; text-decoration: underline">
+      REMARKS OF THE UNIT OFFICER
+    </h5>
+    <b style="text-align: center"
+      >Forwarded. Official applied CL/EL as at Col. 9 and the same has been
+      sanctioned.</b
+    >
+    <div nz-row>
+      <div nz-col nzSpan="16"></div>
+      <div nz-col nzSpan="8" style="text-align: center">
+        <b>(Unit Officer)</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row *ngIf="radioValue == 'TATR'">
+  <div nz-col nzSpan="24">
+    <h4 style="text-align: center; text-decoration: underline">
+      APPLICATION FOR GRANT OF TRANSFER ADVANCE
+    </h4>
+    <div nz-row>
+      <div nz-col nzSpan="1">1.</div>
+      <div nz-col nzSpan="11">Name of the Government Servant</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">2.</div>
+      <div nz-col nzSpan="11">Designation</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">3.</div>
+      <div nz-col nzSpan="11">Present pay & Pay level</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">4.</div>
+      <div nz-col nzSpan="11">Office / Unit working at present</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">5.</div>
+      <div nz-col nzSpan="11">Date of joining the present Station</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">6.</div>
+      <div nz-col nzSpan="11">Date of joining the present Post</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">7.</div>
+      <div nz-col nzSpan="11">Details of Transfer/ Posting Order</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">8.</div>
+      <div nz-col nzSpan="11">
+        Place/ Office of posting on Transfer <br />
+        (Please enclose Transfer Order)
+      </div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">9.</div>
+      <div nz-col nzSpan="11">Whether the transfer is in Public interest</div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">10.</div>
+      <div nz-col nzSpan="11">
+        In case change of residence is involved, the new/ proposed address
+      </div>
+      <div nz-col nzSpan="12">:</div>
+      <div nz-col nzSpan="1">11.</div>
+      <div nz-col nzSpan="23">
+        Details of family members in respect of whom transfer TA is proposed to
+        be claimed :
+      </div>
+      <div nz-col nzSpan="1"></div>
+      <div nz-col nzSpan="23">
+        <table style="width: 100%">
+          <tr>
+            <th style="width: 5%">Sl. No</th>
+            <th style="width: 50%">Name</th>
+            <th style="width: 10%">Age</th>
+            <th style="width: 35%">Relationship with Govt. Servant</th>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+      <div nz-col nzSpan="1">12.</div>
+      <div nz-col nzSpan="23">
+        Transfer Entitlements claimed:
+        <div nz-row>
+          <div nz-col nzSpan="16">
+            Travelling allowance: Fare Rs. x ……… (No. of tickets)
+          </div>
+          <div nz-col nzSpan="4">= Rs.</div>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="16">Travel DA : ………..days @ Rs………… per day</div>
+          <div nz-col nzSpan="4">= Rs.</div>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="16">
+            Transportation charges for personal effects
+          </div>
+          <div nz-col nzSpan="4">= Rs.</div>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="16">
+            Transportation charges for private conveyance
+          </div>
+          <div nz-col nzSpan="4">= Rs.</div>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="16">
+            Composite transfer grant @ one basic pay (80%)
+          </div>
+          <div nz-col nzSpan="4">= Rs.</div>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="16">Total Entitlements</div>
+          <div nz-col nzSpan="4">&nbsp;Rs.</div>
+          <div nz-col nzSpan="4"></div>
+        </div>
+      </div>
+      <div nz-col nzSpan="1">13.</div>
+      <div nz-col nzSpan="11">Amount of advance required</div>
+      <div nz-col nzSpan="12">Rs.</div>
+      <div nz-col nzSpan="1"></div>
+      <div nz-col nzSpan="23">
+        I declare that the particulars furnished above are true and correct to
+        the best of my knowledge.
+      </div>
+      <div nz-col nzSpan="4"></div>
+      <div nz-col nzSpan="16">
+        <div nz-row>
+          <div nz-col nzSpan="4">Station</div>
+          <div nz-col nzSpan="1">:</div>
+
+          <div nz-col nzSpan="7"></div>
+          <div nz-col nzSpan="12"></div>
+          <div nz-col nzSpan="4">Date</div>
+          <div nz-col nzSpan="1">:</div>
+          <div nz-col nzSpan="7"></div>
+          <div nz-col nzSpan="12" style="text-align: right">Signature</div>
+        </div>
+      </div>
+      <div nz-col nzSpan="4"></div>
+    </div>
+  </div>
+</div>
+
+<div nz-row *ngIf="radioValue == 'TOUR'">
+  <div nz-col nzSpan="2"></div>
+  <div nz-col nzSpan="22">
+    <h4 style="text-align: center; text-decoration: underline">
+      APPLICATION FORM FOR TOUR T.A. ADVANCE
+    </h4>
+    <table style="width: 100%">
+      <tr>
+        <td style="width: 5%; text-align: center">1</td>
+        <td style="width: 50%">
+          Name of the Officer/ Official proceeding on Tour
+        </td>
+        <td style="width: 45%"></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">2</td>
+        <td>Designation</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">3</td>
+        <td>Basic Pay and Pay Level (as per 7th CPC)</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">4</td>
+        <td>
+          Class of Entitlement (Air/Train/Bus) (In case of 'Train, Railway class
+          to which entitled)
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">5</td>
+        <td>
+          Whether the Tour programme has been approved by the Competent
+          Authority. If so please attach a copy
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">6</td>
+        <td>
+          In case the Officer is not entitled to travel by Air, whether the
+          approval of Secretary (H) has been obtained. If so. please attach a
+          copy
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">7</td>
+        <td>
+          Whether any previous TA Advance is remaining unadjusted. If so,
+          whether the TA Bill for that has since been submitted or not
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">8</td>
+        <td>Place to be visited</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">9</td>
+        <td>Purpose of Visit</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">10</td>
+        <td>Duration of visit</td>
+        <td>
+          <div>Form :</div>
+          <div>To :</div>
+          <div>No of Days :</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center">11</td>
+        <td>Amount of Advance Required</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">12</td>
+        <td>
+          <div>Details of Calculations</div>
+          <div>a) Air/Rail/Bus Fare (Two ways)</div>
+          <div>b) Accommodation</div>
+          <div>c) Food</div>
+          <div>d) Travel within city</div>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td style="text-align: center">13</td>
+        <td>Remarks,if any</td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+  <div nz-col nzSpan="2"></div>
+  <div nz-col nzSpan="11">Date:</div>
+  <div nz-col nzSpan="11">Signature:</div>
+  <div nz-col nzSpan="13"></div>
+  <div nz-col nzSpan="11w">
+    <div>Name</div>
+    <div>Designation</div>
+  </div>
+
+  <div nz-col nzSpan="2"></div>
+  <div nz-col nzSpan="22">Amount of TA Advance recommended : Rs.</div>
+</div>

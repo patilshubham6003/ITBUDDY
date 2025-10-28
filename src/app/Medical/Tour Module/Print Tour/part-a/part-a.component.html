@@ -1,0 +1,1400 @@
+<div *ngIf="partadata != undefined">
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div
+        style="
+          padding-left: 7%;
+          margin-right: 2%;
+          line-height: 1;
+          height: 75vh;
+          overflow-y: auto;
+        "
+      >
+        <!-- Part A -->
+
+        <div style="display: flex">
+          <div>
+            <p>Sub-bill No.</p>
+          </div>
+          <div style="margin-left: 558px">
+            <p>T.B-25A</p>
+          </div>
+        </div>
+        <p style="text-align: right">G.A.R.-14-A</p>
+        <p style="text-align: center; font-size: xx-large; margin-bottom: 10px">
+          Travelling Allowance Bill for Tour
+        </p>
+        <p style="text-align: center">
+          Note:- This should be prepared in duplicate - one for payment and
+          other as office copy
+        </p>
+        <p style="font-size: 11px; text-align: left">To,</p>
+        <p
+          *ngIf="DDO_Master_Data.length > 0"
+          style="font-size: 11px; text-align: left"
+        >
+          {{ DDO_Master_Data?.[0]['DESCRIPTION'] }}
+        </p>
+        <p
+          *ngIf="DDO_Master_Data.length > 0"
+          style="font-size: 11px; text-align: left"
+        >
+          {{ DDO_Master_Data?.[0]['LOCATION'] }}
+        </p>
+        <p style="text-align: center; font-size: xx-large; margin-bottom: 10px">
+          PART-A
+        </p>
+        <p style="text-align: center">
+          (To be filled up by the Government Servant)
+        </p>
+        <table style="width: 100%; font-size: 13px">
+          <tbody>
+            <tr>
+              <td nzAlign="center" style="width: 45px">1</td>
+              <td style="width: 40%" class="pading">Name</td>
+              <td nzAlign="center" style="width: 45px">:</td>
+              <td class="pading">{{ partadata.EMPLOYEE_NAME }}</td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 45px">2</td>
+              <td style="width: 40%" class="pading">Designation</td>
+              <td nzAlign="center" style="width: 45px">:</td>
+              <td class="pading">{{ partadata.DESIGNATION }}</td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 45px">3</td>
+              <td class="pading" style="width: 40%">Pay</td>
+              <td style="width: 45px; text-align: center">:</td>
+              <td class="pading">Basic Rs. {{ partadata.BASIC_PAY }}/-</td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 45px">4</td>
+              <td style="width: 40%" class="pading">Headquarters</td>
+              <td nzAlign="center" style="width: 45px">:</td>
+              <td class="pading">{{ partadata.HEADQUARTERS_NAME }}</td>
+            </tr>
+            <tr>
+              <td nzAlign="center">5</td>
+              <td colspan="3" class="pading">
+                Details and purpose of journey(s) performed :
+              </td>
+            </tr>
+
+            <tr></tr>
+          </tbody>
+        </table>
+
+        <table style="width: 100%; font-size: 13px">
+          <thead>
+            <tr>
+              <td rowspan="18" style="padding-left: 43px"></td>
+              <td colSpan="2" nzAlign="center">DEPARTURE</td>
+              <td colSpan="2" nzAlign="center">ARRIVAL</td>
+              <td rowSpan="2" nzAlign="center">
+                Mode of <br />
+                travel & <br />
+                class of <br />
+                accomod<br />ation
+              </td>
+              <td rowSpan="2" nzAlign="center">Fare paid(Rs.)</td>
+              <td rowSpan="2" nzAlign="center">
+                Distance <br />in kms. <br />for road <br />mileage
+              </td>
+              <td colSpan="2" nzAlign="center">Duration of Halt</td>
+              <td rowSpan="2" nzAlign="center">Purpose of journey</td>
+            </tr>
+
+            <tr>
+              <td nzAlign="center">Date and time</td>
+              <td nzAlign="center">From</td>
+              <td nzAlign="center">Date and time</td>
+              <td nzAlign="center">To</td>
+              <td nzAlign="center">Days</td>
+              <td nzAlign="center">Hrs.</td>
+            </tr>
+            <tr>
+              <td nzAlign="center">(1)</td>
+              <td nzAlign="center">(2)</td>
+              <td nzAlign="center">(3)</td>
+              <td nzAlign="center">(4)</td>
+              <td nzAlign="center">(5)</td>
+              <td nzAlign="center">(6)</td>
+              <td nzAlign="center">(7)</td>
+              <td colspan="2" nzAlign="center">(8)</td>
+              <td nzAlign="center">(9)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of detailsandpurpose; let k = index">
+              <td></td>
+              <td nzAlign="center">
+                <!-- {{getTimeIn12Hour(data["TIME"]) | date:'hh:mm a'}} -->
+                {{ data.DEPARTURE_DATETIME | date : "dd.MM.yyyy" }} <br />
+                {{ data.DEPARTURE_DATETIME | date : "(HH:mm aa)" }}
+              </td>
+              <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+              <td nzAlign="center">
+                {{ data.ARRIVAL_DATETIME | date : "dd.MM.yyyy" }} <br />
+                {{ data.ARRIVAL_DATETIME | date : "(HH:mm aa)" }}
+              </td>
+              <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+              <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+              <td nzAlign="center">{{ data.FARE_PAID }}</td>
+              <td nzAlign="center">{{ data.DISTANCE_IN_KM_FOR_ROAD }}</td>
+              <td nzAlign="center">{{ data.DAYS_OF_HALT }}</td>
+              <td nzAlign="center">{{ data.HOURS_OF_HALT }}</td>
+              <td nzAlign="center">{{ data.PURPOSE_OF_JOURNEY }}</td>
+            </tr>
+            <tr *ngIf="detailsandpurpose.length == 0">
+              <td style="text-align: center" colspan="8">NA</td>
+            </tr>
+            <tr>
+              <td nzAlign="center"></td>
+              <td nzAlign="left" colspan="10" class="pading">
+                <b>
+                  Mode of journey :-
+                  <span *ngIf="partadata.TRAVEL_MODE_ID == 6">Ship/Boat</span>
+                  <span *ngIf="partadata.TRAVEL_MODE_ID == 5">Air</span>
+                  <span *ngIf="partadata.TRAVEL_MODE_ID == 4">Rail</span>
+                  <span *ngIf="partadata.TRAVEL_MODE_ID == 3">Road</span>
+                </b>
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">I</td>
+              <td nzAlign="left" colspan="10" class="pading"><b>Air :-</b></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(a)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Exchange voucher arranged by office
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                <span
+                  *ngIf="
+                    partadata.IS_EXCHANGE_VOUCHER_ARRANGED_BY_OFFICE == 'Y'
+                  "
+                  >&nbsp;Yes</span
+                >
+                <span
+                  *ngIf="
+                    partadata.IS_EXCHANGE_VOUCHER_ARRANGED_BY_OFFICE == 'N'
+                  "
+                  >&nbsp;No</span
+                >
+                <span
+                  *ngIf="
+                    partadata.IS_EXCHANGE_VOUCHER_ARRANGED_BY_OFFICE == 'NA'
+                  "
+                  >&nbsp;NA</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(b)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Ticket/Exchange voucher arranged by
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                <!-- <span
+                  *ngIf="partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY == 'Y'"
+                  >&nbsp;Yes</span
+                >
+                <span
+                  *ngIf="partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY == 'N'"
+                  >&nbsp;NA</span
+                >
+                <span
+                  *ngIf="partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY == 'NA'"
+                  >&nbsp;NA</span
+                > -->
+                <span>{{ partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">ii</td>
+              <td nzAlign="left" colspan="10" class="pading"><b>Rail :-</b></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(a)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Wheather travelled by Mail/Express/Ordinary train?
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                <span *ngIf="partadata.WHETHER_TRAVELLED_BY_M_E_OT == 0"
+                  >&nbsp;No</span
+                >
+                <span *ngIf="partadata.WHETHER_TRAVELLED_BY_M_E_OT == 1"
+                  >&nbsp;Yes ,{{ partadata.TRAVELLED_M_E_OT }}</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(b)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Whether return ticket was available?
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                <span *ngIf="partadata.WHETHER_RETURN_TICKET_WAS_AVAILABLE == 0"
+                  >&nbsp;No</span
+                >
+                <span *ngIf="partadata.WHETHER_RETURN_TICKET_WAS_AVAILABLE == 1"
+                  >&nbsp;Yes</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(c)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                If available, Whether return ticket purchased? If not, state
+                resons
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                <span *ngIf="partadata.IS_WHETHER_RETURN_TICKET_PURCHASED == 0"
+                  >&nbsp;No</span
+                >
+                <span *ngIf="partadata.IS_WHETHER_RETURN_TICKET_PURCHASED == 1"
+                  >&nbsp;Yes</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">iii</td>
+              <td nzAlign="left" colspan="10" class="pading">
+                <b> Road :-</b>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="left" colspan="10" class="pading">
+                <i
+                  >Mode of conveyance used i.e., by Govt. transport/by taking a
+                  taxi, single seat in a bus or other public conveyance/ by
+                  sharing with another Govt. servant in car belonging to him or
+                  to a third person , to be mentioned.</i
+                >
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">7</td>
+              <td colspan="5" nzAlign="left" class="pading">
+                Dates of absent from place of halt on account of :-
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                {{ partadata.DATES_OF_ABSENT_FROM_PLACE }}
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(i)</td>
+              <td colspan="4" nzAlign="left" class="pading">R.H. and C.L.</td>
+              <td nzAlign="center">:</td>
+              <td colspan="4">
+                &nbsp;{{ partadata.R_H }} ,{{ partadata.C_L }}
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(ii)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Not being actually in camp on sunday and holidays.
+              </td>
+
+              <td nzAlign="center">:</td>
+              <td colspan="4" class="pading">
+                <span
+                  *ngIf="
+                    partadata.NOT_BEING_ACTUALLY_IN_CAMP_ON_SUNDAY_HOLIDAY == 0
+                  "
+                  >&nbsp;No</span
+                >
+                <span
+                  *ngIf="
+                    partadata.NOT_BEING_ACTUALLY_IN_CAMP_ON_SUNDAY_HOLIDAY == 1
+                  "
+                  >&nbsp;Yes</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">8</td>
+              <td colspan="5" nzAlign="left" class="pading">
+                Dates on which free board and/or lodging provided by the state
+                or any organization financed by state funds :
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                <span *ngIf="partadata.DATES_OF_FREE_BOARD_AND_LODGING == 1"
+                  >Yes</span
+                >
+                <span *ngIf="partadata.DATES_OF_FREE_BOARD_AND_LODGING == 0"
+                  >NA</span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(a)</td>
+              <td colspan="4" nzAlign="left" class="pading">Board only</td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" class="pading">
+                <span *ngIf="partadata.BOARD == 1">&nbsp;Yes</span>
+                <span *ngIf="partadata.BOARD == 0">&nbsp;No</span>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td nzAlign="center">(b)</td>
+              <td colspan="4" nzAlign="left" class="pading">Lodging only</td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" class="pading">
+                <span *ngIf="partadata.LODGING == 1">&nbsp;Yes</span>
+                <span *ngIf="partadata.LODGING == 0">&nbsp;No</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td nzAlign="center">(c)</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Board and lodging
+              </td>
+              <td nzAlign="center">:</td>
+              <td colspan="4" class="pading">
+                <span *ngIf="partadata.BOARD_AND_LODGING == 1">&nbsp;Yes</span>
+                <span *ngIf="partadata.BOARD_AND_LODGING == 0">&nbsp;No</span>
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">9</td>
+              <td nzAlign="left" colspan="10" class="pading">
+                Particular to be furnished along with hotel receipt etc. in case
+                where higher rate of D.A. is claimed for stay in hotel other
+                establishments providing board and/or lodging at sheduled
+                tarrifs:
+              </td>
+            </tr>
+            <!-- <tr>
+                        <td></td>
+                        <td colspan="5" nzAlign="center"> Period of stay</td>
+                        <td rowspan="2">Name of the hotel</td>
+                        <td rowspan="2">Daily rate of lodging charged</td>
+                        <td colspan="2" rowspan="2">Total amount paid(Rs)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2.5" nzAlign="center">From</td>
+                        <td colspan="2.5" nzAlign="center">To</td>
+                    </tr> -->
+          </tbody>
+        </table>
+
+        <table style="width: 100%; font-size: 13px">
+          <thead>
+            <tr>
+              <td rowspan="18" style="padding-left: 43px"></td>
+              <td colSpan="2" nzAlign="center">Period of stay</td>
+              <td rowSpan="2" nzAlign="center">Name of the hotel</td>
+              <td rowSpan="2" nzAlign="center">
+                Daily rate of<br />lodging charged
+              </td>
+              <td rowSpan="2" nzAlign="center">Total amount<br />paid(Rs)</td>
+            </tr>
+            <tr>
+              <td nzAlign="center">From</td>
+              <td nzAlign="center">To</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of particularofhotelsdata; let k = index">
+              <td></td>
+              <td nzAlign="center">
+                <!-- {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }} -->
+                {{ data.PERIOD_FROM | date : "dd.MM.yyyy" }} <br />
+                {{ data.PERIOD_FROM | date : "(HH:mm aa)" }}
+              </td>
+              <td nzAlign="center">
+                <!-- {{ data.PERIOD_TO | date : "dd-MM-yyyy" }} -->
+                {{ data.PERIOD_TO | date : "dd.MM.yyyy" }} <br />
+                {{ data.PERIOD_TO | date : "(HH:mm aa)" }}
+              </td>
+              <td nzAlign="center">{{ data.NAME_OF_HOTEL }}</td>
+              <td nzAlign="center">{{ data.DAILY_RATE_OF_LODGING_CHARGES }}</td>
+              <td nzAlign="center">{{ data.TOTAL_AMOUNT_PAID }}</td>
+            </tr>
+            <tr *ngIf="particularofhotelsdata.length == 0">
+              <td style="text-align: center" colspan="8">NA</td>
+            </tr>
+
+            <tr>
+              <td nzAlign="center">10</td>
+              <td nzAlign="left" colspan="10" class="pading">
+                Particular of journey(s) for higher class of accommodation than
+                the one to which the Government servant is entitled as used :-
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table style="width: 100%; font-size: 13px">
+          <thead>
+            <tr>
+              <td rowspan="18" style="padding-left: 43px"></td>
+              <td rowSpan="2" nzAlign="center">Date</td>
+              <td colSpan="2" nzAlign="center">Period of stay and places</td>
+              <td rowSpan="2" nzAlign="center">
+                Mode of <br />
+                conveyance <br />
+                used
+              </td>
+              <td rowSpan="2" nzAlign="center">
+                Class to <br />
+                which <br />
+                entitled
+              </td>
+              <td rowSpan="2" nzAlign="center">
+                Class in <br />
+                which <br />
+                travelled
+              </td>
+              <td rowSpan="2" nzAlign="center">
+                fare of <br />
+                the <br />
+                entitled <br />
+                class <br />
+                (Rs)
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">From</td>
+              <td nzAlign="center">To</td>
+            </tr>
+            <tr>
+              <td nzAlign="center">(1)</td>
+              <td nzAlign="center">(2)</td>
+              <td nzAlign="center">(3)</td>
+              <td nzAlign="center">(4)</td>
+              <td nzAlign="center">(5)</td>
+              <td nzAlign="center">(6)</td>
+              <td nzAlign="center">(7)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of particularoftours; let k = index">
+              <td></td>
+              <td nzAlign="center">{{ data.DATE | date : "dd-MM-yyyy" }}</td>
+              <td nzAlign="center">
+                {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }},{{
+                  data.PLACE_FROM
+                }}
+              </td>
+              <td nzAlign="center">
+                {{ data.PERIOD_TO | date : "dd-MM-yyyy" }},{{ data.PLACE_TO }}
+              </td>
+              <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+              <td nzAlign="center">{{ data.ENTITLED_CLASS_NAME }}</td>
+              <td nzAlign="center">{{ data.TRAVELLED_CLASS_NAME }}</td>
+              <td nzAlign="center">{{ data.FARE_OF_ENTITLED_CLASS }}</td>
+              <td></td>
+            </tr>
+
+            <tr *ngIf="particularoftours.length == 0">
+              <td style="text-align: center" colspan="8">NA</td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td nzAlign="left" colspan="10" class="pading">
+                If the journey(s) by higher class accommodation has been
+                performed with the approval of the competent authority. No. and
+                date of sanction may be quoted &nbsp;<b>{{
+                  partadata.HIGH_CLASS_ACCOMODATION_PERFORMED
+                }}</b>
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center">11</td>
+              <td nzAlign="left" colspan="10" class="pading">
+                Details of journey(s) performed by road within city :-
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table style="width: 100%; font-size: 13px">
+          <thead>
+            <tr>
+              <td rowspan="18" style="width: 44px"></td>
+              <td rowSpan="2" nzAlign="center">Date</td>
+              <td colSpan="2" nzAlign="center">Name of place</td>
+              <td rowSpan="2" nzAlign="center">fair paid (Rs)</td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 150px">From</td>
+              <td nzAlign="center" style="width: 150px">To</td>
+            </tr>
+            <tr>
+              <td nzAlign="center">(1)</td>
+              <td nzAlign="center">(2)</td>
+              <td nzAlign="center">(3)</td>
+              <td nzAlign="center">(4)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of particularofcity; let k = index">
+              <td></td>
+              <td nzAlign="center">
+                <!-- {{ data.DATE }} -->
+                <!-- {{ data.DATE | date : "dd.MM.yyyy" }} <br />
+                {{ data.DATE | date : "(HH:mm aa)" }} -->
+                {{ data.DATE | date : "dd.MM.yyyy" }} <br />
+                {{ data.DATE | date : "(HH:mm aa)" }}
+              </td>
+              <td nzAlign="center">{{ data.FROM_PLACE }}</td>
+              <td nzAlign="center">{{ data.TO_PLACE }}</td>
+
+              <td nzAlign="center">{{ data.FARE_PAID }}</td>
+            </tr>
+            <tr *ngIf="particularofcity.length == 0">
+              <td style="text-align: center" colspan="8">NA</td>
+            </tr>
+            <tr>
+              <td nzAlign="center">12</td>
+              <td colspan="5" nzAlign="left" class="pading">
+                Details of expenses on Stay and Food .
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table style="width: 100%; font-size: 13px">
+          <thead>
+            <tr>
+              <td style="width: 44px"></td>
+              <td nzAlign="center">Start Date/Time</td>
+              <td nzAlign="center">End Date/Time</td>
+              <td nzAlign="center">Claimed Amount</td>
+              <td nzAlign="center">Allowed Percentage</td>
+              <td nzAlign="center">Admisible Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of fooddata; let k = index">
+              <td></td>
+              <td nzAlign="center">
+                {{ data["EXPENSE_DATE"] | date : "dd.MM.yyyy" }} <br />
+
+                {{ data["START_TIME"] }}
+              </td>
+              <td nzAlign="center">
+                <span *ngIf="data.IS_LONG_JOURNEY == false">{{
+                  data["EXPENSE_DATE"] | date : "dd.MM.yyyy"
+                }}</span>
+                <span *ngIf="data.IS_LONG_JOURNEY == true">{{
+                  data["JOURNEY_END_DATE"] | date : "dd.MM.yyyy"
+                }}</span
+                ><br />
+                {{ data["END_TIME"] }}
+              </td>
+              <td nzAlign="center">{{ data["EXPENSE_AMOUNT"] }}</td>
+              <td nzAlign="center">
+                {{ data["ALLOWED_PERCENTAGE"] }}
+              </td>
+              <td nzAlign="center">{{ data["FOOD_ADMISIBLE_AMOUNT"] }}</td>
+            </tr>
+
+            <tr>
+              <td nzAlign="center">13</td>
+              <td colspan="4" nzAlign="left" class="pading">
+                Amount of T.A. advance , if any, drawn
+              </td>
+              <td nzAlign="left" class="pading">
+                Rs.&nbsp;<b>{{ partadata.AMOUNT_OF_T_A }}</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br /><br />
+
+        <p style="text-align: center; font-weight: bold">
+          Certified that the information as given above, is true to the best of
+          my knowledge and belief
+        </p>
+
+        <br /><br />
+        <br />
+        <div style="display: flex">
+          <div>
+            <p>Date :</p>
+          </div>
+          <div style="margin-left: 410px">
+            <p>(Signature of Government Servant)</p>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="printModel()"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Tour Part A'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              margin-right: 2%;
+              line-height: 1;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <!-- Part A -->
+
+            <div style="display: flex">
+              <div>
+                <p>Sub-bill No.</p>
+              </div>
+              <div style="margin-left: 558px">
+                <p>T.B-25A</p>
+              </div>
+            </div>
+            <p style="text-align: right">G.A.R.-14-A</p>
+            <p
+              style="
+                text-align: center;
+                font-size: xx-large;
+                margin-bottom: 10px;
+              "
+            >
+              Travelling Allowance Bill for Tour
+            </p>
+            <p style="text-align: center">
+              Note:- This should be prepared in duplicate - one for payment and
+              other as office copy
+            </p>
+            <p style="font-size: 11px; text-align: left">To,</p>
+            <p
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 11px; text-align: left"
+            >
+              {{ DDO_Master_Data?.[0]['DESCRIPTION'] }}
+            </p>
+            <p
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 11px; text-align: left"
+            >
+              {{ DDO_Master_Data?.[0]['LOCATION'] }}
+            </p>
+            <p
+              style="
+                text-align: center;
+                font-size: xx-large;
+                margin-bottom: 10px;
+              "
+            >
+              PART-A
+            </p>
+            <p style="text-align: center">
+              (To be filled up by the Government Servant)
+            </p>
+            <table style="width: 100%; font-size: 13px">
+              <tbody>
+                <tr>
+                  <td nzAlign="center" style="width: 45px">1</td>
+                  <td style="width: 40%" class="pading">Name</td>
+                  <td nzAlign="center" style="width: 45px">:</td>
+                  <td class="pading">{{ partadata.EMPLOYEE_NAME }}</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center" style="width: 45px">2</td>
+                  <td style="width: 40%" class="pading">Designation</td>
+                  <td nzAlign="center" style="width: 45px">:</td>
+                  <td class="pading">{{ partadata.DESIGNATION }}</td>
+                </tr>
+                <tr>
+                  <td style="width: 45px; text-align: center">3</td>
+                  <td class="pading" style="width: 40%">Pay</td>
+                  <td style="width: 45px; text-align: center">:</td>
+                  <td class="pading">Basic Rs. {{ partadata.BASIC_PAY }}/-</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center" style="width: 45px">4</td>
+                  <td style="width: 40%" class="pading">Headquarters</td>
+                  <td nzAlign="center" style="width: 45px">:</td>
+                  <td class="pading">{{ partadata.HEADQUARTERS_NAME }}</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">5</td>
+                  <td colspan="3" class="pading">
+                    Details and purpose of journey(s) performed :
+                  </td>
+                </tr>
+
+                <tr></tr>
+              </tbody>
+            </table>
+
+            <table style="width: 100%; font-size: 13px">
+              <thead>
+                <tr>
+                  <td rowspan="18" style="padding-left: 43px"></td>
+                  <td colSpan="2" nzAlign="center">DEPARTURE</td>
+                  <td colSpan="2" nzAlign="center">ARRIVAL</td>
+                  <td rowSpan="2" nzAlign="center">
+                    Mode of <br />
+                    travel & <br />
+                    class of <br />
+                    accomod<br />ation
+                  </td>
+                  <td rowSpan="2" nzAlign="center">Fare paid(Rs.)</td>
+                  <td rowSpan="2" nzAlign="center">
+                    Distance <br />in kms. <br />for road <br />mileage
+                  </td>
+                  <td colSpan="2" nzAlign="center">Duration of Halt</td>
+                  <td rowSpan="2" nzAlign="center">Purpose of journey</td>
+                </tr>
+
+                <tr>
+                  <td nzAlign="center">Date and time</td>
+                  <td nzAlign="center">From</td>
+                  <td nzAlign="center">Date and time</td>
+                  <td nzAlign="center">To</td>
+                  <td nzAlign="center">Days</td>
+                  <td nzAlign="center">Hrs.</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">(1)</td>
+                  <td nzAlign="center">(2)</td>
+                  <td nzAlign="center">(3)</td>
+                  <td nzAlign="center">(4)</td>
+                  <td nzAlign="center">(5)</td>
+                  <td nzAlign="center">(6)</td>
+                  <td nzAlign="center">(7)</td>
+                  <td colspan="2" nzAlign="center">(8)</td>
+                  <td nzAlign="center">(9)</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of detailsandpurpose; let k = index">
+                  <td></td>
+                  <td nzAlign="center">
+                    {{ data.DEPARTURE_DATETIME | date : "dd.MM.yyyy" }} <br />
+                    {{ data.DEPARTURE_DATETIME | date : "(HH:mm aa)" }}
+                  </td>
+                  <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+                  <td nzAlign="center">
+                    {{ data.ARRIVAL_DATETIME | date : "dd.MM.yyyy" }} <br />
+                    {{ data.ARRIVAL_DATETIME | date : "(HH:mm aa)" }}
+                  </td>
+                  <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+                  <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+                  <td nzAlign="center">{{ data.FARE_PAID }}</td>
+                  <td nzAlign="center">{{ data.DISTANCE_IN_KM_FOR_ROAD }}</td>
+                  <td nzAlign="center">{{ data.DAYS_OF_HALT }}</td>
+                  <td nzAlign="center">{{ data.HOURS_OF_HALT }}</td>
+                  <td nzAlign="center">{{ data.PURPOSE_OF_JOURNEY }}</td>
+                </tr>
+                <tr *ngIf="detailsandpurpose.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    <b>
+                      Mode of journey :-
+                      <span *ngIf="partadata.TRAVEL_MODE_ID == 6"
+                        >Ship/Boat</span
+                      >
+                      <span *ngIf="partadata.TRAVEL_MODE_ID == 5">Air</span>
+                      <span *ngIf="partadata.TRAVEL_MODE_ID == 4">Rail</span>
+                      <span *ngIf="partadata.TRAVEL_MODE_ID == 3">Road</span>
+                    </b>
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">I</td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    <b>Air :-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(a)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Exchange voucher arranged by office
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    <span
+                      *ngIf="
+                        partadata.IS_EXCHANGE_VOUCHER_ARRANGED_BY_OFFICE == 'Y'
+                      "
+                      >&nbsp;Yes</span
+                    >
+                    <span
+                      *ngIf="
+                        partadata.IS_EXCHANGE_VOUCHER_ARRANGED_BY_OFFICE == 'N'
+                      "
+                      >&nbsp;No</span
+                    >
+                    <span
+                      *ngIf="
+                        partadata.IS_EXCHANGE_VOUCHER_ARRANGED_BY_OFFICE == 'NA'
+                      "
+                      >&nbsp;NA</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(b)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Ticket/Exchange voucher arranged by
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    <!-- <span
+                      *ngIf="
+                        partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY == 'Y'
+                      "
+                      >&nbsp;Yes</span
+                    >
+                    <span
+                      *ngIf="
+                        partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY == 'N'
+                      "
+                      >&nbsp;NA</span
+                    >
+                    <span
+                      *ngIf="
+                        partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY == 'NA'
+                      "
+                      >&nbsp;NA</span
+                    > -->
+                    <span>{{
+                      partadata.TICKET_EXCHANGE_VOUCHER_ARRANGED_BY
+                    }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">ii</td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    <b>Rail :-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(a)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Wheather travelled by Mail/Express/Ordinary train?
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    <span *ngIf="partadata.WHETHER_TRAVELLED_BY_M_E_OT == 0"
+                      >&nbsp;No</span
+                    >
+                    <span *ngIf="partadata.WHETHER_TRAVELLED_BY_M_E_OT == 1"
+                      >&nbsp;Yes ,{{ partadata.TRAVELLED_M_E_OT }}</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(b)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Whether return ticket was available?
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    <span
+                      *ngIf="partadata.WHETHER_RETURN_TICKET_WAS_AVAILABLE == 0"
+                      >&nbsp;No</span
+                    >
+                    <span
+                      *ngIf="partadata.WHETHER_RETURN_TICKET_WAS_AVAILABLE == 1"
+                      >&nbsp;Yes</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(c)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    If available, Whether return ticket purchased? If not, state
+                    resons
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    <span
+                      *ngIf="partadata.IS_WHETHER_RETURN_TICKET_PURCHASED == 0"
+                      >&nbsp;No</span
+                    >
+                    <span
+                      *ngIf="partadata.IS_WHETHER_RETURN_TICKET_PURCHASED == 1"
+                      >&nbsp;Yes</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">iii</td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    <b> Road :-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    <i
+                      >Mode of conveyance used i.e., by Govt. transport/by
+                      taking a taxi, single seat in a bus or other public
+                      conveyance/ by sharing with another Govt. servant in car
+                      belonging to him or to a third person , to be
+                      mentioned.</i
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">7</td>
+                  <td colspan="5" nzAlign="left" class="pading">
+                    Dates of absent from place of halt on account of :-
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    {{ partadata.DATES_OF_ABSENT_FROM_PLACE }}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(i)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    R.H. and C.L.
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4">
+                    &nbsp;{{ partadata.R_H }} ,{{ partadata.C_L }}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(ii)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Not being actually in camp on sunday and holidays.
+                  </td>
+
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" class="pading">
+                    <span
+                      *ngIf="
+                        partadata.NOT_BEING_ACTUALLY_IN_CAMP_ON_SUNDAY_HOLIDAY ==
+                        0
+                      "
+                      >&nbsp;No</span
+                    >
+                    <span
+                      *ngIf="
+                        partadata.NOT_BEING_ACTUALLY_IN_CAMP_ON_SUNDAY_HOLIDAY ==
+                        1
+                      "
+                      >&nbsp;Yes</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">8</td>
+                  <td colspan="5" nzAlign="left" class="pading">
+                    Dates on which free board and/or lodging provided by the
+                    state or any organization financed by state funds :
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    <span *ngIf="partadata.DATES_OF_FREE_BOARD_AND_LODGING == 1"
+                      >Yes</span
+                    >
+                    <span *ngIf="partadata.DATES_OF_FREE_BOARD_AND_LODGING == 0"
+                      >NA</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(a)</td>
+                  <td colspan="4" nzAlign="left" class="pading">Board only</td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" class="pading">
+                    <span *ngIf="partadata.BOARD == 1">&nbsp;Yes</span>
+                    <span *ngIf="partadata.BOARD == 0">&nbsp;No</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(b)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Lodging only
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" class="pading">
+                    <span *ngIf="partadata.LODGING == 1">&nbsp;Yes</span>
+                    <span *ngIf="partadata.LODGING == 0">&nbsp;No</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td nzAlign="center">(c)</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Board and lodging
+                  </td>
+                  <td nzAlign="center">:</td>
+                  <td colspan="4" class="pading">
+                    <span *ngIf="partadata.BOARD_AND_LODGING == 1"
+                      >&nbsp;Yes</span
+                    >
+                    <span *ngIf="partadata.BOARD_AND_LODGING == 0"
+                      >&nbsp;No</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">9</td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    Particular to be furnished along with hotel receipt etc. in
+                    case where higher rate of D.A. is claimed for stay in hotel
+                    other establishments providing board and/or lodging at
+                    sheduled tarrifs:
+                  </td>
+                </tr>
+                <!-- <tr>
+                              <td></td>
+                              <td colspan="5" nzAlign="center"> Period of stay</td>
+                              <td rowspan="2">Name of the hotel</td>
+                              <td rowspan="2">Daily rate of lodging charged</td>
+                              <td colspan="2" rowspan="2">Total amount paid(Rs)</td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td colspan="2.5" nzAlign="center">From</td>
+                              <td colspan="2.5" nzAlign="center">To</td>
+                          </tr> -->
+              </tbody>
+            </table>
+
+            <table style="width: 100%; font-size: 13px">
+              <thead>
+                <tr>
+                  <td rowspan="18" style="padding-left: 43px"></td>
+                  <td colSpan="2" nzAlign="center">Period of stay</td>
+                  <td rowSpan="2" nzAlign="center">Name of the hotel</td>
+                  <td rowSpan="2" nzAlign="center">
+                    Daily rate of<br />lodging charged
+                  </td>
+                  <td rowSpan="2" nzAlign="center">
+                    Total amount<br />paid(Rs)
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">From</td>
+                  <td nzAlign="center">To</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of particularofhotelsdata; let k = index">
+                  <td></td>
+                  <td nzAlign="center">
+                    <!-- {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }} -->
+                    {{ data.PERIOD_FROM | date : "dd.MM.yyyy" }} <br />
+                    {{ data.PERIOD_FROM | date : "(HH:mm aa)" }}
+                  </td>
+                  <td nzAlign="center">
+                    <!-- {{ data.PERIOD_TO | date : "dd-MM-yyyy" }} -->
+                    {{ data.PERIOD_TO | date : "dd.MM.yyyy" }} <br />
+                    {{ data.PERIOD_TO | date : "(HH:mm aa)" }}
+                  </td>
+                  <td nzAlign="center">{{ data.NAME_OF_HOTEL }}</td>
+                  <td nzAlign="center">
+                    {{ data.DAILY_RATE_OF_LODGING_CHARGES }}
+                  </td>
+                  <td nzAlign="center">{{ data.TOTAL_AMOUNT_PAID }}</td>
+                </tr>
+                <tr *ngIf="particularofhotelsdata.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+
+                <tr>
+                  <td nzAlign="center">10</td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    Particular of journey(s) for higher class of accommodation
+                    than the one to which the Government servant is entitled as
+                    used :-
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table style="width: 100%; font-size: 13px">
+              <thead>
+                <tr>
+                  <td rowspan="18" style="padding-left: 43px"></td>
+                  <td rowSpan="2" nzAlign="center">Date</td>
+                  <td colSpan="2" nzAlign="center">
+                    Period of stay and places
+                  </td>
+                  <td rowSpan="2" nzAlign="center">
+                    Mode of <br />
+                    conveyance <br />
+                    used
+                  </td>
+                  <td rowSpan="2" nzAlign="center">
+                    Class to <br />
+                    which <br />
+                    entitled
+                  </td>
+                  <td rowSpan="2" nzAlign="center">
+                    Class in <br />
+                    which <br />
+                    travelled
+                  </td>
+                  <td rowSpan="2" nzAlign="center">
+                    fare of <br />
+                    the <br />
+                    entitled <br />
+                    class <br />
+                    (Rs)
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">From</td>
+                  <td nzAlign="center">To</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">(1)</td>
+                  <td nzAlign="center">(2)</td>
+                  <td nzAlign="center">(3)</td>
+                  <td nzAlign="center">(4)</td>
+                  <td nzAlign="center">(5)</td>
+                  <td nzAlign="center">(6)</td>
+                  <td nzAlign="center">(7)</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of particularoftours; let k = index">
+                  <td></td>
+                  <td nzAlign="center">
+                    {{ data.DATE | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td nzAlign="center">
+                    {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }}&nbsp;,&nbsp;{{
+                      data.PLACE_FROM
+                    }}
+                  </td>
+                  <td nzAlign="center">
+                    {{ data.PERIOD_TO | date : "dd-MM-yyyy" }}&nbsp;, &nbsp;{{
+                      data.PLACE_TO
+                    }}
+                  </td>
+                  <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+                  <td nzAlign="center">{{ data.ENTITLED_CLASS_NAME }}</td>
+                  <td nzAlign="center">{{ data.TRAVELLED_CLASS_NAME }}</td>
+                  <td nzAlign="center">{{ data.FARE_OF_ENTITLED_CLASS }}</td>
+                  <td></td>
+                </tr>
+
+                <tr *ngIf="particularoftours.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    If the journey(s) by higher class accommodation has been
+                    performed with the approval of the competent authority. No.
+                    and date of sanction may be quoted &nbsp;<b>{{
+                      partadata.HIGH_CLASS_ACCOMODATION_PERFORMED
+                    }}</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">11</td>
+                  <td nzAlign="left" colspan="10" class="pading">
+                    Details of journey(s) performed by road within city :-
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table style="width: 100%; font-size: 13px">
+              <thead>
+                <tr>
+                  <td rowspan="18" style="width: 44px"></td>
+                  <td rowSpan="2" nzAlign="center">Date</td>
+                  <td colSpan="2" nzAlign="center">Name of place</td>
+                  <td rowSpan="2" nzAlign="center">fair paid (Rs)</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center" style="width: 150px">From</td>
+                  <td nzAlign="center" style="width: 150px">To</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">(1)</td>
+                  <td nzAlign="center">(2)</td>
+                  <td nzAlign="center">(3)</td>
+                  <td nzAlign="center">(4)</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of particularofcity; let k = index">
+                  <td></td>
+                  <td nzAlign="center">
+                    {{ data.DATE | date : "dd.MM.yyyy" }} <br />
+                    {{ data.DATE | date : "(HH:mm aa)" }}
+                  </td>
+                  <td nzAlign="center">{{ data.FROM_PLACE }}</td>
+                  <td nzAlign="center">{{ data.TO_PLACE }}</td>
+
+                  <td nzAlign="center">{{ data.FARE_PAID }}</td>
+                </tr>
+                <tr *ngIf="particularofcity.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">12</td>
+                  <td colspan="5" nzAlign="left" class="pading">
+                    Details of expenses on Stay and Food .
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table style="width: 100%; font-size: 13px">
+              <thead>
+                <tr>
+                  <td style="width: 44px"></td>
+                  <td nzAlign="center">Start Date/Time</td>
+                  <td nzAlign="center">End Date/Time</td>
+                  <td nzAlign="center">Claimed Amount</td>
+                  <td nzAlign="center">Allowed Percentage</td>
+                  <td nzAlign="center">Admisible Amount</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of fooddata; let k = index">
+                  <td></td>
+                  <td nzAlign="center">
+                    {{ data["EXPENSE_DATE"] | date : "dd.MM.yyyy" }} <br />
+
+                    {{ data["START_TIME"] }}
+                  </td>
+                  <td nzAlign="center">
+                    <span *ngIf="data.IS_LONG_JOURNEY == false">{{
+                      data["EXPENSE_DATE"] | date : "dd.MM.yyyy"
+                    }}</span>
+                    <span *ngIf="data.IS_LONG_JOURNEY == true">{{
+                      data["JOURNEY_END_DATE"] | date : "dd.MM.yyyy"
+                    }}</span
+                    ><br />
+                    {{ data["END_TIME"] }}
+                  </td>
+                  <td nzAlign="center">{{ data["EXPENSE_AMOUNT"] }}</td>
+                  <td nzAlign="center">
+                    {{ data["ALLOWED_PERCENTAGE"] }}
+                  </td>
+                  <td nzAlign="center">{{ data["FOOD_ADMISIBLE_AMOUNT"] }}</td>
+                </tr>
+
+                <tr>
+                  <td nzAlign="center">13</td>
+                  <td colspan="4" nzAlign="left" class="pading">
+                    Amount of T.A. advance , if any, drawn
+                  </td>
+                  <td nzAlign="left" class="pading">
+                    Rs.&nbsp;<b>{{ partadata.AMOUNT_OF_T_A }}</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <br /><br />
+
+            <p style="text-align: center; font-weight: bold">
+              Certified that the information as given above, is true to the best
+              of my knowledge and belief
+            </p>
+
+            <br /><br />
+            <br />
+            <div style="display: flex">
+              <div>
+                <p>Date :</p>
+              </div>
+              <div style="margin-left: 410px">
+                <p>(Signature of Government Servant)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

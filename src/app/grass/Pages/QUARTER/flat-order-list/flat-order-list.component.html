@@ -1,0 +1,259 @@
+<div nz-row nzType="flex" style="justify-content: space-between">
+  <div nz-col style="margin: 0 10px 0 0">
+    <div class="formname">
+      {{ formTitle }}
+    </div>
+  </div>
+
+  <div nz-col style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="postsearch" (keyup)="search(true)" [(ngModel)]="searchText" nz-input
+            placeholder="Search Record" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" class="flexicons" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <!-- <nz-form-item>
+          <button
+            nz-button
+            nzType="primary"
+            *ngIf="roleid != 1"
+            (click)="viewflatvacancy()"
+            class="flexicons"
+          >
+            Generate Vacancy Order
+          </button>
+        </nz-form-item> -->
+
+      <!-- <nz-form-item>
+          <button nz-button nzType="primary" (click)="add()" class="flexicons">
+            <i nz-icon nzType="plus"></i>Add New Quarter
+          </button>
+        </nz-form-item> -->
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="8">
+              <nz-form-item class="chsaaa bb">
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please Select Residence Type "
+                    name="ResidenceType1" nzMode="multiple" [nzMaxTagCount]="2" [(ngModel)]="RESIDENCE_TYPE_IDD">
+                    <nz-option *ngFor="let type of ResidenceType111" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item class="chsaaa bb">
+                <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+                <nz-form-control nzErrorTip="Please Select Month">
+                  <nz-range-picker name="month" nzMode="month" [(ngModel)]="Monthrange"
+                    nzPlaceholder="Please select Month" nzFormat="MMM/yyyy"
+                    (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-col nzSpan="6">
+
+              <nz-form-item class="chsaaa bb">
+                <nz-form-label nzNoColon>Select Month</nz-form-label>
+                <nz-form-control>
+                  <nz-range-picker
+                  nzMode="month"
+                  nzFormat="MMM"
+                  name="monthhhh"
+                  [(ngModel)]="MONTHH"
+                  (ngModelChange)="onChange($event)"
+                ></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+           
+            </div>
+            <div nz-col nzSpan="6">
+              
+
+              <nz-form-item class="chsaaa bb">
+                <nz-form-label nzNoColon>Select Year</nz-form-label>
+                <nz-form-control>
+                  <nz-range-picker
+                nzMode="year"
+                [nzFormat]="'yyyy'"
+                name="yearrrrr"
+                [(ngModel)]="YEARR"
+                (ngModelChange)="onChange($event)"
+              ></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <div nz-col nzSpan="6" style="display: flex; gap: 10px; margin-top: 31px">
+              <button nz-button [nzLoading]="loadingRecords" nzType="primary" class="flexicons" (click)="applyFilter()">
+                <span style="padding-top: inherit" class="flexicons">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </span>
+              </button>
+              <button nz-button nzType="default" [nzLoading]="loadingRecords" class="flexicons" (click)="clearFilter()">
+                <span style="padding-top: inherit" class="flexicons">
+                  <i nz-icon nzType="close"></i>Clear filter
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '1700px', y: '390px' }"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+      <thead>
+        <tr>
+          <th nzWidth="120px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th nzWidth="150px" nzColumnKey="{{ 'RESIDENCE_TYPE_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Residence Type
+          </th>
+          <th nzWidth="200px" nzColumnKey="{{ 'DATETIME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Order Generated Date Time
+          </th>
+          <!-- <th
+              nzWidth="150px"
+              [nzSortFn]="true"
+              style="font-weight: bold; text-align: center"
+            >
+              Quarter Order
+            </th> -->
+          <th nzWidth="180px" nzColumnKey="{{ 'CREATOR_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Name Of Order Generator
+          </th>
+          <th nzWidth="150px" nzColumnKey="{{ 'MONTH' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Month
+          </th>
+          <th nzWidth="130px" nzColumnKey="{{ 'YEAR' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Year
+          </th>
+          <th nzWidth="180px" nzColumnKey="{{ 'APPROVER_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Approval Inspector Name
+          </th>
+          <th nzWidth="150px" nzColumnKey="{{ 'PUBLISH_DATE_TIME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Publish Date Time
+          </th>
+          <th nzWidth="130px" nzColumnKey="{{ 'IS_PUBLISH' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Is Publish
+          </th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of datatable.data" style="text-align: center">
+          <td style="
+              text-align: center;
+              display: flex;
+              gap: 10px;
+              justify-content: center;
+            ">
+            <a (click)="edit(data)" *ngIf="data['IS_PUBLISH'] == 0" style="color: #1890ff">Publish</a>
+            <a *ngIf="data['IS_PUBLISH'] == 1" style="color:green;font-weight: 600;">Published</a>
+          </td>
+          <!-- <td
+              style="
+                text-align: center;
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+              "
+            >
+              <a (click)="order(data)" style="color: #1890ff">Order</a>
+            </td> -->
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["RESIDENCE_TYPE_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DATETIME"] | date:'dd-MM-yyyy HH:mm' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["CREATOR_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data['MONTH'] == 1"> January </span>
+            <span *ngIf="data['MONTH'] == 2"> February </span>
+            <span *ngIf="data['MONTH'] == 3"> March </span>
+            <span *ngIf="data['MONTH'] == 4"> April </span>
+            <span *ngIf="data['MONTH'] == 5"> May </span>
+            <span *ngIf="data['MONTH'] == 6"> June </span>
+            <span *ngIf="data['MONTH'] == 7"> July </span>
+            <span *ngIf="data['MONTH'] == 8"> August </span>
+            <span *ngIf="data['MONTH'] == 9"> September </span>
+            <span *ngIf="data['MONTH'] == 10"> October</span>
+            <span *ngIf="data['MONTH'] == 11"> November</span>
+            <span *ngIf="data['MONTH'] == 12"> December</span>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["YEAR"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["APPROVER_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["PUBLISH_DATE_TIME"] | date:'dd-MM-yyyy' }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            <i nz-icon *ngIf="data['IS_PUBLISH']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data['IS_PUBLISH']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1220" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-flat-order-drawer [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData"
+      [flatList]="flatList"></app-flat-order-drawer>
+  </ng-container>
+</nz-drawer>

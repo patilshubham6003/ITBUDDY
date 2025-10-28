@@ -1,0 +1,1404 @@
+<div>
+  <nz-spin [nzSpinning]="isSpinning">
+    <form nz-form #investigationMaster="ngForm">
+      <div class="my-box">
+        <div nz-row style="width: 100%">
+          <div nz-col nzSpan="14">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Hospital</nz-form-label>
+
+              <nz-form-control nzErrorTip="Input is required">
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  nzErrorTip="Please Select Hospital"
+                  (ngModelChange)="setHospital($event)"
+                  name="Hospital"
+                  [(ngModel)]="data.CLAIM_HOSPITAL_MAPPING_ID"
+                  required
+                >
+                  <!-- <nz-option [nzValue]="0" [nzLabel]="'All'"> </nz-option> -->
+                  <nz-option
+                    nzCustomContent
+                    *ngFor="let hospital of hospitallist"
+                    [nzValue]="hospital.ID"
+                    [nzLabel]="hospital.NAME"
+                  >
+                    <div style="background-color: #fffcfc; padding: 5px">
+                      <div nz-row>
+                        <div
+                          nz-col
+                          nzSpan="24"
+                          style="width: 100%; color: black; font-size: 14px"
+                        >
+                          <b>{{ hospital.NAME }} </b>
+                        </div>
+
+                        <div nz-col nzSpan="24" style="font-size: 11px">
+                          <div nz-row>
+                            <div
+                              style="color: #b30062; font-weight: bold"
+                              nz-col
+                              nzSpan="9"
+                            >
+                              Type |
+                              {{
+                                hospital.TYPE == "E"
+                                  ? "Empanelled"
+                                  : hospital.TYPE == "NE"
+                                  ? "Non Empanelled"
+                                  : hospital.TYPE == "G"
+                                  ? "Government"
+                                  : ""
+                              }}
+                            </div>
+
+                            <div nz-col nzSpan="1"></div>
+
+                            <div
+                              style="color: #2f08c0; font-weight: bold"
+                              nz-col
+                              nzSpan="14"
+                            >
+                              Accrediation |
+                              {{
+                                hospital.ACCREDATION == "N"
+                                  ? "NAHB"
+                                  : hospital.ACCREDATION == "NN"
+                                  ? "Non NAHB"
+                                  : hospital.ACCREDATION == "SP"
+                                  ? "Super Speciality"
+                                  : ""
+                              }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="10">
+            <nz-form-item>
+              <nz-form-label nzNoColon> </nz-form-label>
+
+              <nz-form-control>
+                <label
+                  nz-checkbox
+                  name="IS_DISCOUNT_APPLIED"
+                  (ngModelChange)="setDiscount($event)"
+                  [(ngModel)]="data.IS_DISCOUNT_APPLIED"
+                  >Is Discount Applied?</label
+                >
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="14">
+            <nz-form-item *ngIf="data.IS_DISCOUNT_APPLIED">
+              <nz-form-label nzRequired nzNoColon>
+                Description of Discount
+              </nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Description">
+                <textarea
+                  nz-input
+                  [nzAutosize]="{ minRows: 1, maxRows: 2 }"
+                  name="DESCRIPTION"
+                  placeHolder="Description of Discount "
+                  [(ngModel)]="data.DESCRIPTION"
+                  required
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="data.IS_DISCOUNT_APPLIED">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>
+                Claimed Amount
+              </nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Correct Amount">
+                <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                  <input
+                    nz-input
+                    name="claimedamount"
+                    maxlength="10"
+                    (keypress)="omit2($event)"
+                    [(ngModel)]="data.CLAIMED_AMOUNT"
+                    required
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="data.IS_DISCOUNT_APPLIED">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Admissible</nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Admissible Amount">
+                <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                  <input
+                    nz-input
+                    name="ADMISSIBLE_AMOUNT"
+                    [(ngModel)]="data.ADMISSIBLE_AMOUNT"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="2" *ngIf="data.IS_DISCOUNT_APPLIED">
+            <nz-form-item>
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-control>
+                <button
+                  nz-button
+                  nzType="primary"
+                  style="width: 100%"
+                  (click)="pakagedata(investigationMaster)"
+                >
+                  <i nz-icon nzType="plus"></i> Add
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row style="width: 100%" *ngIf="!data.IS_DISCOUNT_APPLIED">
+          <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>City</nz-form-label>
+
+              <nz-form-control nzErrorTip="Input is required">
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  nzErrorTip="Please Select City"
+                  (ngModelChange)="setCity($event)"
+                  [nzLoading]="cityLoader"
+                  (nzScrollToBottom)="onScroll($event)"
+                  (keyup)="searchCity($event)"
+                  name="CITY_ID"
+                  [(ngModel)]="CITY_ID"
+                  required
+                >
+                  <nz-option [nzValue]="0" [nzLabel]="'All'"> </nz-option>
+                  <nz-option
+                    *ngFor="let city of citylist"
+                    [nzValue]="city.ID"
+                    [nzLabel]="city.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="10">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon
+                >Investigation/ Procedure</nz-form-label
+              >
+
+              <nz-form-control nzErrorTip=" Select Procedure ">
+                <nz-select
+                  [nzOptionHeightPx]="60"
+                  nzShowSearch
+                  name="procedure"
+                  nzAllowClear
+                  required
+                  [(ngModel)]="data.INVESTIGATION_PROCEDURE_ID"
+                  nzPlaceHolder="Enter 3 characters for search"
+                  (ngModelChange)="peocedureRate($event)"
+                  (keyup)="peocedureRate2($event)"
+                  [nzLoading]="procedureLoading"
+                >
+                  <nz-option
+                    nzCustomContent
+                    [nzLabel]="'Not In Schedule'"
+                    [nzValue]="0"
+                  >
+                    <div style="background-color: #fffcfc; padding: 5px">
+                      <div nz-row>
+                        <div
+                          nz-col
+                          nzSpan="16"
+                          style="color: black; font-size: 14px"
+                        >
+                          <b>Not In Schedule</b>
+                        </div>
+
+                        <div
+                          nz-col
+                          nzSpan="8"
+                          style="font-size: 11px; text-align: left; color: blue"
+                        >
+                          Not In Schedule
+                        </div>
+                      </div>
+                    </div>
+                  </nz-option>
+
+                  <nz-option
+                    *ngFor="let option of procedureList2"
+                    [nzLabel]="option.NAME"
+                    [nzValue]="option.ID"
+                    nzCustomContent
+                  >
+                    <div style="background-color: #fffcfc; padding: 5px">
+                      <div nz-row>
+                        <div
+                          nz-col
+                          nzSpan="24"
+                          style="width: 100%; color: black; font-size: 14px"
+                        >
+                          <b
+                            >{{ option.NAME }}
+                            <small
+                              >({{ option.SCHEDULE_NO }} -
+                              {{ option.SHORT_CODE }})</small
+                            ></b
+                          >
+                        </div>
+
+                        <div nz-col nzSpan="24" style="font-size: 11px">
+                          <div nz-row>
+                            <div
+                              style="color: #b30062; font-weight: bold"
+                              nz-col
+                              nzSpan="6"
+                            >
+                              NABH | ₹ {{ option.NABH_AMOUNT }}
+                            </div>
+
+                            <div nz-col nzSpan="1"></div>
+
+                            <div
+                              style="color: #2f08c0; font-weight: bold"
+                              nz-col
+                              nzSpan="7"
+                            >
+                              Non NABH | ₹ {{ option.NON_NABH_AMOUNT }}
+                            </div>
+
+                            <div nz-col nzSpan="1"></div>
+
+                            <div
+                              style="color: rgb(220, 37, 5); font-weight: bold"
+                              nz-col
+                              nzSpan="9"
+                            >
+                              Super Speciality | ₹
+                              {{ option.SUPER_SPECIALITY_AMOUNT }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          nz-col
+                          nzSpan="24"
+                          style="font-size: 14px; font-weight: 500"
+                        >
+                          {{ option.CITY_NAME }}
+                        </div>
+                      </div>
+                    </div>
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="3">
+            <nz-form-item>
+              <nz-form-label nzNoColon></nz-form-label>
+
+              <nz-form-control>
+                <label
+                  nz-checkbox
+                  name="type"
+                  (ngModelChange)="setType($event)"
+                  [(ngModel)]="data.IS_PACKAGE"
+                  >Is Package?</label
+                >
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>
+                Claimed Amount
+              </nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Correct Amount">
+                <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                  <input
+                    nz-input
+                    name="claimedamount"
+                    maxlength="10"
+                    (keypress)="omit2($event)"
+                    [(ngModel)]="data.CLAIMED_AMOUNT"
+                    required
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="3">
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzNoColon> Basic Pay</nz-form-label>
+
+              <nz-form-control
+                style="
+                  border: 1px solid #d9d9d9;
+                  padding: 0px 5px 0px 0px;
+                  background: #f5f5f5;
+                  border-radius: 2px;
+                  cursor: not-allowed;
+                "
+              >
+                <b>
+                  <span *ngIf="claimData != undefined">
+                    <span
+                      style="
+                        padding: 5px 11px 6px;
+                        color: rgba(0, 0, 0, 0.85);
+                        font-weight: 400;
+                        font-size: 14px;
+                        border-right: 1px solid #d9d9d9;
+                        text-align: center;
+                        background-color: #fafafa;
+                        margin-right: 2px;
+                      "
+                      >₹</span
+                    >
+                    {{ claimData.GRADE_PAY }}
+                  </span>
+                </b>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="10">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>
+                Bill Item Name/ Particulars
+              </nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Correct Name">
+                <textarea
+                  nz-input
+                  [nzAutosize]="{ minRows: 4, maxRows: 8 }"
+                  name="investname"
+                  placeHolder="Bill Item Name/ Particulars"
+                  [(ngModel)]="data.PARTICULARS"
+                  required
+                ></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzNoColon> Rate List Code</nz-form-label>
+
+              <nz-form-control>
+                <input
+                  nz-input
+                  name="SHORT_CODE"
+                  (ngModelChange)="changeSheduleNo($event)"
+                  placeHolder="Rate List Code"
+                  [(ngModel)]="data.SHORT_CODE"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzNoColon>
+                Final Amount
+                <span
+                  style="font-size: 11px !important"
+                  *ngIf="additionalChange > 0"
+                  >(+{{ additionalChange }}%)</span
+                >
+              </nz-form-label>
+
+              <nz-form-control
+                style="
+                  border: 1px solid #d9d9d9;
+                  padding: 0px 5px 0px 0px;
+                  background: #f5f5f5;
+                  border-radius: 2px;
+                  cursor: not-allowed;
+                "
+              >
+                <b
+                  ><span
+                    style="
+                      padding: 6px 12px;
+                      color: rgba(0, 0, 0, 0.85);
+                      font-weight: 400;
+                      font-size: 14px;
+                      border-right: 1px solid #d9d9d9;
+                      text-align: center;
+                      background-color: #fafafa;
+                      margin-right: 5px;
+                    "
+                    >₹</span
+                  >
+                  {{ data.FINALE_AMOUNT }}
+                </b>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="3">
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzNoColon> Schedule No. </nz-form-label>
+
+              <nz-form-control>
+                <input
+                  nz-input
+                  name="ScheduleNo"
+                  placeHolder="Schedule No"
+                  [(ngModel)]="data.CODE_NO"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzNoColon> Change</nz-form-label>
+              <nz-input-group style="width: 100%" nzAddOnAfter="%">
+                <nz-input-number
+                  name="CHANGE"
+                  (ngModelChange)="changePerc($event)"
+                  [(ngModel)]="data.CHANGE"
+                  required
+                  [nzStep]="1"
+                ></nz-input-number>
+              </nz-input-group>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzRequired nzNoColon> Rate</nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Correct Rate">
+                <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                  <input
+                    nz-input
+                    name="ratesfaf"
+                    maxlength="10"
+                    (ngModelChange)="changeRateData($event)"
+                    (keypress)="omit($event)"
+                    [(ngModel)]="data.RATE"
+                    required
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Admissible</nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Admissible Amount">
+                <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                  <input
+                    nz-input
+                    name="ADMISSIBLE_AMOUNT"
+                    [(ngModel)]="data.ADMISSIBLE_AMOUNT"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="3">
+            <nz-form-item style="margin-bottom: 0px">
+              <nz-form-label nzRequired nzNoColon> Qty</nz-form-label>
+
+              <nz-form-control nzErrorTip="Please Enter Correct Qty">
+                <input
+                  nz-input
+                  name="QTY"
+                  (ngModelChange)="changeQtyData($event)"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.QTY"
+                  required
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-control>
+                <button
+                  nz-button
+                  nzType="primary"
+                  style="width: 100%"
+                  (click)="pakagedata(investigationMaster)"
+                >
+                  <i nz-icon nzType="plus"></i> Add
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+
+      <div nz-row *ngIf="claimData != undefined">
+        <div nz-col nzSpan="24" style="height: 275px; overflow-y: scroll">
+          <nz-table
+            nzBordered
+            [nzData]="showlayoutDataList"
+            #newtabledata
+            nzFrontPagination="false"
+          >
+            <thead>
+              <tr>
+                <th nzWidth="15px" nzAlign="center">
+                  <p style="font-weight: bold">Sr.No.</p>
+                </th>
+                <th nzColumnKey="" nzWidth="25px" nzAlign="center">
+                  <p style="font-weight: bold">Action</p>
+                </th>
+
+                <th nzWidth="70px" nzAlign="center">
+                  <p style="font-weight: bold">Particulars</p>
+                </th>
+
+                <th nzColumnKey="" nzWidth="25px" nzAlign="center">
+                  <p style="font-weight: bold">Schedule No.</p>
+                </th>
+
+                <th nzColumnKey="" nzWidth="25px" nzAlign="center">
+                  <p style="font-weight: bold">Claimed Amount</p>
+                </th>
+
+                <th nzColumnKey="" nzWidth="25px" nzAlign="center">
+                  <p style="font-weight: bold">Admissible Amount</p>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody style="text-align: center">
+              <tr
+                *ngFor="let data of newtabledata.data; let i = index"
+                style="white-space: pre-line"
+              >
+                <td style="text-align: center">
+                  {{ i + 1 }}
+                </td>
+                <td>
+                  <!-- <a (click)="edit(data)" nz-tooltip nzTooltipTitle="Edit"> -->
+                  <span
+                    nz-icon
+                    nzType="edit"
+                    nzTheme="twotone"
+                    style="margin-top: 10px; margin-right: 20px"
+                    (click)="edit(data)"
+                  ></span>
+                  <!-- </a> -->
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="confirm(data, i)"
+                    (nzOnCancel)="cancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </td>
+
+                <td>
+                  <span *ngIf="!data.IS_DISCOUNT_APPLIED">
+                    {{ data.PARTICULARS }}
+                  </span>
+                  <b *ngIf="data.IS_DISCOUNT_APPLIED">
+                    {{ data.DESCRIPTION }}
+                  </b>
+                </td>
+
+                <td style="text-align: center">
+                  <span *ngIf="!data.IS_DISCOUNT_APPLIED">
+                    {{ data["CODE_NO"] }}
+                    <span
+                      *ngIf="
+                        data['SHORT_CODE'] != undefined &&
+                        data['SHORT_CODE'] != null &&
+                        data['SHORT_CODE'] != ''
+                      "
+                      >({{ data["SHORT_CODE"] }})</span
+                    >
+                  </span>
+                </td>
+                <td style="text-align: right">
+                  ₹ {{ data["CLAIMED_AMOUNT"] }}
+                </td>
+                <td style="text-align: right">
+                  ₹ {{ data["ADMISSIBLE_AMOUNT"] }}
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0">
+                  <b>Total</b>
+                </td>
+                <td style="text-align: right; border: 1px solid #f0f0f0">
+                  <b>₹ {{ total }}/-</b>
+                </td>
+                <td style="text-align: right; border: 1px solid #f0f0f0">
+                  <b>₹ {{ total1 }}/-</b>
+                </td>
+              </tr>
+
+              <tr *ngIf="claimData.IS_ADVANCE_TAKEN == 1">
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0">
+                  <b>Advance Taken </b>
+                </td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: right; border: 1px solid #f0f0f0">
+                  <b>₹ {{ claimData.ADVANCE_AMOUNT }}/-</b>
+                </td>
+              </tr>
+
+              <tr *ngIf="claimData.IS_ADVANCE_TAKEN == 1">
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0"></td>
+                <td style="text-align: center; border: 1px solid #f0f0f0">
+                  <b>₹ {{ claimData.FINAL_REMAINING_AMOUNT }}/-</b>
+                </td>
+              </tr>
+            </tfoot>
+          </nz-table>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Prepared By </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid Prepared By"
+                >
+                  <!-- <input
+                    nz-input
+                    name="PREPARED_BY"
+                    maxlength="256"
+                    [(ngModel)]="claimData.PREPARED_BY"
+                    placeHolder="Enter Prepared By"
+                    required
+                  /> -->
+                  <angular-editor
+                    style="resize: none; color: black"
+                    name="PREPARED_BY1"
+                    maxlength="256"
+                    [(ngModel)]="claimData.PREPARED_BY"
+                    [config]="editorConfigPrepared"
+                  ></angular-editor>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Checked by </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid Checked by"
+                >
+                  <!-- <input
+                    nz-input
+                    name="CHECKED_BY"
+                    maxlength="256"
+                    [(ngModel)]="claimData.CHECKED_BY"
+                    placeHolder="Enter Checked by"
+                    required
+                  /> -->
+                  <angular-editor
+                    style="resize: none; color: black"
+                    name="CHECKED_BY1"
+                    maxlength="256"
+                    [(ngModel)]="claimData.CHECKED_BY"
+                    [config]="editorConfigChecked"
+                  ></angular-editor>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="16">
+          <div nz-row>
+            <div nz-col nzSpan="24" *ngIf="claimData != undefined">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Addition Information </nz-form-label>
+
+                <nz-form-control>
+                  <textarea
+                    nz-input
+                    [nzAutosize]="{ minRows: 4, maxRows: 10 }"
+                    name="AdditionInformation"
+                    placeHolder="Addition Information"
+                    [(ngModel)]="claimData.ANNEXURE_REMARK"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nz-spin>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(investigationMaster)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+  <div class="footer">
+    <!-- <button nz-button (click)="showModal(showlayoutDataList)" nzType="primary">
+        <span>Preview</span>
+      </button> -->
+    <button
+      nz-button
+      (click)="updateClaim(showlayoutDataList)"
+      nzType="primary"
+    >
+      <span>Save & Preview</span>
+    </button>
+    &nbsp;&nbsp;
+
+    <button
+      type="button"
+      nz-button
+      (click)="close(investigationMaster)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  (nzOnCancel)="handleCancel()"
+  [nzWidth]="850"
+  [nzContent]="printAnnexureModalContent"
+  [nzTitle]="'Annexure'"
+  [nzFooter]="printAnnexureModalFooter"
+>
+  <ng-template #printAnnexureModalContent>
+    <div style="height: 450px; overflow: auto">
+      <div id="printAnnexureModal">
+        <div
+          style="
+            font-family: Arial, Helvetica, sans-serif !important;
+            margin: 0px 15px;
+          "
+        >
+          <span style="margin-left: 45%"><b>ANNEXURE 'A'</b></span>
+
+          <table style="overflow: none; width: 100%">
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b
+                    >NAME :
+
+                    <span *ngIf="claimData != undefined">
+                      {{ claimData.EMPLOYEE_NAME }}
+                    </span></b
+                  >
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>BASIC PAY</b>
+                </td>
+
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="claimData != undefined">
+                    {{ claimData.GRADE_PAY }}
+                  </span>
+                </td>
+              </tr>
+              <tr style="width: 30px">
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                  rowspan="2"
+                >
+                  <b>
+                    Designation :
+                    <span *ngIf="claimData != undefined">
+                      {{ claimData.EMPLOYEE_DESIGNATION }},
+                      {{ claimData.EMPLOYEE_OFFICE_NAME }}
+                    </span></b
+                  >
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>CGHS CARD NO :</b>
+                </td>
+
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="claimData != undefined">
+                    <span *ngIf="claimData.BENEFICIARY_TYPE == 'CG'">
+                      {{ claimData.CGHS_CARD_NO }}
+                    </span>
+                    <span *ngIf="claimData.BENEFICIARY_TYPE == 'CS'">
+                      CS(MA)
+                    </span>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>EMPLOYEE CODE</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="claimData != undefined">
+                    {{ claimData.EMPLOYEE_CODE }}
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b
+                    >PATIENT :
+                    <span *ngIf="claimData != undefined">
+                      {{ claimData.RELATION_WITH_PATIENT }}
+                      <span *ngIf="claimData.RELATION_WITH_PATIENT != 'Self'">
+                        - {{ claimData.PATIENT_NAME }}
+                      </span>
+                    </span>
+                    <!-- <span   *ngIf="claimData != undefined">
+                      {{ claimData.RELATION_WITH_PATIENT }} -
+                      {{ claimData.PATIENT_NAME }} - {{ claimData.CGHS_CARD_NO }}
+                    </span> -->
+                  </b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 10px;
+                  "
+                >
+                  <b></b>
+                </td>
+
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 10px;
+                  "
+                ></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table style="overflow: none; width: 100%">
+            <tbody>
+              <tr>
+                <td
+                  colspan="2"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>NATURE OF TREATMENT</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="claimData != undefined">
+                    : {{ claimData.NATURE_OF_TREATMENT }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colspan="2"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>PERIOD</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="claimData != undefined">
+                    :
+                    {{ claimData.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}
+                    To
+                    {{ claimData.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colspan="2"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>NAME OF HOSPITAL</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngFor="let hospital of hospitallist">
+                    {{ hospital.NAME }}-{{
+                      hospital.TYPE == "E"
+                        ? "Empanelled"
+                        : hospital.TYPE == "NE"
+                        ? "Non Empanelled"
+                        : hospital.TYPE == "G"
+                        ? "Government"
+                        : ""
+                    }}
+                    ({{ hospital.ADDRESS }}),
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  colspan="2"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>EMERGENCY OR NOT</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="claimData != undefined">
+                    <span
+                      nz-col
+                      nzSpan="24"
+                      *ngIf="claimData.EMERGENCY_TREATEMENT == 1"
+                      >EMERGENCY</span
+                    >
+                    <span
+                      nz-col
+                      nzSpan="24"
+                      *ngIf="claimData.EMERGENCY_TREATEMENT == 0"
+                      >NO</span
+                    >
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  colspan="2"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>REFERRED RATE LIST</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  : {{ this.REFRED_RATE_LIST }}
+                </td>
+              </tr>
+              <!-- </tbody>
+          </table>
+          <table style="overflow: none; width: 100%">
+            <tbody> -->
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>Sr.No.</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>PARTICULARS</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>SCHEDULE NO.</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                    width: 135px;
+                  "
+                >
+                  <b>CLAIMED AMOUNT</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                    width: 150px;
+                  "
+                >
+                  <b>ADMISSIBLE AMOUNT</b>
+                </td>
+              </tr>
+
+              <tr *ngFor="let data of showlayoutDataList; let i = index">
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                    text-align: center;
+                  "
+                >
+                  {{ i + 1 }}
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <span *ngIf="!data.IS_DISCOUNT_APPLIED">
+                    {{ data.PARTICULARS }}
+                  </span>
+                  <b *ngIf="data.IS_DISCOUNT_APPLIED">
+                    {{ data.DESCRIPTION }}
+                  </b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <span *ngIf="!data.IS_DISCOUNT_APPLIED">
+                    {{ data["CODE_NO"] }}
+                    <span
+                      *ngIf="
+                        data['SHORT_CODE'] != undefined &&
+                        data['SHORT_CODE'] != null &&
+                        data['SHORT_CODE'] != ''
+                      "
+                      >({{ data["SHORT_CODE"] }})</span
+                    >
+                  </span>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                    width: 135px;
+                    text-align: right;
+                  "
+                >
+                  {{ data.CLAIMED_AMOUNT }}
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                    width: 150px;
+                    text-align: right;
+                  "
+                >
+                  {{ data.ADMISSIBLE_AMOUNT }}
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                ></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <b>Total</b>
+                </td>
+                <td style="border: 1px solid black; padding-left: 6px"></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                    text-align: right;
+                  "
+                >
+                  <b>{{ total }}/-</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                    text-align: right;
+                  "
+                >
+                  <b>{{ total1 }}/-</b>
+                </td>
+              </tr>
+              <!-- <tr *ngIf="claimData.IS_ADVANCE_TAKEN == 1">
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+                <td style="text-align: center"></td>
+                <td style="text-align: right">
+                  <b>₹ {{ claimData.ADVANCE_AMOUNT }}/-</b>
+                </td>
+              </tr> -->
+
+              <tr *ngIf="claimData.IS_ADVANCE_TAKEN == 1">
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                ></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <b>Advance Taken </b>
+                </td>
+                <td style="border: 1px solid black; padding-left: 6px"></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                ></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                    text-align: right;
+                  "
+                >
+                  <b>₹ {{ claimData.ADVANCE_AMOUNT }}/-</b>
+                </td>
+              </tr>
+
+              <tr *ngIf="claimData.IS_ADVANCE_TAKEN == 1">
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                ></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                ></td>
+                <td style="border: 1px solid black; padding-left: 6px"></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                ></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <b>₹ {{ claimData.FINAL_REMAINING_AMOUNT }}/-</b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br />
+          <div nz-col nzSpan="24" *ngIf="claimData != undefined">
+            {{ claimData.ANNEXURE_REMARK }}
+          </div>
+          <br />
+          <div style="font-size: 13px">
+            <span>
+              Prepared By: <span [innerHtml]="claimData.PREPARED_BY"> </span
+            ></span>
+            <!-- <span>
+              Prepared By: <b>{{ claimData.PREPARED_BY }}</b></span
+            > -->
+          </div>
+          <div style="margin-top: 30px; font-size: 13px">
+            <span>
+              Checked By:
+              <span [innerHtml]="claimData.CHECKED_BY"> </span>
+            </span>
+            <!-- <span> Checked By: {{ claimData.CHECKED_BY }}</span> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #printAnnexureModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Close</button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="printAnnexureModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="generatePDF()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

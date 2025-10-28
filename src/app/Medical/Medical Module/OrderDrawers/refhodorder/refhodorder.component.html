@@ -1,0 +1,1501 @@
+<div *ngIf="orderdata != undefined">
+  <form nz-form #refHODOrderPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row [nzGutter]="10">
+        <div
+          nz-col
+          nzXs="10"
+          nzSm="10"
+          nzMd="10"
+          nzLg="10"
+          nzXl="10"
+          nzSpan="10"
+        >
+          <div class="my-box">
+            <div nz-row>
+              <!-- <div
+                  style="display: none"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Application Date</nz-form-label
+                    >
+  
+                    <nz-form-control>
+                      <nz-date-picker
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        name="letterdate2"
+                        [(ngModel)]="orderdata.LETTER_DATE"
+                      >
+                      </nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div> -->
+
+              <!-- <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12" nzSpan="12">
+                                      <nz-form-item>
+                                          <nz-form-label nzRequired nzNoColon>From Date</nz-form-label>
+      
+                                          <nz-form-control>
+                                              <nz-date-picker style="width: 100%;" nzFormat="dd/MM/yyyy" name="fromDate"
+                                                  [(ngModel)]="FROM_DATE">
+                                              </nz-date-picker>
+                                          </nz-form-control>
+                                      </nz-form-item>
+                                  </div> -->
+
+              <!-- <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12" nzSpan="12">
+                                      <nz-form-item>
+                                          <nz-form-label nzRequired nzNoColon>To Date</nz-form-label>
+      
+                                          <nz-form-control>
+                                              <nz-date-picker style="width: 100%;" nzFormat="dd/MM/yyyy" name="toDate"
+                                                  [(ngModel)]="TO_DATE">
+                                              </nz-date-picker>
+                                          </nz-form-control>
+                                      </nz-form-item>
+                                  </div> -->
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <!-- <div>
+                  <nz-form-item>
+                  
+                    <nz-radio-group
+                      [(ngModel)]="orderdata.PAY_BILL"
+                      name="radiogaz"
+                    >
+                      <label nz-radio nzValue="NonGazPay">Welfare & S.G </label>
+                      <label nz-radio nzValue="GazPay">Gaz Pay Bill</label>
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div> -->
+
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Signature</nz-form-label
+                    >
+                    <nz-form-control>
+                      <nz-select
+                        name="userid"
+                        [(ngModel)]="orderdata.SIGNATURE_ID"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="Choose Signature"
+                        (ngModelChange)="signature($event)"
+                      >
+                        <nz-option
+                          *ngFor="let user of Signaturearray"
+                          [nzValue]="user.ID"
+                          [nzLabel]="user.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div
+                  nz-col
+                  nzXs="16"
+                  nzSm="16"
+                  nzMd="16"
+                  nzLg="16"
+                  nzXl="16"
+                  nzSpan="16"
+                >
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >HOD Referance Application Date</nz-form-label
+                    >
+
+                    <nz-form-control>
+                      <nz-date-picker
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        name="letterdate"
+                        [(ngModel)]="queData.LETTER_DATE"
+                      >
+                      </nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div
+                  nz-col
+                  nzXs="16"
+                  nzSm="16"
+                  nzMd="16"
+                  nzLg="16"
+                  nzXl="16"
+                  nzSpan="16"
+                >
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >HOD Referance Received Date</nz-form-label
+                    >
+
+                    <nz-form-control>
+                      <nz-date-picker
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        name="receiverdate"
+                        [(ngModel)]="queData.RECEIVED_DATE"
+                      >
+                      </nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div
+                  nz-col
+                  nzXs="16"
+                  nzSm="16"
+                  nzMd="16"
+                  nzLg="16"
+                  nzXl="16"
+                  nzSpan="16"
+                >
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >HOD Referance Referral Date</nz-form-label
+                    >
+
+                    <nz-form-control>
+                      <nz-date-picker
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        name="referaldate"
+                        [(ngModel)]="queData.REFERRAL_DATE"
+                      >
+                      </nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >CGHS Name</nz-form-label
+                      >
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="CGHS Name is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="cghsname"
+                          nz-input
+                          placeholder="Enter CGHS Name"
+                          type="text"
+                          [(ngModel)]="queData.CGHS_NAME"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-label nzNoColon>Forwarding Letter </nz-form-label>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-item>
+                    <!-- <nz-form-label  nzNoColon>Forwarding Letter	</nz-form-label>   -->
+                    <nz-radio-group
+                      [(ngModel)]="queData.FORWARDING_LETTER"
+                      name="radiofor"
+                    >
+                      <label nz-radio nzValue="Y">Yes</label>
+                      <label nz-radio nzValue="N">No</label>
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-label nzNoColon
+                    >CGHS Reference/AMA Reference/Doctor Reference
+                  </nz-form-label>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-item>
+                    <!-- <nz-form-label  nzNoColon>CGHS Reference/AMA Reference/Doctor Reference	</nz-form-label>   -->
+                    <nz-radio-group
+                      [(ngModel)]="queData.CGHS_AMA_DOCTOR_REFERENCE"
+                      name="radioreff"
+                    >
+                      <label nz-radio nzValue="Y">Yes</label>
+                      <label nz-radio nzValue="N">No</label>
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-label nzNoColon
+                    >Copy of CGHS Card for both beneficiary and
+                    patient</nz-form-label
+                  >
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-item>
+                    <!-- <nz-form-label  nzNoColon>Copy of CGHS Card for both beneficiary and patient</nz-form-label>   -->
+                    <nz-radio-group
+                      [(ngModel)]="queData.COPY_OF_CGHS_CARD_1"
+                      name="radiocard"
+                    >
+                      <label nz-radio nzValue="Y">Yes</label>
+                      <label nz-radio nzValue="N">No</label>
+                      <label nz-radio nzValue="NA">N/A</label>
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-label nzNoColon
+                    >Address Proof/Form No.3</nz-form-label
+                  >
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-item>
+                    <!-- <nz-form-label  nzNoColon>Address Proof/Form No.3</nz-form-label>   -->
+                    <nz-radio-group
+                      [(ngModel)]="queData.ADDRESS_PROOF"
+                      name="radioadd"
+                    >
+                      <label nz-radio nzValue="Y">Yes</label>
+                      <label nz-radio nzValue="N">No</label>
+                      <label nz-radio nzValue="NA">N/A</label>
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-label nzNoColon>Salary Slip </nz-form-label>
+                </div>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <nz-form-item>
+                    <!-- <nz-form-label  nzNoColon>Salary Slip	</nz-form-label>   -->
+                    <nz-radio-group
+                      [(ngModel)]="queData.SALARY_SLIP"
+                      name="radiosal"
+                    >
+                      <label nz-radio nzValue="Y">Yes</label>
+                      <label nz-radio nzValue="N">No</label>
+                      <!-- <label nz-radio nzValue="NA">N/A</label> -->
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+            <div *ngFor="let data of HospitalMapping; let i = index">
+              <div class="my-box">
+                <div nz-row>
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>
+                        Name of Hospital
+                      </nz-form-label>
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Hospital is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="NAMENAME{{ i }}"
+                          nz-input
+                          placeholder="Enter name in english"
+                          autocomplete="off"
+                          type="text"
+                          disabled="true"
+                          [(ngModel)]="data.NAME"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <!-- <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Name of Hospital(in hindi)</nz-form-label
+                      >
+  
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Hospital(in hindi) is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          nz-input
+                          placeholder="Enter name of Hospital in hindi"
+                          autocomplete="off"
+                          name="NAME_HN{{ i }}"
+                          type="text"
+                          [(ngModel)]="data.NAME_HN"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div> -->
+
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzNoColon
+                        >Address of Hospital
+                      </nz-form-label>
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Address is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="ADDRESS{{ i }}"
+                          nz-input
+                          placeholder="Enter Address in english"
+                          autocomplete="off"
+                          type="text"
+                          [(ngModel)]="data.ADDRESS"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <!-- <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Address of Hospital(in hindi)</nz-form-label
+                      >
+  
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Address of Hospital(in hindi) is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          nz-input
+                          placeholder="Enter Address of Hospital in hindi"
+                          autocomplete="off"
+                          name="ADDRESS_HN{{ i }}"
+                          type="text"
+                          [(ngModel)]="data.ADDRESS_HN"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div> -->
+
+                <div>
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Show In Order</nz-form-label
+                    >
+                    <nz-form-control>
+                      <nz-switch
+                        name="IS_VISIBLE_IN_ORDER{{ i }}"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        [(ngModel)]="HospitalMapping[i].IS_VISIBLE_IN_ORDER"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div nz-row>
+                                  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+                                      <nz-form-item>
+                                          <nz-form-label  nzNoColon>Amount (in words)</nz-form-label>
+      
+                                          <nz-form-control nzHasFeedback nzErrorTip="City Name is required">
+                                              <input style="width: 100%;" nz-input placeholder="Enter Amount"
+                                                  autocomplete="off"  name="amountinwords" type="text"
+                                                  [(ngModel)]="amountinwords" />
+                                          </nz-form-control>
+                                      </nz-form-item>
+                                  </div>
+                                 
+                              </div>
+                              <div nz-row>
+                                  <div  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+                                      <nz-form-item>
+                                          <nz-form-label nzRequired nzNoColon>Amount (in hindi)</nz-form-label>
+      
+                                          <nz-form-control nzHasFeedback nzErrorTip="City Name is required">
+                                              <input style="width: 100%;" nz-input placeholder="Enter amount in hindi"
+                                                  autocomplete="off" name="amountinwordsh"  type="text"
+                                                  [(ngModel)]="amountinwordsh" />
+                                          </nz-form-control>
+                                      </nz-form-item>
+                                  </div>
+                              </div> -->
+          </div>
+        </div>
+
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+          <div class="my-box" style="padding: 10px">
+            <div>
+              <!-- <div nz-row>
+                      <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                        <div style="text-align: right">
+                          <img
+                            src="assets/govtOfIndia.png"
+                            alt=""
+                            height="130px"
+                            width="100px"
+                          />
+                        </div>
+                      </div>
+      
+                      <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                        <div
+                          style="width: 100%; text-align: center; font-weight: bold"
+                        >
+                          <div>भारत सरकार</div>
+                          <div style="text-transform: uppercase">
+                            Government Of India
+                          </div>
+                          <div>
+                            कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई
+                          </div>
+                          <div style="text-transform: uppercase">
+                            Office Of The Commissioner of Income-Tax (Admin, & TPS)
+                          </div>
+                          <div>
+                            तीसरी मंजिल, आयकर भवन, महर्षी कर्वे रोड, मुंबई -20
+                          </div>
+                          <div style="text-transform: uppercase">
+                            3<sup style="text-transform: lowercase">rd</sup> Floor,
+                            aayakar bhavan, Maharshi Karve Road, Mumbai-20
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <div
+                      style="
+                        width: 100%;
+                        border: 1px solid black;
+                        padding: 10px;
+                        margin-top: 10px;
+                        font-size: 13px;
+                      "
+                    >
+                      <div nz-row>
+                        <div nz-col nzSpan="12">{{ orderdata.ORDER_NO }}</div>
+      
+                        <div nz-col nzSpan="12" style="text-align: right">
+                          दिनांक
+                          :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                   
+                      </div>
+                    </div> -->
+              <div style="font-family: Arial, Helvetica, sans-serif !important">
+                <div
+                  style="
+                    text-align: center;
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>ORDER SHEET</b>
+                </div>
+                <div style="font-size: 14px !important">
+                  <!-- <p style="margin-bottom: 2px;">
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          {{ orderdata.EMPLOYEE_NAME_HN }}
+                          {{ orderdata.DESIGNATION }}, को उनके द्वारा दिनांक
+                          {{
+                            orderdata.TREATMENT_START_DATE | date : "dd MMM yyyy"
+                          }}&nbsp; से
+                          {{
+                            orderdata.TREATMENT_END_DATE | date : "dd MMM yyyy"
+                          }}&nbsp; को 
+                          
+      
+                          <span *ngFor="let data of HospitalMapping;let k = index"              
+                          >
+                        
+                            {{ data.NAME_HN }} , {{ data.ADDRESS_HN }}
+                            <span *ngIf="HospitalMapping.length-2!=k">,</span>
+                            <span *ngIf="HospitalMapping.length-2==k">और</span>
+                       
+                            </span
+                          >
+      
+                          में
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father'"
+                              >उनके पिता</span
+                            >
+                        
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Wife'"
+                              >उनकी पत्नी</span
+                            >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Husband'"
+                              >उनके पती</span
+                            >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Son'"
+                              >उनका बेटा</span
+                            >
+                            <span
+                              *ngIf="orderdata.RELATION_WITH_PATIENT == 'Daughter'"
+                              >उनकी बेटी</span
+                            >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Sister'"
+                              >उनकी बहन</span
+                            >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Brother'"
+                              >उनके भाई</span
+                            >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'"
+                              >उनकी मां</span
+                            >
+                    
+                            <span
+                          *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                          >उनके ससुर</span
+                        >
+                        <span
+                          *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                          >उनकी सासू मां</span
+                        >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Mother'">
+                              &nbsp;{{ orderdata.PATIENT_NAME_HN }} के</span
+                            >
+                            <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'">
+                              &nbsp;{{ orderdata.PATIENT_NAME_HN }} के</span
+                            >
+                          </span>
+      
+                          &nbsp;
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                            स्वयं के</span
+                          >
+                          {{ orderdata.NATURE_OF_TREATMENT }}
+                          के इलाज के लिए खर्च की गई राशि, जो
+                          <b
+                            >रुपये {{ orderdata.ADMISSIBLE_AMOUNT }}&nbsp; ({{
+                              amountinwordsh
+                            }})</b
+                          >
+                          से अधिक नहीं है, को सीजीएचएस दर के अनुसार चिकित्सा व्यय की
+                          प्रतिपूर्ती के लिए स्वीकृति प्रदान की जाती है। यह मंजूरी
+                          स्वास्थ्य एवं परिवार कल्याण मंत्रालय, भारत सरकार द्वारा जारी
+                          दिनांक 18.03.1992 के कार्यालय ज्ञापन सं.
+                          एस-11012/1/91/सीजीएचएस (पी) खंड 1 के माध्यम से मुझे प्रदत्त
+                          शक्तियो का प्रयोग करते हुए जारी की जाती है।
+                        </p> -->
+
+                  <p style="margin-bottom: 2px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <b>
+                      {{ orderdata.EMPLOYEE_NAME }},
+                      {{ orderdata.DESIGNATION }},</b
+                    >
+                    has filed an application dated
+                    <b>{{ queData.LETTER_DATE | date : "dd/MM/yyyy" }}</b> and
+                    received in this office on
+                    <b>{{ queData.RECEIVED_DATE | date : "dd/MM/yyyy" }}</b
+                    >,seeking permission for
+                    {{ orderdata.NATURE_OF_TREATMENT }} from
+                    <span *ngFor="let data of HospitalMapping; let k = index">
+                      <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                        {{ data.NAME }} ,{{ data.ADDRESS }} ,{{
+                          data.TYPE == "E"
+                            ? "Empanelled"
+                            : data.TYPE == "NE"
+                            ? "Non Empanelled"
+                            : data.TYPE == "G"
+                            ? "Government"
+                            : ""
+                        }}
+                        <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                        <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                      </span>
+                    </span>
+
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                      for his {{ orderdata.RELATION_WITH_PATIENT }}
+                      {{ orderdata.PATIENT_NAME }}.</span
+                    >
+
+                    <!-- &nbsp; for&nbsp;{{ orderdata.B }} -->
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                      of Self CGHS card number of the official/officer is
+                      {{ orderdata.CGHS_CARD_NO }}.
+                    </span>
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                      CGHS card number of the official/officer each
+                      {{ orderdata.CGHS_CARD_NO }} and CGHS card number of
+                      patient is {{ orderdata.PATIENT_CGHS_BENEFICIERY_NO }}.
+                    </span>
+                    <!-- He/She is a CGHS beneficiary card holding number
+                    {{ orderdata.CGHS_CARD_NO }} and CGHS card holding of his
+                    {{ orderdata.RELATION_WITH_PATIENT }}
+                    {{ orderdata.PATIENT_CGHS_BENEFICIERY_NO }}. -->
+                  </p>
+
+                  <p style="margin-bottom: 2px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Medical
+                    Officer, CGHS <b>{{ queData.CGHS_NAME }}</b> has given
+                    referral dated
+                    <b>{{ queData.REFERRAL_DATE | date : "dd/MM/yyyy" }}</b> for
+                    {{ orderdata.NATURE_OF_TREATMENT }}, from any Empanelled/
+                    Non-empanelled Hospital. The requisite documents such as
+                    copy of CGHS Reference, Salary Slip etc. have been submitted
+                    by the applicant. As per Office Memorandum No.
+                    1967/2013/DEL/CGHS/SZ/D52/CGHS(P) dated 30/12/2014, CGHS
+                    beneficiaries in Mumbai are allowed to take treatment /
+                    tests, etc. in any private hospital/diagnostic centre,
+                    subject to the condition that:
+                  </p>
+
+                  <p style="margin-bottom: 2px">
+                    &nbsp;&nbsp;&nbsp;(i) &nbsp;&nbsp;&nbsp;Reimbursement would
+                    be limited to CGHS rates;
+                  </p>
+                  <p style="margin-bottom: 2px">
+                    &nbsp;&nbsp;&nbsp;(ii) &nbsp;&nbsp;&nbsp;Referral from
+                    Governemnt Specialist / CGHS Doctor is obtained;
+                  </p>
+                  <p style="margin-bottom: 2px">
+                    &nbsp;&nbsp;&nbsp;(iii) &nbsp;&nbsp;&nbsp;prior permission
+                    from HOD is taken;
+                  </p>
+
+                  <p style="margin-bottom: 2px; padding-top: 20px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;The checklist of the above mentioned
+                    permission is as under:-
+                  </p>
+                  <br />
+
+                  <table style="border: 1px solid black; margin-left: 150px">
+                    <tr style="border: 1px solid black">
+                      <th style="border: 1px solid black; text-align: center">
+                        &nbsp;No.
+                      </th>
+                      <th style="border: 1px solid black; text-align: center">
+                        Particulars
+                      </th>
+                      <th style="border: 1px solid black; text-align: center">
+                        &nbsp;Remarks&nbsp;
+                      </th>
+                    </tr>
+                    <tr style="border: 1px solid black">
+                      <td style="border: 1px solid black; text-align: center">
+                        1
+                      </td>
+                      <td style="border: 1px solid black">
+                        &nbsp;Forwarding Letter
+                      </td>
+                      <td style="border: 1px solid black; text-align: center">
+                        <span *ngIf="queData.FORWARDING_LETTER == 'Y'">
+                          <b> Yes </b></span
+                        >
+                        <span *ngIf="queData.FORWARDING_LETTER == 'N'">
+                          <b> No </b></span
+                        >
+                      </td>
+                    </tr>
+                    <tr style="border: 1px solid black">
+                      <td style="border: 1px solid black; text-align: center">
+                        2
+                      </td>
+                      <td style="border: 1px solid black">
+                        &nbsp;CGHS Reference/AMA Reference/Doctor
+                        Reference&nbsp;
+                      </td>
+                      <td style="border: 1px solid black; text-align: center">
+                        <span *ngIf="queData.CGHS_AMA_DOCTOR_REFERENCE == 'Y'">
+                          <b> Yes </b></span
+                        >
+                        <span *ngIf="queData.CGHS_AMA_DOCTOR_REFERENCE == 'N'">
+                          <b> No </b></span
+                        >
+                      </td>
+                    </tr>
+                    <tr style="border: 1px solid black">
+                      <td style="border: 1px solid black; text-align: center">
+                        3
+                      </td>
+                      <td style="border: 1px solid black">
+                        &nbsp;Copy of CGHS Card for both beneficiary and
+                        patient&nbsp;
+                      </td>
+                      <td style="border: 1px solid black; text-align: center">
+                        <span *ngIf="queData.COPY_OF_CGHS_CARD_1 == 'Y'">
+                          <b> Yes </b></span
+                        >
+                        <span *ngIf="queData.COPY_OF_CGHS_CARD_1 == 'N'">
+                          <b> No </b></span
+                        >
+                        <span *ngIf="queData.COPY_OF_CGHS_CARD_1 == 'NA'"
+                          ><b> N/A </b></span
+                        >
+                      </td>
+                    </tr>
+                    <tr style="border: 1px solid black">
+                      <td style="border: 1px solid black; text-align: center">
+                        4
+                      </td>
+                      <td style="border: 1px solid black">
+                        &nbsp; Address Proof/Form No.3
+                      </td>
+                      <td style="border: 1px solid black; text-align: center">
+                        <span *ngIf="queData.ADDRESS_PROOF == 'Y'">
+                          <b> Yes </b></span
+                        >
+                        <span *ngIf="queData.ADDRESS_PROOF == 'N'">
+                          <b> No </b></span
+                        >
+                        <span *ngIf="queData.ADDRESS_PROOF == 'NA'"
+                          ><b> N/A </b></span
+                        >
+                      </td>
+                    </tr>
+                    <tr style="border: 1px solid black">
+                      <td style="border: 1px solid black; text-align: center">
+                        5
+                      </td>
+                      <td style="border: 1px solid black">&nbsp;Salary Slip</td>
+                      <td style="border: 1px solid black; text-align: center">
+                        <span *ngIf="queData.SALARY_SLIP == 'Y'">
+                          <b> Yes </b></span
+                        >
+                        <span *ngIf="queData.SALARY_SLIP == 'N'">
+                          <b> No </b></span
+                        >
+                      </td>
+                    </tr>
+                  </table>
+
+                  <p style="margin-bottom: 2px; padding-top: 20px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If approved, the
+                    Commissoner of Income Tax (Admin. & TPS), Mumbai, may kindly
+                    grant permission to {{ orderdata.EMPLOYEE_NAME }},
+                    {{ orderdata.DESIGNATION }}, for
+                    {{ orderdata.NATURE_OF_TREATMENT }} from
+                    <span *ngFor="let data of HospitalMapping; let k = index">
+                      <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                        {{ data.NAME }} ,{{ data.ADDRESS }} ,{{
+                          data.TYPE == "E"
+                            ? "Empanelled"
+                            : data.TYPE == "NE"
+                            ? "Non Empanelled"
+                            : data.TYPE == "G"
+                            ? "Government"
+                            : ""
+                        }}
+                        <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                        <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                      </span>
+                    </span>
+                    for his {{ orderdata.RELATION_WITH_PATIENT }}
+                    {{ orderdata.PATIENT_NAME }}. The permission letter (2
+                    copies) is put up for signature please.
+                  </p>
+
+                  <!-- hash -->
+
+                  <div style="margin-top: 100px; font-size: 13px">
+                    <div nz-row>
+                      <div nz-col nzSpan="9" style="text-align: left">
+                        <div></div>
+                        <div style="font-weight: bold">Prepared by:</div>
+                      </div>
+                      <div nz-col nzSpan="15"></div>
+                    </div>
+                    <br /><br />
+
+                    <div nz-row>
+                      <div nz-col nzSpan="15">
+                        <div style="font-weight: bold; font-size: 13px">
+                          Jt. CIT (HQ) Personnel,Mumbai
+                        </div>
+                      </div>
+
+                      <div nz-col nzSpan="9" style="text-align: center">
+                        <div style="font-weight: bold; font-size: 13px">
+                          <div *ngIf="SECTION_TYPE == 'welfare'">
+                            <b>(Ritesh Kumar)</b>
+                          </div>
+                          <div *ngIf="SECTION_TYPE == 'gazpay'">
+                            <b>(Jitendra R Chandekar)</b>
+                          </div>
+                          <span *ngIf="SECTION_TYPE == 'welfare'">
+                            ITO (HQ) Welfare & SG,Mumbai
+                          </span>
+                          <span *ngIf="SECTION_TYPE == 'gazpay'">
+                            ITO Gaz Pay Bill Section II, Mumbai</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div
+                        style="
+                          page-break-inside: avoid !important;
+                          font-size: 13px;
+                          page-break-before: avoid !important;
+                        "
+                      >
+                        <div style="margin-top: 50px">
+                          <b
+                            >Commisioner of Income Tax (Administration & TPS),
+                            Mumbai
+                          </b>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div nz-row>
+                        <div nz-col nzSpan="15" style="text-align: left">
+                          <div></div>
+                          <br /><br />
+                          <div style="font-weight: bold; font-size: 13px">
+                            Jt. CIT (HQ) Personnel,Mumbai
+                          </div>
+                        </div>
+                        <div nz-col nzSpan="9"></div>
+                      </div> -->
+                  </div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      class="ant-btn"
+      style="margin-right: 8px"
+      (click)="close(refHODOrderPage)"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="Save()"
+    >
+      <span>Save & Preview</span>
+    </button>
+    <!-- <button nz-button nzType="primary"  (click)="pakagedata()">
+                  Save and Next
+              </button> -->
+
+    <!-- <button
+            type="button"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="openPrintOrderModal()"
+          >
+            <span>Preview</span>
+          </button> -->
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(refHODOrderPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'HOD Order Sheet'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div style="height: 450px; overflow: auto">
+        <div id="printOrderModal">
+          <div
+            style="
+              font-family: Arial, Helvetica, sans-serif !important;
+              width: 700px;
+              padding: 3px;
+              margin-left: 12px;
+            "
+          >
+            <div
+              style="
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 10px;
+                font-size: 13px;
+              "
+            >
+              <!-- <b>ORDER SHEET</b> -->
+            </div>
+            <div>
+              <div
+                style="
+                  text-align: center;
+                  margin-top: 20px;
+                  margin-bottom: 10px;
+                  font-size: 13px;
+                "
+              >
+                <b>ORDER SHEET</b>
+              </div>
+              <div style="font-size: 14px !important">
+                <!-- <p style="margin-bottom: 2px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {{ orderdata.EMPLOYEE_NAME_HN }}
+                        {{ orderdata.DESIGNATION }}, को उनके द्वारा दिनांक
+                        {{
+                          orderdata.TREATMENT_START_DATE | date : "dd MMM yyyy"
+                        }}&nbsp; से
+                        {{
+                          orderdata.TREATMENT_END_DATE | date : "dd MMM yyyy"
+                        }}&nbsp; को 
+                        
+    
+                        <span *ngFor="let data of HospitalMapping;let k = index"              
+                        >
+                      
+                          {{ data.NAME_HN }} , {{ data.ADDRESS_HN }}
+                          <span *ngIf="HospitalMapping.length-2!=k">,</span>
+                          <span *ngIf="HospitalMapping.length-2==k">और</span>
+                     
+                          </span
+                        >
+    
+                        में
+                        <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father'"
+                            >उनके पिता</span
+                          >
+                      
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Wife'"
+                            >उनकी पत्नी</span
+                          >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Husband'"
+                            >उनके पती</span
+                          >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Son'"
+                            >उनका बेटा</span
+                          >
+                          <span
+                            *ngIf="orderdata.RELATION_WITH_PATIENT == 'Daughter'"
+                            >उनकी बेटी</span
+                          >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Sister'"
+                            >उनकी बहन</span
+                          >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Brother'"
+                            >उनके भाई</span
+                          >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'"
+                            >उनकी मां</span
+                          >
+                  
+                          <span
+                        *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                        >उनके ससुर</span
+                      >
+                      <span
+                        *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                        >उनकी सासू मां</span
+                      >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Mother'">
+                            &nbsp;{{ orderdata.PATIENT_NAME_HN }} के</span
+                          >
+                          <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'">
+                            &nbsp;{{ orderdata.PATIENT_NAME_HN }} के</span
+                          >
+                        </span>
+    
+                        &nbsp;
+                        <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                          स्वयं के</span
+                        >
+                        {{ orderdata.NATURE_OF_TREATMENT }}
+                        के इलाज के लिए खर्च की गई राशि, जो
+                        <b
+                          >रुपये {{ orderdata.ADMISSIBLE_AMOUNT }}&nbsp; ({{
+                            amountinwordsh
+                          }})</b
+                        >
+                        से अधिक नहीं है, को सीजीएचएस दर के अनुसार चिकित्सा व्यय की
+                        प्रतिपूर्ती के लिए स्वीकृति प्रदान की जाती है। यह मंजूरी
+                        स्वास्थ्य एवं परिवार कल्याण मंत्रालय, भारत सरकार द्वारा जारी
+                        दिनांक 18.03.1992 के कार्यालय ज्ञापन सं.
+                        एस-11012/1/91/सीजीएचएस (पी) खंड 1 के माध्यम से मुझे प्रदत्त
+                        शक्तियो का प्रयोग करते हुए जारी की जाती है।
+                      </p> -->
+
+                <p style="margin-bottom: 2px">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <b>
+                    {{ orderdata.EMPLOYEE_NAME }},
+                    {{ orderdata.DESIGNATION }},</b
+                  >
+                  has filed an application dated
+                  <b>{{ queData.LETTER_DATE | date : "dd/MM/yyyy" }}</b> and
+                  received in this office on
+                  <b>{{ queData.RECEIVED_DATE | date : "dd/MM/yyyy" }}</b
+                  >,seeking permission for
+                  {{ orderdata.NATURE_OF_TREATMENT }} from
+                  <span *ngFor="let data of HospitalMapping; let k = index">
+                    <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                      {{ data.NAME }} ,{{ data.ADDRESS }} ,{{
+                        data.TYPE == "E"
+                          ? "Empanelled"
+                          : data.TYPE == "NE"
+                          ? "Non Empanelled"
+                          : data.TYPE == "G"
+                          ? "Government"
+                          : ""
+                      }}
+                      <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                      <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                    </span>
+                  </span>
+
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                    for his {{ orderdata.RELATION_WITH_PATIENT }}
+                    {{ orderdata.PATIENT_NAME }}.</span
+                  >
+
+                  <!-- &nbsp; for&nbsp;{{ orderdata.B }} -->
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                    of Self CGHS card number of the official/officer is
+                    {{ orderdata.CGHS_CARD_NO }}.</span
+                  >
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                    CGHS card number of the official/officer each
+                    {{ orderdata.CGHS_CARD_NO }} and CGHS card number of patient
+                    is {{ orderdata.PATIENT_CGHS_BENEFICIERY_NO }}.
+                  </span>
+                  <!-- He/She is a CGHS beneficiary card holding number
+                  {{ orderdata.CGHS_CARD_NO }} and CGHS card holding of his
+                  {{ orderdata.RELATION_WITH_PATIENT }}
+                  {{ orderdata.PATIENT_CGHS_BENEFICIERY_NO }}. -->
+                </p>
+
+                <p style="margin-bottom: 2px">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The Medical Officer,
+                  CGHS <b>{{ queData.CGHS_NAME }}</b> has given referral dated
+                  <b>{{ queData.REFERRAL_DATE | date : "dd/MM/yyyy" }}</b> for
+                  {{ orderdata.NATURE_OF_TREATMENT }}, from any Empanelled/
+                  Non-empanelled Hospital. The requisite documents such as copy
+                  of CGHS Reference, Salary Slip etc. have been submitted by the
+                  applicant. As per Office Memorandum No.
+                  1967/2013/DEL/CGHS/SZ/D52/CGHS(P) dated 30/12/2014, CGHS
+                  beneficiaries in Mumbai are allowed to take treatment / tests,
+                  etc. in any private hospital/diagnostic centre, subject to the
+                  condition that:
+                </p>
+
+                <p style="margin-bottom: 2px">
+                  &nbsp;&nbsp;&nbsp;(i) &nbsp;&nbsp;&nbsp;Reimbursement would be
+                  limited to CGHS rates;
+                </p>
+                <p style="margin-bottom: 2px">
+                  &nbsp;&nbsp;&nbsp;(ii) &nbsp;&nbsp;&nbsp;Referral from
+                  Governemnt Specialist / CGHS Doctor is obtained;
+                </p>
+                <p style="margin-bottom: 2px">
+                  &nbsp;&nbsp;&nbsp;(iii) &nbsp;&nbsp;&nbsp;prior permission
+                  from HOD is taken;
+                </p>
+
+                <p style="margin-bottom: 2px; padding-top: 20px">
+                  &nbsp;&nbsp;&nbsp;&nbsp;The checklist of the above mentioned
+                  permission is as under:-
+                </p>
+                <br />
+
+                <table style="border: 1px solid black; margin-left: 150px">
+                  <tr style="border: 1px solid black">
+                    <th style="border: 1px solid black; text-align: center">
+                      &nbsp;No.
+                    </th>
+                    <th style="border: 1px solid black; text-align: center">
+                      Particulars
+                    </th>
+                    <th style="border: 1px solid black; text-align: center">
+                      &nbsp;Remarks&nbsp;
+                    </th>
+                  </tr>
+                  <tr style="border: 1px solid black">
+                    <td style="border: 1px solid black; text-align: center">
+                      1
+                    </td>
+                    <td style="border: 1px solid black">
+                      &nbsp;Forwarding Letter
+                    </td>
+                    <td style="border: 1px solid black; text-align: center">
+                      <span *ngIf="queData.FORWARDING_LETTER == 'Y'">
+                        <b> Yes </b></span
+                      >
+                      <span *ngIf="queData.FORWARDING_LETTER == 'N'">
+                        <b> No </b></span
+                      >
+                    </td>
+                  </tr>
+                  <tr style="border: 1px solid black">
+                    <td style="border: 1px solid black; text-align: center">
+                      2
+                    </td>
+                    <td style="border: 1px solid black">
+                      &nbsp;CGHS Reference/AMA Reference/Doctor Reference&nbsp;
+                    </td>
+                    <td style="border: 1px solid black; text-align: center">
+                      <span *ngIf="queData.CGHS_AMA_DOCTOR_REFERENCE == 'Y'">
+                        <b> Yes </b></span
+                      >
+                      <span *ngIf="queData.CGHS_AMA_DOCTOR_REFERENCE == 'N'">
+                        <b> No </b></span
+                      >
+                    </td>
+                  </tr>
+                  <tr style="border: 1px solid black">
+                    <td style="border: 1px solid black; text-align: center">
+                      3
+                    </td>
+                    <td style="border: 1px solid black">
+                      &nbsp;Copy of CGHS Card for both beneficiary and
+                      patient&nbsp;
+                    </td>
+                    <td style="border: 1px solid black; text-align: center">
+                      <span *ngIf="queData.COPY_OF_CGHS_CARD_1 == 'Y'">
+                        <b> Yes </b></span
+                      >
+                      <span *ngIf="queData.COPY_OF_CGHS_CARD_1 == 'N'">
+                        <b> No </b></span
+                      >
+                      <span *ngIf="queData.COPY_OF_CGHS_CARD_1 == 'NA'"
+                        ><b> N/A </b></span
+                      >
+                    </td>
+                  </tr>
+                  <tr style="border: 1px solid black">
+                    <td style="border: 1px solid black; text-align: center">
+                      4
+                    </td>
+                    <td style="border: 1px solid black">
+                      &nbsp; Address Proof/Form No.3
+                    </td>
+                    <td style="border: 1px solid black; text-align: center">
+                      <span *ngIf="queData.ADDRESS_PROOF == 'Y'">
+                        <b> Yes </b></span
+                      >
+                      <span *ngIf="queData.ADDRESS_PROOF == 'N'">
+                        <b> No </b></span
+                      >
+                      <span *ngIf="queData.ADDRESS_PROOF == 'NA'"
+                        ><b> N/A </b></span
+                      >
+                    </td>
+                  </tr>
+                  <tr style="border: 1px solid black">
+                    <td style="border: 1px solid black; text-align: center">
+                      5
+                    </td>
+                    <td style="border: 1px solid black">&nbsp;Salary Slip</td>
+                    <td style="border: 1px solid black; text-align: center">
+                      <span *ngIf="queData.SALARY_SLIP == 'Y'">
+                        <b> Yes </b></span
+                      >
+                      <span *ngIf="queData.SALARY_SLIP == 'N'">
+                        <b> No </b></span
+                      >
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin-bottom: 2px; padding-top: 20px">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If approved, the
+                  Commissoner of Income Tax (Admin. & TPS), Mumbai, may kindly
+                  grant permission to {{ orderdata.EMPLOYEE_NAME }},
+                  {{ orderdata.DESIGNATION }}, for
+                  {{ orderdata.NATURE_OF_TREATMENT }} from
+                  <span *ngFor="let data of HospitalMapping; let k = index">
+                    <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                      {{ data.NAME }} ,{{ data.ADDRESS }} ,{{
+                        data.TYPE == "E"
+                          ? "Empanelled"
+                          : data.TYPE == "NE"
+                          ? "Non Empanelled"
+                          : data.TYPE == "G"
+                          ? "Government"
+                          : ""
+                      }}
+                      <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                      <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                    </span>
+                  </span>
+                  for his {{ orderdata.RELATION_WITH_PATIENT }}
+                  {{ orderdata.PATIENT_NAME }}. The permission letter (2 copies)
+                  is put up for signature please.
+                </p>
+
+                <!-- hash -->
+
+                <div style="margin-top: 100px; font-size: 13px">
+                  <div nz-row>
+                    <div nz-col nzSpan="9" style="text-align: left">
+                      <div></div>
+                      <div style="font-weight: bold">Prepared by:</div>
+                    </div>
+                    <div nz-col nzSpan="15"></div>
+                  </div>
+                  <br /><br />
+
+                  <div nz-row>
+                    <div nz-col nzSpan="15">
+                      <div style="font-weight: bold; font-size: 13px">
+                        Jt. CIT (HQ) Personnel,Mumbai
+                      </div>
+                    </div>
+
+                    <div nz-col nzSpan="9" style="text-align: center">
+                      <div style="font-weight: bold; font-size: 13px">
+                        <div *ngIf="SECTION_TYPE == 'welfare'">
+                          <b>(Ritesh Kumar)</b>
+                        </div>
+                        <div *ngIf="SECTION_TYPE == 'gazpay'">
+                          <b>(Jitendra R Chandekar)</b>
+                        </div>
+                        <span *ngIf="SECTION_TYPE == 'welfare'">
+                          ITO (HQ) Welfare & SG,Mumbai
+                        </span>
+                        <span *ngIf="SECTION_TYPE == 'gazpay'">
+                          ITO Gaz Pay Bill Section II, Mumbai</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div nz-row>
+                    <div
+                      style="
+                        page-break-inside: avoid !important;
+                        font-size: 13px;
+                        page-break-before: avoid !important;
+                      "
+                    >
+                      <div style="margin-top: 50px">
+                        <b
+                          >Commisioner of Income Tax (Administration & TPS),
+                          Mumbai
+                        </b>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div nz-row>
+                      <div nz-col nzSpan="15" style="text-align: left">
+                        <div></div>
+                        <br /><br />
+                        <div style="font-weight: bold; font-size: 13px">
+                          Jt. CIT (HQ) Personnel,Mumbai
+                        </div>
+                      </div>
+                      <div nz-col nzSpan="9"></div>
+                    </div> -->
+                </div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      printSectionId="printOrderModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="generatePDF()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,3951 @@
+<div>
+  <nz-steps
+    [nzCurrent]="getcurrent()"
+    nzSize="small"
+    [nzLabelPlacement]="'vertical'"
+  >
+    <nz-step nzTitle="Employee Details"></nz-step>
+    <nz-step
+      *ngIf="
+        (this.data.IS_ADVANCE_CLAIM && this.data.IS_ADVANCE_LTC_CREATED) ||
+        !this.data.IS_ADVANCE_CLAIM
+      "
+      nzTitle="Travel Details"
+    ></nz-step>
+    <nz-step nzTitle="Documents Details"></nz-step>
+    <nz-step nzTitle="Checklist"></nz-step>
+  </nz-steps>
+  <br /><br />
+  <div
+    class="steps-content"
+    style="height: 60vh !important; overflow-y: auto !important"
+  >
+    <!-- Applicant Info -->
+    <div *ngIf="current == 0">
+      <nz-spin [nzSpinning]="isSpinning">
+        <div>
+          <form nz-form #ITCMasterPages="ngForm">
+            <div nz-row>
+              <div nz-col nzSpan="3">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Salutation</nz-form-label>
+
+                  <nz-form-control nzErrorTip="Select Salutation">
+                    <nz-select
+                      name="SALUTATION"
+                      style="width: 100%"
+                      nzPlaceHolder="Salutation"
+                      [(ngModel)]="data.SALUTATION"
+                    >
+                      <nz-option nzValue="Shri" nzLabel="Shri"></nz-option>
+                      <nz-option nzValue="Smt" nzLabel="Smt"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                [nzSpan]="!data.ID && !data.EMP_ID ? 9 : 10"
+                *ngIf="!data.ID"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of Officer/Official</nz-form-label
+                  >
+
+                  <nz-form-control nzErrorTip="Please Select Employee Name">
+                    <nz-select
+                      [nzOptionHeightPx]="60"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Select Employee"
+                      (ngModelChange)="filterEmpData($event)"
+                      name="empID"
+                      [(ngModel)]="data.EMP_ID"
+                      [nzLoading]="empLoader"
+                      (keyup)="employeeSearch($event)"
+                      (nzScrollToBottom)="onScroll($event)"
+                      required
+                    >
+                      <nz-option
+                        *ngFor="let role of employee"
+                        [nzValue]="role.ID"
+                        nzLabel="{{ role.NAME }} - {{ role.EMPLOYEE_CODE }}"
+                        nzCustomContent
+                      >
+                        <div style="background-color: #fffcfc; padding: 5px">
+                          <div nz-row>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="width: 100%; color: black; font-size: 14px"
+                            >
+                              <b
+                                >{{ role.NAME }}
+                                <small style="position: absolute; right: 0px">{{
+                                  role.EMPLOYEE_CODE
+                                }}</small></b
+                              >
+                            </div>
+
+                            <div nz-col nzSpan="24" style="font-size: 11px">
+                              <div nz-row>
+                                <div
+                                  style="
+                                    color: #b30062;
+                                    font-weight: bold;
+                                    white-space: pre-line;
+                                  "
+                                  nz-col
+                                  nzSpan="12"
+                                >
+                                  {{ role.OFFICE_NAME }}
+                                </div>
+
+                                <div nz-col nzSpan="1"></div>
+
+                                <div
+                                  style="
+                                    color: #2f08c0;
+                                    font-weight: bold;
+                                    white-space: pre-line;
+                                  "
+                                  nz-col
+                                  nzSpan="11"
+                                >
+                                  {{ role.DESIGNATION }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="
+                                font-size: 14px;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              {{ role.DDO_OF_THE_OFFICIAL }}
+                            </div>
+                          </div>
+                        </div>
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="10" *ngIf="data.ID">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Employee Name</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Please Select Employee Name">
+                    <input
+                      nz-input
+                      maxlength="512"
+                      name="EMPLOYEE_NAME"
+                      style="width: 100%"
+                      [(ngModel)]="data.EMPLOYEE_NAME"
+                      nz-input
+                      placeholder="Please Enter Employee"
+                      draggable="false"
+                      required
+                    />
+                    <!-- <input nz-input maxlength="32" name="EMPLOYEE_CODE" style="width: 30%"
+                      [(ngModel)]="data.EMPLOYEE_CODE" nz-input disabled="true" draggable="false" required /> -->
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="1" *ngIf="!data.ID && !data.EMP_ID">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button nz-button nzType="primary" (click)="add()">
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <!-- <div nz-col nzSpan="1" *ngIf="data.EMP_ID">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button nz-button nzType="primary" (click)="edit(data)">
+                      <i nz-icon nzType="edit"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Designation</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Select Designation">
+                    <nz-select
+                      nzShowSearch
+                      name="DESIGNATION_ID"
+                      nzPlaceHolder="Select The Designation"
+                      [(ngModel)]="data.DESIGNATION_ID"
+                    >
+                      <nz-option
+                        *ngFor="let designation of designationList"
+                        [nzLabel]="designation.NAME"
+                        [nzValue]="designation.ID"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="5">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Employee Code</nz-form-label
+                  >
+
+                  <nz-form-control nzErrorTip="Enter Correct Employee Code">
+                    <input
+                      nz-input
+                      maxlength="16"
+                      autocomplete="off"
+                      name="EmployeeCode"
+                      disabled
+                      [(ngModel)]="data.EMPLOYEE_CODE"
+                      type="text"
+                      placeHolder="Enter Employee Code"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="10">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >DDO Of The Official</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Select Correct DDO Of The Official"
+                  >
+                    <!-- <input
+                      nz-input
+                      maxlength="256"
+                      autocomplete="off"
+                      name="DDOOfficial"
+                      type="text"
+                      [(ngModel)]="data.DDO_OF_THE_OFFICIAL"
+                      placeHolder="Enter The DDO Of The Official"
+                      required
+                    /> -->
+
+                    <nz-select
+                      name="DDO_OF_THE_OFFICIAL_ID"
+                      style="width: 100%"
+                      nzShowSearch
+                      disabled
+                      nzPlaceHolder="Select DDO Of The Official"
+                      [(ngModel)]="data.DDO_OF_THE_OFFICIAL_ID"
+                      required
+                    >
+                      <nz-option
+                        *ngFor="let offices of ddoOfTheOfficialDataList"
+                        [nzLabel]="offices.HEAD_OF_OFFICE"
+                        [nzValue]="offices.ID"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                  <span
+                    *ngIf="
+                      DDO_ID != oldDDOID && DDO_ID && oldDDOID && data.EMP_ID
+                    "
+                    style="color: blue; font-size: 10px; display: inline-block"
+                    >(The old DDO Of The Official is <b>{{ oldDDO }}</b> & you
+                    are creating the claim using <b> {{ loggedInDDO }}</b
+                    >)</span
+                  >
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="8">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Office Name</nz-form-label>
+                  <nz-form-control nzErrorTip="Enter Correct Office Name">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      maxlength="256"
+                      name="Office Name"
+                      type="text"
+                      [(ngModel)]="data.OFFICE_NAME"
+                      placeHolder="Enter The Office Name"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Head Quarter Name</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Head Quater Name">
+                    <input
+                      nz-input
+                      name="head"
+                      maxlength="100"
+                      [(ngModel)]="data.HEADQUARTERS"
+                      placeHolder="Enter Head Quater Name"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="5">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Basic Pay</nz-form-label>
+
+                  <nz-form-control nzErrorTip="Enter Correct Basic Pay">
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        maxlength="8"
+                        autocomplete="off"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.GRADE_PAY"
+                        name="gradePay"
+                        type="text"
+                        placeHolder="Enter Basic Pay"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- <div nz-col nzSpan="5">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Grade Pay Level
+                  </nz-form-label>
+                  <nz-form-control nzErrorTip="Enter Correct Basic Pay">
+                  <nz-input-group>
+                    <nz-select
+                      name="gradepaylevel"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzPlaceHolder="Select Grade Pay Level"
+                      [(ngModel)]="data.GRADE_PAY_LEVEL_ID"
+                    >
+                    <nz-option
+                    *ngFor="let option of gradePayLevelDataList"
+                    [nzLabel]="option.GRADE_PAY_LEVEL"
+                    [nzValue]="option.ID"
+                      ></nz-option>
+                      
+                    </nz-select>
+                  </nz-input-group>
+                </nz-form-control>
+                </nz-form-item>
+              </div> -->
+              <div nz-col nzSpan="5">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Grade Pay Level
+                  </nz-form-label>
+                  <nz-form-control nzErrorTip="Enter Correct Basic Pay">
+                    <nz-input-group>
+                      <nz-select
+                        name="gradepaylevel"
+                        class="fixed-width-select"
+                        nzShowSearch
+                        nzPlaceHolder="Select Grade Pay Level"
+                        [(ngModel)]="data.GRADE_PAY_LEVEL_ID"
+                      >
+                        <nz-option
+                          *ngFor="let option of gradePayLevelDataList"
+                          [nzLabel]="option.GRADE_PAY_LEVEL"
+                          [nzValue]="option.ID"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="8">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Email ID </nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Valid Email ID">
+                    <input
+                      nz-input
+                      name="commiteeemail"
+                      maxlength="256"
+                      [pattern]="emailpattern"
+                      [(ngModel)]="data.EMAIL_ID"
+                      placeHolder="Enter Email ID"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzNoColon> Mobile Number </nz-form-label>
+                  <nz-form-control
+                    nzErrorTip="Please Enter Valid Mobile Number"
+                  >
+                    <nz-input-group nzAddOnBefore="(+91)">
+                      <input
+                        nz-input
+                        name="commiteemobileno"
+                        [pattern]="mobpattern"
+                        [(ngModel)]="data.MOBILE_NO"
+                        maxlength="10"
+                        minlength="10"
+                        (keypress)="omit($event)"
+                        placeHolder="Enter Mobile Number"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div *ngIf="data.IS_ADVANCE_CLAIM == true">
+              <!-- <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Is Advance Claim ?</nz-form-label>
+                  <nz-form-control>
+                    <nz-switch
+                      name="advanceclaim"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                      [(ngModel)]="data.IS_ADVANCE_CLAIM"
+                      (ngModelChange)="clearAdvanceData($event)"
+                      nzDisabled
+                      style="width: 100%"
+                    ></nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+
+              <div nz-row class="my-box">
+                <div nz-col nzSpan="7" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Date of appointment in the Department</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Select Date of appointment in the Department"
+                    >
+                      <nz-date-picker
+                        name="appDate"
+                        [(ngModel)]="data.APPOINTMENT_DATE"
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        [nzDisabledDate]="disabledAppointmentDate"
+                        required
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="11" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Place of hometown as decalred in the Service
+                      Book</nz-form-label
+                    >
+
+                    <nz-form-control
+                      nzErrorTip="Please Enter Place of hometown as decalred in the Service Book"
+                    >
+                      <input
+                        nz-input
+                        name="homwtown"
+                        maxlength="256"
+                        [(ngModel)]="data.HOMETOWN"
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        placeHolder="Enter Place of hometown as decalred in the Service Book"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="6"
+                *ngIf="data.IS_ADVANCE_CLAIM == true"
+              ></div>
+
+              <div nz-row class="my-box">
+                <div nz-col nzSpan="24" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-divider
+                    *ngIf="data.IS_ADVANCE_CLAIM"
+                    style="font-weight: bold"
+                    nzText="Advance Previous Year Details"
+                  >
+                  </nz-divider>
+                </div>
+                <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon></nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="ADVANCE_ORDER_YEAR"
+                        [(ngModel)]="data.ADVANCE_ORDER_YEAR"
+                        (ngModelChange)="clearAdvanceBlockCalanderYear($event)"
+                      >
+                        <label nz-radio nzValue="Block Year">Block Year </label>
+                        <label nz-radio nzValue="Calendar Year"
+                          >Calendar Year</label
+                        >
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <span
+                      *ngIf="
+                        data.ADVANCE_ORDER_YEAR == '' ||
+                        data.ADVANCE_ORDER_YEAR == null ||
+                        data.ADVANCE_ORDER_YEAR == undefined
+                      "
+                    >
+                      <nz-form-label nzNoColon
+                        >Block/Calendar Year</nz-form-label
+                      >
+                    </span>
+                    <span *ngIf="data.ADVANCE_ORDER_YEAR == 'Block Year'">
+                      <nz-form-label nzNoColon>Block Year</nz-form-label>
+                    </span>
+                    <span *ngIf="data.ADVANCE_ORDER_YEAR == 'Calendar Year'">
+                      <nz-form-label nzNoColon>Calendar Year</nz-form-label>
+                    </span>
+
+                    <nz-form-control nzErrorTip="Please Select Year">
+                      <!-- <input
+                        nz-input
+                        name="PARTICULARS_BLOCK_YEAR"
+                        maxlength="128"
+                        [(ngModel)]="data.PARTICULARS_BLOCK_YEAR"
+                        placeHolder="Enter Block Year"
+                        required
+                      /> -->
+                      <nz-select
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="PARTICULARS_BLOCK_YEAR"
+                        style="width: 100%"
+                        nzShowSearch
+                        nzPlaceHolder="Select Year"
+                        [(ngModel)]="data.PARTICULARS_BLOCK_YEAR_ID"
+                      >
+                        <nz-option
+                          *ngFor="let year of advanceBlockYearList"
+                          [nzValue]="year.ID"
+                          [nzLabel]="year.YEAR"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Is Home Town ?</nz-form-label>
+                    <nz-form-control>
+                      <nz-switch
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="IS_PARTICULARS_HOMETOWN"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        (ngModelChange)="clearParticularHomeTown($event)"
+                        [(ngModel)]="data.IS_PARTICULARS_HOMETOWN"
+                        style="width: 100%"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div
+                  nz-col
+                  nzSpan="6"
+                  *ngIf="data.IS_ADVANCE_CLAIM && data.IS_PARTICULARS_HOMETOWN"
+                >
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Home Town</nz-form-label>
+                    <nz-form-control nzErrorTip="Please Enter Home Town">
+                      <input
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        nz-input
+                        name="PARTICULARS_HOMETOWN"
+                        maxlength="256"
+                        [(ngModel)]="data.PARTICULARS_HOMETOWN"
+                        placeHolder="Enter Home Town"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Any Where In India ?</nz-form-label
+                    >
+                    <nz-form-control>
+                      <!-- <input
+                        nz-input
+                        name="ANYWHERE_IN_INDIA"
+                        maxlength="256"
+                        [(ngModel)]="data.ANYWHERE_IN_INDIA"
+                        placeHolder="Enter Any Where In India"
+                        required
+                      /> -->
+                      <nz-switch
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="ANYWHERE_IN_INDIA"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        [(ngModel)]="data.ANYWHERE_IN_INDIA"
+                        style="width: 100%"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row class="my-box">
+                <div nz-col nzSpan="24" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-divider
+                    *ngIf="data.IS_ADVANCE_CLAIM"
+                    style="font-weight: bold"
+                    nzText="Advance Current Year Details"
+                  >
+                  </nz-divider>
+                </div>
+                <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon></nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group
+                        name="FINAL_ORDER_YEAR"
+                        [(ngModel)]="data.FINAL_ORDER_YEAR"
+                        (ngModelChange)="clearCurrentBlockCalanderYear($event)"
+                      >
+                        <label nz-radio nzValue="Block Year">Block Year </label>
+                        <label nz-radio nzValue="Calendar Year"
+                          >Calendar Year</label
+                        >
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <span
+                      *ngIf="
+                        data.FINAL_ORDER_YEAR == '' ||
+                        data.FINAL_ORDER_YEAR == null ||
+                        data.FINAL_ORDER_YEAR == undefined
+                      "
+                    >
+                      <nz-form-label nzNoColon
+                        >Block/Calendar Year</nz-form-label
+                      >
+                    </span>
+                    <span *ngIf="data.FINAL_ORDER_YEAR == 'Block Year'">
+                      <nz-form-label nzNoColon>Block Year</nz-form-label>
+                    </span>
+                    <span *ngIf="data.FINAL_ORDER_YEAR == 'Calendar Year'">
+                      <nz-form-label nzNoColon>Calendar Year</nz-form-label>
+                    </span>
+
+                    <nz-form-control nzErrorTip="Please Select Year">
+                      <!-- <input
+                        nz-input
+                        name="PARTICULARS_BLOCK_YEAR"
+                        maxlength="128"
+                        [(ngModel)]="data.PARTICULARS_BLOCK_YEAR"
+                        placeHolder="Enter Block Year"
+                        required
+                      /> -->
+                      <nz-select
+                        name="FINAL_PARTICULARS_BLOCK_YEAR_ID"
+                        style="width: 100%"
+                        nzShowSearch
+                        nzPlaceHolder="Select Year"
+                        [(ngModel)]="data.FINAL_PARTICULARS_BLOCK_YEAR_ID"
+                      >
+                        <nz-option
+                          *ngFor="let year of finalBlockYearList"
+                          [nzValue]="year.ID"
+                          [nzLabel]="year.YEAR"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Is Home Town ?</nz-form-label>
+                    <nz-form-control>
+                      <nz-switch
+                        name="IS_PARTICULARS_HOMETOWN_FINAL"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        (ngModelChange)="clearFinalParticularHomeTown($event)"
+                        [(ngModel)]="data.IS_PARTICULARS_HOMETOWN_FINAL"
+                        style="width: 100%"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div
+                  nz-col
+                  nzSpan="6"
+                  *ngIf="
+                    data.IS_ADVANCE_CLAIM && data.IS_PARTICULARS_HOMETOWN_FINAL
+                  "
+                >
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Home Town</nz-form-label>
+                    <nz-form-control nzErrorTip="Please Enter Home Town">
+                      <input
+                        nz-input
+                        name="FINAL_PARTICULARS_HOMETOWN"
+                        maxlength="256"
+                        [(ngModel)]="data.FINAL_PARTICULARS_HOMETOWN"
+                        placeHolder="Enter Home Town"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4" *ngIf="data.IS_ADVANCE_CLAIM">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Any Where In India ?</nz-form-label
+                    >
+                    <nz-form-control>
+                      <!-- <input
+                        nz-input
+                        name="ANYWHERE_IN_INDIA"
+                        maxlength="256"
+                        [(ngModel)]="data.ANYWHERE_IN_INDIA"
+                        placeHolder="Enter Any Where In India"
+                        required
+                      /> -->
+                      <nz-switch
+                        name="FINAL_ANYWHERE_IN_INDIA"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        [(ngModel)]="data.FINAL_ANYWHERE_IN_INDIA"
+                        style="width: 100%"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row class="my-box">
+                <div nz-col nzSpan="12" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Block Year & place to which now proposed to
+                      avail</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Enter Block Year & place to which now proposed to avail"
+                    >
+                      <textarea
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        nz-input
+                        name="AVAIL_BLOCK_YEAR"
+                        maxlength="256"
+                        [(ngModel)]="data.AVAIL_BLOCK_YEAR"
+                        placeHolder="Enter Block Year & place to which now proposed to avail"
+                        required
+                        rows="2"
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.AVAIL_BLOCK_YEAR != undefined"
+                      >
+                        {{ data.AVAIL_BLOCK_YEAR.length }}/256
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="12" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Whether Avails CL or EL (Nature of leave to be
+                      mentioned)</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Enter Whether Avails CL or EL (Nature of leave to be mentioned)"
+                    >
+                      <textarea
+                        nz-input
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="AVAILS_CL_EL"
+                        maxlength="256"
+                        rows="2"
+                        [(ngModel)]="data.AVAILS_CL_EL"
+                        placeHolder="Enter Whether Avails CL or EL (Nature of leave to be mentioned)"
+                        required
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.AVAILS_CL_EL != undefined"
+                      >
+                        {{ data.AVAILS_CL_EL.length }}/256
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>
+                      Whether LTC advance already taken has been settled in full
+                      or pending settelment, date of the settelment of the
+                      previous case</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Enter Whether LTC advance already taken has been settled in full or pending settelment, date of the settelment of the previous case"
+                    >
+                      <input
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        nz-input
+                        name="LTC_ADVACNE_SETTLED"
+                        maxlength="256"
+                        [(ngModel)]="data.LTC_ADVACNE_SETTLED"
+                        placeHolder="Enter Whether LTC advance already taken has been settled in full or pending settelment, date of the settelment of the previous case"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Place of visit (farthest point)</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Enter Place of visit (farthest point)"
+                    >
+                      <input
+                        nz-input
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="PLACE_OF_VISIT"
+                        maxlength="256"
+                        [(ngModel)]="data.PLACE_OF_VISIT"
+                        placeHolder="Enter Place of visit (farthest point)"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Propose date onward journey</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Select Propose date onward journey"
+                    >
+                      <nz-date-picker
+                        name="JOURNEY_ONWARD_PROPOSED_DATE"
+                        [(ngModel)]="data.JOURNEY_ONWARD_PROPOSED_DATE"
+                        style="width: 100%"
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        nzFormat="dd/MM/yyyy"
+                        required
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>
+                      Probable date of return journey</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Select Probable date of return journey"
+                    >
+                      <nz-date-picker
+                        name="JOURNEY_RETURN_PROBABLE_DATE"
+                        [(ngModel)]="data.JOURNEY_RETURN_PROBABLE_DATE"
+                        style="width: 100%"
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        nzFormat="dd/MM/yyyy"
+                        required
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <!-- <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Amount Of Single Fare</nz-form-label>
+                  <nz-form-control
+                    nzErrorTip="Please Enter Amount Of Single Fare"
+                  >
+                    <input
+                      nz-input
+                      name="AMOUNT_OF_SINGLE_FARE"
+                      maxlength="8"
+                      [(ngModel)]="data.AMOUNT_OF_SINGLE_FARE"
+                      placeHolder="Enter Amount Of Single Fare"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Number Of Single Fare</nz-form-label>
+                  <nz-form-control
+                    nzErrorTip="Please Enter Number Of Single Fare"
+                  >
+                    <input
+                      nz-input
+                      name="NUMBER_OF_FARE"
+                      maxlength="8"
+                      [(ngModel)]="data.NUMBER_OF_FARE"
+                      placeHolder="Enter Number Of Single Fare"
+                      (keypress)="omit($event)"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+
+                <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon nzRequired
+                      >Amount of advance required</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Enter Amount of advance required"
+                    >
+                      <input
+                        nz-input
+                        [disabled]="
+                          data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED
+                            ? true
+                            : false
+                        "
+                        name="REQUIRED_ADVANCE_AMOUNT"
+                        maxlength="8"
+                        [(ngModel)]="data.REQUIRED_ADVANCE_AMOUNT"
+                        placeHolder="Enter Amount of advance required"
+                        (keypress)="onlynumdot($event)"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <nz-divider
+              *ngIf="data.IS_ADVANCE_CLAIM == true"
+              style="font-weight: bold"
+              nzText="Advance Claim Journey Details"
+            >
+            </nz-divider>
+
+            <div class="my-box" *ngIf="data.IS_ADVANCE_CLAIM == true">
+              <form nz-form #journeyTableData="ngForm">
+                <div nz-row>
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon nzRequired
+                        >From Place</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Please Enter From Place">
+                        <input
+                          nz-input
+                          name="DEPARTURE_FROM"
+                          maxlength="128"
+                          [(ngModel)]="editJourneyRecord.DEPARTURE_FROM"
+                          placeHolder="Enter From Place"
+                          required
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon nzRequired
+                        >To Place</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Please Enter To Place">
+                        <input
+                          nz-input
+                          name="ARRIVAL_TO"
+                          maxlength="128"
+                          [(ngModel)]="editJourneyRecord.ARRIVAL_TO"
+                          placeHolder="Enter To Place"
+                          required
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon nzRequired
+                        >Travel Mode</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Please Select Travel Mode">
+                        <nz-select
+                          name="TRAVEL_MODE_ID"
+                          nzPlaceHolder="Select Travel Mode"
+                          [(ngModel)]="editJourneyRecord.TRAVEL_MODE_ID"
+                          style="width: 100%"
+                          required
+                          (ngModelChange)="getClasses($event)"
+                        >
+                          <nz-option
+                            *ngFor="let mode of travelMode"
+                            [nzValue]="mode.ID"
+                            [nzLabel]="mode.NAME"
+                          ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon nzRequired
+                        >Class of Mode</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Please Select Class of Mode">
+                        <nz-select
+                          name="TRAVEL_CLASS_ID"
+                          nzPlaceHolder="Select Class of Mode"
+                          [(ngModel)]="editJourneyRecord.TRAVEL_CLASS_ID"
+                          style="width: 100%"
+                          required
+                        >
+                          <nz-option
+                            *ngFor="let class of classMode"
+                            [nzValue]="class.ID"
+                            [nzLabel]="class.NAME"
+                          ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon nzRequired
+                        >Number Of Fare</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Please Enter Number Of Fare">
+                        <input
+                          nz-input
+                          name="NO_OF_FAIRS"
+                          maxlength="8"
+                          [(ngModel)]="editJourneyRecord.NO_OF_FAIRS"
+                          placeHolder="Enter Number Of Fare"
+                          (keypress)="omit($event)"
+                          required
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon nzRequired
+                        >Fare Paid Claimed</nz-form-label
+                      >
+                      <nz-form-control
+                        nzErrorTip="Please Enter Fare Paid Claimed"
+                      >
+                        <input
+                          nz-input
+                          name="JOURNEY_CLAIMED_AMOUNT"
+                          maxlength="8"
+                          [(ngModel)]="editJourneyRecord.JOURNEY_CLAIMED_AMOUNT"
+                          placeHolder="Enter Fare Paid Claimed"
+                          (keypress)="onlynumdot($event)"
+                          required
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div
+                    nz-col
+                    nzSpan="3"
+                    *ngIf="data.IS_ADVANCE_LTC_CREATED == false"
+                  >
+                    <nz-form-item style="margin-top: 30px" *ngIf="!isAdmin">
+                      <nz-form-label nzNoColon></nz-form-label>
+
+                      <button
+                        nz-button
+                        nzType="primary"
+                        (click)="addJourneyData(true, journeyTableData)"
+                        nzJustify="end"
+                      >
+                        <i nz-icon nzType="plus"></i>Add
+                      </button>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </form>
+
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <nz-table
+                    class="my-scroll no-wrap1"
+                    nzBordered
+                    #journeyDataTable
+                    nzShowSizeChanger
+                    [nzFrontPagination]="false"
+                    [nzLoading]="isSpinning"
+                    [nzSize]="'small'"
+                    [nzScroll]="{ x: '1150px', y: '55vh' }"
+                    [nzData]="journeyData"
+                  >
+                    <thead>
+                      <tr>
+                        <th
+                          *ngIf="data.IS_ADVANCE_LTC_CREATED == false"
+                          nzWidth="10px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          Action
+                        </th>
+                        <th
+                          nzWidth="20px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          From Place
+                        </th>
+                        <th
+                          nzWidth="20px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          To Place
+                        </th>
+                        <th
+                          nzWidth="17px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          Number Of Fare
+                        </th>
+                        <th
+                          nzWidth="18px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          Fare Paid Claimed
+                        </th>
+                        <th
+                          nzWidth="15px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          Travel Mode
+                        </th>
+                        <th
+                          nzWidth="25px"
+                          style="font-weight: bold; text-align: center"
+                        >
+                          Class of Mode
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        style="white-space: pre-line"
+                        *ngFor="
+                          let jData of journeyDataTable.data;
+                          let i = index
+                        "
+                      >
+                        <td
+                          *ngIf="data.IS_ADVANCE_LTC_CREATED == false"
+                          style="text-align: center"
+                        >
+                          <span
+                            style="cursor: pointer"
+                            nz-popconfirm
+                            nzPopconfirmTitle="Are you sure want delete?"
+                            nzPopconfirmPlacement="top"
+                            (nzOnConfirm)="confirmDeleteJourney(jData, i)"
+                            (nzOnCancel)="cancel()"
+                          >
+                            <span
+                              *ngIf="!isAdmin"
+                              nz-icon
+                              nzType="delete"
+                              nzTheme="twotone"
+                              nz-tooltip
+                              nzTooltipTitle="Delete"
+                            >
+                            </span>
+                          </span>
+                          &nbsp;
+                          <a
+                            (click)="editJourneyData(jData, i)"
+                            nz-tooltip
+                            nzTooltipTitle="Edit"
+                          >
+                            <span
+                              nz-icon
+                              nzType="edit"
+                              nzTheme="twotone"
+                              style="margin-top: 10px"
+                            ></span>
+                          </a>
+                        </td>
+
+                        <td style="text-align: center">
+                          {{ journeyData[i]["DEPARTURE_FROM"] }}
+                        </td>
+                        <td style="text-align: center">
+                          {{ journeyData[i]["ARRIVAL_TO"] }}
+                        </td>
+                        <td style="text-align: center">
+                          {{ journeyData[i]["NO_OF_FAIRS"] }}
+                        </td>
+                        <td style="text-align: center">
+                          {{ journeyData[i]["JOURNEY_CLAIMED_AMOUNT"] }}
+                        </td>
+                        <td style="text-align: center">
+                          {{ journeyData[i]["TRAVEL_MODE_NAME"] }}
+                        </td>
+                        <td style="text-align: center">
+                          {{ journeyData[i]["TRAVEL_CLASS_NAME"] }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </nz-table>
+                </div>
+              </div>
+            </div>
+
+            <div
+              nz-row
+              *ngIf="
+                (data.IS_ADVANCE_CLAIM == true &&
+                  data.IS_ADVANCE_LTC_CREATED) ||
+                data.IS_ADVANCE_CLAIM == false
+              "
+            >
+              <div nz-col nzSpan="24">
+                <div nz-row class="my-box">
+                  <div nz-col nzSpan="8">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Nature Of Leave</nz-form-label
+                      >
+
+                      <nz-form-control>
+                        <nz-select
+                          name="NATURE_OF_LEAVE"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Nature Of Leave"
+                          [(ngModel)]="data.NATURE_OF_LEAVE"
+                          style="width: 100%"
+                        >
+                          <nz-option
+                            nzLabel="Casual Leave"
+                            nzValue="Casual Leave"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Medical Leave"
+                            nzValue="Medical Leave"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Half Day"
+                            nzValue="Half Day"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Study Leave"
+                            nzValue="Study Leave"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Child Care Leave"
+                            nzValue="Child Care Leave"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Earn Leave"
+                            nzValue="Earn Leave"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Other"
+                            nzValue="Other"
+                          ></nz-option>
+                          <nz-option
+                            nzLabel="Not Applicable"
+                            nzValue="Not Applicable"
+                          ></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Leave From Date</nz-form-label
+                      >
+                      <nz-form-control
+                        nzErrorTip="Please Select Leave From Date"
+                      >
+                        <nz-date-picker
+                          name="leavestartdate"
+                          [(ngModel)]="data.LEAVE_START_DATE"
+                          style="width: 100%"
+                          nzFormat="dd/MM/yyyy"
+                          [nzDisabledDate]="disabledStartDate"
+                          (nzOnOpenChange)="leaveFromDate()"
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Leave To Date</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Please Select Leave To Date">
+                        <nz-date-picker
+                          name="leaveenddate"
+                          [(ngModel)]="data.LEAVE_END_DATE"
+                          style="width: 100%"
+                          nzFormat="dd/MM/yyyy"
+                          [nzDisabledDate]="disabledEndDate"
+                          (nzOnOpenChange)="leaveToDate()"
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="4">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>Is Sanctioned?</nz-form-label>
+                      <nz-form-control>
+                        <nz-switch
+                          name="sanction"
+                          nzCheckedChildren="Yes"
+                          nzUnCheckedChildren="No"
+                          [(ngModel)]="data.IS_SANCTIONED"
+                          style="width: 100%"
+                        ></nz-switch>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="8">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <nz-form-label nzNoColon></nz-form-label>
+                        <nz-radio-group
+                          name="ORDER_YEAR"
+                          [(ngModel)]="data.ORDER_YEAR"
+                          (ngModelChange)="clearBlockCalanderYear($event)"
+                        >
+                          <label nz-radio nzValue="Block Year"
+                            >Block Year
+                          </label>
+                          <label nz-radio nzValue="Calendar Year"
+                            >Calendar Year</label
+                          >
+                        </nz-radio-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div
+                    nz-col
+                    nzSpan="4"
+                    *ngIf="data.ORDER_YEAR == 'Block Year'"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Block Year</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Select Block Year">
+                        <!-- <nz-form-control
+                            *ngIf="data.ORDER_YEAR == 'Calendar Year'"
+                            nzErrorTip="Select Calendar Year"
+                          > -->
+                        <nz-input-group>
+                          <nz-select
+                            name="BLOCKYEAR"
+                            style="width: 100%"
+                            nzShowSearch
+                            nzPlaceHolder="Block Year "
+                            (ngModelChange)="getspecification($event)"
+                            [(ngModel)]="data.BLOCK_YEAR_ID"
+                          >
+                            <nz-option
+                              *ngFor="let year of blockYearList"
+                              [nzValue]="year.ID"
+                              [nzLabel]="year.YEAR"
+                            ></nz-option>
+                          </nz-select>
+                        </nz-input-group>
+
+                        <!-- <nz-input-group>
+                            <input
+                              nz-input
+                              maxlength="16"
+                              autocomplete="off"
+                              [(ngModel)]="data.BLOCK_YEAR"
+                              name="BLOCK_YEAR"
+                              type="text"
+                              placeHolder="Enter Block Year"
+                              required
+                            />
+                          </nz-input-group> -->
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div
+                    nz-col
+                    nzSpan="4"
+                    *ngIf="data.ORDER_YEAR == 'Calendar Year'"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Calendar Year</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Select Calendar Year">
+                        <!-- <nz-form-control
+                            *ngIf="data.ORDER_YEAR == 'Calendar Year'"
+                            nzErrorTip="Select Calendar Year"
+                          > -->
+                        <nz-input-group>
+                          <nz-select
+                            name="BLOCKYEAR"
+                            style="width: 100%"
+                            nzShowSearch
+                            nzPlaceHolder="Block Year "
+                            (ngModelChange)="getspecification($event)"
+                            [(ngModel)]="data.BLOCK_YEAR_ID"
+                          >
+                            <nz-option
+                              *ngFor="let year of blockYearList"
+                              [nzValue]="year.ID"
+                              [nzLabel]="year.YEAR"
+                            ></nz-option>
+                          </nz-select>
+                        </nz-input-group>
+
+                        <!-- <nz-input-group>
+                            <input
+                              nz-input
+                              maxlength="16"
+                              autocomplete="off"
+                              [(ngModel)]="data.BLOCK_YEAR"
+                              name="BLOCK_YEAR"
+                              type="text"
+                              placeHolder="Enter Block Year"
+                              required
+                            />
+                          </nz-input-group> -->
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <br />
+
+          <nz-divider
+            style="font-weight: bold"
+            nzText="Particulars of members of family in respect of whom the L.T.C. has been claimed"
+          >
+          </nz-divider>
+
+          <form nz-form #relation="ngForm">
+            <div nz-row class="my-box">
+              <div nz-col nzSpan="8">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of Family Member</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzErrorTip="Please Enter Name of Family Member"
+                  >
+                    <input
+                      nz-input
+                      name="NAME_OF_FAMILY_MEMBER"
+                      maxlength="256"
+                      [(ngModel)]="editrelation.NAME_OF_FAMILY_MEMBER"
+                      placeHolder="Enter Name of Family Member"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="3">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon> Age </nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Age">
+                    <input
+                      nz-input
+                      name="AGE"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="editrelation.AGE"
+                      placeHolder="Enter Age"
+                      maxlength="3"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="7">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Relationship with the Govt. Servant
+                  </nz-form-label>
+                  <nz-input-group>
+                    <nz-select
+                      name="RELATIONSHIP"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzPlaceHolder="Select Relationship "
+                      [(ngModel)]="editrelation.RELATIONSHIP"
+                    >
+                      <nz-option nzLabel="Self" nzValue="Self"></nz-option>
+
+                      <nz-option nzLabel="Mother" nzValue="Mother"></nz-option>
+                      <nz-option nzLabel="Father" nzValue="Father"></nz-option>
+                      <nz-option
+                        nzLabel="Brother"
+                        nzValue="Brother"
+                      ></nz-option>
+                      <nz-option nzLabel="Sister" nzValue="Sister"></nz-option>
+                      <nz-option
+                        nzLabel="Daughter"
+                        nzValue="Daughter"
+                      ></nz-option>
+                      <nz-option nzLabel="Son" nzValue="Son"></nz-option>
+                      <nz-option nzLabel="Wife" nzValue="Wife"></nz-option>
+                      <nz-option
+                        nzLabel="Husband"
+                        nzValue="Husband"
+                      ></nz-option>
+                      <nz-option
+                        nzLabel="Father-In-Law"
+                        nzValue="Father-In-Law"
+                      ></nz-option>
+                      <nz-option
+                        nzLabel="Mother-In-Law"
+                        nzValue="Mother-In-Law"
+                      ></nz-option>
+                      <nz-option
+                        nzLabel="Grand-Mother"
+                        nzValue="Grand-Mother"
+                      ></nz-option>
+                      <nz-option
+                        nzLabel="Grand-Father"
+                        nzValue="Grand-Father"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="3">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Gender </nz-form-label>
+                  <nz-input-group>
+                    <nz-select
+                      name="GENDER"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzPlaceHolder="Gender "
+                      [(ngModel)]="editrelation.GENDER"
+                    >
+                      <nz-option nzLabel="Male" nzValue="Male"></nz-option>
+                      <nz-option nzLabel="Female" nzValue="Female"></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="3">
+                <nz-form-item style="margin-top: 30px" *ngIf="!isAdmin">
+                  <nz-form-label nzNoColon></nz-form-label>
+
+                  <button
+                    nz-button
+                    nzType="primary"
+                    (click)="addData(true, relation)"
+                    nzJustify="end"
+                  >
+                    <span *ngIf="!editrelation.ID">Add</span>
+                    <span *ngIf="editrelation.ID">Update</span>
+                  </button>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-table
+                class="my-scroll no-wrap1"
+                nzBordered
+                #retlatioantable
+                nzShowSizeChanger
+                [nzFrontPagination]="false"
+                [nzLoading]="isSpinning"
+                [nzSize]="'small'"
+                [nzScroll]="{ x: '1100px', y: '55vh' }"
+                [nzData]="relationdata"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      nzWidth="10px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Action
+                    </th>
+                    <th
+                      nzWidth="50px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Name of Family Member
+                    </th>
+                    <th
+                      nzWidth="10px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Age
+                    </th>
+                    <th
+                      nzWidth="40px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Relationship with the Govt Servant
+                    </th>
+                    <th
+                      nzWidth="30px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Gender
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    style="white-space: pre-line"
+                    *ngFor="let data of retlatioantable.data; let i = index"
+                  >
+                    <td style="text-align: center">
+                      <span
+                        style="cursor: pointer"
+                        nz-popconfirm
+                        nzPopconfirmTitle="Are you sure want delete?"
+                        nzPopconfirmPlacement="top"
+                        (nzOnConfirm)="confirmDeleterelation(data, i)"
+                        (nzOnCancel)="cancel()"
+                      >
+                        <span
+                          *ngIf="!isAdmin"
+                          nz-icon
+                          nzType="delete"
+                          nzTheme="twotone"
+                          nz-tooltip
+                          nzTooltipTitle="Delete"
+                        >
+                        </span>
+                      </span>
+                      &nbsp;
+                      <a
+                        (click)="edit1(data, i)"
+                        nz-tooltip
+                        nzTooltipTitle="Edit"
+                      >
+                        <span
+                          nz-icon
+                          nzType="edit"
+                          nzTheme="twotone"
+                          style="margin-top: 10px"
+                        ></span>
+                      </a>
+                    </td>
+
+                    <td style="text-align: center">
+                      {{ relationdata[i]["NAME_OF_FAMILY_MEMBER"] }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ relationdata[i]["AGE"] }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ relationdata[i]["RELATIONSHIP"] }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ relationdata[i]["GENDER"] }}
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+      </nz-spin>
+    </div>
+
+    <!-- Applicant Info -->
+
+    <div *ngIf="current == 1">
+      <nz-divider
+        style="font-weight: bold"
+        nzText="Details of Journeys(s) performed by Government Servant and the members of his/her Family"
+      ></nz-divider>
+
+      <div nz-row>
+        <div nz-col nzSpan="24" style="text-align: right">
+          <button
+            *ngIf="!isAdmin"
+            nz-button
+            nzType="primary"
+            (click)="addform7()"
+            nzJustify="end"
+          >
+            <i nz-icon nzType="plus"></i>Add
+          </button>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-table
+            class="my-scroll no-wrap1"
+            nzBordered
+            #dataxfdstable
+            nzShowSizeChanger
+            [nzFrontPagination]="false"
+            [nzLoading]="isSpinning"
+            [nzSize]="'small'"
+            [nzScroll]="{ x: '2000px', y: '55vh' }"
+            [nzData]="formdata7"
+          >
+            <thead>
+              <tr>
+                <th
+                  nzWidth="10px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Action
+                </th>
+                <th
+                  nzWidth="12px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  From Date
+                </th>
+                <th
+                  nzWidth="15px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Journey From
+                </th>
+                <th
+                  nzWidth="12px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  To Date
+                </th>
+                <th
+                  nzWidth="15px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Journey To
+                </th>
+                <th
+                  nzWidth="15px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Travel Mode
+                </th>
+                <th
+                  nzWidth="15px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Class of Mode
+                </th>
+                <th
+                  nzWidth="15px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  No of Fairs
+                </th>
+                <th
+                  nzWidth="10px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Fare Paid(₹)
+                </th>
+                <th
+                  nzWidth="15px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Distance of Road(Kms.)
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="white-space: pre-line" *ngFor="let data of formdata7">
+                <td style="text-align: center">
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="deleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                  &nbsp;
+                  <a (click)="editform7(data)" nz-tooltip nzTooltipTitle="Edit">
+                    <span
+                      nz-icon
+                      nzType="edit"
+                      nzTheme="twotone"
+                      style="margin-top: 10px"
+                    ></span>
+                  </a>
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.FROM_DATETIME | date : "dd/MM/yyyy (HH:mm)" }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.DEPARTURE_FROM }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.TO_DATETIME | date : "dd/MM/yyyy (HH:mm)" }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.ARRIVAL_TO }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.TRAVEL_CLASS_NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.TRAVEL_MODE_NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.NO_OF_FAIRS }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.FAIR_PAID }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.DISTANCE_BY_ROAD }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+      <br />
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Is Advance Taken? </nz-form-label>
+            <nz-form-control>
+              <nz-switch
+                name="advan"
+                (ngModelChange)="switchChange1($event)"
+                [nzDisabled]="data.IS_ADVANCE_CLAIM == true ? true : false"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_ADVANCE_TAKEN"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_TAKEN">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Advance Amount </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Amount">
+              <nz-input-group nzAddOnBefore="₹">
+                <input
+                  nz-input
+                  name="Advanceamount"
+                  placeHolder="Enter Advance Amount"
+                  style="width: 100%"
+                  maxlength="8"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.AMOUNT_OF_ADVANCE"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <br />
+      <nz-divider
+        style="font-weight: bold; white-space: pre"
+        nzText="Particulars of Journey(s) for which higher class of accommodation than the one to which the
+      Goverment Servant is entitled, was used ( Sanction No. and date to be given)"
+      ></nz-divider>
+
+      <div nz-row>
+        <div nz-col nzSpan="24" style="text-align: right">
+          <button
+            *ngIf="!isAdmin"
+            nz-button
+            nzType="primary"
+            (click)="addform3()"
+            nzJustify="end"
+          >
+            <i nz-icon nzType="plus"></i>Add
+          </button>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-table
+            class="my-scroll no-wrap1"
+            nzBordered
+            #dataxfduuuustable
+            nzShowSizeChanger
+            [nzFrontPagination]="false"
+            [nzLoading]="isSpinning"
+            [nzSize]="'small'"
+            [nzScroll]="{ x: '1800px', y: '55vh' }"
+            [nzData]="formdata3"
+          >
+            <thead>
+              <tr>
+                <th nzWidth="5px" nzAlign="center">
+                  <p style="font-weight: bold">Action</p>
+                </th>
+
+                <th
+                  nzWidth="13px"
+                  style="text-align: center; font-weight: bold"
+                  nzColumnKey="{{ 'PLACE_FROM' }}"
+                >
+                  From Place
+                </th>
+
+                <th
+                  nzWidth="13px"
+                  style="text-align: center; font-weight: bold"
+                  nzColumnKey="{{ 'PLACE_TO' }}"
+                >
+                  To Place
+                </th>
+
+                <th
+                  nzColumnKey="{{ 'MODE_OF_CONVEYANCE_NAME' }}"
+                  nzWidth="13px"
+                  style="text-align: center; font-weight: bold"
+                >
+                  Mode Of Conveyance
+                </th>
+
+                <th
+                  nzWidth="9px"
+                  style="text-align: center; font-weight: bold"
+                  nzColumnKey="{{ 'ENTITLED_CLASS_NAME' }}"
+                >
+                  Class To which Entitled
+                </th>
+                <th
+                  nzWidth="9px"
+                  style="text-align: center; font-weight: bold"
+                  nzColumnKey="{{ 'TRAVELLED_CLASS_CLASS_NAME' }}"
+                >
+                  Class Actually Travelled
+                </th>
+                <th
+                  nzWidth="8px"
+                  style="text-align: center; font-weight: bold"
+                  nzColumnKey="{{ 'NO_OF_FAIRS' }}"
+                >
+                  No. Of Fairs(No.s)
+                </th>
+                <th
+                  nzWidth="8px"
+                  style="text-align: center; font-weight: bold"
+                  nzColumnKey="{{ 'FAIR_PAID' }}"
+                >
+                  Fare Paid(₹)
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                style="white-space: pre-line"
+                *ngFor="let data of dataxfduuuustable.data"
+              >
+                <td style="text-align: center">
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="deleteConfirmparticular(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span> </span
+                  >&nbsp;
+                  <a (click)="editform3(data)" nz-tooltip nzTooltipTitle="Edit">
+                    <span
+                      nz-icon
+                      nzType="edit"
+                      nzTheme="twotone"
+                      style="margin-top: 10px"
+                    ></span>
+                  </a>
+                </td>
+                <!-- <td style="text-align: center;white-space: pre-line; "> {{ getTimeIn12Hour(data["DATE"]) | date: "hh:mm a"
+                }}</td> -->
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["PLACE_FROM"] }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["PLACE_TO"] }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["MODE_OF_CONVEYANCE_NAME"] }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["ENTITLED_CLASS_NAME"] }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["TRAVELLED_CLASS_CLASS_NAME"] }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["NO_OF_FAIRS"] }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data["FAIR_PAID"] }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+
+      <br />
+      <nz-divider
+        style="font-weight: bold"
+        nzText="Particulars of Journey(s) Performed by Road between places Connected by Rail"
+      ></nz-divider>
+
+      <div nz-row>
+        <div nz-col nzSpan="24" style="text-align: right">
+          <button
+            *ngIf="!isAdmin"
+            nz-button
+            nzType="primary"
+            (click)="addform1()"
+            nzJustify="end"
+          >
+            <i nz-icon nzType="plus"></i>Add
+          </button>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-table
+            class="my-scroll no-wrap1"
+            nzBordered
+            #datatablefare
+            nzShowSizeChanger
+            [nzFrontPagination]="false"
+            [nzLoading]="isSpinning"
+            [nzSize]="'small'"
+            [nzScroll]="{ x: '910px', y: '55vh' }"
+            [nzData]="formdata1"
+          >
+            <thead>
+              <tr>
+                <th
+                  nzWidth="15px"
+                  style="font-weight: bold; text-align: center"
+                >
+                  Action
+                </th>
+                <th
+                  nzWidth="50px"
+                  style="font-weight: bold; text-align: center"
+                >
+                  From Place
+                </th>
+                <th
+                  nzWidth="50px"
+                  style="font-weight: bold; text-align: center"
+                >
+                  To Place
+                </th>
+                <th
+                  nzWidth="25px"
+                  style="font-weight: bold; text-align: center"
+                >
+                  Class To Entitled
+                </th>
+                <th
+                  nzWidth="25px"
+                  style="font-weight: bold; text-align: center"
+                >
+                  Fare Paid(₹)
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                style="white-space: pre-line"
+                *ngFor="let data of datatablefare.data"
+              >
+                <td style="text-align: center">
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="deleteConfirmlitcroad(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span> </span
+                  >&nbsp;
+                  <a (click)="editform1(data)" nz-tooltip nzTooltipTitle="Edit">
+                    <span
+                      nz-icon
+                      nzType="edit"
+                      nzTheme="twotone"
+                      style="margin-top: 10px"
+                    ></span>
+                  </a>
+                </td>
+                <!-- <td style="text-align: center;white-space: pre-line; "> {{ getTimeIn12Hour(data["DATE"]) | date: "hh:mm a"
+                }}
+              </td> -->
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.FROM_PLACE }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.TO_PLACE }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.ENTITLED_TRAVEL_CLASS_NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.FARE_PAID }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+
+      <br />
+      <br />
+
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <p>
+              <b>
+                <label
+                  nz-checkbox
+                  name="type"
+                  [(ngModel)]="data.SELF_DECLARATION"
+                  (ngModelChange)="chechboxdata($event)"
+                >
+                </label>
+                Certifiied that the:-</b
+              >
+            </p>
+            <p>
+              Information as given above is true to the best of my knowledge and
+              belief, and
+            </p>
+            <p>
+              That my husband/ wife is not employed in the Government Service /
+              that my husband / wife is employed in Government Service and the
+              concession has not been availed of by him / her separately for
+              himself / herself for any of the family members for the concerned
+              <span *ngIf="!data.IS_ADVANCE_CLAIM">
+                <span *ngIf="data.ORDER_YEAR"> {{ data.ORDER_YEAR }}</span>
+                <span *ngIf="data.BLOCK_YEAR">
+                  {{ data.BLOCK_YEAR }}
+                </span>
+              </span>
+              <span *ngIf="data.IS_ADVANCE_CLAIM">
+                <span *ngIf="data.FINAL_ORDER_YEAR">
+                  {{ data.FINAL_ORDER_YEAR }}</span
+                >
+                <span *ngIf="data.FINAL_PARTICULARS_BLOCK_YEAR">
+                  {{ data.FINAL_PARTICULARS_BLOCK_YEAR }}
+                </span> </span
+              >.
+              <!-- Block of 2018-21. -->
+            </p>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div *ngIf="current == 2">
+      <div>
+        <form nz-form #docMasterPage="ngForm">
+          <nz-spin [nzSpinning]="isSpinning">
+            <!-- <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Bank Mandate Form</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="mandateForm.click()"
+                    >
+                      Select File
+                      <input
+                        #mandateForm
+                        name="LTCMandateForm"
+                        type="file"
+                        (change)="onFileSelectedMandateForm($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarltcMandateForm">
+                    <nz-progress
+                      [style.width]="percentltcMandateForm + '%'"
+                      [nzPercent]="percentltcMandateForm"
+                      >{{ percentltcMandateForm }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.LTC_MANDATE_FORM != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.LTC_MANDATE_FORM }}
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewMandateFormPDF(data.LTC_MANDATE_FORM)"
+                  ></a>
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="mandateDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+
+                
+              </div>
+
+              
+            </div> -->
+
+            <div nz-row *ngIf="data.IS_ADVANCE_CLAIM == true">
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Bank Mandate Form</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      nzSize="small"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="mandateForm.click()"
+                    >
+                      Select File
+                      <input
+                        #mandateForm
+                        name="LTCMandateForm"
+                        type="file"
+                        (change)="onFileSelectedMandateForm($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarltcMandateForm">
+                    <nz-progress
+                      [style.width]="percentltcMandateForm + '%'"
+                      [nzPercent]="percentltcMandateForm"
+                      >{{ percentltcMandateForm }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.LTC_MANDATE_FORM != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.LTC_MANDATE_FORM }} &nbsp;
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewMandateFormPDF(data.LTC_MANDATE_FORM)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="mandateDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row *ngIf="data.IS_ADVANCE_CLAIM == false">
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Copy of Prior Intimation/Leave Application</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="assumption.click()"
+                    >
+                      Select File
+                      <input
+                        #assumption
+                        name="LTCAssumptionCharge"
+                        type="file"
+                        (change)="onFileSelectedAssumption($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div
+                    nz-col
+                    nzSpan="12"
+                    *ngIf="progressBarltcAssumptionCharge"
+                  >
+                    <!-- <div > -->
+                    <nz-progress
+                      [style.width]="percentltcAssumptionCharge + '%'"
+                      [nzPercent]="percentltcAssumptionCharge"
+                      >{{ percentltcAssumptionCharge }}%</nz-progress
+                    >
+                    <!-- </div> -->
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.PRIOR_LEAVE_APPLICATION_URL != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.PRIOR_LEAVE_APPLICATION_URL }} &nbsp;
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="
+                      viewAssumptionPDF(data.PRIOR_LEAVE_APPLICATION_URL)
+                    "
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="assumptionDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row *ngIf="data.IS_ADVANCE_CLAIM == true">
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Salary Slip </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      nzSize="small"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="SalarySlip.click()"
+                    >
+                      Select File
+                      <input
+                        #SalarySlip
+                        name="LTCSalarySlip"
+                        type="file"
+                        (change)="onFileSelectedSalarySlip($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarltcSalarySlipForm">
+                    <nz-progress
+                      [style.width]="percentltcSalarySlip + '%'"
+                      [nzPercent]="percentltcSalarySlip"
+                      >{{ percentltcSalarySlip }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.SALARY_SLIP != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.SALARY_SLIP }} &nbsp;
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewSalarySlipPDF(data.SALARY_SLIP)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="salarySlipDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Copy of Leave Sanctioned Order</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="lpc.click()"
+                    >
+                      Select File
+                      <input
+                        #lpc
+                        name="LTClpc"
+                        type="file"
+                        (change)="onFileSelectedLPC($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarltcLpc">
+                    <nz-progress
+                      [style.width]="percentltcLpc + '%'"
+                      [nzPercent]="percentltcLpc"
+                      >{{ percentltcLpc }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.LEAVE_SACTIONED_ORDER_URL != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.LEAVE_SACTIONED_ORDER_URL }} &nbsp;
+
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewLPCPDF(data.LEAVE_SACTIONED_ORDER_URL)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="LPCDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Latest Payment Slip </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="Transfer.click()"
+                    >
+                      Select File
+                      <input
+                        #Transfer
+                        name="LTCTransfer"
+                        type="file"
+                        (change)="onFileSelectedTransfer($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div
+                    nz-col
+                    nzSpan="12"
+                    *ngIf="progressBarltcServiceCertificate"
+                  >
+                    <nz-progress
+                      [style.width]="percentltcServiceCertificate + '%'"
+                      [nzPercent]="percentltcServiceCertificate"
+                      >{{ percentltcServiceCertificate }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.LATEST_PAYMENT_SLIP != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.LATEST_PAYMENT_SLIP }} &nbsp;
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewTransferPDF(data.LATEST_PAYMENT_SLIP)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="serviceDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              nz-row
+              *ngIf="
+                (data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED) ||
+                !data.IS_ADVANCE_CLAIM
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>
+                    Dependency Certificate</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="ticketBoardingPass.click()"
+                    >
+                      Select File
+                      <input
+                        #ticketBoardingPass
+                        name="LTCTicketBoardingPass"
+                        type="file"
+                        (change)="onFileSelectedTicketPass($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div
+                    nz-col
+                    nzSpan="12"
+                    *ngIf="progressBarltcTicketBoardingPass"
+                  >
+                    <nz-progress
+                      [style.width]="percentltcTicketBoardingPass + '%'"
+                      [nzPercent]="percentltcTicketBoardingPass"
+                      >{{ percentltcTicketBoardingPass }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.DEPENDENCY_CERTIFICATE != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.DEPENDENCY_CERTIFICATE }} &nbsp;
+
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewBoardingPassPDF(data.DEPENDENCY_CERTIFICATE)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="dependancyDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              nz-row
+              *ngIf="
+                (data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED) ||
+                !data.IS_ADVANCE_CLAIM
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon> Website ScreenShot</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="web.click()"
+                    >
+                      Select File
+                      <input
+                        #web
+                        name="web"
+                        type="file"
+                        (change)="onfileweb($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarweb">
+                    <nz-progress
+                      [style.width]="percentweb + '%'"
+                      [nzPercent]="percentweb"
+                      >{{ percentweb }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.WEBSITE_SCREENSHOT != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.WEBSITE_SCREENSHOT }} &nbsp;
+
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewwebsiteSSPDF(data.WEBSITE_SCREENSHOT)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="webdelete(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              nz-row
+              *ngIf="
+                data.IS_ADVANCE_CLAIM && data.SERVICE_TYPE == 'Quasi Permanent'
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon> Surety Bond</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="suretyBond.click()"
+                    >
+                      Select File
+                      <input
+                        #suretyBond
+                        name="suretyBond"
+                        type="file"
+                        (change)="onfileSuretyBond($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarSuretyBond">
+                    <nz-progress
+                      [style.width]="percentSuretyBond + '%'"
+                      [nzPercent]="percentSuretyBond"
+                      >{{ percentSuretyBond }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="12"
+                style="align-self: center; font-weight: 600"
+              >
+                <div
+                  *ngIf="data.SURETY_BOND != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.SURETY_BOND }} &nbsp;
+
+                  <a
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="View"
+                    (click)="viewSuretyBondPDF(data.SURETY_BOND)"
+                  ></a>
+                  &nbsp;&nbsp;
+                  <span
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="suretyBondDelete(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      *ngIf="!isAdmin"
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </nz-spin>
+        </form>
+      </div>
+    </div>
+
+    <!-- Questionary -->
+    <div *ngIf="current == 3">
+      <form nz-form #queMasterPage="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+          <div class="my-box">
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>File Number</nz-form-label>
+                  <nz-form-control nzHasFeedback>
+                    <nz-select
+                      nzShowSearch
+                      nzAllowClear
+                      name="FILE_NUMBER"
+                      [(ngModel)]="data.FILE_ID"
+                      nzPlaceHolder="Select File Number"
+                    >
+                      <nz-option
+                        *ngFor="let option of fileList"
+                        [nzLabel]="option.FILE_NUMBER"
+                        [nzValue]="option.ID"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              (data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED) ||
+              !data.IS_ADVANCE_CLAIM
+            "
+          >
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>1.</b> Whether Original bills submitted in proper format
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_ORIGINAL_BILL_SUBMITTED"
+                      name="originalbill"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div><b>2.</b> Whether Block Year mentioned</div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether CGHS/AMA's Reference Taken?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.WHETHER_BLOCK_YEAR_MENTIONED"
+                      name="blockyear"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>3.</b> Whether bills has been submitted in proper time (If
+                  advance is taken then bills should be submitted in 30 days
+                  after completion of journey and bills should be submitted in
+                  90 days after completion of journey if advance is not taken).
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_BILL_SUBMITTED_PROPER_TIME"
+                      name="billinproper"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>4.</b> In case of Air Journey, whether original boarding
+                  pass and Tickets of Air Fare duly submitted and in case of
+                  Train Journey Train Tickets submitted.
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_PASS_OR_TICKET_SUBMITTED"
+                      name="originaldocuments"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>4(a).</b> Print-out of concerned webpage of the ATAS having
+                  flight & fare details for concerned time slot for tickets
+                  taken after 28/08/2022.
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-radio-group
+                      name="IS_PRINTOUT_SUBMITTED_FOR_CONCERNED_TIME_SLOT"
+                      [(ngModel)]="
+                        QueData.IS_PRINTOUT_SUBMITTED_FOR_CONCERNED_TIME_SLOT
+                      "
+                    >
+                      <label nz-radio nzValue="Y">Yes </label>
+                      <label nz-radio nzValue="N">No</label>
+                      <label nz-radio nzValue="NA">NA</label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>5.</b>
+                  Whether Bank Mandate Form Submitted
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_BANK_MANDATE_FORM_SUBMITTED"
+                      name="bankmandateform"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>6.</b> Whether Copy of Prior Intimation/Leave Application
+                  Given
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="
+                        QueData.IS_COPY_OF_INTIMATION_OR_LEAVE_APPLICATION_GIVEN
+                      "
+                      name="leaveapplication"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>7.</b>
+                  Whether copy of leave sanctioned order Given
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-radio-group
+                      name="IS_COPY_OF_LEAVE_LEAVE_SANCTIONED_ORDER_GIVEN"
+                      [(ngModel)]="
+                        QueData.IS_COPY_OF_LEAVE_LEAVE_SANCTIONED_ORDER_GIVEN
+                      "
+                    >
+                      <label nz-radio nzValue="Y">Yes </label>
+                      <label nz-radio nzValue="N">No</label>
+                      <label nz-radio nzValue="NA">NA</label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>8.</b>
+                  Latest Payment Slip for pay level purpose
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_LATEST_PAYMENT_SLIP_FOR_PAY_LEVEL"
+                      name="paymentslip"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>9.</b> Dependency Certificate given in case if sons age is
+                  more than 18 years and daughters age is more than 24 years
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <!-- <nz-form-control>
+                  <nz-switch
+                    [(ngModel)]="QueData.IS_DEPENDENCY_CERTIFICATE_GIVEN"
+                    name="dependancycertificate"
+                    nzCheckedChildren="Yes"
+                    nzUnCheckedChildren="No"
+                  >
+                  </nz-switch>
+                </nz-form-control> -->
+                  <nz-form-control>
+                    <nz-radio-group
+                      name="IS_DEPENDENCY_CERTIFICATE_GIVEN"
+                      [(ngModel)]="QueData.IS_DEPENDENCY_CERTIFICATE_GIVEN"
+                    >
+                      <label nz-radio nzValue="Y">Yes </label>
+                      <label nz-radio nzValue="N">No</label>
+                      <label nz-radio nzValue="NA">NA</label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div><b>10.</b> Whether Advance for LTC Granted</div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_ADVANCE_FOR_LTC_GRANTED"
+                      name="advanceforLTC"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div><b>11.</b> Whether Home Town</div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.WHETHER_HOME_TOWN"
+                      name="hometown"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div><b>12.</b> Whether All Over India</div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.WHETHER_ALL_OVER_INDIA"
+                      name="alloverindia"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>13.</b> Whether converted Home Town to NER/Andaman &
+                  Nicobar/Jammu & Kashmir/Ladakh
+                </div>
+              </div>
+              <div nz-col nzSpan="4">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="
+                        QueData.WHETHER_CONVERTED_HOME_TO_NER_AN_JK_L
+                      "
+                      name="convertedhometown"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="
+              data.IS_ADVANCE_CLAIM == true &&
+              data.IS_ADVANCE_LTC_CREATED == false
+            "
+          >
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>1.</b>
+
+                  Whether Bank Mandate Form Submitted
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_BANK_MANDATE_FORM_SUBMITTED"
+                      name="bankmandateform"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>2.</b>
+
+                  Whether copy of leave sanctioned order Given
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-radio-group
+                      name="IS_COPY_OF_LEAVE_LEAVE_SANCTIONED_ORDER_GIVEN"
+                      [(ngModel)]="
+                        QueData.IS_COPY_OF_LEAVE_LEAVE_SANCTIONED_ORDER_GIVEN
+                      "
+                    >
+                      <label nz-radio nzValue="Y">Yes </label>
+                      <label nz-radio nzValue="N">No</label>
+                      <label nz-radio nzValue="NA">NA</label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="18">
+                <div>
+                  <b>3.</b>
+
+                  Latest Payment Slip for pay level purpose
+                </div>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="QueData.IS_LATEST_PAYMENT_SLIP_FOR_PAY_LEVEL"
+                      name="paymentslip"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-box">
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>
+                    <h6>Claim Confirmation</h6>
+                  </nz-form-label>
+                  <nz-form-control>
+                    <nz-radio-group
+                      name="checkstatus"
+                      style="margin-left: 10px"
+                      [(ngModel)]="data.LTC_STATUS"
+                      (ngModelChange)="clearDateRemark($event)"
+                      required
+                    >
+                      <label
+                        *ngIf="
+                          (data.IS_ADVANCE_CLAIM &&
+                            data.IS_ADVANCE_LTC_CREATED == true) ||
+                          !data.IS_ADVANCE_CLAIM
+                        "
+                        nz-radio
+                        nzValue="A"
+                        style="color: green"
+                        >Accept Claim</label
+                      >
+
+                      <label
+                        *ngIf="
+                          (data.IS_ADVANCE_CLAIM &&
+                            data.IS_ADVANCE_LTC_CREATED == true) ||
+                          !data.IS_ADVANCE_CLAIM
+                        "
+                        nz-radio
+                        nzValue="R"
+                        style="color: red"
+                        >Reject Claim</label
+                      >
+                      <label
+                        *ngIf="
+                          (data.IS_ADVANCE_CLAIM &&
+                            data.IS_ADVANCE_LTC_CREATED == true) ||
+                          !data.IS_ADVANCE_CLAIM
+                        "
+                        nz-radio
+                        nzValue="H"
+                        style="color: black"
+                        >On Hold</label
+                      >
+                      <label
+                        *ngIf="
+                          data.IS_ADVANCE_CLAIM == true &&
+                          data.IS_ADVANCE_LTC_CREATED == false
+                        "
+                        nz-radio
+                        nzValue="AA"
+                        style="color: green"
+                        >Accept Advance Claim</label
+                      >
+
+                      <label
+                        *ngIf="
+                          data.IS_ADVANCE_CLAIM == true &&
+                          data.IS_ADVANCE_LTC_CREATED == false
+                        "
+                        nz-radio
+                        nzValue="AR"
+                        style="color: red"
+                        >Reject Advance Claim</label
+                      >
+                      <label
+                        *ngIf="
+                          data.IS_ADVANCE_CLAIM == true &&
+                          data.IS_ADVANCE_LTC_CREATED == false
+                        "
+                        nz-radio
+                        nzValue="AH"
+                        style="color: black"
+                        >On Hold Advance Claim</label
+                      >
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="24"
+                *ngIf="data.LTC_STATUS == 'R' || data.LTC_STATUS == 'AR'"
+              >
+                <nz-form-item>
+                  <span *ngIf="data.LTC_STATUS == 'R'">
+                    <nz-form-label nzRequired nzNoColon
+                      >Reject Remark</nz-form-label
+                    >
+                  </span>
+                  <span *ngIf="data.LTC_STATUS == 'AR'">
+                    <nz-form-label nzRequired nzNoColon
+                      >Advance Reject Remark</nz-form-label
+                    >
+                  </span>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Reject Remark "
+                  >
+                    <textarea
+                      name="remark"
+                      style="width: 100%"
+                      [(ngModel)]="data.LTC_REMARK"
+                      nz-input
+                      [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                      maxlength="256"
+                      placeholder="Please Enter Reject Remark"
+                      draggable="false"
+                      required
+                    ></textarea>
+                    <h6
+                      style="color: red; font-size: 0.67rem; font-weight: 500"
+                      *ngIf="data.LTC_REMARK != undefined"
+                    >
+                      {{ data.LTC_REMARK.length }}/256
+                    </h6>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="6"
+                *ngIf="data.LTC_STATUS == 'H' || data.LTC_STATUS == 'AH'"
+              >
+                <nz-form-item>
+                  <span *ngIf="data.LTC_STATUS == 'H'">
+                    <nz-form-label nzRequired nzNoColon>
+                      On Hold Date
+                    </nz-form-label>
+                  </span>
+                  <span *ngIf="data.LTC_STATUS == 'AH'">
+                    <nz-form-label nzRequired nzNoColon>
+                      Advance On Hold Date
+                    </nz-form-label>
+                  </span>
+
+                  <nz-form-control nzErrorTip="Select Correct On Hold Date">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/yyyy"
+                      name="onholddate"
+                      [(ngModel)]="data.LTC_HOLD_DATE"
+                      required
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="18"></div>
+              <div
+                nz-col
+                nzSpan="24"
+                *ngIf="data.LTC_STATUS == 'H' || data.LTC_STATUS == 'AH'"
+              >
+                <nz-form-item>
+                  <span *ngIf="data.LTC_STATUS == 'H'">
+                    <nz-form-label nzRequired nzNoColon
+                      >On Hold Remark</nz-form-label
+                    >
+                  </span>
+                  <span *ngIf="data.LTC_STATUS == 'AH'">
+                    <nz-form-label nzRequired nzNoColon
+                      >Advance On Hold Remark</nz-form-label
+                    >
+                  </span>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid On Hold Remark "
+                  >
+                    <textarea
+                      name="onholdremark"
+                      style="width: 100%"
+                      [(ngModel)]="data.LTC_REMARK"
+                      nz-input
+                      [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                      maxlength="256"
+                      placeholder="Please Enter On Hold Remark"
+                      draggable="false"
+                      required
+                    ></textarea>
+                    <h6
+                      style="color: red; font-size: 0.67rem; font-weight: 500"
+                      *ngIf="data.LTC_REMARK != undefined"
+                    >
+                      {{ data.LTC_REMARK.length }}/256
+                    </h6>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </nz-spin>
+      </form>
+    </div>
+    <!-- Questionary -->
+  </div>
+  <div class="footer">
+    <button
+      [nzLoading]="isSpinning"
+      nz-button
+      nzType="default"
+      (click)="pre()"
+      *ngIf="current > 0"
+      style="margin-right: 8px"
+    >
+      <span>Previous</span>
+    </button>
+    <span *ngIf="current < 3 && data.ID && isAdmin">
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current < 3 && data.ID && isAdmin"
+          type="button"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          (click)="next()"
+        >
+          <span> Next </span>
+        </button>
+      </span>
+      &nbsp; &nbsp;
+    </span>
+    <span *ngIf="current == 0 && !isAdmin">
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current == 0 && !isAdmin"
+          nzType="primary"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          (click)="empSave()"
+        >
+          <span>Save Applicant Info. & Next </span>
+        </button>
+      </span>
+      &nbsp; &nbsp;
+    </span>
+
+    <span *ngIf="current == 1 && !isAdmin">
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current == 1 && !isAdmin"
+          nzType="primary"
+          class="ant-btn ant-btn-primary"
+          (click)="AlldataSave(false)"
+          nz-button
+        >
+          <span>Save Travel Details & Next </span>
+        </button>
+      </span>
+      &nbsp; &nbsp;
+    </span>
+
+    <span *ngIf="current == 2 && !isAdmin">
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current == 2 && !isAdmin"
+          nzType="primary"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          (click)="uploadDoc(false)"
+        >
+          <span>Upload Document & Next</span>
+        </button>
+      </span>
+      &nbsp; &nbsp;
+    </span>
+    <span *ngIf="current == 3 && !isAdmin">
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current == 3 && !isAdmin"
+          nzType="primary"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          (click)="queSave(false)"
+        >
+          <span>Save Questionary & Finish </span>
+        </button>
+      </span>
+      &nbsp; &nbsp;
+    </span>
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+  </div>
+
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+
+<div nz-row *ngIf="drawerVisible2form1">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="500"
+    [nzVisible]="drawerVisible2form1"
+    [nzTitle]="drawerTitleform1"
+    (nzOnClose)="drawerClose2form1()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-placesconnectedbyrail
+        [drawerClose]="closeCallbackform1form1"
+        [ltcID]="ltcID"
+        [empID]="empID"
+        [data]="drawerData2form1"
+      ></app-placesconnectedbyrail>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div nz-row *ngIf="drawerVisibleform3">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="600"
+    [nzVisible]="drawerVisibleform3"
+    [nzTitle]="drawerTitleform3"
+    (nzOnClose)="drawerCloseform3()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-particularsofjourney
+        [drawerClose]="closeCallbackform3"
+        [empID]="empID"
+        [ltcID]="ltcID"
+        [data]="drawerDataform3"
+        [class]="class"
+      ></app-particularsofjourney>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div nz-row *ngIf="drawerVisibleform7">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1000"
+    [nzVisible]="drawerVisibleform7"
+    [nzTitle]="drawerTitleform7"
+    (nzOnClose)="drawerCloseform7()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-detailsofjourney
+        [drawerClose]="closeCallbackform7"
+        [empID]="empID"
+        [ltcID]="ltcID"
+        [data]="drawerDataform7"
+        [classdata]="classdata"
+        [gradePayLevel]="gradePayLevel"
+      ></app-detailsofjourney>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="empDrawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="700"
+    [nzVisible]="empDrawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="empDrawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addclaimemployee
+        [drawerClose]="closeCallback"
+        [data]="drawerData"
+      ></app-addclaimemployee>
+    </ng-container>
+  </nz-drawer>
+</div>
+<nz-modal
+  [nzWidth]="1200"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'PDFview'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <div
+      *ngIf="
+        sanitizedLink != undefined &&
+        sanitizedLink != null &&
+        sanitizedLink != ''
+      "
+      style="height: 600px; overflow: auto"
+    >
+      <iframe
+        [src]="sanitizedLink"
+        style="width: 1150px; height: 600px"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>

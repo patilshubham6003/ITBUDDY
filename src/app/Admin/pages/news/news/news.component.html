@@ -1,0 +1,184 @@
+<div class="my-boxxxxxxx">
+  <form nz-form>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+              <input nz-input name="name" type="text" [(ngModel)]="data.NAME" placeholder="Please Enter Name"
+                required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Date</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Date is required">
+              <nz-date-picker style="width: 100%" name="newsdate" [(ngModel)]="data.DATE"  nzFormat="dd/MM/yyyy"
+                nzPlaceHolder="Please Select Date" required></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>News Content Type</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+              <nz-radio-group [(ngModel)]="data.NEWS_CONTENT_TYPE" name="abc">
+                <label nz-radio nzValue="P">PDF
+                </label>
+                <label nz-radio nzValue="L">Link</label>
+                <label nz-radio nzValue="NA">NA</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="data.NEWS_CONTENT_TYPE=='P'">
+          <nz-form-item style="margin-top: 10px;">
+            <nz-form-label nzRequired nzNoColon>Select PDF Files</nz-form-label>
+            <nz-form-control>
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="fileInputpdf.click()">
+                Choose File
+                <input #fileInputpdf (click)="fileInputpdf.value = ''"
+                value="" name="newspdf" type="file"  accept="application/pdf" (change)="onFileSelected($event)"
+                  style="display: none" required />
+              </button>
+              <span *ngIf="data.NEWS_URL != ''">
+                <button (click)="clear1(data.NEWS_URL,'news')" [nzSize]="'default'" nz-button style="margin-left: 10px">
+                    <nz-badge>
+                        <i style="font-size: 15px; color: red" nz-icon
+                            nzType="delete"></i>
+                    </nz-badge>
+                </button>
+            </span>
+            </nz-form-control>
+          </nz-form-item>
+          <div *ngIf="data.NEWS_URL!=null">
+            {{data.NEWS_URL}}
+          </div>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="data.NEWS_CONTENT_TYPE=='L'">
+          <nz-form-item style="margin-top: 10px;">
+            <nz-form-label nzRequired nzNoColon>Upload News Url</nz-form-label>
+            <input nz-input name="link" [(ngModel)]="data.NEWS_URL" type="text" placeholder="Please Upload News Url"
+              required />
+            <nz-form-control>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+       
+      <div nz-row>
+        <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Sequence No is required">
+              <input nz-input name="newsseq" maxlength="6"  style="width: 100%"
+              [(ngModel)]="data.SEQUENCE_NO" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="5">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch style="padding-left: 15px" name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.STATUS"></nz-switch></nz-form-control></nz-form-item>
+           </div>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon>Is Latest</nz-form-label>
+            <nz-form-control>
+              <nz-switch style="padding-left: 15px" name="Latest" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_LATEST"></nz-switch></nz-form-control></nz-form-item>
+        </div>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Show In Service</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="is_on_service" [(ngModel)]="data.SHOW_IN_SERVICE" nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+      
+        <div nz-col nzSpan="12" *ngIf="data['SHOW_IN_SERVICE']">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Service</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Service ">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Service..." [(ngModel)]="data.SERVICE_ID"
+                name="service_name" required>
+                <nz-option *ngFor="let role of details" [nzLabel]="role.TITLE" [nzValue]="role.ID"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+            <nz-form-label nzNoColon>Image
+               </nz-form-label>
+               <br>
+               <span *ngIf="data.IMG_URL == ''||data.IMG_URL ==null">
+                <span style="color: red; font-size: 10px !important; margin-left: 5px">
+                    ( Image Must Be 480px Height And 480px Width )
+                </span>
+            </span>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Image.">
+                <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="fileInput1.click()">
+                    Choose Image
+                    <input #fileInput1 name="otherimage" type="file" (click)="fileInput1.value = ''"
+                         value=""
+                        accept=".png, .jpg, .jpeg" (change)="onFileSelectedIMAGE_URL($event)" style="display: none"
+                        required />
+                </button>
+                <span *ngIf="data.IMG_URL != ''&& data.IMG_URL!=null">
+                    <button (click)="clear(data.IMG_URL,'news')" [nzSize]="'default'" nz-button style="margin-left: 10px">
+                        <nz-badge>
+                            <i style="font-size: 15px; color: red" nz-icon
+                                nzType="delete"></i>
+                        </nz-badge>
+                    </button>
+                </span>
+            </nz-form-control>
+        </nz-form-item>
+        <div *ngIf="fileDataIMAGE_URL != null">
+            <img width="100%" style="margin-left: 10px;height: 170px;" [src]="image" />
+        </div>
+        <!-- <div nz-row> -->
+            <!-- <div nz-col nzSpan="12"> -->
+              <nz-form-item *ngIf="fileDataIMAGE_URL == null && data.IMG_URL != ''&& data.IMG_URL != null" style="margin-top: 20px">
+                        <img class="img" width="100%" src="{{ imgurl }}news/{{ data.IMG_URL }}" style="margin-left: 10px;height: 170px;"/>
+              </nz-form-item> 
+            <!-- </div> -->
+        <!-- </div> -->
+    </div>
+    </nz-spin>
+  </form>
+</div>
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      (click)="save(false)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+          <a (click)="save(true)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false)">
+      <span>Update & close</span>
+    </button>
+  </div>

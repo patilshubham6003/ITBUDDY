@@ -1,0 +1,209 @@
+<div class="my-boxxxxxxx">
+    <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+   
+            <div nz-row >
+          <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon> Email ID</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip=" Please Enter Email ID "
+                >
+                  <input
+                    nz-input
+                    name="contactemail"
+                    [pattern]="emailpattern"
+                    [(ngModel)]="data.EMAIL_ID"
+                    placeholder="Please Enter Email ID"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  > Contact No
+                </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip=" Please Enter Contact Number "
+                >
+                  <input
+                    nz-input
+                    name="contactno"
+                    [(ngModel)]="data.CONTACT_NO"
+                    placeholder="Please Enter Contact Number"
+                    (keypress)="omit($event)"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+          
+        </div>
+        </div>
+
+        <div nz-row >
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon> Longitude</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip=" Please Enter Longitude">
+                  <input
+                    nz-input
+                    name="longitude"
+                    [(ngModel)]="data.LONGITUDE"
+                    placeholder="Please Enter Longitude"
+                     required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Latitude </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip=" Please Enter Latitude">
+              <input
+                nz-input
+                name="latitude"
+                [(ngModel)]="data.LATITUDE"
+                placeholder="Please Enter Latitude"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+            
+         </div>
+
+          <div nz-row >
+            <div nz-col nzSpan="12">
+              <nz-form-item >
+                <nz-form-label nzNoColon> Instagram Link <i *ngIf="data.INSTA_LINK != ''" (click)="open(data.INSTA_LINK)" style="margin-left: 10px;" nz-icon nzType="eye" nzTheme="twotone"></i> </nz-form-label>
+                <nz-form-control  nzErrorTip="  Please Enter Correct Instagram Link ">
+                  <input nz-input name="insta" maxlength="128" [(ngModel)]="data.INSTA_LINK"                     placeholder="Please Enter Longitude"
+                  placeholder="Please Enter Instagram Link"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+              <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Twitter Link <i *ngIf="data.TWITTER_LINK != ''" (click)="open(data.TWITTER_LINK)" style="margin-left: 10px;" nz-icon nzType="eye" nzTheme="twotone"></i> </nz-form-label>
+                <nz-form-control nzErrorTip=" Please Enter Twitter Link ">
+                  <input nz-input name="twitter" maxlength="128" [(ngModel)]="data.TWITTER_LINK"
+                  placeholder="Please Enter Twitter Link"
+                   />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+</div>
+          
+<div nz-row>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon> Facebook Link  <i *ngIf="data.FACEBOOK_LINK != ''" (click)="open(data.FACEBOOK_LINK)" style="margin-left: 10px;" nz-icon nzType="eye" nzTheme="twotone"></i></nz-form-label>
+            <nz-form-control nzErrorTip=" Please Enter Facebook Link ">
+              <input nz-input name="fb" maxlength="128" [(ngModel)]="data.FACEBOOK_LINK" 
+              placeholder="Please Enter Facebook Link"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col  nzSpan="12">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon
+              >Status</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                style="padding-left: 15px"
+                name="status"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.STATUS"
+              ></nz-switch></nz-form-control
+          ></nz-form-item>
+        </div>
+</div>
+   
+
+
+            <div nz-col nzSpan="1"></div>
+<!--        
+            <div nz-col nzSpan="24"> -->
+              <div nz-row >
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon> Address</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip=" Please Enter Address">
+                  <textarea nz-input
+                    style="width: 100%"
+                    rows="5"
+                    name="contactaddress"
+                    [(ngModel)]="data.ADDRESS"
+                    maxlength="256"
+                    placeholder="Please Enter Address"
+                    required
+                  ></textarea>
+                  <small  style="color: red" *ngIf="data.ADDRESS != undefined">
+                    {{ data.ADDRESS.length }}/256
+                </small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+        
+          </div>
+        <!-- </div> -->
+
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span> Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    *ngIf="!data.ID"
+    nz-button
+    nz-dropdown
+    [nzDropdownMenu]="menu"
+    (click)="save(false,websitebannerPage)"
+  >
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li
+        nz-menu-item
+        class="menuc"
+        style="border-radius: 4px; background-color: #40a9ff"
+      >
+        <a style="color: white" (click)="save(true,websitebannerPage)"> Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    [nzLoading]="isSpinning"
+    *ngIf="data.ID"
+    (click)="save(false,websitebannerPage)"
+  >
+    <span> Update & Close </span>
+  </button>
+</div>

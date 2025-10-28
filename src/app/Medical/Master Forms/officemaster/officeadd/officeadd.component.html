@@ -1,0 +1,145 @@
+<div>
+  <!-- <form nz-form #form10> -->
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Name">
+              <input
+                nz-input
+                name="demo1name"
+                required
+                [pattern]="namepatt"
+                [(ngModel)]="data.NAME"
+                maxlength="256"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Address </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Address">
+              <textarea
+                maxlength="256"
+                required
+                rows="2"
+                maxlength="512"
+                placeHolder="Enter The Address"
+                [(ngModel)]="data.ADDRESS"
+                name="addressline1"
+                nz-input
+              ></textarea>
+            </nz-form-control>
+            <span
+              *ngIf="data.ADDRESS"
+              style="color: red; font-size: 0.67rem; font-weight: 400"
+              >{{ data.ADDRESS.length }}/ 256</span
+            >
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon nzRequired>Sequence No</nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Sequence Number"
+            >
+              <input
+                nz-input
+                name="sequenceno"
+                maxlength="5"
+                (keypress)="omit($event)"
+                [(ngModel)]="data.SEQ_NO"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <nz-form-item>
+            <nz-form-label nzNoColon class="IS_ACTIVE" class="status"
+              >Status</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="IS_ACTIVE"
+                [(ngModel)]="data.STATUS"
+                required
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(websitebannerPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, websitebannerPage)"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff"
+        >
+          <a style="color: white" (click)="save(true, websitebannerPage)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="save(false, websitebannerPage)"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(websitebannerPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">
+      <b> {{ formTitle }} </b>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="photosearch" (keydown.enter)="search(true)" [(ngModel)]="searchText" nz-input
+            placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<!-- <div nz-row> -->
+<div nz-row style="margin-top: 20px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8"
+    style="text-align: center; font-weight: bold; margin-bottom: 30px">
+    <div style="
+          background-color: rgb(251 251 251);
+          height: 210px;
+          position: relative;
+          width: 95%;
+          font-size: 12px;
+          cursor: pointer;
+          padding: 10px;
+          border: 1px solid #efefef;
+          border-radius: 8px;
+        ">
+      <button nzShape="circle" nz-button nxType="primary" (click)="add()"
+        style="margin-top: 65px; height: 45px; width: 50px">
+        <i nz-icon nzType="plus" style="font-size: 30px"></i>
+      </button>
+      <br />
+      Add New Video
+    </div>
+  </div>
+  <div *ngFor="let data of dataList" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="8"
+    style="text-align: center; font-weight: bold; margin-bottom: 30px">
+    <div style="
+          background-color: rgb(251 251 251);
+          height: 210px;
+          position: relative;
+          width: 95%;
+          font-size: 12px;
+          cursor: pointer;
+          padding: 10px;
+          border: 1px solid #efefef;
+          border-radius: 8px;
+        ">
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <video style="height: 165px; width: 100%" controls>
+            <source src="{{ imgurl }}video/{{ data.VIDEO_URL }}" type="video/mp4" />
+            <source src="{{ imgurl }}video/{{ data.VIDEO_URL }}" type="video/webm" />
+            <source src="{{ imgurl }}video/{{ data.VIDEO_URL }}" type="video/ogg" />
+          </video>
+        </div>
+      </div>
+
+      <div nz-row style="height: 40px">
+        <div nz-col nzSpan="3">
+          <a nz-button nzType="link" (click)="edit(data)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>
+        </div>
+        <div nz-col nzSpan="13">
+          <span nz-popover nzPopoverTitle="Title" [nzPopoverContent]="data.TITLE" nzPopoverPlacement="topLeft">
+                    {{data.TITLE | slice:0:20 }}{{ data.TITLE.length > 20 ? "..." : "" }}
+          </span>
+        </div>
+         <div nz-col nzSpan="4">
+          {{ data.SEQUENCE_NO }}
+        </div>
+        <div nz-col nzSpan="4">
+          <td style="text-align: center;">
+            <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <app-videos *nzDrawerContent [drawerClose]="closeCallback" [data]="drawerData"></app-videos>
+</nz-drawer>

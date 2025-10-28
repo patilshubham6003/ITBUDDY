@@ -1,0 +1,1170 @@
+<div *ngIf="checklist != undefined">
+  <form nz-form>
+    <div nz-row [nzGutter]="10">
+      <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+        <div class="my-box" style="height: 75vh; overflow-y: auto">
+          <div nz-row>
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid"
+                    [(ngModel)]="
+                      SignatureMapCheckList.TOUR_CHECKLIST_SIGNATURE_1
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16">
+        <div
+          class="my-box"
+          style="padding: 10px; height: 75vh; overflow-y: auto"
+        >
+          <p style="text-align: center; font-size: large; margin-bottom: 0">
+            <b> <u>Checklist for TA on Tour Bills</u></b>
+          </p>
+          <br />
+          <p>
+            Name of the Officer = <b>{{ checklist.EMPLOYEE_NAME }}</b>
+          </p>
+          <p>
+            Designation = <b>{{ checklist.DESIGNATION }}</b>
+          </p>
+          <p>
+            Pay Level = <b>{{ checklist.GRADE_PAY_LEVEL }}</b>
+          </p>
+          <br />
+          <table style="width: 100%">
+            <thead>
+              <tr>
+                <th nzAlign="center" style="width: 50px">Sr.No.</th>
+                <th nzAlign="center">Subject</th>
+                <th nzAlign="center" style="width: 75px">Yes</th>
+                <th nzAlign="center" style="width: 75px">No</th>
+                <th nzAlign="center" style="width: 75px">NA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td nzAlign="center">1</td>
+                <td class="pading">
+                  Whether original bills submitted in proper format <br />
+                  (Duly filled GAR14A-Part-A and signed certificate)
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                      1
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                      0
+                    "
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                      1
+                    "
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                      0
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">2</td>
+                <td class="pading">
+                  Whether bills have been submitted in proper time if (advance
+                  is taken then bills should be submitted in 15 days after
+                  submission of journey and bills should be submitted in 60 days
+                  after completion of journey after in advance is not taken)
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 0"
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 1"
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">3</td>
+                <td class="pading">
+                  In case of delayed submission of bill, whether condonation of
+                  delay submitted
+                </td>
+                <!-- <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 1"><i
+                      nz-icon nzType="check" nzTheme="outline"></i></span>
+                  <span
+                    *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 0"></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 1"></span>
+                  <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 0"><i
+                      nz-icon nzType="check" nzTheme="outline"></i></span>
+                </td> -->
+
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 'Y'"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.DELAYED_SUBMISSION_BILL == 'N' &&
+                      checklistyesno.DELAYED_SUBMISSION_BILL == 'NA'
+                    "
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.DELAYED_SUBMISSION_BILL == 'Y' &&
+                      checklistyesno.DELAYED_SUBMISSION_BILL == 'NA'
+                    "
+                  ></span>
+                  <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 'N'"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.DELAYED_SUBMISSION_BILL == 'Y' &&
+                      checklistyesno.DELAYED_SUBMISSION_BILL == 'N'
+                    "
+                  ></span>
+                  <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 'NA'"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+              </tr>
+              <tr>
+                <td nzAlign="center">4</td>
+                <td class="pading">Whether T.A. advance taken</td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 0"></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 1"></span>
+                  <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">5</td>
+                <td class="pading">Whether S.R.61 (original) submitted</td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 0"></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 1"></span>
+                  <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">6</td>
+                <td class="pading">
+                  In case of election duty, whether election order duly enclosed
+                </td>
+                <!-- <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 1"><i nz-icon
+                      nzType="check" nzTheme="outline"></i></span>
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 0"></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 1"></span>
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 0"><i nz-icon
+                      nzType="check" nzTheme="outline"></i></span>
+                </td> -->
+
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 'Y'"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.ELECTION_DUTY == 'N' &&
+                      checklistyesno.ELECTION_DUTY == 'NA'
+                    "
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.ELECTION_DUTY == 'Y' &&
+                      checklistyesno.ELECTION_DUTY == 'NA'
+                    "
+                  ></span>
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 'N'"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.ELECTION_DUTY == 'Y' &&
+                      checklistyesno.ELECTION_DUTY == 'N'
+                    "
+                  ></span>
+                  <span *ngIf="checklistyesno.ELECTION_DUTY == 'NA'"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+              </tr>
+              <tr>
+                <td nzAlign="center">7</td>
+                <td class="pading">
+                  Whether Air/Train tickets booked through official Travel
+                  Desk(DCIT(Admin))
+                </td>
+                <!-- <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 1
+                    "><i nz-icon nzType="check" nzTheme="outline"></i></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 0
+                    "></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 1
+                    "></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 0
+                    "><i nz-icon nzType="check" nzTheme="outline"></i></span>
+                </td> -->
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'Y'
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'N' &&
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'NA'
+                    "
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'Y' &&
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'NA'
+                    "
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'N'
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'Y' &&
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'N'
+                    "
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'NA'
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+              </tr>
+              <tr>
+                <td nzAlign="center">8</td>
+                <td class="pading">Whether air or train tickets submitted</td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.TICKET_SUBMITTED == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span *ngIf="checklistyesno.TICKET_SUBMITTED == 0"></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.TICKET_SUBMITTED == 1"></span>
+                  <span *ngIf="checklistyesno.TICKET_SUBMITTED == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">9</td>
+                <td class="pading">
+                  In case of Air journey, wheather original boarding pass/
+                  self-declaration in case of non submission of boarding pass
+                  duly submitted
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 0"
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 1"
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">10</td>
+                <td class="pading">
+                  In case of Air journey, wheather tickets booked through
+                  official travel agents (IRCTC, Ashoka Tour & travels, balmer &
+                  lawrie)
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 1
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 0
+                    "
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 1
+                    "
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 0
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">11</td>
+                <td class="pading">Whether food expenses claimed</td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 0"
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 1"
+                  ></span>
+                  <span *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">12</td>
+                <td class="pading">
+                  In case of accommodation claimed, original Hotel/Guest House
+                  bills submitted
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 1
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 0
+                    "
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="
+                      checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 1
+                    "
+                  ></span>
+                  <span
+                    *ngIf="
+                      checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 0
+                    "
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">13</td>
+                <td class="pading">
+                  In case of taxi, whether travelling voucher or
+                  self-declaration submitted
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 0"
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 1"
+                  ></span>
+                  <span *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td nzAlign="center">14</td>
+                <td class="pading">
+                  Whether Bank Mandate from/cancelled cheque submitted
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 1"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                  <span
+                    *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 0"
+                  ></span>
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                  <span
+                    *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 1"
+                  ></span>
+                  <span *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 0"
+                    ><i nz-icon nzType="check" nzTheme="outline"></i
+                  ></span>
+                </td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+
+          <div style="margin-top: 100px; font-size: 13px">
+            <div nz-row>
+              <div nz-col nzSpan="15"></div>
+
+              <div nz-col nzSpan="9" style="text-align: center">
+                <div *ngIf="NAME_HN" style="font-weight: bold">
+                  ({{ NAME_HN }})
+                </div>
+                <div>{{ POST_HN }}</div>
+                <div>{{ OFFICE_NAME_HN }}</div>
+                <div *ngIf="SIGNNAME" style="font-weight: bold">
+                  ({{ SIGNNAME }})
+                </div>
+                <div>{{ POST }}</div>
+                <div>{{ OFFICE_NAME }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Checklist'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <p style="text-align: center; font-size: large; margin-bottom: 0">
+              <b> <u>Checklist for TA on Tour Bills</u></b>
+            </p>
+            <br />
+            <p>
+              Name of the Officer = <b>{{ checklist.EMPLOYEE_NAME }}</b>
+            </p>
+            <p>
+              Designation = <b>{{ checklist.DESIGNATION }}</b>
+            </p>
+            <p>
+              Pay Level = <b>{{ checklist.GRADE_PAY_LEVEL }}</b>
+            </p>
+            <br />
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th nzAlign="center" style="width: 50px">Sr.No.</th>
+                  <th nzAlign="center">Subject</th>
+                  <th nzAlign="center" style="width: 75px">Yes</th>
+                  <th nzAlign="center" style="width: 75px">No</th>
+                  <th nzAlign="center" style="width: 75px">NA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td nzAlign="center">1</td>
+                  <td class="pading">
+                    Whether original bills submitted in proper format <br />
+                    (Duly filled GAR14A-Part-A and signed certificate)
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                        1
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                        0
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                        1
+                      "
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT ==
+                        0
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">2</td>
+                  <td class="pading">
+                    Whether bills have been submitted in proper time if (advance
+                    is taken then bills should be submitted in 15 days after
+                    submission of journey and bills should be submitted in 60
+                    days after completion of journey after in advance is not
+                    taken)
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 0"
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 1"
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.BILL_SUBMITTED_IN_PROPER_TIME == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">3</td>
+                  <td class="pading">
+                    In case of delayed submission of bill, whether condonation
+                    of delay submitted
+                  </td>
+                  <!-- <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 1"><i
+                        nz-icon nzType="check" nzTheme="outline"></i></span>
+                    <span
+                      *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 0"></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 1"></span>
+                    <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 0"><i
+                        nz-icon nzType="check" nzTheme="outline"></i></span>
+                  </td> -->
+
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 'Y'"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.DELAYED_SUBMISSION_BILL == 'N' &&
+                        checklistyesno.DELAYED_SUBMISSION_BILL == 'NA'
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.DELAYED_SUBMISSION_BILL == 'Y' &&
+                        checklistyesno.DELAYED_SUBMISSION_BILL == 'NA'
+                      "
+                    ></span>
+                    <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 'N'"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.DELAYED_SUBMISSION_BILL == 'Y' &&
+                        checklistyesno.DELAYED_SUBMISSION_BILL == 'N'
+                      "
+                    ></span>
+                    <span *ngIf="checklistyesno.DELAYED_SUBMISSION_BILL == 'NA'"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">4</td>
+                  <td class="pading">Whether T.A. advance taken</td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 0"></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 1"></span>
+                    <span *ngIf="checklistyesno.T_A_ADVANCE_TAKEN == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">5</td>
+                  <td class="pading">Whether S.R.61 (original) submitted</td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 0"></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 1"></span>
+                    <span *ngIf="checklistyesno.S_R_61_SUBMITTED == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">6</td>
+                  <td class="pading">
+                    In case of election duty, whether election order duly
+                    enclosed
+                  </td>
+                  <!-- <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 1"><i nz-icon
+                        nzType="check" nzTheme="outline"></i></span>
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 0"></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 1"></span>
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 0"><i nz-icon
+                        nzType="check" nzTheme="outline"></i></span>
+                  </td> -->
+
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 'Y'"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ELECTION_DUTY == 'N' &&
+                        checklistyesno.ELECTION_DUTY == 'NA'
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ELECTION_DUTY == 'Y' &&
+                        checklistyesno.ELECTION_DUTY == 'NA'
+                      "
+                    ></span>
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 'N'"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ELECTION_DUTY == 'Y' &&
+                        checklistyesno.ELECTION_DUTY == 'N'
+                      "
+                    ></span>
+                    <span *ngIf="checklistyesno.ELECTION_DUTY == 'NA'"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">7</td>
+                  <td class="pading">
+                    Whether Air/Train tickets booked through official Travel
+                    Desk(DCIT(Admin))
+                  </td>
+                  <!-- <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 1
+                      "><i nz-icon nzType="check" nzTheme="outline"></i></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 0
+                      "></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 1
+                      "></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 0
+                      "><i nz-icon nzType="check" nzTheme="outline"></i></span>
+                  </td> -->
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'Y'
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK ==
+                          'N' &&
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'NA'
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK ==
+                          'Y' &&
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'NA'
+                      "
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'N'
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK ==
+                          'Y' &&
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'N'
+                      "
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_DESK == 'NA'
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">8</td>
+                  <td class="pading">Whether air or train tickets submitted</td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.TICKET_SUBMITTED == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span *ngIf="checklistyesno.TICKET_SUBMITTED == 0"></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.TICKET_SUBMITTED == 1"></span>
+                    <span *ngIf="checklistyesno.TICKET_SUBMITTED == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">9</td>
+                  <td class="pading">
+                    In case of Air journey, wheather original boarding pass/
+                    self-declaration in case of non submission of boarding pass
+                    duly submitted
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 1
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 0
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 1
+                      "
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ORIGINAL_BOARDING_PASS_SUBMITTED == 0
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">10</td>
+                  <td class="pading">
+                    In case of Air journey, wheather tickets booked through
+                    official travel agents (IRCTC, Ashoka Tour & travels, balmer
+                    & lawrie)
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 1
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 0
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 1
+                      "
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.TICKET_BOOKED_THROUGH_TRAVEL_AGENT == 0
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">11</td>
+                  <td class="pading">Whether food expenses claimed</td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 0"
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 1"
+                    ></span>
+                    <span *ngIf="checklistyesno.FOOD_EXPENSES_CLAIMED == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">12</td>
+                  <td class="pading">
+                    In case of accommodation claimed, original Hotel/Guest House
+                    bills submitted
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 1
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 0
+                      "
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="
+                        checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 1
+                      "
+                    ></span>
+                    <span
+                      *ngIf="
+                        checklistyesno.ACCOMODATION_BILL_CLAIMED_SUBMITTED == 0
+                      "
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">13</td>
+                  <td class="pading">
+                    In case of taxi, whether travelling voucher or
+                    self-declaration submitted
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 0"
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 1"
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.TRAVELLING_VOUCHER_SUBMITTED == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td nzAlign="center">14</td>
+                  <td class="pading">
+                    Whether Bank Mandate from/cancelled cheque submitted
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 1"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 0"
+                    ></span>
+                  </td>
+                  <td style="border: 1px solid black; text-align: center">
+                    <span
+                      *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 1"
+                    ></span>
+                    <span
+                      *ngIf="checklistyesno.BANK_MANDATE_FORM_SUBMITTED == 0"
+                      ><i nz-icon nzType="check" nzTheme="outline"></i
+                    ></span>
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+
+            <div style="margin-top: 100px; font-size: 13px">
+              <div nz-row>
+                <div nz-col nzSpan="15"></div>
+
+                <div nz-col nzSpan="9" style="text-align: center">
+                  <div *ngIf="NAME_HN" style="font-weight: bold">
+                    ({{ NAME_HN }})
+                  </div>
+                  <div>{{ POST_HN }}</div>
+                  <div>{{ OFFICE_NAME_HN }}</div>
+                  <div *ngIf="SIGNNAME" style="font-weight: bold">
+                    ({{ SIGNNAME }})
+                  </div>
+                  <div>{{ POST }}</div>
+                  <div>{{ OFFICE_NAME }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

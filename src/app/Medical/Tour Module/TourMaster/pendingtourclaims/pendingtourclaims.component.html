@@ -1,0 +1,308 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="12"
+    nzLg="12"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            (keydown.enter)="onKeypressEvent($event)"
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            id="button"
+            nz-button
+            nzType="primary"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item class="cccnz-form-item">
+                <nz-form-label nzNoColon>Claim Type</nz-form-label>
+
+                <nz-form-control>
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    name="ClaimType"
+                    [(ngModel)]="TYPE_OF_CLAIM"
+                    nzPlaceHolder="Select Claim Type"
+                  >
+                    <nz-option nzLabel="Final Claim" nzValue="0"></nz-option>
+                    <nz-option nzLabel="Advance Claim" nzValue="1"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 20px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="loadingRecords"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="7"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item style="margin-top: 1px; width: 113%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="BILL_FILIING_DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="5" style="margin-left: 39px">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Hospital Type</nz-form-label>
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  name="hospitalType"
+                  [(ngModel)]="TYPE_OF_HOSPITAL"
+                  nzPlaceHolder="Select Hospital Type"
+                >
+                  <nz-option nzLabel="Empanelled" nzValue="E"></nz-option>
+                  <nz-option nzLabel="Non-Empanelled" nzValue="NE"></nz-option>
+                  <nz-option nzLabel="Governemnt" nzValue="G"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 45px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="dataList"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '1500px', y: '55vh' }"
+      nzBordered
+    >
+      <thead>
+        <tr>
+          <th
+            nzLeft
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+          >
+            Action
+          </th>
+          <th
+            nzLeft
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="IS_APPLYING_FOR_ADVANCE"
+            [nzSortFn]="true"
+          >
+            Claim Type
+          </th>
+          <th
+            nzWidth="230px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DESIGNATION"
+            [nzSortFn]="true"
+          >
+            Employee Designation
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="BASIC_PAY"
+            [nzSortFn]="true"
+          >
+            Basic Pay
+          </th>
+
+          <th
+            nzWidth="220px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="HEADQUARTERS_NAME"
+            [nzSortFn]="true"
+          >
+            Head Quater Address
+          </th>
+
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="MOBILE_NO"
+            [nzSortFn]="true"
+          >
+            Mobile No
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="GRADE_PAY_LEVEL"
+            [nzSortFn]="true"
+          >
+            Gradepay Level
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td nzLeft nzWidth="100px">
+            <div style="padding: 3px">
+              <span style="cursor: pointer" (click)="pickClaim(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px blue solid;
+                    border-radius: 0px;
+                  "
+                  [nzColor]="'blue'"
+                >
+                  Pick Claim
+                </nz-tag>
+              </span>
+            </div>
+          </td>
+
+          <td nzLeft style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.IS_APPLYING_FOR_ADVANCE">Advance Claim</span>
+            <span *ngIf="!data.IS_APPLYING_FOR_ADVANCE">Final Claim</span>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DESIGNATION }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.BASIC_PAY }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.HEADQUARTERS_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.GRADE_PAY_LEVEL }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

@@ -1,0 +1,2267 @@
+<!-- <button nz-button nzType="primary" (click)="concessionBill()" nzJustify="end">
+    <i nz-icon nzType="plus"></i>Open
+</button>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzMaskClosable]="false" [nzWidth]="990" [nzVisible]="isVisible" (nzOnClose)="close()"> -->
+<div nz-row [nzGutter]="[16, 24]">
+  <div nz-col nzSpan="8" class="gutter-row">
+    <div class="my-box">
+      <div
+        nz-row
+        style="
+          height: 70vh;
+          overflow-y: scroll;
+          border-bottom: 1px solid;
+          margin-bottom: 30px;
+        "
+      >
+        <!-- <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>My wife with...</nz-form-label>
+        
+                    <nz-input-group>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        name="My wife with"
+                        nz-input
+                        placeholder="Enter My wife with"
+                        [(ngModel)]="checkListltc.JOURNEY_DETAILS_FIVE_REMARK1"
+                      />
+                    </nz-input-group>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Children...</nz-form-label>
+        
+                    <nz-input-group>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        name="children"
+                        nz-input
+                        placeholder="Enter children"
+                        [(ngModel)]="checkListltc.JOURNEY_DETAILS_FIVE_REMARK2"
+                      />
+                    </nz-input-group>
+                  </nz-form-item>
+                </div> -->
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Home Town Destination</nz-form-label>
+
+            <nz-input-group>
+              <input
+                type="text"
+                autocomplete="off"
+                name="home town viz"
+                nz-input
+                placeholder="Enter Home Town Destination"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_FIVE_REMARK3"
+              />
+            </nz-input-group>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon
+              >1.Any Other Claim Submitted ?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails1"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_ONE"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>2.Is T.A. Already Drawn ?</nz-form-label>
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails2"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_TWO"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon
+              >3.Is T.A. Already Not Drawn ?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails3"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_THREE"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon
+              >4.I have not already drawn...</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails4"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_FOUR"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>5.The journey has been...</nz-form-label>
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails5"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_FIVE"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon
+              >6.Is Husband or Wife Employeed In Government ?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails6"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_SIX"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label
+              nzNoColon
+              nzTooltipTitle="7.Whether The Claimed Of LTC Is Employed In Any Public Sector
+                ?"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              >7.Whether The Claimed Of LTC Is Employed In Any Public Sector
+              ?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails7"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_SEVEN"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label
+              nzNoColon
+              nzTooltipTitle="8.Whether The Claimed Of LTC Is Not Employed In Any Public Sector
+                ?"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              >8.Whether The Claimed Of LTC Is Not Employed In Any Public Sector
+              ?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                name="journeydetails8"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="checkListltc.JOURNEY_DETAILS_EIGHT"
+                style="width: 100%"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="16" class="gutter-row">
+    <div class="my-box">
+      <form nz-form *ngIf="LTC6data != undefined">
+        <div
+          style="font-size: 13px"
+          style="
+            height: 70vh;
+            overflow-y: scroll;
+            border-bottom: 1px solid;
+            margin-bottom: 30px;
+          "
+        >
+          <div style="margin-top: 4%; font-size: 16px; text-align: right">
+            Bill No.___________________________<b>GAR-14-C</b>
+          </div>
+
+          <div style="font-size: 28px; text-align: center">
+            <b>Leave Travel Concession Bill</b>
+          </div>
+
+          <div style="font-size: 16px; text-align: center">
+            <b
+              >For the
+              <u
+                >Block of Year {{ LTC6data.BLOCK_YEAR }}
+                <!-- (extended upto March, 2021) -->
+              </u></b
+            >
+          </div>
+
+          <div style="font-size: 16px; text-align: center">
+            <b>Note: - </b>
+            This should be prepared in duplicate - One for payment and other as
+            office copy
+          </div>
+          <div style="font-size: 14px; text-align: left">To,</div>
+          <div
+            *ngIf="DDO_Master_Data.length > 0"
+            style="font-size: 14px; text-align: left"
+          >
+            {{ DDO_Master_Data[0]["DESCRIPTION"] }}
+          </div>
+          <div
+            *ngIf="DDO_Master_Data.length > 0"
+            style="font-size: 14px; text-align: left"
+          >
+            {{ DDO_Master_Data[0]["LOCATION"] }}
+          </div>
+          <div style="font-size: 30px; text-align: center"><b>PART-A</b></div>
+
+          <div style="text-align: center">
+            (To be filled up by the Government Servant)
+          </div>
+
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+          >
+            <tr>
+              <td nzAlign="center" style="width: 40px">1</td>
+              <td nzAlign="left">Name</td>
+              <td nzAlign="center" style="width: 20px">:</td>
+              <td nzAlign="left">
+                <div>{{ LTC6data.EMPLOYEE_NAME }}</div>
+                <div>( Employee No. : {{ LTC6data.EMPLOYEE_CODE }} )</div>
+              </td>
+            </tr>
+
+            <tr>
+              <td nzAlign="center" style="width: 40px">2</td>
+              <td nzAlign="left">Designation</td>
+              <td nzAlign="center" style="width: 20px">:</td>
+              <td nzAlign="left">{{ LTC6data.DESIGNATION }}</td>
+            </tr>
+
+            <tr>
+              <td nzAlign="center" style="width: 40px">3</td>
+              <td nzAlign="left">Pay</td>
+              <td nzAlign="center" style="width: 20px">:</td>
+              <td nzAlign="left">{{ LTC6data.GRADE_PAY }}/-</td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 40px">4</td>
+              <td nzAlign="left">Headquarters</td>
+              <td nzAlign="center" style="width: 20px">:</td>
+              <td nzAlign="left">{{ LTC6data.HEADQUARTERS }}</td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 40px">5</td>
+              <td nzAlign="left" colspan="3">
+                Nature and period of leave :
+                <!-- {{
+                          LTC6data.LEAVE_START_DATE | date : "dd-MM-yyyy"
+                        }} to {{ LTC6data.LEAVE_END_DATE | date : "dd-MM-yyyy" }}  -->
+                {{ LTC6data.NATURE_OF_LEAVE }}.{{
+                  getdate(LTC6data.LEAVE_START_DATE, LTC6data.LEAVE_END_DATE)
+                }}
+                ({{ LTC6data.IS_SANCTIONED ? "Sanctioned" : "Not Sanctioned" }})
+              </td>
+            </tr>
+          </table>
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+          >
+            <tr>
+              <td nzAlign="center" style="width: 40px">6</td>
+              <td nzAlign="left" colspan="8">
+                Particulars of members of family in respect of whom the L.T.C.
+                has been claimed :
+              </td>
+            </tr>
+
+            <tr>
+              <td nzAlign="center" style="width: 40px"></td>
+              <td nzAlign="center" style="width: 60px">
+                <div>S No.</div>
+                <div>(1)</div>
+              </td>
+              <td nzAlign="center">
+                <div>Name</div>
+                <div>(2)</div>
+              </td>
+              <td nzAlign="center" style="width: 70px">
+                <div>Age</div>
+                <div>(3)</div>
+              </td>
+
+              <td nzAlign="center">
+                <div>Relationship with Govt. Servant</div>
+                <div>(4)</div>
+              </td>
+            </tr>
+
+            <tr *ngFor="let data of relationdata1; let k = index">
+              <td style="width: 40px"></td>
+              <td nzAlign="center">{{ k + 1 }}</td>
+              <td nzAlign="center">{{ data["NAME_OF_FAMILY_MEMBER"] }}</td>
+              <td nzAlign="center">{{ data["AGE"] }}</td>
+              <td nzAlign="center">{{ data["RELATIONSHIP"] }}</td>
+            </tr>
+            <tr *ngIf="relationdata1.length == 0">
+              <td nzAlign="center" colspan="6">NA</td>
+            </tr>
+            <tr>
+              <td style="width: 40px"></td>
+              <td colspan="4" style="height: 30px"></td>
+            </tr>
+          </table>
+
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+          >
+            <tr>
+              <td nzAlign="center" style="width: 40px">7</td>
+              <td nzAlign="left" colspan="8">
+                Details of Journey(s) performed by Government Servant and the
+                members of his / her family:
+              </td>
+            </tr>
+          </table>
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+          >
+            <tr>
+              <th colspan="2" nzAlign="center">DEPARTURE</th>
+              <th colspan="2" align="center">ARRIVAL</th>
+              <th align="center" rowspan="2">
+                <div>Distance</div>
+                <div>in Kms.</div>
+                <div>(5)</div>
+              </th>
+              <th nzAlign="center" rowspan="2">
+                <div>Mode of</div>
+                <div>travel and</div>
+                <div>class of</div>
+                <div>accommodation</div>
+                <div>used</div>
+                <div>(6)</div>
+              </th>
+              <th nzAlign="center" rowspan="2">
+                <div>No.</div>
+                <div>of</div>
+                <div>fares</div>
+                <div>(7)</div>
+              </th>
+
+              <th nzAlign="center" rowspan="2">
+                <div>Fare paid</div>
+                <div>(Rs.)</div>
+                <div>(8)</div>
+              </th>
+              <th nzAlign="center" rowspan="2">
+                <div>Remarks</div>
+                <div>(9)</div>
+              </th>
+            </tr>
+
+            <tr>
+              <th nzAlign="center" style="width: 100px">
+                <div>Date and</div>
+                <div>time</div>
+                <div>(1)</div>
+              </th>
+
+              <th nzAlign="center" style="width: 100px">
+                <div>From</div>
+                <div>(2)</div>
+              </th>
+
+              <th nzAlign="center" style="width: 100px">
+                <div>Date and</div>
+                <div>time</div>
+                <div>(3)</div>
+              </th>
+
+              <th nzAlign="center" style="width: 100px">
+                <div>To</div>
+                <div>(4)</div>
+              </th>
+            </tr>
+
+            <tr *ngFor="let data of formdata7; let k = index">
+              <td nzAlign="center">
+                <!-- <div>{{ data.TO_DATETIME }}</div> -->
+                {{ data.FROM_DATETIME | date : "dd.MM.yyyy" }} <br />
+                {{ data.FROM_DATETIME | date : "(HH:mm aa)" }}
+                <!-- <div>05:55 A.M.</div> -->
+              </td>
+              <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+              <td nzAlign="center">
+                <!-- <div>{{ data.FROM_DATETIME }}</div> -->
+                {{ data.TO_DATETIME | date : "dd.MM.yyyy" }} <br />
+                {{ data.TO_DATETIME | date : "(HH:mm aa)" }}
+                <!-- <div>08:00 A.M.</div> -->
+              </td>
+              <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+              <td nzAlign="center">{{ data.DISTANCE_BY_ROAD }}</td>
+
+              <td nzAlign="center">
+                <div>{{ data.TRAVEL_CLASS_NAME }}</div>
+                <!-- <div>Air India</div>
+                                                <div>AI-689</div>
+                                                <div>Business Class</div> -->
+              </td>
+
+              <td nzAlign="center">{{ data.NO_OF_FAIRS }}</td>
+              <td nzAlign="center">Rs.{{ data.JOURNEY_CLAIMED_AMOUNT }}/-</td>
+              <td nzAlign="center">{{ data.REMARK }}</td>
+            </tr>
+            <tr *ngIf="formdata7.length == 0">
+              <td nzAlign="center" colspan="9">NA</td>
+            </tr>
+            <tr>
+              <td colspan="7" nzAlign="right">Total</td>
+              <td nzAlign="center">
+                <span *ngIf="formdata7.length > 0"
+                  >Rs.<b> {{ aamount }} </b></span
+                >
+              </td>
+              <td nzAlign="center">-</td>
+            </tr>
+          </table>
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+          >
+            <tr>
+              <td nzAlign="center" style="width: 40px">8</td>
+              <td nzAlign="left">Amount of Advance, if any, drawn</td>
+              <td nzAlign="center" style="width: 15px">:</td>
+
+              <td nzAlign="left">
+                <span
+                  *ngIf="
+                    LTC6data.AMOUNT_OF_ADVANCE == undefined &&
+                    LTC6data.AMOUNT_OF_ADVANCE == ''
+                  "
+                  >Rs. NIL</span
+                >
+                <span
+                  *ngIf="
+                    LTC6data.AMOUNT_OF_ADVANCE != undefined &&
+                    LTC6data.AMOUNT_OF_ADVANCE > 0
+                  "
+                  >Rs.<b> {{ LTC6data.AMOUNT_OF_ADVANCE }} </b></span
+                >
+              </td>
+            </tr>
+            <tr>
+              <td nzAlign="center" style="width: 40px">9</td>
+              <td nzAlign="left" colspan="3">
+                Particulars of Journey(s) for which higher class of
+                accommodation than the one to which the Government Servant is
+                entitled, was used ( Sanction No. and date to be given):
+              </td>
+            </tr>
+          </table>
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+          >
+            <tr>
+              <th colspan="2" nzAlign="center">P L A C E S</th>
+              <th nzAlign="center" rowspan="2">
+                <div>Mode of</div>
+                <div>Conveyance</div>
+                <div>(3)</div>
+              </th>
+
+              <th nzAlign="center" rowspan="2">
+                <div>Class to</div>
+                <div>which</div>
+                <div>entitled</div>
+                <div>(4)</div>
+              </th>
+
+              <th nzAlign="center" rowspan="2">
+                <div>Class to</div>
+                <div>which</div>
+                <div>actually</div>
+                <div>travelled</div>
+                <div>(5)</div>
+              </th>
+
+              <th nzAlign="center" rowspan="2">
+                <div>No. of</div>
+                <div>Fares</div>
+                <div>(6)</div>
+              </th>
+
+              <th nzAlign="center" colspan="4" rowspan="2">
+                <div>Fare paid</div>
+                <div>Rs.</div>
+                <div>(7)</div>
+              </th>
+            </tr>
+
+            <tr>
+              <th nzAlign="center">
+                <div>From</div>
+                <div>(1)</div>
+              </th>
+              <th nzAlign="center">
+                <div>To</div>
+                <div>(2)</div>
+              </th>
+            </tr>
+
+            <tr *ngFor="let data of formdata3; let k = index">
+              <!-- <td nzAlign="center" colspan="10">N.A.</td> -->
+
+              <td nzAlign="center">{{ data.PLACE_FROM }}</td>
+              <td nzAlign="center">{{ data.PLACE_TO }}</td>
+              <td nzAlign="center">{{ data.MODE_OF_CONVEYANCE_NAME }}</td>
+              <td nzAlign="center">{{ data.ENTITLED_CLASS_NAME }}</td>
+              <td nzAlign="center">{{ data.TRAVELLED_CLASS_CLASS_NAME }}</td>
+              <td nzAlign="center">{{ data.NO_OF_FAIRS }}</td>
+              <td nzAlign="center" colspan="4">{{ data.FAIR_PAID }}</td>
+            </tr>
+            <tr *ngIf="formdata3.length == 0">
+              <td nzAlign="center" colspan="6">NA</td>
+            </tr>
+          </table>
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+            class="breakable-table"
+          >
+            <tr>
+              <td nzAlign="center" style="width: 40px">10</td>
+              <td nzAlign="left" colspan="9">
+                Particulars of Journey(s) Performed by road between places
+                connected by rail:-
+              </td>
+            </tr>
+          </table>
+          <table
+            border="1"
+            style="border-collapse: collapse"
+            style="width: 100%"
+            class="breakable-table"
+          >
+            <tr>
+              <th colspan="2" nzAlign="center">NAME OF PLACE</th>
+              <th nzAlign="center" rowspan="2">
+                <div>Class to which entitled</div>
+                <div>(3)</div>
+              </th>
+
+              <th nzAlign="center" colspan="6" rowspan="2">
+                <div>Fare paid</div>
+                <div>Rs.</div>
+                <div>(4)</div>
+              </th>
+            </tr>
+
+            <tr>
+              <th nzAlign="center">
+                <div>From</div>
+                <div>(1)</div>
+              </th>
+              <th nzAlign="center">
+                <div>To</div>
+                <div>(2)</div>
+              </th>
+            </tr>
+
+            <tr *ngFor="let data of formdata1; let k = index">
+              <!-- <td nzAlign="center" colspan="10">N.A.</td> -->
+
+              <td nzAlign="center">{{ data.FROM_PLACE }}</td>
+              <td nzAlign="center">{{ data.TO_PLACE }}</td>
+              <td nzAlign="center">{{ data.ENTITLED_TRAVEL_CLASS_NAME }}</td>
+              <td nzAlign="center" colspan="6">{{ data.FARE_PAID }}</td>
+            </tr>
+            <tr *ngIf="formdata1.length == 0">
+              <td nzAlign="center" colspan="6">NA</td>
+            </tr>
+          </table>
+          <br />
+          <p style="font-size: 14px"><b>CERTIFIED that the:-</b></p>
+          <p>
+            Information as given above is true to the best of my knowledge and
+            belief, and
+          </p>
+
+          <div style="text-align: justify">
+            That my husband./ wife is not employed in the Government Service /
+            that my husband / wife is employed in Government Service and the
+            concession has not been availed of by him / her separately for
+            himself / herself for any of the family members for the concerned
+            <span *ngIf="!LTC6data.IS_ADVANCE_CLAIM">
+              <span *ngIf="LTC6data.ORDER_YEAR">
+                {{ LTC6data.ORDER_YEAR }}</span
+              >
+              <span *ngIf="LTC6data.BLOCK_YEAR">
+                {{ LTC6data.BLOCK_YEAR }}
+              </span>
+            </span>
+            <span *ngIf="LTC6data.IS_ADVANCE_CLAIM">
+              <span *ngIf="LTC6data.FINAL_ORDER_YEAR">
+                {{ LTC6data.FINAL_ORDER_YEAR }}</span
+              >
+              <span *ngIf="LTC6data.FINAL_PARTICULARS_BLOCK_YEAR">
+                {{ LTC6data.FINAL_PARTICULARS_BLOCK_YEAR }}
+              </span> </span
+            >.
+          </div>
+
+          <div style="margin-top: 110px; margin-left: 65%">
+            <div style="font-size: 14px">(Signature of Government Servant)</div>
+            <br />
+            <div style="font-size: 14px">Dated :</div>
+          </div>
+
+          <div
+            style="
+              font-size: 13px;
+              text-align: center;
+              page-break-inside: avoid !important;
+              page-break-before: always !important;
+            "
+          >
+            <b><u>L.T.C.CERTIFICATE</u></b>
+          </div>
+
+          <div style="font-size: 16px; text-align: center">
+            <b> <u>CERTIFICATES TO BE GIVEN BY THE CONTROLLING OFFICER</u></b>
+          </div>
+          <br />
+          <ul style="text-align: justify; list-style-type: lower-roman">
+            <li>
+              <p>
+                that Shri/Smt./Kumari
+                <b style="text-decoration: underline">{{
+                  LTC6data.EMPLOYEE_NAME
+                }}</b>
+                has rendered continuous service for one year or more on the date
+                of commencing outward Journey.
+              </p>
+            </li>
+
+            <li>
+              <p>
+                that necessary entries as required under 3 of the Ministry of
+                Home Affairs O.M. No. 43/1/55-Ests(A) Part II dated 11th
+                October,1956 have been made in the Service Book of Shri / Smt. /
+                Kumari_______________________________________
+              </p>
+            </li>
+
+            <div style="margin-top: 70px; text-align: right">
+              <div style="font-size: 14px">
+                (Signature & Designation of the Controlling Officer)
+              </div>
+            </div>
+          </ul>
+          <br />
+          <div style="font-size: 16px; text-align: center">
+            <b> <u>CERTIFICATES TO BE GIVEN BY THE GOVT. SERVANT</u></b>
+          </div>
+
+          <ul style="text-align: justify; list-style-type: decimal">
+            <li>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_ONE == 1"
+                style="margin-left: 5px"
+              >
+                I have not submitted any other claim so far for Leave Travel
+                Concession in respect of myself or my family members in respect
+                of the block years
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_ONE == 0"
+                style="text-decoration: line-through; margin-left: 5px"
+              >
+                I have not submitted any other claim so far for Leave Travel
+                Concession in respect of myself or my family members in respect
+                of the block years
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_TWO == 1">
+                &nbsp;&nbsp; I have already drawn T.A. for the Leave Travel
+                Concession in respect of a journey performed by me / my wife
+                with ______ children.The claim is in respect of journey
+                performed by my wife /myself with _____________ children none of
+                whom travelled with the party on the earlier occasion.
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_TWO == 0"
+                style="text-decoration: line-through"
+              >
+                &nbsp;&nbsp; I have already drawn T.A. for the Leave Travel
+                Concession in respect of a journey performed by me / my wife
+                with ______ children.The claim is in respect of journey
+                performed by my wife /myself with _____________ children none of
+                whom travelled with the party on the earlier occasion.
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_THREE == 1">
+                I have not already drawn T.A. for the Leave Travel Concession in
+                respect of the journey performed by me / my wife with
+                _____________ children / ___________ children in respect of
+                block of two years 20______ and 20_______.This claim is in
+                respect of the journey performedby my wife / myself with
+                ___________ chidren / ___________ children one of whom availed
+                of the concession relating of the block.
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_THREE == 0"
+                style="text-decoration: line-through"
+              >
+                I have not already drawn T.A. for the Leave Travel Concession in
+                respect of the journey performed by me / my wife with
+                _____________ children / ___________ children in respect of
+                block of two years 20______ and 20_______.This claim is in
+                respect of the journey performedby my wife / myself with
+                ___________ chidren / ___________ children one of whom availed
+                of the concession relating of the block.
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_FOUR == 1">
+                I have already drawn T.A. for the Leave Travel Concession in
+                respect of the journey performed by me in the year ____________
+                in respect of block of two years 20__________ and 20__________.
+                The claim is in respect of journey performed by me in the year
+                200_____________. This is against the concession admissible once
+                every year in a prescribed block for visiting home town as all
+                the members of my family is living away from place of work.
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_FOUR == 0"
+                style="text-decoration: line-through"
+              >
+                I have already drawn T.A. for the Leave Travel Concession in
+                respect of the journey performed by me in the year ____________
+                in respect of block of two years 20__________ and 20__________.
+                The claim is in respect of journey performed by me in the year
+                200_____________. This is against the concession admissible once
+                every year in a prescribed block for visiting home town as all
+                the members of my family is living away from place of work.
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_FIVE == 1">
+                <span
+                  *ngIf="
+                    selfList.length == 1 &&
+                    wifeList.length == 0 &&
+                    childrenList.length == 0
+                  "
+                >
+                  The journey has been performed by me to the declared home town
+                  viz.<b style="text-decoration: underline">{{
+                    checkListltc.JOURNEY_DETAILS_FIVE_REMARK3
+                  }}</b>
+                </span>
+                <span
+                  *ngIf="
+                    wifeList.length == 1 &&
+                    childrenList.length == 0 &&
+                    selfList.length == 0
+                  "
+                >
+                  The journey has been performed by my wife
+                  <span *ngFor="let data of wifeList">
+                    {{ data }}
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    childrenList.length == 1 &&
+                    selfList.length == 0 &&
+                    wifeList.length == 0
+                  "
+                >
+                  The journey has been performed by children
+                  <span *ngFor="let data of childrenList; let k = index">
+                    <span>{{ data }}</span>
+
+                    <span *ngIf="childrenList.length > 1">
+                      <span
+                        *ngIf="
+                          childrenList.length - 2 != k &&
+                          childrenList.length != k + 1
+                        "
+                      >
+                        ,
+                      </span>
+                      <span *ngIf="childrenList.length - 2 == k"> & </span>
+                    </span>
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    selfList.length == 1 &&
+                    wifeList.length == 1 &&
+                    childrenList.length == 0
+                  "
+                >
+                  The journey has been performed by me with my wife
+                  <span *ngFor="let data of wifeList">
+                    {{ data }}
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    selfList.length == 1 &&
+                    childrenList.length == 1 &&
+                    wifeList.length == 0
+                  "
+                >
+                  The journey has been performed by me with my children
+                  <span *ngFor="let data of childrenList; let k = index">
+                    <span>{{ data }}</span>
+
+                    <span *ngIf="childrenList.length > 1">
+                      <span
+                        *ngIf="
+                          childrenList.length - 2 != k &&
+                          childrenList.length != k + 1
+                        "
+                      >
+                        ,
+                      </span>
+                      <span *ngIf="childrenList.length - 2 == k"> & </span>
+                    </span>
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    childrenList.length == 1 &&
+                    wifeList.length == 1 &&
+                    selfList.length == 0
+                  "
+                >
+                  The journey has been performed by my wife
+                  <span *ngFor="let data of wifeList">
+                    {{ data }}
+                  </span>
+                  with my children
+                  <span *ngFor="let data of childrenList; let k = index">
+                    <span>{{ data }}</span>
+
+                    <span *ngIf="childrenList.length > 1">
+                      <span
+                        *ngIf="
+                          childrenList.length - 2 != k &&
+                          childrenList.length != k + 1
+                        "
+                      >
+                        ,
+                      </span>
+                      <span *ngIf="childrenList.length - 2 == k"> & </span>
+                    </span>
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    childrenList.length == 0 &&
+                    wifeList.length == 0 &&
+                    selfList.length == 0
+                  "
+                >
+                  The journey has been performed by me / my wife with children /
+                  children to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <!-- The journey has been performed by me / my wife with
+                        <b style="text-decoration: underline">{{
+                          checkListltc.JOURNEY_DETAILS_FIVE_REMARK1
+                        }}</b>
+                        children /
+                        <b style="text-decoration: underline">{{
+                          checkListltc.JOURNEY_DETAILS_FIVE_REMARK2
+                        }}</b>
+                        children to the declared home town viz.<b
+                          style="text-decoration: underline"
+                          >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                        > -->
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_FIVE == 0"
+                style="text-decoration: line-through"
+              >
+                <span
+                  *ngIf="
+                    selfList.length == 1 &&
+                    wifeList.length == 0 &&
+                    childrenList.length == 0
+                  "
+                >
+                  The journey has been performed by me to the declared home town
+                  viz.<b style="text-decoration: underline">{{
+                    checkListltc.JOURNEY_DETAILS_FIVE_REMARK3
+                  }}</b>
+                </span>
+                <span
+                  *ngIf="
+                    wifeList.length == 1 &&
+                    childrenList.length == 0 &&
+                    selfList.length == 0
+                  "
+                >
+                  The journey has been performed by my wife
+                  <span *ngFor="let data of wifeList">
+                    {{ data }}
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    childrenList.length == 1 &&
+                    selfList.length == 0 &&
+                    wifeList.length == 0
+                  "
+                >
+                  The journey has been performed by children
+                  <span *ngFor="let data of childrenList; let k = index">
+                    <span>{{ data }}</span>
+
+                    <span *ngIf="childrenList.length > 1">
+                      <span
+                        *ngIf="
+                          childrenList.length - 2 != k &&
+                          childrenList.length != k + 1
+                        "
+                      >
+                        ,
+                      </span>
+                      <span *ngIf="childrenList.length - 2 == k"> & </span>
+                    </span>
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    selfList.length == 1 &&
+                    wifeList.length == 1 &&
+                    childrenList.length == 0
+                  "
+                >
+                  The journey has been performed by me with my wife
+                  <span *ngFor="let data of wifeList">
+                    {{ data }}
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    selfList.length == 1 &&
+                    childrenList.length == 1 &&
+                    wifeList.length == 0
+                  "
+                >
+                  The journey has been performed by me with my children
+                  <span *ngFor="let data of childrenList; let k = index">
+                    <span>{{ data }}</span>
+
+                    <span *ngIf="childrenList.length > 1">
+                      <span
+                        *ngIf="
+                          childrenList.length - 2 != k &&
+                          childrenList.length != k + 1
+                        "
+                      >
+                        ,
+                      </span>
+                      <span *ngIf="childrenList.length - 2 == k"> & </span>
+                    </span>
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    childrenList.length == 1 &&
+                    wifeList.length == 1 &&
+                    selfList.length == 0
+                  "
+                >
+                  The journey has been performed by my wife
+                  <span *ngFor="let data of wifeList">
+                    {{ data }}
+                  </span>
+                  with my children
+                  <span *ngFor="let data of childrenList; let k = index">
+                    <span>{{ data }}</span>
+
+                    <span *ngIf="childrenList.length > 1">
+                      <span
+                        *ngIf="
+                          childrenList.length - 2 != k &&
+                          childrenList.length != k + 1
+                        "
+                      >
+                        ,
+                      </span>
+                      <span *ngIf="childrenList.length - 2 == k"> & </span>
+                    </span>
+                  </span>
+                  to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <span
+                  *ngIf="
+                    childrenList.length == 0 &&
+                    wifeList.length == 0 &&
+                    selfList.length == 0
+                  "
+                >
+                  The journey has been performed by me / my wife with children /
+                  children to the declared home town viz.<b
+                    style="text-decoration: underline"
+                    >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                  >
+                </span>
+                <!-- The journey has been performed by me / my wife with
+                        <b style="text-decoration: underline">{{
+                          checkListltc.JOURNEY_DETAILS_FIVE_REMARK1
+                        }}</b>
+                        children /
+                        <b style="text-decoration: underline">{{
+                          checkListltc.JOURNEY_DETAILS_FIVE_REMARK2
+                        }}</b>
+                        children to the declared home town viz.<b
+                          style="text-decoration: underline"
+                          >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                        > -->
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_SIX == 1">
+                <u>That my husband / wife is not employed in Government:</u
+                ><br /><br />
+                That my husband / wife is employed in Government service and the
+                concession has not been availed of by him / her seperately for
+                himself / herself or for any of the family members for the
+                conserned block of two years.
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_SIX == 0"
+                style="text-decoration: line-through"
+              >
+                <u>That my husband / wife is not employed in Government:</u
+                ><br /><br />
+                That my husband / wife is employed in Government service and the
+                concession has not been availed of by him / her seperately for
+                himself / herself or for any of the family members for the
+                conserned block of two years.
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_SEVEN == 1">
+                Certified that my wife / husband for whom L.T.C is claimed by me
+                is employed in __________________________________________ (name
+                of the Public Sector Undertaking / Corporation / Autonomous
+                Body, etc.) which provide Leave Travel Concession facilities but
+                he / she has not perferred and will not prefer any claim in this
+                behalf to his / her employer.
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_SEVEN == 0"
+                style="text-decoration: line-through"
+              >
+                Certified that my wife / husband for whom L.T.C is claimed by me
+                is employed in __________________________________________ (name
+                of the Public Sector Undertaking / Corporation / Autonomous
+                Body, etc.) which provide Leave Travel Concession facilities but
+                he / she has not perferred and will not prefer any claim in this
+                behalf to his / her employer.
+              </p>
+            </li>
+
+            <li>
+              <p *ngIf="checkListltc.JOURNEY_DETAILS_EIGHT == 1">
+                Certified that my wife / husband for whom L.T.C is claimed by me
+                is not employed in any Public Sector Undertaking / Corporation
+                /Autonomous Body, finaced by wholly or partly by the Central
+                Government or Local Body, which provides LTC facilities to its
+                employees and their families.
+              </p>
+              <p
+                *ngIf="checkListltc.JOURNEY_DETAILS_EIGHT == 0"
+                style="text-decoration: line-through"
+              >
+                Certified that my wife / husband for whom L.T.C is claimed by me
+                is not employed in any Public Sector Undertaking / Corporation
+                /Autonomous Body, finaced by wholly or partly by the Central
+                Government or Local Body, which provides LTC facilities to its
+                employees and their families.
+              </p>
+            </li>
+          </ul>
+
+          <div style="margin-top: 70px; margin-left: 80%">
+            <div style="font-size: 14px">(Signature of Govt.Servant)</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    *ngIf="!isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="showmodal()"
+  >
+    <span>Download or Print</span>
+  </button>
+
+  <button
+    *ngIf="isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="showModalOnly()"
+  >
+    <span>Preview</span>
+  </button>
+</div>
+<!-- </nz-drawer> -->
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Part A'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="PartA">
+          <div
+            style="
+              width: 94%;
+              padding: 3px;
+              margin-left: 60px;
+              font-size: 14px;
+              font-family: Arial, Helvetica, sans-serif;
+            "
+          >
+            <div style="margin-top: 4%; font-size: 16px; text-align: right">
+              Bill No.___________________________<b>GAR-14-C</b>
+            </div>
+
+            <div style="font-size: 28px; text-align: center">
+              <b>Leave Travel Concession Bill</b>
+            </div>
+
+            <div style="font-size: 16px; text-align: center">
+              <b
+                >For the
+                <u
+                  >Block of Year {{ LTC6data.BLOCK_YEAR }}
+                  <!-- (extended upto March, 2021) -->
+                </u></b
+              >
+            </div>
+
+            <div style="font-size: 16px; text-align: center">
+              <b>Note: - </b>
+              This should be prepared in duplicate - One for payment and other
+              as office copy
+            </div>
+            <div style="font-size: 14px; text-align: left">To,</div>
+            <div
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 14px; text-align: left"
+            >
+              {{ DDO_Master_Data[0]["DESCRIPTION"] }}
+            </div>
+            <div
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 14px; text-align: left"
+            >
+              {{ DDO_Master_Data[0]["LOCATION"] }}
+            </div>
+            <div style="font-size: 30px; text-align: center"><b>PART-A</b></div>
+
+            <div style="text-align: center">
+              (To be filled up by the Government Servant)
+            </div>
+
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+            >
+              <tr>
+                <td nzAlign="center" style="width: 40px">1</td>
+                <td nzAlign="left">Name</td>
+                <td nzAlign="center" style="width: 20px">:</td>
+                <td nzAlign="left">
+                  <div>{{ LTC6data.EMPLOYEE_NAME }}</div>
+                  <div>( Employee No. : {{ LTC6data.EMPLOYEE_CODE }} )</div>
+                </td>
+              </tr>
+
+              <tr>
+                <td nzAlign="center" style="width: 40px">2</td>
+                <td nzAlign="left">Designation</td>
+                <td nzAlign="center" style="width: 20px">:</td>
+                <td nzAlign="left">{{ LTC6data.DESIGNATION }}</td>
+              </tr>
+
+              <tr>
+                <td nzAlign="center" style="width: 40px">3</td>
+                <td nzAlign="left">Pay</td>
+                <td nzAlign="center" style="width: 20px">:</td>
+                <td nzAlign="left">{{ LTC6data.GRADE_PAY }}/-</td>
+              </tr>
+              <tr>
+                <td nzAlign="center" style="width: 40px">4</td>
+                <td nzAlign="left">Headquarters</td>
+                <td nzAlign="center" style="width: 20px">:</td>
+                <td nzAlign="left">{{ LTC6data.HEADQUARTERS }}</td>
+              </tr>
+              <tr>
+                <td nzAlign="center" style="width: 40px">5</td>
+                <td nzAlign="left" colspan="3">
+                  Nature and period of leave :
+                  <!-- {{ LTC6data.NATURE_OF_LEAVE }}.{{
+                            LTC6data.LEAVE_START_DATE | date : "dd-MM-yyyy"
+                          }} to {{ LTC6data.LEAVE_END_DATE | date : "dd-MM-yyyy" }} -->
+                  {{ LTC6data.NATURE_OF_LEAVE }}.{{
+                    getdate(LTC6data.LEAVE_START_DATE, LTC6data.LEAVE_END_DATE)
+                  }}
+                  ({{
+                    LTC6data.IS_SANCTIONED ? "Sanctioned" : "Not Sanctioned"
+                  }})
+                </td>
+              </tr>
+            </table>
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+            >
+              <tr>
+                <td nzAlign="center" style="width: 40px">6</td>
+                <td nzAlign="left" colspan="8">
+                  Particulars of members of family in respect of whom the L.T.C.
+                  has been claimed :
+                </td>
+              </tr>
+
+              <tr>
+                <td nzAlign="center" style="width: 40px"></td>
+                <td nzAlign="center" style="width: 60px">
+                  <div>S No.</div>
+                  <div>(1)</div>
+                </td>
+                <td nzAlign="center">
+                  <div>Name</div>
+                  <div>(2)</div>
+                </td>
+                <td nzAlign="center" style="width: 70px">
+                  <div>Age</div>
+                  <div>(3)</div>
+                </td>
+
+                <td nzAlign="center">
+                  <div>Relationship with Govt. Servant</div>
+                  <div>(4)</div>
+                </td>
+              </tr>
+
+              <tr *ngFor="let data of relationdata1; let k = index">
+                <td style="width: 40px"></td>
+                <td nzAlign="center">{{ k + 1 }}</td>
+                <td nzAlign="center">{{ data["NAME_OF_FAMILY_MEMBER"] }}</td>
+                <td nzAlign="center">{{ data["AGE"] }}</td>
+                <td nzAlign="center">{{ data["RELATIONSHIP"] }}</td>
+              </tr>
+              <tr *ngIf="relationdata1.length == 0">
+                <td nzAlign="center" colspan="6">NA</td>
+              </tr>
+              <tr>
+                <td style="width: 40px"></td>
+                <td colspan="4" style="height: 30px"></td>
+              </tr>
+            </table>
+
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+            >
+              <tr>
+                <td nzAlign="center" style="width: 40px">7</td>
+                <td nzAlign="left" colspan="8">
+                  Details of Journey(s) performed by Government Servant and the
+                  members of his / her family:
+                </td>
+              </tr>
+            </table>
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+            >
+              <tr>
+                <th colspan="2" nzAlign="center">DEPARTURE</th>
+                <th colspan="2" align="center">ARRIVAL</th>
+                <th align="center" rowspan="2">
+                  <div>Distance</div>
+                  <div>in Kms.</div>
+                  <div>(5)</div>
+                </th>
+                <th nzAlign="center" rowspan="2">
+                  <div>Mode of</div>
+                  <div>travel and</div>
+                  <div>class of</div>
+                  <div>accommo- dation</div>
+                  <div>used</div>
+                  <div>(6)</div>
+                </th>
+                <th nzAlign="center" rowspan="2">
+                  <div>No.</div>
+                  <div>of</div>
+                  <div>fares</div>
+                  <div>(7)</div>
+                </th>
+
+                <th nzAlign="center" rowspan="2">
+                  <div>Fare paid</div>
+                  <div>(Rs.)</div>
+                  <div>(8)</div>
+                </th>
+                <th nzAlign="center" rowspan="2">
+                  <div>Remarks</div>
+                  <div>(9)</div>
+                </th>
+              </tr>
+
+              <tr>
+                <th nzAlign="center" style="width: 100px">
+                  <div>Date and</div>
+                  <div>time</div>
+                  <div>(1)</div>
+                </th>
+
+                <th nzAlign="center" style="width: 100px">
+                  <div>From</div>
+                  <div>(2)</div>
+                </th>
+
+                <th nzAlign="center" style="width: 100px">
+                  <div>Date and</div>
+                  <div>time</div>
+                  <div>(3)</div>
+                </th>
+
+                <th nzAlign="center" style="width: 100px">
+                  <div>To</div>
+                  <div>(4)</div>
+                </th>
+              </tr>
+
+              <tr *ngFor="let data of formdata7; let k = index">
+                <td nzAlign="center">
+                  <!-- <div>{{ data.TO_DATETIME }}</div> -->
+                  {{ data.FROM_DATETIME | date : "dd.MM.yyyy" }} <br />
+                  {{ data.FROM_DATETIME | date : "(HH:mm aa)" }}
+                  <!-- <div>05:55 A.M.</div> -->
+                </td>
+                <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+                <td nzAlign="center">
+                  <!-- <div>{{ data.FROM_DATETIME }}</div> -->
+                  {{ data.TO_DATETIME | date : "dd.MM.yyyy" }} <br />
+                  {{ data.TO_DATETIME | date : "(HH:mm aa)" }}
+                  <!-- <div>08:00 A.M.</div> -->
+                </td>
+                <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+                <td nzAlign="center">{{ data.DISTANCE_BY_ROAD }}</td>
+
+                <td nzAlign="center">
+                  <div>{{ data.TRAVEL_CLASS_NAME }}</div>
+                  <!-- <div>Air India</div>
+                                                        <div>AI-689</div>
+                                                        <div>Business Class</div> -->
+                </td>
+
+                <td nzAlign="center">{{ data.NO_OF_FAIRS }}</td>
+                <td nzAlign="center">Rs.{{ data.JOURNEY_CLAIMED_AMOUNT }}/-</td>
+                <td nzAlign="center">{{ data.REMARK }}</td>
+              </tr>
+              <tr *ngIf="formdata7.length == 0">
+                <td nzAlign="center" colspan="9">NA</td>
+              </tr>
+              <tr>
+                <td colspan="7" nzAlign="right">Total</td>
+                <td nzAlign="center">
+                  <span *ngIf="formdata7.length > 0"
+                    >Rs.<b> {{ aamount }} </b></span
+                  >
+                </td>
+                <td nzAlign="center">-</td>
+              </tr>
+            </table>
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+            >
+              <tr>
+                <td nzAlign="center" style="width: 40px">8</td>
+                <td nzAlign="left">Amount of Advance, if any, drawn</td>
+                <td nzAlign="center" style="width: 15px">:</td>
+
+                <td nzAlign="left">
+                  <span
+                    *ngIf="
+                      LTC6data.AMOUNT_OF_ADVANCE == undefined &&
+                      LTC6data.AMOUNT_OF_ADVANCE == ''
+                    "
+                    >Rs. NIL</span
+                  >
+                  <span
+                    *ngIf="
+                      LTC6data.AMOUNT_OF_ADVANCE != undefined &&
+                      LTC6data.AMOUNT_OF_ADVANCE > 0
+                    "
+                    >Rs.<b> {{ LTC6data.AMOUNT_OF_ADVANCE }} </b></span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td nzAlign="center" style="width: 40px">9</td>
+                <td nzAlign="left" colspan="3">
+                  Particulars of Journey(s) for which higher class of
+                  accommodation than the one to which the Government Servant is
+                  entitled, was used ( Sanction No. and date to be given):
+                </td>
+              </tr>
+            </table>
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+            >
+              <tr>
+                <th colspan="2" nzAlign="center">P L A C E S</th>
+                <th nzAlign="center" rowspan="2">
+                  <div>Mode of</div>
+                  <div>Conveyance</div>
+                  <div>(3)</div>
+                </th>
+
+                <th nzAlign="center" rowspan="2">
+                  <div>Class to</div>
+                  <div>which</div>
+                  <div>entitled</div>
+                  <div>(4)</div>
+                </th>
+
+                <th nzAlign="center" rowspan="2">
+                  <div>Class to</div>
+                  <div>which</div>
+                  <div>actually</div>
+                  <div>travelled</div>
+                  <div>(5)</div>
+                </th>
+
+                <th nzAlign="center" rowspan="2">
+                  <div>No. of</div>
+                  <div>Fares</div>
+                  <div>(6)</div>
+                </th>
+
+                <th nzAlign="center" colspan="4" rowspan="2">
+                  <div>Fare paid</div>
+                  <div>Rs.</div>
+                  <div>(7)</div>
+                </th>
+              </tr>
+
+              <tr>
+                <th nzAlign="center">
+                  <div>From</div>
+                  <div>(1)</div>
+                </th>
+                <th nzAlign="center">
+                  <div>To</div>
+                  <div>(2)</div>
+                </th>
+              </tr>
+
+              <tr *ngFor="let data of formdata3; let k = index">
+                <!-- <td nzAlign="center" colspan="10">N.A.</td> -->
+
+                <td nzAlign="center">{{ data.PLACE_FROM }}</td>
+                <td nzAlign="center">{{ data.PLACE_TO }}</td>
+                <td nzAlign="center">{{ data.MODE_OF_CONVEYANCE_NAME }}</td>
+                <td nzAlign="center">{{ data.ENTITLED_CLASS_NAME }}</td>
+                <td nzAlign="center">{{ data.TRAVELLED_CLASS_CLASS_NAME }}</td>
+                <td nzAlign="center">{{ data.NO_OF_FAIRS }}</td>
+                <td nzAlign="center" colspan="4">{{ data.FAIR_PAID }}</td>
+              </tr>
+              <tr *ngIf="formdata3.length == 0">
+                <td nzAlign="center" colspan="6">NA</td>
+              </tr>
+            </table>
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+              class="breakable-table"
+            >
+              <tr>
+                <td nzAlign="center" style="width: 40px">10</td>
+                <td nzAlign="left" colspan="9">
+                  Particulars of Journey(s) Performed by road between places
+                  connected by rail:-
+                </td>
+              </tr>
+            </table>
+            <table
+              border="1"
+              style="border-collapse: collapse"
+              style="width: 100%"
+              class="breakable-table"
+            >
+              <tr>
+                <th colspan="2" nzAlign="center">NAME OF PLACE</th>
+                <th nzAlign="center" rowspan="2">
+                  <div>Class to which entitled</div>
+                  <div>(3)</div>
+                </th>
+
+                <th nzAlign="center" colspan="6" rowspan="2">
+                  <div>Fare paid</div>
+                  <div>Rs.</div>
+                  <div>(4)</div>
+                </th>
+              </tr>
+
+              <tr>
+                <th nzAlign="center">
+                  <div>From</div>
+                  <div>(1)</div>
+                </th>
+                <th nzAlign="center">
+                  <div>To</div>
+                  <div>(2)</div>
+                </th>
+              </tr>
+
+              <tr *ngFor="let data of formdata1; let k = index">
+                <!-- <td nzAlign="center" colspan="10">N.A.</td> -->
+
+                <td nzAlign="center">{{ data.FROM_PLACE }}</td>
+                <td nzAlign="center">{{ data.TO_PLACE }}</td>
+                <td nzAlign="center">{{ data.ENTITLED_TRAVEL_CLASS_NAME }}</td>
+                <td nzAlign="center" colspan="6">{{ data.FARE_PAID }}</td>
+              </tr>
+              <tr *ngIf="formdata1.length == 0">
+                <td nzAlign="center" colspan="6">NA</td>
+              </tr>
+            </table>
+            <br />
+            <p style="font-size: 14px"><b>CERTIFIED that the:-</b></p>
+            <p>
+              Information as given above is true to the best of my knowledge and
+              belief, and
+            </p>
+
+            <div style="text-align: justify">
+              That my husband./ wife is not employed in the Government Service /
+              that my husband / wife is employed in Government Service and the
+              concession has not been availed of by him / her separately for
+              himself / herself for any of the family members for the concerned
+              <span *ngIf="!LTC6data.IS_ADVANCE_CLAIM">
+                <span *ngIf="LTC6data.ORDER_YEAR">
+                  {{ LTC6data.ORDER_YEAR }}</span
+                >
+                <span *ngIf="LTC6data.BLOCK_YEAR">
+                  {{ LTC6data.BLOCK_YEAR }}
+                </span>
+              </span>
+              <span *ngIf="LTC6data.IS_ADVANCE_CLAIM">
+                <span *ngIf="LTC6data.FINAL_ORDER_YEAR">
+                  {{ LTC6data.FINAL_ORDER_YEAR }}</span
+                >
+                <span *ngIf="LTC6data.FINAL_PARTICULARS_BLOCK_YEAR">
+                  {{ LTC6data.FINAL_PARTICULARS_BLOCK_YEAR }}
+                </span> </span
+              >.
+            </div>
+
+            <div style="margin-top: 140px; margin-left: 65%">
+              <div style="font-size: 14px">
+                (Signature of Government Servant)
+              </div>
+              <br />
+              <div style="font-size: 14px">Dated :</div>
+            </div>
+
+            <div
+              style="
+                font-size: 13px;
+                text-align: center;
+                page-break-inside: avoid !important;
+                page-break-before: always !important;
+              "
+            >
+              <b><u>L.T.C.CERTIFICATE</u></b>
+            </div>
+
+            <div style="font-size: 16px; text-align: center">
+              <b> <u>CERTIFICATES TO BE GIVEN BY THE CONTROLLING OFFICER</u></b>
+            </div>
+            <br />
+            <ul style="text-align: justify; list-style-type: lower-roman">
+              <li>
+                <p>
+                  that Shri/Smt./Kumari
+                  <b style="text-decoration: underline">{{
+                    LTC6data.EMPLOYEE_NAME
+                  }}</b>
+                  has rendered continuous service for one year or more on the
+                  date of commencing outward Journey.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  that necessary entries as required under 3 of the Ministry of
+                  Home Affairs O.M. No. 43/1/55-Ests(A) Part II dated 11th
+                  October,1956 have been made in the Service Book of Shri / Smt.
+                  / Kumari_______________________________________
+                </p>
+              </li>
+
+              <div style="margin-top: 70px; text-align: right">
+                <div style="font-size: 14px">
+                  (Signature & Designation of the Controlling Officer)
+                </div>
+              </div>
+            </ul>
+            <br />
+            <div style="font-size: 16px; text-align: center">
+              <b> <u>CERTIFICATES TO BE GIVEN BY THE GOVT. SERVANT</u></b>
+            </div>
+
+            <ul style="text-align: justify; list-style-type: decimal">
+              <li>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_ONE == 1"
+                  style="margin-left: 5px"
+                >
+                  I have not submitted any other claim so far for Leave Travel
+                  Concession in respect of myself or my family members in
+                  respect of the block years
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_ONE == 0"
+                  style="text-decoration: line-through; margin-left: 5px"
+                >
+                  I have not submitted any other claim so far for Leave Travel
+                  Concession in respect of myself or my family members in
+                  respect of the block years
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_TWO == 1">
+                  &nbsp;&nbsp; I have already drawn T.A. for the Leave Travel
+                  Concession in respect of a journey performed by me / my wife
+                  with ______ children.The claim is in respect of journey
+                  performed by my wife /myself with _____________ children none
+                  of whom travelled with the party on the earlier occasion.
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_TWO == 0"
+                  style="text-decoration: line-through"
+                >
+                  &nbsp;&nbsp; I have already drawn T.A. for the Leave Travel
+                  Concession in respect of a journey performed by me / my wife
+                  with ______ children.The claim is in respect of journey
+                  performed by my wife /myself with _____________ children none
+                  of whom travelled with the party on the earlier occasion.
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_THREE == 1">
+                  I have not already drawn T.A. for the Leave Travel Concession
+                  in respect of the journey performed by me / my wife with
+                  _____________ children / ___________ children in respect of
+                  block of two years 20______ and 20_______.This claim is in
+                  respect of the journey performedby my wife / myself with
+                  ___________ chidren / ___________ children one of whom availed
+                  of the concession relating of the block.
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_THREE == 0"
+                  style="text-decoration: line-through"
+                >
+                  I have not already drawn T.A. for the Leave Travel Concession
+                  in respect of the journey performed by me / my wife with
+                  _____________ children / ___________ children in respect of
+                  block of two years 20______ and 20_______.This claim is in
+                  respect of the journey performedby my wife / myself with
+                  ___________ chidren / ___________ children one of whom availed
+                  of the concession relating of the block.
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_FOUR == 1">
+                  I have already drawn T.A. for the Leave Travel Concession in
+                  respect of the journey performed by me in the year
+                  ____________ in respect of block of two years 20__________ and
+                  20__________. The claim is in respect of journey performed by
+                  me in the year 200_____________. This is against the
+                  concession admissible once every year in a prescribed block
+                  for visiting home town as all the members of my family is
+                  living away from place of work.
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_FOUR == 0"
+                  style="text-decoration: line-through"
+                >
+                  I have already drawn T.A. for the Leave Travel Concession in
+                  respect of the journey performed by me in the year
+                  ____________ in respect of block of two years 20__________ and
+                  20__________. The claim is in respect of journey performed by
+                  me in the year 200_____________. This is against the
+                  concession admissible once every year in a prescribed block
+                  for visiting home town as all the members of my family is
+                  living away from place of work.
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_FIVE == 1">
+                  <span
+                    *ngIf="
+                      selfList.length == 1 &&
+                      wifeList.length == 0 &&
+                      childrenList.length == 0
+                    "
+                  >
+                    The journey has been performed by me to the declared home
+                    town viz.<b style="text-decoration: underline">{{
+                      checkListltc.JOURNEY_DETAILS_FIVE_REMARK3
+                    }}</b>
+                  </span>
+                  <span
+                    *ngIf="
+                      wifeList.length == 1 &&
+                      childrenList.length == 0 &&
+                      selfList.length == 0
+                    "
+                  >
+                    The journey has been performed by my wife
+                    <span *ngFor="let data of wifeList">
+                      {{ data }}
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      childrenList.length == 1 &&
+                      selfList.length == 0 &&
+                      wifeList.length == 0
+                    "
+                  >
+                    The journey has been performed by children
+                    <span *ngFor="let data of childrenList; let k = index">
+                      <span>{{ data }}</span>
+
+                      <span *ngIf="childrenList.length > 1">
+                        <span
+                          *ngIf="
+                            childrenList.length - 2 != k &&
+                            childrenList.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="childrenList.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      selfList.length == 1 &&
+                      wifeList.length == 1 &&
+                      childrenList.length == 0
+                    "
+                  >
+                    The journey has been performed by me with my wife
+                    <span *ngFor="let data of wifeList">
+                      {{ data }}
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      selfList.length == 1 &&
+                      childrenList.length == 1 &&
+                      wifeList.length == 0
+                    "
+                  >
+                    The journey has been performed by me with my children
+                    <span *ngFor="let data of childrenList; let k = index">
+                      <span>{{ data }}</span>
+
+                      <span *ngIf="childrenList.length > 1">
+                        <span
+                          *ngIf="
+                            childrenList.length - 2 != k &&
+                            childrenList.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="childrenList.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      childrenList.length == 1 &&
+                      wifeList.length == 1 &&
+                      selfList.length == 0
+                    "
+                  >
+                    The journey has been performed by my wife
+                    <span *ngFor="let data of wifeList">
+                      {{ data }}
+                    </span>
+                    with my children
+                    <span *ngFor="let data of childrenList; let k = index">
+                      <span>{{ data }}</span>
+
+                      <span *ngIf="childrenList.length > 1">
+                        <span
+                          *ngIf="
+                            childrenList.length - 2 != k &&
+                            childrenList.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="childrenList.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      childrenList.length == 0 &&
+                      wifeList.length == 0 &&
+                      selfList.length == 0
+                    "
+                  >
+                    The journey has been performed by me / my wife with children
+                    / children to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <!-- The journey has been performed by me / my wife with
+                          <b style="text-decoration: underline">{{
+                            checkListltc.JOURNEY_DETAILS_FIVE_REMARK1
+                          }}</b>
+                          children /
+                          <b style="text-decoration: underline">{{
+                            checkListltc.JOURNEY_DETAILS_FIVE_REMARK2
+                          }}</b>
+                          children to the declared home town viz.<b
+                            style="text-decoration: underline"
+                            >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                          > -->
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_FIVE == 0"
+                  style="text-decoration: line-through"
+                >
+                  <span
+                    *ngIf="
+                      selfList.length == 1 &&
+                      wifeList.length == 0 &&
+                      childrenList.length == 0
+                    "
+                  >
+                    The journey has been performed by me to the declared home
+                    town viz.<b style="text-decoration: underline">{{
+                      checkListltc.JOURNEY_DETAILS_FIVE_REMARK3
+                    }}</b>
+                  </span>
+                  <span
+                    *ngIf="
+                      wifeList.length == 1 &&
+                      childrenList.length == 0 &&
+                      selfList.length == 0
+                    "
+                  >
+                    The journey has been performed by my wife
+                    <span *ngFor="let data of wifeList">
+                      {{ data }}
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      childrenList.length == 1 &&
+                      selfList.length == 0 &&
+                      wifeList.length == 0
+                    "
+                  >
+                    The journey has been performed by children
+                    <span *ngFor="let data of childrenList; let k = index">
+                      <span>{{ data }}</span>
+
+                      <span *ngIf="childrenList.length > 1">
+                        <span
+                          *ngIf="
+                            childrenList.length - 2 != k &&
+                            childrenList.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="childrenList.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      selfList.length == 1 &&
+                      wifeList.length == 1 &&
+                      childrenList.length == 0
+                    "
+                  >
+                    The journey has been performed by me with my wife
+                    <span *ngFor="let data of wifeList">
+                      {{ data }}
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      selfList.length == 1 &&
+                      childrenList.length == 1 &&
+                      wifeList.length == 0
+                    "
+                  >
+                    The journey has been performed by me with my children
+                    <span *ngFor="let data of childrenList; let k = index">
+                      <span>{{ data }}</span>
+
+                      <span *ngIf="childrenList.length > 1">
+                        <span
+                          *ngIf="
+                            childrenList.length - 2 != k &&
+                            childrenList.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="childrenList.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      childrenList.length == 1 &&
+                      wifeList.length == 1 &&
+                      selfList.length == 0
+                    "
+                  >
+                    The journey has been performed by my wife
+                    <span *ngFor="let data of wifeList">
+                      {{ data }}
+                    </span>
+                    with my children
+                    <span *ngFor="let data of childrenList; let k = index">
+                      <span>{{ data }}</span>
+
+                      <span *ngIf="childrenList.length > 1">
+                        <span
+                          *ngIf="
+                            childrenList.length - 2 != k &&
+                            childrenList.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="childrenList.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                    to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <span
+                    *ngIf="
+                      childrenList.length == 0 &&
+                      wifeList.length == 0 &&
+                      selfList.length == 0
+                    "
+                  >
+                    The journey has been performed by me / my wife with children
+                    / children to the declared home town viz.<b
+                      style="text-decoration: underline"
+                      >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                    >
+                  </span>
+                  <!-- The journey has been performed by me / my wife with
+                          <b style="text-decoration: underline">{{
+                            checkListltc.JOURNEY_DETAILS_FIVE_REMARK1
+                          }}</b>
+                          children /
+                          <b style="text-decoration: underline">{{
+                            checkListltc.JOURNEY_DETAILS_FIVE_REMARK2
+                          }}</b>
+                          children to the declared home town viz.<b
+                            style="text-decoration: underline"
+                            >{{ checkListltc.JOURNEY_DETAILS_FIVE_REMARK3 }}</b
+                          > -->
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_SIX == 1">
+                  <u>That my husband / wife is not employed in Government:</u
+                  ><br /><br />
+                  That my husband / wife is employed in Government service and
+                  the concession has not been availed of by him / her seperately
+                  for himself / herself or for any of the family members for the
+                  conserned block of two years.
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_SIX == 0"
+                  style="text-decoration: line-through"
+                >
+                  <u>That my husband / wife is not employed in Government:</u
+                  ><br /><br />
+                  That my husband / wife is employed in Government service and
+                  the concession has not been availed of by him / her seperately
+                  for himself / herself or for any of the family members for the
+                  conserned block of two years.
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_SEVEN == 1">
+                  Certified that my wife / husband for whom L.T.C is claimed by
+                  me is employed in __________________________________________
+                  (name of the Public Sector Undertaking / Corporation /
+                  Autonomous Body, etc.) which provide Leave Travel Concession
+                  facilities but he / she has not perferred and will not prefer
+                  any claim in this behalf to his / her employer.
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_SEVEN == 0"
+                  style="text-decoration: line-through"
+                >
+                  Certified that my wife / husband for whom L.T.C is claimed by
+                  me is employed in __________________________________________
+                  (name of the Public Sector Undertaking / Corporation /
+                  Autonomous Body, etc.) which provide Leave Travel Concession
+                  facilities but he / she has not perferred and will not prefer
+                  any claim in this behalf to his / her employer.
+                </p>
+              </li>
+
+              <li>
+                <p *ngIf="checkListltc.JOURNEY_DETAILS_EIGHT == 1">
+                  Certified that my wife / husband for whom L.T.C is claimed by
+                  me is not employed in any Public Sector Undertaking /
+                  Corporation /Autonomous Body, finaced by wholly or partly by
+                  the Central Government or Local Body, which provides LTC
+                  facilities to its employees and their families.
+                </p>
+                <p
+                  *ngIf="checkListltc.JOURNEY_DETAILS_EIGHT == 0"
+                  style="text-decoration: line-through"
+                >
+                  Certified that my wife / husband for whom L.T.C is claimed by
+                  me is not employed in any Public Sector Undertaking /
+                  Corporation /Autonomous Body, finaced by wholly or partly by
+                  the Central Government or Local Body, which provides LTC
+                  facilities to its employees and their families.
+                </p>
+              </li>
+            </ul>
+
+            <div style="margin-top: 70px; margin-left: 80%">
+              <div style="font-size: 14px">(Signature of Govt.Servant)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="PartA"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+  </ng-template>
+</nz-modal>

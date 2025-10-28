@@ -1,0 +1,560 @@
+<div class="row">
+  <div class="header">
+    <button nzSize='small' nz-button (click)="close()">
+      <span nz-icon nzType="close" nzTheme="outline"></span>
+    </button>
+  </div>
+
+  <div class="col-2">
+    <nz-steps [nzCurrent]="stage" nzDirection="vertical" nzSize="small">
+      <nz-step [nzTitle]="desctemp1tit" [nzDescription]="desctemp1">
+      </nz-step>
+      <ng-template #desctemp1tit>
+        <p style="font-size: 12px; margin-top: 0px;margin-bottom: 0px;">
+          Fill Quarter Preferences
+        </p>
+      </ng-template>
+      <ng-template #desctemp1>
+        <p style="font-size: 11px; margin-top: 0px" *ngIf="addDateTime != undefined">
+          {{ addDateTime | date : "dd/MM/yyyy HH:mm:ss" }}
+        </p>
+      </ng-template>
+
+      <nz-step [nzTitle]="desctemp1pres" [nzDescription]="desctemp2"> </nz-step>
+      <ng-template #desctemp1pres>
+        <p style="font-size: 12px; margin-top: 0px;margin-bottom: 0px;">
+          Preview & Submit
+        </p>
+      </ng-template>
+      <ng-template #desctemp2>
+        <p style="font-size: 11px; margin-top: 0px" *ngIf="UploadDateTime != undefined">
+          {{ UploadDateTime | date : "dd/MM/yyyy HH:mm:ss" }}
+        </p>
+      </ng-template>
+    </nz-steps>
+  </div>
+
+  <div class="col-10 col-xl-10 col-lg-10 col-md-10 col-sm-10" style="overflow-x: auto; max-height: 560px">
+    <nz-spin [nzSpinning]="isSpinning0">
+      <div class="row" style="margin-top: 0px" *ngIf="stage == 0">
+        <h6 style="text-align: center; font-size: 15px;margin-bottom: 5px">
+          Add Quarter Preferences
+        </h6>
+        <p style="text-align: center; margin-bottom: 10px;font-size: 13px;">
+          On the left side, you can view the available Quarters categorized by
+          residence type {{datamap.RESIDENCE_TYPE_NAME}}. On the right side, employees have the option to add
+          the quarters they need, with a maximum limit of 20. After adding the
+          quarters on the right side, preferences can be easily adjusted by using a
+          simple drag-and-drop feature
+        </p>
+        <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+          <div class="card">
+            <div class="card-header" style="background-color: #006699; height: 40px; padding: 10px">
+              <div style="color: white;font-size: 12px">Available Quarters ( {{ count }} )</div>
+            </div>
+
+            <div class="row">
+              <div class="tableScroll">
+                <div *ngIf="dataList!=undefined && dataList.length>0">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="padding: 5px 5px 5px 15px"
+                    *ngFor="let data of dataList; let i = index">
+                    <div class="card" style="width: 100%" (click)="addCard(data)">
+                      <div class="card-body" style="padding: 6px">
+                        <button nzSize='small' nz-button nzType="primary" nzShape="circle" [nzSize]="'small'">
+                          +
+                        </button>
+
+                        <div>
+                          <h6 style="margin-top: -25px; margin-left: 35px" class="card-title mainnam limit1">
+                            {{ data["AREA_NAME"] }}, {{ data["CITY_NAME"] }}
+                          </h6>
+
+                          <div class="row">
+                            <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                              <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data.BUILDING_NAME">
+                                Bulding Name : {{ data["BUILDING_NAME"] }}
+                              </p>
+                            </div>
+
+                            <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                              <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data.FLOOR_NAME">
+                                Floor : {{ data["FLOOR_NAME"] }}
+                              </p>
+                            </div>
+
+                            <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                              <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data.ROOM_TYPE">
+                                Room Type : {{ data["ROOM_TYPE"] }}
+                              </p>
+                            </div>
+
+                            <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                              <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data.NAME">
+                                Quarter No : {{ data["NAME"] }}
+                              </p>
+                            </div>
+                            <div class="col-12">
+                              <p *ngIf="data.ROSTER_POINT_NO==10 || data.ROSTER_POINT_NO==20 || data.ROSTER_POINT_NO==40 || data.ROSTER_POINT_NO==50"
+                                style="color: red;margin-bottom: 0px;
+                            font-size: 11px;
+                            font-weight: 600;">*Note : This Quarter is Reserved for Scheduled Caste (SC)</p>
+                              <p *ngIf="data.ROSTER_POINT_NO==30 || data.ROSTER_POINT_NO==60" style="color: red;margin-bottom: 0px;
+                            font-size: 11px;
+                            font-weight: 600;">*Note : This Quarter is Reserved for Scheduled Tribe (ST)</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="dataList.length<=0">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
+                    style="padding: 5px 5px 5px 15px;text-align: center;display: flex;height: 180px; align-items: center; justify-content: center;">
+                    <svg width="64" height="41" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg"
+                      class="ant-empty-img-simple">
+                      <g transform="translate(0 1)" fill="none" fill-rule="evenodd">
+                        <ellipse cx="32" cy="33" rx="32" ry="7" class="ant-empty-img-simple-ellipse"></ellipse>
+                        <g fill-rule="nonzero" class="ant-empty-img-simple-g">
+                          <path
+                            d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z">
+                          </path>
+                          <path
+                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                            class="ant-empty-img-simple-path"></path>
+                        </g>
+                      </g>
+                    </svg><br>
+                    <div style="text-align: center;color: #d1cdcd;">No Data</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-6" style="margin-top: -8px">
+          <nz-table class="table borderless" [nzData]="dataListFlat" #editRowTable cdkDropList
+            [nzShowPagination]="false" (cdkDropListDropped)="onDrop($event)" [nzScroll]="{ y: '440px' }">
+            <thead>
+              <tr>
+                <th class="card-header" nzWidth="15%"
+                  style="background-color: #006699; color: #fff; padding: 10px;font-size: 12px">
+                  S.N.
+                </th>
+
+                <th style="background-color: #006699; color: #fff; padding: 10px;font-size: 12px">
+                  Selected Quarters ( {{ dataListFlat.length }} )
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data1 of editRowTable.data; let i = index" cdkDrag class="grabbable">
+                <td nzAlign="center" style="padding: 6px 2px 7px 1px">
+                  {{ counter + i }}
+
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <div style="
+                      display: flex;
+                      justify-content: center;
+                      margin: -21px;
+                      margin-left: 0px;
+                    " class="buttonclassid">
+                    <span nz-icon nzType="arrow-up" nzTheme="outline" *ngIf="i !== 0"></span>
+                    <span nz-icon nzType="arrow-down" nzTheme="outline" *ngIf="i !== dataListFlat.length - 1">
+                    </span>
+                  </div>
+                </td>
+
+                <td style="padding: 5px 2px 5px 1px">
+                  <div class="row">
+                    <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="
+                        margin-bottom: 0px;
+                        padding: 0 17px;
+                        margin-top: 0px;
+                      ">
+                      <div class="card" style="width: 100%" (click)="removeCard(data1)">
+                        <div class="card-body" style="padding: 10px">
+                          <button nzSize='small' nz-button nzType="primary" nzShape="circle" [nzSize]="'small'">
+                            <span style="font-size: 10px;" nz-icon nzType="close"></span>
+                          </button>
+
+                          <div>
+                            <h6 style="margin-top: -25px; margin-left: 35px" class="card-title mainnam limit1">
+                              {{ data1["AREA_NAME"] }}, {{ data1["CITY_NAME"] }}
+                            </h6>
+
+                            <div class="row">
+                              <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                                <p class="card-text subnamm limitssss" nz-tooltip
+                                  [nzTooltipTitle]="data1.BUILDING_NAME">
+                                  Bulding Name : {{ data1["BUILDING_NAME"] }}
+                                </p>
+                              </div>
+
+                              <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                                <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data1.FLOOR_NAME">
+                                  Floor : {{ data1["FLOOR_NAME"] }}
+                                </p>
+                              </div>
+
+                              <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                                <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data1.ROOM_TYPE">
+                                  Room Type : {{ data1["ROOM_TYPE"] }}
+                                </p>
+                              </div>
+
+                              <div class="col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12" style="display: flex">
+                                <p class="card-text subnamm limitssss" nz-tooltip [nzTooltipTitle]="data1.FLAT_NAME">
+                                  Quarter No : {{ data1["FLAT_NAME"] }}
+                                </p>
+                              </div>
+                              <div class="col-12">
+                                <p *ngIf="data1.ROSTER_POINT_NO==10 || data1.ROSTER_POINT_NO==20 || data1.ROSTER_POINT_NO==40 || data1.ROSTER_POINT_NO==50"
+                                  style="color: red;margin-bottom: 0px;
+                                font-size: 11px;
+                                font-weight: 600;">*Note : This Quarter is Reserved for Scheduled Caste (SC)</p>
+                                <p *ngIf="data1.ROSTER_POINT_NO==30 || data1.ROSTER_POINT_NO==60" style="color: red;margin-bottom: 0px;
+                                font-size: 11px;
+                                font-weight: 600;">*Note : This Quarter is Reserved for Scheduled Tribe (ST)</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+          <!-- </div> -->
+        </div>
+      </div>
+    </nz-spin>
+    <div *ngIf="stage == 1">
+      <h6 style="text-align: center; font-size: 15px;margin-bottom: 5px">
+        Print Preference Form
+      </h6>
+      <p style="text-align: center; margin-bottom: 10px; font-size: 13px">
+        Please review your preferences and carefully read the details. Once
+        this preference form is submitted, you will not be able to make any
+        changes.
+      </p>
+      <form id="printForm11">
+        <div nz-row style="padding-left: 20px;">
+          <div nz-col nzSpan="24" style="text-align: center; font-size: 20px">
+            <u><b> PROFORMA FOR PREFERENCE </b></u> <br />
+            <br />
+          </div>
+          <div nz-col nzSpan="24">
+            <div nz-row style="margin: 0 20px 10px 64px">
+              <div nz-col nzSpan="24">To,</div>
+              <div nz-col nzSpan="24"
+                *ngIf="(datamap != undefined && (datamap.RESIDENCE_TYPE_ID==4 || datamap.RESIDENCE_TYPE_ID==5 || datamap.RESIDENCE_TYPE_ID==6) ) else elseblocksITO;">
+                DCIT (HQ) Admin,</div>
+              <ng-template #elseblocksITO>
+                <div nz-col nzSpan="24">ITO (HQ) Admin - I,</div>
+              </ng-template>
+              <div nz-col nzSpan="24">Aayakar Bhavan,</div>
+              <div nz-col nzSpan="24">Mumbai.</div>
+              <br />
+              <div nz-col nzSpan="24">Sir,</div>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" style="text-align: center; font-size: 16px">
+            Subject :- Preference for
+            {{ datamap != undefined ? datamap.RESIDENCE_TYPE_NAME : "" }}
+            Quarters - reg.
+            <br />
+            <br />
+          </div>
+          <div nz-col nzSpan="24">
+            <div nz-row>
+              <div nz-col nzSpan="2"></div>
+              <div nz-col nzSpan="20" style="margin: 0px">
+                <table class="main"
+                  style="text-align: center;width: 100%; margin-left:auto;margin-right:auto;border-collapse: collapse;white-space: pre-line;"
+                  *ngFor="let emdata of empdata">
+                  <tr style="border:1px solid black;">
+                    <th style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">
+                      Sr. No.
+                    </th>
+                    <th style="border:1px solid black;text-align: left; padding: 4px 5px;width: 35%;">
+                      Particulars
+                    </th>
+                    <th style="border:1px solid black;text-align: center; padding: 4px 5px;width: 55%;">
+                      Information
+                    </th>
+                  </tr>
+
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">1.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">Name</td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{ emdata != undefined ? emdata.NAME : "" }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">2.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Designation
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{ emdata != undefined ? emdata.DESIGNATION_SHORT_CODE : "" }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">3.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Date of Joining in Govt. Service
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{
+                      emdata != undefined
+                      ? (emdata.JOINING_DATE | date : "dd/MM/yyyy")
+                      : ""
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">4.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Date of Birth
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{
+                      emdata != undefined
+                      ? (emdata.DOB | date : "dd/MM/yyyy")
+                      : ""
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">5.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Present Pay Level ( Latest Salary Slip to be enclosed)
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{ emdata != undefined ? emdata.GRADE_PAY_LEVEL : "" }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">6.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Basic Pay
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{ emdata != undefined ? emdata.GRASS_GRADE_PAY : "" }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">7.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Place of Posting
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{ emdata != undefined ? emdata.ADDRESS : "" }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">8.</td>
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%;">
+                      Mobile No.
+                    </td>
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 50%;">
+                      {{ emdata != undefined ? emdata.MOBILE_NO : "" }}
+                    </td>
+                  </tr>
+                  <tr style="border:1px solid black;border-right: 1px solid;">
+                    <td style="border:1px solid black;text-align: center; padding: 4px 5px;width: 10%;">9.</td>
+                    <!-- <p style="border:1px solid black;text-align: left; padding: 5px 5px">
+                              Preferences
+                            </p> -->
+                    <td style="border:1px solid black;text-align: left; padding: 4px 5px;width: 40%; ">
+                      Preferences
+                    </td>
+                    <td style="border:1px solid black;;width: 50%;padding: 4px 5px;"></td>
+                  </tr>
+                  <tr style="border:1px solid black;">
+                    <td></td>
+                    <td style="border:1px solid black;text-align: center; padding: 0px 0px;border:none" colspan="5">
+                      <table class="noborder"
+                        style="border:none;border-collapse: collapse;margin-left: 0px;margin-right: 0px;width: 100%;white-space: pre-line;">
+                        <tr style="border:1px solid black;border-top: none;border-right: none;">
+                          <th
+                            style="width: 10%; border:1px solid black;border-left: none;border-top: none; text-align: center; padding: 5px 3px">
+                            Sr. No.
+                          </th>
+                          <th
+                            style="width: 30%; border:1px solid black;text-align: center; padding: 5px 3px;border-top: none;">
+                            Building Name
+                          </th>
+                          <th style="width: 15%;border:1px solid black;
+                                  text-align: center;
+                                  padding: 5px 3px;border-top: none;
+                                " colspan="2">
+                            Qtr. No.
+                          </th>
+                          <th style="width: 15%;border:1px solid black;
+                                  text-align: center;
+                                  padding: 5px 3px;border-top: none;
+                                " colspan="2">
+                            Floor
+                          </th>
+                          <th style="width: 30%;border:1px solid black;
+                                  text-align: center;
+                                  padding: 5px 3px;border-top: none;border-right: none;
+                                " colspan="2">
+                            Location
+                          </th>
+                        </tr>
+                        <tr style="border:1px solid black;border-bottom: none;border-right: none;"
+                          *ngFor="let tab of dataListFlat; let i = index">
+                          <td
+                            style="border:1px solid black;text-align: center; padding: 5px 3px;border-left: none;border-bottom: none;">
+                            {{ i + 1 }}.
+                          </td>
+                          <td style="border:1px solid black;text-align: center; padding: 5px 3px;border-bottom: none;">
+                            {{ tab.BUILDING_NAME }}
+                          </td>
+                          <td style="border:1px solid black;text-align: center; padding: 5px 3px;border-bottom: none;"
+                            colspan="2">
+                            {{ tab.FLAT_NAME }}
+                          </td>
+                          <td style="border:1px solid black;text-align: center; padding: 5px 3px;border-bottom: none;"
+                            colspan="2">
+                            {{ tab.FLOOR_NAME }}
+                          </td>
+                          <td
+                            style="border:1px solid black;text-align: center; padding: 5px 3px;border-bottom: none;border-right: none;"
+                            colspan="2">
+                            {{ tab.AREA_NAME }},{{ tab.CITY_NAME }}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <br />
+              </div>
+
+              <div nz-col nzSpan="2"></div>
+            </div>
+          </div>
+          <div nz-col nzSpan="24"
+            style="margin-top: 40px;margin-bottom: 15px; text-align: center;font-weight: bold;font-size: 14px;">
+            Note : This is computer generated proforma for preference, signature not required.
+          </div>
+        </div>
+      </form>
+    </div>
+    <form *ngIf="stage == 2" style="max-height: 420px; overflow-x: auto">
+      <h6 style="text-align: center; font-size: 15px;margin-bottom: 5px">Upload Form</h6>
+      <p style="text-align: center; margin-bottom: 10px; font-size: 13px">
+        Kindly upload the copy of the form that was printed in the last stage
+        and submit your Preferences.
+        <br />
+      </p>
+
+      <div nz-row style="display: flex; justify-content: center; align-items: center">
+        <div nz-col nzSpan="12" style="text-align: center; margin-top: 10px">
+          <nz-form-item>
+            <nz-form-label class="labelsize" nzRequired nzNoColon>Upload Preferences Form</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required"
+              *ngIf="perfdata.UPLOAD_URL == null || perfdata.UPLOAD_URL == '' || perfdata.UPLOAD_URL == undefined">
+              <button nzSize='small' nzSize="small" nz-button style="padding: 0px 10px; font-size: 10px"
+                (click)="Applicationform.click()">
+                Select File
+                <input #Applicationform name="UPLOAD_URL" type="file" (change)="onFileApplicationform($event)"
+                  style="display: none" required />
+              </button>
+            </nz-form-control>
+
+            <div *ngIf="perfdata.UPLOAD_URL != null && perfdata.UPLOAD_URL != '' && perfdata.UPLOAD_URL != undefined"
+              style="
+                overflow: hidden;
+                font-size: 11px;
+                display: block;
+                width: 100%;
+                color: #1890ff;
+              ">
+              {{ perfdata.UPLOAD_URL }} &nbsp;&nbsp;&nbsp;
+              <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+                style="cursor: pointer; color: #1890ff"
+                (click)="applnformshow(perfdata.UPLOAD_URL)"></span>&nbsp;&nbsp;&nbsp;
+              <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                nz-tooltip style="cursor: pointer; color: red"
+                (click)="clearapplnform(perfdata.UPLOAD_URL,'employeePreferance')"></span>
+            </div>
+          </nz-form-item>
+          <div *ngIf="progressBar">
+            <nz-progress [nzPercent]="percent"></nz-progress>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+    [nzContent]="printOrderModalContent" [nzTitle]="'PDFview'" (nzOnCancel)="printOrderModalCancel()"
+    [nzFooter]="printOrderModalFooter">
+    <ng-template #printOrderModalContent>
+      <div *ngIf="stage == 2" style="height: 600px; overflow: auto">
+        <iframe [src]="viewPdfPrefer" style="width: 1235px; height: 650px" frameborder="0"></iframe>
+      </div>
+    </ng-template>
+    <ng-template #printOrderModalFooter>
+      <button nzSize='small' nz-button nzType="default" (click)="printOrderModalCancel()">
+        Close
+      </button>
+    </ng-template>
+  </nz-modal>
+  <div class="footer">
+    <button nz-button type="button" class="ant-btn" [disabled]="disableprevious"
+      style="margin-right: 8px;font-size: 13px;padding: 4px 10px;" (click)="previous()" *ngIf="stage != 0">
+      Previous
+    </button>
+    <button nz-button type="button" class="ant-btn" style="margin-right: 8px;font-size: 13px;padding: 4px 10px;"
+      (click)="close()">
+      Cancel
+    </button>
+    <button *ngIf="stage == 1" style="margin-right: 8px;font-size: 13px;padding: 4px 10px;" nz-button nzType="primary"
+      printSectionId="printForm11" ngxPrint [useExistingCss]="true">
+      Print
+    </button>
+    <button *ngIf="stage == 0" style="font-size: 13px;padding: 4px 10px;" [nzLoading]="isRecordLoading" nz-button
+      type="button" class="ant-btn ant-btn-primary" (click)="step1save()">
+      Save & Preview
+    </button>
+    <button *ngIf="stage == 1" style="font-size: 13px;padding: 4px 10px;" [nzLoading]="isRecordLoading" nz-button
+      type="button" class="ant-btn ant-btn-primary" (click)="step2save()">
+      Submit Preferences
+    </button>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="prafraceconfirm" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="450px"
+  nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 17px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 16px; margin-bottom: 10px">
+      Are you sure want to submit your Preferences?
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules>
+    <button nz-button nzType="primary" [nzLoading]="isRecordLoading" class="btn btn-primary"
+      style="background-color: #006699;font-size: 13px; padding: 4px 8px;" (click)="submitp()">
+      Submit Preferences
+    </button>
+    <button nz-button nzType="default" style="font-size: 13px; padding: 4px 8px;" [nzLoading]="isRecordLoading"
+      class="btn btn-primary" (click)="cancelcon()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>

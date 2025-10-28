@@ -1,0 +1,28 @@
+.Checkboxchange {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 24px;
+}
+
+.formname {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.Changeformitm {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+.flexicons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}

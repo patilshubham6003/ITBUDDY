@@ -1,0 +1,166 @@
+<div>
+  <form nz-form #notificationMasterPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row type="flex">
+        <div
+          nz-col
+          nzXs="24"
+          nzSm="24"
+          nzMd="24"
+          nzLg="24"
+          nzXl="24"
+          nzSpan="24"
+        >
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Notification/ Memorandum Name</nz-form-label
+            >
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Notification/ Memorandum Name"
+            >
+              <input
+                nz-input
+                placeholder="Enter Notification/ Memorandum Name"
+                maxlength="256"
+                autocomplete="off"
+                name="name"
+                type="text"
+                [(ngModel)]="data.NAME"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div
+          nz-col
+          nzXs="12"
+          nzSm="12"
+          nzMd="12"
+          nzLg="12"
+          nzXl="12"
+          nzSpan="12"
+        >
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Date </nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Date">
+              <nz-date-picker
+                name="date"
+                [(ngModel)]="data.DATE"
+                style="width: 100%"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12" nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Pdf File </nz-form-label>
+
+          <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+            <button
+              nz-button
+              style="height: 28px; padding: 0px 7px; font-size: 12px"
+              (click)="fileInput.click()"
+            >
+              Select Pdf
+              <input
+                #fileInput
+                name="image"
+                [(ngModel)]="data.PDF_URL"
+                type="file"
+                (change)="onFileSelected($event)"
+                style="display: none"
+                required
+              />
+            </button>
+            <!-- <input style="width: 100%;" type="file" id="myfile" name="myfile"> -->
+          </nz-form-control>
+        </nz-form-item>
+        <div
+          nz-col
+          nzSpan="23"
+          *ngIf="data.PDF_URL != null"
+          style="overflow: hidden; padding-left: 11px; font-size: 13px"
+        >
+          {{ data.PDF_URL }}
+        </div>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>File No</nz-form-label>
+
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter File No">
+            <input
+              nz-input
+              placeholder="Enter File No"
+              maxlength="128"
+              autocomplete="off"
+              name="file"
+              [(ngModel)]="data.FILE_NO"
+              required
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(notificationMasterPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, notificationMasterPage)"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <!-- <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+                    <a style="color: white" (click)="save(true,notificationMasterPage)">Save & New</a>
+                </li>
+            </ul> -->
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="save(false, notificationMasterPage)"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(notificationMasterPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

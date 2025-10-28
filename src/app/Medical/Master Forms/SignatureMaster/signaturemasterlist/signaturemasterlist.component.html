@@ -1,0 +1,233 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item style="width: 40%">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="webbannersearch"
+            (keyup)="keyup($event)"
+            [(ngModel)]="searchText"
+            nz-input
+            placeholder="Search "
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i> Add New Signature
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #Signaturetable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '2000px', y: '55vh' }"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="100px" style="text-align: center; font-weight: bold">
+            Action
+          </th>
+          <!-- <th
+            nzWidth="230px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'USER_NAME' }}"
+            [nzSortFn]="true"
+          >
+            User Name
+          </th> -->
+          <th
+            nzWidth="230px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'NAME' }}"
+            [nzSortFn]="true"
+          >
+            Name
+          </th>
+          <th
+            nzWidth="230px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'NAME_HN' }}"
+            [nzSortFn]="true"
+          >
+            Name in Hindi
+          </th>
+          <th
+            nzWidth="300px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'OFFICE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Office Name
+          </th>
+          <th
+            nzWidth="350px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'OFFICE_NAME_HN' }}"
+            [nzSortFn]="true"
+          >
+            Office Name in Hindi
+          </th>
+          <th
+            nzWidth="300px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'POST' }}"
+            [nzSortFn]="true"
+          >
+            Post
+          </th>
+          <th
+            nzWidth="300px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'POST_HN' }}"
+            [nzSortFn]="true"
+          >
+            Post Name in Hindi
+          </th>
+          <!-- <th
+            nzWidth="170px"
+            style="text-align: center; font-weight: bold"
+            nzColumnKey="{{ 'SECTION_TYPE' }}"
+            [nzSortFn]="true"
+          >
+            Section Type
+          </th> -->
+          <!-- <th
+            nzWidth="350px"
+            [nzColumnKey]="'SERVICE_TITLE'"
+            [nzSortFn]="true"
+            nzAlign="center"
+          >
+            <b>Service Name</b>
+          </th> -->
+
+          <th
+            nzColumnKey="{{ 'STATUS' }}"
+            [nzSortFn]="true"
+            nzWidth="115px"
+            style="text-align: center; font-weight: bold"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of Signaturetable.data">
+          <td style="text-align: center">
+            <a nz-button nzType="link" (click)="edit(data)"
+              ><span nz-icon nzType="edit" nzTheme="outline"></span
+            ></a>
+          </td>
+          <!-- <td style="white-space: pre-line">{{ data.USER_NAME }}</td> -->
+          <td style="white-space: pre-line">{{ data.NAME }}</td>
+          <td style="white-space: pre-line">{{ data.NAME_HN }}</td>
+          <!-- <td style="white-space: pre-line; ">{{ data.OFFICE_NAME }}</td> -->
+          <td
+            style="white-space: pre-line"
+            nz-popover
+            nzPopoverTitle="Office Name"
+            [nzPopoverContent]="data.OFFICE_NAME"
+            nzPopoverPlacement="topLeft"
+          >
+            {{ data.OFFICE_NAME | slice : 0 : 40 }}
+          </td>
+          <td style="white-space: pre-line">{{ data.OFFICE_NAME_HN }}</td>
+
+          <td style="white-space: pre-line">
+            {{ data.POST }}
+          </td>
+          <td style="white-space: pre-line">{{ data.POST_HN }}</td>
+          <!-- <td style="white-space: pre-line">
+            <span *ngIf="data.SECTION_TYPE == 'welfare'"> Welfare and SG </span>
+            <span *ngIf="data.SECTION_TYPE == 'gazpay'">
+              Gaz. Pay Bill II
+            </span>
+          </td> -->
+          <!-- <td
+            style="white-space: pre-line"
+            nz-popover
+            nzPopoverTitle="Service Name"
+            [nzPopoverContent]="data.SERVICE_TITLE"
+            nzPopoverPlacement="topLeft"
+          >
+            {{ data.SERVICE_TITLE | slice : 0 : 40 }}
+          </td> -->
+          <td style="text-align: center">
+            <i
+              nz-icon
+              *ngIf="data['STATUS']"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="!data['STATUS']"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="450"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-addsignaturemaster
+      [drawerClose]="closeCallback"
+      [data]="drawerData"
+    ></app-addsignaturemaster>
+  </ng-container>
+</nz-drawer>

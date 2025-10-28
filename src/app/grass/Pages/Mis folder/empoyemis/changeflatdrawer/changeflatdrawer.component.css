@@ -1,0 +1,204 @@
+nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}
+
+td,
+th {
+    border: 1px solid black;
+    word-wrap: break-word !important;
+    padding: 3px 5px;
+}
+
+table {
+    width: 100%;
+}
+
+.inputsize1 {
+    font-size: 11px !important;
+}
+
+.inputsize {
+    font-size: 11px !important;
+}
+
+.pdd {
+    padding: 3px 3px
+}
+
+.inputgroup>span>span {
+    font-size: 11px !important;
+}
+
+.optiongroup>div {
+    font-size: 11px !important;
+}
+
+.datesize>div>input {
+    font-size: 11px !important;
+}
+
+.labelsize>label {
+    font-size: 11px !important;
+}
+
+.ant-select {
+    font-size: 11px !important;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    left: 0px;
+    background: #fff;
+}
+
+.header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    right: 0px;
+}
+
+.ant-btn {
+    line-height: 0;
+    font-size: 10px;
+}
+
+.flexicons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    left: 0px;
+    background: #fff;
+}
+
+.my-box {
+    border: 1px dashed #e9e9e9;
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    background-color: #fafafa;
+}
+
+nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}
+
+.ant-steps-icon {
+    position: relative;
+    top: -0.5px;
+    color: #1890ff;
+    line-height: 1;
+}
+
+.header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    right: 0px;
+}
+
+.ant-btn {
+    line-height: 0;
+}
+
+.flexicons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.ant-steps-vertical>.ant-steps-item {
+    height: 100px !important;
+
+}
+
+td,
+th {
+    border: 1px solid black;
+    word-wrap: break-word !important;
+    padding: 2px 2px;
+}
+
+table {
+    width: 80%;
+}
+
+.disable {
+    cursor: not-allowed;
+    /* background-color: dimgrey; */
+}
+
+.black {
+    font-weight: 1000 !important;
+}
+
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(173, 172, 172);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #006699;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #006699;
+}
+
+@media print {
+
+
+
+    tr {
+
+        page-break-inside: avoid;
+
+    }
+
+
+
+    th,
+    td {
+
+        padding: 5px;
+
+        border: 1px solid #000;
+
+    }
+
+}

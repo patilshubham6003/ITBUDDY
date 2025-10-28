@@ -1,0 +1,224 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="20"
+    nzLg="20"
+    nzXl="12"
+    style="padding-left: 30px"
+  >
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="4"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="postsearch"
+            (keyup)="search(true)"
+            (keyEnter)="onKeypressEvent($event)"
+            [(ngModel)]="searchText"
+            nz-input
+            placeholder="Search Record"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="search(true)"
+            nzSearch
+            id="button"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px; width: 973px">
+        <form nz-form>
+          <div nz-row>
+            <!-- [(ngModel)]="data" -->
+            <div nz-col nzSpan="5" style="margin-left: 39px">
+              <nz-form-item>
+                <nz-form-label nzNoColon style="margin-left: -31px"
+                  >Inspector Name</nz-form-label
+                >
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  style="margin-left: -33px"
+                  name="inspectorname"
+                  [(ngModel)]="INSPECTOR_ID"
+                  nzPlaceHolder="Select Inspector Name"
+                >
+                  <nz-option
+                    *ngFor="let iname of usernames"
+                    [nzValue]="iname.ID"
+                    [nzLabel]="iname.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 45px">
+                <button
+                  style="margin: 0 10px 0 -68px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button
+                  nz-button
+                  nzType="primary"
+                  style="margin: -31px 0 0 73px"
+                  (click)="clearFilter()"
+                >
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #basicTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '1400px', y: '55vh' }"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            nzColumnKey="INSPECTOR_NAME"
+            [nzSortFn]="true"
+          >
+            Inspector name
+          </th>
+          <th
+            style="text-align: center"
+            nzColumnKey="TOTAL_CLAIM"
+            [nzSortFn]="true"
+          >
+            Total Claim
+          </th>
+          <th
+            style="text-align: center"
+            nzColumnKey="SUBMITTED"
+            [nzSortFn]="true"
+          >
+            Submitted
+          </th>
+          <th
+            style="text-align: center"
+            nzColumnKey="VERIFIED"
+            [nzSortFn]="true"
+          >
+            Verified
+          </th>
+          <th
+            style="text-align: center"
+            nzColumnKey="ANNEXTURE"
+            [nzSortFn]="true"
+          >
+            Annexure
+          </th>
+          <th style="text-align: center" nzColumnKey="ORDERS" [nzSortFn]="true">
+            Orders
+          </th>
+          <th
+            style="text-align: center"
+            nzColumnKey="CLAIM_FILE"
+            [nzSortFn]="true"
+          >
+            Claim File
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.INSPECTOR_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.TOTAL_CLAIM }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.SUBMITTED }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.VERIFIED }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.ANNEXTURE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.ORDERS }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.CLAIM_FILE }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

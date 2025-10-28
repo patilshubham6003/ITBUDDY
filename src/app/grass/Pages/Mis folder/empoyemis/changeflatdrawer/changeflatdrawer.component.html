@@ -1,0 +1,399 @@
+<div class="header">
+  <button nz-button (click)="close()">
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+  </button>
+</div>
+<div nz-row nzSpan="24" style="padding: 0px">
+  <div nz-col nzSpan="6">
+    <nz-steps [nzCurrent]="stage" nzDirection="vertical" nzSize="small">
+      <nz-step [nzTitle]="Applicat" [nzDescription]="desctemp"> </nz-step>
+      <ng-template #desctemp>
+        <p style="font-size: 10px; margin-top: 10px" *ngIf="datastatic!=undefined">
+          {{datastatic.CHANGE_PRINT_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss"}}
+        </p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </ng-template>
+      <ng-template #Applicat>
+        <span style="font-size: 10px; font-weight: 600">Print Form</span>
+      </ng-template>
+      <nz-step [nzTitle]="Application" [nzDescription]="desctapplication">
+      </nz-step>
+      <ng-template #desctapplication>
+        <p style="font-size: 10px; margin-top: 10px" *ngIf="datastatic!=undefined">
+          {{datastatic.APPLIED_FOR_CHANGE_DATE_TIME| date : "dd/MM/yyyy HH:mm:ss"}}
+        </p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </ng-template>
+      <ng-template #Application>
+        <span style="font-size: 10px; font-weight: 600">Upload & Submit</span>
+      </ng-template>
+    </nz-steps>
+  </div>
+  <div nz-col nzSpan="18" style="max-height: 80vh; overflow-y: auto; overflow-x: hidden">
+    <nz-card>
+      <form *ngIf="stage == 0">
+        <h4 style="text-align: center; font-size: 15px">
+          Application Change of Accommodation Form
+        </h4>
+        <p style="text-align: center; margin-bottom: 10px; font-size: 13px;">
+          Please review all the information displayed below for accuracy. Once
+          verified, you can proceed to print out the application form for the
+          next steps in the process.
+        </p>
+        <div nz-row style="padding: 8px;" id="printpagess">
+          <div style="margin-left: 30px">
+            To, <br />
+            The Pr. Chief Commissioner of Income Tax, <br />
+            Aayakar Bhavan, Mumbai. <br />
+            <br />
+
+            Sir,
+            <br />
+            <p style="text-align: center;">
+              Sub: Application for change of Accommodation - Reg.
+            </p>
+
+            <p> With reference to the above, I hereby submit my application for change of accommodation from
+              ________________ to ________________ for which the necessary particulars are as under:- </p>
+          </div>
+
+          <div nz-col nzSpan="24" style="padding:20px">
+            <table style="width: 100%; ">
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">1</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Name
+                </td>
+                <td colspan="1" style="padding: 7px;width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="padding: 7px;width: 435px" *ngIf="datastatic!=undefined">
+                  {{datastatic.EMPLOYEE_NAME |
+                  uppercase}}</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">2</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Employee No. & Telephone No.
+                </td>
+                <td colspan="1" style="padding: 7px;width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="padding: 7px;width: 435px" *ngIf="datastatic!=undefined">{{datastatic.MOBILE_NO}}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">3</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Date of joining in Govt. Service
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">{{datastatic.JOINING_DATE | date :
+                  "dd/MM/yyyy"}}</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">4</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Present Quarter
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">{{datastatic.AREA_NAME}},
+                  {{datastatic.CITY_NAME}}, {{datastatic.BUILDING_NAME}}, {{datastatic.FLAT_NAME}}</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">5</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Type of Quarter
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">{{datastatic.RESIDENCE_TYPE_NAME}}
+                </td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">6</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Date of occupation of present Quarter
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">-</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">7</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Present emoluments and date from which drawn <br>(Duly verified by DDO)
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">-</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">8</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Particulars of change of applications prior to this application and pending
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">-</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">9</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Particulars of past change
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">-</td>
+              </tr>
+              <tr>
+                <td colspan="1" style="padding: 7px; text-align: center">10</td>
+                <td colspan="2" style="padding: 7px; width: 35%">
+                  Particulars of building / Quarters in order of desired change <br>(Pease annexe sheet
+                  for preferences, if required)
+                </td>
+                <td colspan="1" style="width: 50px" nzAlign="center">:</td>
+                <td colspan="3" style="width: 435px" *ngIf="datastatic!=undefined">-</td>
+              </tr>
+            </table>
+          </div>
+
+          <br /><br />
+          <div nz-col nzSpan="24" style=" text-align: end;margin-right: 30px; margin-top: 7px; margin-bottom: 30px">
+            Yours faithfully,
+          </div>
+          <div nz-col nzSpan="24" style="text-align: center; margin-top: 7px;">
+            Signature :
+          </div>
+          <div nz-col nzSpan="24" style="text-align: center; margin-top: 10px;" *ngIf="datastatic!=undefined">
+            Name : &nbsp; {{datastatic.EMPLOYEE_NAME}}
+          </div>
+          <div nz-col nzSpan="24" style="text-align: center; margin-top: 10px;" *ngIf="datastatic!=undefined">
+            Designation :&nbsp;{{datastatic.DESIGNATION}}
+          </div>
+          <div nz-col nzSpan="24" style="text-align: left; margin-top: -15px">
+            Date: &nbsp; {{todaysdate | date:'dd/MM/yyyy'}}
+          </div>
+          <div nz-col nzSpan="24" style="border: dashed solid 1px; border-color: black"></div>
+        </div>
+      </form>
+
+      <form *ngIf="stage == 1">
+        <h4 style="text-align: center; font-size: 18px">
+          Upload the Signed Copy of Form
+        </h4>
+        <p style="text-align: center; margin-bottom: 26px">
+          Kindly upload the signed copy of the form that was printed in the
+          last stage and submit your application for verification.
+        </p>
+        <div nz-row style="display: flex; justify-content: center; align-items: center">
+          <div nz-col nzSpan="6" style="margin-top: 40px"></div>
+          <div nz-col nzSpan="12" style="text-align: center; margin-top: 10px">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon class="labelsize">Upload Change of Accommodation Form</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="PDF File is required"
+                *ngIf="data!=undefined && data.CHANGE_FORM == null">
+                <button nz-button style="font-size: 10px;" nzSize="small" (click)="Applicationform.click()"
+                  [nzLoading]="isSpinning">
+                  Select File
+                  <input #Applicationform name="CHANGE_FORM" type="file" accept="application/pdf"
+                    (change)="onFileApplicationform($event)" style="display: none" required />
+                </button>
+              </nz-form-control>
+
+              <div *ngIf="data!=undefined && data.CHANGE_FORM != null" style="
+                          overflow: hidden;
+                          font-size: 13px;
+                          display: block;
+                          width: 100%;
+                          color: #1890ff;
+                        ">
+                {{ data.CHANGE_FORM }} &nbsp;&nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="applnformshow(data.CHANGE_FORM)"></span>&nbsp;&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red" (click)="clearapplnform()"></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar">
+              <nz-progress [style.width]="percent + '%'" [nzPercent]="percent">{{ percent }}%</nz-progress>
+            </div>
+          </div>
+          <div nz-col nzSpan="6" style="margin-top: 40px"></div>
+
+          <div nz-col nzSpan="24" style="margin-top: 40px">
+            <input id="agrrrr" type="checkbox" class="form-check-input" name="agrrrr" (click)="agrreconfirmation1()"
+              style="cursor: pointer; border: 2px solid #415be2" />&nbsp; By clicking Send for Verification, I agree to
+            the
+            <a style="color: #006699" data-bs-dismiss="modal">Terms & Conditions</a>
+          </div>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+
+  <div class="footer">
+    <button nzSize="small" type="button" nz-button class="ant-btn" style="margin-right: 8px" (click)="close()"
+      [nzLoading]="submitapplnon">
+      <span>Cancel</span>
+    </button>
+    <button nzSize="small" type="button" nz-button class="ant-btn" [disabled]="disableprevious"
+      style="margin-right: 8px" (click)="previous2()" *ngIf="stage != 0 && stage == 1" [nzLoading]="submitapplnon">
+      <span>Previous</span>
+    </button>
+    <button nzSize="small" nz-button nzType="primary" *ngIf="stage == 0" printSectionId="printpagess" ngxPrint
+      [useExistingCss]="true" style="margin-right: 8px" [nzLoading]="savenextapp">
+      <span>Print Form</span>
+    </button>
+    <button nzSize="small" type="button" *ngIf="stage == 0" class="ant-btn ant-btn-primary" [disabled]="disablenext"
+      nz-button (click)="nextUpload()" [nzLoading]="savenextapp">
+      <span>Save & Next</span>
+    </button>
+    <button nzSize="small" type="button" *ngIf="stage == 1" class="ant-btn ant-btn-primary" [disabled]="disablenext"
+      nz-button (click)="handleOkform()" [nzLoading]="submitapplnon">
+      <span>Submit</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'PDFview'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div *ngIf="view == 1" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 2" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 3" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 4" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 5" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 6" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nzSize="small" style="font-size: 10px;" nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="contextofrulesc" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5>Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 15px; margin-bottom: 10px">
+      Are you sure want to submit your change form for verification?
+    </p>
+    <p style="font-size: 13px; margin-bottom: 0px">
+      By clicking <b>Send for Verification</b> , you acknowledge that the
+      information provided in your change form is accurate and complete. Once
+      submitted, you may not be able to make further changes until the
+      verification process gets completed.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrulesc>
+    <button nz-button nzType="primary" nzSize="small" class="btn btn-primary"
+      style="background-color: #006699;font-size: 10px;" (click)="Submitapplication()" [nzLoading]="submitapplnon">
+      Send For Verification
+    </button>
+    <button nz-button nzType="primary" nzSize="small" class="btn btn-primary"
+      style="background-color: #006699;font-size: 10px;" (click)="cancelappliactionform()" [nzLoading]="submitapplnon">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+<nz-modal [(nzVisible)]="checkthevalidation" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="410px"
+  nzClosable="false" [nzFooter]="checkthevalidationfoot" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h6>Change Quarters Purpose</h6>
+    <hr style="margin: 8px 0" />
+    <div nz-row style="margin-top: 20px;">
+      <div nz-col nzSpan="24">
+        <p style="font-size: 12px; margin-bottom: 10px;font-weight: 500;">
+          <span style="color: red;">*</span> Choose Your Purpose For Change Quarter
+        </p>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-radio-group class="inputsize" nzSize="small" [(ngModel)]="dCHANGE_REASON_TYPE" name="SectionType"
+              (ngModelChange)="flatpurposechange(dCHANGE_REASON_TYPE)">
+              <label nz-radio nzValue="M" class="inputsize">For Medical Purpose</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-radio-group [(ngModel)]="dCHANGE_REASON_TYPE" name="SectionType" class="inputsize" nzSize="small"
+              (ngModelChange)="flatpurposechange(dCHANGE_REASON_TYPE)">
+              <label nz-radio nzValue="BM" class="inputsize">Building Maintenance</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-radio-group [(ngModel)]="dCHANGE_REASON_TYPE" name="SectionType" class="inputsize" nzSize="small"
+              (ngModelChange)="flatpurposechange(dCHANGE_REASON_TYPE)">
+              <label nz-radio nzValue="O" class="inputsize">Other</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24" *ngIf="showotheroption">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon class="labelsize">Other Purpose</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input name="otherpurposess" rows="2" placeholder="Enter Quarter Change Other Purpose"
+              [(ngModel)]="dCHANGE_REASON" class="inputsize" (ngModelChange)="oreason(dCHANGE_REASON)"
+              required></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <p style="font-size: 12px; margin-bottom: 10px;font-weight: 500;">
+          <span style="color: red;">*</span>Change Residence Type
+        </p>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please Select Residence Type">
+            <nz-select nzShowSearch nzSize="small" class="optiongroup" nzAllowClear
+              nzPlaceHolder="Select Residence Type" name="recidencetype" [(ngModel)]="dCHANGE_RESIDENCE_TYPE_ID"
+              required (ngModelChange)="selectrecidence(dCHANGE_RESIDENCE_TYPE_ID)">
+              <nz-option *ngFor="let city of RecidenceList1" [nzValue]="city.RESIDENCE_TYPE_ID"
+                [nzLabel]="city.RESIDENCE_TYPE_NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #checkthevalidationfoot>
+    <button nz-button nzType="primary" nzSize="small" class="btn btn-primary"
+      style="background-color: #006699;font-size: 10px;" (click)="cancelvaidationform()"
+      [nzLoading]="createapplication">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" nzSize="small" class="btn btn-primary"
+      style="background-color: #006699;font-size: 10px;" (click)="checkthevalidationsubmit()"
+      [nzLoading]="createapplication">
+      Submit
+    </button>
+  </ng-template>
+</nz-modal>

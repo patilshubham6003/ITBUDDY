@@ -1,0 +1,23 @@
+@media screen and (max-width: 800px) {
+  .hFont {
+    font-size: 1.6rem;
+  }
+}
+
+p {
+  text-align: justify;
+}
+
+.breadcrumbs ol {
+  display: inline-flex;
+  margin: 0px 0;
+}
+
+.breadcrumbs ol li+li::before {
+  color: #f5f7f2;
+}
+
+div,a,footer,li,ui,p,h4,h1,h2,h3,h5,section,span,main{
+  font-family: 'Hanken Grotesk', sans-serif !important;
+  
+}

@@ -1,0 +1,31 @@
+<nz-spin [nzSpinning]="isSpinning">
+<div style="width: 100%;height: 100%;padding: 5px;" *ngIf="roleid == 2">
+  <div *ngFor="let chat of arrray">
+    <div style="display: flex;justify-content: flex-end;">
+      <div class="styleobjection" *ngIf="chat.REASON != ''">
+        <p style="font-weight: bold;"><span>Applicant: </span>{{chat.EMPLOYEE_NAME}}</p>
+        <p>{{chat.REASON}}</p>
+      </div>
+    </div>
+    <div style="display: flex;justify-content: flex-start;">
+      <div class="styleobjection12" *ngIf="chat.REMARK != ''">
+        <p style="font-weight: bold;"><span>Inspector: </span>{{chat.RESOVLED_BY_NAME}}</p>
+        <p >{{chat.REMARK}}</p>
+      </div>
+    </div>
+    <div style="display: flex;justify-content: center;margin-top: 10px;border-radius: 5px;font-size: 15px;" *ngIf="chat.STATUS == 'P'">
+      <nz-tag [nzColor]="'green'">Pending</nz-tag>
+    </div>
+    <div style="display: flex;justify-content: center;margin-top: 10px;border-radius: 5px;font-size: 15px;" *ngIf="chat.STATUS == 'A'">
+      <nz-tag [nzColor]="'green'">Resolved</nz-tag>
+    </div>
+  </div>
+</div>
+
+</nz-spin>
+
+<div class="header">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>

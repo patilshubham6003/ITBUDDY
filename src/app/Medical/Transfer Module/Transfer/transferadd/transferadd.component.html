@@ -1,0 +1,4305 @@
+<div>
+  <nz-steps
+    [nzCurrent]="getcurrent()"
+    nzSize="small"
+    [nzLabelPlacement]="'vertical'"
+  >
+    <nz-step nzTitle="Employee Details"></nz-step>
+    <nz-step
+      *ngIf="
+        (this.data.IS_APPLYING_FOR_ADVANCE &&
+          this.data.IS_TRANSFER_ADVANCE_CREATED) ||
+        !this.data.IS_APPLYING_FOR_ADVANCE
+      "
+      nzTitle="Transfer Details"
+    ></nz-step>
+    <nz-step
+      *ngIf="
+        (this.data.IS_APPLYING_FOR_ADVANCE &&
+          this.data.IS_TRANSFER_ADVANCE_CREATED) ||
+        !this.data.IS_APPLYING_FOR_ADVANCE
+      "
+      nzTitle="File Details"
+    ></nz-step>
+    <nz-step nzTitle="Upload Document"></nz-step>
+    <nz-step nzTitle="Transfer CheckList"></nz-step>
+  </nz-steps>
+  <br /><br />
+  <div
+    class="steps-content"
+    style="height: 60vh !important; overflow-y: auto !important"
+  >
+    <!-- Applicant Info -->
+    <div *ngIf="current == 0">
+      <div>
+        <nz-spin [nzSpinning]="isSpinning">
+          <form nz-form #applicantMasterPages="ngForm">
+            <div nz-row>
+              <div
+                nz-col
+                [nzSpan]="!data.ID && !data.EMP_ID ? 10 : 11"
+                *ngIf="isCreate"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of Officer/Official</nz-form-label
+                  >
+
+                  <nz-form-control nzErrorTip="Please Select Employee Name">
+                    <nz-select
+                      [nzOptionHeightPx]="60"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Select Employee"
+                      (ngModelChange)="filterEmpData($event)"
+                      name="empID"
+                      [(ngModel)]="data.EMP_ID"
+                      [nzLoading]="empLoader"
+                      (keyup)="employeeSearch($event)"
+                      (nzScrollToBottom)="onScroll($event)"
+                      required
+                    >
+                      <nz-option
+                        *ngFor="let role of employee"
+                        [nzValue]="role.ID"
+                        nzLabel="{{ role.NAME }} - {{ role.EMPLOYEE_CODE }}"
+                        nzCustomContent
+                      >
+                        <div style="background-color: #fffcfc; padding: 5px">
+                          <div nz-row>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="width: 100%; color: black; font-size: 14px"
+                            >
+                              <b
+                                >{{ role.NAME }}
+                                <small style="position: absolute; right: 0px">{{
+                                  role.EMPLOYEE_CODE
+                                }}</small></b
+                              >
+                            </div>
+
+                            <div nz-col nzSpan="24" style="font-size: 11px">
+                              <div nz-row>
+                                <div
+                                  style="
+                                    color: #b30062;
+                                    font-weight: bold;
+                                    white-space: pre-line;
+                                  "
+                                  nz-col
+                                  nzSpan="12"
+                                >
+                                  {{ role.OFFICE_NAME }}
+                                </div>
+
+                                <div nz-col nzSpan="1"></div>
+
+                                <div
+                                  style="
+                                    color: #2f08c0;
+                                    font-weight: bold;
+                                    white-space: pre-line;
+                                  "
+                                  nz-col
+                                  nzSpan="11"
+                                >
+                                  {{ role.DESIGNATION }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="
+                                font-size: 14px;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              {{ role.DDO_OF_THE_OFFICIAL }}
+                            </div>
+                          </div>
+                        </div>
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="11" *ngIf="data.ID && !isCreate">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Employee Name</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Please Select Employee Name">
+                    <input
+                      nz-input
+                      maxlength="512"
+                      name="NAME"
+                      style="width: 100%"
+                      [(ngModel)]="data.NAME"
+                      nz-input
+                      placeholder="Please Enter Employee"
+                      draggable="false"
+                      required
+                    />
+                    <!-- <input nz-input maxlength="32" name="EMPLOYEE_CODE" style="width: 30%"
+                      [(ngModel)]="data.EMPLOYEE_CODE" nz-input disabled="true" draggable="false" required /> -->
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="1" *ngIf="!data.ID && !data.EMP_ID">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button nz-button nzType="primary" (click)="add()">
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <!-- <div nz-col nzSpan="1" *ngIf="data.EMP_ID">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button nz-button nzType="primary" (click)="edit(data)">
+                      <i nz-icon nzType="edit"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+
+              <div nz-col nzSpan="7">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Designation</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Enter Designation">
+                    <nz-select
+                      nzShowSearch
+                      name="DESIGNATION_ID"
+                      [(ngModel)]="data.DESIGNATION_ID"
+                      nzPlaceHolder="Select The Designation"
+                    >
+                      <nz-option
+                        *ngFor="let designation of designationList"
+                        [nzLabel]="designation.NAME"
+                        [nzValue]="designation.ID"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Employee Code</nz-form-label
+                  >
+
+                  <nz-form-control nzErrorTip="Enter Correct Employee Code">
+                    <input
+                      nz-input
+                      maxlength="16"
+                      autocomplete="off"
+                      name="EmployeeCode"
+                      disabled
+                      [(ngModel)]="data.EMPLOYEE_CODE"
+                      type="text"
+                      placeHolder="Enter Employee Code"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="11">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Office Name</nz-form-label>
+                  <nz-form-control nzErrorTip="Enter Correct Office Name">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      maxlength="256"
+                      name="Office Name"
+                      type="text"
+                      [(ngModel)]="data.OFFICE_NAME"
+                      placeHolder="Enter The Office Name"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="7">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >DDO Of The Official</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Select Correct DDO Of The Official"
+                  >
+                    <!-- <input
+                      nz-input
+                      maxlength="256"
+                      autocomplete="off"
+                      name="DDOOfficial"
+                      type="text"
+                      [(ngModel)]="data.DDO_OF_THE_OFFICIAL"
+                      placeHolder="Enter The DDO Of The Official"
+                      required
+                    /> -->
+
+                    <nz-select
+                      name="DDO_OF_THE_OFFICIAL_ID"
+                      style="width: 100%"
+                      nzShowSearch
+                      disabled
+                      nzPlaceHolder="Select DDO Of The Official"
+                      [(ngModel)]="data.DDO_OF_THE_OFFICIAL_ID"
+                    >
+                      <nz-option
+                        *ngFor="let offices of ddoOfTheOfficialDataList"
+                        [nzLabel]="offices.HEAD_OF_OFFICE"
+                        [nzValue]="offices.ID"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                  <span
+                    *ngIf="
+                      DDO_ID != oldDDOID && DDO_ID && oldDDOID && data.EMP_ID
+                    "
+                    style="color: blue; font-size: 10px; display: inline-block"
+                    >(The old DDO Of The Official is <b>{{ oldDDO }}</b> & you
+                    are creating the claim using <b> {{ loggedInDDO }}</b
+                    >)</span
+                  >
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Basic Pay</nz-form-label>
+
+                  <nz-form-control nzErrorTip="Enter Correct Basic Pay">
+                    <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        maxlength="8"
+                        autocomplete="off"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.GRADE_PAY"
+                        name="gradePay"
+                        type="text"
+                        placeHolder="Enter Basic Pay"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="11">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Email ID </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Email ID"
+                  >
+                    <input
+                      nz-input
+                      name="commiteeemail"
+                      maxlength="256"
+                      [pattern]="emailpattern"
+                      [(ngModel)]="data.EMAIL_ID"
+                      placeHolder="Enter Email ID"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="7">
+                <nz-form-item>
+                  <nz-form-label nzNoColon> Mobile Number </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Mobile Number"
+                  >
+                    <nz-input-group style="width: 100%" nzAddOnBefore="(+91)">
+                      <input
+                        nz-input
+                        name="commiteemobileno"
+                        [pattern]="mobpattern"
+                        [(ngModel)]="data.MOBILE_NO"
+                        maxlength="10"
+                        minlength="10"
+                        (keypress)="omit($event)"
+                        placeHolder="Enter Mobile Number"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Grade Pay Level
+                  </nz-form-label>
+                  <nz-input-group>
+                    <nz-select
+                      name="HospitalType"
+                      style="width: 100%"
+                      nzShowSearch
+                      nzPlaceHolder="Select Grade Pay Level"
+                      [(ngModel)]="data.GRADE_PAY_LEVEL_ID"
+                    >
+                      <nz-option
+                        *ngFor="let option of gradePayLevelDataList"
+                        [nzLabel]="option.GRADE_PAY_LEVEL"
+                        [nzValue]="option.ID"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="24">
+                <div nz-row>
+                  <div nz-col nzSpan="6">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Service Type Name</nz-form-label
+                      >
+                      <nz-form-control
+                        nzErrorTip="Please Select Service Type Name"
+                      >
+                        <nz-select
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Service Type Name"
+                          name="SERVICE_TYPE"
+                          [(ngModel)]="data.SERVICE_TYPE"
+                          required
+                        >
+                          <nz-option
+                            [nzValue]="'Permanent'"
+                            [nzLabel]="'Permanent'"
+                          >
+                          </nz-option>
+                          <nz-option
+                            [nzValue]="'Quasi Permanent'"
+                            [nzLabel]="'Quasi Permanent'"
+                          >
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="11">
+                <div nz-row class="my-box">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Old Head Quarter Name</nz-form-label
+                    >
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter Old Head Quarter Name"
+                    >
+                      <input
+                        nz-input
+                        name="commfffiteeemail"
+                        maxlength="256"
+                        [(ngModel)]="data.HEADQUARTERS_NAME"
+                        placeHolder="Enter Old Head Quarter Name"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >Old Residential Address
+                    </nz-form-label>
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter Old Residential Name"
+                    >
+                      <textarea
+                        maxlength="256"
+                        required
+                        rows="2"
+                        placeHolder="Enter Old Residential Name"
+                        [(ngModel)]="data.ADDRESS"
+                        name="addressfggggline1"
+                        nz-input
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.ADDRESS != undefined"
+                      >
+                        {{ data.ADDRESS.length }}/256
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-col nzSpan="1"></div>
+              <div nz-col nzSpan="12">
+                <div nz-row class="my-box">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon
+                      >New Head Quarter Name
+                    </nz-form-label>
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter New Head Quarter Name"
+                    >
+                      <input
+                        nz-input
+                        name="newhead"
+                        maxlength="256"
+                        [(ngModel)]="data.NEW_HEADQUARTERS_NAME"
+                        placeHolder="Enter Head Quarter Name"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>
+                      New Residential Address
+                    </nz-form-label>
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter New Residential Address"
+                    >
+                      <textarea
+                        maxlength="256"
+                        required
+                        rows="2"
+                        placeHolder="Enter New Residential Name"
+                        [(ngModel)]="data.NEW_ADDRESS"
+                        name="addrdfdfessline1"
+                        nz-input
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.NEW_ADDRESS != undefined"
+                      >
+                        {{ data.NEW_ADDRESS.length }}/256
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+            <div nz-row class="my-box" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+              <!-- <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Are you Applying for Advance?</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="data.IS_APPLYING_FOR_ADVANCE"
+                      (ngModelChange)="changeondvance($event)"
+                      name="Are you Applying for Advance"
+                      nzDisabled
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+              <div nz-col nzSpan="4" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >DOJ of Present Station</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Please Select DOJ of Present Station"
+                  >
+                    <nz-date-picker
+                      [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                      [ngClass]="isShowCSS ? 'datesize' : ''"
+                      style="width: 100%"
+                      nzFormat="dd/MM/yyyy"
+                      [(ngModel)]="data.DOJ_PRESENT_STATION"
+                      name="DOJ_PRESENT_STATION"
+                      required
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >DOJ of Present Post</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Please Select DOJ of Present Post"
+                  >
+                    <nz-date-picker
+                      [ngClass]="isShowCSS ? 'datesize' : ''"
+                      style="width: 100%"
+                      [(ngModel)]="data.DOJ_PRESENT_POST"
+                      nzFormat="dd/MM/yyyy"
+                      name="DOJ_PRESENT_POST"
+                      required
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="8" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired>
+                    Details of Transfer/Posting Order</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Please Enter Details of Transfer/Posting Order"
+                  >
+                    <textarea
+                      nz-input
+                      maxlength="128"
+                      autocomplete="off"
+                      name="DETAILS_OF_TRANSFER_POSTING_ORDER"
+                      type="text"
+                      [(ngModel)]="data.DETAILS_OF_TRANSFER_POSTING_ORDER"
+                      placeHolder="Enter Details of Transfer/Posting Order"
+                      required
+                    ></textarea>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="8" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired>
+                    Place Office of Posting on Transfer</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Please Enter Place Office of Posting on Transfer"
+                  >
+                    <textarea
+                      nz-input
+                      maxlength="128"
+                      autocomplete="off"
+                      name="PLACE_OFFICE_OF_POSTING"
+                      type="text"
+                      [(ngModel)]="data.PLACE_OFFICE_OF_POSTING"
+                      placeHolder="Enter Place Office of Posting on Transfer"
+                      required
+                    ></textarea>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="8" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Whether Transfer is in Public Interest?</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-switch
+                      [(ngModel)]="data.WHETHER_TRANSFER_IS_IN_PUBLIC_INTEREST"
+                      name="WHETHER_TRANSFER_IS_IN_PUBLIC_INTEREST"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                    >
+                    </nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired>
+                    New Residence Address</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Please Enter New Residence Address"
+                  >
+                    <textarea
+                      nz-input
+                      maxlength="128"
+                      autocomplete="off"
+                      name="RESIDANCE_IS_INVOLVED"
+                      type="text"
+                      [(ngModel)]="data.RESIDANCE_IS_INVOLVED"
+                      placeHolder="Enter New Residence Address"
+                      required
+                    ></textarea>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="5" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >Travelling Allowance Fare</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Travelling Allowance Fare"
+                  >
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="TRA_ALLO_FARE_RS"
+                        (keypress)="omit($event)"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.TRA_ALLO_FARE_RS"
+                        placeHolder="Enter Travelling Allowance Fare"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="5" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired>
+                    Travel DA (Days)</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Please Enter Travel DA (Days)">
+                    <input
+                      nz-input
+                      maxlength="128"
+                      autocomplete="off"
+                      name="TRAVEL_DA_DAYS"
+                      type="text"
+                      [(ngModel)]="data.TRAVEL_DA_DAYS"
+                      placeHolder="Enter Travel DA (Days)"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="8" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >Transportation charges for Personal Effects</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Transportation charges for Personal Effects "
+                  >
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="CHARGES_FOR_PERSONAL_EFFECTS_AMOUNT"
+                        (keypress)="omit($event)"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.CHARGES_FOR_PERSONAL_EFFECTS_AMOUNT"
+                        placeHolder="Enter Transportation charges for Personal Effects "
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="11" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >Transportation charges for Private
+                    Conveyance</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Transportation charges for Private Conveyance "
+                  >
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="CHARGES_FOR_PRIVATE_CON_AMOUNT"
+                        (keypress)="omit($event)"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.CHARGES_FOR_PRIVATE_CON_AMOUNT"
+                        placeHolder="Enter Transportation charges for Private Conveyance "
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="5" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Travel DA (Perday Rs)</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Travel DA (Perday Rs)"
+                  >
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="TRAVEL_RS_PERDAY"
+                        (keypress)="omit($event)"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.TRAVEL_RS_PERDAY"
+                        placeHolder="Enter Travel DA (Perday Rs)"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="8" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >Amount of Advance Required</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Amount of Advance Required "
+                  >
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="ADVANCE_AMOUNT_REQ"
+                        (keypress)="omit($event)"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.ADVANCE_AMOUNT_REQ"
+                        placeHolder="Enter Amount of Advance Required "
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="11" *ngIf="data.IS_APPLYING_FOR_ADVANCE">
+                <nz-form-item>
+                  <nz-form-label nzNoColon nzRequired
+                    >Composite transfer grant @ one basic pay
+                    (80%)</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Composite transfer grant @ one basic pay (80%)"
+                  >
+                    <nz-input-group nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="GRANT_ONE_BASIC_PAY_AMOUNT"
+                        (keypress)="omit($event)"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.GRANT_ONE_BASIC_PAY_AMOUNT"
+                        placeHolder="Enter Composite transfer grant @ one basic pay (80%)"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+          <!-- <br /> -->
+
+          <nz-divider
+            style="font-weight: bold"
+            nzText="Particular of the members of the family as on date of transfer [vide S. R 2(8)]"
+          ></nz-divider>
+          <!-- <br /> -->
+          <form nz-form #relation="ngForm">
+            <div nz-col nzSpan="24">
+              <div nz-row class="my-box">
+                <div nz-col nzSpan="10">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Name of Family Member</nz-form-label
+                    >
+
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter Name of Family Member"
+                    >
+                      <input
+                        nz-input
+                        name="newdddddddddhead"
+                        maxlength="256"
+                        autocomplete="off"
+                        [(ngModel)]="editrelation.NAME_OF_FAMILY_MEMBER"
+                        placeHolder="Enter Name of Family Member"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon> Age </nz-form-label>
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter Age"
+                    >
+                      <input
+                        nz-input
+                        name="squesdncenumber"
+                        (keypress)="omit($event)"
+                        autocomplete="off"
+                        [(ngModel)]="editrelation.AGE"
+                        placeHolder="Enter Age"
+                        maxlength="3"
+                        required
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="7">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Relationship with the Govt. Servant
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-select
+                        name="HospeeeedddeitalType"
+                        style="width: 100%"
+                        nzShowSearch
+                        nzAllowClear
+                        nzPlaceHolder="Select Relationship"
+                        [(ngModel)]="editrelation.RELATIONSHIP"
+                      >
+                        <nz-option nzLabel="Self" nzValue="Self"></nz-option>
+                        <nz-option
+                          nzLabel="Mother"
+                          nzValue="Mother"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Father"
+                          nzValue="Father"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Brother"
+                          nzValue="Brother"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Sister"
+                          nzValue="Sister"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Daughter"
+                          nzValue="Daughter"
+                        ></nz-option>
+                        <nz-option nzLabel="Son" nzValue="Son"></nz-option>
+                        <nz-option nzLabel="Wife" nzValue="Wife"></nz-option>
+                        <nz-option
+                          nzLabel="Husband"
+                          nzValue="Husband"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Father-In-Law"
+                          nzValue="Father-In-Law"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Mother-In-Law"
+                          nzValue="Mother-In-Law"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Grand-Mother"
+                          nzValue="Grand-Mother"
+                        ></nz-option>
+                        <nz-option
+                          nzLabel="Grand-Father"
+                          nzValue="Grand-Father"
+                        ></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="2">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon></nz-form-label>
+
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      nzType="primary"
+                      (click)="addData(true, relation)"
+                      nzJustify="end"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                      <span *ngIf="!editrelation.ID">Add</span>
+                      <span *ngIf="editrelation.ID">Update</span>
+                    </button>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-table
+                class="my-scroll no-wrap1"
+                nzBordered
+                #retlatioantable
+                nzShowSizeChanger
+                [nzFrontPagination]="false"
+                [nzLoading]="loadingRecords"
+                [nzSize]="'small'"
+                [nzScroll]="{ x: '900px', y: '55vh' }"
+                [nzData]="relationdata"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      nzWidth="10px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Action
+                    </th>
+                    <th
+                      nzWidth="50px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Name of Family Member
+                    </th>
+                    <th
+                      nzWidth="10px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Age
+                    </th>
+                    <th
+                      nzWidth="30px"
+                      style="font-weight: bold; text-align: center"
+                    >
+                      Relationship with the Govt. Servant
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    style="white-space: pre-line"
+                    *ngFor="let data of retlatioantable.data; let i = index"
+                  >
+                    <td style="text-align: center">
+                      <span
+                        *ngIf="!isAdmin"
+                        style="cursor: pointer"
+                        nz-popconfirm
+                        nzPopconfirmTitle="Are you sure want delete?"
+                        nzPopconfirmPlacement="top"
+                        (nzOnConfirm)="confirmDeleteRetlation(data, i)"
+                        (nzOnCancel)="cancel()"
+                      >
+                        <span
+                          nz-icon
+                          nzType="delete"
+                          nzTheme="twotone"
+                          nz-tooltip
+                          nzTooltipTitle="Delete"
+                        >
+                        </span>
+                      </span>
+                      &nbsp;
+                      <a
+                        (click)="edit1(data, i)"
+                        nz-tooltip
+                        nzTooltipTitle="Edit"
+                      >
+                        <span
+                          nz-icon
+                          nzType="edit"
+                          nzTheme="twotone"
+                          style="margin-top: 10px"
+                        ></span>
+                      </a>
+                    </td>
+
+                    <td style="text-align: center">
+                      {{ relationdata[i]["NAME_OF_FAMILY_MEMBER"] }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ relationdata[i]["AGE"] }}
+                    </td>
+                    <td style="text-align: center">
+                      {{ relationdata[i]["RELATIONSHIP"] }}
+                    </td>
+
+                    <!-- <td style="text-align: center;">
+                          {{data['LAYOUT_NAME']}}
+                        </td>
+                        <td style="text-align: center;">{{data['DEFAULT_RATE']}}</td> -->
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </nz-spin>
+      </div>
+    </div>
+
+    <!-- Applicant Info -->
+
+    <div *ngIf="current == 1">
+      <nz-spin [nzSpinning]="isSpinning">
+        <nz-divider
+          style="font-weight: bold; padding-top: 10px"
+          nzText="Details of Journey(s) performed by Government servent as well as members of his/her Family"
+        ></nz-divider>
+
+        <div nz-row>
+          <div
+            nz-col
+            nzSpan="24"
+            style="text-align: right; padding-right: 20px"
+          >
+            <button
+              *ngIf="!isAdmin"
+              nz-button
+              nzType="primary"
+              (click)="adddetailsjorney()"
+              nzJustify="end"
+            >
+              <i nz-icon nzType="plus"></i>Add
+            </button>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-table
+              class="my-scroll no-wrap1"
+              nzBordered
+              #dataxfdstable
+              nzShowSizeChanger
+              [nzFrontPagination]="false"
+              [nzLoading]="loadingRecords"
+              [nzSize]="'small'"
+              [nzScroll]="{ x: '1800px', y: '55vh' }"
+              [nzData]="formdata7"
+            >
+              <thead>
+                <tr>
+                  <th
+                    nzWidth="5px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Action
+                  </th>
+                  <th
+                    nzWidth="10px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    From Date
+                  </th>
+                  <th
+                    nzWidth="15px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Journey From
+                  </th>
+                  <th
+                    nzWidth="10px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    To Date
+                  </th>
+                  <th
+                    nzWidth="15px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Journey To
+                  </th>
+                  <th
+                    nzWidth="15px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Travel Mode
+                  </th>
+                  <th
+                    nzWidth="15px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Class of Mode
+                  </th>
+                  <th
+                    nzWidth="7px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    No. of Fairs
+                  </th>
+                  <th
+                    nzWidth="10px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Fare Paid(₹)
+                  </th>
+                  <th
+                    nzWidth="15px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Distance of Road(Kms)
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="white-space: pre-line"
+                  *ngFor="let data of dataxfdstable.data"
+                >
+                  <td style="text-align: center">
+                    <a
+                      (click)="editform7(data)"
+                      nz-tooltip
+                      nzTooltipTitle="Edit"
+                    >
+                      <span
+                        nz-icon
+                        nzType="edit"
+                        nzTheme="twotone"
+                        style="margin-top: 10px"
+                      ></span>
+                    </a>
+                    &nbsp;
+                    <span
+                      *ngIf="!isAdmin"
+                      style="cursor: pointer"
+                      nz-popconfirm
+                      nzPopconfirmTitle="Are you sure want delete?"
+                      nzPopconfirmPlacement="top"
+                      (nzOnConfirm)="deleteConfirm(data)"
+                      (nzOnCancel)="deleteCancel()"
+                    >
+                      <span
+                        nz-icon
+                        nzType="delete"
+                        nzTheme="twotone"
+                        nz-tooltip
+                        nzTooltipTitle="Delete"
+                      >
+                      </span>
+                    </span>
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_DATETIME"] | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DEPARTURE_FROM"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_DATETIME"] | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["ARRIVAL_TO"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVEL_MODE_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVEL_CLASS_NAME"] }}
+                  </td>
+
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["NO_OF_FAIRS"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FAIR_PAID"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DISTANCE_BY_ROAD"] }}
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+
+        <nz-divider
+          style="font-weight: bold; padding-top: 20px"
+          nzText="Transportion Charges of personal effects (Money recipets to be attached)"
+        ></nz-divider>
+
+        <div nz-row>
+          <div
+            *ngIf="!isAdmin"
+            nz-col
+            nzSpan="24"
+            style="text-align: right; padding-right: 20px"
+          >
+            <button
+              *ngIf="!isAdmin"
+              nz-button
+              nzType="primary"
+              (click)="addform3()"
+              nzJustify="end"
+            >
+              <i nz-icon nzType="plus"></i>Add
+            </button>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-table
+              class="my-scroll no-wrap1"
+              nzBordered
+              #dataxfduuuustable
+              nzShowSizeChanger
+              [nzFrontPagination]="false"
+              [nzLoading]="loadingRecords"
+              [nzSize]="'small'"
+              [nzScroll]="{ x: '1800px', y: '55vh' }"
+              [nzData]="formdata3"
+            >
+              <thead>
+                <tr>
+                  <th nzWidth="5px" nzAlign="center">
+                    <span style="font-weight: bold">Action</span>
+                  </th>
+
+                  <th nzColumnKey nzWidth="8px" nzAlign="center">
+                    <span style="font-weight: bold">Date</span>
+                  </th>
+
+                  <th nzColumnKey nzWidth="13px" nzAlign="center">
+                    <span style="font-weight: bold">Mode</span>
+                  </th>
+
+                  <th
+                    nzWidth="13px"
+                    style="text-align: center; font-weight: bold"
+                    nzColumnKey="{{ 'DEFAULT_RATE' }}"
+                  >
+                    Station From
+                  </th>
+
+                  <th
+                    nzWidth="13px"
+                    style="text-align: center; font-weight: bold"
+                    nzColumnKey="{{ 'DEFAULT_RATE' }}"
+                  >
+                    Station To
+                  </th>
+                  <th
+                    nzWidth="7px"
+                    style="text-align: center; font-weight: bold"
+                    nzColumnKey="{{ 'DEFAULT_RATE' }}"
+                  >
+                    Weight(Kg)
+                  </th>
+                  <th
+                    nzWidth="7px"
+                    style="text-align: center; font-weight: bold"
+                    nzColumnKey="{{ 'DEFAULT_RATE' }}"
+                  >
+                    Rate(₹)
+                  </th>
+                  <th
+                    nzWidth="8px"
+                    style="text-align: center; font-weight: bold"
+                    nzColumnKey="{{ 'DEFAULT_RATE' }}"
+                  >
+                    Amount(₹)
+                  </th>
+                  <th
+                    nzWidth="8px"
+                    style="text-align: center; font-weight: bold"
+                  >
+                    Distance
+                  </th>
+
+                  <th
+                    nzWidth="20px"
+                    style="text-align: center; font-weight: bold"
+                    nzColumnKey="{{ 'DEFAULT_RATE' }}"
+                  >
+                    Remark
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="white-space: pre-line"
+                  *ngFor="let data of dataxfduuuustable.data"
+                >
+                  <td style="text-align: center">
+                    <a
+                      (click)="editform3(data)"
+                      nz-tooltip
+                      nzTooltipTitle="Edit"
+                    >
+                      <span
+                        nz-icon
+                        nzType="edit"
+                        nzTheme="twotone"
+                        style="margin-top: 10px"
+                      ></span>
+                    </a>
+                    &nbsp;
+                    <span
+                      *ngIf="!isAdmin"
+                      style="cursor: pointer"
+                      nz-popconfirm
+                      nzPopconfirmTitle="Are you sure want delete?"
+                      nzPopconfirmPlacement="top"
+                      (nzOnConfirm)="deletetransportationcharges(data)"
+                      (nzOnCancel)="deleteCancel()"
+                    >
+                      <span
+                        nz-icon
+                        nzType="delete"
+                        nzTheme="twotone"
+                        nz-tooltip
+                        nzTooltipTitle="Delete"
+                      >
+                      </span>
+                    </span>
+                  </td>
+
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DATE"] | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRANSPORTATION_MODE_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_STATION"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_STATION"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["WEIGHT_IN_KG"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["RATE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["AMOUNT"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DISTANCE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["REMARKS"] }}
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+
+        <nz-divider
+          style="font-weight: bold; padding-top: 20px"
+          nzText="Transportion Charges of Personal Conveyance"
+        ></nz-divider>
+        <form nz-form #modedataform="ngForm">
+          <!-- <div nz-row class="my-box">
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Is Personal Car ?</nz-form-label>
+              <nz-form-control>
+                <nz-switch
+                  [(ngModel)]="data.IS_PERSONAL_CAR"
+                  name="personalcar"
+                  nzCheckedChildren="Yes"
+                  nzUnCheckedChildren="No"
+                >
+                </nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div> -->
+
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Mode of Tranfer</nz-form-label>
+                <br />
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Select Mode of Tranfer "
+                >
+                  <nz-select
+                    nzShowSearch
+                    name="machsdfine-name"
+                    nzAllowClear
+                    required
+                    [(ngModel)]="data.TRAVEL_MODE_ID"
+                    nzPlaceHolder="Select Mode of Tranfer"
+                  >
+                    <nz-option
+                      *ngFor="let option of travelmode"
+                      [nzLabel]="option.NAME"
+                      [nzValue]="option.ID"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="12">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Station Name</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Station Name "
+                >
+                  <input
+                    nz-input
+                    name="squesdndfgfghcenumber"
+                    placeHolder=" Enter Station Name"
+                    maxlength="256"
+                    [(ngModel)]="data.STATION_NAME"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Amount </nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Amount">
+                  <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      maxlength="8"
+                      autocomplete="off"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="data.AMOUNT"
+                      name="greeadePay"
+                      type="text"
+                      placeHolder=" Enter Amount"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="7">
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Vehicle Brought by Self Propulsion</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-switch
+                    [(ngModel)]="data.VEHICLE_BROUGHT_SELF_PROPULATION"
+                    name="Vehiclebrought"
+                    nzCheckedChildren="Yes"
+                    nzUnCheckedChildren="No"
+                    (ngModelChange)="vehicleBroughtClear($event)"
+                  >
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="5"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Road Milage</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Road Milage"
+                >
+                  <nz-input-group>
+                    <input
+                      nz-input
+                      name="RoadMilage"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.VEHICLE_BROUGHT_ROAD_MILEAGE"
+                      placeHolder="Enter Road Milage"
+                      (ngModelChange)="roadMilageTotal($event)"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Distance in KiloMeter</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter KiloMeter"
+                >
+                  <nz-input-group nzAddOnAfter="KM">
+                    <input
+                      nz-input
+                      name="KiloMeter"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.VEHICLE_BROUGHT_ROAD_MILEAGE_KMS"
+                      placeHolder="Enter KiloMeter"
+                      required
+                      autocomplete="off"
+                      (ngModelChange)="roadKMTotal($event)"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Total</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Enter Total">
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="Total"
+                      maxlength="16"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.VEHICLE_BROUGHT_TOTAL"
+                      placeHolder="Enter Total"
+                      autocomplete="off"
+                      disabled="true"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="7"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            ></div>
+
+            <div
+              nz-col
+              nzSpan="5"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Rail KiloMeter</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Rail KiloMeter "
+                >
+                  <nz-input-group nzAddOnAfter="KM">
+                    <input
+                      nz-input
+                      name="TrainBrought "
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.TRAIN_BROUGHT_KMS"
+                      (ngModelChange)="rateOnKM($event)"
+                      placeHolder="Enter Rail KiloMeter "
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Rail Freight</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Rail Freight Charge"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="TrainBroughtCharge"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.TRAIN_BROUGHT_CHARGE"
+                      placeHolder="Enter Rail Freight Charge"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div
+              nz-col
+              nzSpan="6"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Claimed Amount</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Claimed Amount"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="VEHICLE_CLAIMED_AMOUNT"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.VEHICLE_CLAIMED_AMOUNT"
+                      placeHolder="Enter Claimed Amount"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="5"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == false"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Truck/Ship Charge</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Truck/Ship Charge"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="Truck/ShipCharge"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.TRUCK_SHIP_CHARGE"
+                      placeHolder="Enter Truck/Ship Charge"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="12"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == false"
+            ></div>
+
+            <div
+              nz-col
+              nzSpan="7"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == false"
+            ></div>
+
+            <div
+              nz-col
+              nzSpan="5"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == false"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Rail KiloMeter</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Rail KiloMeter"
+                >
+                  <nz-input-group nzAddOnAfter="KM">
+                    <input
+                      nz-input
+                      name="TrainBroughtNo"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.TRAIN_BROUGHT_FOR_KMS_NO"
+                      placeHolder="Enter Rail KiloMeter"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == false"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Rail Freight</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Rail Freight Charge"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="Charge"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.TRAIN_BROUGHT_FOR_CHARGE_NO"
+                      placeHolder="Enter Rail Freight Charge"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div
+              nz-col
+              nzSpan="6"
+              *ngIf="data.VEHICLE_BROUGHT_SELF_PROPULATION == false"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Claimed Amount</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Claimed Amount"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="VEHICLE_CLAIMED_AMOUNT"
+                      maxlength="8"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      [(ngModel)]="data.VEHICLE_CLAIMED_AMOUNT"
+                      placeHolder="Enter Claimed Amount"
+                      autocomplete="off"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Is Advance Taken?</nz-form-label>
+                <nz-form-control>
+                  <nz-switch
+                    [(ngModel)]="data.IS_ADVANCE_TAKEN"
+                    [nzDisabled]="
+                      data.IS_APPLYING_FOR_ADVANCE == true ? true : false
+                    "
+                    name="AdvanceTaken"
+                    nzCheckedChildren="Yes"
+                    nzUnCheckedChildren="No"
+                    (ngModelChange)="isAdvanceTaken($event)"
+                  >
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_TAKEN == true">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Date Of Advance Taken</nz-form-label
+                >
+                <nz-form-control
+                  nzErrorTip="Please Select Date Of Advance Taken"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    nzFormat="dd/MM/yyyy"
+                    name="advancedate"
+                    [(ngModel)]="data.ADVANCE_TAKEN_DATE"
+                    required
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_TAKEN == true">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Advance Amount</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Advance Amount"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="AdvanceAmount"
+                      maxlength="8"
+                      (keypress)="omit($event)"
+                      type="text"
+                      [(ngModel)]="data.ADVANCED_AMOUNT"
+                      placeHolder="Enter Advance Amount"
+                      required
+                    />
+                    <!-- disabled="data.IS_APPLYING_FOR_ADVANCE == true ? true : false" -->
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_TAKEN == true">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Voucher No.</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Voucher No."
+                >
+                  <input
+                    nz-input
+                    name="VoucherNo"
+                    maxlength="64"
+                    type="text"
+                    [(ngModel)]="data.VOUCHER_NO"
+                    placeHolder="Enter Voucher No."
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+
+        <div nz-row style="margin-top: 40px">
+          <div nz-col nzSpan="22">
+            <p style="font-weight: bold">
+              Is Any higher class of accommodation than the one to which the
+              government servent is Entitled was used ?
+            </p>
+          </div>
+          <div style="text-align: right; padding-right: 20px" nz-col nzSpan="2">
+            <nz-switch
+              [(ngModel)]="data.IS_HIGHER_CLASS_ACCOMODATION"
+              name="show_table"
+              nzCheckedChildren="Yes"
+              nzJustify="end"
+              nzUnCheckedChildren="No"
+              (ngModelChange)="showtable1($event)"
+            >
+            </nz-switch>
+          </div>
+        </div>
+        <div nz-row *ngIf="data.IS_HIGHER_CLASS_ACCOMODATION == true">
+          <div
+            *ngIf="!isAdmin"
+            nz-col
+            nzSpan="24"
+            style="text-align: right; padding-right: 20px"
+          >
+            <button
+              *ngIf="!isAdmin"
+              nz-button
+              nzType="primary"
+              (click)="addform2()"
+              nzJustify="end"
+            >
+              <i nz-icon nzType="plus"></i>Add
+            </button>
+          </div>
+        </div>
+
+        <div nz-row *ngIf="data.IS_HIGHER_CLASS_ACCOMODATION == true">
+          <div nz-col nzSpan="24">
+            <nz-table
+              class="my-scroll no-wrap1"
+              nzBordered
+              #datatableconveyance
+              nzShowSizeChanger
+              [nzFrontPagination]="false"
+              [nzLoading]="loadingRecords"
+              [nzSize]="'small'"
+              [nzScroll]="{ x: '1400px', y: '55vh' }"
+              [nzData]="formdata2"
+            >
+              <thead>
+                <tr>
+                  <th
+                    nzWidth="10px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Action
+                  </th>
+                  <th
+                    nzWidth="25px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Date
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Mode Of Conveyance Used
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    From Place
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    To Place
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Class To Which Entitled
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Class By Which Travelled
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="white-space: pre-line"
+                  *ngFor="let data of datatableconveyance.data"
+                >
+                  <td style="text-align: center">
+                    <a
+                      (click)="editform2(data)"
+                      nz-tooltip
+                      nzTooltipTitle="Edit"
+                    >
+                      <span
+                        nz-icon
+                        nzType="edit"
+                        nzTheme="twotone"
+                        style="margin-top: 10px"
+                      ></span>
+                    </a>
+
+                    &nbsp;
+                    <span
+                      *ngIf="!isAdmin"
+                      style="cursor: pointer"
+                      nz-popconfirm
+                      nzPopconfirmTitle="Are you sure want delete?"
+                      nzPopconfirmPlacement="top"
+                      (nzOnConfirm)="accommodation(data)"
+                      (nzOnCancel)="deleteCancel()"
+                    >
+                      <span
+                        nz-icon
+                        nzType="delete"
+                        nzTheme="twotone"
+                        nz-tooltip
+                        nzTooltipTitle="Delete"
+                      >
+                      </span>
+                    </span>
+                  </td>
+
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DATE"] | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVEL_MODE_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["ENTITLED_CLASS_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVELLED_CLASS_NAME"] }}
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+
+        <nz-divider
+          style="font-weight: bold; padding-top: 20px"
+          nzText="Details of Journey(s) performed by
+       road between place connected by Rail "
+        ></nz-divider>
+
+        <div nz-row>
+          <div
+            *ngIf="!isAdmin"
+            nz-col
+            nzSpan="24"
+            style="text-align: right; padding-right: 20px"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              (click)="addform1()"
+              nzJustify="end"
+            >
+              <i nz-icon nzType="plus"></i>Add
+            </button>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-table
+              class="my-scroll no-wrap1"
+              nzBordered
+              #datatablefare
+              nzShowSizeChanger
+              [nzFrontPagination]="false"
+              [nzLoading]="loadingRecords"
+              [nzSize]="'small'"
+              [nzScroll]="{ x: '900px', y: '55vh' }"
+              [nzData]="formdata1"
+            >
+              <thead>
+                <tr>
+                  <th
+                    nzWidth="13px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Action
+                  </th>
+                  <th
+                    nzWidth="25px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Date
+                  </th>
+                  <th
+                    nzWidth="30px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    Fare Paid(₹)
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    From Place Name
+                  </th>
+                  <th
+                    nzWidth="35px"
+                    style="font-weight: bold; text-align: center"
+                  >
+                    To Place Name
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="white-space: pre-line"
+                  *ngFor="let data of datatablefare.data"
+                >
+                  <td style="text-align: center">
+                    <a
+                      (click)="editform1(data)"
+                      nz-tooltip
+                      nzTooltipTitle="Edit"
+                    >
+                      <span
+                        nz-icon
+                        nzType="edit"
+                        nzTheme="twotone"
+                        style="margin-top: 10px"
+                      ></span>
+                    </a>
+
+                    &nbsp;
+                    <span
+                      *ngIf="!isAdmin"
+                      style="cursor: pointer"
+                      nz-popconfirm
+                      nzPopconfirmTitle="Are you sure want delete?"
+                      nzPopconfirmPlacement="top"
+                      (nzOnConfirm)="deleterail(data)"
+                      (nzOnCancel)="deleteCancel()"
+                    >
+                      <span
+                        nz-icon
+                        nzType="delete"
+                        nzTheme="twotone"
+                        nz-tooltip
+                        nzTooltipTitle="Delete"
+                      >
+                      </span>
+                    </span>
+                  </td>
+
+                  <!-- <td style="text-align: center;white-space: pre-line; "> {{ getTimeIn12Hour(data["DATE"]) | date: "hh:mm a"
+              }}
+            </td> -->
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DATE"] | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FARE_PAID"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_PLACE"] }}
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+
+        <br />
+
+        <div nz-col nzSpan="24" style="display: none">
+          <nz-form-item>
+            <nz-form-control>
+              <label
+                nz-checkbox
+                name="type"
+                [(ngModel)]="data.CERTIFIED_INFORMATION"
+                (ngModelChange)="chechboxdata($event)"
+              >
+              </label>
+              <span>
+                <h4
+                  style="
+                    font-weight: bold;
+                    margin-top: -22px;
+                    margin-left: 31px;
+                  "
+                >
+                  Cerified that the information,as given above ,is true to the
+                  best of my knowledge and belief.
+                </h4>
+              </span>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="20">
+          <h4></h4>
+        </div>
+      </nz-spin>
+    </div>
+
+    <div *ngIf="current == 2">
+      <form nz-form #queMasterPage="ngForm">
+        <div nz-row>
+          <div nz-col nzSpan="10">
+            <div nz-row class="my-box">
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Road Mileage</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Road Mileage"
+                  >
+                    <input
+                      nz-input
+                      name="ROAD_MILEAGE"
+                      maxlength="8"
+                      type="text"
+                      (keypress)="onlynumdot($event)"
+                      [(ngModel)]="data.ROAD_MILEAGE"
+                      placeHolder="Enter Road Mileage"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Per KM</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Per KM"
+                  >
+                    <nz-input-group style="width: 100%" nzAddOnAfter="Kms">
+                      <input
+                        nz-input
+                        name="PER_KM"
+                        maxlength="8"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.PER_KM"
+                        placeHolder="Enter Per KM"
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+          <div nz-col nzSpan="1"></div>
+          <div nz-col nzSpan="13">
+            <div nz-row class="my-box">
+              <div nz-col nzSpan="14">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Transfer Grant</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Enter Transfer Grant">
+                    <nz-input-group
+                      style="width: 100%"
+                      nzAddOnAfter="% of {{ data.GRADE_PAY }}"
+                    >
+                      <input
+                        nz-input
+                        name="TRANSFER_GRANT"
+                        maxlength="20"
+                        max="100"
+                        type="number"
+                        [(ngModel)]="data.TRANSFER_GRANT"
+                        (ngModelChange)="grantamount($event)"
+                        placeHolder="Enter Transfer Grant"
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="10">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Transfer Grant Amonut</nz-form-label>
+                  <nz-form-control
+                    nzErrorTip="Please Enter Transfer Grant Amonut"
+                  >
+                    <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="TRANSFER_GRANT_amonut"
+                        maxlength="8"
+                        type="text"
+                        (keypress)="omit($event)"
+                        disabled="true"
+                        [(ngModel)]="data.TRANSFER_GRANT_AMOUNT"
+                        placeHolder="Enter Transfer Grant amonut"
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div nz-row>
+          <div nz-col nzSpan="12">
+            <div nz-row class="my-box">
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Transfer Incidentals D. A.
+                  </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Transfer Incidentals D. A."
+                  >
+                    <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="da"
+                        maxlength="8"
+                        type="text"
+                        [(ngModel)]="data.D_A"
+                        placeHolder="Enter Transfer Incidentals D. A."
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Rupees Per Day </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Rupees Per Day"
+                  >
+                    <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        name="RUPEES_PER_DAY"
+                        maxlength="8"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.RUPEES_PER_DAY"
+                        placeHolder="Enter Rupees Per Day"
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div
+          style="display: none"
+          nz-col
+          nzXs="12"
+          nzSm="12"
+          nzMd="12"
+          nzLg="12"
+          nzXl="12"
+          nzSpan="12"
+        >
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Pdf File </nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 28px; padding: 0px 7px; font-size: 12px"
+                (click)="fileInput.click()"
+              >
+                Select Pdf
+                <input
+                  #fileInput
+                  name="image"
+                  [(ngModel)]="data.FILE_URL"
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  style="display: none"
+                  required
+                />
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+          <div
+            nz-col
+            nzSpan="23"
+            *ngIf="data.FILE_URL != null"
+            style="overflow: hidden; padding-left: 11px; font-size: 13px"
+          >
+            {{ data.FILE_URL }}
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="current == 3">
+      <div>
+        <form nz-form #docMasterPage="ngForm">
+          <nz-spin [nzSpinning]="isSpinning">
+            <div
+              nz-row
+              *ngIf="
+                !data.IS_APPLYING_FOR_ADVANCE ||
+                (data.IS_APPLYING_FOR_ADVANCE &&
+                  data.IS_TRANSFER_ADVANCE_CREATED)
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Assumption Charge</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="assumption.click()"
+                    >
+                      Select File
+                      <input
+                        #assumption
+                        name="assumptionCharge"
+                        type="file"
+                        (change)="onFileSelectedAssumption($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarassumptionCharge">
+                    <nz-progress
+                      [style.width]="percentassumptionCharge + '%'"
+                      [nzPercent]="percentassumptionCharge"
+                      >{{ percentassumptionCharge }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="
+                    data.ASSUMPTION_CHARGE != null &&
+                    data.ASSUMPTION_CHARGE != ''
+                  "
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.ASSUMPTION_CHARGE }}
+                </div>
+
+                <div
+                  *ngIf="
+                    data.ASSUMPTION_CHARGE != null &&
+                    data.ASSUMPTION_CHARGE != ''
+                  "
+                >
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="viewAssumptionPDF(data.ASSUMPTION_CHARGE)"
+                  >
+                    Open Assumption Charge PDF File
+                  </button>
+                </div>
+                <!-- <div
+                  *ngIf="
+                    assumptionFileURL == null && data.ASSUMPTION_CHARGE != ''
+                  "
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/assumptionCharge/{{
+                      data.ASSUMPTION_CHARGE
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div
+                  *ngIf="
+                    data.ASSUMPTION_CHARGE != null &&
+                    data.ASSUMPTION_CHARGE != ''
+                  "
+                >
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="assumptionDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="data.ASSUMPTION_CHARGE_STATUS != null"
+                  style="margin-top: 22px"
+                >
+                  <b
+                    *ngIf="data.ASSUMPTION_CHARGE_STATUS == 'A'"
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="data.ASSUMPTION_CHARGE_STATUS == 'R'"
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon> Pay Slip </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="paySlip.click()"
+                    >
+                      Select File
+                      <input
+                        #paySlip
+                        name="paySlip"
+                        type="file"
+                        (change)="onFileSelectedPaySlip($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarPaySlip">
+                    <nz-progress
+                      [style.width]="percentPaySlip + '%'"
+                      [nzPercent]="percentPaySlip"
+                      >{{ percentPaySlip }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="data.PAY_SLIP != null && data.PAY_SLIP != ''"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.PAY_SLIP }}
+                </div>
+
+                <div *ngIf="data.PAY_SLIP != null">
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="viewPaySlipPDF(data.PAY_SLIP)"
+                  >
+                    Open Pay Slip PDF File
+                  </button>
+                </div>
+
+                <!-- <div
+                  *ngIf="
+                    paySlipFileURL == null &&
+                    data.PAY_SLIP != ''
+                  "
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/condolationOfDelay/{{
+                      data.PAY_SLIP
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div *ngIf="data.PAY_SLIP != null && data.PAY_SLIP != ''">
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="paySlipDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  style="margin-top: 22px"
+                  *ngIf="data.PAY_SLIP_STATUS != null"
+                >
+                  <b
+                    *ngIf="data.PAY_SLIP_STATUS == 'A'"
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="data.PAY_SLIP_STATUS == 'R'"
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Mandate Form</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="mandateForm.click()"
+                    >
+                      Select File
+                      <input
+                        #mandateForm
+                        name="mandateForm"
+                        type="file"
+                        (change)="onFileSelectedMandateForm($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarmandateForm">
+                    <nz-progress
+                      [style.width]="percentmandateForm + '%'"
+                      [nzPercent]="percentmandateForm"
+                      >{{ percentmandateForm }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="data.MANDATE_FORM != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.MANDATE_FORM }}
+                </div>
+
+                <div
+                  *ngIf="data.MANDATE_FORM != null && data.MANDATE_FORM != ''"
+                >
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="viewMandateFormPDF(data.MANDATE_FORM)"
+                  >
+                    Open Mandate Form PDF File
+                  </button>
+                </div>
+
+                <!-- <div
+                  *ngIf="mandateFormFileURL == null && data.MANDATE_FORM != ''"
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/mandateForm/{{
+                      data.MANDATE_FORM
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div
+                  *ngIf="data.MANDATE_FORM != null && data.MANDATE_FORM != ''"
+                >
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="mandateDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  style="margin-top: 22px"
+                  *ngIf="data.MANDATE_FORM_STATUS != null"
+                >
+                  <b
+                    *ngIf="data.MANDATE_FORM_STATUS == 'A'"
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="data.MANDATE_FORM_STATUS == 'R'"
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Transfer Order Service Certificate</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="Transfer.click()"
+                    >
+                      Select File
+                      <input
+                        #Transfer
+                        name="Transfer"
+                        type="file"
+                        (change)="onFileSelectedTransfer($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div
+                    nz-col
+                    nzSpan="12"
+                    *ngIf="progressBartransferServiceCertificate"
+                  >
+                    <nz-progress
+                      [style.width]="percenttransferServiceCertificate + '%'"
+                      [nzPercent]="percenttransferServiceCertificate"
+                      >{{ percenttransferServiceCertificate }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="data.TRANSFER_ORDER_SERVICE_CERTIFICATE != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.TRANSFER_ORDER_SERVICE_CERTIFICATE }}
+                </div>
+
+                <div
+                  *ngIf="
+                    data.TRANSFER_ORDER_SERVICE_CERTIFICATE != null &&
+                    data.TRANSFER_ORDER_SERVICE_CERTIFICATE != ''
+                  "
+                >
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="
+                      viewTransferPDF(data.TRANSFER_ORDER_SERVICE_CERTIFICATE)
+                    "
+                  >
+                    Open Transfer Certificate PDF File
+                  </button>
+                </div>
+
+                <!-- <div
+                  *ngIf="
+                    transferFileURL == null &&
+                    data.TRANSFER_ORDER_SERVICE_CERTIFICATE != ''
+                  "
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/transferServiceCertificate/{{
+                      data.TRANSFER_ORDER_SERVICE_CERTIFICATE
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div
+                  *ngIf="
+                    data.TRANSFER_ORDER_SERVICE_CERTIFICATE != null &&
+                    data.TRANSFER_ORDER_SERVICE_CERTIFICATE != ''
+                  "
+                >
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="transferDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  style="margin-top: 22px"
+                  *ngIf="data.TRANSFER_ORDER_SERVICE_CERTIFICATE_STATUS != null"
+                >
+                  <b
+                    *ngIf="
+                      data.TRANSFER_ORDER_SERVICE_CERTIFICATE_STATUS == 'A'
+                    "
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="
+                      data.TRANSFER_ORDER_SERVICE_CERTIFICATE_STATUS == 'R'
+                    "
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              nz-row
+              *ngIf="
+                !data.IS_APPLYING_FOR_ADVANCE ||
+                (data.IS_APPLYING_FOR_ADVANCE &&
+                  data.IS_TRANSFER_ADVANCE_CREATED)
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Ticket Boarding Pass</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="ticketBoardingPass.click()"
+                    >
+                      Select File
+                      <input
+                        #ticketBoardingPass
+                        name="ticketBoardingPass"
+                        type="file"
+                        (change)="onFileSelectedTicketPass($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarticketBoardingPass">
+                    <nz-progress
+                      [style.width]="percentticketBoardingPass + '%'"
+                      [nzPercent]="percentticketBoardingPass"
+                      >{{ percentticketBoardingPass }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="data.TICKET_BOARDING_PASS != null"
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.TICKET_BOARDING_PASS }}
+                </div>
+
+                <div
+                  *ngIf="
+                    data.TICKET_BOARDING_PASS != null &&
+                    data.TICKET_BOARDING_PASS != ''
+                  "
+                >
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="viewBoardingPassPDF(data.TICKET_BOARDING_PASS)"
+                  >
+                    Open Ticket Boarding Pass PDF File
+                  </button>
+                </div>
+
+                <!-- <div
+                  *ngIf="
+                    ticketPassFileURL == null && data.TICKET_BOARDING_PASS != ''
+                  "
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/ticketBoardingPass/{{
+                      data.TICKET_BOARDING_PASS
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div
+                  *ngIf="
+                    data.TICKET_BOARDING_PASS != null &&
+                    data.TICKET_BOARDING_PASS != ''
+                  "
+                >
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="boardingPassDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  style="margin-top: 22px"
+                  *ngIf="data.TICKET_BOARDING_PASS_STATUS != null"
+                >
+                  <b
+                    *ngIf="data.TICKET_BOARDING_PASS_STATUS == 'A'"
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="data.TICKET_BOARDING_PASS_STATUS == 'R'"
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              nz-row
+              *ngIf="
+                !data.IS_APPLYING_FOR_ADVANCE ||
+                (data.IS_APPLYING_FOR_ADVANCE &&
+                  data.IS_TRANSFER_ADVANCE_CREATED)
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Transportation Bills </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="transportationBill.click()"
+                    >
+                      Select File
+                      <input
+                        #transportationBill
+                        name="TransportationBill"
+                        type="file"
+                        (change)="onFileSelectedTransportationBill($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div
+                    nz-col
+                    nzSpan="12"
+                    *ngIf="progressBartransportationBills"
+                  >
+                    <nz-progress
+                      [style.width]="percenttransportationBills + '%'"
+                      [nzPercent]="percenttransportationBills"
+                      >{{ percenttransportationBills }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="
+                    data.TRANSPORTATION_BILLS != null &&
+                    data.TRANSPORTATION_BILLS != ''
+                  "
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.TRANSPORTATION_BILLS }}
+                </div>
+
+                <div *ngIf="data.TRANSPORTATION_BILLS != null">
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="
+                      viewTransportationBillsPDF(data.TRANSPORTATION_BILLS)
+                    "
+                  >
+                    Open Transportation Bills PDF File
+                  </button>
+                </div>
+
+                <!-- <div
+                  *ngIf="
+                    transportationBillFileURL == null &&
+                    data.TRANSPORTATION_BILLS != ''
+                  "
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/transportationBills/{{
+                      data.TRANSPORTATION_BILLS
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div
+                  *ngIf="
+                    data.TRANSPORTATION_BILLS != null &&
+                    data.TRANSPORTATION_BILLS != ''
+                  "
+                >
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="transBillDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div *ngIf="data.TRANSPORTATION_BILLS_STATUS != null">
+                  <b
+                    *ngIf="data.TRANSPORTATION_BILLS_STATUS == 'A'"
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="data.TRANSPORTATION_BILLS_STATUS == 'R'"
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              nz-row
+              *ngIf="
+                !data.IS_APPLYING_FOR_ADVANCE ||
+                (data.IS_APPLYING_FOR_ADVANCE &&
+                  data.IS_TRANSFER_ADVANCE_CREATED)
+              "
+            >
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>
+                    Condonation Of Delay
+                  </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="PDF File is required"
+                  >
+                    <button
+                      *ngIf="!isAdmin"
+                      nz-button
+                      style="height: 28px; padding: 0px 7px; font-size: 12px"
+                      (click)="condonationOfDelay.click()"
+                    >
+                      Select File
+                      <input
+                        #condonationOfDelay
+                        name="condonationDelay"
+                        type="file"
+                        (change)="onFileSelectedCondonationOfDelay($event)"
+                        style="display: none"
+                        required
+                      />
+                    </button>
+                  </nz-form-control>
+                  <div nz-col nzSpan="12" *ngIf="progressBarcondolationOfDelay">
+                    <nz-progress
+                      [style.width]="percentcondolationOfDelay + '%'"
+                      [nzPercent]="percentcondolationOfDelay"
+                      >{{ percentcondolationOfDelay }}%</nz-progress
+                    >
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  *ngIf="
+                    data.CONDOLATION_OF_DELAY != null &&
+                    data.CONDOLATION_OF_DELAY != ''
+                  "
+                  style="overflow: hidden; padding-left: 11px; font-size: 13px"
+                >
+                  {{ data.CONDOLATION_OF_DELAY }}
+                </div>
+
+                <div *ngIf="data.CONDOLATION_OF_DELAY != null">
+                  <button
+                    nz-button
+                    style="height: 28px; padding: 0px 7px; font-size: 12px"
+                    (click)="
+                      viewCondonationOfDelayPDF(data.CONDOLATION_OF_DELAY)
+                    "
+                  >
+                    Open Condonation Of Delay PDF File
+                  </button>
+                </div>
+
+                <!-- <div
+                  *ngIf="
+                    condonationOfDelayFileURL == null &&
+                    data.CONDOLATION_OF_DELAY != ''
+                  "
+                >
+                  <img
+                    style="width: 100%; height: 100%; margin-top: 10px"
+                    src="{{ imgurl }}uploads/condolationOfDelay/{{
+                      data.CONDOLATION_OF_DELAY
+                    }}"
+                  />
+                </div> -->
+              </div>
+
+              <div nz-col nzSpan="6" style="padding: 20px">
+                <div
+                  *ngIf="
+                    data.CONDOLATION_OF_DELAY != null &&
+                    data.CONDOLATION_OF_DELAY != ''
+                  "
+                >
+                  <span
+                    *ngIf="!isAdmin"
+                    style="cursor: pointer"
+                    nz-popconfirm
+                    nzPopconfirmTitle="Are you sure want delete?"
+                    nzPopconfirmPlacement="top"
+                    (nzOnConfirm)="delayDeleteConfirm(data)"
+                    (nzOnCancel)="deleteCancel()"
+                  >
+                    <span
+                      nz-icon
+                      nzType="delete"
+                      nzTheme="twotone"
+                      nz-tooltip
+                      nzTooltipTitle="Delete"
+                    >
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div
+                  style="margin-top: 22px"
+                  *ngIf="data.CONDOLATION_OF_DELAY_STATUS != null"
+                >
+                  <b
+                    *ngIf="data.CONDOLATION_OF_DELAY_STATUS == 'A'"
+                    style="color: green; font-weight: 1000"
+                    >Verified</b
+                  >
+                  <b
+                    *ngIf="data.CONDOLATION_OF_DELAY_STATUS == 'R'"
+                    style="color: red; font-weight: 1000"
+                    >Rejected</b
+                  >
+                </div>
+              </div>
+            </div>
+          </nz-spin>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="current == 4">
+      <div>
+        <form nz-form #checkListMasterPage="ngForm">
+          <nz-spin [nzSpinning]="isSpinning">
+            <div class="my-box">
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>File Number</nz-form-label>
+                    <nz-form-control nzHasFeedback>
+                      <nz-select
+                        nzShowSearch
+                        name="FILE_NUMBER"
+                        [(ngModel)]="data.FILE_ID"
+                        nzPlaceHolder="Select File Number"
+                      >
+                        <nz-option
+                          *ngFor="let option of fileList"
+                          [nzLabel]="option.FILE_NUMBER"
+                          [nzValue]="option.ID"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <div
+              *ngIf="
+                (data.IS_APPLYING_FOR_ADVANCE &&
+                  data.IS_TRANSFER_ADVANCE_CREATED) ||
+                !data.IS_APPLYING_FOR_ADVANCE
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div>
+                    <b>1.</b> Whether Original bills submitted in proper format
+                    (Duly filled Part A and signed Certificate).
+                  </div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="
+                          checkData.ORIGINAL_BILL_SUBMITTED_IN_PROPER_FORMAT
+                        "
+                        name="billInProperFormat"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div>
+                    <b>2.</b>Whether bills has been submitted in proper time (
+                    If advance is taken then bills should be submitted in 15
+                    days after completion of journey and bills should be
+                    submitted in 60 days after completion of journey if advance
+                    is not taken).
+                  </div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether CGHS/AMA's Reference Taken?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.BILLS_SUMBMITTED_IN_PROPER_TIME"
+                        name="billInTime"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div>
+                    <b>3.</b> In case of delayed submission of bill, whether
+                    condonation of delay submitted.
+                  </div>
+                </div>
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="
+                          checkData.CONDOLATION_OF_DELAY_IS_SUBMITTED
+                        "
+                        name="condonationOfDelay"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div><b>4.</b> Whether T.A. Advance taken.</div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.T_A_ADVANCE_TAKEN"
+                        name="TAAdvance"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div><b>5.</b> Whether CTG already claimed?</div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.CTG_ALREADY_CLAIMED"
+                        name="CTGClaimed"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div><b>6.</b> Whether Request case Transfer?</div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.REQUEST_CASE_TRANSFER"
+                        name="caseTransfer"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div>
+                    <b>7.</b> If Request case Transfer, whether fixed tenure
+                    completed at old station.
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="
+                          checkData.FIXED_TENURE_COMPLETED_AT_OLD_STATION
+                        "
+                        name="oldStation"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div>
+                    <b>8.</b> Whether air or train tickets submitted or not.
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="checkData.A_T_TICKET_SUBMITTED"
+                        name="ticketSubmitted"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div>
+                    <b>9.</b> In case of Air Journey, Whether original boarding
+                    pass/self declaration in case of non submission of boarding
+                    pass duly submitted.
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="
+                          checkData.ORIGINAL_BOARDING_PASS_SELF_DECLARATION
+                        "
+                        name="airJourney"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div>
+                    <b>10.</b> In case of transportation of personal; effects
+                    whether original bills submitted.
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="
+                          checkData.TRANSPORTATION_OF_PERSONAL_EFFECT_BILL_SUBMITTED
+                        "
+                        name="originalBill"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div>
+                    <b>11.</b> In case of transportation of vehicle by road/
+                    self propulsion, whether restricted to Railway freight
+                    charges.
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="
+                          checkData.TRANSPORTATION_OF_VEHICLE_BY_ROAD_SELF_PROPULSION
+                        "
+                        name="vehicleByRoad"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div>
+                    <b>12.</b> Whether Transfer order (full copy)/Service
+                    Certificate submitted.
+                  </div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="
+                          checkData.IS_TRANSFER_ORDER_SERVICE_CERTIFICATE
+                        "
+                        name="transferOrder"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="19">
+                  <div><b>13.</b> Whether Assumption of charge submitted.</div>
+                </div>
+
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Emergency Treatment is Availed ?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-radio-group
+                        [(ngModel)]="checkData.ASSUMPTION_OF_CHARGE_SUBMITTED"
+                        name="assumptionCharges"
+                      >
+                        <label nz-radio nzValue="Y">Yes </label>
+                        <label nz-radio nzValue="N">No</label>
+                        <label nz-radio nzValue="NA">NA</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div><b>14.</b> Whether Last pay certificate submitted.</div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.LAST_PAY_CERTIFICATE_SUBMITTED"
+                        name="lastPay"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div>
+                    <b>15.</b> Whether Bank Mandate form/ cancelled cheque
+                    Submitted.
+                  </div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.BANK_MANDATE_CHEQUE_SUBMITTED"
+                        name="bankMandate"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <div
+              *ngIf="
+                data.IS_APPLYING_FOR_ADVANCE &&
+                !data.IS_TRANSFER_ADVANCE_CREATED
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div>
+                    <b>1.</b> Whether Bank Mandate form/ cancelled cheque
+                    Submitted.
+                  </div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.BANK_MANDATE_CHEQUE_SUBMITTED"
+                        name="advbankMandate"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div>
+                    <b>2.</b> Whether Transfer order (full copy)/Service
+                    Certificate submitted.
+                  </div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="
+                          checkData.IS_TRANSFER_ORDER_SERVICE_CERTIFICATE
+                        "
+                        name="advtransferOrder"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="20">
+                  <div><b>3.</b> Whether Last pay certificate submitted.</div>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <!-- <nz-form-label nzRequired nzNoColon>Whether Hospital Is Emplanelled?</nz-form-label> -->
+                    <nz-form-control>
+                      <nz-switch
+                        [(ngModel)]="checkData.LAST_PAY_CERTIFICATE_SUBMITTED"
+                        name="advlastPay"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                      >
+                      </nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-box">
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>
+                      <h6>Claim Confirmation</h6>
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group
+                        name="checkstatus"
+                        style="margin-left: 10px"
+                        [(ngModel)]="data.TRANSFER_STATUS"
+                        required
+                        (ngModelChange)="clearRemark($event)"
+                      >
+                        <label
+                          *ngIf="
+                            (data.IS_APPLYING_FOR_ADVANCE &&
+                              data.IS_TRANSFER_ADVANCE_CREATED) ||
+                            !data.IS_APPLYING_FOR_ADVANCE
+                          "
+                          nz-radio
+                          nzValue="A"
+                          style="color: green"
+                          >Accept Claim</label
+                        >
+
+                        <label
+                          *ngIf="
+                            (data.IS_APPLYING_FOR_ADVANCE &&
+                              data.IS_TRANSFER_ADVANCE_CREATED) ||
+                            !data.IS_APPLYING_FOR_ADVANCE
+                          "
+                          nz-radio
+                          nzValue="R"
+                          style="color: red"
+                          >Reject Claim</label
+                        >
+                        <label
+                          *ngIf="
+                            (data.IS_APPLYING_FOR_ADVANCE &&
+                              data.IS_TRANSFER_ADVANCE_CREATED) ||
+                            !data.IS_APPLYING_FOR_ADVANCE
+                          "
+                          nz-radio
+                          nzValue="H"
+                          style="color: black"
+                          >On Hold</label
+                        >
+                        <label
+                          *ngIf="
+                            data.IS_APPLYING_FOR_ADVANCE &&
+                            !data.IS_TRANSFER_ADVANCE_CREATED
+                          "
+                          nz-radio
+                          nzValue="AA"
+                          style="color: green"
+                          >Advance Accept</label
+                        >
+
+                        <label
+                          *ngIf="
+                            data.IS_APPLYING_FOR_ADVANCE &&
+                            !data.IS_TRANSFER_ADVANCE_CREATED
+                          "
+                          nz-radio
+                          nzValue="AR"
+                          style="color: red"
+                        >
+                          Advance Reject</label
+                        >
+                        <label
+                          *ngIf="
+                            data.IS_APPLYING_FOR_ADVANCE &&
+                            !data.IS_TRANSFER_ADVANCE_CREATED
+                          "
+                          nz-radio
+                          nzValue="AH"
+                          style="color: black"
+                          >Advance On Hold</label
+                        >
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div
+                  nz-col
+                  nzSpan="24"
+                  *ngIf="
+                    data.TRANSFER_STATUS == 'R' || data.TRANSFER_STATUS == 'AR'
+                  "
+                >
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Reject Remark</nz-form-label
+                    >
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter Valid Reject Remark "
+                    >
+                      <textarea
+                        name="remark"
+                        style="width: 100%"
+                        [(ngModel)]="data.TRANSFER_REMARK"
+                        nz-input
+                        [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                        maxlength="256"
+                        placeholder="Please Enter Reject Remark"
+                        draggable="false"
+                        required
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.TRANSFER_REMARK != undefined"
+                      >
+                        {{ data.TRANSFER_REMARK.length }}/256
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="12"></div>
+                <div
+                  nz-col
+                  nzSpan="6"
+                  *ngIf="
+                    data.TRANSFER_STATUS == 'H' || data.TRANSFER_STATUS == 'AH'
+                  "
+                >
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon>
+                      On Hold Date
+                    </nz-form-label>
+                    <nz-form-control nzErrorTip="Select Correct On Hold Date">
+                      <nz-date-picker
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        name="onholddate"
+                        [(ngModel)]="data.TRANSFER_HOLD_DATE"
+                        required
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div
+                  nz-col
+                  nzSpan="24"
+                  *ngIf="
+                    data.TRANSFER_STATUS == 'H' || data.TRANSFER_STATUS == 'AH'
+                  "
+                >
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >On Hold Remark</nz-form-label
+                    >
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Enter Valid On Hold Remark "
+                    >
+                      <textarea
+                        name="onholdremark"
+                        style="width: 100%"
+                        [(ngModel)]="data.TRANSFER_REMARK"
+                        nz-input
+                        [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                        maxlength="256"
+                        placeholder="Please Enter On Hold Remark"
+                        draggable="false"
+                        required
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.TRANSFER_REMARK != undefined"
+                      >
+                        {{ data.TRANSFER_REMARK.length }}/256
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+          </nz-spin>
+        </form>
+      </div>
+    </div>
+    <div class="footer">
+      <button
+        [nzLoading]="isSpinning"
+        nz-button
+        nzType="default"
+        (click)="pre()"
+        *ngIf="current > 0"
+        style="margin-right: 8px"
+      >
+        <span>Previous</span>
+      </button>
+
+      <span *ngIf="current == 0 && !isAdmin">
+        <span>
+          <button
+            [nzLoading]="isSpinning"
+            *ngIf="current == 0 && !isAdmin"
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="empSave(false)"
+          >
+            <span>Save Applicant Info. & Next </span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+
+      <span *ngIf="current == 1 && !isAdmin">
+        <span>
+          <button
+            [nzLoading]="isSpinning"
+            *ngIf="current == 1 && !isAdmin"
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            (click)="AlldataSave(false, 'S')"
+            nz-button
+          >
+            <span>Save & Next </span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+
+      <span
+        *ngIf="
+          current == 1 &&
+          (data.CERTIFIED_INFORMATION == true ||
+            data.CERTIFIED_INFORMATION == 1) &&
+          !isAdmin
+        "
+      >
+        <span>
+          <button
+            style="display: none"
+            [nzLoading]="isSpinning"
+            *ngIf="
+              current == 1 &&
+              (data.CERTIFIED_INFORMATION == true ||
+                data.CERTIFIED_INFORMATION == 1) &&
+              !isAdmin
+            "
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            (click)="AlldataSave(false, 'V')"
+            nz-button
+          >
+            <span>Submit for Verifiaction</span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+      <span *ngIf="current == 2 && !isAdmin">
+        <span>
+          <button
+            [nzLoading]="isSpinning"
+            *ngIf="current == 2 && !isAdmin"
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="saveFileDetails()"
+          >
+            <span>Save File Details & Next</span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+      <span *ngIf="current == 3 && !isAdmin">
+        <span>
+          <button
+            [nzLoading]="isSpinning"
+            *ngIf="current == 3 && !isAdmin"
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="uploadDoc(false)"
+          >
+            <span>Upload Document & Next</span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+      <span *ngIf="current == 4 && !isAdmin">
+        <span>
+          <button
+            [nzLoading]="isSpinning"
+            *ngIf="current == 4 && !isAdmin"
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="checkSave(false)"
+          >
+            <span>Save Checklist & Close</span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+      <span *ngIf="current != 4 && isAdmin">
+        <span>
+          <button
+            [nzLoading]="isSpinning"
+            nzType="primary"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="next()"
+          >
+            <span>Next</span>
+          </button>
+        </span>
+        &nbsp; &nbsp;
+      </span>
+      <button
+        type="button"
+        nz-button
+        (click)="close()"
+        class="ant-btn"
+        style="margin-right: 8px"
+      >
+        <span>Cancel</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+<div nz-row *ngIf="drawerVisible2form1">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="500"
+    [nzVisible]="drawerVisible2form1"
+    [nzTitle]="drawerTitleform1"
+    (nzOnClose)="drawerClose2form1()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-form1
+        [drawerClose]="closeCallbackform1form1"
+        [claimID]="claimID"
+        [empID]="empID"
+        [drawerVisible]="drawerVisible2form1"
+        [data]="drawerData2form1"
+      ></app-form1>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div nz-row *ngIf="drawerVisibleform2">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="550"
+    [nzVisible]="drawerVisibleform2"
+    [nzTitle]="drawerTitleform2"
+    (nzOnClose)="drawerCloseform2()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-form2
+        [drawerClose]="closeCallbackform2"
+        [empID]="empID"
+        [claimID]="claimID"
+        [data]="drawerDataform2"
+        [classdata]="classdata"
+      ></app-form2>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div nz-row *ngIf="drawerVisibleform3">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="550"
+    [nzVisible]="drawerVisibleform3"
+    [nzTitle]="drawerTitleform3"
+    (nzOnClose)="drawerCloseform3()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-transportationchargesofpersonaleffects
+        [drawerClose]="closeCallbackform3"
+        [empID]="empID"
+        [claimID]="claimID"
+        [drawerVisible]="drawerVisibleform3"
+        [data]="drawerDataform3"
+      ></app-transportationchargesofpersonaleffects>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div nz-row *ngIf="detailsjorneyDrawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="700"
+    [nzVisible]="detailsjorneyDrawerVisible"
+    [nzTitle]="drawerTitledetailsjorney"
+    (nzOnClose)="detailsjorneyDrawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-detailsjorney
+        [drawerClose]="closeCallbackdetailsjorney"
+        [empID]="empID"
+        [claimID]="claimID"
+        [data]="detailsJorneyDrawerData"
+        [classdata]="classdata"
+        [gradePayLevel]="gradePayLevel"
+      ></app-detailsjorney>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="empDrawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="700"
+    [nzVisible]="empDrawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="empDrawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addclaimemployee
+        [drawerClose]="closeCallback"
+        [data]="drawerData"
+      ></app-addclaimemployee>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal
+  [nzWidth]="1200"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'PDFview'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div
+        *ngIf="
+          sanitizedLink != undefined &&
+          sanitizedLink != null &&
+          sanitizedLink != ''
+        "
+        style="height: 600px; overflow: auto"
+      >
+        <iframe
+          [src]="sanitizedLink"
+          style="width: 1150px; height: 600px"
+          frameborder="0"
+        ></iframe>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button *ngIf="!isAdmin" nz-button nzType="primary" (click)="Accept()">
+      Accept
+    </button>
+    <button
+      *ngIf="!isAdmin"
+      nz-button
+      nzType="primary"
+      nzDanger
+      (click)="reject()"
+    >
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>

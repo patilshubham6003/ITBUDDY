@@ -1,0 +1,728 @@
+<div nz-row style="margin-top: 5px" *ngIf="showCards && !showSurrenderandflatchange">
+
+    <div nz-col nzSpan="24">
+        <div nz-row>
+            <div nz-col nzSpan="24">
+                <div nz-row style="display: flex;justify-content: end;">
+                    <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12"
+                        style="display: flex;justify-content: flex-end">
+                        <button style="margin-right: 10px;" [nzType]="isFilterApplied" nz-button (click)="showFilter()"
+                            nz-tooltip nzTooltipTitle="Filter ">
+                            <i nz-icon nzType="filter"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-col nzSpan="24">
+        <div nz-row>
+            <div nz-col nzSpan="24">
+                <div class="filter {{ filterClass }}">
+                    <div class="filter-box">
+                        <form nz-form>
+                            <div nz-row>
+
+                                <div nz-col nzSpan="8">
+                                    <nz-form-item>
+                                        <nz-form-label nzRequired nzNoColon>Select
+                                            Month</nz-form-label>
+                                        <nz-form-control nzErrorTip="Please Select Month">
+                                            <nz-range-picker name="month" nzMode="month" [(ngModel)]="Monthrange"
+                                                nzPlaceholder="Please select Month" nzFormat="MMM/yyyy"
+                                                (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                <div nz-col nzSpan="7">
+                                    <nz-form-item class="chsaaa">
+                                        <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                                        <nz-form-control>
+                                            <nz-select [nzMaxTagCount]="2" nzShowSearch nzAllowClear
+                                                nzPlaceHolder="Please Select Residence Type " name="Residence Type"
+                                                nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_ID">
+                                                <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID"
+                                                    [nzLabel]="type.TYPE">
+                                                </nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                <div nz-col nzSpan="8" style="display: flex;gap: 10px;margin-top: 31px;">
+                                    <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons"
+                                        (click)="applyFilter()">
+                                        <i nz-icon nzType="filter"></i>Apply
+                                        Filter
+                                    </button>
+                                    <button nz-button nzType="primary" class="flexicons" (click)="clearFilter()">
+                                        <i nz-icon nzType="close"></i>Clear
+                                        filter
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="padding:15px"
+        *ngFor="let show of dataList; let nn = index">
+        <div class="cardstyle">
+            <div nz-row>
+                <div class="mainnam" nz-col nzSpan="16">
+                    RESIDENCE {{ show["RESIDENCE_TYPE_NAME"] }}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8" style="display: flex; justify-content: flex-end">
+                    <span *ngIf="show['MONTH'] == 1" style="text-transform: uppercase;"> January {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 2" style="text-transform: uppercase;"> February {{ show["YEAR"]
+                        }} </span>
+                    <span *ngIf="show['MONTH'] == 3" style="text-transform: uppercase;"> March {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 4" style="text-transform: uppercase;"> April {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 5" style="text-transform: uppercase;"> May {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 6" style="text-transform: uppercase;"> June {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 7" style="text-transform: uppercase;"> July {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 8" style="text-transform: uppercase;"> August {{ show["YEAR"]
+                        }}
+                    </span>
+                    <span *ngIf="show['MONTH'] == 9" style="text-transform: uppercase;"> September {{ show["YEAR"]
+                        }} </span>
+                    <span *ngIf="show['MONTH'] == 10" style="text-transform: uppercase;"> October {{ show["YEAR"]
+                        }} </span>
+                    <span *ngIf="show['MONTH'] == 11" style="text-transform: uppercase;"> November {{ show["YEAR"]
+                        }} </span>
+                    <span *ngIf="show['MONTH'] == 12" style="text-transform: uppercase;"> December {{ show["YEAR"]
+                        }} </span>
+                </div>
+            </div>
+
+            <div nz-row>
+                <div nz-col nzXs="0" nzSm="0" nzMd="12" nzLg="12" nzXl="12" style="padding:10px">
+                    <div style="text-align: center;">
+                        <div nz-row>
+                            <div nz-col nzSpan="19"
+                                style="border: 1px solid blue; padding: 5px; border-radius: 5px 0 0 5px; background-color: rgb(205, 205, 249); font-size: 12px;">
+                                Quarter Surrender
+                            </div>
+                            <div nz-col nzSpan="5"
+                                style="border: 1px solid blue; padding: 5px; margin-left: -1px; border-radius: 0 5px 5px 0; background-color: rgb(227, 227, 249); font-size: 12px;">
+                                <span
+                                    [ngStyle]="{'font-weight': (show.SURRENDER_COUNT != null && show.SURRENDER_COUNT > 0) ? '800' : 'normal', 'text-align':'center' }">
+                                    {{show.SURRENDER_COUNT != null ?
+                                    show.SURRENDER_COUNT : ''}}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div nz-col nzXs="0" nzSm="0" nzMd="12" nzLg="12" nzXl="12" style="padding:10px">
+                    <div style="text-align: center;">
+                        <div nz-row>
+                            <div nz-col nzSpan="19"
+                                style="border: 1px solid blue; padding: 5px; border-radius: 5px 0 0 5px; background-color: rgb(205, 205, 249); font-size: 12px;">
+                                Quarter Change
+                            </div>
+                            <div nz-col nzSpan="5"
+                                style="border: 1px solid blue; padding: 5px; margin-left: -1px; border-radius: 0 5px 5px 0; background-color: rgb(227, 227, 249); font-size: 12px;">
+                                <span
+                                    [ngStyle]="{'font-weight': (show.CHANGE_COUNT != null && show.CHANGE_COUNT > 0) ? '800' : 'normal', 'text-align':'center' }">
+                                    {{show.CHANGE_COUNT != null ?
+                                    show.CHANGE_COUNT : ''}}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div nz-row style="display:flex;justify-content: center;align-items: center;gap:10px 20px;margin:20px 0px">
+                <div>
+                    <button nz-button nzType="primary" (click)="showemployeedata(show)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View Quarter Surrender Request's</span>
+                    </button>
+                </div>
+
+                <div>
+                    <button nz-button nzType="primary" (click)="FlatchangeRequest(show)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View Quarter Change Request's</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12"
+        style="padding:10px"
+        *ngFor="let show of dataList; let nn = index">
+        <div class="cardstyle">
+            <div nz-row>
+                <div class="subnamm" nz-col nzSpan="24">
+                    Name : {{show.EMPLOYEE_NAME != undefined ?
+                    show.EMPLOYEE_NAME : ''}}
+                </div>
+
+                <div class="subnamm" nz-col nzSpan="24">
+                    City : {{show.CITY_NAME != undefined ?
+                    show.CITY_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="24">
+                    Area : {{show.AREA_NAME != undefined ?
+                    show.AREA_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="24">
+                    Building : {{show.BUILDING_NAME != undefined ?
+                    show.BUILDING_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="24">
+                    Quarter : {{show.FLAT_NAME != undefined ?
+                    show.FLAT_NAME : ''}}
+                </div>
+
+            </div>
+
+            <div nz-row
+                style="display:flex;justify-content: center;align-items: center;gap:10px 20px;margin:20px 0px">
+                <div
+                    *ngIf="(show.SURRENDER_FORM != null && show.SURRENDER_FORM != undefined && show.SURRENDER_FORM != '') && show.SURRENDER_INSPECTOR_STATUS == 'P' ">
+                    <button nz-button nzType="primary"
+                        (click)="SurrenderFormApprove(show,show.SURRENDER_FORM)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View/Approve Quarter Surrender</span>
+                    </button>
+                </div>
+
+                <div
+                    *ngIf="(show.SURRENDER_FORM != null && show.SURRENDER_FORM != undefined && show.SURRENDER_FORM != '') && ( show.SURRENDER_INSPECTOR_STATUS == 'R' || show.SURRENDER_INSPECTOR_STATUS == 'A' )">
+                    <button nz-button nzType="primary"
+                        (click)="showSurrenderForm(show.SURRENDER_FORM)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View Quarter Surrender Form</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div> -->
+
+    <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+        <div class="col-12" style="text-align: center; margin-top: 5%">
+            <div v-if="loading" class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="dataList.length == 0 && !isRecordLoading">
+        <div class="col-3"></div>
+
+        <div class="col-18" style="margin-top: 100px">
+            <div class="card" style="width: 100%;box-shadow:none!important">
+                <div class="card-body" style="padding: 25px">
+                    <div class="row">
+                        <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                            <p class="card-text subnamm" style="font-size: 26px">
+                                Data Not Found
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3"></div>
+    </div>
+</div>
+
+<div nz-row style="margin-top: 5px;" *ngIf="!showCards && showSurrenderandflatchange">
+    <div nz-col nzSpan="2">
+        <p (click)="changebacktocards()"
+            style="display:flex;justify-content: center;align-items:center;gap:5px;color:#1890ff;cursor: pointer;font-size:16px;">
+            <span nz-icon nzType="arrow-left" nzTheme="outline" style="margin-top:-10"></span>&nbsp; Back
+        </p>
+    </div>
+
+    <div nz-col nzSpan="20" style="text-align:center">
+        <h6>Residence {{RESIDENCETYPE_NAME != undefined ? RESIDENCETYPE_NAME :
+            ''}}</h6>
+    </div>
+
+    <div nz-col nzSpan="2"></div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="padding:10px"
+        *ngFor="let shows of employeedata; let nn = index">
+        <div class="cardstyle">
+            <div nz-row>
+                <div class="mainnam12" nz-col nzSpan="8">
+                    Name :&nbsp; {{(shows.EMPLOYEE_NAME != undefined &&
+                    shows.EMPLOYEE_NAME != null && shows.EMPLOYEE_NAME != '' ) ?
+                    shows.EMPLOYEE_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Designation :&nbsp; {{(shows.DESIGNATION != undefined &&
+                    shows.DESIGNATION != null && shows.DESIGNATION != '') ?
+                    shows.DESIGNATION : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Email_ID :&nbsp; {{(shows.EMAIL_ID != undefined &&
+                    shows.EMAIL_ID
+                    != null && shows.EMAIL_ID != '') ?
+                    shows.EMAIL_ID : ''}}
+                </div>
+
+                <div class="subnamm" nz-col nzSpan="8">
+                    Mobile No. :&nbsp; {{(shows.MOBILE_NO != undefined &&
+                    shows.MOBILE_NO != null && shows.MOBILE_NO != '') ?
+                    shows.MOBILE_NO : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Date of Birth :&nbsp; {{(shows.DOB != undefined && shows.DOB
+                    !=
+                    null && shows.DOB != '') ?
+                    (shows.DOB | date:"dd/MM/yyyy") : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Cast :&nbsp; {{(shows.CAST != undefined && shows.CAST !=
+                    null &&
+                    shows.CAST != '') ?
+                    shows.CAST : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Gender :&nbsp; {{(shows.GENDER != undefined && shows.GENDER
+                    !=
+                    null && shows.GENDER != '' ) ?
+                    shows.GENDER : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Joining Date :&nbsp; {{(shows.JOINING_DATE != undefined &&
+                    shows.JOINING_DATE != null && shows.JOINING_DATE != '') ?
+                    (shows.JOINING_DATE | date:"dd/MM/yyyy"): ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Retirement Date :&nbsp; {{(shows.RETIREMENT_DATE !=
+                    undefined &&
+                    shows.RETIREMENT_DATE != null && shows.RETIREMENT_DATE != '')
+                    ?
+                    (shows.RETIREMENT_DATE | date:"dd/MM/yyyy"): ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    City :&nbsp; {{(shows.CITY_NAME != undefined &&
+                    shows.CITY_NAME !=
+                    null && shows.CITY_NAME != '') ?
+                    shows.CITY_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Area :&nbsp; {{(shows.AREA_NAME != undefined &&
+                    shows.AREA_NAME !=
+                    null && shows.AREA_NAME != '') ?
+                    shows.AREA_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Building :&nbsp; {{(shows.BUILDING_NAME != undefined &&
+                    shows.BUILDING_NAME != null && shows.BUILDING_NAME != '') ?
+                    shows.BUILDING_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Quarter :&nbsp; {{(shows.FLAT_NAME != undefined &&
+                    shows.FLAT_NAME !=
+                    null && shows.FLAT_NAME != '') ?
+                    shows.FLAT_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Status :
+                    <span style="color:orange" *ngIf="shows.SURRENDER_INSPECTOR_STATUS == 'P'">Pending</span>
+                    <span style="color:green" *ngIf="shows.SURRENDER_INSPECTOR_STATUS == 'A'">Approved</span>
+                    <span style="color:red" *ngIf="shows.SURRENDER_INSPECTOR_STATUS == 'R'">Rejected</span>
+                </div>
+
+            </div>
+
+            <div nz-row style="display:flex;justify-content: center;align-items: center;gap:10px 20px;margin:20px 0px">
+                <div
+                    *ngIf="(shows.SURRENDER_FORM != null && shows.SURRENDER_FORM != undefined && shows.SURRENDER_FORM != '') && shows.SURRENDER_INSPECTOR_STATUS == 'P' ">
+                    <button nz-button nzType="primary" (click)="SurrenderFormApprove(shows,shows.SURRENDER_FORM)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View/Approve Quarter Surrender</span>
+                    </button>
+                </div>
+
+                <div
+                    *ngIf="(shows.SURRENDER_FORM != null && shows.SURRENDER_FORM != undefined && shows.SURRENDER_FORM != '') && ( shows.SURRENDER_INSPECTOR_STATUS == 'R' || shows.SURRENDER_INSPECTOR_STATUS == 'A' )">
+                    <button nz-button nzType="primary" (click)="showSurrenderForm(shows.SURRENDER_FORM)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View Quarter Surrender Form</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+        <div class="col-12" style="text-align: center; margin-top: 5%">
+            <div v-if="loading" class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="employeedata.length == 0 && !isRecordLoading">
+        <div class="col-3"></div>
+
+        <div class="col-18" style="margin-top: 100px">
+            <div class="card" style="width: 100%;box-shadow:none!important">
+                <div class="card-body" style="padding: 25px">
+                    <div class="row">
+                        <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                            <p class="card-text subnamm" style="font-size: 26px">
+                                Data Not Found
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3"></div>
+    </div>
+
+</div>
+
+<div nz-row style="margin-top: 5px;" *ngIf="!showCards && !showSurrenderandflatchange">
+    <div nz-col nzSpan="2">
+        <p (click)="changebacktocards()"
+            style="display:flex;justify-content: center;align-items:center;gap:5px;color:#1890ff;cursor: pointer;font-size:16px;">
+            <span nz-icon nzType="arrow-left" nzTheme="outline" style="margin-top:-10"></span>&nbsp; Back
+        </p>
+    </div>
+
+    <div nz-col nzSpan="20" style="text-align:center">
+        <h6>Residence {{RESIDENCETYPE_NAME != undefined ? RESIDENCETYPE_NAME :
+            ''}}</h6>
+    </div>
+
+    <div nz-col nzSpan="2"></div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="padding:8px"
+        *ngFor="let shows of employeedata; let nn = index">
+        <div class="cardstyle">
+            <div nz-row>
+                <div class="mainnam12" nz-col nzSpan="8">
+                    Name :&nbsp; {{(shows.EMPLOYEE_NAME != undefined &&
+                    shows.EMPLOYEE_NAME != null && shows.EMPLOYEE_NAME != '' ) ?
+                    shows.EMPLOYEE_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Designation :&nbsp; {{(shows.DESIGNATION != undefined &&
+                    shows.DESIGNATION != null && shows.DESIGNATION != '') ?
+                    shows.DESIGNATION : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Email_ID :&nbsp; {{(shows.EMAIL_ID != undefined &&
+                    shows.EMAIL_ID
+                    != null && shows.EMAIL_ID != '') ?
+                    shows.EMAIL_ID : ''}}
+                </div>
+
+                <div class="subnamm" nz-col nzSpan="8">
+                    Mobile No. :&nbsp; {{(shows.MOBILE_NO != undefined &&
+                    shows.MOBILE_NO != null && shows.MOBILE_NO != '') ?
+                    shows.MOBILE_NO : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Date of Birth :&nbsp; {{(shows.DOB != undefined && shows.DOB
+                    !=
+                    null && shows.DOB != '') ?
+                    (shows.DOB | date:"dd/MM/yyyy") : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Cast :&nbsp; {{(shows.CAST != undefined && shows.CAST !=
+                    null &&
+                    shows.CAST != '') ?
+                    shows.CAST : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Gender :&nbsp; {{(shows.GENDER != undefined && shows.GENDER
+                    !=
+                    null && shows.GENDER != '' ) ?
+                    shows.GENDER : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Joining Date :&nbsp; {{(shows.JOINING_DATE != undefined &&
+                    shows.JOINING_DATE != null && shows.JOINING_DATE != '') ?
+                    (shows.JOINING_DATE | date:"dd/MM/yyyy"): ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Retirement Date :&nbsp; {{(shows.RETIREMENT_DATE !=
+                    undefined &&
+                    shows.RETIREMENT_DATE != null && shows.RETIREMENT_DATE != '')
+                    ?
+                    (shows.RETIREMENT_DATE | date:"dd/MM/yyyy"): ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    City :&nbsp; {{(shows.CITY_NAME != undefined &&
+                    shows.CITY_NAME !=
+                    null && shows.CITY_NAME != '') ?
+                    shows.CITY_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Area :&nbsp; {{(shows.AREA_NAME != undefined &&
+                    shows.AREA_NAME !=
+                    null && shows.AREA_NAME != '') ?
+                    shows.AREA_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Building :&nbsp; {{(shows.BUILDING_NAME != undefined &&
+                    shows.BUILDING_NAME != null && shows.BUILDING_NAME != '') ?
+                    shows.BUILDING_NAME : ''}}
+                </div>
+                <div class="subnamm" nz-col nzSpan="8">
+                    Quarter :&nbsp; {{(shows.FLAT_NAME != undefined &&
+                    shows.FLAT_NAME !=
+                    null && shows.FLAT_NAME != '') ?
+                    shows.FLAT_NAME : ''}}
+                </div>
+
+            </div>
+
+            <div nz-row style="display:flex;justify-content: center;align-items: center;gap:10px 20px;margin:20px 0px">
+                <div
+                    *ngIf="(shows.CHANGE_FORM != null && shows.CHANGE_FORM != undefined && shows.CHANGE_FORM != '') && (shows.CHANGE_INSPECTOR_STATUS == null || shows.CHANGE_INSPECTOR_STATUS == 'P' || shows.CHANGE_INSPECTOR_STATUS == '')">
+                    <button nz-button nzType="primary" (click)="showChangeForm(shows,shows.CHANGE_FORM)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View/Approve Quarter Change Request</span>
+                    </button>
+                </div>
+
+                <div
+                    *ngIf="(shows.CHANGE_FORM != null && shows.CHANGE_FORM != undefined && shows.CHANGE_FORM != '') && (shows.CHANGE_INSPECTOR_STATUS == 'R' || shows.CHANGE_INSPECTOR_STATUS == 'A')">
+                    <button nz-button nzType="primary" (click)="viewChangeflatform(shows.CHANGE_FORM)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View Quarter Change Form</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+        <div class="col-12" style="text-align: center; margin-top: 5%">
+            <div v-if="loading" class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="employeedata.length == 0 && !isRecordLoading">
+        <div class="col-3"></div>
+
+        <div class="col-18" style="margin-top: 100px">
+            <div class="card" style="width: 100%;box-shadow:none!important">
+                <div class="card-body" style="padding: 25px">
+                    <div class="row">
+                        <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                            <p class="card-text subnamm" style="font-size: 26px">
+                                Data Not Found
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3"></div>
+    </div>
+
+</div>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="VisibleOccupancyLetter" nzMaskClosable="false" nzClosable="true"
+    [nzContent]="VisibleOccupancyLetterContent" [nzTitle]="'PDFview'"
+    (nzOnCancel)="VisibleOccupancyLetterContentCancel()" [nzFooter]="OccupancyLetterContentFooter">
+    <ng-template #VisibleOccupancyLetterContent>
+
+        <div *ngIf="view11==1" style="height: 600px; overflow: auto">
+            <iframe [src]="viewPdfSafe12" style="width:1150px; height:600px;" frameborder="0"></iframe>
+        </div>
+    </ng-template>
+    <ng-template #OccupancyLetterContentFooter>
+        <button nz-button nzType="default" (click)="VisibleOccupancyLetterContentCancel()">
+            Close
+        </button>
+
+        <button nz-button nzType="primary" (click)="RejectSurrenderflat()">
+            Reject
+        </button>
+        <button nz-button nzType="primary" (click)="ApproveSurrenderflat()">
+            Approve
+        </button>
+    </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="SurrenderConfirm" nzCentered="true" [nzBodyStyle]="{ padding: '10px' }" nzWidth="570px"
+    nzClosable="false" [nzFooter]="surrenderconfirmmodalfooter" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <span style="font-size: 18px; font-weight: 500">Are you sure want to
+            Approve this Quarter Surrender?</span>
+        <hr style="margin: 8px 0" />
+        <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+            *Please note that changes cannot be made after Approved.
+        </p>
+    </ng-container>
+
+    <ng-template #surrenderconfirmmodalfooter>
+
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+            style="background-color: #006699" (click)="surrenderconfimok()">
+            Yes
+        </button>
+
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+            style="background-color: #006699" (click)="CancelSurrenderConfirm()">
+            NO
+        </button>
+
+    </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="RejectModalInspector" nzCentered="true" nzTitle="Reject Remark"
+    [nzBodyStyle]="{ padding: '0px 20px' }" nzWidth="480px" nzClosable="true" (nzOnCancel)="Cancelsurrendermodal()"
+    [nzFooter]="contextofrules2" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <div nz-row>
+            <div nz-col nzSpan="24" style="padding: 5px">
+                <nz-form-label style="padding:0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzRequired nzErrorTip>
+                        <textarea required maxlength="512" placeHolder="Enter The Remark"
+                            style="width: 100%; height: 100%" [(ngModel)]="Inspector_REMARK" name="REASON"
+                            [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #contextofrules2>
+        <button nz-button nzType="default" class="btn btn-primary" (click)="Cancelsurrendermodal()">
+            Cancel
+        </button>
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="loadingRecords"
+            style="background-color: red" (click)="RejectSurrender()">
+            Reject
+        </button>
+    </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="VisibleChangeflatmodal" nzMaskClosable="false" nzClosable="true"
+    [nzContent]="VisibleChangeflatmodalContent" [nzTitle]="'PDFview'" (nzOnCancel)="VisibleChangeflatmodalCancel()"
+    [nzFooter]="ChangeflatmodalFooter">
+    <ng-template #VisibleChangeflatmodalContent>
+
+        <div *ngIf="view22==1" style="height: 600px; overflow: auto">
+            <iframe [src]="viewPdfSafe13" style="width:1150px; height:600px;" frameborder="0"></iframe>
+        </div>
+    </ng-template>
+    <ng-template #ChangeflatmodalFooter>
+        <button nz-button nzType="default" (click)="VisibleChangeflatmodalCancel()">
+            Close
+        </button>
+
+        <button nz-button nzType="primary" (click)="RejectChangeflat()">
+            Reject
+        </button>
+        <button nz-button nzType="primary" (click)="ApproveChangeflat()">
+            Approve
+        </button>
+    </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="RejectFlatchangerequest" nzCentered="true" nzTitle="Reject Remark"
+    [nzBodyStyle]="{ padding: '0px 20px' }" nzWidth="480px" nzClosable="true"
+    (nzOnCancel)="CancelRejectFlatchangerequest()" [nzFooter]="RejectFlatchangerequestfooter" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <div nz-row>
+            <div nz-col nzSpan="24" style="padding: 5px">
+                <nz-form-label style="padding:0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzRequired nzErrorTip>
+                        <textarea required maxlength="512" placeHolder="Enter The Remark"
+                            style="width: 100%; height: 100%" [(ngModel)]="Flatchange_Remark"
+                            name="RejectRemarkFlatchange" [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #RejectFlatchangerequestfooter>
+        <button nz-button nzType="default" class="btn btn-primary" (click)="CancelRejectFlatchangerequest()">
+            Cancel
+        </button>
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="loadingRecords"
+            style="background-color: red" (click)="RejectFlatchangerequestcomfirm()">
+            Reject
+        </button>
+    </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="FlatChangeRequestApprove" nzCentered="true" [nzBodyStyle]="{ padding: '10px' }" nzWidth="570px"
+    nzClosable="false" [nzFooter]="FlatChangeRequestApprovefooter" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <span style="font-size: 18px; font-weight: 500">Are you sure want to
+            Approve this Quarter Change Request?</span>
+        <hr style="margin: 8px 0" />
+        <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+            *Please note that changes cannot be made after Approved.
+        </p>
+    </ng-container>
+
+    <ng-template #FlatChangeRequestApprovefooter>
+
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+            style="background-color: #006699" (click)="ConfirmApproveFlatChangeRequest()">
+            Yes
+        </button>
+
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+            style="background-color: #006699" (click)="CancelApproveFlatChangeRequest()">
+            NO
+        </button>
+
+    </ng-template>
+</nz-modal>

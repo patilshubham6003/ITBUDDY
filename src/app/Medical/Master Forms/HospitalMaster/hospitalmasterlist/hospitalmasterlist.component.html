@@ -1,0 +1,274 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            (keydown.enter)="onKeypressEvent($event)"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Hospital
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #datatable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '2400px', y: '55vh' }"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="40px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+          >
+            City Name
+          </th>
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NAME' }}"
+            [nzSortFn]="true"
+          >
+            Hospital Name
+          </th>
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'ADDRESS' }}"
+            [nzSortFn]="true"
+          >
+            Address
+          </th>
+
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'CONTACT_NOS' }}"
+            [nzSortFn]="true"
+          >
+            Contact No
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMAILS' }}"
+            [nzSortFn]="true"
+          >
+            Email id
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NODAL_OFFICER_NAMES' }}"
+            [nzSortFn]="true"
+          >
+            Nodal Officer Name
+          </th>
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'MOBILE_NOS' }}"
+            [nzSortFn]="true"
+          >
+            Mobile No
+          </th>
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'ACCREDITATION' }}"
+            [nzSortFn]="true"
+          >
+            Accreditation
+          </th>
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'HOSPITAL_TYPE' }}"
+            [nzSortFn]="true"
+          >
+            Hospital Type
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'FACILITIES_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Facilities
+          </th>
+          <th
+            nzWidth="125px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NOTIFICATION_MEMORANDUM_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Memorandum Name
+          </th>
+          <th
+            nzWidth="35px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'STATUS' }}"
+            [nzSortFn]="true"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of datatable.data" style="text-align: center">
+          <td style="text-align: center">
+            <a (click)="edit(data)"
+              ><i nz-icon nzType="edit" nzTheme="outline"></i
+            ></a>
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["CITY_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["ADDRESS"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["CONTACT_NOS"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["EMAILS"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NODAL_OFFICER_NAMES"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["MOBILE_NOS"] }}
+          </td>
+
+          <td style="text-align: center">
+            <span nz-icon *ngIf="data['ACCREDITATION'] == 'N'">NABH</span>
+            <span nz-icon *ngIf="data['ACCREDITATION'] == 'NN'">Non NABH</span>
+            <span nz-icon *ngIf="data['ACCREDITATION'] == 'SP'"
+              >Super Speciality</span
+            >
+          </td>
+
+          <td style="text-align: center">
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'E'">Empanelled</span>
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'NE'"
+              >Non Empanelled</span
+            >
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'G'">Government</span>
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FACILITIES_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NOTIFICATION_MEMORANDUM_NAME"] }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            <i
+              nz-icon
+              *ngIf="data['STATUS']"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="!data['STATUS']"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="900"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-addhospitalmaster
+      [drawerClose]="closeCallback"
+      [data]="drawerData"
+      [facility]="facility"
+      [list]="list"
+      [list1]="list1"
+      [list2]="list2"
+      [list3]="list3"
+      [list4]="list4"
+    ></app-addhospitalmaster>
+  </ng-container>
+</nz-drawer>

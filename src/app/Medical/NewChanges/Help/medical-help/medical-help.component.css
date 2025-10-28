@@ -1,0 +1,25 @@
+.carousel {
+    background-color: snow;
+
+}
+
+h3 {
+    text-align: left;
+    margin: 10px;
+    user-select: none;
+}
+
+.image {
+    margin: 20px;
+
+}
+
+
+.header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    background-color: aliceblue;
+    left: 0px;
+    right: 0px;
+}

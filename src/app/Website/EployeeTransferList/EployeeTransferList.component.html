@@ -1,0 +1,867 @@
+<nz-layout class="app-layout">
+  <nz-header class="header1" style="background: #006699 !important">
+    <div nz-row class="app-header" style="background: #006699 !important">
+      <div nz-col nzSpan="1" style="justify-content: end; display: flex; align-items: center">
+        <button nzType="primary" nzShape="circle" [routerLink]="['']" nzTooltipTitle="Home" nzTooltipPlacement="bottom"
+          nz-button nz-tooltip>
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 20" fill="none">
+            <path
+              d="M12.6553 5.18853L4.33368 11.9683V19.2856C4.33368 19.4751 4.40976 19.6568 4.54519 19.7908C4.68063 19.9247 4.86431 20 5.05584 20L10.1137 19.9871C10.3046 19.9861 10.4874 19.9104 10.622 19.7766C10.7567 19.6427 10.8323 19.4615 10.8323 19.2727V14.9994C10.8323 14.81 10.9084 14.6283 11.0438 14.4943C11.1792 14.3603 11.3629 14.2851 11.5544 14.2851H14.4431C14.6346 14.2851 14.8183 14.3603 14.9538 14.4943C15.0892 14.6283 15.1653 14.81 15.1653 14.9994V19.2696C15.165 19.3636 15.1834 19.4567 15.2196 19.5436C15.2558 19.6306 15.3089 19.7096 15.376 19.7761C15.4431 19.8427 15.5228 19.8955 15.6106 19.9316C15.6983 19.9676 15.7924 19.9862 15.8874 19.9862L20.9435 20C21.135 20 21.3187 19.9247 21.4542 19.7908C21.5896 19.6568 21.6657 19.4751 21.6657 19.2856V11.9634L13.3459 5.18853C13.2481 5.11054 13.1262 5.06801 13.0006 5.06801C12.8749 5.06801 12.7531 5.11054 12.6553 5.18853ZM25.8001 9.79663L22.0268 6.71995V0.535774C22.0268 0.393678 21.9697 0.257402 21.8681 0.156925C21.7665 0.0564476 21.6288 0 21.4851 0H18.9575C18.8139 0 18.6761 0.0564476 18.5746 0.156925C18.473 0.257402 18.4159 0.393678 18.4159 0.535774V3.77765L14.375 0.488894C13.9872 0.173224 13.5005 0.000631028 12.9983 0.000631028C12.4961 0.000631028 12.0095 0.173224 11.6217 0.488894L0.196564 9.79663C0.141719 9.84147 0.0963433 9.89656 0.0630297 9.95876C0.0297162 10.021 0.0091177 10.089 0.0024112 10.1591C-0.00429529 10.2292 0.00302166 10.2999 0.023944 10.3671C0.0448663 10.4344 0.0789839 10.497 0.124347 10.5512L1.2753 11.9353C1.32054 11.9897 1.37619 12.0347 1.43905 12.0678C1.50192 12.101 1.57077 12.1215 1.64166 12.1282C1.71256 12.135 1.7841 12.1279 1.8522 12.1072C1.92031 12.0866 1.98363 12.0529 2.03854 12.008L12.6553 3.35796C12.7531 3.27998 12.8749 3.23745 13.0006 3.23745C13.1262 3.23745 13.2481 3.27998 13.3459 3.35796L23.9631 12.008C24.0179 12.0529 24.0811 12.0867 24.1491 12.1074C24.2171 12.1281 24.2886 12.1353 24.3594 12.1287C24.4303 12.122 24.4991 12.1016 24.562 12.0687C24.6248 12.0357 24.6805 11.9909 24.7259 11.9366L25.8768 10.5525C25.9221 10.498 25.9561 10.4351 25.9768 10.3675C25.9974 10.3 26.0044 10.229 25.9973 10.1588C25.9902 10.0886 25.9691 10.0204 25.9352 9.95824C25.9014 9.89609 25.8554 9.84117 25.8001 9.79663Z"
+              fill="white" />
+          </svg>
+        </button>
+      </div>
+      <div nz-col nzSpan="11" style="text-align: left">
+        <b style="
+            color: white !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.4;
+          ">
+          &nbsp;Employee Transfer Request
+        </b>
+      </div>
+      <div nz-col nzSpan="12" style="display: flex; justify-content: flex-end; align-items: center">
+        <button nzType="primary" nzShape="circle" (click)="openprofile()" nzTooltipTitle="Profile"
+          nzTooltipPlacement="bottom" nz-button nz-tooltip style="margin-right: 10px">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path
+                d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M11.0007 14.3333C13.3018 14.3333 15.1673 12.4679 15.1673 10.1667C15.1673 7.86548 13.3018 6 11.0007 6C8.69946 6 6.83398 7.86548 6.83398 10.1667C6.83398 12.4679 8.69946 14.3333 11.0007 14.3333Z"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M4.3125 18.4378C4.93949 17.2028 5.89621 16.1656 7.07661 15.4411C8.257 14.7165 9.61498 14.333 11 14.333C12.385 14.333 13.743 14.7165 14.9234 15.4411C16.1038 16.1656 17.0605 17.2028 17.6875 18.4378"
+                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </button>
+
+        <button nzType="primary" nzShape="circle" class="vv" data-bs-toggle="modal" data-bs-target="#changepasss"
+          nzTooltipTitle="Change Password" nzTooltipPlacement="bottom" nz-button nz-tooltip style="margin-right: 10px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M2.77672 6.63658C0.263131 6.63658 -0.00223708 7.27765 1.40579e-05 9.73017C0.00200035 11.7038 0.00014984 13.6774 0.00014984 15.6509C0.00014984 20.8349 0.265784 19.9188 7.47551 19.9188C16.1392 19.9188 14.938 21.5937 14.9491 9.73017C14.9515 7.26878 14.6701 6.63658 12.172 6.63658C11.982 4.43904 12.455 3.68609 11.2301 1.93475C9.44936 -0.611495 5.5733 -0.676853 3.71783 1.93099C2.49785 3.64574 2.96701 4.4736 2.77672 6.63658ZM3.68115 13.1833L2.3502 13.1852C2.5295 13.5895 3.87078 14.854 4.11205 15.0534C4.71668 14.5619 5.42247 13.6101 5.95242 13.2127L4.61405 13.1784C4.69244 11.9179 5.21894 11.2338 5.92408 10.7709C7.0756 10.0147 7.65494 10.3355 8.81917 10.6278L9.39388 9.98407C7.97513 8.65701 3.82192 9.34407 3.68115 13.1833ZM8.99913 13.1829H10.2595C10.3854 14.3658 9.59264 15.2386 8.99529 15.6012C7.66394 16.4093 7.36812 15.946 6.13012 15.7706L5.48537 16.4687C7.01257 16.9776 7.87078 17.414 9.46949 16.425C10.728 15.6464 10.8843 14.9473 11.2926 13.1829L12.6141 13.1731C12.3455 12.7679 11.1471 11.4919 10.6809 11.2874C10.4479 11.6211 10.1691 11.8548 9.86807 12.1601C9.69208 12.3385 9.59489 12.4309 9.41797 12.609C9.13129 12.8976 9.16148 12.8198 8.99913 13.1829ZM4.59207 6.62408L10.3542 6.63524C10.4241 5.47333 10.4837 4.07164 9.96102 3.21729C8.77295 1.27513 6.04035 1.40584 4.99065 3.21971C4.48733 4.0894 4.53434 5.45154 4.59207 6.62408Z"
+              fill="white" />
+          </svg>
+        </button>
+        <button (click)="logout()" nzType="primary" nzShape="circle" nzTooltipTitle="Logout" nzTooltipPlacement="bottom"
+          nz-button nz-tooltip style="margin-right: 25px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+            <path
+              d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 2.81829e-06 10 2.81829e-06C11.5527 -0.00116364 13.0842 0.359775 14.4729 1.05414C15.8617 1.74851 17.0693 2.75718 18 4H15.29C14.1352 2.98176 12.7112 2.31836 11.1887 2.0894C9.66625 1.86044 8.11007 2.07566 6.70689 2.70922C5.30371 3.34277 4.11315 4.36776 3.27807 5.66119C2.44299 6.95462 1.99887 8.46153 1.999 10.0011C1.99913 11.5407 2.4435 13.0475 3.27879 14.3408C4.11409 15.6341 5.30482 16.6589 6.7081 17.2922C8.11139 17.9255 9.66761 18.1405 11.19 17.9113C12.7125 17.6821 14.1364 17.0184 15.291 16H18.001C17.0702 17.243 15.8624 18.2517 14.4735 18.9461C13.0846 19.6405 11.5528 20.0013 10 20ZM17 14V11H9V9H17V6L22 10L17 14Z"
+              fill="white" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-content style="margin: 0px !important">
+    <div class="inner-content" style="padding: 10px 24px 24px 24px !important">
+      <nz-spin [nzSpinning]="isSpinning">
+        <!--  -->
+        <div nz-row >
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+            <div class="formname" style="text-align: center;text-align: center;">
+              <h6 style="font-size: 16px; margin-bottom: 2px">
+                Request For Transfer In Annual General Transfer {{nextYear}} - {{currentYear}}
+              </h6>
+            </div>
+            <p style="text-align: center; margin-bottom: 10px">
+              You are eligible for applying Annual General Transfer Request. Please click the below button to proceed
+              with your application.
+            </p>
+          </div>
+        </div>
+        <div *ngIf="dataList.length > 0" nz-row style="overflow-y: auto; height: 65vh" id="activityItem" #activityItem
+          (scroll)="onScroll($event)">
+          <div *ngIf="dataList.length > 0" nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="
+              text-align: center;
+              font-weight: bold;
+              padding: 15px 15px 0px 0px;
+            ">
+            <div style="
+                height: 185px;
+                position: relative;
+                width: 100%;
+                font-size: 12px;
+                cursor: pointer;
+                padding: 10px;
+                background-color: white;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                border: 1px solid #efefef;
+                border-radius: 8px;
+              ">
+              <button nzShape="circle" nz-button nxType="primary" style="margin-top: 30px; height: 50px; width: 50px"
+                (click)="opendrawer()" [nzLoading]="loaddrawer">
+                <i nz-icon nzType="plus" style="font-size: 30px"></i>
+              </button>
+              <br />
+              <div style="font-size: 1rem; padding-top: 12px">
+                Add New Transfer Request
+              </div>
+            </div>
+          </div>
+          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" *ngFor="let data of dataList; let nn = index">
+            <div class="cardstyle" style="padding-bottom: 0px">
+              <div nz-row>
+                <div class="mainnam" nz-col nzSpan="12">
+                  <b>Application No. :
+                    <span *ngIf="dataList != undefined">{{
+                      data["APPLICATION_NO"]
+                      }}</span></b>
+                </div>
+                <div class="mainnam" nz-col nzSpan="10">
+                  <b>Application Date :
+                    <span *ngIf="dataList != undefined">{{
+                      data["REQUESTED_DATETIME"]
+                      ? (data["REQUESTED_DATETIME"] | date : "dd/MM/yyyy")
+                      : "-"
+                      }}</span></b>
+                </div>
+                <div class="mainnam" nz-col nzSpan="2" style="text-align: end;">
+                  <a nz-button nz-tooltip nzTooltipTitle="Download PDF" style="
+                      color: #1890ff;
+                      padding: 0px !important;
+                      border: none;
+                      box-shadow: none;
+                    " *ngIf="dataList != undefined" (click)="printt(data); stopPropagation($event)"
+                    [nzLoading]="isSpinninggg[data.ID]">
+                    <span nz-icon nzType="download" nzTheme="outline"></span> </a>&nbsp;
+                  <a nz-button nz-tooltip nzTooltipTitle="Edit" style="
+                      color: #1890ff;
+                      padding: 0px !important;
+                      border: none;
+                      box-shadow: none;
+                    " *ngIf="dataList != undefined && data.IS_UPDATED==false"
+                    (click)="edittransfer(data); stopPropagation($event)">
+                    <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 14px;"></span> </a>
+                </div>
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Name :</b>
+                  <span *ngIf="dataList != undefined" nz-popover [nzPopoverContent]="porankcontent"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.EMPLOYEE_NAME ? data.EMPLOYEE_NAME : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontent>
+                  <span *ngIf="dataList != undefined">{{
+                    data.EMPLOYEE_NAME
+                    }}</span>
+                </ng-template>
+
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Email ID :</b>
+                  <span nz-popover [nzPopoverContent]="porankcontentEMAIL_ID" *ngIf="dataList != undefined"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.EMAIL_ID ? data.EMAIL_ID : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentEMAIL_ID>
+                  <span *ngIf="dataList != undefined">{{ data.EMAIL_ID }}</span>
+                </ng-template>
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Employee Code :</b>
+                  <span nz-popover [nzPopoverContent]="porankcontentEMPLOYEE_CODE" *ngIf="dataList != undefined"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentEMPLOYEE_CODE>
+                  <span *ngIf="dataList != undefined">{{
+                    data.EMPLOYEE_CODE
+                    }}</span>
+                </ng-template>
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Mobile No :</b>
+                  <span nz-popover [nzPopoverContent]="porankcontentMOBILE_NO" *ngIf="dataList != undefined"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.MOBILE_NO ? data.MOBILE_NO : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentMOBILE_NO>
+                  <span *ngIf="dataList != undefined">{{
+                    data.MOBILE_NO
+                    }}</span>
+                </ng-template>
+
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Current Cadre :</b>
+                  <span nz-popover [nzPopoverContent]="porankcontentDESIGNATION_NAME" *ngIf="dataList != undefined"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.DESIGNATION_NAME ? data.DESIGNATION_NAME : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentDESIGNATION_NAME>
+                  <span *ngIf="dataList != undefined">{{
+                    data.DESIGNATION_NAME
+                    }}</span>
+                </ng-template>
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Current Office :</b>
+                  <span nz-popover [nzPopoverContent]="porankcontentCURRENT_OFFICE_NAME" *ngIf="dataList != undefined"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data.CURRENT_OFFICE_NAME ? data.CURRENT_OFFICE_NAME : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentCURRENT_OFFICE_NAME>
+                  <span *ngIf="dataList != undefined">{{
+                    data.CURRENT_OFFICE_NAME
+                    }}</span>
+                </ng-template>
+
+                <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                  <b>Period Spent In Current Office :</b>
+                  <span nz-popover [nzPopoverContent]="porankcontentSPEND_DAY_IN_OFFICE" *ngIf="dataList != undefined"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data.SPEND_DAY_IN_OFFICE ? data.SPEND_DAY_IN_OFFICE : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentSPEND_DAY_IN_OFFICE>
+                  <span *ngIf="dataList != undefined">{{
+                    data.SPEND_DAY_IN_OFFICE
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" class="modelsub textOverflow" style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Current Residential Address :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentADDRESS" nzPopoverPlacement="topLeft">
+                    {{ data.ADDRESS ? data.ADDRESS : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentADDRESS>
+                  <span *ngIf="dataList != undefined">{{ data.ADDRESS }}</span>
+                </ng-template>
+
+              </div>
+              <div nz-row>
+                <div nz-col nzSpan="12" class="modelsub textOverflow" style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Building 1 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_BUILDING_NAME"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.REQ_BUILDING_NAME ? data.REQ_BUILDING_NAME : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_BUILDING_NAME>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_BUILDING_NAME
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" class="modelsub textOverflow" style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Charge 1 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_OFFICE_NAME"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.REQ_OFFICE_ID ? data.REQ_OFFICE_ID : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_OFFICE_NAME>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_OFFICE_ID
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Building 2 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_2"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data.REQ_BUILDING_NAME_2 ? data.REQ_BUILDING_NAME_2 : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_BUILDING_NAME_2>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_BUILDING_NAME_2
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Charge 2 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_OFFICE_NAME_2"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.REQ_OFFICE_ID_2 ? data.REQ_OFFICE_ID_2 : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_OFFICE_NAME_2>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_OFFICE_ID_2
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Building 3 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_3"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data.REQ_BUILDING_NAME_3 ? data.REQ_BUILDING_NAME_3 : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_BUILDING_NAME_3>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_BUILDING_NAME_3
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Charge 3 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_OFFICE_NAME_3"
+                    nzPopoverPlacement="topLeft">
+                    {{ data.REQ_OFFICE_ID_3 ? data.REQ_OFFICE_ID_3 : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_OFFICE_NAME_3>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_OFFICE_ID_3
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Building 4 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_4"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data.REQ_BUILDING_NAME_4 ? data.REQ_BUILDING_NAME_4 : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_BUILDING_NAME_4>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_BUILDING_NAME_4
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Charge 4 :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentREQ_OFFICE_NAME_4" nzPopoverPlacement="topLeft">
+                    {{ data.REQ_OFFICE_ID_4 ? data.REQ_OFFICE_ID_4 : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_OFFICE_NAME_4>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_OFFICE_ID_4
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Building 5 :</b>
+                  <span nz-popover *ngIf="dataList != undefined" [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_5"
+                    nzPopoverPlacement="topLeft">
+                    {{
+                    data.REQ_BUILDING_NAME_5 ? data.REQ_BUILDING_NAME_5 : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_BUILDING_NAME_5>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_BUILDING_NAME_5
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Requested Charge 5 :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentREQ_OFFICE_ID_5" nzPopoverPlacement="topLeft">
+                    {{ data.REQ_OFFICE_ID_5 ? data.REQ_OFFICE_ID_5 : "-" }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREQ_OFFICE_ID_5>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REQ_OFFICE_ID_5
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Reason Type :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentREASON_FOR_TRANSFER" nzPopoverPlacement="topLeft">
+                    {{
+                    data.REASON_FOR_TRANSFER ? data.REASON_FOR_TRANSFER : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentREASON_FOR_TRANSFER>
+                  <span *ngIf="dataList != undefined">{{
+                    data.REASON_FOR_TRANSFER
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Reason For Transfer :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentSUMMARY_OF_TRANSFER" nzPopoverPlacement="topLeft">
+                    {{
+                    data.SUMMARY_OF_TRANSFER ? data.SUMMARY_OF_TRANSFER : "-"
+                    }}
+                  </span>
+                </div>
+                <ng-template #porankcontentSUMMARY_OF_TRANSFER>
+                  <span *ngIf="dataList != undefined">{{
+                    data.SUMMARY_OF_TRANSFER
+                    }}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Date Of APAR Submitted :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentAPAR_DATE" nzPopoverPlacement="topLeft">
+                    {{
+                    data.APAR_DATE ? (data.APAR_DATE | date: 'dd/MM/yyyy') : "-"}}
+                  </span>
+                </div>
+                <ng-template #porankcontentAPAR_DATE>
+                  <span *ngIf="dataList != undefined">{{data.APAR_DATE | date: 'dd/MM/yyyy'}}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn]" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Date of filling of IPR for Group A/B :</b><span nz-popover *ngIf="dataList != undefined"
+                    [nzPopoverContent]="porankcontentIPR_FILLING_DATE" nzPopoverPlacement="topLeft">
+                    {{
+                    data.IPR_FILLING_DATE ? (data.IPR_FILLING_DATE | date: 'dd/MM/yyyy') : "-"}}
+                  </span>
+                </div>
+                <ng-template #porankcontentIPR_FILLING_DATE>
+                  <span *ngIf="dataList != undefined">{{data.IPR_FILLING_DATE | date: 'dd/MM/yyyy'}}</span>
+                </ng-template>
+                <div nz-col nzSpan="12" *ngIf="uptrue[nn] && dataList != undefined" class="modelsub textOverflow"
+                  style="margin-top: 1px; margin-bottom: 1px">
+                  <b>Attached Document :</b>
+                  {{
+                  data.ATTACHMENTS == null ? "-" : data["ATTACHMENTS"]
+                  }}
+                  &nbsp;
+                  <span *ngIf="data.ATTACHMENTS" nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip
+                    nzType="eye" nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                    (click)="cricular_viewIcard1(data.ATTACHMENTS)">
+                  </span>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: center; align-self: center; z-index: 1000">
+                  <button nz-button nzType="default" nzShape="circle" (click)="updown(nn)" *ngIf="!uptrue[nn]" style="
+                      top: 10px;
+                      height: 21px !important;
+                      min-width: 23px !important;
+                      width: 23px;
+                      padding: 0px 4px !important;
+                    ">
+                    <span nz-icon nzType="down"></span>
+                  </button>
+                  <button nz-button nzType="default" nzShape="circle" (click)="updown1(nn)" *ngIf="uptrue[nn]" style="
+                      top: 10px;
+                      height: 21px !important;
+                      min-width: 23px !important;
+                      width: 23px;
+                      padding: 0px 4px !important;
+                    ">
+                    <span nz-icon nzType="up"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-row *ngIf="dataList == 0">
+          <div nz-col nzSpan="7" style="text-align: center"></div>
+          <div nz-col nzSpan="10" style="text-align: center">
+            <nz-card style="
+                background-color: #fafafa;
+                text-align: center;
+                margin-top: 100px;
+              ">
+              <div class="row">
+                <div class="col-sm-12" style="padding: 0px">
+                  <div class="container" style="padding: 0px">
+                    You are eligible for applying Annual General Transfer request. Please click the below button to
+                    proceed with your application.
+                  </div>
+                  <button nz-button nzType="primary" *ngIf="dataList.length == 0" (click)="opendrawer()"
+                    style="border-radius: 12px; margin-top: 20px">
+                    Apply Now
+                  </button>
+                </div>
+              </div>
+            </nz-card>
+          </div>
+          <div nz-col nzSpan="7" style="text-align: center"></div>
+        </div>
+
+        <!-- <div nz-row *ngIf="dataList == 0">
+          <div nz-col nzSpan="5" style="text-align: center"></div>
+          <div nz-col nzSpan="14" style="text-align: center">
+            <nz-card style="
+                background-color: #fafafa;
+                text-align: center;
+                margin-top: 130px;
+              ">
+              <div class="row">
+                <div class="col-sm-12" style="padding: 0px">
+                  <div class="container" style="padding: 0px;font-weight: 500;font-size: 18px;">
+                    Request For Transfer In Annual General Transfer 2024 - 25 which is ended on 31/05/2024 at 11:59:59
+                    PM.
+                  </div>
+                </div>
+              </div>
+            </nz-card>
+          </div>
+          <div nz-col nzSpan="5" style="text-align: center"></div>
+        </div> -->
+      </nz-spin>
+    </div>
+  </nz-content>
+  <nz-footer style="text-align: center">Copyright 2023
+    <a href="https://www.uvtechsoft.com/" target="_blank">UjjVilas Technologies & Software Pvt. Ltd.</a>All rights
+    reserved.
+  </nz-footer>
+</nz-layout>
+
+<!-- change password -->
+<div class="modal fade" id="changepasss" tabindex="-1" aria-labelledby="changepasssd" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 315px !important">
+    <div class="modal-content">
+      <div class="modal-header" style="padding-top: 10px; padding-bottom: 10px">
+        <h5 class="modal-title" style="margin-bottom: 0px;font-size: 15px;">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal1()"></button>
+        <button type="button" style="display: none" #closechangeppp class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #006699;
+          border-top: 4px groove #006699;
+          padding: 0px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form action="#">
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">
+                  Old Password</label>
+                <div class="input-group">
+                  <input autocomplete="off" [type]="pass3 ? 'text' : 'password'" autocomplete="off" type="password"
+                    class="form-control" [(ngModel)]="changepassss.PASSWORD" placeholder="Enter Old Password"
+                    style="font-size: 12px;padding: 6px;height: 34px;" name="pasccs" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding:8px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showpass3()" [ngClass]="{
+                        'bi bi-eye': !pass3,
+                        'bi bi-eye-slash': pass3
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">New Password</label>
+                <div class="input-group mb-0">
+                  <input autocomplete="off" [type]="pass4 ? 'text' : 'password'" [(ngModel)]="changepassss.NEW_PASSWORD"
+                    class="form-control" placeholder="Enter New Password" name="cpass" required
+                    style="font-size: 12px;padding: 6px;height: 34px;" />
+
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 8px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showpass4()" [ngClass]="{
+                        'bi bi-eye': !pass4,
+                        'bi bi-eye-slash': pass4
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">Retype New Password</label>
+                <div class="input-group mb-0">
+                  <input autocomplete="off" [type]="pass11 ? 'text' : 'password'" [(ngModel)]="RETYPE_PASSWORD"
+                    class="form-control" placeholder="Retype New Password" name="cpass" required
+                    style="font-size: 12px;padding: 6px;height: 34px;" />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 8px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showp()" [ngClass]="{
+                        'bi bi-eye': !pass11,
+                        'bi bi-eye-slash': pass11
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+                <span style="font-weight: 400; font-size: 11px; margin-top: 7px">
+                  *Enter minimum 8 alphanumeric characters with special
+                  symbols.</span>
+              </div>
+              <div class="mt-4" style="text-align: center; margin-top: 0px !important">
+                <button *ngIf="!otpSpinning" (click)="changepasss()" class="btn btn-primary px-4 validate"
+                  style="background-color: #006699 !important;width: 100%;color: white;margin-bottom: 0px;padding: 4px 14px!important;font-size: 13px!important;">
+                  Change Password <i class="icon-long-arrow-right"></i>
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="reg-container" style="visibility: hidden; display: none">
+  <div id="excel-table">
+    <div style="margin-bottom: -10px;width: 100%;display: flex;justify-content: space-between;">
+      <div style="text-align: center">
+        <img src="assets/govtOfIndia.png" alt="logo" height="50" />
+      </div>
+      <div style="text-align: center">
+        <span class="GRAASTitle"> Income Tax</span><br /><span class="GRAASSubTitle">
+          Mumbai Region</span>
+      </div>
+      <div><img src="assets/aykarlogo.png" alt="logo" height="50" /></div>
+    </div>
+    <hr />
+    <div style="text-align: center;">
+      Request For Transfer In Annual General Transfer {{nextYear}}-{{currentYear}}
+    </div>
+    <br />
+    <div style="text-align: center; font-weight: bold" *ngIf="dataofpdf != undefined">
+      Application No. : {{ dataofpdf.APPLICATION_NO }}
+    </div>
+    <br />
+    <div style="width: 95%; margin-left: 35px">
+      <table style="width: 100%">
+        <tr>
+          <td style="width: 10%; text-align: center; padding: 3px">1</td>
+          <td style="width: 30%; padding: 3px">Employee Code</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.EMPLOYEE_CODE ? dataofpdf.EMPLOYEE_CODE : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; padding: 3px; text-align: center">2</td>
+          <td style="width: 30%; padding: 3px">Name</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.EMPLOYEE_NAME ? dataofpdf.EMPLOYEE_NAME : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; padding: 3px; text-align: center">3</td>
+          <td style="width: 30%; padding: 3px">Email ID</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.EMAIL_ID ? dataofpdf.EMAIL_ID : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; padding: 3px; text-align: center">4</td>
+          <td style="width: 30%; padding: 3px">Mobile No</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.MOBILE_NO ? dataofpdf.MOBILE_NO : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">5</td>
+          <td style="width: 30%; padding: 3px">Current Cadre</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.DESIGNATION_NAME ? dataofpdf.DESIGNATION_NAME : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">6</td>
+          <td style="width: 30%; padding: 3px">Current Office</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.CURRENT_OFFICE_NAME
+              ? dataofpdf.CURRENT_OFFICE_NAME
+              : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">7</td>
+          <td style="width: 30%; padding: 3px">Period Spent In Current Office</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.SPEND_DAY_IN_OFFICE
+              ? dataofpdf.SPEND_DAY_IN_OFFICE
+              : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">8</td>
+          <td style="width: 30%; padding: 3px">
+            Current Residential Address
+          </td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.ADDRESS ? dataofpdf.ADDRESS : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">9</td>
+          <td style="width: 30%; padding: 3px">Requested Buildings</td>
+          <td style="width: 60%; padding: 3px">
+            1.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_BUILDING_NAME ? dataofpdf.REQ_BUILDING_NAME : "-"
+              }}</span><br />
+            2.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_BUILDING_NAME_2
+              ? dataofpdf.REQ_BUILDING_NAME_2
+              : "-"
+              }}</span><br />
+            3.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_BUILDING_NAME_3
+              ? dataofpdf.REQ_BUILDING_NAME_3
+              : "-"
+              }}</span><br />
+            4.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_BUILDING_NAME_4
+              ? dataofpdf.REQ_BUILDING_NAME_4
+              : "-"
+              }}</span><br />
+            5.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_BUILDING_NAME_5
+              ? dataofpdf.REQ_BUILDING_NAME_5
+              : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">10</td>
+          <td style="width: 30%; padding: 3px">Requested Charges</td>
+          <td style="width: 60%; padding: 3px">
+            1.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_OFFICE_ID ? dataofpdf.REQ_OFFICE_ID : "-"
+              }}</span><br />
+            2.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_OFFICE_ID_2 ? dataofpdf.REQ_OFFICE_ID_2 : "-"
+              }}</span><br />
+            3.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_OFFICE_ID_3 ? dataofpdf.REQ_OFFICE_ID_3 : "-"
+              }}</span><br />
+            4.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_OFFICE_ID_4 ? dataofpdf.REQ_OFFICE_ID_4 : "-"
+              }}</span><br />
+            5.<span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REQ_OFFICE_ID_5 ? dataofpdf.REQ_OFFICE_ID_5 : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">11</td>
+          <td style="width: 30%; padding: 3px">Date of filling of IPR for Group A/B</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{dataofpdf.IPR_FILLING_DATE? (dataofpdf.IPR_FILLING_DATE |
+              date:'dd/MM/yyyy'):"_"}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; text-align: center">12</td>
+          <td style="width: 30%; padding: 3px">Date Of APAR Submitted For The Year {{nextYear}}-{{currentYear}}?</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{dataofpdf.APAR_DATE? (dataofpdf.APAR_DATE |
+              date:'dd/MM/yyyy'):"_"}}</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 10%; text-align: center">13</td>
+          <td style="width: 30%; padding: 3px">Is Registered On iGot Portal ? </td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined && dataofpdf.IS_REGISTERED_ON_iGOT=='1'">Yes</span>
+            <span *ngIf="dataofpdf != undefined && dataofpdf.IS_REGISTERED_ON_iGOT=='0'">No</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 10%; text-align: center">14</td>
+          <td style="width: 30%; padding: 3px">Reason Type</td>
+          <td style="width: 60%; padding: 3px">
+            <span *ngIf="dataofpdf != undefined">{{
+              dataofpdf.REASON_FOR_TRANSFER ? dataofpdf.REASON_FOR_TRANSFER : "-"
+              }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 10%; padding: 3px; text-align: center">15</td>
+          <td style="width: 30%; padding: 3px">
+            <div>Reason For Transfer Request</div>
+            <br />
+            <div>
+              <u>( recent supporting documents to be enclosed*)</u>
+            </div>
+          </td>
+          <td style="width: 60%; padding: 3px">
+            <div style="width: 100%" *ngIf="dataofpdf != undefined">
+              {{
+              dataofpdf.SUMMARY_OF_TRANSFER
+              ? dataofpdf.SUMMARY_OF_TRANSFER
+              : "-"
+              }}
+              <br />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            *Note: Request for transfer on medical ground shall not be considered if it is not
+            accompany
+            with recent and legible supporting document.
+          </td>
+        </tr>
+      </table>
+      <br />
+    </div>
+  </div>
+</div>
+
+<div *ngIf="drawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-top': '6px','padding-bottom': '53px','padding-left': '16px','padding-right': '16px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="true" [nzWidth]="drawerwidth" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-employee-transfer-drawer [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+        [data]="drawerData"></app-employee-transfer-drawer>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerVisible1s">
+  <nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px', 'padding-top':'10px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="Dwidth" [nzVisible]="drawerVisible1s"
+    [nzTitle]="drawerTitles" (nzOnClose)="drawerClosess()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-employee [personalinformation]="drawerDatapersonal" [empstatus]="empstatus" [drawerClose]="closeCallbackss"
+        [addnew]="addnew"></app-employee>
+    </ng-container>
+  </nz-drawer>
+</div>

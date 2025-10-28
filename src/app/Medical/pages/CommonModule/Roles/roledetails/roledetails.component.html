@@ -1,0 +1,52 @@
+<div nz-row>
+  <div nz-col nzSpan="16"></div>
+
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <input type="text" name="search" nz-input placeholder="Search Records" [(ngModel)]="searchText" />
+    </nz-form-item>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" [nzScroll]="{ x: '1500px' }" nzBordered #table [nzLoading]="loadingRecords"
+      [nzFrontPagination]="false" [nzData]="roleDetailsData">
+
+      <thead>
+        <tr>
+          <th style="width: 130px; text-align: center;">Allow Y/N</th>
+          <th>Parent Name</th>
+          <th>Form Name</th>
+          <th>Link</th>
+          <th style="width: 130px; text-align: center;">Show in Menu Y/N</th>
+          <th>Seq. No.</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data | filter:searchText">
+          <td style="text-align: center;">
+            <nz-switch name="is_allowed" nzCheckedChildren="Y" nzUnCheckedChildren="N" [(ngModel)]="data.IS_ALLOWED">
+            </nz-switch>
+          </td>
+          <td style="white-space: pre-line;">{{data.PARENT_NAME}}</td>
+          <td style="white-space: pre-line;">{{data.NAME}}</td>
+          <td style="white-space: pre-line;">{{data.LINK}}</td>
+          <td style="text-align: center;">
+            <nz-switch name="is_allowed" nzCheckedChildren="Y" nzUnCheckedChildren="N" [(ngModel)]="data.SHOW_IN_MENU">
+            </nz-switch>
+          </td>
+          <td><input nz-input name="saq_no" [(ngModel)]="data.SEQ_NO" /></td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div class="footer">
+  <button type="button" nz-button (click)="close()" class="ant-btn"
+    style="margin-right: 8px;"><span>Cancel</span></button>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save()"><span>Save & Close</span></button>
+</div>

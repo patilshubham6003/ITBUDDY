@@ -1,0 +1,852 @@
+<form nz-form>
+    <div class="myboxxxx" style="padding-top: 1px;margin-top: 10px;padding-bottom: 0px;" *ngIf="!isVerifiedOTP">
+        <div class="row">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Employee Name</nz-form-label>
+                    <input nz-input name="EMPLOYEE_NAME" class="inputsize" [disabled]="istruname"
+                        [(ngModel)]="data.EMPLOYEE_NAME" maxlength="64" autocomplete="off"
+                        (keypress)="alphaOnly($event)" required placeholder="Enter Employee Name" />
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Email ID</nz-form-label>
+                    <input nz-input name="Email" class="inputsize" [disabled]="istruemail" [(ngModel)]="data.EMAIL_ID"
+                        maxlength="64" autocomplete="off" required placeholder="Enter Email ID" />
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Employee Code</nz-form-label>
+                    <input nz-input name="name" class="inputsize" [(ngModel)]="data.EMP_NO" maxlength="8"
+                        autocomplete="off" (keypress)="omit($event)" required placeholder="Employee Code"
+                        [disabled]="istrucode" />
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Mobile No.</nz-form-label>
+                    <input nz-input name="MOBILE_NO" class="inputsize" [disabled]="istrumobile"
+                        [(ngModel)]="data.MOBILE_NO" maxlength="10" autocomplete="off" (keypress)="omit($event)"
+                        [pattern]="mobpattern" placeholder="Enter Mobile No." required />
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Current Cadre</nz-form-label>
+                    <nz-select name="Designation" nzShowSearch nzAllowClear style="width: 100%"
+                        nzPlaceHolder="Current Cadre" nzSize="small" [(ngModel)]="data.DESIGNATION" class="inputsize1"
+                        (ngModelChange)="designationChanged($event)" [nzLoading]="loadDesignation"  [disabled]="rankidtrue">
+                        <nz-option *ngFor="let designation of Designationlist" [nzValue]="designation.MDB_ID"
+                            [nzLabel]="designation.NAME">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Current office</nz-form-label>
+                    <nz-select name="currentoff" nzShowSearch nzAllowClear style="width: 100%" nzSize="small"
+                        nzPlaceHolder="Current office" [(ngModel)]="data.CURRENT_OFFICE_ID" class="inputsize1"
+                        [nzLoading]="loadOfficeCurrent"  [disabled]="officeidtrue">
+                        <nz-option *ngFor="let Office of ReqOfficelistcurrent" [nzValue]="Office.MDB_ID"
+                            [nzLabel]="Office.NAME">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Period Spent In Current
+                        Office</nz-form-label>
+                        <div nz-row>
+                            <div nz-col nzSpan="24">
+                              <div nz-row nzGutter="2">
+                                <div nz-col nzSpan="12">
+                                  <!-- <nz-form-label class="labelsize" nzNoColon
+                                    >
+                                  </nz-form-label> -->
+                                  <nz-form-control>
+                                    <nz-date-picker
+                                      class="datesize"
+                                      nzFormat="dd/MM/yyyy"
+                                      [(ngModel)]="data.FROM_DATE"
+                                      [nzPlaceHolder]="'From Date'"
+                                      name="FROM_DATE"
+                                   
+                                      style="width: 100%; padding-bottom: 3px; padding-top: 3px"
+                                    ></nz-date-picker>
+                                  </nz-form-control>
+                                </div>
+                                <div nz-col nzSpan="12">
+                                  <!-- <nz-form-label class="labelsize" nzNoColon>To </nz-form-label> -->
+                                  <nz-form-control>
+                                    <nz-date-picker
+                                      class="datesize"
+                                      nzFormat="dd/MM/yyyy"
+                                      [(ngModel)]="data.TO_DATE"
+                                      name="TO_DATE"
+                                  
+                                      [nzDisabledDate]="disabledDate"
+                                      [nzPlaceHolder]="'To Date'"
+                                      style="width: 100%; padding-bottom: 3px; padding-top: 3px"
+                                    ></nz-date-picker>
+                                  </nz-form-control>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div style="text-align: end;color: blue;font-size: 12px;font-weight: 600;">
+                            {{calculateDateDifference(data.FROM_DATE,data.TO_DATE)}}
+                            
+                          </div>
+                    <!-- <nz-select [(ngModel)]="data.SPEND_DAY_IN_OFFICE" style="width: 100%" nzSize="small"
+                        autocomplete="off" nzPlaceHolder="Period Spent In Office" class="inputsize1" required
+                        name="selctoption" nzShowSearch nzAllowClear>
+                        <nz-option nzValue="0-6 Months" nzLabel="0-6 Months"></nz-option>
+                        <nz-option nzValue="1-2 Years" nzLabel="1-2 Years"></nz-option>
+                        <nz-option nzValue="2-3 Years" nzLabel="2-3 Years"></nz-option>
+                        <nz-option nzValue="3-4 Years" nzLabel="3-4 Years"></nz-option>
+                        <nz-option nzValue="4-5 Years" nzLabel="4-5 Years"></nz-option>
+                    </nz-select> -->
+                </nz-form-item>
+            </div>
+            <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 colsspadding">
+                <nz-form-item style="
+                display: inline-block;
+                margin-bottom: 5px;
+                width: -webkit-fill-available;
+                padding: 0px 10px;
+              ">
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Current Residential
+                        Address</nz-form-label>
+                    <nz-form-control>
+                        <textarea rows="1" nz-input minlength="1" class="inputsize" name="adddetails" maxlength="300"
+                            [nzAutosize]="{ minRows: 1, maxRows: 3 }" placeholder="Enter Current Residential Address"
+                            [(ngModel)]="data.ADDRESS"></textarea>
+                        <small style="color: red" *ngIf="data.ADDRESS != undefined">
+                            {{data.ADDRESS.length}}/300
+                        </small>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </div>
+    <div class="myboxxxx11" style="padding-top: 1px;padding-bottom: 0px;" *ngIf="!isVerifiedOTP">
+        <div class="row" *ngIf="!isVerifiedOTP">
+            <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 colsspadding" *ngIf="!isVerifiedOTP">
+                <div class="myboxxxxmar" style="padding-top: 1px;padding-bottom: 0px;"
+                    *ngIf="data.DESIGNATION != '51' && data.DESIGNATION != '52' && data.DESIGNATION != '27' && data.DESIGNATION != '18'">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Building 1
+                                </nz-form-label>
+                                <nz-select name="RequestedBuilding1" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 1" (ngModelChange)="GetReqOfficeData1($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Charge 1
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedOffice1" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 1"
+                                    (ngModelChange)="officengchange1($event)" [(ngModel)]="data.REQ_OFFICE_ID"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed1" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Building 2
+                                </nz-form-label>
+                                <nz-select name="RequestedBuilding2" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 2" (ngModelChange)="GetReqOfficeData2($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_2" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist2" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Charge 2
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedOffice2" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 2"
+                                    (ngModelChange)="officengchange2($event)" [(ngModel)]="data.REQ_OFFICE_ID_2"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed2" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Building
+                                    3</nz-form-label>
+                                <nz-select name="RequestedBuilding3" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 3" (ngModelChange)="GetReqOfficeData3($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_3" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist3" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Charge 3
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedOffice3" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 3"
+                                    (ngModelChange)="officengchange3($event)" [(ngModel)]="data.REQ_OFFICE_ID_3"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed3" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building
+                                    4</nz-form-label>
+                                <nz-select name="RequestedBuilding4" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 4" (ngModelChange)="GetReqOfficeData4($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_4" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglistforfilter" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Charge 4
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedOffice4" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 4"
+                                    (ngModelChange)="officengchange4($event)" [(ngModel)]="data.REQ_OFFICE_ID_4"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed4" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building
+                                    5</nz-form-label>
+                                <nz-select name="RequestedBuilding5" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 5" (ngModelChange)="GetReqOfficeData5($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_5" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglistforfilter" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Charge 5
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedOffice5" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 5"
+                                    (ngModelChange)="officengchange5($event)" [(ngModel)]="data.REQ_OFFICE_ID_5"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed5" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+                <div class="myboxxxxmar" style="padding-top: 1px;padding-bottom: 0px;"
+                    *ngIf="data.DESIGNATION !=undefined &&( data.DESIGNATION == '51' || data.DESIGNATION == '52' || data.DESIGNATION == '27' || data.DESIGNATION == '18' )">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Charge 1
+                                </nz-form-label>
+                                <nz-select name="RequestedOffice1" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 1"
+                                    (ngModelChange)="officengchange1($event)" [(ngModel)]="data.REQ_OFFICE_ID"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed1" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building 1 (Optional)
+                                </nz-form-label>
+                                <nz-select name="RequestedBuilding1" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 1" (ngModelChange)="GetReqOfficeData1($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Charge 2
+                                </nz-form-label>
+                                <nz-select name="RequestedOffice2" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 2"
+                                    (ngModelChange)="officengchange2($event)" [(ngModel)]="data.REQ_OFFICE_ID_2"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed2" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building 2 (Optional)
+                                </nz-form-label>
+                                <nz-select name="RequestedBuilding2" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 2" (ngModelChange)="GetReqOfficeData2($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_2" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist2" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Charge 3
+                                </nz-form-label>
+                                <nz-select name="RequestedOffice3" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 3"
+                                    (ngModelChange)="officengchange3($event)" [(ngModel)]="data.REQ_OFFICE_ID_3"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed3" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building 3
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedBuilding3" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 3" (ngModelChange)="GetReqOfficeData3($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_3" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist3" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Charge 4
+                                </nz-form-label>
+                                <nz-select name="RequestedOffice4" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 4"
+                                    (ngModelChange)="officengchange4($event)" [(ngModel)]="data.REQ_OFFICE_ID_4"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed4" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building 4
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedBuilding4" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 4" (ngModelChange)="GetReqOfficeData4($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_4" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist4" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Requested Charge 5
+                                </nz-form-label>
+                                <nz-select name="RequestedOffice5" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzSize="small" nzPlaceHolder="Requested Charge 5"
+                                    (ngModelChange)="officengchange5($event)" [(ngModel)]="data.REQ_OFFICE_ID_5"
+                                    class="inputsize1">
+                                    <nz-option *ngFor="let option of officed5" [nzValue]="option.value"
+                                        [nzLabel]="option.label"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzNoColon>Requested Building 5
+                                    (Optional)</nz-form-label>
+                                <nz-select name="RequestedBuilding5" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Requested Building 5" (ngModelChange)="GetReqOfficeData5($event)"
+                                    [(ngModel)]="data.REQ_BUILDING_ID_5" class="inputsize1" [nzLoading]="loadBuilding"
+                                    nzSize="small">
+                                    <nz-option *ngFor="let building of ReqBuildinglist5" [nzValue]="building.ID"
+                                        [nzLabel]="building.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 colsspadding" *ngIf="!isVerifiedOTP">
+                <div class="myboxxxxmar" style="padding-top: 1px;padding-bottom: 0px;">
+                    <div class="row">
+                        <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Reason Type</nz-form-label>
+                                <nz-select [(ngModel)]="data.REASON_FOR_TRANSFER" style="width: 100%" nzSize="small"
+                                    autocomplete="off" nzPlaceHolder="Reason Reason Type" class="inputsize1" required
+                                    name="reasfortransfer" nzShowSearch nzAllowClear>
+                                    <nz-option nzValue="Family" nzLabel="Family"></nz-option>
+                                    <nz-option nzValue="Medical" nzLabel="Medical"></nz-option>
+                                    <nz-option nzValue="Retirement" nzLabel="Retirement"></nz-option>
+                                    <nz-option nzValue="Other" nzLabel="Other"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 colsspadding">
+                            <nz-form-item style="
+                        display: inline-block;
+                        margin-bottom: 5px;
+                        width: -webkit-fill-available;
+                        padding: 0px 10px;
+                      ">
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Reason For Transfer
+                                    Request</nz-form-label>
+                                <nz-form-control>
+                                    <textarea rows="1" nz-input minlength="1" maxlength="300" class="inputsize"
+                                        name="Summary" [nzAutosize]="{ minRows: 1, maxRows: 3 }"
+                                        placeholder="Enter Reason For Request"
+                                        [(ngModel)]="data.SUMMARY_OF_TRANSFER"></textarea>
+                                    <small style="color: red"
+                                        *ngIf="data.SUMMARY_OF_TRANSFER != undefined && data.SUMMARY_OF_TRANSFER!=null">
+                                        {{data.SUMMARY_OF_TRANSFER.length}}/300
+                                    </small>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 colsspadding">
+                            <nz-form-item>
+                                <nz-form-label *ngIf="data.REASON_FOR_TRANSFER!='Medical'" class="labelsize"
+                                    nzNoColon>Attachment</nz-form-label>
+                                <nz-form-label *ngIf="data.REASON_FOR_TRANSFER=='Medical'" class="labelsize" nzRequired
+                                    nzNoColon>Attachment</nz-form-label>
+
+                                <nz-form-control *ngIf="gradepaynotnull">
+                                    <button nz-button style="padding: 0px 10px; height: 26px; font-size: 10px"
+                                        (click)="attachments.click()" [nzLoading]="loadattach">
+                                        Select File
+                                        <input #attachments name="attachments" class="inputsize"
+                                            [(ngModel)]="data.ATTACHMENTS" type="file"
+                                            (change)="onFileSelectAttachments($event)" accept=".pdf, .png, .jpeg, .jpg"
+                                            (click)="attachments.value = ''" style="display: none" required />
+                                    </button>
+                                </nz-form-control>
+
+                                <div *ngIf="
+                          data.ATTACHMENTS &&
+                          data.ATTACHMENTS != undefined &&
+                          data.ATTACHMENTS != null &&
+                          data.ATTACHMENTS != ''
+                        " style="
+                          overflow: hidden;
+                          font-size: 9px;
+                          display: block;
+                          width: 100%;
+                          color: #1890ff;
+                        ">
+                                    {{ data.ATTACHMENTS }} &nbsp;&nbsp;
+                                    <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove"
+                                        nzTooltipPlacement="top" nz-tooltip style="cursor: pointer; color: red"
+                                        (click)="clearAttachments()">
+                                    </span>
+                                </div>
+                            </nz-form-item>
+                            <div *ngIf="progressBar">
+                                <nz-progress [nzPercent]="percent"></nz-progress>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 colsspadding">
+                            <nz-form-item
+                                style="display: inline-block;margin-bottom: 5px;width: -webkit-fill-available;padding: 0px 10px;">
+                                <nz-form-label class="labelsize" nzRequired nzNoColon>Is Registered On iGot Portal ?
+                                </nz-form-label>
+                                <nz-form-control>
+                                    <nz-switch name="igotregister" class="inputsize" nzCheckedChildren="Yes"
+                                        nzUnCheckedChildren="No" [(ngModel)]="data.IS_REGISTERED_ON_iGOT"></nz-switch>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 colsspadding">
+                            <nz-form-item
+                                style="display: inline-block;margin-bottom: 5px;width: -webkit-fill-available;padding: 0px 10px;">
+                                <nz-form-label
+                                    *ngIf="data.DESIGNATION!=22 && data.DESIGNATION!=36 && data.DESIGNATION!=43 && data.DESIGNATION!=75 && data.DESIGNATION!=39 && data.DESIGNATION!=46 && data.DESIGNATION!=34 && data.DESIGNATION!=35 && data.DESIGNATION!=86 && data.DESIGNATION!=105 && data.DESIGNATION!=87"
+                                    class="labelsize"  nzNoColon>Date Of Filling
+                                    Of IPR For Group
+                                    A/B</nz-form-label>
+                                <nz-form-label
+                                    *ngIf="(data.DESIGNATION==22 || data.DESIGNATION==36 || data.DESIGNATION==43 || data.DESIGNATION==75 || data.DESIGNATION==39 || data.DESIGNATION==46 || data.DESIGNATION==34 || data.DESIGNATION==35 || data.DESIGNATION==86 || data.DESIGNATION==105 || data.DESIGNATION==87)"
+                                    class="labelsize" nzNoColon>Date
+                                    Of Filling Of IPR For Group
+                                    A/B</nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker name="DateOfIPR" [nzDisabledDate]="disabledDate2222"
+                                        class="datesize" nzFormat="dd/MM/yyyy" [(ngModel)]="data.IPR_FILLING_DATE"
+                                        style="width: 100%"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 colsspadding">
+                            <nz-form-item
+                                style="display: inline-block;margin-bottom: 5px;width: -webkit-fill-available;padding: 0px 10px;">
+                                <nz-form-label class="labelsize"  nzNoColon>Date Of APAR Submitted For The
+                                    Year {{nextYear}}-{{currentYear}}?</nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker name="APAR_DATE" [nzDisabledDate]="disabledDate2222"
+                                        class="datesize" nzFormat="dd/MM/yyyy" [(ngModel)]="data.APAR_DATE"
+                                        style="width: 100%"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="isVerifiedOTP">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 colsspadding" style="margin-top: 30px;">
+            <div class="wrap-form">
+                <nz-result nzStatus="success" nzTitle="Transfer request submitted successfully!"
+                    nzSubTitle="Application No. : {{ data.APPLICATION_NO }}" style="
+                padding-bottom: 20px !important;
+                padding-top: 13px !important;
+              ">
+                </nz-result>
+            </div>
+        </div>
+    </div>
+
+    <!-- PDF -->
+    <div class="reg-container" style="visibility: hidden; display: none">
+        <div id="excel-table2">
+            <div style="margin-bottom: -10px;width: 100%;display: flex;justify-content: space-between;">
+                <div style="text-align: center">
+                    <img src="assets/govtOfIndia.png" alt="logo" height="50" />
+                </div>
+                <div style="text-align: center">
+                    <span class="GRAASTitle"> Income Tax</span><br /><span class="GRAASSubTitle">
+                        Mumbai Region</span>
+                </div>
+                <div><img src="assets/aykarlogo.png" alt="logo" height="50" /></div>
+            </div>
+            <hr />
+            <div style="text-align: center;">
+                Request For Transfer In Annual General Transfer {{nextYear}}-{{currentYear}}
+            </div>
+            <br />
+            <div style="text-align: center; font-weight: bold" *ngIf="dataofpdf != undefined">
+                Application No. : {{ dataofpdf.APPLICATION_NO }}
+            </div>
+            <br />
+            <div style="width: 95%; margin-left: 35px">
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 10%; text-align: center; padding: 3px">1</td>
+                        <td style="width: 30%; padding: 3px">Employee Code</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.EMPLOYEE_CODE ? dataofpdf.EMPLOYEE_CODE : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; padding: 3px; text-align: center">2</td>
+                        <td style="width: 30%; padding: 3px">Name</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.EMPLOYEE_NAME ? dataofpdf.EMPLOYEE_NAME : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; padding: 3px; text-align: center">3</td>
+                        <td style="width: 30%; padding: 3px">Email ID</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.EMAIL_ID ? dataofpdf.EMAIL_ID : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; padding: 3px; text-align: center">4</td>
+                        <td style="width: 30%; padding: 3px">Mobile No</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.MOBILE_NO ? dataofpdf.MOBILE_NO : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">5</td>
+                        <td style="width: 30%; padding: 3px">Current Cadre</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.DESIGNATION_NAME ? dataofpdf.DESIGNATION_NAME : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">6</td>
+                        <td style="width: 30%; padding: 3px">Current Office</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.CURRENT_OFFICE_NAME
+                                ? dataofpdf.CURRENT_OFFICE_NAME
+                                : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">7</td>
+                        <td style="width: 30%; padding: 3px">Period Spent In Current Office</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.SPEND_DAY_IN_OFFICE
+                                ? dataofpdf.SPEND_DAY_IN_OFFICE
+                                : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">8</td>
+                        <td style="width: 30%; padding: 3px">
+                            Current Residential Address
+                        </td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.ADDRESS ? dataofpdf.ADDRESS : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">9</td>
+                        <td style="width: 30%; padding: 3px">Requested Buildings</td>
+                        <td style="width: 60%; padding: 3px">
+                            1.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_BUILDING_NAME ? dataofpdf.REQ_BUILDING_NAME : "-"
+                                }}</span><br />
+                            2.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_BUILDING_NAME_2
+                                ? dataofpdf.REQ_BUILDING_NAME_2
+                                : "-"
+                                }}</span><br />
+                            3.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_BUILDING_NAME_3
+                                ? dataofpdf.REQ_BUILDING_NAME_3
+                                : "-"
+                                }}</span><br />
+                            4.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_BUILDING_NAME_4
+                                ? dataofpdf.REQ_BUILDING_NAME_4
+                                : "-"
+                                }}</span><br />
+                            5.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_BUILDING_NAME_5
+                                ? dataofpdf.REQ_BUILDING_NAME_5
+                                : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">10</td>
+                        <td style="width: 30%; padding: 3px">Requested Charges</td>
+                        <td style="width: 60%; padding: 3px">
+                            1.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_OFFICE_ID ? dataofpdf.REQ_OFFICE_ID : "-"
+                                }}</span><br />
+                            2.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_OFFICE_ID_2 ? dataofpdf.REQ_OFFICE_ID_2 : "-"
+                                }}</span><br />
+                            3.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_OFFICE_ID_3 ? dataofpdf.REQ_OFFICE_ID_3 : "-"
+                                }}</span><br />
+                            4.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_OFFICE_ID_4 ? dataofpdf.REQ_OFFICE_ID_4 : "-"
+                                }}</span><br />
+                            5.<span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REQ_OFFICE_ID_5 ? dataofpdf.REQ_OFFICE_ID_5 : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">11</td>
+                        <td style="width: 30%; padding: 3px">Date of filling of IPR for Group A/B</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{dataofpdf.IPR_FILLING_DATE?
+                                (dataofpdf.IPR_FILLING_DATE |
+                                date:'dd/MM/yyyy'):"_"}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; text-align: center">12</td>
+                        <td style="width: 30%; padding: 3px">Date Of APAR Submitted For The Year
+                            2025-26?</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{dataofpdf.APAR_DATE? (dataofpdf.APAR_DATE |
+                                date:'dd/MM/yyyy'):"_"}}</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 10%; text-align: center">13</td>
+                        <td style="width: 30%; padding: 3px">Is Registered On iGot Portal ? </td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined && dataofpdf.IS_REGISTERED_ON_iGOT=='1'">Yes</span>
+                            <span *ngIf="dataofpdf != undefined && dataofpdf.IS_REGISTERED_ON_iGOT=='0'">No</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 10%; text-align: center">14</td>
+                        <td style="width: 30%; padding: 3px">Reason Type</td>
+                        <td style="width: 60%; padding: 3px">
+                            <span *ngIf="dataofpdf != undefined">{{
+                                dataofpdf.REASON_FOR_TRANSFER ? dataofpdf.REASON_FOR_TRANSFER : "-"
+                                }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 10%; padding: 3px; text-align: center">15</td>
+                        <td style="width: 30%; padding: 3px">
+                            <div>Reason For Transfer Request</div>
+                            <br />
+                            <div>
+                                <u>( recent supporting documents to be enclosed*)</u>
+                            </div>
+                        </td>
+                        <td style="width: 60%; padding: 3px">
+                            <div style="width: 100%" *ngIf="dataofpdf != undefined">
+                                {{
+                                dataofpdf.SUMMARY_OF_TRANSFER
+                                ? dataofpdf.SUMMARY_OF_TRANSFER
+                                : "-"
+                                }}
+                                <br />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            *Note: Request for transfer on medical ground shall not be considered if it is not
+                            accompany
+                            with recent and legible supporting document.
+                        </td>
+                    </tr>
+                </table>
+                <br />
+            </div>
+        </div>
+    </div>
+</form>
+<div class="footer" *ngIf="!isVerifiedOTP" style="text-align: center;">
+    <button type="button" nz-button [nzLoading]="loaddataOtp" class="btn" *ngIf="!data.ID"
+        style="border-radius: 50px;background-color: #069!important;margin-bottom: 0px;" (click)="ConfirmRequest()">
+        Get OTP
+    </button>
+    <button type="button" nz-button [nzLoading]="loadingUpdate" class="btn" *ngIf="data.ID"
+        style="border-radius: 50px;background-color: #069!important;margin-bottom: 0px;" (click)="UpdateTransferForm()">
+        Update Details
+    </button>
+</div>
+
+<nz-modal nzWidth="310px" [(nzVisible)]="isOTPModalVisible" nzTitle="OTP Verification" (nzOnCancel)="closeOTPModal()"
+    [nzBodyStyle]="{ padding: '11px' }" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <div nz-row>
+            <div nz-col nzSpan="24">
+                <nz-form-item>
+                    <span style="font-size: 14px !important" class="labelsize">
+                        We have sent the 6-digit OTP to the <br> <b>{{ data.EMAIL_ID }}</b>. Please
+                        enter the OTP received in the textbox below.
+                    </span>
+                </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>OTP</nz-form-label>
+                    <input nz-input name="OTP" [(ngModel)]="OTP" class="inputsize" style="width: 100%" maxlength="6"
+                        autocomplete="off" (keypress)="omit($event)" placeholder="Enter OTP" required />
+                </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24" style="color: blue; font-size: 11px;padding-left: 10px;">
+                *Before confirming OTP, please check filled details carefully. <br />
+                *OTP will expire after 5 minutes. <br />
+            </div>
+        </div>
+    </ng-container>
+    <div *nzModalFooter style="text-align: center !important">
+        <div style="text-align: right;margin-bottom: 10px;font-size: 11px;color: black;">
+            <a *ngIf="!showTimer" (click)="resendOTPForAGT()" style="color: black;font-weight: 600;">
+                Resend OTP
+            </a>
+            <a *ngIf="showTimer" style="color: black;font-weight: 600;">
+                Resend OTP In({{ 180 - timerMobile1 }})
+            </a>
+        </div>
+        <button type="button" class="btn" nz-button [nzLoading]="loadingconfotp" (click)="ConfirmOTP()" style="
+            font-size: 12px;
+    padding: 14px 15px;
+    height: 27px;
+    margin-bottom: 0px;
+    background-color: #069 !important;
+    border-radius: 50px;
+      ">
+            <span>Verify OTP & Submit Application</span>
+        </button>
+    </div>
+</nz-modal>
+
+<div *ngIf="drawerVisible1s">
+    <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px', 'padding-top':'10px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="Dwidth" [nzVisible]="drawerVisible1s"
+        [nzTitle]="drawerTitles" (nzOnClose)="drawerClosess()" (nzKeyboard)="(true)">
+        <ng-container *nzDrawerContent>
+            <app-employee [personalinformation]="drawerDatapersonal" [empstatus]="empstatus"
+                [drawerClose]="closeCallbackss" [addnew]="addnew"></app-employee>
+        </ng-container>
+    </nz-drawer>
+</div>

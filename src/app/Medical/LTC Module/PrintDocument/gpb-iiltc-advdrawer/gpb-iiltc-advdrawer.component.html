@@ -1,0 +1,885 @@
+<div>
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div nz-row [nzGutter]="[16, 24]">
+        <div
+          nz-col
+          nzXs="7"
+          nzSm="7"
+          nzMd="7"
+          nzLg="7"
+          nzXl="7"
+          nzSpan="7"
+          class="gutter-row"
+        >
+          <div class="my-box" style="height: 75vh; overflow-y: auto">
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon> Date</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Select Date">
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/yyyy"
+                      [(ngModel)]="LTCAdvOrderData.ADVANCE_ORDER_DATE"
+                      name="ADVANCE_ORDER_DATE"
+                      required
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid"
+                      [(ngModel)]="
+                        AdvanceOrderSignMap.ADV_LTC_ADV_ORDER_SIGNATURE_1
+                      "
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 2</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid2"
+                      [(ngModel)]="
+                        AdvanceOrderSignMap.ADV_LTC_ADV_ORDER_SIGNATURE_2
+                      "
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature1($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Advance Bill Number</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="ADVANCE_BILL_NO"
+                      nz-input
+                      placeholder="Enter Bill Number"
+                      [(ngModel)]="LTCAdvOrderData.ADVANCE_BILL_NO"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Prepared by:</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="PREPARED_BY"
+                      nz-input
+                      placeholder="Enter Prepared by:"
+                      [(ngModel)]="AdvanceOrderSignMap.PREPARED_BY"
+                      maxlength="32"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Checked by:</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="CHECKED_BY"
+                      nz-input
+                      placeholder="Enter Checked by:"
+                      [(ngModel)]="AdvanceOrderSignMap.CHECKED_BY"
+                      maxlength="32"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Verified by:</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="CHECKED_BY"
+                      nz-input
+                      placeholder="Enter Verified  by:"
+                      [(ngModel)]="AdvanceOrderSignMap.VERIFIED_BY"
+                      maxlength="32"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="gutter-row"
+          nz-col
+          nzXs="17"
+          nzSm="17"
+          nzMd="17"
+          nzLg="17"
+          nzXl="17"
+          nzSpan="17"
+        >
+          <div class="my-box" style="height: 75vh; overflow-y: auto">
+            <div nz-row>
+              <div nz-col nzSpan="6" style="text-align: left">
+                <p>
+                  <b
+                    >Date : &nbsp;
+                    {{
+                      LTCAdvOrderData.ADVANCE_ORDER_DATE | date : "dd/MM/yyyy"
+                    }}
+                  </b>
+                </p>
+              </div>
+              <div nz-col nzSpan="18" style="text-align: right">
+                <p style="font-weight: bold">
+                  {{ LTCAdvOrderData.ADVANCE_BILL_NO }}
+                </p>
+              </div>
+            </div>
+            <div>
+              <p style="margin-left: 10px">
+                1. Placed alongside is a LTC advance bill in respect of
+                {{ LTCAdvOrderData.SALUTATION }}
+                {{ LTCAdvOrderData.EMPLOYEE_NAME }},{{
+                  LTCAdvOrderData.DESIGNATION
+                }}
+                for the {{ LTCAdvOrderData.ADVANCE_ORDER_YEAR }}
+                {{ LTCAdvOrderData.PARTICULARS_BLOCK_YEAR }} He has claimed the
+                LTC Advance for
+                <span *ngIf="advOrderRelations.length > 0">
+                  <ng-container
+                    *ngFor="
+                      let item of advOrderRelations;
+                      let last = last;
+                      let i = index
+                    "
+                  >
+                    {{ item }}
+                    <ng-container *ngIf="advOrderRelations.length > 1 && !last">
+                      <ng-container
+                        *ngIf="advOrderRelations.length === 2 && i === 0"
+                      >
+                        and
+                      </ng-container>
+                      <ng-container
+                        *ngIf="
+                          advOrderRelations.length > 2 &&
+                          i < advOrderRelations.length - 2
+                        "
+                        >,
+                      </ng-container>
+                      <ng-container
+                        *ngIf="
+                          advOrderRelations.length > 2 &&
+                          i === advOrderRelations.length - 2
+                        "
+                      >
+                        and
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </span>
+                only
+              </p>
+              <br />
+              <table>
+                <thead>
+                  <tr style="border: 1px solid black; text-align: center">
+                    <th>Total Expected fare in ₹</th>
+                    <th>
+                      Eligible Amount (90% of the total expected fair) in ₹
+                    </th>
+                    <th>Advance claimed by th officer in ₹</th>
+                    <th>Advance Allowable in ₹</th>
+                    <th>Amount Allowable in ₹ (in words)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="text-align: center">
+                    <td>{{ getTotalClaimed() }}/-</td>
+                    <td>{{ ordereligibleAmount }}/-</td>
+                    <td>{{ LTCAdvOrderData.REQUIRED_ADVANCE_AMOUNT }}/-</td>
+                    <td>{{ LTCAdvOrderData.FINAL_ADVANCE_AMOUNT }}/-</td>
+                    <td style="font-weight: bold">{{ allowedAmountInEng }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <p style="margin-left: 10px">
+                2. The checklist for the LTC bill submitted by
+                {{ LTCAdvOrderData.SALUTATION }}
+                {{ LTCAdvOrderData.EMPLOYEE_NAME }},{{
+                  LTCAdvOrderData.DESIGNATION
+                }}, Pay {{ LTCAdvOrderData.GRADE_PAY_LEVEL }} for the
+                {{ LTCAdvOrderData.ADVANCE_ORDER_YEAR }}
+                {{ LTCAdvOrderData.PARTICULARS_BLOCK_YEAR }} is as under:-
+              </p>
+              <table>
+                <thead>
+                  <tr style="border: 1px solid black; text-align: center">
+                    <th>Sr.No.</th>
+                    <th>Subject</th>
+                    <th>Yes</th>
+                    <th>No</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align: center">1</td>
+                    <td>
+                      Print-out of concerned webpage of the ATAs having flight &
+                      fare details for concerned time slot for tickets taken
+                      after 28/08/2022
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">2</td>
+                    <td>Whether Bank Mandate form Submitted</td>
+                    <td style="text-align: center">
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LTC_MANDATE_FORM != undefined &&
+                          LTCAdvOrderData.LTC_MANDATE_FORM != null &&
+                          LTCAdvOrderData.LTC_MANDATE_FORM != ''
+                        "
+                        >✓</span
+                      >
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LTC_MANDATE_FORM == undefined ||
+                          LTCAdvOrderData.LTC_MANDATE_FORM == null ||
+                          LTCAdvOrderData.LTC_MANDATE_FORM == ''
+                        "
+                      ></span>
+                    </td>
+                    <td style="text-align: center">
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LTC_MANDATE_FORM == undefined ||
+                          LTCAdvOrderData.LTC_MANDATE_FORM == null ||
+                          LTCAdvOrderData.LTC_MANDATE_FORM == ''
+                        "
+                        >✓</span
+                      >
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LTC_MANDATE_FORM != undefined &&
+                          LTCAdvOrderData.LTC_MANDATE_FORM != null &&
+                          LTCAdvOrderData.LTC_MANDATE_FORM != ''
+                        "
+                      ></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: center">3</td>
+                    <td>Latest Payment Slip for pay level purpose</td>
+                    <td style="text-align: center">
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP != undefined &&
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP != null &&
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP != ''
+                        "
+                        >✓</span
+                      >
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP == undefined ||
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP == null ||
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP == ''
+                        "
+                      ></span>
+                    </td>
+                    <td style="text-align: center">
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP == undefined ||
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP == null ||
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP == ''
+                        "
+                        >✓</span
+                      >
+                      <span
+                        *ngIf="
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP != undefined &&
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP != null &&
+                          LTCAdvOrderData.LATEST_PAYMENT_SLIP != ''
+                        "
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <br />
+              <p>Prepared by : {{ AdvanceOrderSignMap.PREPARED_BY }}</p>
+              <br />
+              <p>
+                It is verified from the service book that the officer is
+                eligible for LTC for the above mentioned
+                {{ LTCAdvOrderData.ADVANCE_ORDER_YEAR }}
+                {{ LTCAdvOrderData.PARTICULARS_BLOCK_YEAR }}.<br />
+                Verified by: {{ AdvanceOrderSignMap.VERIFIED_BY }} <br />
+                <br />
+                Checked by: {{ AdvanceOrderSignMap.CHECKED_BY }} <br />
+                T.R. 27-B Sanction order is put up for your kind perusal and
+                signature please.
+              </p>
+            </div>
+            <br />
+            <br />
+            <div nz-row>
+              <div nz-col nzSpan="17"></div>
+              <div nz-col nzSpan="7" style="text-align: center">
+                <span style="font-weight: bold" *ngIf="NAME_HN">
+                  ({{ NAME_HN }})</span
+                >
+                <br />
+                <span style="font-weight: bold" *ngIf="SIGNNAME">
+                  ({{ SIGNNAME }})
+                </span>
+                <br />
+                <span style="text-align: center" *ngIf="POST_HIN">
+                  {{ POST_HIN }}</span
+                >
+                <br />
+                <span style="font-weight: bold" *ngIf="POST"> {{ POST }} </span>
+                <br />
+                <span style="text-align: center" *ngIf="OFFICE_NAME_HIN">
+                  {{ OFFICE_NAME_HIN }}
+                </span>
+                <br />
+                <span style="font-weight: bold" *ngIf="OFFICE_NAME">
+                  {{ OFFICE_NAME }}
+                </span>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="9" style="text-align: center">
+                <span style="font-weight: bold" *ngIf="NAME_HN1"
+                  >({{ NAME_HN1 }})</span
+                >
+                <br />
+                <span style="font-weight: bold" *ngIf="SIGNNAME1"
+                  >({{ SIGNNAME1 }})</span
+                >
+                <br />
+                <span>
+                  <span *ngIf="POST1_HIN">
+                    {{ POST1_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME1_HIN">
+                    , {{ OFFICE_NAME1_HIN }}
+                  </span>
+                  <br />
+                  <span style="text-align: left !important" *ngIf="POST1">
+                    {{ POST1 }}</span
+                  >
+                  <br />
+                  <span
+                    style="text-align: left !important"
+                    *ngIf="OFFICE_NAME1"
+                    >{{ OFFICE_NAME1 }}</span
+                  ></span
+                >
+              </div>
+              <div nz-col nzSpan="15"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<!-- <div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="drawerClose()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    nz-button
+    nzType="primary"
+    ngxPrint
+    [useExistingCss]="true"
+    printSectionId="printgpb"
+  >
+    Print
+  </button>
+</div> -->
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    *ngIf="isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="openPrintModal()"
+    [nzLoading]="loadingRecords"
+  >
+    <span>Preview</span>
+  </button>
+  <button
+    *ngIf="!isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="save()"
+    [nzLoading]="loadingRecords"
+  >
+    <span>Save & Preview</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Advance Order'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto; font-size: 14px !important">
+        <div id="advOrder">
+          <br /><br />
+          <div
+            style="
+              width: 840px;
+              padding: 3px;
+              font-size: 15px !important;
+              font-family: Bookman Old Style;
+              margin-left: 35px;
+            "
+          >
+            <div>
+              <div nz-row>
+                <div nz-col nzSpan="6" style="text-align: left">
+                  <p>
+                    <b
+                      >Date : &nbsp;
+                      {{
+                        LTCAdvOrderData.ADVANCE_ORDER_DATE | date : "dd/MM/yyyy"
+                      }}</b
+                    >
+                  </p>
+                </div>
+                <div nz-col nzSpan="18" style="text-align: right">
+                  <p style="font-weight: bold">
+                    {{ LTCAdvOrderData.ADVANCE_BILL_NO }}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <p style="margin-left: 10px">
+                  1. Placed alongside is a LTC advance bill in respect of
+                  {{ LTCAdvOrderData.SALUTATION }}
+                  {{ LTCAdvOrderData.EMPLOYEE_NAME }},{{
+                    LTCAdvOrderData.DESIGNATION
+                  }}
+                  for the {{ LTCAdvOrderData.ADVANCE_ORDER_YEAR }}
+                  {{ LTCAdvOrderData.PARTICULARS_BLOCK_YEAR }} He has claimed
+                  the LTC Advance for
+                  <span *ngIf="advOrderRelations.length > 0">
+                    <ng-container
+                      *ngFor="
+                        let item of advOrderRelations;
+                        let last = last;
+                        let i = index
+                      "
+                    >
+                      {{ item }}
+                      <ng-container
+                        *ngIf="advOrderRelations.length > 1 && !last"
+                      >
+                        <ng-container
+                          *ngIf="advOrderRelations.length === 2 && i === 0"
+                        >
+                          and
+                        </ng-container>
+                        <ng-container
+                          *ngIf="
+                            advOrderRelations.length > 2 &&
+                            i < advOrderRelations.length - 2
+                          "
+                          >,
+                        </ng-container>
+                        <ng-container
+                          *ngIf="
+                            advOrderRelations.length > 2 &&
+                            i === advOrderRelations.length - 2
+                          "
+                        >
+                          and
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </span>
+                  only
+                </p>
+                <br />
+                <table>
+                  <thead>
+                    <tr style="border: 1px solid black; text-align: center">
+                      <th>Total Expected fare in ₹</th>
+                      <th>
+                        Eligible Amount (90% of the total expected fair) in ₹
+                      </th>
+                      <th>Advance claimed by th officer in ₹</th>
+                      <th>Advance Allowable in ₹</th>
+                      <th>Amount Allowable in ₹ (in words)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="text-align: center">
+                      <td>{{ getTotalClaimed() }}/-</td>
+                      <td>{{ ordereligibleAmount }}/-</td>
+                      <td>{{ LTCAdvOrderData.REQUIRED_ADVANCE_AMOUNT }}/-</td>
+                      <td>{{ LTCAdvOrderData.FINAL_ADVANCE_AMOUNT }}/-</td>
+                      <td style="font-weight: bold">
+                        {{ allowedAmountInEng }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <p style="margin-left: 10px">
+                  2. The checklist for the LTC bill submitted by
+                  {{ LTCAdvOrderData.SALUTATION }}
+                  {{ LTCAdvOrderData.EMPLOYEE_NAME }},{{
+                    LTCAdvOrderData.DESIGNATION
+                  }}, Pay {{ LTCAdvOrderData.GRADE_PAY_LEVEL }} for the
+                  {{ LTCAdvOrderData.ADVANCE_ORDER_YEAR }}
+                  {{ LTCAdvOrderData.PARTICULARS_BLOCK_YEAR }} is as under:-
+                </p>
+                <table>
+                  <thead>
+                    <tr style="border: 1px solid black; text-align: center">
+                      <th>Sr.No.</th>
+                      <th>Subject</th>
+                      <th>Yes</th>
+                      <th>No</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="text-align: center">1</td>
+                      <td>
+                        Print-out of concerned webpage of the ATAs having flight
+                        & fare details for concerned time slot for tickets taken
+                        after 28/08/2022
+                      </td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: center">2</td>
+                      <td>Whether Bank Mandate form Submitted</td>
+                      <td style="text-align: center">
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LTC_MANDATE_FORM != undefined &&
+                            LTCAdvOrderData.LTC_MANDATE_FORM != null &&
+                            LTCAdvOrderData.LTC_MANDATE_FORM != ''
+                          "
+                          >✓</span
+                        >
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LTC_MANDATE_FORM == undefined ||
+                            LTCAdvOrderData.LTC_MANDATE_FORM == null ||
+                            LTCAdvOrderData.LTC_MANDATE_FORM == ''
+                          "
+                        ></span>
+                      </td>
+                      <td style="text-align: center">
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LTC_MANDATE_FORM == undefined ||
+                            LTCAdvOrderData.LTC_MANDATE_FORM == null ||
+                            LTCAdvOrderData.LTC_MANDATE_FORM == ''
+                          "
+                          >✓</span
+                        >
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LTC_MANDATE_FORM != undefined &&
+                            LTCAdvOrderData.LTC_MANDATE_FORM != null &&
+                            LTCAdvOrderData.LTC_MANDATE_FORM != ''
+                          "
+                        ></span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: center">3</td>
+                      <td>Latest Payment Slip for pay level purpose</td>
+                      <td style="text-align: center">
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP != undefined &&
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP != null &&
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP != ''
+                          "
+                          >✓</span
+                        >
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP == undefined ||
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP == null ||
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP == ''
+                          "
+                        ></span>
+                      </td>
+                      <td style="text-align: center">
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP == undefined ||
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP == null ||
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP == ''
+                          "
+                          >✓</span
+                        >
+                        <span
+                          *ngIf="
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP != undefined &&
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP != null &&
+                            LTCAdvOrderData.LATEST_PAYMENT_SLIP != ''
+                          "
+                        ></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <br />
+                <p>Prepared by : {{ AdvanceOrderSignMap.PREPARED_BY }}</p>
+                <br />
+                <p>
+                  It is verified from the service book that the officer is
+                  eligible for LTC for the above mentioned
+                  {{ LTCAdvOrderData.ADVANCE_ORDER_YEAR }}
+                  {{ LTCAdvOrderData.PARTICULARS_BLOCK_YEAR }}.<br />
+                  Verified by: {{ AdvanceOrderSignMap.VERIFIED_BY }} <br />
+                  <br />
+                  Checked by: {{ AdvanceOrderSignMap.CHECKED_BY }} <br />
+                  T.R. 27-B Sanction order is put up for your kind perusal and
+                  signature please.
+                </p>
+              </div>
+              <br />
+              <br />
+              <div nz-row>
+                <div nz-col nzSpan="17"></div>
+                <div nz-col nzSpan="7" style="text-align: center">
+                  <span style="font-weight: bold" *ngIf="NAME_HN">
+                    ({{ NAME_HN }})</span
+                  >
+                  <br />
+                  <span style="font-weight: bold" *ngIf="SIGNNAME">
+                    ({{ SIGNNAME }})
+                  </span>
+                  <br />
+                  <span style="text-align: center" *ngIf="POST_HIN">
+                    {{ POST_HIN }}</span
+                  >
+                  <br />
+                  <span style="font-weight: bold" *ngIf="POST">
+                    {{ POST }}
+                  </span>
+                  <br />
+                  <span style="text-align: center" *ngIf="OFFICE_NAME_HIN">
+                    {{ OFFICE_NAME_HIN }}
+                  </span>
+                  <br />
+                  <span style="font-weight: bold" *ngIf="OFFICE_NAME">
+                    {{ OFFICE_NAME }}
+                  </span>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="9" style="text-align: center">
+                  <span style="font-weight: bold" *ngIf="NAME_HN1"
+                    >({{ NAME_HN1 }})</span
+                  >
+                  <br />
+                  <span style="font-weight: bold" *ngIf="SIGNNAME1"
+                    >({{ SIGNNAME1 }})</span
+                  >
+                  <br />
+                  <span>
+                    <span *ngIf="POST1_HIN">
+                      {{ POST1_HIN }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME1_HIN">
+                      , {{ OFFICE_NAME1_HIN }}
+                    </span>
+                    <br />
+                    <span style="text-align: left !important" *ngIf="POST1">
+                      {{ POST1 }}</span
+                    >
+                    <br />
+                    <span
+                      style="text-align: left !important"
+                      *ngIf="OFFICE_NAME1"
+                      >{{ OFFICE_NAME1 }}</span
+                    ></span
+                  >
+                </div>
+                <div nz-col nzSpan="15"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="advOrder"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

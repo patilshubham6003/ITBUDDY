@@ -1,0 +1,796 @@
+<div>
+  <form nz-form>
+    <!-- <div style="font-size: 14px">
+      <p style="text-align: center; font-size: 16px">
+        <u>(To be filled in the Bill Section)</u>
+      </p> 
+      <p>
+        The net entitlement on account of Travelling Allowance works out to
+        <b>
+          <u
+            >Rs.<b>{{ totalamountofpartb }}</b
+            >/-</u
+          ></b
+        >
+        as detailed below :-
+      </p>
+
+      <p>(a) Railway / Air / Bus / Steamer fare : Rs _________</p>
+      <p>
+        (b) Road mileage for <b>{{ tourpartbdata.KILOMETER }}</b> Kms @ .Rs
+        <b>{{ tourpartbdata.MILAGE_BY_ROAD }}</b> per/Km
+      </p>
+
+      <table style="border: 1px solid black">
+        <tr>
+          <th rowspan="5" style="width: 40px; text-align: center">(c)</th>
+          <td colspan="6">Daily Allowance</td>
+        </tr>
+        <tr>
+          <td style="width: 40px; text-align: center">(i)</td>
+          <td style="width: 220px">__________ days</td>
+          <td style="width: 40px; text-align: center">@</td>
+          <td style="width: 220px">Rs.__________</td>
+          <td style="width: 100px; text-align: center">Per days</td>
+          <td style="width: 200px">Rs.</td>
+        </tr>
+        <tr>
+          <td style="width: 40px; text-align: center">(ii)</td>
+          <td style="width: 220px">__________ days</td>
+          <td style="width: 40px; text-align: center">@</td>
+          <td style="width: 220px">Rs.__________</td>
+          <td style="width: 100px; text-align: center">Per days</td>
+          <td style="width: 200px">Rs.</td>
+        </tr>
+        <tr>
+          <td style="width: 40px; text-align: center">(iii)</td>
+          <td style="width: 220px">__________ days</td>
+          <td style="width: 40px; text-align: center">@</td>
+          <td style="width: 220px">Rs.__________</td>
+          <td style="width: 100px; text-align: center">Per days</td>
+          <td style="width: 200px">Rs.</td>
+        </tr>
+        <tr>
+          <td style="width: 40px"></td>
+          <td style="width: 220px"></td>
+          <td style="width: 40px; text-align: center"></td>
+          <td style="width: 220px"></td>
+          <td style="width: 100px; text-align: center"></td>
+          <td style="width: 200px">Rs.</td>
+        </tr>
+        <tr>
+          <th  style="width: 40px; text-align: center">(d)</th>
+          <td colspan="5" style="text-align: left">Hotel</td>
+          <td style="width: 200px">
+            Rs.<b>{{ hotelAdmissibleAmount }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <th  style="width: 40px; text-align: center">(e)</th>
+          <td colspan="5"  style="text-align: left">Food</td>
+          <td style="width: 200px">
+            Rs.<b>{{ foodAdmissibleAmount }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <th  style="width: 40px; text-align: center">(f)</th>
+          <td colspan="5" style="text-align: left">Intercity</td>
+          <td style="width: 200px">
+            Rs.<b>{{ intercityAdmissibleAmount }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="2" style="width: 40px; text-align: center">(g)</th>
+          <td style="text-align: right">Actual expences :</td>
+          <td style="width: 200px">
+            Rs.<b>{{ actualExpences }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="text-align: right">Gross Amount :</td>
+          <td style="width: 200px">
+            Rs.<b>{{ grossAmount }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <th style="text-align: center">(h)</th>
+          <td colspan="5">
+            Less: Amount of T.A. advance, if any, drawn vide voucher No.
+            <b>{{ tourpartbdata.ADVANCE_TAKEN_VOUCHER_NO }}</b> date :-<b>{{
+              tourpartbdata.ADVANCE_TAKEN_DATE | date : "dd MM yyyy"
+            }}</b>
+            :
+          </td>
+          <td style="width: 200px">
+            Rs.<b>{{ tourpartbdata.AMOUNT_OF_T_A }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <th style="text-align: center"></th>
+          <td colspan="5" style="text-align: right">Net Amount :</td>
+          <td style="width: 200px">
+            Rs.<b>{{ totalamountofpartb }}/-</b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6" style="height: 33px"></td>
+          <td style="width: 200px; height: 33px"></td>
+        </tr>
+      </table>
+
+      <br /><br />
+      <br />
+
+      <p>
+        The Expenditure is debitable to
+        <span style="text-decoration: underline">DTE</span>
+      </p>
+      <br />
+      <br /><br />
+
+      <div style="display: flex; gap: 255px; margin-left: 35px">
+        <div style="text-transform: uppercase">Initials of Bill Clerk</div>
+        <div>Signature of Drawing & Disbursing Officer</div>
+      </div>
+      <br /><br />
+      <div style="margin-top: 100px; font-size: 13px">
+        <div nz-row>
+          <div nz-col nzSpan="12"></div>
+
+          <div nz-col nzSpan="12" style="text-align: center">
+            <p>COUNTERSIGNED</p>
+          </div>
+        </div>
+      </div>
+
+      <br /><br />
+
+      <div style="margin-top: 100px; font-size: 13px">
+        <div nz-row>
+          <div nz-col nzSpan="12"></div>
+
+          <div nz-col nzSpan="12" style="text-align: center">
+            <p>(Signature of Controlling Officer)</p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div nz-row [nzGutter]="[16, 24]">
+      <div nz-col nzSpan="8" class="gutter-row">
+        <div class="my-box" style="height: 75vh; overflow-y: auto">
+          <div nz-row>
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid"
+                    [(ngModel)]="
+                      SignatureMaptourpartbdata.TOUR_PART_B_SIGNATURE_1
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 2</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid2"
+                    [(ngModel)]="
+                      SignatureMaptourpartbdata.TOUR_PART_B_SIGNATURE_2
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature1($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 3</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid3"
+                    [(ngModel)]="
+                      SignatureMaptourpartbdata.TOUR_PART_B_SIGNATURE_3
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature2($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="16" class="gutter-row">
+        <div
+          style="padding: 10px; height: 75vh; overflow-y: auto"
+          class="my-box"
+        >
+          <div style="font-size: 14px">
+            <h2 style="text-align: center; font-weight: bold">Part - B</h2>
+            <p style="text-align: center; font-size: 16px">
+              <u>(To be filled in the Bill Section)</u>
+            </p>
+            <div>
+              Name of the Official/Officer : {{ tourpartbdata.EMPLOYEE_NAME }}
+            </div>
+            <p>
+              The net entitlement on account of Travelling Allowance works out
+              to
+              <b>
+                <u
+                  >Rs.<b>{{ totalamountofpartb }}</b
+                  >/-</u
+                ></b
+              >
+              as detailed below :-
+            </p>
+
+            <p>
+              (a) Railway / Air / Bus / Steamer fare : Rs
+              <b>{{ journeytotalamounttourpartb }}/-</b>
+            </p>
+            <p>
+              (b) Road mileage for <b>{{ tourpartbdata.KILOMETER }}</b> Kms @
+              .Rs <b>{{ tourpartbdata.MILAGE_BY_ROAD }}</b> per/Km
+            </p>
+
+            <table style="border: 1px solid black">
+              <tr>
+                <th rowspan="5" style="width: 40px; text-align: center">(c)</th>
+                <td colspan="6">Daily Allowance</td>
+              </tr>
+              <tr>
+                <td style="width: 40px; text-align: center">(i)</td>
+                <td style="width: 220px">__________ days</td>
+                <td style="width: 40px; text-align: center">@</td>
+                <td style="width: 220px">Rs.__________</td>
+                <td style="width: 100px; text-align: center">Per days</td>
+                <td style="width: 200px">Rs.</td>
+              </tr>
+              <tr>
+                <td style="width: 40px; text-align: center">(ii)</td>
+                <td style="width: 220px">__________ days</td>
+                <td style="width: 40px; text-align: center">@</td>
+                <td style="width: 220px">Rs.__________</td>
+                <td style="width: 100px; text-align: center">Per days</td>
+                <td style="width: 200px">Rs.</td>
+              </tr>
+              <tr>
+                <td style="width: 40px; text-align: center">(iii)</td>
+                <td style="width: 220px">__________ days</td>
+                <td style="width: 40px; text-align: center">@</td>
+                <td style="width: 220px">Rs.__________</td>
+                <td style="width: 100px; text-align: center">Per days</td>
+                <td style="width: 200px">Rs.</td>
+              </tr>
+              <tr>
+                <td style="width: 40px"></td>
+                <td style="width: 220px"></td>
+                <td style="width: 40px; text-align: center"></td>
+                <td style="width: 220px"></td>
+                <td style="width: 100px; text-align: center"></td>
+                <td style="width: 200px">Rs.</td>
+              </tr>
+              <tr>
+                <th style="width: 40px; text-align: center">(d)</th>
+                <td colspan="5" style="text-align: left">Accommodation</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ accommodationAdmissibleAmount }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <th style="width: 40px; text-align: center">(e)</th>
+                <td colspan="5" style="text-align: left">Hotel</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ hotelAdmissibleAmount }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <th style="width: 40px; text-align: center">(f)</th>
+                <td colspan="5" style="text-align: left">Food</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ foodAdmissibleAmount }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <th style="width: 40px; text-align: center">(g)</th>
+                <td colspan="5" style="text-align: left">Intercity</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ intercityAdmissibleAmount }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <th rowspan="2" style="width: 40px; text-align: center">(h)</th>
+                <td colspan="5" style="text-align: right">Actual expences :</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ actualExpences }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="5" style="text-align: right">Gross Amount :</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ grossAmount }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <th style="text-align: center">(i)</th>
+                <td colspan="5">
+                  Less: Amount of T.A. advance, if any, drawn vide voucher No.
+                  <b>{{ tourpartbdata.ADVANCE_TAKEN_VOUCHER_NO }}</b> date :-<b
+                    >{{
+                      tourpartbdata.ADVANCE_TAKEN_DATE | date : "dd MM yyyy"
+                    }}</b
+                  >
+                  :
+                </td>
+                <td style="width: 200px">
+                  Rs.<b>{{ tourpartbdata.AMOUNT_OF_T_A }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <th style="text-align: center"></th>
+                <td colspan="5" style="text-align: right">Net Amount :</td>
+                <td style="width: 200px">
+                  Rs.<b>{{ totalamountofpartb }}/-</b>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" style="height: 33px"></td>
+                <td style="width: 200px; height: 33px"></td>
+              </tr>
+            </table>
+            <p style="margin-top: 10px">
+              The Expenditure is debitable to
+              <span style="text-decoration: underline">DTE</span>
+            </p>
+            <br />
+            <br />
+
+            <div nz-row>
+              <div nz-col nzSpan="12" style="font-size: 12px !important">
+                Initials of Bill Clerk
+              </div>
+              <div
+                nz-col
+                nzSpan="12"
+                style="text-align: center; font-size: 12px !important"
+              >
+                <div *ngIf="NAME_HN; else abc" style="font-weight: bold">
+                  ({{ NAME_HN }})
+                </div>
+                <ng-template #abc></ng-template>
+                <div *ngIf="POST_HIN">{{ POST_HIN }}</div>
+                <div *ngIf="OFFICE_NAME_HIN">{{ OFFICE_NAME_HIN }}</div>
+                <div *ngIf="SIGNNAME" style="font-weight: bold">
+                  ({{ SIGNNAME }})
+                </div>
+                <div *ngIf="POST">{{ POST }}</div>
+                <div *ngIf="OFFICE_NAME">{{ OFFICE_NAME }}</div>
+                <div>COUNTERSIGNED</div>
+              </div>
+            </div>
+
+            <div
+              style="
+                margin-top: 80px;
+                text-align: center;
+                font-size: 12px !important;
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <div *ngIf="NAME_HN1" style="font-weight: bold">
+                    ({{ NAME_HN1 }})
+                  </div>
+                  <div *ngIf="POST1_HIN">{{ POST1_HIN }}</div>
+                  <div *ngIf="OFFICE_NAME1_HIN">{{ OFFICE_NAME1_HIN }}</div>
+                  <div *ngIf="SIGNNAME1" style="font-weight: bold">
+                    ({{ SIGNNAME1 }})
+                  </div>
+                  <div *ngIf="POST1">{{ POST1 }}</div>
+                  <div *ngIf="OFFICE_NAME1">{{ OFFICE_NAME1 }}</div>
+                </div>
+                <div
+                  nz-col
+                  nzSpan="12"
+                  style="text-align: center; font-size: 12px !important"
+                >
+                  <div *ngIf="NAME_HN2" style="font-weight: bold">
+                    ({{ NAME_HN2 }})
+                  </div>
+                  <div *ngIf="POST2_HIN">{{ POST2_HIN }}</div>
+                  <div *ngIf="OFFICE_NAME2_HIN">{{ OFFICE_NAME2_HIN }}</div>
+                  <div *ngIf="SIGNNAME2" style="font-weight: bold">
+                    ({{ SIGNNAME2 }})
+                  </div>
+                  <div *ngIf="POST2">{{ POST2 }}</div>
+                  <div *ngIf="OFFICE_NAME2">{{ OFFICE_NAME2 }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Save & Preview</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Tour Part B'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding-right: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <div>
+              <h2 style="text-align: center; font-weight: bold">Part - B</h2>
+              <p style="text-align: center; font-size: 16px">
+                <u>(To be filled in the Bill Section)</u>
+              </p>
+              <div>
+                Name of the Official/Officer : {{ tourpartbdata.EMPLOYEE_NAME }}
+              </div>
+              <p>
+                The net entitlement on account of Travelling Allowance works out
+                to
+                <b>
+                  <u
+                    >Rs.<b>{{ totalamountofpartb }}</b
+                    >/-</u
+                  ></b
+                >
+                as detailed below :-
+              </p>
+
+              <p>
+                (a) Railway / Air / Bus / Steamer fare : Rs
+                <b>{{ journeytotalamounttourpartb }}/-</b>
+              </p>
+              <p>
+                (b) Road mileage for <b>{{ tourpartbdata.KILOMETER }}</b> Kms @
+                .Rs <b>{{ tourpartbdata.MILAGE_BY_ROAD }}</b> per/Km
+              </p>
+
+              <table style="border: 1px solid black">
+                <tr>
+                  <th rowspan="5" style="width: 40px; text-align: center">
+                    (c)
+                  </th>
+                  <td colspan="6">Daily Allowance</td>
+                </tr>
+                <tr>
+                  <td style="width: 40px; text-align: center">(i)</td>
+                  <td style="width: 220px">__________ days</td>
+                  <td style="width: 40px; text-align: center">@</td>
+                  <td style="width: 220px">Rs.__________</td>
+                  <td style="width: 100px; text-align: center">Per days</td>
+                  <td style="width: 200px">Rs.</td>
+                </tr>
+                <tr>
+                  <td style="width: 40px; text-align: center">(ii)</td>
+                  <td style="width: 220px">__________ days</td>
+                  <td style="width: 40px; text-align: center">@</td>
+                  <td style="width: 220px">Rs.__________</td>
+                  <td style="width: 100px; text-align: center">Per days</td>
+                  <td style="width: 200px">Rs.</td>
+                </tr>
+                <tr>
+                  <td style="width: 40px; text-align: center">(iii)</td>
+                  <td style="width: 220px">__________ days</td>
+                  <td style="width: 40px; text-align: center">@</td>
+                  <td style="width: 220px">Rs.__________</td>
+                  <td style="width: 100px; text-align: center">Per days</td>
+                  <td style="width: 200px">Rs.</td>
+                </tr>
+                <tr>
+                  <td style="width: 40px"></td>
+                  <td style="width: 220px"></td>
+                  <td style="width: 40px; text-align: center"></td>
+                  <td style="width: 220px"></td>
+                  <td style="width: 100px; text-align: center"></td>
+                  <td style="width: 200px">Rs.</td>
+                </tr>
+                <tr>
+                  <th style="width: 40px; text-align: center">(d)</th>
+                  <td colspan="5" style="text-align: left">Accommodation</td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ accommodationAdmissibleAmount }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="width: 40px; text-align: center">(e)</th>
+                  <td colspan="5" style="text-align: left">Hotel</td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ hotelAdmissibleAmount }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="width: 40px; text-align: center">(f)</th>
+                  <td colspan="5" style="text-align: left">Food</td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ foodAdmissibleAmount }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="width: 40px; text-align: center">(g)</th>
+                  <td colspan="5" style="text-align: left">Intercity</td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ intercityAdmissibleAmount }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th rowspan="2" style="width: 40px; text-align: center">
+                    (h)
+                  </th>
+                  <td colspan="5" style="text-align: right">
+                    Actual expences :
+                  </td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ actualExpences }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" style="text-align: right">Gross Amount :</td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ grossAmount }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: center">(i)</th>
+                  <td colspan="5">
+                    Less: Amount of T.A. advance, if any, drawn vide voucher No.
+                    <b>{{ tourpartbdata.ADVANCE_TAKEN_VOUCHER_NO }}</b> date
+                    :-<b>{{
+                      tourpartbdata.ADVANCE_TAKEN_DATE | date : "dd MM yyyy"
+                    }}</b>
+                    :
+                  </td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ tourpartbdata.AMOUNT_OF_T_A }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: center"></th>
+                  <td colspan="5" style="text-align: right">Net Amount :</td>
+                  <td style="width: 200px">
+                    Rs.<b>{{ totalamountofpartb }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6" style="height: 33px"></td>
+                  <td style="width: 200px; height: 33px"></td>
+                </tr>
+              </table>
+
+              <br />
+
+              <p>
+                The Expenditure is debitable to
+                <span style="text-decoration: underline">DTE</span>
+              </p>
+              <br />
+
+              <div nz-row>
+                <div nz-col nzSpan="12" style="font-size: 12px !important">
+                  Initials of Bill Clerk
+                </div>
+                <div
+                  nz-col
+                  nzSpan="12"
+                  style="text-align: center; font-size: 12px !important"
+                >
+                  <div *ngIf="NAME_HN; else abc" style="font-weight: bold">
+                    ({{ NAME_HN }})
+                  </div>
+                  <ng-template #abc></ng-template>
+                  <div *ngIf="POST_HIN">{{ POST_HIN }}</div>
+                  <div *ngIf="OFFICE_NAME_HIN">{{ OFFICE_NAME_HIN }}</div>
+                  <div *ngIf="SIGNNAME" style="font-weight: bold">
+                    ({{ SIGNNAME }})
+                  </div>
+                  <div *ngIf="POST">{{ POST }}</div>
+                  <div *ngIf="OFFICE_NAME">{{ OFFICE_NAME }}</div>
+                  <div>COUNTERSIGNED</div>
+                </div>
+              </div>
+
+              <div
+                style="
+                  margin-top: 60px;
+                  text-align: center;
+                  font-size: 12px !important;
+                "
+              >
+                <div nz-row>
+                  <div nz-col nzSpan="12">
+                    <div *ngIf="NAME_HN1" style="font-weight: bold">
+                      ({{ NAME_HN1 }})
+                    </div>
+                    <div *ngIf="POST1_HIN">{{ POST1_HIN }}</div>
+                    <div *ngIf="OFFICE_NAME1_HIN">{{ OFFICE_NAME1_HIN }}</div>
+                    <div *ngIf="SIGNNAME1" style="font-weight: bold">
+                      ({{ SIGNNAME1 }})
+                    </div>
+                    <div *ngIf="POST1">{{ POST1 }}</div>
+                    <div *ngIf="OFFICE_NAME1">{{ OFFICE_NAME1 }}</div>
+                  </div>
+                  <div
+                    nz-col
+                    nzSpan="12"
+                    style="text-align: center; font-size: 12px !important"
+                  >
+                    <div *ngIf="NAME_HN2" style="font-weight: bold">
+                      ({{ NAME_HN2 }})
+                    </div>
+                    <div *ngIf="POST2_HIN">{{ POST2_HIN }}</div>
+                    <div *ngIf="OFFICE_NAME2_HIN">{{ OFFICE_NAME2_HIN }}</div>
+                    <div *ngIf="SIGNNAME2" style="font-weight: bold">
+                      ({{ SIGNNAME2 }})
+                    </div>
+                    <div *ngIf="POST2">{{ POST2 }}</div>
+                    <div *ngIf="OFFICE_NAME2">{{ OFFICE_NAME2 }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

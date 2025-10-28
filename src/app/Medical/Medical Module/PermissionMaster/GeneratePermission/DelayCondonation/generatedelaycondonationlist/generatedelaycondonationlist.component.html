@@ -1,0 +1,561 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="20"
+    nzLg="20"
+    nzXl="8"
+    style="padding-left: 30px"
+  >
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="4"
+    nzXl="16"
+    style="justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item style="width: 40%">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            (keydown.enter)="onKeypressEvent($event)"
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search" id="button"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Delay Condonation Permission
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item style="margin-top: 1px; width: 113%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="BILL_FILIING_DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <!-- [(ngModel)]="data" -->
+            <!-- <div nz-col nzSpan="5" style="margin-left: 39px">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>Hospital Type</nz-form-label>
+                      <nz-select
+                        nzShowSearch
+                        nzAllowClear
+                        name="hospitalType"
+                        [(ngModel)]="TYPE_OF_HOSPITAL"
+                        nzPlaceHolder="Select Hospital Type"
+                      >
+                        <nz-option nzLabel="Empanelled" nzValue="1"></nz-option>
+                        <nz-option nzLabel="Non-Empanelled" nzValue="2"></nz-option>
+                        <nz-option nzLabel="Governemnt" nzValue="3"></nz-option>
+                      </nz-select>
+                    </nz-form-item>
+                  </div> -->
+            <!-- [(ngModel)]="STAGE_ID" -->
+            <!-- <div nz-col nzSpan="5" style="margin-left: 39px">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>Stage Name</nz-form-label>
+                      <nz-select
+                        name="stageName"
+                        nzShowSearch
+                        nzAllowClear
+                        style="width: 100%"
+                        [(ngModel)]="STAGE_NAME"
+                        nzPlaceHolder="Select Stage Name"
+                        nzMode="multiple"
+                      >
+                        <nz-option
+                          *ngFor="let stage of stages"
+                          [nzValue]="stage.ID"
+                          [nzLabel]="stage.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-item>
+                  </div> -->
+
+            <!-- </div>
+                          <div nz-row nzGutter="8"> -->
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 45px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="dataList"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ x: '3300px', y: '55vh' }"
+      nzBordered
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th nzWidth="80px">Action</th>
+          <!-- <th nzWidth="70px">Delete</th> -->
+          <!-- <th nzWidth="120px">Claim File</th> -->
+          <th nzWidth="100px">Order</th>
+          <th nzWidth="100px">Letter</th>
+          <th nzWidth="250px" nzColumnKey="EMPLOYEE_NAME" [nzSortFn]="true">
+            Applicant Name
+          </th>
+          <!-- <th nzWidth="210px" nzColumnKey="CLAIM_STAGE_NAME" [nzSortFn]="true">
+                Status
+              </th> -->
+          <!-- <th nzWidth="150px" nzColumnKey="CLAIM_NO" [nzSortFn]="true">
+                Claim No
+              </th> -->
+
+          <th nzWidth="110px" nzColumnKey="MOBILE_NO" [nzSortFn]="true">
+            Mobile No.
+          </th>
+          <th nzWidth="150px" nzColumnKey="EMPLOYEE_CODE" [nzSortFn]="true">
+            Employee Code
+          </th>
+          <th nzWidth="270px" nzColumnKey="DESIGNATION" [nzSortFn]="true">
+            Employee Designation
+          </th>
+          <th nzWidth="220px" nzColumnKey="PATIENT_NAME" [nzSortFn]="true">
+            Patient Name
+          </th>
+          <th
+            nzWidth="170px"
+            nzColumnKey="RELATION_WITH_PATIENT"
+            [nzSortFn]="true"
+          >
+            Patient Relation
+          </th>
+          <th nzWidth="150px" nzColumnKey="BILL_FILIING_DATE" [nzSortFn]="true">
+            Bill Filling Date
+          </th>
+          <!-- <th nzWidth="190px" nzColumnKey="ADMISSIBLE_AMOUNT" [nzSortFn]="true">
+                Admissible Amount(₹)
+              </th> -->
+
+          <th nzWidth="370px" nzColumnKey="TREATEMENT_TYPE" [nzSortFn]="true">
+            Treatment Type
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="TREATMENT_START_DATE"
+            [nzSortFn]="true"
+          >
+            Treatment Start Date
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="TREATMENT_END_DATE"
+            [nzSortFn]="true"
+          >
+            Treatment End Date
+          </th>
+          <!-- <th nzWidth="260px" nzColumnKey="ACCREDITATION" [nzSortFn]="true">
+                  Empanelled Hospital Accrediation
+                </th>
+                <th
+                  nzWidth="210px"
+                  nzColumnKey="CLAIM_ACCREDITATION"
+                  [nzSortFn]="true"
+                >
+                  Accrediation
+                </th>
+      
+                <th nzWidth="180px" nzColumnKey="HOSPITAL_TYPE" [nzSortFn]="true">
+                  Hospital Type
+                </th>
+                <th nzWidth="400px" nzColumnKey="HOSPITAL_NAME" [nzSortFn]="true">
+                  Hospital Name
+                </th>
+                <th
+                  nzWidth="400px"
+                  nzColumnKey="EMPANELLED_HOSPITAL_NAME"
+                  [nzSortFn]="true"
+                >
+                  Empanelled Hospital Name
+                </th> -->
+          <!-- <th nzWidth="25px" nzColumnKey="EMPLOYEE_NAME" [nzSortFn]="true" >Advance Amount</th>
+                          <th style="width: 40px" nzColumnKey="EMPLOYEE_NAME" [nzSortFn]="true" >Date Of Advance Taken</th> -->
+          <th nzWidth="200px" nzColumnKey="WARD_TYPE" [nzSortFn]="true">
+            Ward Entitlement
+          </th>
+
+          <th
+            nzWidth="400px"
+            nzColumnKey="NATURE_OF_TREATMENT"
+            [nzSortFn]="true"
+          >
+            Nature Of Treatment
+          </th>
+          <!-- <th nzWidth="190px" nzColumnKey="CHECKLIST_STATUS" [nzSortFn]="true">
+                Accept / Reject / On Hold
+              </th>
+              <th nzWidth="300px" nzColumnKey="REJECT_REMARK" [nzSortFn]="true">
+                Reject Remark
+              </th>
+              <th nzWidth="120px" nzColumnKey="ON_HOLD_DATE" [nzSortFn]="true">
+                On Hold Date
+              </th>
+              <th nzWidth="300px" nzColumnKey="ON_HOLD_REMARK" [nzSortFn]="true">
+                On Hold Remark
+              </th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td align="center">
+            <a (click)="edit(data)"><i nz-icon nzType="edit"></i></a>
+          </td>
+          <td align="center">
+            <a (click)="orderDrawer(data)">Order</a>
+          </td>
+          <td align="center">
+            <a (click)="letterDrawer(data)">Letter</a>
+          </td>
+          <!-- <td align="center" nzWidth="70px">
+                <span
+                  style="cursor: pointer"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure want delete?"
+                  nzPopconfirmPlacement="top"
+                  (nzOnConfirm)="deleteConfirm(data)"
+                  (nzOnCancel)="deleteCancel()"
+                >
+                  <span
+                    nz-icon
+                    nzType="delete"
+                    nzTheme="twotone"
+                    nz-tooltip
+                    nzTooltipTitle="Delete"
+                  >
+                  </span>
+                </span>
+              </td> -->
+          <!-- <td align="center" nzWidth="120px">
+                <a *ngIf="data.CHECKLIST_STATUS == 'A'" (click)="viewFile(data)">
+                  <span nz-icon nzType="eye" nzTheme="outline"></span> Claim File
+                </a>
+              </td> -->
+          <!-- <td align="center" nzWidth="100px">
+                  <a (click)="openLogDrawer()">
+                    <span nz-icon nzType="eye" nzTheme="outline"></span> View
+                  </a>
+                </td> -->
+          <td style="text-align: center; white-space: pre-line" nzWidth="250px">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+          <!-- <td style="text-align: center; white-space: pre-line" nzWidth="210px">
+                {{ data.CLAIM_STAGE_NAME }}
+              </td> -->
+          <!-- <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+                {{ data.CLAIM_NO }}
+              </td> -->
+
+          <td style="text-align: center; white-space: pre-line" nzWidth="110px">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.EMPLOYEE_CODE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="270px">
+            {{ data.DESIGNATION }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="220px">
+            {{ data.PATIENT_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="170px">
+            {{ data.RELATION_WITH_PATIENT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.BILL_FILIING_DATE }}
+          </td>
+          <!-- <td style="text-align: center; white-space: pre-line" nzWidth="190px">
+                {{ data.ADMISSIBLE_AMOUNT }}
+              </td> -->
+
+          <!-- <td style="text-align: center;white-space: pre-line;" >{{ data.TREATEMENT_TYPE }}</td> -->
+          <td style="text-align: center" nzWidth="370px">
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT'"
+              >OPD Treatment / Test Entitled</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'IT'"
+              >Indoor Treatment</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT,IT'"
+              >OPD Treatment / Test Entitled & Indoor Treatment</span
+            >
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.TREATMENT_START_DATE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.TREATMENT_END_DATE }}
+          </td>
+
+          <!-- <td style="text-align: center" nzWidth="260px">
+                  <span nz-icon *ngIf="data['ACCREDITATION'] == 'N'">NAHB</span>
+                  <span nz-icon *ngIf="data['ACCREDITATION'] == 'NN'">Non NAHB</span>
+                  <span nz-icon *ngIf="data['ACCREDITATION'] == 'SP'"
+                    >Super Speciality</span
+                  >
+                </td>
+                <td style="text-align: center" nzWidth="180px">
+                  <span nz-icon *ngIf="data['CLAIM_ACCREDITATION'] == 'N'">NAHB</span>
+                  <span nz-icon *ngIf="data['CLAIM_ACCREDITATION'] == 'NN'"
+                    >Non NAHB</span
+                  >
+                  <span nz-icon *ngIf="data['CLAIM_ACCREDITATION'] == 'SP'"
+                    >Super Speciality</span
+                  >
+                </td> -->
+          <!-- <td style="text-align: center;white-space: pre-line;" >{{ data.HOSPITAL_TYPE }}</td> -->
+          <!-- <td style="text-align: center" nzWidth="180px">
+                  <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'E'">Empanelled</span>
+                  <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'NE'"
+                    >Non Empanelled</span
+                  >
+                  <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'G'">Government</span>
+                </td>
+                <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+                  {{ data.HOSPITAL_NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+                  {{ data.EMPANELLED_HOSPITAL_NAME }}
+                </td> -->
+          <!-- <td style="text-align: center;white-space: pre-line;" >{{ data.ADVANCE_AMOUNT }}</td>
+                          <td style="text-align: center;white-space: pre-line;" >{{ data.DATE_OF_ADVANCE_TAKEN }}</td> -->
+
+          <td style="text-align: center" nzWidth="200px">
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'P'">Pvt </span>
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'S'">Semi Pvt</span>
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'G'">General</span>
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.NATURE_OF_TREATMENT }}
+          </td>
+          <!-- <td style="text-align: center" nzWidth="150px">
+                <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'A'">
+                  Claim Accept
+                </span>
+                <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'R'"
+                  >Claim Reject</span
+                >
+                <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'H'"
+                  >Claim On Hold</span
+                >
+              </td>
+              <td style="text-align: center; white-space: pre-line" nzWidth="300px">
+                {{ data.REJECT_REMARK }}
+              </td>
+              <td style="text-align: center; white-space: pre-line" nzWidth="300px">
+                {{ data.ON_HOLD_DATE }}
+              </td>
+              <td style="text-align: center; white-space: pre-line" nzWidth="300px">
+                {{ data.ON_HOLD_REMARK }}
+              </td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div *ngIf="drawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addgeneratedelaycondonation
+        [drawerClose]="closeCallback"
+        [data]="drawerData"
+        [current]="currentStage"
+        [isSpinning]="isSpin"
+        [employeeID]="employeeID"
+        [employee]="employee"
+      ></app-addgeneratedelaycondonation>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="hodOrderVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1150"
+    [nzVisible]="hodOrderVisible"
+    [nzTitle]="hodOrderTitle"
+    (nzOnClose)="hodOrderDrawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-delaycondolenceorder
+        [drawerClose]="hodorderSheetCloseCallback"
+        [orderdata1]="orderdata1"
+        [HospitalMapping]="HospitalMapping"
+        [queData]="queData"
+        [SECTION_TYPE]="SECTION_TYPE"
+        [sixMonthDate]="sixMonthDate"
+        [dateBetweenDiff]="dateBetweenDiff"
+      ></app-delaycondolenceorder>
+    </ng-container>
+    <!-- <ng-container *nzDrawerContent> -->
+    <!-- <app-delaycondolenceorder
+      [drawerClose]="delayOrderSheetCloseCallback"
+      [orderdata1]="orderdata1"
+      [HospitalMapping]="HospitalMapping"
+      [queData]="queData"
+      [SECTION_TYPE]="SECTION_TYPE"
+      [sixMonthDate]="sixMonthDate"
+      [dateBetweenDiff]="dateBetweenDiff"
+    ></app-delaycondolenceorder> -->
+    <!-- </ng-container> -->
+  </nz-drawer>
+</div>
+
+<div *ngIf="hodLetterVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1200"
+    [nzVisible]="hodLetterVisible"
+    [nzTitle]="hodLetterTitle"
+    (nzOnClose)="hodLetterDrawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <!-- <app-delaycondolencepermission
+      [orderdata]="orderdata1"
+      [queData]="queData"
+      [HospitalMapping]="HospitalMapping"
+      [SECTION_TYPE]="SECTION_TYPE"
+      [SIGNNAME]="NAME"
+      [NAME_HN]="NAME_HN"
+      [OFFICE_NAME]="OFFICE_NAME"
+      [OFFICE_NAME_HN]="OFFICE_NAME_HN"
+      [POST]="POST"
+      [POST_HN]="POST_HN"
+      [drawerClose]="delayPermissionCloseCallback"
+      [dateBetweenDiff]="dateBetweenDiff"
+    ></app-delaycondolencepermission> -->
+    <ng-container *nzDrawerContent>
+      <app-delaycondolencepermission
+        [drawerClose]="letterSheetCloseCallback"
+        [orderdata]="orderdata1"
+        [HospitalMapping]="HospitalMapping"
+        [queData]="queData"
+        [dateBetweenDiff]="dateBetweenDiff"
+      ></app-delaycondolencepermission>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div class="header">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>

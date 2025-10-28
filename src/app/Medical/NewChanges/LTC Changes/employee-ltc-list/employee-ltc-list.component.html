@@ -1,0 +1,804 @@
+<nz-spin [nzSpinning]="isSpinning">
+  <div nz-row>
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <div class="formname" style="text-align: center">
+        <h6 style="font-size: 15px">
+          Application for Travelling Allowance for LTC
+        </h6>
+      </div>
+      <p style="text-align: center; margin-bottom: 26px; font-size: 13px">
+        You can submit your new claim, check the status of your claim, and view already approved claims.
+      </p>
+    </div>
+  </div>
+  <div nz-row *ngIf="dataList == 0">
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+    <div nz-col nzSpan="10" style="text-align: center">
+      <nz-card
+        style="background-color: #fafafa; text-align: center; margin-top: 100px"
+      >
+        <div class="row">
+          <div class="col-sm-12" style="padding: 0px">
+            <div class="container" style="font-size: 13px">
+              You can submit your new claim, check the status of your claim, and view already approved claims.
+            </div>
+            <button
+              nz-button
+              nzType="primary"
+              *ngIf="dataList.length == 0"
+              (click)="createCustomButtonModal('apply')"
+              style="border-radius: 12px; margin-top: 20px"
+            >
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+  </div>
+  <div
+    *ngIf="dataList.length > 0"
+    nz-row
+    style="overflow-y: auto; height: 55vh"
+    class="ss"
+  >
+    <div
+      *ngIf="dataList.length > 0"
+      nz-col
+      nzXs="24"
+      nzSm="24"
+      nzMd="12"
+      nzLg="12"
+      nzXl="12"
+      style="
+        text-align: center;
+        font-weight: bold;
+
+        padding: 20px;
+      "
+    >
+      <div
+        style="
+          background-color: rgb(251 251 251);
+          height: 315px;
+
+          position: relative;
+          width: 100%;
+          height: 275px;
+          font-size: 12px;
+          cursor: pointer;
+          padding: 10px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border: 1px solid #efefef;
+          border-radius: 8px;
+        "
+      >
+        <button
+          nzShape="circle"
+          nz-button
+          nxType="primary"
+          (click)="createCustomButtonModal('s')"
+          style="margin-top: 100px; height: 50px; width: 50px"
+        >
+          <i nz-icon nzType="plus" style="font-size: 30px"></i>
+        </button>
+
+        <br />
+
+        <div style="font-size: 12px">Add New Claim</div>
+      </div>
+    </div>
+    <div
+      *ngFor="let data of dataList; let i = index"
+      nz-col
+      nzXs="24"
+      nzSm="24"
+      nzMd="12"
+      nzLg="12"
+      nzXl="12"
+      style="padding: 20px"
+    >
+      <div
+        nz-row
+        style="
+          background-color: rgb(251 251 251);
+          position: relative;
+          width: 100%;
+
+          cursor: pointer;
+          padding-bottom: 10px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border: 1px solid #efefef;
+          border-radius: 8px;
+        "
+      >
+        <div nz-col nzSpan="24">
+          <div>
+            <div nz-row style="padding: 10px">
+              <!-- <div
+          style="text-align: left; font-size: 15px; font-weight: 500"
+          nz-col
+          nzSpan="18"
+        >
+          Details
+        </div>
+
+        <div nz-col nzSpan="3">
+          <span
+            style="cursor: pointer"
+            (click)="edit(data)"
+            *ngIf="
+              (data.LTC_STATUS != 'P' &&
+                data.LTC_STATUS != 'T' &&
+                data.LTC_STATUS != 'C') ||
+              data.LTC_STATUS == 'R'
+            "
+          >
+            <span
+              nz-icon
+              nzType="edit"
+              nzTheme="twotone"
+              nz-tooltip
+              nzTooltipTitle="Edit"
+            >
+            </span>
+          </span>
+        </div>
+
+        <div nz-col nzSpan="3">
+          <span
+            style="cursor: pointer; text-align: center"
+            nz-popconfirm
+            *ngIf="
+              (data.LTC_STATUS != 'P' &&
+                data.LTC_STATUS != 'T' &&
+                data.LTC_STATUS != 'C') ||
+              data.LTC_STATUS == 'R'
+            "
+            nzPopconfirmTitle="Are you sure you want to delete?"
+            nzPopconfirmPlacement="top"
+            (nzOnConfirm)="deleteConfirm(data)"
+            (nzOnCancel)="deleteCancel()"
+          >
+            <span
+              nz-icon
+              nzType="delete"
+              nzTheme="twotone"
+              nz-tooltip
+              nzTooltipTitle="Delete"
+            ></span>
+          </span>
+        </div> -->
+
+              <div
+                style="text-align: left; font-size: 14px; font-weight: 600"
+                nz-col
+                nzSpan="24"
+              >
+                Name : {{ data.EMPLOYEE_NAME }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Designation : {{ data.DESIGNATION }}
+              </div>
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Mobile No : {{ data.MOBILE_NO }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Emp Code : {{ data.EMPLOYEE_CODE }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                DDO Official : {{ data.DDO_OF_THE_OFFICIAL }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Office Name : {{ data.OFFICE_NAME }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Basic Pay : {{ data.GRADE_PAY }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Grade Pay Level : {{ data.GRADE_PAY_LEVEL }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                File No : {{ data.FILE_NO }}
+              </div>
+
+              <div
+                *ngIf="data.STEP_NO == 4"
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Status :
+                <span style="color: green; font-size: 13px; font-weight: 500"
+                  >Application Submitted</span
+                >
+              </div>
+
+              <!-- <div style="border-bottom: 1px solid" nz-col nzSpan="24"></div> -->
+            </div>
+          </div>
+        </div>
+        <div
+          nz-col
+          nzSpan="24"
+          class="ss"
+          style="
+            align-self: center;
+            text-align: center;
+            margin-top: 10px;
+            overflow-x: auto;
+          "
+        >
+          <nz-steps
+            [nzSize]="'small'"
+            [nzCurrent]="checkstep(data.STEP_NO, data.AD_STEP_NO, data) + 1"
+            [nzLabelPlacement]="'vertical'"
+          >
+            <nz-step [nzTitle]="titile1Template"></nz-step>
+            <ng-template #titile1Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Employee Details
+                <p
+                  *ngIf="
+                    data.APP_INFO_DATE_TIME != undefined &&
+                    data.APP_INFO_DATE_TIME != '' &&
+                    data.APP_INFO_DATE_TIME != null
+                  "
+                >
+                  {{ data.APP_INFO_DATE_TIME | date : "dd-MM-yyyy HH:mm:ss" }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template1>
+              <span style="font-size: 10px; font-weight: bold">
+                Travel Details
+                <p
+                  *ngIf="
+                    data.TARVEL_DETAILS_SUBMITTED_DATE_TIME != undefined &&
+                    data.TARVEL_DETAILS_SUBMITTED_DATE_TIME != '' &&
+                    data.TARVEL_DETAILS_SUBMITTED_DATE_TIME != null
+                  "
+                >
+                  {{
+                    data.TARVEL_DETAILS_SUBMITTED_DATE_TIME
+                      | date : "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template2>
+              <span style="font-size: 10px; font-weight: bold">
+                Documents Details
+                <p
+                  *ngIf="
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME != undefined &&
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME != '' &&
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME != null
+                  "
+                >
+                  {{
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME
+                      | date : "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template3>
+              <span style="font-size: 10px; font-weight: bold">
+                <span *ngIf="data.IS_ADVANCE_CLAIM == true">
+                  Advance Application</span
+                >
+                <span *ngIf="data.IS_ADVANCE_CLAIM == false">
+                  Download PART A</span
+                >
+
+                <p>
+                  {{
+                    data.PARTA_DOWNLOAD_DATE_TIME | date : "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template4>
+              <span style="font-size: 10px; font-weight: bold">
+                Status
+                <p>
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'P'"
+                    style="color: blue; font-size: 10px; font-weight: bold"
+                    >Pending</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'A'"
+                    style="color: green; font-size: 10px; font-weight: bold"
+                    >Approved</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'R'"
+                    style="color: red; font-size: 10px; font-weight: bold"
+                    >Rejected</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'H'"
+                    style="color: blue; font-size: 10px; font-weight: bold"
+                    >On Hold
+                  </span>
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'T'"
+                    style="color: blue; font-size: 10px; font-weight: bold"
+                    >Picked</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'AP'"
+                    style="color: blue; font-size: 10px; font-weight: bold"
+                    >Advance Pending</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'AA'"
+                    style="color: green; font-size: 10px; font-weight: bold"
+                    >Advance Approved</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'AR'"
+                    style="color: red; font-size: 10px; font-weight: bold"
+                    >Advance Rejected</span
+                  >
+                  <span
+                    *ngIf="data['LTC_STATUS'] == 'AH'"
+                    style="color: blue; font-size: 10px; font-weight: bold"
+                    >Advance On Hold
+                  </span>
+                </p>
+              </span>
+            </ng-template>
+            <nz-step
+              *ngIf="
+                (data.IS_ADVANCE_CLAIM && data.IS_ADVANCE_LTC_CREATED) ||
+                !data.IS_ADVANCE_CLAIM
+              "
+              [nzTitle]="titile1Template1"
+            ></nz-step>
+            <nz-step [nzTitle]="titile1Template2"></nz-step>
+            <nz-step [nzTitle]="titile1Template3"></nz-step>
+            <nz-step [nzTitle]="titile1Template4"></nz-step>
+          </nz-steps>
+        </div>
+        <div
+          *ngIf="
+            data.LTC_STATUS != 'P' &&
+              data.LTC_STATUS != 'T' &&
+              data.LTC_STATUS != 'H' &&
+              data.LTC_STATUS != 'R' &&
+              data.LTC_STATUS != 'A' &&
+              data.LTC_STATUS != 'AA' &&
+              data.LTC_STATUS != 'AR' &&
+              data.LTC_STATUS != 'AH';
+            else elseblock
+          "
+          nz-col
+          nzSpan="24"
+          style="align-self: center; text-align: center; margin-top: 10px"
+        >
+          <button
+            nz-button
+            nzType="primary"
+            (click)="edit(data)"
+            style="border-radius: 12px; font-size: 11px"
+          >
+            Continue Claim
+          </button>
+        </div>
+
+        <ng-template #elseblock>
+          <div
+            *ngIf="
+              data.LTC_STATUS != 'AR' &&
+                data.LTC_STATUS != 'AH' &&
+                data.IS_ADVANCE_LTC_CREATED &&
+                !data.IS_EMP_FILL_ADVANCE_INFO;
+              else elseblockfinal
+            "
+            nz-col
+            nzSpan="24"
+            style="align-self: center; text-align: center; margin-top: 10px"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              (click)="edit(data)"
+              style="border-radius: 12px; font-size: 11px"
+            >
+              Fill Advance Details
+            </button>
+          </div>
+        </ng-template>
+
+        <ng-template #elseblockfinal>
+          <div *ngIf="showid != i" nz-col nzSpan="24">
+            <span
+              *ngIf="data.LTC_STATUS == 'H' || data.LTC_STATUS == 'AH'"
+              style="
+                padding: 20px;
+                color: blue;
+                font-size: 10px;
+                font-weight: bold;
+                padding-left: 20px;
+              "
+              >{{
+                data.LTC_STATUS == "AH"
+                  ? "Advance On Hold Reason"
+                  : "On Hold Reason"
+              }}
+              : {{ data.LTC_REMARK }} &nbsp;&nbsp;
+              {{
+                data.LTC_STATUS == "AH"
+                  ? "Advance  On Hold Date"
+                  : " On Hold Date"
+              }}
+              :
+              <span
+                *ngIf="
+                  data.LTC_HOLD_DATE != undefined &&
+                  data.LTC_HOLD_DATE != '' &&
+                  data.LTC_HOLD_DATE != null
+                "
+                >{{ data["LTC_HOLD_DATE"] | date : "dd-MM-yyyy" }}
+              </span></span
+            >
+            <span
+              *ngIf="data.LTC_STATUS == 'R' || data.LTC_STATUS == 'AR'"
+              style="
+                padding: 20px;
+                color: red;
+                font-size: 10px;
+                font-weight: bold;
+              "
+            >
+              {{
+                data.LTC_STATUS == "AR"
+                  ? "Advance Rejected Reason"
+                  : "Rejected Reason"
+              }}: {{ data.LTC_REMARK }}</span
+            >
+            <span
+              *ngIf="
+                data.LTC_STATUS != 'H' &&
+                data.LTC_STATUS != 'R' &&
+                data.LTC_STATUS != 'AH' &&
+                data.LTC_STATUS != 'AR'
+              "
+              style="padding: 20px"
+            ></span></div
+        ></ng-template>
+        <div
+          class="ss"
+          nz-col
+          nzSpan="24"
+          style="
+            align-self: center;
+            margin-top: 10px;
+            max-height: 87px;
+            overflow-y: auto;
+          "
+          *ngIf="data.STEP_NO == 4 && showid == i"
+        >
+          <div nz-row *ngIf="data.STEP_NO == 4 && showid == i">
+            <!-- <div nz-col nzSpan="4"></div> -->
+            <div nz-col nzSpan="24">
+              <div
+                *ngIf="data.STEP_NO == 4 && showid == i"
+                style="
+                  padding-left: 10px;
+                  padding-top: 5px;
+                  padding-bottom: 10px;
+                  padding-right: 5px;
+                "
+              >
+                <nz-timeline *ngIf="logdata.length > 0">
+                  <nz-timeline-item *ngFor="let logg of logdata" nzColor="green"
+                    ><span style="font-weight: 500">{{ logg.STAGE_NAME }}</span>
+                    <p
+                      style="
+                        margin-bottom: 0px !important;
+                        font-size: 10px !important;
+                        font-weight: 500 !important;
+                      "
+                    >
+                      {{ logg.LOG_TEXT }}
+                    </p>
+                    <p
+                      style="
+                        font-size: 10px !important;
+                        font-weight: 500 !important;
+                      "
+                    >
+                      {{ logg.CREATED_DATETIME }}
+                    </p>
+                  </nz-timeline-item>
+                </nz-timeline>
+                <span *ngIf="logdata.length == 0">No Record</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div *ngIf="data.STEP_NO == 4 && showid != i" style="text-align: center; margin: auto">
+           
+            <button nz-button nzType="primary" (click)="showstatus(data, i)" style="border-radius: 12px">
+              Check Status
+            </button>
+          </div> -->
+        </div>
+
+        <div nz-col nzSpan="24" style="text-align: center">
+          <button
+            nz-tooltip
+            nzTooltipTitle="View Objections"
+            nzTooltipPlacement="button"
+            *ngIf="data.STEP_NO == 4 && showid != i"
+            nz-button
+            nzShape="circle"
+            (click)="showstatus(data, i)"
+            style="position: absolute"
+            nzJustify="end"
+          >
+            <span nz-icon nzType="down" nzTheme="outline"></span>
+          </button>
+
+          <button
+            nz-tooltip
+            nzTooltipTitle="View Objections"
+            nzTooltipPlacement="button"
+            style="position: absolute"
+            nz-button
+            (click)="showstatus1()"
+            nzShape="circle"
+            *ngIf="data.STEP_NO == 4 && showid == i"
+            nzJustify="end"
+          >
+            <span nz-icon nzType="up" nzTheme="outline"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div nz-row *ngIf="dataList.length == 0">
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+    <div nz-col nzSpan="10" style="text-align: center">
+      <nz-card style="background-color: #fafafa; text-align: center; margin-top: 30%">
+        <div class="row">
+          <div class="col-sm-12" style="padding: 10px">
+            <div class="container">
+              You can review your submitted applications, check those pending submission or approval, and submit new
+              applications as needed.
+            </div>
+            <button nz-button nzType="primary" (click)="add1()" style="border-radius: 12px; margin-top: 20px">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+  </div> -->
+</nz-spin>
+
+<!-- <div style="float: right; margin-top: 15px">
+  <nz-pagination
+    (nzPageIndexChange)="search2($event)"
+    (nzPageSizeChange)="search3($event)"
+    [nzPageIndex]="pageIndex"
+    [nzTotal]="totalRecords"
+    nzShowSizeChanger
+    [nzPageSize]="pageSize"
+  ></nz-pagination>
+</div> -->
+
+<!-- <br /> -->
+
+<div *ngIf="drawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    
+    overflow: 'auto',
+    'padding-bottom': '0px',
+    'padding-top': '20px',
+    'padding-right': '0px',
+    'padding-left': '0px',
+    
+
+  }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="drawerWidth"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-ltcemployeeadd
+        [drawerClose]="closeCallback"
+        [data]="drawerData"
+        [editrelation]="editrelation"
+        [empID]="empID"
+        [ltcID]="ltcID"
+        [drawerTitle11]="drawerTitle"
+        [current]="currentStage"
+        [isSpinning]="isSpin"
+        [relationdata]="relationdata"
+        [employerecordfilled]="isdetailsfilled"
+        [isdraweropendedggg]="isdraweropended"
+        [empid]="employeedata"
+        [journeyData]="journeyData"
+      ></app-ltcemployeeadd>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="visible6">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1200"
+    [nzVisible]="visible6"
+    [nzTitle]="concession"
+    (nzOnClose)="close6()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-leave-travel-concession-bill
+        [LTC6data]="partAData"
+        [relationdata1]="relationdata1"
+        [drawerClose]="close6CloseCallback"
+        [formdata7]="formdata7"
+        [formdata1]="formdata1"
+        [formdata3]="formdata3"
+        [aamount]="aamount"
+        [checkListltc]="checkListltc"
+        [childrenList]="childrenList"
+        [wifeList]="wifeList"
+        [selfList]="selfList"
+      >
+      </app-leave-travel-concession-bill>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal
+  [(nzVisible)]="showmodell"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px"
+  nzClosable="false"
+  [nzFooter]="contextofrules2"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500"
+      >What type of claim do you want to submit?</span
+    >
+    <hr style="margin: 8px 0" />
+  </ng-container>
+
+  <ng-template #contextofrules2>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      (click)="opennnadvance(show)"
+    >
+      Advance Claim
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      (click)="opennnsimple(show)"
+    >
+      Final claim
+    </button>
+    <button
+      nz-button
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      (click)="cancelModel()"
+    >
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>

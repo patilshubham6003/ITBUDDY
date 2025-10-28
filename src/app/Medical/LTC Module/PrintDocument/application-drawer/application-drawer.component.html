@@ -1,0 +1,1232 @@
+<div *ngIf="data != undefined">
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <p
+        style="
+          text-align: center;
+          font-weight: bold;
+          text-decoration: underline;
+          font-size: 19px;
+        "
+      >
+        APPLIACTION FOR LTC ADVANCE
+      </p>
+      <p style="font-size: 14px; margin-bottom: 2px; text-align: left">To,</p>
+      <p
+        *ngIf="DDO_Master_Data.length > 0"
+        style="font-size: 14px; margin-bottom: 2px; text-align: left"
+      >
+        {{ DDO_Master_Data[0]["DESCRIPTION"] }}
+      </p>
+      <p
+        *ngIf="DDO_Master_Data.length > 0"
+        style="font-size: 14px; margin-bottom: 11px; text-align: left"
+      >
+        {{ DDO_Master_Data[0]["LOCATION"] }}
+      </p>
+      <table class="forAdvanceTable" style="width: 100%">
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="width: 3%; text-align: center">
+            1
+          </td>
+          <td
+            class="forAdvanceTable"
+            style="width: 47%; white-space: pre-line"
+            colSpan="2"
+          >
+            Name of the official(in Block Letters)
+          </td>
+          <td class="forAdvanceTable" style="width: 2%; text-align: center">
+            :
+          </td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            style="
+              width: 48%;
+              white-space: pre-line;
+              text-transform: uppercase;
+              padding-left: 1%;
+            "
+            class="dataBold"
+          >
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">2</td>
+
+          <td class="forAdvanceTable" style="white-space: pre-line" colSpan="2">
+            Designation and Employee Code
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.DESIGNATION }}&nbsp;{{ data.EMPLOYEE_CODE }}
+          </td>
+        </tr>
+
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">3</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Permanent or Temporary [if not permanent,surty bond from permanent
+            official to be enclosed with the Application]
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.SERVICE_TYPE }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">4</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Unity/Office to which attached
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.OFFICE_NAME }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">5</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Basic pay in the present grade
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            Rs. {{ data.GRADE_PAY }} /-
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">6</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Date of appointment in the Department
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.APPOINTMENT_DATE | date : "dd.MM.yyyy" }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">7</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Place of hometown as decalred in the Service Book
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.HOMETOWN }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">8</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Particulars of LTC availed for previous Block years
+          </td>
+          <td class="forAdvanceTable"></td>
+          <td class="forAdvanceTable" colSpan="3"></td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center"></td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            (i)Block Years
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.PARTICULARS_BLOCK_YEAR }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center"></td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            (ii)Hometown
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.PARTICULARS_HOMETOWN }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center"></td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            (iii)Anywhere in India
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            <span *ngIf="data.ANYWHERE_IN_INDIA">Yes</span>
+            <span *ngIf="!data.ANYWHERE_IN_INDIA">No</span>
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">9</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Block Year & place to which now proposed to avail
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.AVAIL_BLOCK_YEAR }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">10</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Whether Avails CL or EL (Nature of leave to be mentioned)
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.AVAILS_CL_EL }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">11</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Whether LTC advnce already taken has been settled in full or pending
+            settelment, date of the settelment of the previous case
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.LTC_ADVACNE_SETTLED }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">12</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Place of visit (farthest point)
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.PLACE_OF_VISIT }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">13</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Propose date onward journey
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.JOURNEY_ONWARD_PROPOSED_DATE | date : "dd.MM.yyyy" }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">14</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Probable date of return journey
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.JOURNEY_RETURN_PROBABLE_DATE | date : "dd.MM.yyyy" }}
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">15</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Details of single fair
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            <span *ngFor="let data of advJourneyData; let i = index">
+              Rs.{{ data.JOURNEY_CLAIMED_AMOUNT }} /- X
+              {{ data.NO_OF_FAIRS }} ={{
+                data.JOURNEY_CLAIMED_AMOUNT * data.NO_OF_FAIRS
+              }}
+              <br />
+            </span>
+            <span> Total = Rs. {{ singleFareTotal }} /- </span>
+            <!-- Rs.{{ amountOfSingleFare }} /- X {{ numberOfSingleFare }} =
+            <span
+              *ngIf="
+                amountOfSingleFare != null &&
+                amountOfSingleFare != undefined &&
+                amountOfSingleFare != '' &&
+                numberOfSingleFare != null &&
+                numberOfSingleFare != undefined &&
+                numberOfSingleFare != ''
+              "
+            >
+              {{ amountOfSingleFare * numberOfSingleFare }}</span
+            >
+            /- -->
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">16</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Particulars of family members availing the facility
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td class="forAdvanceTable" colSpan="3"></td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <th class="forAdvanceTable" colspan="2" style="text-align: center">
+            S.No.
+          </th>
+          <th class="forAdvanceTable" style="text-align: center">Name</th>
+          <th class="forAdvanceTable" colspan="2" style="text-align: center">
+            Relationship
+          </th>
+          <th class="forAdvanceTable" style="text-align: center">Age</th>
+          <th class="forAdvanceTable" style="text-align: center">
+            Whether Dependent
+          </th>
+        </tr>
+        <tr
+          class="forAdvanceTable"
+          *ngFor="let data of relationdata1; let i = index"
+        >
+          <td class="forAdvanceTable" colspan="2" style="text-align: center">
+            {{ i + 1 }}
+          </td>
+
+          <td
+            class="forAdvanceTable"
+            style="text-align: center; white-space: pre-line"
+          >
+            {{ data["NAME_OF_FAMILY_MEMBER"] }}
+          </td>
+
+          <td
+            class="forAdvanceTable"
+            colSpan="2"
+            style="text-align: center; white-space: pre-line"
+          >
+            {{ data["RELATIONSHIP"] }}
+          </td>
+          <td
+            class="forAdvanceTable"
+            style="text-align: center; white-space: pre-line"
+          >
+            {{ data["AGE"] }}
+          </td>
+          <td
+            class="forAdvanceTable"
+            style="text-align: center; white-space: pre-line"
+          >
+            <span *ngIf="data.RELATIONSHIP == 'Self'"> - </span>
+            <span *ngIf="data.RELATIONSHIP != 'Self'"> Yes </span>
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">17</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Class of accommndation proposed to be the Railway/Air journey
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            <span *ngIf="journeyModes.length > 0">
+              <ng-container
+                *ngFor="
+                  let item of journeyModes;
+                  let last = last;
+                  let i = index
+                "
+              >
+                {{ item }}
+                <ng-container *ngIf="journeyModes.length > 1 && !last">
+                  <ng-container *ngIf="journeyModes.length === 2 && i === 0">
+                    and
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      journeyModes.length > 2 && i < journeyModes.length - 2
+                    "
+                    >,
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      journeyModes.length > 2 && i === journeyModes.length - 2
+                    "
+                  >
+                    and
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              Journey -
+            </span>
+            <span *ngIf="journeyClassModes.length > 0">
+              <ng-container
+                *ngFor="
+                  let item of journeyClassModes;
+                  let last = last;
+                  let i = index
+                "
+              >
+                {{ item }}
+                <ng-container *ngIf="journeyClassModes.length > 1 && !last">
+                  <ng-container
+                    *ngIf="journeyClassModes.length === 2 && i === 0"
+                  >
+                    and
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      journeyClassModes.length > 2 &&
+                      i < journeyClassModes.length - 2
+                    "
+                    >,
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      journeyClassModes.length > 2 &&
+                      i === journeyClassModes.length - 2
+                    "
+                  >
+                    and
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </span>
+          </td>
+        </tr>
+        <tr class="forAdvanceTable">
+          <td class="forAdvanceTable" style="text-align: center">18</td>
+          <td class="forAdvanceTable" colSpan="2" style="white-space: pre-line">
+            Amount of advance required
+          </td>
+          <td class="forAdvanceTable" style="text-align: center">:</td>
+          <td
+            class="forAdvanceTable"
+            colSpan="3"
+            class="dataBold"
+            style="white-space: pre-line; padding-left: 1%"
+          >
+            {{ data.REQUIRED_ADVANCE_AMOUNT }} /-
+          </td>
+        </tr>
+      </table>
+
+      <div nz-row>
+        <div nz-col nzSpan="12" style="margin-top: 8%">
+          <p style="font-size: 17px">Date:</p>
+        </div>
+        <div nz-col nzSpan="12" style="margin-top: 8%"></div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="13"></div>
+        <div nz-col nzSpan="11">
+          <p style="font-size: 17px">
+            Signature :
+            <span style="text-decoration: underline"
+              >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+            >
+          </p>
+        </div>
+        <div nz-col nzSpan="13"></div>
+        <div nz-col nzSpan="11">
+          <p style="margin-top: 14px; font-size: 17px">
+            Designation and Employee Code
+          </p>
+        </div>
+        <div nz-col nzSpan="13"></div>
+        <div nz-col nzSpan="11">
+          <p style="margin-top: -17px; font-size: 17px">
+            {{ data.EMPLOYEE_NAME }},
+          </p>
+        </div>
+        <div nz-col nzSpan="13"></div>
+        <div nz-col nzSpan="11">
+          <p style="margin-top: -18px; font-size: 17px">
+            {{ data.DESIGNATION }}
+          </p>
+        </div>
+        <div nz-col nzSpan="13"></div>
+        <div nz-col nzSpan="11">
+          <p style="margin-top: -19px; font-size: 17px">
+            Employee NO:&nbsp;{{ data.EMPLOYEE_CODE }}
+          </p>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    *ngIf="!isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="save()"
+    [nzLoading]="loadingRecords"
+  >
+    <span>Approve & Preview</span>
+  </button>
+  <button
+    *ngIf="isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="openPrintModal()"
+    [nzLoading]="loadingRecords"
+  >
+    <span>Preview</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printApplicationVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printApplicationContent"
+  [nzTitle]="'Application For LTC Advance'"
+  (nzOnCancel)="printApplicationCancel()"
+  [nzFooter]="printApplicationFooter"
+>
+  <ng-template #printApplicationContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow-y: auto" class="ss">
+        <div id="advanceApplication">
+          <div
+            style="
+              width: 820px;
+              padding: 3px;
+              font-size: 15px !important;
+              font-family: Bookman Old Style;
+              margin-left: 35px;
+            "
+          >
+            <p
+              style="
+                text-align: center;
+                font-weight: bold;
+                text-decoration: underline;
+                font-size: 19px;
+              "
+            >
+              APPLIACTION FOR LTC ADVANCE
+            </p>
+            <p style="font-size: 14px; margin-bottom: 2px; text-align: left">
+              To,
+            </p>
+            <p
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 14px; margin-bottom: 2px; text-align: left"
+            >
+              {{ DDO_Master_Data[0]["DESCRIPTION"] }}
+            </p>
+            <p
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 14px; margin-bottom: 11px; text-align: left"
+            >
+              {{ DDO_Master_Data[0]["LOCATION"] }}
+            </p>
+            <table class="forAdvanceTable" style="width: 100%">
+              <tr class="forAdvanceTable">
+                <td
+                  class="forAdvanceTable"
+                  style="width: 3%; text-align: center"
+                >
+                  1
+                </td>
+                <td
+                  class="forAdvanceTable"
+                  style="width: 47%; white-space: pre-line"
+                  colSpan="2"
+                >
+                  Name of the official(in Block Letters)
+                </td>
+                <td
+                  class="forAdvanceTable"
+                  style="width: 2%; text-align: center"
+                >
+                  :
+                </td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  style="
+                    width: 48%;
+                    white-space: pre-line;
+                    text-transform: uppercase;
+                    padding-left: 1%;
+                  "
+                  class="dataBold"
+                >
+                  {{ data.EMPLOYEE_NAME }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">2</td>
+
+                <td
+                  class="forAdvanceTable"
+                  style="white-space: pre-line"
+                  colSpan="2"
+                >
+                  Designation and Employee Code
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.DESIGNATION }}&nbsp;{{ data.EMPLOYEE_CODE }}
+                </td>
+              </tr>
+
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">3</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Permanent or Temporary [if not permanent,surty bond from
+                  permanent official to be enclosed with the Application]
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.SERVICE_TYPE }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">4</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Unity/Office to which attached
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.OFFICE_NAME }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">5</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Basic pay in the present grade
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  Rs. {{ data.GRADE_PAY }} /-
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">6</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Date of appointment in the Department
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.APPOINTMENT_DATE | date : "dd.MM.yyyy" }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">7</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Place of hometown as decalred in the Service Book
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.HOMETOWN }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">8</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Particulars of LTC availed for previous Block years
+                </td>
+                <td class="forAdvanceTable"></td>
+                <td class="forAdvanceTable" colSpan="3"></td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center"></td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  (i)Block Years
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.PARTICULARS_BLOCK_YEAR }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center"></td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  (ii)Hometown
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.PARTICULARS_HOMETOWN }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center"></td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  (iii)Anywhere in India
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  <span *ngIf="data.ANYWHERE_IN_INDIA">Yes</span>
+                  <span *ngIf="!data.ANYWHERE_IN_INDIA">No</span>
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">9</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Block Year & place to which now proposed to avail
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.AVAIL_BLOCK_YEAR }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">10</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Whether Avails CL or EL (Nature of leave to be mentioned)
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.AVAILS_CL_EL }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">11</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Whether LTC advnce already taken has been settled in full or
+                  pending settelment, date of the settelment of the previous
+                  case
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.LTC_ADVACNE_SETTLED }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">12</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Place of visit (farthest point)
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.PLACE_OF_VISIT }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">13</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Propose date onward journey
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.JOURNEY_ONWARD_PROPOSED_DATE | date : "dd.MM.yyyy" }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">14</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Probable date of return journey
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.JOURNEY_RETURN_PROBABLE_DATE | date : "dd.MM.yyyy" }}
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">15</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Details of single fair
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  <span *ngFor="let data of advJourneyData; let i = index">
+                    Rs.{{ data.JOURNEY_CLAIMED_AMOUNT }} /- X
+                    {{ data.NO_OF_FAIRS }} ={{
+                      data.JOURNEY_CLAIMED_AMOUNT * data.NO_OF_FAIRS
+                    }}
+                    <br />
+                  </span>
+                  <span> Total = Rs. {{ singleFareTotal }} /- </span>
+                  <!-- Rs.{{ amountOfSingleFare }} /- X {{ numberOfSingleFare }} =
+                <span
+                  *ngIf="
+                    amountOfSingleFare != null &&
+                    amountOfSingleFare != undefined &&
+                    amountOfSingleFare != '' &&
+                    numberOfSingleFare != null &&
+                    numberOfSingleFare != undefined &&
+                    numberOfSingleFare != ''
+                  "
+                >
+                  {{ amountOfSingleFare * numberOfSingleFare }}</span
+                >
+                /- -->
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">16</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Particulars of family members availing the facility
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td class="forAdvanceTable" colSpan="3"></td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <th
+                  class="forAdvanceTable"
+                  colspan="2"
+                  style="text-align: center"
+                >
+                  S.No.
+                </th>
+                <th class="forAdvanceTable" style="text-align: center">Name</th>
+                <th
+                  class="forAdvanceTable"
+                  colspan="2"
+                  style="text-align: center"
+                >
+                  Relationship
+                </th>
+                <th class="forAdvanceTable" style="text-align: center">Age</th>
+                <th class="forAdvanceTable" style="text-align: center">
+                  Whether Dependent
+                </th>
+              </tr>
+              <tr
+                class="forAdvanceTable"
+                *ngFor="let data of relationdata1; let i = index"
+              >
+                <td
+                  class="forAdvanceTable"
+                  colspan="2"
+                  style="text-align: center"
+                >
+                  {{ i + 1 }}
+                </td>
+
+                <td
+                  class="forAdvanceTable"
+                  style="text-align: center; white-space: pre-line"
+                >
+                  {{ data["NAME_OF_FAMILY_MEMBER"] }}
+                </td>
+
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="text-align: center; white-space: pre-line"
+                >
+                  {{ data["RELATIONSHIP"] }}
+                </td>
+                <td
+                  class="forAdvanceTable"
+                  style="text-align: center; white-space: pre-line"
+                >
+                  {{ data["AGE"] }}
+                </td>
+                <td
+                  class="forAdvanceTable"
+                  style="text-align: center; white-space: pre-line"
+                >
+                  <span *ngIf="data.RELATIONSHIP == 'Self'"> - </span>
+                  <span *ngIf="data.RELATIONSHIP != 'Self'"> Yes </span>
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">17</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Class of accommndation proposed to be the Railway/Air journey
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  <span *ngIf="journeyModes.length > 0">
+                    <ng-container
+                      *ngFor="
+                        let item of journeyModes;
+                        let last = last;
+                        let i = index
+                      "
+                    >
+                      {{ item }}
+                      <ng-container *ngIf="journeyModes.length > 1 && !last">
+                        <ng-container
+                          *ngIf="journeyModes.length === 2 && i === 0"
+                        >
+                          and
+                        </ng-container>
+                        <ng-container
+                          *ngIf="
+                            journeyModes.length > 2 &&
+                            i < journeyModes.length - 2
+                          "
+                          >,
+                        </ng-container>
+                        <ng-container
+                          *ngIf="
+                            journeyModes.length > 2 &&
+                            i === journeyModes.length - 2
+                          "
+                        >
+                          and
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                    Journey -
+                  </span>
+                  <span *ngIf="journeyClassModes.length > 0">
+                    <ng-container
+                      *ngFor="
+                        let item of journeyClassModes;
+                        let last = last;
+                        let i = index
+                      "
+                    >
+                      {{ item }}
+                      <ng-container
+                        *ngIf="journeyClassModes.length > 1 && !last"
+                      >
+                        <ng-container
+                          *ngIf="journeyClassModes.length === 2 && i === 0"
+                        >
+                          and
+                        </ng-container>
+                        <ng-container
+                          *ngIf="
+                            journeyClassModes.length > 2 &&
+                            i < journeyClassModes.length - 2
+                          "
+                          >,
+                        </ng-container>
+                        <ng-container
+                          *ngIf="
+                            journeyClassModes.length > 2 &&
+                            i === journeyClassModes.length - 2
+                          "
+                        >
+                          and
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </span>
+                </td>
+              </tr>
+              <tr class="forAdvanceTable">
+                <td class="forAdvanceTable" style="text-align: center">18</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="2"
+                  style="white-space: pre-line"
+                >
+                  Amount of advance required
+                </td>
+                <td class="forAdvanceTable" style="text-align: center">:</td>
+                <td
+                  class="forAdvanceTable"
+                  colSpan="3"
+                  class="dataBold"
+                  style="white-space: pre-line; padding-left: 1%"
+                >
+                  {{ data.REQUIRED_ADVANCE_AMOUNT }} /-
+                </td>
+              </tr>
+            </table>
+
+            <div nz-row>
+              <div nz-col nzSpan="12" style="margin-top: 8%">
+                <p style="font-size: 17px">Date:</p>
+              </div>
+              <div nz-col nzSpan="12" style="margin-top: 8%"></div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="13"></div>
+              <div nz-col nzSpan="11">
+                <p style="font-size: 17px">
+                  Signature :
+                  <span style="text-decoration: underline"
+                    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+                  >
+                </p>
+              </div>
+              <div nz-col nzSpan="13"></div>
+              <div nz-col nzSpan="11">
+                <p style="margin-top: 14px; font-size: 17px">
+                  Designation and Employee Code
+                </p>
+              </div>
+              <div nz-col nzSpan="13"></div>
+              <div nz-col nzSpan="11">
+                <p style="margin-top: -17px; font-size: 17px">
+                  {{ data.EMPLOYEE_NAME }},
+                </p>
+              </div>
+              <div nz-col nzSpan="13"></div>
+              <div nz-col nzSpan="11">
+                <p style="margin-top: -18px; font-size: 17px">
+                  {{ data.DESIGNATION }}
+                </p>
+              </div>
+              <div nz-col nzSpan="13"></div>
+              <div nz-col nzSpan="11">
+                <p style="margin-top: -19px; font-size: 17px">
+                  Employee NO:&nbsp;{{ data.EMPLOYEE_CODE }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printApplicationFooter>
+    <button nz-button nzType="default" (click)="printApplicationCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="advanceApplication"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button nz-button nzType="primary" (click)="openApplicationPdf()">
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

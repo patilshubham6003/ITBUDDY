@@ -1,0 +1,208 @@
+<div nz-row nzType="flex">
+    <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12" nzSpan="12">
+
+        <div class="formname">{{ formTitle }}</div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="4" nzXl="12" style="display: flex;justify-content: flex-end;gap:5px">
+        <div style="display: flex;gap:10px">
+            <button style="margin:0px 3xp" nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip
+                nzType="primary" (click)="importInExcel()" [nzLoading]="exportLoading">
+                <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+            </button>
+            <button style="margin:0px 3xp" nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip
+                [nzType]="isFilterApplied" (click)="showFilter()">
+                <i nz-icon nzType="filter"></i>
+            </button>
+        </div>
+        <form nz-form [nzLayout]="'inline'">
+
+            <nz-form-item class="Changeformitm">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="webbannersearch" (keyup)="keyup($event)" [(ngModel)]="searchText" nz-input
+                        placeholder="Search " />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" (click)="search()" nzSearch><i nz-icon
+                            nzType="search"></i></button>
+                </ng-template>
+            </nz-form-item>
+        </form>
+    </div>
+
+</div>
+
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+            <div class="filter-box">
+                <form nz-form>
+                    <div nz-row>
+                        <div nz-col nzSpan="4">
+                            <nz-form-item class="Changeformitm">
+                                <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+                                <nz-form-control nzErrorTip="Please Select Month">
+                                    <nz-date-picker nzMode="month" nzPlaceholder="Please select Month" nzFormat="MMM"
+                                        name="month" [(ngModel)]="selectmonth"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="4">
+                            <nz-form-item class="Changeformitm">
+                                <nz-form-label nzRequired nzNoColon>Select Year</nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker nzMode="year" name="year" [(ngModel)]="selectyear"
+                                        nzPlaceholder="Please Select Year" nzFormat="yyyy"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+                        <div nz-col nzSpan="8">
+                            <nz-form-item class="Changeformitm">
+                                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2"
+                                        nzPlaceHolder="Please Select Residence Type " name="Residence Type"
+                                        nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_IDD">
+                                        <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID"
+                                            [nzLabel]="type.TYPE">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+                        <div nz-col nzSpan="8" style="display: flex;gap: 12px;margin-top: 31px;">
+                            <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons"
+                                (click)="applyFilter()">
+                                <i nz-icon nzType="filter"></i>Apply Filter
+                            </button>
+                            <button nz-button nzType="primary" class="flexicons" [nzLoading]="isSpinning"
+                                (click)="clearFilter()">
+                                <i nz-icon nzType="close"></i>Clear filter
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #Flatvacanttable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzTotal]="totalRecords"
+            [nzScroll]="{ y: '2500px' }" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+
+            <thead>
+                <tr>
+                    <th nzColumnKey="{{ 'MONTH' }}" nzWidth="150px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Month</th>
+                    <th nzColumnKey="{{ 'YEAR' }}" nzWidth="150px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Year</th>
+                    <th nzColumnKey="{{ 'RESIDENCE_TYPE_NAME' }}" nzWidth="180px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Residence
+                        Type</th>
+
+                    <th nzColumnKey="{{ 'VACANT_DATE_TIME' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Vacant Report Datetime</th>
+                    <th nzColumnKey="{{ 'VACANT_FILE_URL' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Vacant Report File</th>
+                    <th nzColumnKey="{{ 'DRAFT_SEN_PUBLISH_DATE_TIME' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Draft Seniority Datetime</th>
+                    <th nzColumnKey="{{ 'DRAFT_SEN_FILE_URL' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Draft Seniority File</th>
+                    <th nzColumnKey="{{ 'FINAL_SEN_PUBLISH_DATE_TIME' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Final Seniority Datetime</th>
+                    <th nzColumnKey="{{ 'FINAL_SEN_FILE_URL' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Final Seniority File</th>
+                    <th nzColumnKey="{{ 'PREFERENCE_START_DATE_TIME' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Preference Start Datetime</th>
+                    <th nzColumnKey="{{ 'PREFERENCE_END_DATE_TIME' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Preference End Datetime</th>
+                    <th nzColumnKey="{{ 'DRAFT_ALLOTMENT_PUBLISH_DATE_TIME' }}" nzWidth="235px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Draft Allotment Datetime</th>
+                    <th nzColumnKey="{{ 'DRAFT_ALLOTMENT_FILE_URL' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Draft Allotment File</th>
+                    <th nzColumnKey="{{ 'FINAL_ALLOTMENT_PUBLISH_DATE_TIME' }}" nzWidth="230px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Final Allotment Datetime</th>
+                    <th nzColumnKey="{{ 'FINAL_ALLOTMENT_FILE_URL' }}" nzWidth="235px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Final Allotment File</th>
+                    <th nzColumnKey="{{ 'ACCEPTANCE_START_DATE_TIME' }}" nzWidth="235px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Acceptance Start Datetime</th>
+                    <th nzColumnKey="{{ 'ACCEPTANCE_END_DATE_TIME' }}" nzWidth="235px" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Acceptance End Datetime</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of Flatvacanttable.data">
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        <span *ngIf="data['MONTH'] == 1"> January </span>
+                        <span *ngIf="data['MONTH'] == 2"> February </span>
+                        <span *ngIf="data['MONTH'] == 3"> March </span>
+                        <span *ngIf="data['MONTH'] == 4"> April </span>
+                        <span *ngIf="data['MONTH'] == 5"> May </span>
+                        <span *ngIf="data['MONTH'] == 6"> June </span>
+                        <span *ngIf="data['MONTH'] == 7"> July </span>
+                        <span *ngIf="data['MONTH'] == 8"> August </span>
+                        <span *ngIf="data['MONTH'] == 9"> September </span>
+                        <span *ngIf="data['MONTH'] == 10"> October</span>
+                        <span *ngIf="data['MONTH'] == 11"> November</span>
+                        <span *ngIf="data['MONTH'] == 12"> December</span>
+                    </td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">{{data['YEAR']}}</td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['RESIDENCE_TYPE_NAME']}}</td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['VACANT_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td style="text-align: center;">
+                        <span nz-icon nzType="eye" (click)="edit1(data['VACANT_FILE_URL'])"
+                            style="color: #1890ff;cursor: pointer;" nzTheme="outline"></span>
+                    </td>
+                    <!-- <td style="text-align: center;white-space: pre-line; ">{{data['VACANT_FILE_URL']}}</td> -->
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined"> {{
+                        data['DRAFT_SEN_PUBLISH_DATE_TIME']
+                        ? data['DRAFT_SEN_PUBLISH_DATE_TIME']
+                        : "_"
+                        }}</td>
+                    <!-- <td style="text-align: center;white-space: pre-line; ">{{data['DRAFT_SEN_FILE_URL']}}</td> -->
+                    <td style="text-align: center;">
+                        <span nz-icon nzType="eye" (click)="edit2(data['DRAFT_SEN_FILE_URL'])"
+                            style="color: #1890ff;cursor: pointer;" nzTheme="outline"></span>
+                    </td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['FINAL_SEN_PUBLISH_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <!-- <td style="text-align: center;white-space: pre-line; ">{{data['FINAL_SEN_FILE_URL']}}</td> -->
+                    <td style="text-align: center;">
+                        <span nz-icon nzType="eye" (click)="edit3(data['FINAL_SEN_FILE_URL'])"
+                            style="color: #1890ff;cursor: pointer;" nzTheme="outline"></span>
+                    </td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['PREFERENCE_START_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['PREFERENCE_END_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['DRAFT_ALLOTMENT_PUBLISH_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <!-- <td style="text-align: center;white-space: pre-line; ">{{data['DRAFT_ALLOTMENT_FILE_URL']}}</td> -->
+                    <td style="text-align: center;">
+                        <span nz-icon nzType="eye" (click)="edit4(data['DRAFT_ALLOTMENT_FILE_URL'])"
+                            style="color: #1890ff;cursor: pointer;" nzTheme="outline"></span>
+                    </td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['FINAL_ALLOTMENT_PUBLISH_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <!-- <td style="text-align: center;white-space: pre-line; ">{{data['FINAL_ALLOTMENT_FILE_URL']}}</td> -->
+                    <td style="text-align: center;">
+                        <span nz-icon nzType="eye" (click)="edit5(data['FINAL_ALLOTMENT_FILE_URL'])"
+                            style="color: #1890ff;cursor: pointer;" nzTheme="outline"></span>
+                    </td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['ACCEPTANCE_START_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td style="text-align: center;white-space: pre-line; " *ngIf="data!=undefined">
+                        {{data['ACCEPTANCE_END_DATE_TIME'] | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

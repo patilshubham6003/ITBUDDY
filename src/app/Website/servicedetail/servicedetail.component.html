@@ -1,0 +1,247 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<section *ngIf="!isSpinning" class="banner-section" style="background-color: #f4f4f454 !important;padding-bottom: 0px">
+  <ngx-slick-carousel *ngIf="webbanner.length > 0" #slickModal="slick-carousel" [config]="settings"
+    class="banner-slider" id="bannerSlider">
+    <div *ngFor="let item of webbanner" ngxSlickItem class="single-banner" [ngStyle]="{
+        'background-repeat': 'no-repeat',
+        'background-size': '100% 100%'
+      }" [style.background-image]="'url(' + img_url + item.IMG_URL + ')'">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-9 col-9 col-sm-9 col-xl-9 col-md-9">
+          </div>
+          <div class="col-lg-3 col-3 col-sm-3 col-xl-3 col-md-3"
+            style="text-align: center; padding-left: 0px; padding-right: 6px">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</section>
+<main *ngIf="!isSpinning" id="main" style="margin-top: 0px">
+  <section style="
+      padding-bottom: 0px !important;
+      padding-top: 30px;
+    ">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6" style="height: 400px; padding: 20px;padding-top: 10px;">
+          <div class="card" style="border: none;box-shadow: none; background-color: white;">
+            <div class="header" style="border-bottom: 1px solid #cfd9de;">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-lg-5 col-xl-5 col-md-5" style="text-align: left; align-self: center;">
+                  <h5 style="
+                      font-family: 'Poppins', sans-serif !important;
+                      font-weight: 600;margin-bottom: 0px;">News & Updates
+                  </h5>
+                </div>
+                <div class="col-12 col-sm-12 col-lg-7 col-xl-7 col-md-7" style="align-self: center">
+                  <div class="input-group">
+                    <input autocomplete="off" placeholder="Search" class="form-control" name="search"
+                      (keyup)="searchBlogs(searchText)" [(ngModel)]="searchText"
+                      style="border-radius: 0px;font-size: 14px;border-radius: 10px 0px 0px 10px;" />
+
+                    <div class="input-group-append">
+                      <span *ngIf="!showx" style="
+                          padding: 10px;
+                          border-radius: 0px;
+                          cursor: pointer;background-color: #006699;color: white;
+  border-radius: 0px 10px 10px 0px;
+                        " class="fa input-group-text bi bi-search" (click)="searchBlogs(searchText)"></span>
+                      <span *ngIf="showx" style="
+                          padding: 10px;
+                          border-radius: 0px;
+                          cursor: pointer;background-color: #006699; color: white;
+  border-radius: 0px 10px 10px 0px;
+                        " class="fa input-group-text bi bi-x" (click)="searchBlogs1()"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="body11">
+              <div style="height: 400px; overflow-y: scroll; padding: 10px 0px 20px 0px;" class="scrollable">
+                <div *ngIf="news.length == 0" style="text-align: center; margin-top: 40px">
+                  No Data
+                </div>
+                <!-- <span> -->
+                <ul [style.animation-duration]="getAnimationDuration()" class="scrolll">
+                  <li *ngFor="let data of news" style="text-align: justify;">
+                    <a *ngIf="data.NEWS_CONTENT_TYPE == 'P'" target="_blank"
+                      href="{{ retrieveimgUrl }}news/{{data.NEWS_URL}}">
+                      <p style="margin-top: 15px;">
+                        <a style="color: black;margin-bottom: 10px !important;">{{data.DATE | date:'dd MMMM yyyy'}}</a>
+                      </p>
+                      <p style="margin-top: 15px;">
+                        <a href="{{ retrieveimgUrl }}news/{{data.NEWS_URL}}" target="_blank"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                            class="bi bi-filetype-pdf" viewBox="0 0 16 16" style="margin-bottom: 10px;">
+                            <path fill-rule="evenodd"
+                              d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z" />
+                          </svg></a>&nbsp;<a href="{{ retrieveimgUrl }}news/{{data.NEWS_URL}}" target="_blank"
+                          style="font-weight: 400;" class="datahover">{{
+                          data.NAME }}</a>&nbsp;
+                        <img *ngIf="data.IS_LATEST == 1" src="assets/img/newgif.gif" alt="new" height="14" width="35" />
+                      </p>
+
+                    </a>
+
+                    <a *ngIf="data.NEWS_CONTENT_TYPE == 'L'" target="_blank" href="{{data.NEWS_URL}}">
+                      <p style="margin-top: 15px;">
+                        <a style="color: black;margin-bottom: 10px !important;">{{data.DATE | date:'dd MMMM yyyy'}}</a>
+                      </p>
+                      <p style="margin-top: 15px;">
+                        <a href="{{ data.NEWS_URL }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                            height="20" fill="blue" class="bi bi-link" viewBox="0 0 16 16" style="margin-bottom: 10px;">
+                            <path
+                              d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z" />
+                            <path
+                              d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" />
+                          </svg></a>&nbsp; <a *ngIf="data.NEWS_CONTENT_TYPE == 'L'" target="_blank"
+                          href="{{ data.NEWS_URL }}" style="font-weight: 400;" class="datahover">{{ data.NAME }}
+                        </a>&nbsp;<img *ngIf="data.IS_LATEST == 1" src="assets/img/newgif.gif" alt="new" height="14"
+                          width="35" />
+                      </p>
+                    </a>
+                    <a *ngIf="data.NEWS_CONTENT_TYPE == 'NA'">
+                      <p style="margin-top: 15px;">
+                        <a style="color: black;margin-bottom: 10px !important;">{{data.DATE | date:'dd MMMM yyyy'}}</a>
+                      </p>
+                      <p style="margin-top: 15px;" class="datahover">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                          class="bi bi-newspaper" viewBox="0 0 16 16" style="margin-bottom: 10px;"
+                          style="font-weight: 400;">
+                          <path
+                            d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
+                          <path
+                            d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
+                        </svg>&nbsp;{{ data.NAME }}&nbsp;<img *ngIf="data.IS_LATEST == 1" src="assets/img/newgif.gif"
+                          alt="new" height="14" width="35" />
+                      </p>
+                    </a>
+                    <p style="border-top: 2px dotted #a9a9a9;margin-bottom: 15px;"></p>
+                  </li>
+                </ul>
+                <!-- </span> -->
+              </div>
+            </div>
+            <div class="card-footer__events" *ngIf="ncounts>0">
+              <a class="btnnn" style="margin: 0px;" (click)="storeservfaq(servises.TITLE)">View
+                More</a>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="col-lg-6" style="padding: 20px">
+          <div style="padding: 0px 0px 20px 0px;">
+            <h3 class="abouttextt" style="
+                    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 10px;
+              " *ngIf="servises != undefined" [innerHTML]="servises.TITLE"></h3>
+            <p class="abouttextt1" style="text-align: justify" *ngIf="servises != undefined"
+              [innerHTML]="servises.DESCRIPTION"></p>
+
+            <a class="btnnn" (click)="openServiceAdmin()">Visit Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <section id="about" class="about" style="padding-top: 30px;padding-bottom: 7px;" *ngIf="homecount>0">
+    <div class="container" style="padding-top: 15px;box-shadow: none;">
+      <div class="row" style="padding-top: 10px; padding-bottom: 10px;justify-content: center;">
+
+        <div class="col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2" style="margin-bottom: 20px; justify-content:center;"
+          *ngFor="let dd of homestat">
+          <div class="mgt">
+            <img *ngIf="homestat!=undefined" src="{{retrieveimgUrl}}countImg/{{dd.COUNT_URL}}" height="48" width="48"
+              alt="stat">
+          </div>
+          <div class="mggg counterup" *ngIf="homecount>0" #counterElements>
+            {{dd.TOTAL_COUNT}}
+          </div>
+          <div class="sttext" *ngIf="homecount>0">
+            {{dd.TITLE}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section> -->
+  <app-ser-downloads></app-ser-downloads>
+  <app-serfeatures></app-serfeatures>
+  <app-serbenefits></app-serbenefits>
+  <app-ser-contactdirectory></app-ser-contactdirectory>
+  <app-serfaq></app-serfaq>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>
+
+<a data-bs-toggle="modal" data-bs-target="#exampleModal" style="display:none" #exampleModal></a>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none;
+    background-color: transparent;">
+      <div class="modal-body" style="text-align: center;">
+        <section id="hero" style="background-image: url('assets/img/bbbb.jpg')!important; background-size:cover;">
+          <div class="hero-container" data-aos="fade-up">
+            <h1>Coming Soon</h1>
+            <h2>We are Working on it.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<a data-bs-toggle="modal" data-bs-target="#ggggggggg" style="display:none" #ggggggggg></a>
+<div class="modal fade" id="ggggggggg" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none;
+    background-color: transparent;">
+      <div class="modal-body" style="text-align: center;">
+        <section id="hero" style="background-image: url('assets/img/bbbb.jpg')!important; background-size:cover;">
+          <div class="hero-container" data-aos="fade-up">
+            <h1>Coming Soon</h1>
+            <h2>We are Working on it.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#outofservice" style="display:none" #outofservice></a>
+<div class="modal fade" id="outofservice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none;
+    background-color: transparent;">
+      <div class="modal-body" style="text-align: center;">
+        <section id="hero" style="background: transparent !important;">
+          <div class="hero-container" data-aos="fade-up">
+            <h2>This specific service is not customized for your usage.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

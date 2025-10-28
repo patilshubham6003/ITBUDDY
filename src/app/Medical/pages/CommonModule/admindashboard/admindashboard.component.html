@@ -1,0 +1,664 @@
+<!-- <div style="padding-bottom: 15px;">
+  <div nz-row style="padding-bottom: 10px;" nzGutter="10">
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="4">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #4f89ee , #a4c1f3) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">Total Claims</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{TOTAL_CLAIM}}
+          </span>
+        </span>
+      </div>
+    </div> 
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="4">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #4f89ee , #a4c1f3) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">New Claims</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{NEW_CLAIM}}
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="4">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #efeb69 , #f4f4ce) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">Forwarded</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{FORWARDED}}
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="3">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #5cbc5a , #c7f1c5) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">Approved</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{APPROVED}}
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="3">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #fb5e53 , #f7c5c2) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">Rejected</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{REJECTED}}
+          </span>
+        </span>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="3">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #fb5e53 , #f7c5c2) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">Rejected</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{QUERIED}}
+          </span>
+        </span>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="8" nzXl="3">
+      <div style="border-radius: 5px; padding: 10px; background: linear-gradient(30deg, #fb5e53 , #f7c5c2) !important;">
+        <span style="font-size: 15px; font-weight: bold; color: black;">Rejected</span>
+        <br>
+        <span style="font-size: 20px;">
+          <i nz-icon nzType="bar-chart" nzTheme="outline"></i>
+          <span style="font-weight: bold; color: black; font-family: 'Courier New', Courier, monospace;">
+            {{READY_TO_ZONAL}}
+          </span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div> -->
+<nz-spin [nzSpinning]="isLoading" style="height: 75vh !important; overflow-y: auto;">
+
+  <!-- <div style="height: 100%; width: 100%; position: relative;">
+    <iframe title="IncomeTax Dashboard 2" width="100%" height="100%"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMTk2NDIxNmUtOWEyOS00YmIwLTk2NWMtNDE4ZWZiNmNiYWM5IiwidCI6ImVjNDI3Y2I5LWNmNDItNGYwYS1hZWM0LWQzOTk2NmEwN2I3NSJ9"
+      frameborder="0" allowfullscreen="true" style="position: absolute; top: 0; left: 0;">
+    </iframe>
+  </div> -->
+
+
+  <span>
+    <iframe title="IncomeTax Dashboard 2" width="100%" height="750"
+    src="https://app.powerbi.com/view?r=eyJrIjoiOThkMzU5MmUtMzNhZi00YmQ0LTk1ODgtOTBmM2E1YzQ5MjExIiwidCI6ImVjNDI3Y2I5LWNmNDItNGYwYS1hZWM0LWQzOTk2NmEwN2I3NSJ9"
+      frameborder="0" allowFullScreen="true"></iframe>
+  </span>
+
+  <!-- <div nz-col nzSpan="11" style="border-right:1px solid grey;">
+      <div class="formname">
+        Stage Wise Stats
+      </div>
+      <div id="chart" *ngIf="stats.length>0">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+          [responsive]="chartOptions.responsive" [colors]="chartOptions.colors"></apx-chart>
+      </div>
+    </div> -->
+
+
+  <!-- <div id="chart" *ngIf="stats.length>0">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [labels]="chartOptions.labels"
+          [responsive]="chartOptions.responsive" [colors]="chartOptions.colors"></apx-chart>
+      </div> -->
+
+  <!-- <div nz-row [nzGutter]="10">
+    
+
+    <div nz-col nzSpan="10" style="border-right: 1px solid grey">
+      <div class="formname">File Wise Stats</div>
+
+      <div id="chart" *ngIf="stats && stats.length > 0">
+        <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
+          [labels]="chartOptions.labels" [responsive]="chartOptions.responsive"
+          [colors]="chartOptions.colors"></apx-chart>
+      </div>
+    
+    </div>
+    <div nz-col nzSpan="1"></div>
+    <div nz-col nzSpan="13">
+      <div class="formname">Today's File Stats</div>
+
+      <div>
+        <nz-table class="my-scroll no-wrap1" nzBordered #table1 nzShowSizeChanger [nzFrontPagination]="false"
+          [nzData]="daywisesummarydata" [nzTotal]="totalRecords2" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+          [nzLoading]="loadingRecords" (nzQueryParams)="sort23($event)" [nzScroll]="{ x: '1800px', y: '220px' }"
+          [nzSize]="'small'">
+          <thead>
+            <tr>
+              <th nzWidth="80px" [nzSortFn]="true" nzColumnKey="{{ 'CREATOR_NAME' }}"
+                style="font-weight: bold; text-align: center">
+                Creator Name
+              </th>
+              <th nzWidth="80px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_CREATED' }}"
+                style="font-weight: bold; text-align: center">
+                Total Created
+              </th>
+              <th nzWidth="70px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_ACCEPT' }}"
+                style="font-weight: bold; text-align: center">
+                Total Accept
+              </th>
+              <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_IS_ADVANCE' }}"
+                style="font-weight: bold; text-align: center">
+                Total Is Advance
+              </th>
+              <th nzWidth="70px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_CLOSE' }}"
+                style="font-weight: bold; text-align: center">
+                Total Closed
+              </th>
+              <th nzWidth="70px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_REJECT' }}"
+                style="font-weight: bold; text-align: center">
+                Total Reject
+              </th>
+              <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'TRANSEFER_OTHER' }}"
+                style="font-weight: bold; text-align: center">
+                Transfered To Other
+              </th>
+              <th nzWidth="110px" [nzSortFn]="true" nzColumnKey="{{ 'PENDING_AT_MYDESK' }}"
+                style="font-weight: bold; text-align: center">
+                Pending At My Desk
+              </th>
+              <th nzWidth="110px" [nzSortFn]="true" nzColumnKey="{{ 'PENDING_AT_OTHERDESK' }}"
+                style="font-weight: bold; text-align: center">
+                Pending At Other Desk
+              </th>
+              <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_CONVERTED_TO_FINAL' }}"
+                style="font-weight: bold; text-align: center">
+                Converted To Final
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let data of table1.data">
+              <td style="text-align: center; white-space: preline">
+                {{ data["CREATOR_NAME"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TOTAL_CREATED"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TOTAL_ACCEPT"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TOTAL_IS_ADVANCE"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TOTAL_CLOSE"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TOTAL_REJECT"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TRANSEFER_OTHER"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["PENDING_AT_MYDESK"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["PENDING_AT_OTHERDESK"] }}
+              </td>
+              <td style="text-align: center; white-space: preline">
+                {{ data["TOTAL_CONVERTED_TO_FINAL"] }}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+
+  <div style="
+      border: 1px solid grey;
+      border-radius: 5px;
+      margin-top: 20px;
+      padding-left: 10px;
+      padding-top: 10px;
+    ">
+    <div nz-row nzType="flex">
+      <div nz-col nzSpan="24" nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="20" nzAlign="right"
+        style="display: flex; justify-content: flex-start">
+        <div class="formname">Month Wise Application Stats</div>
+      </div>
+      <div nz-col nzSpan="24" nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="4" nzAlign="right"
+        style="display: flex; justify-content: flex-end">
+        <nz-date-picker nzMode="month" [(ngModel)]="date" name="date" [nzDisabledDate]="disabledDate"
+          (ngModelChange)="onChange($event)"></nz-date-picker>
+      </div>
+    </div>
+
+    <div id="chart" *ngIf="datapush.length > 0">
+      <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart" [dataLabels]="chartOptions1.dataLabels"
+        [plotOptions]="chartOptions1.plotOptions" [yaxis]="chartOptions1.yaxis" [xaxis]="chartOptions1.xaxis"
+        [legend]="chartOptions1.legend" [colors]="chartOptions1.colors" [grid]="chartOptions1.grid"></apx-chart>
+    </div>
+  </div>
+
+  <div>
+    <div nz-row style="
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding-left: 10px;
+        padding-top: 10px;
+      ">
+      <div nz-col nzSpan="24">
+        <div class="formname">Inspector Wise Application Stats</div>
+
+        <div>
+          <nz-table id="excel-table1" class="my-scroll no-wrap1" nzBordered #table3 nzShowSizeChanger
+            [nzFrontPagination]="false" [nzData]="inspector" [nzLoading]="loadingRecords1" [nzTotal]="totalRecords"
+            [nzScroll]="{ x: '4500px', y: '55vh' }" [(nzPageIndex)]="pageIndex1" [(nzPageSize)]="pageSize1"
+            (nzPageIndexChange)="inspectorApplication()" (nzPageSizeChange)="inspectorApplication()"
+            (nzQueryParams)="sort1($event)" [nzSize]="'small'">
+            <thead nzSingleSort>
+              <tr>
+                <th nzWidth="120px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'INSPECTOR_NAME' }}">
+                  Inspector Name
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_COUNT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Total Count
+                </th>
+                <th nzWidth="100px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'APPLICATION_CREATED' }}">
+                  Application Created
+                </th>
+                <th nzWidth="110px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'BILL_ITEMS_ADDED' }}">
+                  Bill Items Added
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'APPLICATION_SUBMITTED' }}"
+                  style="font-weight: bold; text-align: center">
+                  Application Submited
+                </th>
+                <th nzWidth="115px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_INFORMATION_VERIFIED' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Information Verified
+                </th>
+                <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_REJECTED_BY_INSPECTOR' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Rejected By Inspector
+                </th>
+                <th nzWidth="200px" [nzSortFn]="true" nzColumnKey="{{
+                    'CLAIM_FORWARDED_TOWARDS_ADMINISTRATIVE_OFFICER'
+                  }}" style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards Administrative Officer
+                </th>
+                <th nzWidth="125px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_FORWARDED_TOWARDS_ITO' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards ITO
+                </th>
+                <th nzWidth="160px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_ADMINISTRATIVE_OFFICER' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By Administative Officer
+                </th>
+                <th nzWidth="135px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_FORWARDED_TOWARDS_JCIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards JCIT
+                </th>
+                <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_ITO' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By ITO
+                </th>
+                <th nzWidth="130px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_FORWARDED_TOWARDS_CIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards CIT
+                </th>
+                <th nzWidth="140px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_JCIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By JCIT
+                </th>
+                <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="{{ 'READY_TO_FORWARD_TO_ZONAL_CBDT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Ready to Forward to Zonal CBDT
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_CIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By CIT
+                </th>
+                <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'FORWARDED_TO_ZONAL_CBDT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Forwarded to Zonal CBDT
+                </th>
+
+                <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_ZONAL_CBDT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By Zonal CBDT
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_APPROVED' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Approved
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data of table3.data">
+                <td style="white-space: pre-line" align="center">
+                  {{ data["INSPECTOR_NAME"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["TOTAL_COUNT"] }}
+                </td>
+
+                <td style="white-space: pre-line" align="center">
+                  {{ data["APPLICATION_CREATED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["BILL_ITEMS_ADDED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["APPLICATION_SUBMITTED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_INFORMATION_VERIFIED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_REJECTED_BY_INSPECTOR"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_ADMINISTRATIVE_OFFICER"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_ITO"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_ADMINISTRATIVE_OFFICER"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_JCIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_ITO"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_CIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_JCIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["READY_TO_FORWARD_TO_ZONAL_CBDT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_CIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["FORWARDED_TO_ZONAL_CBDT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_ZONAL_CBDT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_APPROVED"] }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div nz-row style="
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding-left: 10px;
+        padding-top: 10px;
+      ">
+      <div nz-col nzSpan="24">
+        <div class="formname">Hospital Wise Application Stats</div>
+
+        <div>
+          <nz-table id="excel-table" class="my-scroll no-wrap1" nzBordered #table32 nzShowSizeChanger
+            [nzFrontPagination]="false" [nzData]="hospital" [nzLoading]="loadingRecords2" [nzTotal]="totalRecords1"
+            [nzScroll]="{ x: '4600px', y: '55vh' }" [(nzPageIndex)]="pageIndex2" [(nzPageSize)]="pageSize2"
+            (nzPageIndexChange)="hospitalApplication()" (nzPageSizeChange)="hospitalApplication()"
+            (nzQueryParams)="sort2($event)" [nzSize]="'small'">
+            <thead nzSingleSort>
+              <tr>
+                <th nzWidth="200px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'HOSPITAL_NAME' }}">
+                  Hospital Name
+                </th>
+                <th nzWidth="120px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'HOSPITAL_TYPE' }}">
+                  Hospital Type
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'TOTAL_COUNT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Total Count
+                </th>
+                <th nzWidth="100px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'APPLICATION_CREATED' }}">
+                  Application Created
+                </th>
+                <th nzWidth="110px" style="font-weight: bold; text-align: center" [nzSortFn]="true"
+                  nzColumnKey="{{ 'BILL_ITEMS_ADDED' }}">
+                  Bill Items Added
+                </th>
+                <th nzWidth="107px" [nzSortFn]="true" nzColumnKey="{{ 'APPLICATION_SUBMITTED' }}"
+                  style="font-weight: bold; text-align: center">
+                  Application Submited
+                </th>
+                <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_INFORMATION_VERIFIED' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Information Verified
+                </th>
+                <th nzWidth="130px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_REJECTED_BY_INSPECTOR' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Rejected By Inspector
+                </th>
+                <th nzWidth="210px" [nzSortFn]="true" nzColumnKey="{{
+                    'CLAIM_FORWARDED_TOWARDS_ADMINISTRATIVE_OFFICER'
+                  }}" style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards Administrative Officer
+                </th>
+                <th nzWidth="130px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_FORWARDED_TOWARDS_ITO' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards ITO
+                </th>
+                <th nzWidth="167px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_ADMINISTRATIVE_OFFICER' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By Administative Officer
+                </th>
+                <th nzWidth="138px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_FORWARDED_TOWARDS_JCIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards JCIT
+                </th>
+                <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_ITO' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By ITO
+                </th>
+                <th nzWidth="130px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_FORWARDED_TOWARDS_CIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Forwarded Towards CIT
+                </th>
+                <th nzWidth="140px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_JCIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By JCIT
+                </th>
+                <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="{{ 'READY_TO_FORWARD_TO_ZONAL_CBDT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Ready to Forward to Zonal CBDT
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_CIT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By CIT
+                </th>
+                <th nzWidth="120px" [nzSortFn]="true" nzColumnKey="{{ 'FORWARDED_TO_ZONAL_CBDT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Forwarded to Zonal CBDT
+                </th>
+
+                <th nzWidth="150px" [nzSortFn]="true" nzColumnKey="{{ 'QUERY_RAISED_BY_ZONAL_CBDT' }}"
+                  style="font-weight: bold; text-align: center">
+                  Query Raised By Zonal CBDT
+                </th>
+                <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'CLAIM_APPROVED' }}"
+                  style="font-weight: bold; text-align: center">
+                  Claim Approved
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data of table32.data">
+                <td style="white-space: pre-line" align="center">
+                  {{ data["HOSPITAL_NAME"] }}
+                </td>
+
+                <td style="text-align: center">
+                  <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'E'">Empanelled</span>
+                  <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'NE'">Non Empanelled</span>
+                  <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'G'">Government</span>
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["TOTAL_COUNT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["APPLICATION_CREATED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["BILL_ITEMS_ADDED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["APPLICATION_SUBMITTED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_INFORMATION_VERIFIED"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_REJECTED_BY_INSPECTOR"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_ADMINISTRATIVE_OFFICER"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_ITO"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_ADMINISTRATIVE_OFFICER"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_JCIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_ITO"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_FORWARDED_TOWARDS_CIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_JCIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["READY_TO_FORWARD_TO_ZONAL_CBDT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_CIT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["FORWARDED_TO_ZONAL_CBDT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["QUERY_RAISED_BY_ZONAL_CBDT"] }}
+                </td>
+                <td style="white-space: pre-line" align="center">
+                  {{ data["CLAIM_APPROVED"] }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-row [nzGutter]="10">
+    <div nz-col nzSpan="24" style="
+        border: 1px solid grey;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding-left: 20px;
+        padding-top: 10px;
+      ">
+      <div class="formname">File Activity Log</div>
+
+      <div>
+        <nz-table class="my-scroll no-wrap1" nzBordered #table2 nzShowSizeChanger [nzFrontPagination]="false"
+          [nzData]="ACTIVITIES" [nzTotal]="totalRecords3" [nzLoading]="loadingRecords3" [(nzPageIndex)]="pageIndex3"
+          [(nzPageSize)]="pageSize3" [nzScroll]="{ x: '1190px', y: '55vh' }" (nzPageIndexChange)="getActivityLog()"
+          (nzPageSizeChange)="getActivityLog()" (nzQueryParams)="sort3($event)" [nzSize]="'small'">
+          <thead>
+            <tr>
+              <th nzWidth="90px" [nzSortFn]="true" nzColumnKey="{{ 'CREATOR_NAME' }}"
+                style="font-weight: bold; text-align: center">
+                Creator Name
+              </th>
+              <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="{{ 'CURRENT_POSITION_NAME' }}"
+                style="font-weight: bold; text-align: center">
+                Current Position Name
+              </th>
+              <th nzWidth="70px" [nzSortFn]="true" nzColumnKey="{{ 'FILE_NUMBER' }}"
+                style="font-weight: bold; text-align: center">
+                File Number
+              </th>
+              <th nzWidth="80px" [nzSortFn]="true" nzColumnKey="{{ 'CREATED_MODIFIED_DATE' }}"
+                style="font-weight: bold; text-align: center">
+                Action Modified Date
+              </th>
+              <th nzWidth="70px" [nzSortFn]="true" nzColumnKey="{{ 'REMARK' }}"
+                style="font-weight: bold; text-align: center">
+                Remark
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let data of table2.data">
+              <td style="text-align: center; white-space: pre-line">
+                {{ data["CREATOR_NAME"] }}
+              </td>
+              <td style="text-align: center; white-space: pre-line">
+                {{ data["CURRENT_POSITION_NAME"] }}
+              </td>
+              <td style="text-align: center; white-space: pre-line">
+                {{ data["FILE_NUMBER"] }}
+              </td>
+              <td style="text-align: center; white-space: pre-line">
+                {{ data["CREATED_MODIFIED_DATE"] }}
+              </td>
+              <td style="text-align: center; white-space: pre-line">
+                {{ data["REMARK"] }}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div> -->
+</nz-spin>

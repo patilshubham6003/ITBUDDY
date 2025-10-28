@@ -1,0 +1,2385 @@
+<div *ngIf="drawerClaimData != undefined">
+  <form nz-form>
+    <div nz-row [nzGutter]="10">
+      <div nz-col nzSpan="8">
+        <div class="my-box" style="height: 75vh; overflow-y: auto">
+          <div nz-row>
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid"
+                    [(ngModel)]="
+                      SignatureOrderDataMap.TRANSFER_ORDER_SIGNATURE_1
+                    "
+                    nzAllowClear
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 2</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid2"
+                    [(ngModel)]="
+                      SignatureOrderDataMap.TRANSFER_ORDER_SIGNATURE_2
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature1($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 3</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid3"
+                    [(ngModel)]="
+                      SignatureOrderDataMap.TRANSFER_ORDER_SIGNATURE_3
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature2($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="20">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Signature 4</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid43"
+                    [(ngModel)]="
+                      SignatureOrderDataMap.TRANSFER_ORDER_SIGNATURE_4
+                    "
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature3($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="4">
+              <nz-form-item style="padding: 0px !important">
+                <nz-form-label nzNoColon></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="primary" (click)="opensignature()">
+                    <i nz-icon nzType="plus"></i>
+                  </button>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="12"
+            >
+              <nz-form-item
+                style="
+                  display: inline-block;
+                  margin-bottom: 5px;
+                  width: -webkit-fill-available;
+                  padding: 0px 10px;
+                "
+              >
+                <nz-form-label nzNoColon>Date </nz-form-label>
+
+                <nz-form-control>
+                  <nz-date-picker
+                    style="width: 100%"
+                    nzFormat="dd/MM/yyyy"
+                    name="BILL_SUBMISSION_DATE"
+                    [(ngModel)]="drawerClaimData.ORDER_FORM_DATE"
+                  >
+                  </nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Bill Number</nz-form-label>
+                <nz-form-control nzHasFeedback>
+                  <input
+                    nz-input
+                    name="BillNo"
+                    placeHolder="Enter Bill Number"
+                    maxlength="512"
+                    autocomplete="off"
+                    [(ngModel)]="drawerClaimData.ORDER_BILL_NO"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24" *ngIf="drawerClaimData.IS_ADVANCE_TAKEN">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Vide Letter Number</nz-form-label>
+                <nz-form-control nzHasFeedback>
+                  <input
+                    nz-input
+                    name="VIDE_LETTER_NUMBER"
+                    placeHolder="Enter Vide Letter Number"
+                    maxlength="256"
+                    autocomplete="off"
+                    [(ngModel)]="drawerClaimData.VIDE_LETTER_NUMBER"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Prepared By</nz-form-label>
+                <nz-form-control>
+                  <input
+                    nz-input
+                    name="PREPARED_BY"
+                    placeHolder="Enter Prepared By"
+                    maxlength="60"
+                    autocomplete="off"
+                    [(ngModel)]="SignatureOrderDataMap.PREPARED_BY"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Checked By</nz-form-label>
+              <nz-form-control >
+                <input
+                  nz-input
+                  name="CHECKED_BY"
+                  placeHolder="Enter Checked By"
+                  maxlength="60"
+                  autocomplete="off"
+                  [(ngModel)]="SignatureOrderDataMap.CHECKED_BY"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Order Form Remark</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Order Remark is required"
+                  >
+                    <!-- <textarea
+                    maxlength="512"
+                    style="width: 100%"
+                    name="Journey2"
+                    nz-input
+                    placeholder="Enter Order Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.ORDER_FORM_REMARK"
+                    nz-input
+                  ></textarea> -->
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="Journey2"
+                      [(ngModel)]="drawerClaimData.ORDER_FORM_REMARK"
+                      [config]="editorConfigPara"
+                    ></angular-editor>
+                  </nz-form-control>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="drawerClaimData.ORDER_FORM_REMARK != undefined"
+                  >
+                    {{ drawerClaimData.ORDER_FORM_REMARK.length }}/512
+                  </h6>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Order Form Remark 2</nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter Order Remark 2">
+                  <textarea
+                    style="width: 100%"
+                    nz-input
+                    name="fromname"
+                    placeHolder="Enter Order Remark"
+                    maxlength="512"
+                    autocomplete="off"
+                    [(ngModel)]="drawerClaimData.ORDER_FORM_REMARK_2"
+                  ></textarea>
+                  <!-- <input
+                  nz-input
+                  name="fromname"
+                  placeHolder="Enter Order Remark"
+                  maxlength="512"
+                  autocomplete="off"
+                  [(ngModel)]="drawerClaimData.ORDER_FORM_REMARK_2"
+                /> -->
+                </nz-form-control>
+                <h6
+                  style="color: red; font-size: 0.67rem; font-weight: 400"
+                  *ngIf="drawerClaimData.ORDER_FORM_REMARK_2 != undefined"
+                >
+                  {{ drawerClaimData.ORDER_FORM_REMARK_2.length }}/512
+                </h6>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Is Destination Editable ?</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-switch
+                    [(ngModel)]="drawerClaimData.IS_EDITABLE_DESTINATION"
+                    name="destinationEditable"
+                    nzCheckedChildren="Yes"
+                    nzUnCheckedChildren="No"
+                    (ngModelChange)="destinationRemarkNull($event)"
+                  >
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="drawerClaimData.IS_EDITABLE_DESTINATION == true"
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>Destination Remark </nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter Destination Remark ">
+                  <textarea
+                    style="width: 100%"
+                    nz-input
+                    name="destinationRemark"
+                    placeHolder="Enter Destination Remark "
+                    maxlength="512"
+                    autocomplete="off"
+                    [(ngModel)]="drawerClaimData.DESTINATION_REMARK"
+                  ></textarea>
+                </nz-form-control>
+                <h6
+                  style="color: red; font-size: 0.67rem; font-weight: 400"
+                  *ngIf="drawerClaimData.DESTINATION_REMARK != undefined"
+                >
+                  {{ drawerClaimData.DESTINATION_REMARK.length }}/512
+                </h6>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="
+                (drawerClaimData.TRANSFER_GRANT_AMOUNT != undefined ||
+                  drawerClaimData.TRANSFER_GRANT_AMOUNT != null) &&
+                drawerClaimData.TRANSFER_GRANT_AMOUNT > 0
+              "
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>CTG Claimed Amt.</nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter CTG Claimed Amt.">
+                  <nz-input-group style="width: 100%">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="drawerClaimData.CTG_TOTAL"
+                      name="CTG Claimed Amt."
+                      disabled="true"
+                      type="text"
+                      maxlength="16"
+                      placeHolder="Enter CTG Claimed Amt."
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="
+                (drawerClaimData.ROAD_MILEAGE != undefined ||
+                  drawerClaimData.ROAD_MILEAGE != null) &&
+                (drawerClaimData.PER_KM != undefined ||
+                  drawerClaimData.PER_KM != null) &&
+                drawerClaimData.ROAD_MILEAGE > 0 &&
+                drawerClaimData.PER_KM > 0
+              "
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Road mileage Claimed Amt.
+                </nz-form-label>
+                <nz-form-control
+                  nzErrorTip="Please Enter Road mileage Claimed Amt.	"
+                >
+                  <nz-input-group style="width: 100%">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="drawerClaimData.ROAD_MILEAGE_TOTAL"
+                      name="mileage"
+                      disabled="true"
+                      type="text"
+                      maxlength="16"
+                      placeHolder="Enter Road mileage Claimed Amt.	"
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24" *ngIf="journeyfairfaird > 0">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Journey Claimed Amt.</nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter Road Claimed Amt.">
+                  <nz-input-group style="width: 100%">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="drawerClaimData.JOURNEY_TOTAL"
+                      name="RoadClaimed"
+                      type="text"
+                      disabled="true"
+                      maxlength="16"
+                      placeHolder="Enter Journey Claimed Amt."
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24" *ngIf="totalofweight > 0">
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Personal Effects Claimed Amt.</nz-form-label
+                >
+                <nz-form-control
+                  nzErrorTip="Please Enter Personal Effects Claimed Amt."
+                >
+                  <nz-input-group style="width: 100%">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="drawerClaimData.PERSONAL_EFFECT_TOTAL"
+                      name="PersonalEffects"
+                      type="text"
+                      disabled="true"
+                      maxlength="16"
+                      placeHolder="Enter Personal Effects	Claimed Amt."
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24" *ngIf="grosspaymentvalue > 0">
+              <nz-form-item>
+                <nz-form-label nzNoColon
+                  >Private Conveyance Claimed Amt.</nz-form-label
+                >
+                <nz-form-control
+                  nzErrorTip="Please Enter Private Conveyance Claimed Amt."
+                >
+                  <nz-input-group style="width: 100%">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      (keypress)="omit($event)"
+                      [(ngModel)]="drawerClaimData.PRIVATE_CONVEYANCE_TOTAL"
+                      name="PrivateConveyance"
+                      type="text"
+                      disabled="true"
+                      maxlength="16"
+                      placeHolder="Enter Private Conveyance	Claimed Amt."
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <!-- <div nz-row>
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Journey Remark</nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Journey Remark is required">
+                  <textarea
+                    maxlength="1024"
+                    style="width: 100%"
+                    name="Journey3"
+                    nz-input
+                    placeholder="Enter Journey Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.JOURNEY_REMARK"
+                    nz-input></textarea>
+                </nz-form-control>
+                <h6
+                   style="
+                            color: red;
+                            font-size: 0.67rem;
+                            font-weight: 400;
+                          "
+                  *ngIf="drawerClaimData.JOURNEY_REMARK != undefined">
+                  {{ drawerClaimData.JOURNEY_REMARK.length }}/1024
+                </h6>
+              </nz-form-item>
+            </div>
+          </div> -->
+            <div
+              style="width: 100%"
+              nz-row
+              *ngIf="
+                (drawerClaimData.TRANSFER_GRANT_AMOUNT != undefined ||
+                  drawerClaimData.TRANSFER_GRANT_AMOUNT != null) &&
+                drawerClaimData.TRANSFER_GRANT_AMOUNT > 0
+              "
+            >
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>CTG Remark</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="CTG Remark is required"
+                  >
+                    <!-- <textarea
+                    maxlength="1024"
+                    style="width: 100%"
+                    name="CTG Remark"
+                    nz-input
+                    placeholder="Enter CTG Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.CTG_REMARK"
+                    nz-input
+                  ></textarea> -->
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="CTG Remark"
+                      [(ngModel)]="drawerClaimData.CTG_REMARK"
+                      [config]="editorConfigPara"
+                    ></angular-editor>
+                  </nz-form-control>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="drawerClaimData.CTG_REMARK != undefined"
+                  >
+                    {{ drawerClaimData.CTG_REMARK.length }}/1024
+                  </h6>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div
+              style="width: 100%"
+              nz-row
+              *ngIf="
+                (drawerClaimData.ROAD_MILEAGE != undefined ||
+                  drawerClaimData.ROAD_MILEAGE != null) &&
+                (drawerClaimData.PER_KM != undefined ||
+                  drawerClaimData.PER_KM != null) &&
+                drawerClaimData.ROAD_MILEAGE > 0 &&
+                drawerClaimData.PER_KM > 0
+              "
+            >
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Road mileage Remark</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Road mileage Remark is required"
+                  >
+                    <!-- <textarea
+                    maxlength="1024"
+                    style="width: 100%"
+                    name="trainremark"
+                    nz-input
+                    placeholder="Enter Road mileage Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.ROAD_MILEAGE_REMARK"
+                    nz-input
+                  ></textarea> -->
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="trainremark"
+                      [(ngModel)]="drawerClaimData.ROAD_MILEAGE_REMARK"
+                      [config]="editorConfigPara"
+                    ></angular-editor>
+                  </nz-form-control>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="drawerClaimData.ROAD_MILEAGE_REMARK != undefined"
+                  >
+                    {{ drawerClaimData.ROAD_MILEAGE_REMARK.length }}/1024
+                  </h6>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row *ngIf="journeyfairfaird > 0" style="width: 100%">
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Journey Remark</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Journey Remark is required"
+                  >
+                    <!-- <textarea
+                    maxlength="1024"
+                    style="width: 100%"
+                    name="Journey1"
+                    nz-input
+                    placeholder="Enter Journey Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.JOURNEY_REMARK"
+                    nz-input
+                  ></textarea> -->
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="Journey1"
+                      [(ngModel)]="drawerClaimData.JOURNEY_REMARK"
+                      [config]="editorConfigPara"
+                    ></angular-editor>
+                  </nz-form-control>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="drawerClaimData.JOURNEY_REMARK != undefined"
+                  >
+                    {{ drawerClaimData.JOURNEY_REMARK.length }}/1024
+                  </h6>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row *ngIf="totalofweight > 0" style="width: 100%">
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Personal Effects Remark</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Personal Effects Remark is required"
+                  >
+                    <!-- <textarea
+                    maxlength="1024"
+                    style="width: 100%"
+                    name="Personal"
+                    nz-input
+                    placeholder="Enter Personal Effects Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.PERSONAL_REMARK"
+                    nz-input
+                  ></textarea> -->
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="Personal"
+                      [(ngModel)]="drawerClaimData.PERSONAL_REMARK"
+                      [config]="editorConfigPara"
+                    ></angular-editor>
+                  </nz-form-control>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="drawerClaimData.PERSONAL_REMARK != undefined"
+                  >
+                    {{ drawerClaimData.PERSONAL_REMARK.length }}/1024
+                  </h6>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row *ngIf="grosspaymentvalue > 0" style="width: 100%">
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Private Conveyance Remark</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Private Conveyance Remark is required"
+                  >
+                    <!-- <textarea
+                    maxlength="1024"
+                    style="width: 100%"
+                    name="Personal"
+                    nz-input
+                    placeholder="Enter Private Conveyance Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.PRIVATE_CONVEYANCE_REMARK"
+                    nz-input
+                  ></textarea> -->
+
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="PrivateConveyanceRemark"
+                      [(ngModel)]="drawerClaimData.PRIVATE_CONVEYANCE_REMARK"
+                      [config]="editorConfigPara"
+                    ></angular-editor>
+                  </nz-form-control>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="
+                      drawerClaimData.PRIVATE_CONVEYANCE_REMARK != undefined
+                    "
+                  >
+                    {{ drawerClaimData.PRIVATE_CONVEYANCE_REMARK.length }}/1024
+                  </h6>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <!-- <div nz-row>
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Order Remark </nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Order Remark is required">
+                  <textarea
+                    maxlength="256"
+                    style="width: 100%"
+                    name="remark"
+                    nz-input
+                    placeholder="Enter Order Remark"
+                    type="text"
+                    rows="2"
+                    [(ngModel)]="drawerClaimData.ORDER_REASON"
+                    nz-input></textarea>
+                </nz-form-control>
+                <h6
+                   style="
+                            color: red;
+                            font-size: 0.67rem;
+                            font-weight: 400;
+                          "
+                  *ngIf="drawerClaimData.ORDER_REASON != undefined">
+                  {{ drawerClaimData.ORDER_REASON.length }}/256
+                </h6>
+              </nz-form-item>
+            </div>
+          </div> -->
+          </div>
+        </div>
+      </div>
+      <div nz-col nzSpan="16">
+        <div class="my-box" style="height: 75vh; overflow-y: auto">
+          <div style="font-size: 14px">
+            <p>
+              Dated:<b>{{
+                drawerClaimData.ORDER_FORM_DATE | date : "dd/MM/yyyy"
+              }}</b>
+            </p>
+            <pre>Bill No.{{ drawerClaimData.ORDER_BILL_NO }}</pre>
+            <p>
+              P.U.C is TA-Transfer Bill Of
+              <span>{{ transferallounceorder.NAME }}</span
+              >, <span>{{ transferallounceorder.DESIGNATION }}</span> on Travel
+              From
+
+              <span *ngIf="drawerClaimData.IS_EDITABLE_DESTINATION == true">
+                {{ drawerClaimData.DESTINATION_REMARK }}
+              </span>
+              <span *ngIf="drawerClaimData.IS_EDITABLE_DESTINATION == false">
+                <span *ngFor="let data of journeydetails; let k = index">
+                  <span>{{ data.DEPARTURE_FROM }}</span> to
+                  <span>{{ data.ARRIVAL_TO }}</span>
+                  <span *ngIf="journeydetails.length > 1">
+                    <span
+                      *ngIf="
+                        journeydetails.length - 2 != k &&
+                        journeydetails.length != k + 1
+                      "
+                    >
+                      ,
+                    </span>
+                    <span *ngIf="journeydetails.length - 2 == k"> & </span>
+                  </span>
+                </span>
+              </span>
+
+              <span [innerHtml]="drawerClaimData.ORDER_FORM_REMARK"></span>
+              <span *ngIf="!drawerClaimData.IS_ADVANCE_TAKEN">
+                <p>They have not taken any advance.</p>
+              </span>
+              <span *ngIf="drawerClaimData.IS_ADVANCE_TAKEN">
+                <p>
+                  The advance taken of Rs.{{
+                    drawerClaimData.ADVANCED_AMOUNT
+                  }}
+                  vide letter {{ drawerClaimData.VIDE_LETTER_NUMBER }}.
+                </p>
+              </span>
+              <!-- <span *ngFor="let data of journeydetails; let k = index">
+                <b>{{ data.TO_PLACE }}</b>
+                <span *ngIf="journeydetails.length > 1">
+                  <span
+                    *ngIf="
+                      journeydetails.length - 2 != k && journeydetails.length != k + 1
+                    "
+                  >
+                    ,
+                  </span>
+                  <span *ngIf="journeydetails.length - 2 == k"> & </span>
+                </span>
+              </span> -->
+              <!-- {{ drawerClaimData.ORDER_FORM_REMARK }} -->
+              <!-- Vide F No. A. 22011/5/2022-AD-Vl, Office Order No. 212 Of 2022
+              dated <b>{{ railorder.DATE | date : "dd-MM-yyyy" }}</b> Pg. No.
+              of. 17/25 SI No. 20. -->
+            </p>
+            <!-- <p>{{drawerClaimData.JOURNEY_REMARK}}</p> -->
+            <!-- <p>
+              The Officer/Official has Claimed an amount of
+              <b>Rs.{{ totacountofbill }}/-</b> against CTG and Airfare for Self
+              and Family
+              < <b>{{ transferallounceorder.RELATIONSHIP }}</b>  
+              only vide
+              CP00002835 dated
+              <b> {{ drawerClaimData.DATE | date : "dd-MM-yyyy" }}</b> 
+              (Annexure
+              'A').
+              <b>{{ drawerClaimData.ORDER_REASON }}</b>
+            </p> -->
+            <p>{{ drawerClaimData.ORDER_FORM_REMARK_2 }}</p>
+
+            <p>
+              The Total Amount Admissible to the official is worked out as
+              under.
+            </p>
+
+            <table
+              border="1"
+              style="border-collapse: collapse; width: -webkit-fill-available"
+            >
+              <thead>
+                <tr>
+                  <!-- <th nzAlign="center"><b>Sr. No.</b></th> -->
+                  <th nzAlign="center"><b>Components</b></th>
+                  <th nzAlign="center"><b>Amt. Claimed</b></th>
+                  <th nzAlign="center"><b>Amt. Admissible</b></th>
+                  <!-- <th nzAlign="center"><b>Amt.in Admissible</b></th> -->
+                  <th nzAlign="center"><b>Remarks</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngIf="
+                    (drawerClaimData.TRANSFER_GRANT_AMOUNT != undefined ||
+                      drawerClaimData.TRANSFER_GRANT_AMOUNT != null) &&
+                    drawerClaimData.TRANSFER_GRANT_AMOUNT > 0
+                  "
+                >
+                  <!-- <td nzAlign="center">1.</td> -->
+                  <td style="padding: 5px">
+                    <!-- Transfer Grant: {{ drawerClaimData.TRANSFER_GRANT }} -->
+                    CTG
+                  </td>
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    <span *ngFor="let data of journeydetails; let k = index">
+                      <b>{{ data.DEPARTURE_FROM }}</b>
+
+                      <span *ngIf="journeydetails.length > 1">
+                        <span
+                          *ngIf="
+                            journeydetails.length - 2 != k &&
+                            journeydetails.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="journeydetails.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                  </td> -->
+                  <td nzAlign="center">{{ drawerClaimData.CTG_TOTAL }}/-</td>
+                  <td nzAlign="center">
+                    {{ drawerClaimData.TRANSFER_GRANT_AMOUNT }}/-
+                  </td>
+                  <!-- <td nzAlign="center">
+                    <b>{{ journeyfairfaird }}/-</b>
+                  </td> -->
+
+                  <!-- <td nzAlign="center">Nil</td> -->
+
+                  <td nzAlign="left">
+                    <div>
+                      <span [innerHtml]="drawerClaimData.CTG_REMARK">
+                        <!-- {{ drawerClaimData.CTG_REMARK }} -->
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    (drawerClaimData.ROAD_MILEAGE != undefined ||
+                      drawerClaimData.ROAD_MILEAGE != null) &&
+                    (drawerClaimData.PER_KM != undefined ||
+                      drawerClaimData.PER_KM != null) &&
+                    drawerClaimData.ROAD_MILEAGE > 0 &&
+                    drawerClaimData.PER_KM > 0
+                  "
+                >
+                  <!-- <td nzAlign="center">2.</td> -->
+
+                  <td style="padding: 5px">
+                    Road mileage for
+                    <span style="text-decoration: underline"
+                      >{{ drawerClaimData.ROAD_MILEAGE }} </span
+                    >kms @
+                    <span style="text-decoration: underline">
+                      {{ drawerClaimData.PER_KM }}
+                    </span>
+                    per km.
+                  </td>
+                  <td nzAlign="center">
+                    {{ drawerClaimData.ROAD_MILEAGE_TOTAL }}/-
+                  </td>
+                  <td nzAlign="center">{{ multiplication }}/-</td>
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    <span *ngFor="let data of TravelModeNames; let k = index">
+                      <b>{{ data }}</b>
+
+                      <span *ngIf="TravelModeNames.length > 1">
+                        <span
+                          *ngIf="
+                            TravelModeNames.length - 2 != k &&
+                            TravelModeNames.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="TravelModeNames.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                  </td>
+                  <td nzAlign="center">{{ raiamount }}/-</td> -->
+
+                  <!-- <td nzAlign="center">af</td> -->
+
+                  <td nzAlign="left">
+                    <div>
+                      <span [innerHtml]="drawerClaimData.ROAD_MILEAGE_REMARK">
+                        <!-- {{ drawerClaimData.ROAD_MILEAGE_REMARK }} -->
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="journeyfairfaird > 0">
+                  <!-- <td nzAlign="center">
+                    <span
+                      *ngIf="
+                        (drawerClaimData.ROAD_MILEAGE != undefined ||
+                          drawerClaimData.ROAD_MILEAGE != null) &&
+                        (drawerClaimData.PER_KM != undefined ||
+                          drawerClaimData.PER_KM != null)
+                      "
+                    >
+                      3.</span
+                    >
+                    <span
+                      *ngIf="
+                        drawerClaimData.ROAD_MILEAGE == undefined ||
+                        drawerClaimData.ROAD_MILEAGE == null ||
+                        drawerClaimData.PER_KM == undefined ||
+                        drawerClaimData.PER_KM == null
+                      "
+                    >
+                      2.</span
+                    >
+                  </td> -->
+                  <td style="padding: 5px">
+                    <span *ngIf="showPrivate == 1 || showPrivate == 0">
+                      <span *ngFor="let data of TravelModeNames; let k = index">
+                        <span>{{ data }}</span>
+
+                        <span *ngIf="TravelModeNames.length > 1">
+                          <span
+                            *ngIf="
+                              TravelModeNames.length - 2 != k &&
+                              TravelModeNames.length != k + 1
+                            "
+                          >
+                            ,
+                          </span>
+                          <span *ngIf="TravelModeNames.length - 2 == k">
+                            &
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                    <!-- <span *ngIf="showPrivate == 1">{{
+                      drawerClaimData.TRAVEL_MODE_NAME
+                    }}</span> -->
+                    <span *ngIf="showPrivate == 2">Private Vehicle</span>
+                  </td>
+                  <td nzAlign="center">
+                    {{ transferJourneyClaimedAmount }}/-
+                    <!-- {{ drawerClaimData.JOURNEY_TOTAL }}/- -->
+                  </td>
+                  <td nzAlign="center">
+                    <span *ngIf="journeydetails != undefined">
+                      <span *ngIf="showPrivate == 1 || showPrivate == 0"
+                        >{{ journeyfairfaird }}/-</span
+                      >
+                      <!-- <span *ngIf="showPrivate == 1">{{
+                        grosspaymentvalue
+                      }}</span> -->
+                      <span *ngIf="showPrivate == 2">0</span>
+                    </span>
+                  </td>
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    Personal Effects
+                  </td>
+                  <td nzAlign="center">{{ amount }}/-</td> -->
+
+                  <!-- <td nzAlign="center">as</td> -->
+                  <td nzAlign="left">
+                    <div>
+                      <span [innerHtml]="drawerClaimData.JOURNEY_REMARK">
+                        <!-- {{ drawerClaimData.JOURNEY_REMARK }} -->
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- <tr *ngIf="totalofweight > 0">
+                 
+                  <td style="padding: 5px">
+                    Transportation of personal effects
+                  </td>
+                  <td nzAlign="center"></td>
+                
+                  <td nzAlign="center">
+                  
+                  </td>
+            
+                  <td nzAlign="left">
+                    
+                  </td>
+                </tr> -->
+
+                <tr *ngIf="totalofweight > 0">
+                  <!-- <td nzAlign="center"></td> -->
+                  <td style="padding: 5px">
+                    Transportation of personal effects
+                    <!-- <br />
+                    Calculation:<br />
+                    <span
+                      >{{ weightrate }} * {{ distance }} * {{ amountt }} /
+                      6000</span
+                    >
+
+                    <br />(Weight for &nbsp;<span
+                      style="text-decoration: underline"
+                      >{{ drawerClaimData.WEIGHT_IN_KG }}</span
+                    >&nbsp; day(s) Rs.
+                    <span style="text-decoration: underline">{{
+                      drawerClaimData.RATE
+                    }}</span>
+                    per day ) -->
+                  </td>
+                  <td nzAlign="center">
+                    <span>{{ drawerClaimData.PERSONAL_EFFECT_TOTAL }}/-</span>
+                  </td>
+                  <td nzAlign="center">
+                    <span>{{ personalEffectsAddmissible }}/-</span>
+                    <!-- <span>{{ totalofweight }}/-</span> -->
+                  </td>
+
+                  <td nzAlign="left">
+                    <span [innerHtml]="drawerClaimData.PERSONAL_REMARK">
+                      <!-- {{ drawerClaimData.PERSONAL_REMARK }} -->
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- <tr *ngIf="grosspaymentvalue > 0">
+               
+                  <td style="padding: 5px">
+                    Transportation of private conveyance
+                  </td>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="center"></td>
+                </tr> -->
+
+                <tr *ngIf="grosspaymentvalue > 0">
+                  <!-- <td class="a"></td> -->
+                  <td style="padding: 5px">
+                    Transportation of private conveyance
+                    <!-- <br />
+                    Calculation:<br />
+                    <div
+                      *ngIf="
+                        drawerClaimData.VEHICLE_BROUGHT_SELF_PROPULATION == 0
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          grosspaymentvalue == drawerClaimData.TRUCK_SHIP_CHARGE
+                        "
+                      >
+                        <p>Truck/Ship Charge</p>
+                        <span> {{ drawerClaimData.TRUCK_SHIP_CHARGE }}</span>
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO
+                        "
+                      >
+                        <p>
+                          Train Brought KiloMeter :-
+                          <span>{{
+                            drawerClaimData.TRAIN_BROUGHT_FOR_KMS_NO
+                          }}</span
+                          ><br />
+                        </p>
+                        <p>
+                          Train Brought Charge :-
+                          <span>{{
+                            drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO
+                          }}</span
+                          ><br />
+                        </p>
+                        <br />
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRUCK_SHIP_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                          privateVehicleMinFair > 0
+                        "
+                      >
+                        <p>
+                          Private Vehicle Brought Charges
+                          
+                          <br />
+                        </p>
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRUCK_SHIP_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                          privateVehicleMinFair <= 0
+                        "
+                      >
+                      </span>
+
+                      <br />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        drawerClaimData.VEHICLE_BROUGHT_SELF_PROPULATION == 1
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          drawerClaimData.VEHICLE_BROUGHT_TOTAL
+                        "
+                      >
+                        <p>
+                          Road Milage :-
+                          <span>
+                            {{
+                              drawerClaimData.VEHICLE_BROUGHT_ROAD_MILEAGE
+                            }}</span
+                          >
+                        </p>
+                        <p>
+                          KiloMeter :-
+                          <span>
+                            {{
+                              drawerClaimData.VEHICLE_BROUGHT_ROAD_MILEAGE_KMS
+                            }}</span
+                          >
+                        </p>
+
+                        <p>
+                          Total:-<span>{{
+                            drawerClaimData.VEHICLE_BROUGHT_TOTAL
+                          }}</span>
+                        </p>
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          drawerClaimData.TRAIN_BROUGHT_CHARGE
+                        "
+                      >
+                        <p>
+                          Train Brought KiloMeter :-
+                          <span>{{ drawerClaimData.TRAIN_BROUGHT_KMS }}</span
+                          ><br />
+                        </p>
+                        <p>
+                          Train Brought Charge :-
+                          <span>{{ drawerClaimData.TRAIN_BROUGHT_CHARGE }}</span
+                          ><br />
+                        </p>
+                        <br />
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.VEHICLE_BROUGHT_TOTAL &&
+                          privateVehicleMinFair > 0
+                        "
+                      >
+                        <p>
+                          Private Vehicle Brought Charges
+                          
+                          <br />
+                        </p>
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.VEHICLE_BROUGHT_TOTAL &&
+                          privateVehicleMinFair <= 0
+                        "
+                      >
+                      </span>
+
+                      <br />
+                      
+                    </div>
+
+                    <br /> -->
+                  </td>
+                  <td nzAlign="center">
+                    {{ drawerClaimData.PRIVATE_CONVEYANCE_TOTAL }}/-
+                  </td>
+                  <td nzAlign="center">{{ grosspaymentvalue }}/-</td>
+
+                  <td nzAlign="left">
+                    <span
+                      [innerHtml]="drawerClaimData.PRIVATE_CONVEYANCE_REMARK"
+                    >
+                      <!-- {{ drawerClaimData.PRIVATE_CONVEYANCE_REMARK }} -->
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- <tr **ngIf="data">
+                                        <td nzAlign="center">3.</td>
+                                        <td nzAlign="left">is</td>
+                                        <td nzAlign="center">{{istransport}}/-</td>
+                                        <td nzAlign="center">88,500/-</td>
+                                        <td nzAlign="left">
+                                            <div>{{tranferchnagesorder.REMARKS}}</div>
+                                        </td>
+                                    </tr> -->
+
+                <tr>
+                  <!-- <td nzAlign="center"></td> -->
+                  <td nzAlign="left" style="padding-left: 1%"><b>TOTAL</b></td>
+                  <td nzAlign="center">
+                    <b>{{ gettotal() }}/-</b>
+                  </td>
+                  <td nzAlign="center">
+                    <b>{{ totacountofbill }}/-</b>
+                  </td>
+
+                  <td nzAlign="left"></td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    drawerClaimData.ADVANCED_AMOUNT != null &&
+                    drawerClaimData.ADVANCED_AMOUNT != undefined &&
+                    drawerClaimData.ADVANCED_AMOUNT > 0
+                  "
+                >
+                  <!-- <td nzAlign="center"></td> -->
+
+                  <td style="padding: 5px">
+                    Less amount of advance, if any drawn vide Voucher
+                    No.&nbsp;<span>{{ drawerClaimData.VOUCHER_NO }}&nbsp;</span>
+                    Dated
+                    <span>{{
+                      drawerClaimData.ADVANCE_TAKEN_DATE | date : "dd-MM-yyyy"
+                    }}</span>
+                  </td>
+
+                  <td></td>
+                  <td nzAlign="center">
+                    <span>{{ drawerClaimData.ADVANCED_AMOUNT }}/-</span>
+                  </td>
+                  <td></td>
+                </tr>
+                <!-- <tr>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="left" style="padding-left: 1%">
+                    <b>Advance Taken</b>
+                  </td>
+                  <td nzAlign="center">
+                  </td>
+                  <td nzAlign="center">
+                    <b style="text-align: center"
+                      >{{ drawerClaimData.ADVANCED_AMOUNT }}/-</b
+                    >
+                  </td>
+                  <td nzAlign="left"></td>
+                </tr> -->
+
+                <!-- <tr>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="left" style="padding-left: 1%">
+                    <b>Balance</b>
+                  </td>
+                  <td nzAlign="center">
+                
+                  </td>
+                  <td nzAlign="center">
+                    <b>{{ drawerClaimData.ORDER_FORM_NET_TOTAL }}</b>
+                  </td>
+                  <td nzAlign="left"></td>
+                </tr> -->
+
+                <tr>
+                  <!-- <td nzAlign="center"></td> -->
+                  <td nzAlign="left" style="padding-left: 1%">
+                    <b>Net Total</b>
+                  </td>
+                  <td nzAlign="center">
+                    <b>{{ gettotal() }}/-</b>
+                  </td>
+                  <td nzAlign="center">
+                    <!-- <b>{{ drawerClaimData.ORDER_FORM_NET_TOTAL }}</b> -->
+                    <b>{{ nettotacountofbill }}/-</b>
+                  </td>
+
+                  <td nzAlign="left"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              <b
+                >Net amount= Rs
+                <!-- <b>{{ drawerClaimData.ORDER_FORM_NET_TOTAL }}/-</b>({{
+                  getwords()
+                }}).</b
+              > -->
+                {{ nettotacountofbill }} (Rupees {{ netAmountInWord }})</b
+              >
+            </p>
+
+            <p>The file is put up for kind perusal and signature please.</p>
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <div style="margin-top: 8%">
+                  <div>
+                    Prepared By: {{ SignatureOrderDataMap.PREPARED_BY }}
+                  </div>
+                  <div>Designation:</div>
+                  <!-- <div>Prepared By: {{ drawerClaimData.INSPECTOR_NAME }}</div>
+                  <div>Designation: {{ inspectorDestination }}</div> -->
+                </div>
+              </div>
+              <div nz-col nzSpan="12">
+                <!-- <div style="margin-top: 8%">
+                  <div>द्​वारा जांचा गया : विनायक बोराडे</div>
+                  <div>Checked by: Vinayak Borhade</div>
+                  <div>पदनाम : प्रशासनिक अधिकारी</div>
+                  <div>Designation: Administrative Officer</div>
+                </div> -->
+
+                <div style="margin-top: 8%">
+                  <div>
+                    द्​वारा जांचा गया :
+                    <span *ngIf="NAME_HN"> {{ NAME_HN }}</span>
+                  </div>
+                  <div>
+                    Checked by: <span *ngIf="SIGNNAME"> {{ SIGNNAME }}</span>
+                  </div>
+                  <div>
+                    पदनाम : <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                  </div>
+                  <div>
+                    Designation: <span *ngIf="POST"> {{ POST }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div style="margin-top: 8%">
+              <div>Checked By:</div>
+            </div> -->
+
+            <div style="margin-top: 12%">
+              <div *ngIf="NAME_HN1">{{ NAME_HN1 }}</div>
+              <div *ngIf="SIGNNAME1">
+                <b>({{ SIGNNAME1 }})</b>
+              </div>
+              <div>
+                <span *ngIf="POST1_HIN"> {{ POST1_HIN }}</span>
+                <span *ngIf="OFFICE_NAME1_HIN">,{{ OFFICE_NAME1_HIN }}</span>
+              </div>
+              <div>
+                <b
+                  ><span *ngIf="POST1"> {{ POST1 }}</span>
+                  <span *ngIf="OFFICE_NAME1"> , {{ OFFICE_NAME1 }}</span></b
+                >
+              </div>
+
+              <!-- <div>Income Tax Officer</div>
+              <div>Gaz PayBill-ll,Personnel</div>
+              <div>Mumbai</div> -->
+            </div>
+
+            <div style="margin-top: 12%">
+              <div *ngIf="NAME_HN2">({{ NAME_HN2 }})</div>
+              <div *ngIf="SIGNNAME2">
+                <b>({{ SIGNNAME2 }})</b>
+              </div>
+              <div>
+                <span *ngIf="POST2_HIN"> {{ POST2_HIN }}</span>
+                <span *ngIf="OFFICE_NAME2_HIN"> , {{ OFFICE_NAME2_HIN }}</span>
+              </div>
+
+              <div *ngIf="POST2">
+                <b>{{ POST2 }}</b>
+              </div>
+              <div *ngIf="OFFICE_NAME2">{{ OFFICE_NAME2 }}</div>
+              <!-- <div>Addl. Commissioner Of Income Tax</div>
+              <div>(HQ),Personnel</div>
+              <div>Mumbai</div> -->
+            </div>
+
+            <div style="margin-top: 12%">
+              <div *ngIf="NAME_HN3">( {{ NAME_HN3 }})</div>
+              <div *ngIf="SIGNNAME3">
+                <b>({{ SIGNNAME3 }})</b>
+              </div>
+              <div>
+                <span *ngIf="POST3_HIN"> {{ POST3_HIN }}</span>
+                <span *ngIf="OFFICE_NAME3_HIN"> , {{ OFFICE_NAME3_HIN }}</span>
+              </div>
+
+              <div *ngIf="POST3">
+                <b>{{ POST3 }}</b>
+              </div>
+              <div *ngIf="OFFICE_NAME3">{{ OFFICE_NAME3 }}</div>
+              <!-- <div>CIT (Admin & TPS)</div>
+              <div>Mumbai</div> -->
+            </div>
+
+            <!-- <div
+              style="
+                margin-top: 20px;
+                margin-left: 60%;
+                border-style: solid;
+                box-sizing: border-box;
+                width: 31%;
+              "
+            >
+              Checked By..............................................
+            </div> -->
+          </div>
+          <!-- </form> -->
+
+          <!-- <div class="footer">
+          <button
+            type="button"
+            nz-button
+            (click)="close()"
+            class="ant-btn"
+            style="margin-right: 8px"
+          >
+            <span>Cancel</span>
+          </button>
+          <button
+            type="button"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="showmodal()"
+          >
+            <span>Download or Print</span>
+          </button>
+        </div> -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Save & Preview</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Order'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+              margin-top: 10px;
+            "
+          >
+            <p>
+              Dated:<b>{{
+                drawerClaimData.ORDER_FORM_DATE | date : "dd/MM/yyyy"
+              }}</b>
+            </p>
+            <pre>Bill No.{{ drawerClaimData.ORDER_BILL_NO }}</pre>
+            <p>
+              P.U.C is TA-Transfer Bill Of
+              <span>{{ transferallounceorder.NAME }}</span
+              >, <span>{{ transferallounceorder.DESIGNATION }}</span> on Travel
+              From
+              <span *ngIf="drawerClaimData.IS_EDITABLE_DESTINATION == true">
+                {{ drawerClaimData.DESTINATION_REMARK }}
+              </span>
+              <span *ngIf="drawerClaimData.IS_EDITABLE_DESTINATION == false">
+                <span *ngFor="let data of journeydetails; let k = index">
+                  <span>{{ data.DEPARTURE_FROM }}</span> to
+                  <span>{{ data.ARRIVAL_TO }}</span>
+                  <span *ngIf="journeydetails.length > 1">
+                    <span
+                      *ngIf="
+                        journeydetails.length - 2 != k &&
+                        journeydetails.length != k + 1
+                      "
+                    >
+                      ,
+                    </span>
+                    <span *ngIf="journeydetails.length - 2 == k"> & </span>
+                  </span>
+                </span>
+              </span>
+              <span [innerHtml]="drawerClaimData.ORDER_FORM_REMARK"></span>
+              <span *ngIf="!drawerClaimData.IS_ADVANCE_TAKEN">
+                <p>They have not taken any advance.</p>
+              </span>
+              <span *ngIf="drawerClaimData.IS_ADVANCE_TAKEN">
+                <p>
+                  The advance taken of Rs.{{
+                    drawerClaimData.ADVANCED_AMOUNT
+                  }}
+                  vide letter {{ drawerClaimData.VIDE_LETTER_NUMBER }}.
+                </p>
+              </span>
+              <!-- <span *ngFor="let data of journeydetails; let k = index">
+                <b>{{ data.TO_PLACE }}</b>
+                <span *ngIf="journeydetails.length > 1">
+                  <span
+                    *ngIf="
+                      journeydetails.length - 2 != k && journeydetails.length != k + 1
+                    "
+                  >
+                    ,
+                  </span>
+                  <span *ngIf="journeydetails.length - 2 == k"> & </span>
+                </span>
+              </span> -->
+              <!-- {{ drawerClaimData.ORDER_FORM_REMARK }} -->
+              <!-- Vide F No. A. 22011/5/2022-AD-Vl, Office Order No. 212 Of 2022
+              dated <b>{{ railorder.DATE | date : "dd-MM-yyyy" }}</b> Pg. No.
+              of. 17/25 SI No. 20. -->
+            </p>
+            <!-- <p>{{drawerClaimData.JOURNEY_REMARK}}</p> -->
+            <!-- <p>
+              The Officer/Official has Claimed an amount of
+              <b>Rs.{{ totacountofbill }}/-</b> against CTG and Airfare for Self
+              and Family
+              < <b>{{ transferallounceorder.RELATIONSHIP }}</b>  
+              only vide
+              CP00002835 dated
+              <b> {{ drawerClaimData.DATE | date : "dd-MM-yyyy" }}</b> 
+              (Annexure
+              'A').
+              <b>{{ drawerClaimData.ORDER_REASON }}</b>
+            </p> -->
+            <p>{{ drawerClaimData.ORDER_FORM_REMARK_2 }}</p>
+
+            <p>
+              The Total Amount Admissible to the official is worked out as
+              under.
+            </p>
+
+            <table
+              border="1"
+              style="border-collapse: collapse; width: -webkit-fill-available"
+            >
+              <thead>
+                <tr>
+                  <!-- <th nzAlign="center"><b>Sr. No.</b></th> -->
+                  <th nzAlign="center"><b>Components</b></th>
+                  <th nzAlign="center"><b>Amt. Claimed</b></th>
+                  <th nzAlign="center"><b>Amt. Admissible</b></th>
+                  <!-- <th nzAlign="center"><b>Amt.in Admissible</b></th> -->
+                  <th nzAlign="center"><b>Remarks</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngIf="
+                    (drawerClaimData.TRANSFER_GRANT_AMOUNT != undefined ||
+                      drawerClaimData.TRANSFER_GRANT_AMOUNT != null) &&
+                    drawerClaimData.TRANSFER_GRANT_AMOUNT > 0
+                  "
+                >
+                  <!-- <td nzAlign="center">1.</td> -->
+                  <td style="padding: 5px">
+                    <!-- Transfer Grant: {{ drawerClaimData.TRANSFER_GRANT }} -->
+                    CTG
+                  </td>
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    <span *ngFor="let data of journeydetails; let k = index">
+                      <b>{{ data.DEPARTURE_FROM }}</b>
+
+                      <span *ngIf="journeydetails.length > 1">
+                        <span
+                          *ngIf="
+                            journeydetails.length - 2 != k &&
+                            journeydetails.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="journeydetails.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                  </td> -->
+                  <td nzAlign="center">{{ drawerClaimData.CTG_TOTAL }}/-</td>
+                  <td nzAlign="center">
+                    {{ drawerClaimData.TRANSFER_GRANT_AMOUNT }}/-
+                  </td>
+                  <!-- <td nzAlign="center">
+                    <b>{{ journeyfairfaird }}/-</b>
+                  </td> -->
+
+                  <!-- <td nzAlign="center">Nil</td> -->
+
+                  <td nzAlign="left">
+                    <div>
+                      <span [innerHtml]="drawerClaimData.CTG_REMARK">
+                        <!-- {{ drawerClaimData.CTG_REMARK }} -->
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    (drawerClaimData.ROAD_MILEAGE != undefined ||
+                      drawerClaimData.ROAD_MILEAGE != null) &&
+                    (drawerClaimData.PER_KM != undefined ||
+                      drawerClaimData.PER_KM != null) &&
+                    drawerClaimData.ROAD_MILEAGE > 0 &&
+                    drawerClaimData.PER_KM > 0
+                  "
+                >
+                  <!-- <td nzAlign="center">2.</td> -->
+
+                  <td style="padding: 5px">
+                    Road mileage for
+                    <span style="text-decoration: underline"
+                      >{{ drawerClaimData.ROAD_MILEAGE }} </span
+                    >kms @
+                    <span style="text-decoration: underline">
+                      {{ drawerClaimData.PER_KM }}
+                    </span>
+                    per km.
+                  </td>
+                  <td nzAlign="center">
+                    {{ drawerClaimData.ROAD_MILEAGE_TOTAL }}/-
+                  </td>
+                  <td nzAlign="center">{{ multiplication }}/-</td>
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    <span *ngFor="let data of TravelModeNames; let k = index">
+                      <b>{{ data }}</b>
+
+                      <span *ngIf="TravelModeNames.length > 1">
+                        <span
+                          *ngIf="
+                            TravelModeNames.length - 2 != k &&
+                            TravelModeNames.length != k + 1
+                          "
+                        >
+                          ,
+                        </span>
+                        <span *ngIf="TravelModeNames.length - 2 == k"> & </span>
+                      </span>
+                    </span>
+                  </td>
+                  <td nzAlign="center">{{ raiamount }}/-</td> -->
+
+                  <!-- <td nzAlign="center">af</td> -->
+
+                  <td nzAlign="left">
+                    <div>
+                      <span [innerHtml]="drawerClaimData.ROAD_MILEAGE_REMARK">
+                        <!-- {{ drawerClaimData.ROAD_MILEAGE_REMARK }} -->
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="journeyfairfaird > 0">
+                  <!-- <td nzAlign="center">
+                    <span
+                      *ngIf="
+                        (drawerClaimData.ROAD_MILEAGE != undefined ||
+                          drawerClaimData.ROAD_MILEAGE != null) &&
+                        (drawerClaimData.PER_KM != undefined ||
+                          drawerClaimData.PER_KM != null)
+                      "
+                    >
+                      3.</span
+                    >
+                    <span
+                      *ngIf="
+                        drawerClaimData.ROAD_MILEAGE == undefined ||
+                        drawerClaimData.ROAD_MILEAGE == null ||
+                        drawerClaimData.PER_KM == undefined ||
+                        drawerClaimData.PER_KM == null
+                      "
+                    >
+                      2.</span
+                    >
+                  </td> -->
+                  <td style="padding: 5px">
+                    <span *ngIf="showPrivate == 1 || showPrivate == 0">
+                      <span *ngFor="let data of TravelModeNames; let k = index">
+                        <span>{{ data }}</span>
+
+                        <span *ngIf="TravelModeNames.length > 1">
+                          <span
+                            *ngIf="
+                              TravelModeNames.length - 2 != k &&
+                              TravelModeNames.length != k + 1
+                            "
+                          >
+                            ,
+                          </span>
+                          <span *ngIf="TravelModeNames.length - 2 == k">
+                            &
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                    <!-- <span *ngIf="showPrivate == 1">{{
+                      drawerClaimData.TRAVEL_MODE_NAME
+                    }}</span> -->
+                    <span *ngIf="showPrivate == 2">Private Vehicle</span>
+                  </td>
+                  <td nzAlign="center">
+                    {{ transferJourneyClaimedAmount }}/-
+                    <!-- {{ drawerClaimData.JOURNEY_TOTAL }}/- -->
+                  </td>
+                  <td nzAlign="center">
+                    <span *ngIf="journeydetails != undefined">
+                      <span *ngIf="showPrivate == 1 || showPrivate == 0"
+                        >{{ journeyfairfaird }}/-</span
+                      >
+                      <!-- <span *ngIf="showPrivate == 1">{{
+                        grosspaymentvalue
+                      }}</span> -->
+                      <span *ngIf="showPrivate == 2">0</span>
+                    </span>
+                  </td>
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    Personal Effects
+                  </td>
+                  <td nzAlign="center">{{ amount }}/-</td> -->
+
+                  <!-- <td nzAlign="center">as</td> -->
+                  <td nzAlign="left">
+                    <div>
+                      <span [innerHtml]="drawerClaimData.JOURNEY_REMARK">
+                        <!-- {{ drawerClaimData.JOURNEY_REMARK }} -->
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- <tr *ngIf="totalofweight > 0">
+                 
+                  <td style="padding: 5px">
+                    Transportation of personal effects
+                  </td>
+                  <td nzAlign="center"></td>
+                
+                  <td nzAlign="center">
+                  
+                  </td>
+            
+                  <td nzAlign="left">
+                    
+                  </td>
+                </tr> -->
+
+                <tr *ngIf="totalofweight > 0">
+                  <!-- <td nzAlign="center"></td> -->
+                  <td style="padding: 5px">
+                    Transportation of personal effects
+                    <!-- <br />
+                    Calculation:<br />
+                    <span
+                      >{{ weightrate }} * {{ distance }} * {{ amountt }} /
+                      6000</span
+                    >
+
+                    <br />(Weight for &nbsp;<span
+                      style="text-decoration: underline"
+                      >{{ drawerClaimData.WEIGHT_IN_KG }}</span
+                    >&nbsp; day(s) Rs.
+                    <span style="text-decoration: underline">{{
+                      drawerClaimData.RATE
+                    }}</span>
+                    per day ) -->
+                  </td>
+                  <td nzAlign="center">
+                    <span>{{ drawerClaimData.PERSONAL_EFFECT_TOTAL }}/-</span>
+                  </td>
+                  <td nzAlign="center">
+                    <span>{{ personalEffectsAddmissible }}/-</span>
+                    <!-- <span>{{ totalofweight }}/-</span> -->
+                  </td>
+
+                  <td nzAlign="left">
+                    <span [innerHtml]="drawerClaimData.PERSONAL_REMARK">
+                      <!-- {{ drawerClaimData.PERSONAL_REMARK }} -->
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- <tr *ngIf="grosspaymentvalue > 0">
+               
+                  <td style="padding: 5px">
+                    Transportation of private conveyance
+                  </td>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="center"></td>
+                </tr> -->
+
+                <tr *ngIf="grosspaymentvalue > 0">
+                  <!-- <td class="a"></td> -->
+                  <td style="padding: 5px">
+                    Transportation of private conveyance
+                    <!-- <br />
+                    Calculation:<br />
+                    <div
+                      *ngIf="
+                        drawerClaimData.VEHICLE_BROUGHT_SELF_PROPULATION == 0
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          grosspaymentvalue == drawerClaimData.TRUCK_SHIP_CHARGE
+                        "
+                      >
+                        <p>Truck/Ship Charge</p>
+                        <span> {{ drawerClaimData.TRUCK_SHIP_CHARGE }}</span>
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO
+                        "
+                      >
+                        <p>
+                          Train Brought KiloMeter :-
+                          <span>{{
+                            drawerClaimData.TRAIN_BROUGHT_FOR_KMS_NO
+                          }}</span
+                          ><br />
+                        </p>
+                        <p>
+                          Train Brought Charge :-
+                          <span>{{
+                            drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO
+                          }}</span
+                          ><br />
+                        </p>
+                        <br />
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRUCK_SHIP_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                          privateVehicleMinFair > 0
+                        "
+                      >
+                        <p>
+                          Private Vehicle Brought Charges
+                          <br />
+                        </p>
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRUCK_SHIP_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                          privateVehicleMinFair <= 0
+                        "
+                      >
+                      </span>
+
+                      <br />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        drawerClaimData.VEHICLE_BROUGHT_SELF_PROPULATION == 1
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          drawerClaimData.VEHICLE_BROUGHT_TOTAL
+                        "
+                      >
+                        <p>
+                          Road Milage :-
+                          <span>
+                            {{
+                              drawerClaimData.VEHICLE_BROUGHT_ROAD_MILEAGE
+                            }}</span
+                          >
+                        </p>
+                        <p>
+                          KiloMeter :-
+                          <span>
+                            {{
+                              drawerClaimData.VEHICLE_BROUGHT_ROAD_MILEAGE_KMS
+                            }}</span
+                          >
+                        </p>
+
+                        <p>
+                          Total:-<span>{{
+                            drawerClaimData.VEHICLE_BROUGHT_TOTAL
+                          }}</span>
+                        </p>
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          drawerClaimData.TRAIN_BROUGHT_CHARGE
+                        "
+                      >
+                        <p>
+                          Train Brought KiloMeter :-
+                          <span>{{ drawerClaimData.TRAIN_BROUGHT_KMS }}</span
+                          ><br />
+                        </p>
+                        <p>
+                          Train Brought Charge :-
+                          <span>{{ drawerClaimData.TRAIN_BROUGHT_CHARGE }}</span
+                          ><br />
+                        </p>
+                        <br />
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.VEHICLE_BROUGHT_TOTAL &&
+                          privateVehicleMinFair > 0
+                        "
+                      >
+                        <p>
+                          Private Vehicle Brought Charges
+                          <br />
+                        </p>
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue !=
+                            drawerClaimData.TRAIN_BROUGHT_CHARGE &&
+                          grosspaymentvalue !=
+                            drawerClaimData.VEHICLE_BROUGHT_TOTAL &&
+                          privateVehicleMinFair <= 0
+                        "
+                      >
+                      </span>
+
+                      <br />
+                    </div>
+
+                    <br /> -->
+                  </td>
+                  <td nzAlign="center">
+                    {{ drawerClaimData.PRIVATE_CONVEYANCE_TOTAL }}/-
+                  </td>
+                  <td nzAlign="center">{{ grosspaymentvalue }}/-</td>
+
+                  <td nzAlign="left">
+                    <span
+                      [innerHtml]="drawerClaimData.PRIVATE_CONVEYANCE_REMARK"
+                    >
+                      <!-- {{ drawerClaimData.PRIVATE_CONVEYANCE_REMARK }} -->
+                    </span>
+                  </td>
+                </tr>
+
+                <!-- <tr **ngIf="data">
+                                        <td nzAlign="center">3.</td>
+                                        <td nzAlign="left">is</td>
+                                        <td nzAlign="center">{{istransport}}/-</td>
+                                        <td nzAlign="center">88,500/-</td>
+                                        <td nzAlign="left">
+                                            <div>{{tranferchnagesorder.REMARKS}}</div>
+                                        </td>
+                                    </tr> -->
+
+                <tr>
+                  <!-- <td nzAlign="center"></td> -->
+                  <td nzAlign="left" style="padding-left: 1%"><b>TOTAL</b></td>
+                  <td nzAlign="center">
+                    <b>{{ gettotal() }}/-</b>
+                  </td>
+                  <td nzAlign="center">
+                    <b>{{ totacountofbill }}/-</b>
+                  </td>
+
+                  <td nzAlign="left"></td>
+                </tr>
+
+                <tr
+                  *ngIf="
+                    drawerClaimData.ADVANCED_AMOUNT != null &&
+                    drawerClaimData.ADVANCED_AMOUNT != undefined &&
+                    drawerClaimData.ADVANCED_AMOUNT > 0
+                  "
+                >
+                  <!-- <td nzAlign="center"></td> -->
+
+                  <td style="padding: 5px">
+                    Less amount of advance, if any drawn vide Voucher
+                    No.&nbsp;<span>{{ drawerClaimData.VOUCHER_NO }}&nbsp;</span>
+                    Dated
+                    <span>{{
+                      drawerClaimData.ADVANCE_TAKEN_DATE | date : "dd-MM-yyyy"
+                    }}</span>
+                  </td>
+
+                  <td></td>
+                  <td nzAlign="center">
+                    <span>{{ drawerClaimData.ADVANCED_AMOUNT }}/-</span>
+                  </td>
+                  <td></td>
+                </tr>
+                <!-- <tr>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="left" style="padding-left: 1%">
+                    <b>Advance Taken</b>
+                  </td>
+                  <td nzAlign="center">
+                  </td>
+                  <td nzAlign="center">
+                    <b style="text-align: center"
+                      >{{ drawerClaimData.ADVANCED_AMOUNT }}/-</b
+                    >
+                  </td>
+                  <td nzAlign="left"></td>
+                </tr> -->
+
+                <!-- <tr>
+                  <td nzAlign="center"></td>
+                  <td nzAlign="left" style="padding-left: 1%">
+                    <b>Balance</b>
+                  </td>
+                  <td nzAlign="center">
+                
+                  </td>
+                  <td nzAlign="center">
+                    <b>{{ drawerClaimData.ORDER_FORM_NET_TOTAL }}</b>
+                  </td>
+                  <td nzAlign="left"></td>
+                </tr> -->
+
+                <tr>
+                  <!-- <td nzAlign="center"></td> -->
+                  <td nzAlign="left" style="padding-left: 1%">
+                    <b>Net Total</b>
+                  </td>
+                  <td nzAlign="center">
+                    <b>{{ gettotal() }}/-</b>
+                  </td>
+                  <td nzAlign="center">
+                    <!-- <b>{{ drawerClaimData.ORDER_FORM_NET_TOTAL }}</b> -->
+                    <b>{{ nettotacountofbill }}/-</b>
+                  </td>
+
+                  <td nzAlign="left"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>
+              <b
+                >Net amount= Rs
+                <!-- <b>{{ drawerClaimData.ORDER_FORM_NET_TOTAL }}/-</b>({{
+                  getwords()
+                }}).</b
+              > -->
+                {{ nettotacountofbill }} (Rupees {{ netAmountInWord }})</b
+              >
+            </p>
+
+            <p>The file is put up for kind perusal and signature please.</p>
+
+            <div nz-row>
+              <div nz-col nzSpan="14">
+                <div style="margin-top: 8%">
+                  <div>
+                    Prepared By: {{ SignatureOrderDataMap.PREPARED_BY }}
+                  </div>
+                  <div>Designation:</div>
+                  <!-- <div>Prepared By: {{ drawerClaimData.INSPECTOR_NAME }}</div>
+                  <div>Designation: {{ inspectorDestination }}</div> -->
+                </div>
+              </div>
+              <div nz-col nzSpan="10">
+                <div style="margin-top: 8%">
+                  <div>
+                    द्​वारा जांचा गया :
+                    <span *ngIf="NAME_HN"> {{ NAME_HN }}</span>
+                  </div>
+                  <div>
+                    Checked by: <span *ngIf="SIGNNAME"> {{ SIGNNAME }}</span>
+                  </div>
+                  <div>
+                    पदनाम : <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                  </div>
+                  <div>
+                    Designation: <span *ngIf="POST"> {{ POST }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div style="margin-top: 8%">
+              <div>Checked By:</div>
+            </div> -->
+            <div style="margin-top: 12%">
+              <div *ngIf="NAME_HN1">{{ NAME_HN1 }}</div>
+              <div *ngIf="SIGNNAME1">
+                <b>({{ SIGNNAME1 }})</b>
+              </div>
+              <div>
+                <span *ngIf="POST1_HIN"> {{ POST1_HIN }}</span>
+                <span *ngIf="OFFICE_NAME1_HIN">,{{ OFFICE_NAME1_HIN }}</span>
+              </div>
+              <div>
+                <b
+                  ><span *ngIf="POST1"> {{ POST1 }}</span>
+                  <span *ngIf="OFFICE_NAME1"> , {{ OFFICE_NAME1 }}</span></b
+                >
+              </div>
+
+              <!-- <div>Income Tax Officer</div>
+              <div>Gaz PayBill-ll,Personnel</div>
+              <div>Mumbai</div> -->
+            </div>
+
+            <div style="margin-top: 12%">
+              <div *ngIf="NAME_HN2">({{ NAME_HN2 }})</div>
+              <div *ngIf="SIGNNAME2">
+                <b>({{ SIGNNAME2 }})</b>
+              </div>
+              <div>
+                <span *ngIf="POST2_HIN"> {{ POST2_HIN }}</span>
+                <span *ngIf="OFFICE_NAME2_HIN"> , {{ OFFICE_NAME2_HIN }}</span>
+              </div>
+
+              <div *ngIf="POST2">
+                <b>{{ POST2 }}</b>
+              </div>
+              <div *ngIf="OFFICE_NAME2">{{ OFFICE_NAME2 }}</div>
+              <!-- <div>Addl. Commissioner Of Income Tax</div>
+              <div>(HQ),Personnel</div>
+              <div>Mumbai</div> -->
+            </div>
+
+            <div style="margin-top: 12%">
+              <div *ngIf="NAME_HN3">( {{ NAME_HN3 }})</div>
+              <div *ngIf="SIGNNAME3">
+                <b>({{ SIGNNAME3 }})</b>
+              </div>
+              <div>
+                <span *ngIf="POST3_HIN"> {{ POST3_HIN }}</span>
+                <span *ngIf="OFFICE_NAME3_HIN"> , {{ OFFICE_NAME3_HIN }}</span>
+              </div>
+
+              <div *ngIf="POST3">
+                <b>{{ POST3 }}</b>
+              </div>
+              <div *ngIf="OFFICE_NAME3">{{ OFFICE_NAME3 }}</div>
+              <!-- <div>CIT (Admin & TPS)</div>
+              <div>Mumbai</div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

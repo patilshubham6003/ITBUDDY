@@ -1,0 +1,73 @@
+.formname {
+    color: rgba(0, 0, 0, .85);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+}
+.flexicons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* td, th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 8px;
+  }
+
+  table
+  {
+    width: 100%;
+  } */
+
+  .forTDTH{
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    left: 0px;
+    background: #fff;
+  }
+  
+  .header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    right: 0px;
+  }
+  
+  .ant-btn {
+    line-height: 0;  
+  }
+  .flexicons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+ .nzFormItem{
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+  nz-form-item{
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }

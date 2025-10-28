@@ -1,0 +1,1410 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<!-- <section *ngIf="!isSpinning" class="banner-section" style="background-color: linen !important; padding-bottom: 0px;">
+  <ngx-slick-carousel *ngIf="webbanner.length>0" #slickModal="slick-carousel" [config]="settings" class="banner-slider"
+    id="bannerSlider">
+    <div *ngFor="let item of webbanner" ngxSlickItem class="single-banner"
+      [ngStyle]="{'background-repeat': 'no-repeat', 'background-size': '100% 100%'}"
+      [style.background-image]="'url('+img_url+item.IMG_URL +')'">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-9 col-9 col-sm-9 col-xl-9 col-md-9"></div>
+          <div class="col-lg-3 col-3 col-sm-3 col-xl-3 col-md-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</section> -->
+
+<main *ngIf="!isSpinning" id="main" style="margin-top: 0px">
+  <section id="services" class="about1" style="
+      background-color: #f4f4f454 !important;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    ">
+    <div class="container" data-aos="fade-up" data-aos-delay="100" style="max-width: 90vw !important">
+      <!-- <div class="section-title pt-5" data-aos="fade-up">
+        <h2 style="font-weight: 500;">Our Services</h2>
+      </div> -->
+      <div class="row align-items-xl-center">
+        <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-sm-12">
+          <div class="row gy-4 icon-boxes1">
+            <!-- (click)="servclick(ser.ID,ser.TITLE)" -->
+            <ng-container *ngFor="let ser of servises">
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+                style="margin-top: 20px" *ngIf="
+                  ser.ID == 8 &&
+                  employeedataaaa11111 != undefined &&
+                  (employeedataaaa11111.DESIGNATION_ID == 11 ||
+                    employeedataaaa11111.DESIGNATION_ID == 17 ||
+                    employeedataaaa11111.DESIGNATION_ID == 44 ||
+                    employeedataaaa11111.DESIGNATION_ID == 22 ||
+                    employeedataaaa11111.DESIGNATION_ID == 21 ||
+                    employeedataaaa11111.DESIGNATION_ID == 20 ||
+                    employeedataaaa11111.DESIGNATION_ID == 25 ||
+                    employeedataaaa11111.DESIGNATION_ID == 19 ||
+                    employeedataaaa11111.DESIGNATION_ID == 12 ||
+                    employeedataaaa11111.DESIGNATION_ID == 39 ||
+                    employeedataaaa11111.DESIGNATION_ID == 40 ||
+                    employeedataaaa11111.DESIGNATION_ID == 16 ||
+                    employeedataaaa11111.DESIGNATION_ID == 13)
+                ">
+                <div (click)="getServices33(ser.ID)" class="icon-box1"
+                  style="cursor: pointer; padding: 15px 15px 5px 15px">
+                  <div class="row">
+                    <div class="col-md-2 col-xl-2 col-lg-2 col-12 col-sm-12" *ngIf="servises != undefined">
+                      <img src="{{ retrieveimgUrl }}service/{{ ser.IMG_URL }}" height="70" width="100%" alt="service" />
+                    </div>
+                    <div class="col-md-10 col-xl-10 col-lg-10 col-12 col-sm-12">
+                      <div class="row">
+                        <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="align-self: center">
+                          <h3 *ngIf="servises != undefined" class="limit1" style="
+                              align-self: center;
+                              display: flex;
+                              align-items: center;
+                            ">
+                            {{ ser.TITLE }}
+                          </h3>
+                        </div>
+                        <!-- && (ser.ID==5 || ser.ID==8 ) -->
+                        <!-- <h3 *ngIf="servises != undefined && (ser.ID!=5 && ser.ID!=8 )" class="limit1">
+                  {{ ser.TITLE }}
+                </h3> -->
+                        <!-- <div
+                  style="
+                    font-size: 11px;
+                    text-align: right;
+                    font-weight: 600;
+                    color: #0b83c1;
+                  "
+                >
+                  <nz-tag [nzColor]="'blue'">View My Profile </nz-tag>
+                  &nbsp; &nbsp;<nz-tag [nzColor]="'magenta'"
+                    >Search Profile</nz-tag
+                  >
+                </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <p *ngIf="servises!=undefined" class="limit"
+            style="text-align: justify;font-weight: 500;font-size: 15px;">{{ser.DESCRIPTION}}</p>
+          <a class="read-more" (click)="servclick(ser.ID,ser.TITLE)"><span>Read
+              More</span><i class="bi bi-arrow-right"></i></a> -->
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+                style="margin-top: 20px" *ngIf="
+                  ser.ID == 11 &&
+                  employeedataaaa != undefined &&
+                  roleid == '2' &&
+                  (employeedataaaa.DESIGNATION_ID == 31 ||
+                    employeedataaaa.DESIGNATION_ID == 32 ||
+                    employeedataaaa.DESIGNATION_ID == 30)
+                ">
+                <div (click)="openrepresentation()" class="icon-box1"
+                  style="cursor: pointer; padding: 15px 15px 5px 15px">
+                  <div class="row">
+                    <div class="col-md-2 col-xl-2 col-lg-2 col-12 col-sm-12" *ngIf="servises != undefined">
+                      <img src="{{ retrieveimgUrl }}service/{{ ser.IMG_URL }}" height="70" width="100%" alt="service" />
+                    </div>
+                    <div class="col-md-10 col-xl-10 col-lg-10 col-12 col-sm-12">
+                      <div class="row">
+                        <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="align-self: center">
+                          <h3 *ngIf="servises != undefined" class="limit1" style="
+                              align-self: center;
+                              display: flex;
+                              align-items: center;
+                            ">
+                            {{ ser.TITLE }}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+                style="margin-top: 20px" *ngIf="(ser.ID == 10 && roleid=='56')  ||  (ser.ID ==10  &&  employeedataaaa11111 != undefined &&
+                (employeedataaaa11111.DESIGNATION_ID == 11 ||
+                  employeedataaaa11111.DESIGNATION_ID == 17 ||
+                  employeedataaaa11111.DESIGNATION_ID == 44 ||
+                  employeedataaaa11111.DESIGNATION_ID == 22 ||
+                  employeedataaaa11111.DESIGNATION_ID == 21 ||
+                  employeedataaaa11111.DESIGNATION_ID == 20 ||
+                  employeedataaaa11111.DESIGNATION_ID == 25 ||
+                  employeedataaaa11111.DESIGNATION_ID == 19 ||
+                  employeedataaaa11111.DESIGNATION_ID == 12 ||
+                  employeedataaaa11111.DESIGNATION_ID == 39 ||
+                  employeedataaaa11111.DESIGNATION_ID == 40 ||
+                  employeedataaaa11111.DESIGNATION_ID == 16 ||
+                  employeedataaaa11111.DESIGNATION_ID == 13 || employeedataaaa11111.DESIGNATION_ID == 43  ||
+                employeedataaaa11111.DESIGNATION_ID == 23  ||
+                employeedataaaa11111.DESIGNATION_ID == 6  ||
+                employeedataaaa11111.DESIGNATION_ID == 41  ||
+                employeedataaaa11111.DESIGNATION_ID == 37  ||
+                employeedataaaa11111.DESIGNATION_ID == 38 ))
+              ">
+                <div *ngIf="ser.ID == 10" class="icon-box1" style="padding: 15px 15px 5px 15px">
+                  <div class="row">
+                    <div class="col-md-2 col-xl-2 col-lg-2 col-12 col-sm-12" *ngIf="servises != undefined">
+                      <img src="{{ retrieveimgUrl }}service/{{ ser.IMG_URL }}" height="70" width="100%" alt="service" />
+                    </div>
+                    <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12">
+                      <div class="row">
+                        <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="align-self: center">
+                          <h3 *ngIf="servises != undefined" class="limit1" style="
+                              align-self: center;
+                              display: inline-grid;
+                              align-items: center;
+                            ">
+                            {{ ser.TITLE }}
+                            <!-- <span
+                              style="
+                                text-align: center;
+                                font-size: 11px !important;
+                              "
+                              >{{ ser.DESCRIPTION }}</span
+                            > -->
+                          </h3>
+                          <!-- <h6
+                          *ngIf="servises != undefined"
+                          style="
+                            align-self: center;
+                            display: flex;
+                            align-items: center;
+                          "
+                        > -->
+
+                          <!-- </h6> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-xl-4 col-lg-4 col-12 col-sm-12">
+                      <div class="row" style="
+                          text-align: center;
+                          height: 100%;
+                          align-items: center;
+                        ">
+                        <!-- <nz-spin [nzSpinning]="isSpinningggg"> -->
+                        <div class="col-12" *ngIf="IS_ITHR_DATA">
+                          <nz-tag nzColor="#55acee" style="
+                              cursor: pointer;
+                              padding: 2px 10px;
+                              width: 100%;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                            " (click)="onviewclick()">
+                            <span nz-icon nzType="eye"> </span>
+                            <span>View My Profile</span>
+                          </nz-tag>
+                        </div>
+                        <div class="col-12" *ngIf="getcondition()">
+                          <nz-tag nzColor="#3b5999" style="
+                              cursor: pointer;
+                              padding: 2px 10px;
+                              width: 100%;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                            " (click)="onclickkkk()">
+                            <span nz-icon nzType="search"> </span>
+
+                            <span>Search Profile</span>
+                          </nz-tag>
+                        </div>
+                        <!-- </nz-spin> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <p *ngIf="servises!=undefined" class="limit"
+                style="text-align: justify;font-weight: 500;font-size: 15px;">{{ser.DESCRIPTION}}</p>
+              <a class="read-more" (click)="servclick(ser.ID,ser.TITLE)"><span>Read
+                  More</span><i class="bi bi-arrow-right"></i></a> -->
+                </div>
+              </div>
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+                style="margin-top: 20px" *ngIf="ser.ID != 8 && ser.ID != 11 && ser.ID != 10">
+                <!-- (click)="getServices33(ser.ID)" -->
+                <div *ngIf="
+                    ser.ID != 8 && ser.ID != 9 && ser.ID != 10 && ser.ID != 11
+                  " (click)="getServices33(ser.ID)" class="icon-box1"
+                  style="cursor: pointer; padding: 15px 15px 5px 15px">
+                  <div class="row">
+                    <div class="col-md-2 col-xl-2 col-lg-2 col-12 col-sm-12" *ngIf="servises != undefined">
+                      <img src="{{ retrieveimgUrl }}service/{{ ser.IMG_URL }}" height="70" width="100%" alt="service" />
+                    </div>
+                    <div class="col-md-10 col-xl-10 col-lg-10 col-12 col-sm-12">
+                      <div class="row">
+                        <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="align-self: center">
+                          <h3 *ngIf="servises != undefined" class="limit1" style="
+                              align-self: center;
+                              display: flex;
+                              align-items: center;
+                            ">
+                            {{ ser.TITLE }}
+                          </h3>
+                        </div>
+                        <!-- && (ser.ID==5 || ser.ID==8 ) -->
+                        <!-- <h3 *ngIf="servises != undefined && (ser.ID!=5 && ser.ID!=8 )" class="limit1">
+                        {{ ser.TITLE }}
+                      </h3> -->
+                        <!-- <div
+                        style="
+                          font-size: 11px;
+                          text-align: right;
+                          font-weight: 600;
+                          color: #0b83c1;
+                        "
+                      >
+                        <nz-tag [nzColor]="'blue'">View My Profile </nz-tag>
+                        &nbsp; &nbsp;<nz-tag [nzColor]="'magenta'"
+                          >Search Profile</nz-tag
+                        >
+                      </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <p *ngIf="servises!=undefined" class="limit"
+                  style="text-align: justify;font-weight: 500;font-size: 15px;">{{ser.DESCRIPTION}}</p>
+                <a class="read-more" (click)="servclick(ser.ID,ser.TITLE)"><span>Read
+                    More</span><i class="bi bi-arrow-right"></i></a> -->
+                </div>
+
+                <div *ngIf="ser.ID == 9 && roleid == '2'" class="icon-box111"
+                  style="cursor: pointer; padding: 15px 15px 5px 15px">
+                  <div class="row">
+                    <!-- <div
+                    class="col-md-2 col-xl-2 col-lg-2 col-12 col-sm-12"
+                    *ngIf="servises != undefined"
+                  >
+                    <img
+                      src="{{ retrieveimgUrl }}service/{{ ser.IMG_URL }}"
+                      height="70"
+                      width="100%"
+                      alt="service"
+                    />
+                  </div> -->
+                    <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12">
+                      <div class="row">
+                        <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="text-align: center">
+                          <h3 style="height: 40px !important" *ngIf="servises != undefined" class="limit1"
+                            style="text-align: center">
+                            {{ ser.TITLE }}
+                          </h3>
+                        </div>
+                        <div *ngIf="!submmited" class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="
+                            text-align: center;
+                            margin-bottom: 8px;
+                            font-size: 12px !important;
+                          ">
+                          ( Only For Group B non-gazetted employees ) &nbsp;
+                          <span nz-popover [nzPopoverContent]="popoverTemplate" [nzPopoverTrigger]="'hover'"
+                            [nzPopoverPlacement]="'top'" style="color: blue !important" nz-icon nzType="info-circle"
+                            nzTheme="outline"></span>
+
+                          <ng-template #popoverTemplate>
+                            <div style="padding: 5px !important">
+                              <!-- <p><strong>Data:</strong> {{ currentPopoverData || 'No Data' }}</p> -->
+                              <b style="
+                                  font-size: 15px !important;
+                                  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+                                ">Instructions</b>
+
+                              <ol type="1">
+                                <li>
+                                  This IPR form needs to be carefully filled up
+                                  by Group B non-gazetted employees of Income
+                                  Tax Department, Mumbai. The filled form shall
+                                  be printed and a duly signed copy should be
+                                  scanned in PDF format only and uploaded on
+                                  this module.
+                                </li>
+                                <!-- <li>
+                                Alternately, the filled IPR form can also be
+                                sent through e-mail to
+                                <a
+                                  style="color: blue"
+                                  href="mailto:mumbai.ngaz.ipr@incometax.gov.in"
+                                  >mumbai.ngaz.ipr@incometax.gov.in
+                                </a>
+                              </li> -->
+                                <li>
+                                  Please note that Incomplete IPR forms and IPR
+                                  forms submitted without employee signature
+                                  will be marked as INVALID.
+                                </li>
+                                <li>
+                                  All non-gazetted employees of Income Tax
+                                  Department, Mumbai are required to file their
+                                  IPRs well before the timeline of 31st January
+                                  2025 to avoid last minute rush and technical
+                                  difficulties.
+                                </li>
+                                <!-- <li>
+                                If you have already emailed the filled IPR form to <a style="color:blue"> mumbai.ngaz.ipr@incometax.gov.in</a>, you don’t need to upload it here again.
+                               
+                              </li> -->
+                              </ol>
+
+                              <!-- <p>{{currentPopoverData.SCHEDULED_DATE_TIME | date:'dd MM yyyy hh:mm a'}}</p> -->
+                            </div>
+                          </ng-template>
+                        </div>
+
+                        <div *ngIf="!submmited" class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="
+                            display: flex;
+                            justify-content: space-between;
+                            padding-left: 110px;
+                            padding-right: 110px;
+                          ">
+                          <button class="btn btn-primary px-4 validate" style="
+                              background-color: #f68831 !important;
+                              font-size: 11px;
+                              border: none;
+                            ">
+                            <a href="https://www.incometaxmumbai.gov.in/employeecorner/assets/Filing of IPR of Group B NGO.pdf"
+                              target="_blank" style="color: white">
+                              Circular</a>
+                          </button>
+                          <button class="btn btn-primary px-4 validate" style="
+                              background-color: #f68831 !important;
+                              font-size: 11px;
+                              border: none;
+                            ">
+                            <a href="https://www.incometaxmumbai.gov.in/employeecorner/assets/IPR Form Non-Gazetted.docx"
+                              target="_blank" style="color: white">
+                              Download Form</a>
+                          </button>
+                          <!-- <button  *ngIf="!iiprSpinning"
+                          data-bs-toggle="modal"
+                          data-bs-target="#outofservice11111"
+                          class="btn btn-primary px-4 validate"
+                          style="
+                            background-color: #f68831 !important;
+                            font-size: 11px;
+                            border: none;
+                          "
+                        >
+                          Upload IPR
+                        </button> -->
+                          <button *ngIf="!iiprSpinning" (click)="openiprmodel()" class="btn btn-primary px-4 validate"
+                            style="
+                              background-color: #f68831 !important;
+                              font-size: 11px;
+                              border: none;
+                            ">
+                            Upload IPR
+                          </button>
+                          <div *ngIf="iiprSpinning">
+                            <div class="spinner-border text-success" role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div
+                        *ngIf="!submmited"
+                        class="col-md-6 col-xl-6 col-lg-6 col-6 col-sm-6"
+                        style="text-align: start"
+                      >
+                        <button
+                          (click)="openiprmodel()"
+                          class="btn btn-primary px-4 validate"
+                          style="
+                            background-color: #f68831 !important;
+                            font-size: 11px;
+                            border: none;
+                          "
+                        >
+                          Upload IPR
+                        </button>
+                      </div> -->
+                        <div *ngIf="submmited" class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="
+                            text-align: center;
+                            margin-top: 15px;
+                            margin-bottom: 15px;
+                          ">
+                          IPR submitted on
+                          {{ dateeeeee | date : "dd/MM/yyyy HH:mm a" }} &nbsp;
+                          <a style="color: blue; text-decoration: underline" (click)="viewidproof()">View uploaded
+                            IPR</a>
+                        </div>
+
+                        <!-- && (ser.ID==5 || ser.ID==8 ) -->
+                        <!-- <h3 *ngIf="servises != undefined && (ser.ID!=5 && ser.ID!=8 )" class="limit1">
+                        {{ ser.TITLE }}
+                      </h3> -->
+                        <!-- <div *ngIf="servises != undefined && (ser.ID==3 || ser.ID==4 || ser.ID==6 || ser.ID==7)" style="font-size: 11px;
+                    text-align: right;
+                    font-weight: 600;
+                    color: #0b83c1;">
+                        Concept By Mr. Jitendra Chandekar (ITO)
+                        Income Tax Office - Mumbai
+                      </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <p *ngIf="servises!=undefined" class="limit"
+                  style="text-align: justify;font-weight: 500;font-size: 15px;">{{ser.DESCRIPTION}}</p>
+                <a class="read-more" (click)="servclick(ser.ID,ser.TITLE)"><span>Read
+                    More</span><i class="bi bi-arrow-right"></i></a> -->
+                </div>
+
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-bottom: 15px !important; padding-top: 30px">
+    <div class="container" style="max-width: 90vw !important">
+      <div class="row">
+        <div class="col-12" style="height: 400px; padding: 20px; padding-top: 10px">
+          <div class="card" style="border: none">
+            <div class="header" style="border-bottom: 1px solid #cfd9de">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-lg-5 col-xl-5 col-md-5" style="text-align: left; align-self: center">
+                  <h5 style="
+                      font-family: 'Poppins', sans-serif !important;
+                      font-weight: 600;
+                      margin-bottom: 0px;
+                    ">
+                    News & Updates
+                  </h5>
+                </div>
+                <div class="col-12 col-sm-12 col-lg-7 col-xl-7 col-md-7" style="align-self: center">
+                  <div class="input-group">
+                    <input autocomplete="off" placeholder="Search" class="form-control" name="search"
+                      (keyup)="searchBlogs(searchText)" [(ngModel)]="searchText" style="
+                        border-radius: 0px;
+                        font-size: 14px;
+                        border-radius: 10px 0px 0px 10px;
+                      " />
+
+                    <div class="input-group-append">
+                      <span *ngIf="!showx" style="
+                          padding: 10px;
+                          border-radius: 0px;
+                          cursor: pointer;
+                          background-color: #006699;
+                          color: white;
+                          border-radius: 0px 10px 10px 0px;
+                        " class="fa input-group-text bi bi-search" (click)="searchBlogs(searchText)"></span>
+                      <span *ngIf="showx" style="
+                          padding: 10px;
+                          border-radius: 0px;
+                          cursor: pointer;
+                          background-color: #006699;
+                          color: white;
+                          border-radius: 0px 10px 10px 0px;
+                        " class="fa input-group-text bi bi-x" (click)="searchBlogs1()"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="body11">
+              <div style="
+                  height: 400px;
+                  overflow-y: scroll;
+                  padding: 10px 5px 20px 5px;
+                " class="scrollable">
+                <div *ngIf="news.length == 0" style="text-align: center; margin-top: 40px">
+                  No Data
+                </div>
+                <ul [style.animation-duration]="getAnimationDuration()" class="scrolll">
+                  <li *ngFor="let data of news" style="text-align: justify">
+                    <a *ngIf="data.NEWS_CONTENT_TYPE == 'P'" target="_blank"
+                      href="{{ retrieveimgUrl }}news/{{ data.NEWS_URL }}">
+                      <p style="margin-top: 15px">
+                        <a style="color: black; margin-bottom: 10px !important">{{ data.DATE | date : "dd MMMM yyyy"
+                          }}</a>
+                      </p>
+                      <p style="margin-top: 15px">
+                        <a href="{{ retrieveimgUrl }}news/{{ data.NEWS_URL }}" target="_blank"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                            class="bi bi-filetype-pdf" viewBox="0 0 16 16" style="margin-bottom: 10px">
+                            <path fill-rule="evenodd"
+                              d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z" />
+                          </svg></a>&nbsp;<a href="{{ retrieveimgUrl }}news/{{ data.NEWS_URL }}" target="_blank"
+                          style="font-weight: 400" class="datahover">{{ data.NAME }}</a>&nbsp;
+                      </p>
+                    </a>
+
+                    <a *ngIf="data.NEWS_CONTENT_TYPE == 'L'" target="_blank" href="{{ data.NEWS_URL }}">
+                      <p style="margin-top: 15px">
+                        <a style="color: black; margin-bottom: 10px !important">{{ data.DATE | date : "dd MMMM yyyy"
+                          }}</a>
+                      </p>
+                      <p style="margin-top: 15px">
+                        <a href="{{ data.NEWS_URL }}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                            height="20" fill="blue" class="bi bi-link" viewBox="0 0 16 16" style="margin-bottom: 10px">
+                            <path
+                              d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z" />
+                            <path
+                              d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" />
+                          </svg></a>&nbsp;
+                        <a *ngIf="data.NEWS_CONTENT_TYPE == 'L'" target="_blank" href="{{ data.NEWS_URL }}"
+                          style="font-weight: 400" class="datahover">{{ data.NAME }} </a>&nbsp;
+                      </p>
+                    </a>
+                    <a *ngIf="data.NEWS_CONTENT_TYPE == 'NA'">
+                      <p style="margin-top: 15px">
+                        <a style="color: black; margin-bottom: 10px !important">{{ data.DATE | date : "dd MMMM yyyy"
+                          }}</a>
+                      </p>
+                      <p style="margin-top: 15px" class="datahover">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                          class="bi bi-newspaper" viewBox="0 0 16 16" style="margin-bottom: 10px"
+                          style="font-weight: 400">
+                          <path
+                            d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
+                          <path
+                            d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
+                        </svg>&nbsp;{{ data.NAME }}&nbsp;
+                      </p>
+                    </a>
+                    <p style="
+                        border-top: 2px dotted #a9a9a9;
+                        margin-bottom: 15px;
+                      "></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card-footer__events" *ngIf="ncounts > 10">
+              <a (click)="servicedetailroutecon()" class="btn btnloadm">View More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <section id="about" class="about" style="padding-top: 30px;padding-bottom: 7px;" *ngIf="homecount>0">
+    <div class="container" style="padding-top: 15px;box-shadow: none;">
+      <div class="row" style="padding-top: 10px; padding-bottom: 10px;justify-content: center;">
+        <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
+        <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2" style="margin-bottom: 20px;"
+          *ngFor="let dd of homestat">
+          <div class="mgt">
+            <img *ngIf="homestat!=undefined" src="{{retrieveimgUrl}}countImg/{{dd.COUNT_URL}}" height="48" width="48"
+              alt="stat">
+          </div>
+          <div class="mggg counter counter-1" *ngIf="homestat!=undefined" #counterElements>
+            {{dd.TOTAL_COUNT}}
+          </div>
+          <div class="sttext" *ngIf="homestat!=undefined">
+            {{dd.TITLE}}
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
+      </div>
+    </div>
+  </section> -->
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>
+<!-- <div *ngIf="!isSpinning" class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker__item" *ngFor="let data of news1">
+      <img src="assets/img/new.jpg" alt="new" height="23" width="60" />&nbsp;
+      <span *ngIf="data.NEWS_CONTENT_TYPE == 'L'"><a href="{{ data.NEWS_URL }}" target="_blank">{{ data.NAME
+          }}</a></span>
+      <span *ngIf="data.NEWS_CONTENT_TYPE == 'P'"><a href="{{ retrieveimgUrl }}news/{{ data.NEWS_URL }}"
+          target="_blank">{{ data.NAME }}</a></span>
+      <span *ngIf="data.NEWS_CONTENT_TYPE == 'NA'">{{ data.NAME }}</span>
+    </div>
+  </div>
+</div> -->
+
+<a data-bs-toggle="modal" data-bs-target="#exampleModal111w" style="display: none" #exampleModal111w></a>
+<div class="modal fade" id="exampleModal111w" tabindex="-1" aria-labelledby="exampleModal111wLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="
+            background-image: url('assets/img/bbbb.jpg') !important;
+            background-size: cover;
+          ">
+          <div class="hero-container" data-aos="fade-up">
+            <h1>Coming Soon</h1>
+            <h2>We are Working on it.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#ggggggggg11" style="display: none" #ggggggggg11></a>
+<div class="modal fade" id="ggggggggg11" tabindex="-1" aria-labelledby="ggggggggg11Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="
+            background-image: url('assets/img/bbbb.jpg') !important;
+            background-size: cover;
+          ">
+          <div class="hero-container" data-aos="fade-up">
+            <h1>Coming Soon</h1>
+            <h2>We are Working on it.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#outofservice1" style="display: none" #outofservice1></a>
+<div class="modal fade" id="outofservice1" tabindex="-1" aria-labelledby="outofservice1Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="background: transparent !important">
+          <div class="hero-container" data-aos="fade-up">
+            <h2>This specific service is not customized for your usage.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#iprmodel" style="display: none" #iprmodel></a>
+<div class="modal fade" id="iprmodel" tabindex="-1" aria-labelledby="bsdiusm" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog" style="max-width: 550px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size: 18px">
+          Immovable Property Return Upload
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+        ">
+        <button style="display: none" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          #clodeOTP11111 aria-label="Close" id="closeotpmobileee1111">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="form-box" style="padding: 0px">
+          <div>
+            <form action="#" style="max-width: 540px !important">
+              <div class="form-group" style="margin-bottom: 0px">
+                <div class="row">
+                  <div class="col-12">
+                    <!-- <p style="text-align: justify; font-size: 13px">
+                      Note: This form is only for non-gazetted employees. For
+                      gazetted employees, please use the eOffice portal. <a *ngIf="!showmoreee" style="color: blue;" (click)="showmore()">...read-more</a>
+
+                    
+                       
+                      
+                    </p> -->
+                    <div style="padding: 5px !important">
+                      <b style="
+                          font-size: 15px !important;
+                          box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+                        ">Instructions</b>
+
+                      <ol type="1" style="text-align: justify; font-size: 12px !important">
+                        <li style="
+                            text-align: justify;
+                            font-size: 12px !important;
+                          ">
+                          This IPR form needs to be carefully filled up by Group
+                          B non-gazetted employees of Income Tax Department,
+                          Mumbai. The filled form shall be printed and a duly
+                          signed copy should be scanned in PDF format only and
+                          uploaded on this module.
+                        </li>
+                        <!-- <li
+                          style="
+                            text-align: justify;
+                            font-size: 12px !important;
+                          "
+                        >
+                          Alternately, the filled IPR form can also be sent
+                          through e-mail to
+                          <a
+                            style="color: blue"
+                            href="mailto:mumbai.ngaz.ipr@incometax.gov.in"
+                            >mumbai.ngaz.ipr@incometax.gov.in
+                          </a>
+                        </li> -->
+                        <li style="
+                            text-align: justify;
+                            font-size: 12px !important;
+                          ">
+                          Please note that Incomplete IPR forms and IPR forms
+                          submitted without employee signature will be marked as
+                          INVALID.
+                        </li>
+                        <li style="
+                            text-align: justify;
+                            font-size: 12px !important;
+                          ">
+                          All non-gazetted employees of Income Tax Department,
+                          Mumbai are required to file their IPRs well before the
+                          timeline of 31st January 2025 to avoid last minute
+                          rush and technical difficulties.
+                        </li>
+                        <!-- <li
+                          style="
+                            text-align: justify;
+                            font-size: 12px !important;
+                          "
+                        >
+                        If you have already emailed the filled IPR form to <a style="color:blue"> mumbai.ngaz.ipr@incometax.gov.in</a>, you don’t need to upload it here again.
+
+                          
+                        </li> -->
+                        <!-- <a style="color: blue;" (click)="showmore()">...read-less</a> -->
+                      </ol>
+                    </div>
+                  </div>
+                  <div class="col-12 form-group" style="margin-bottom: 10px">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" required />
+                  </div>
+                  <div class="col-4 form-group" style="margin-bottom: 10px">
+                    <label class="inpTitle">Employee Code<span style="color: red">*</span></label>
+                    <input disabled autocomplete="off" type="text" placeholder="Enter Employee Code"
+                      class="form-control inp" name="empcode" [(ngModel)]="EMPLOYEE_CODE" required />
+                  </div>
+                  <div class="col-8 form-group" style="margin-bottom: 10px">
+                    <label class="inpTitle">Current Designation<span style="color: red">*</span></label>
+                    <input autocomplete="off" style="height: 35px !important"
+                      placeholder="Enter Place of Current Designation" class="form-control inp"
+                      name="PLACE_OF_CURRENT_POSTING" [(ngModel)]="CURRENT_POSTING" />
+                  </div>
+
+                  <div class="col-md-5 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Upload IPR Signed Copy<span style="color: red">*</span></label>
+
+                    <div class="input-group">
+                      <button nz-button (click)="fileInput.click()" *ngIf="
+                          IPR_SIGNED_COPY == null ||
+                          IPR_SIGNED_COPY == '' ||
+                          IPR_SIGNED_COPY == undefined
+                        ">
+                        Select PDF
+                        <input style="display: none" #fileInput type="file" class="form-control inp"
+                          id="IPR_SIGNED_COPY" accept="application/pdf" name="IPR_SIGNED_COPY"
+                          (change)="checkImagedoc($event)" required />
+                      </button>
+                      <!-- <input
+                        *ngIf="
+                          IPR_SIGNED_COPY == null ||
+                          IPR_SIGNED_COPY == '' ||
+                          IPR_SIGNED_COPY == undefined
+                        "
+                        type="file"
+                        class="form-control inp"
+                        id="IPR_SIGNED_COPY"
+                        accept="application/pdf"
+                        name="IPR_SIGNED_COPY"
+                        (change)="checkImagedoc($event)"
+                        required
+                      /> -->
+                      <div *ngIf="progressBar" style="width: 100%">
+                        <nz-progress [nzPercent]="percent"></nz-progress>
+                      </div>
+                      <div style="width: 100%; text-align: center">
+                        {{ IPR_SIGNED_COPY }}
+                      </div>
+                      <div style="width: 100%; text-align: center" *ngIf="
+                          IPR_SIGNED_COPY != null &&
+                          IPR_SIGNED_COPY != '' &&
+                          IPR_SIGNED_COPY != undefined
+                        ">
+                        <span *ngIf="
+                            IPR_SIGNED_COPY != null &&
+                            IPR_SIGNED_COPY != '' &&
+                            IPR_SIGNED_COPY != undefined
+                          " nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                          nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                          (click)="viewidproof()"></span>&nbsp;&nbsp;
+                        <span *ngIf="
+                            IPR_SIGNED_COPY != null &&
+                            IPR_SIGNED_COPY != '' &&
+                            IPR_SIGNED_COPY != undefined
+                          " nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                          nz-tooltip style="cursor: pointer; color: red" (click)="clearifproff()"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7 col-12 form-group" style="
+                      margin-bottom: 0.5rem;
+                      font-size: 11px !important ;
+                      align-self: flex-end;
+                    ">
+                    *Note : Please upload a PDF file. The file size must not
+                    exceed 1024 KB.
+                  </div>
+                  <div class="mt-4" style="
+                      text-align: center;
+                      margin-top: 11px !important;
+                      margin-bottom: 5px;
+                    ">
+                    <button *ngIf="!iprSpinning" (click)="submitiprform()" class="btn btn-primary px-4 validate" style="
+                        background-color: #f68831 !important;
+                        font-size: 15px;
+                        border: none;
+                      ">
+                      Submit Form
+                    </button>
+                    <div *ngIf="iprSpinning">
+                      <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#outofservice11111" style="display: none" #outofservice11111></a>
+<div class="modal fade" id="outofservice11111" tabindex="-1" aria-labelledby="outofservice1Label1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="background: transparent !important">
+          <div class="hero-container" data-aos="fade-up">
+            <h2>Comming Soon ...</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#profileviewww" style="display: none" #profileviewww></a>
+<div class="modal fade" id="profileviewww" tabindex="-1" aria-labelledby="bsdiusm" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog" style="max-width: 1200px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size: 18px">
+          Employee Code : {{ empdataaaa.EMPLOYEE_CODE }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+        ">
+        <button style="display: none" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          #clodeOTP11111 aria-label="Close" id="closeotpmobileee1111">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="form-box" style="padding: 0px">
+          <div>
+            <form action="#" style="
+                max-width: 1200px !important;
+                max-height: 80vh;
+                overflow-y: auto;
+                padding-left: 20px;
+              ">
+              <div class="form-group" style="margin-bottom: 0px; padding: 10px">
+                <div class="row" style="width: 100%">
+                  <div class="col-12" style="
+                      box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+                      margin-bottom: 10px;
+                    ">
+                    <div class="row" style="
+                        padding: 10px;
+                        font-family: 'Poppins', sans-serif !important;
+                      ">
+                      <h6 style="
+                          color: #fff !important;
+                          margin-bottom: 4px !important;
+                          padding: 4px 8px;
+                          font-size: 14px;
+                          background: #3b5999;
+                        ">
+                        Personal Details
+                      </h6>
+
+                      <div class="col-2 mainnam">Name</div>
+                      <div class="col-4">: {{ empdataaaa.NAME }}</div>
+                      <div class="col-2 mainnam">Employee Code</div>
+                      <div class="col-4">: {{ empdataaaa.EMPLOYEE_CODE }}</div>
+                      <div class="col-12">
+                        <hr style="margin: 4px !important; color: #adadad" />
+                      </div>
+                      <div class="col-2 mainnam">Gender</div>
+                      <div class="col-4">: {{ empdataaaa.GENDER }}</div>
+                      <div class="col-2 mainnam">Date of Birth</div>
+                      <div class="col-4">
+                        :
+                        {{ empdataaaa.DOB | date : "dd/MM/yyyy" }}
+                      </div>
+                      <div class="col-12">
+                        <hr style="margin: 4px !important; color: #adadad" />
+                      </div>
+                      <div class="col-2 mainnam">Retirement Date</div>
+                      <div class="col-4">
+                        :
+                        {{ empdataaaa.RETIREMENT_DATE | date : "dd/MM/yyyy" }}
+                      </div>
+                      <!-- <div class="col-6 subname">
+                        Mobile No. :{{ empdataaaa.MOBILE_NO }}
+                      </div> -->
+                      <!-- <div class="col-6 subname">Email Id : {{ empdataaaa.EMAIL_ID }}</div> -->
+                    </div>
+                  </div>
+                  <div class="col-12" style="
+                      box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+                      margin-bottom: 10px;
+                    ">
+                    <div class="row" style="padding: 10px">
+                      <h6 style="
+                          color: #fff !important;
+                          margin-bottom: 4px !important;
+                          padding: 4px 8px;
+                          font-size: 14px;
+                          background: #3b5999;
+                        ">
+                        Service Details
+                      </h6>
+
+                      <div class="col-2 mainnam">Cadre</div>
+                      <div class="col-4">
+                        : {{ servicedata.ITHR_RANK_NAME }}
+                      </div>
+                      <div class="col-2 mainnam">
+                        Joining Date in Present Post :
+                      </div>
+                      <div class="col-4">
+                        :
+                        {{ servicedata.DOJ_PRESENT_POST | date : "dd/MM/yyyy" }}
+                      </div>
+                      <div class="col-12">
+                        <hr style="margin: 4px !important; color: #adadad" />
+                      </div>
+                      <div class="col-2 mainnam">Office</div>
+                      <div class="col-4">
+                        : {{ servicedata.ITHR_OFFICE_NAME }}
+                      </div>
+                      <div class="col-2 mainnam">
+                        Joining Date in Present Rank
+                      </div>
+                      <div class="col-4">
+                        :
+                        {{ servicedata.DOJ_PRESENT_RANK | date : "dd/MM/yyyy" }}
+                      </div>
+                      <div class="col-12">
+                        <hr style="margin: 4px !important; color: #adadad" />
+                      </div>
+                      <div class="col-2 mainnam">
+                        Date of Entry in Govt. Service
+                      </div>
+                      <div class="col-4">
+                        :
+                        {{ servicedata.DOE_GOV_SERVICE }}
+                      </div>
+                      <div class="col-2 mainnam">
+                        Rank of Entry for IT Department Mumbai
+                      </div>
+                      <div class="col-4">
+                        :
+                        {{ servicedata.RANK_ID_IT_STATE_SERVICE_NAME }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12" style="
+                      box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+                      margin-bottom: 10px;
+                    ">
+                    <div class="row" style="padding: 10px">
+                      <h6 style="
+                          color: #fff !important;
+                          margin-bottom: 4px !important;
+                          padding: 4px 8px;
+                          font-size: 14px;
+                          background: #3b5999;
+                        ">
+                        Posting Details
+                      </h6>
+
+                      <!-- <div class="table-responsive mt-3 fscroll" id="scrollableDiv">
+                        <table
+                          style="width: 100%"
+                          class="table table-striped table-hover table-sm mb-0"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Office</th>
+                              <th>Order No.</th>
+                              <th>Order Date</th>
+                              <th>Cadre</th>
+                              <th>From Date</th>
+                              <th>To Date</th>
+                              <th>Duration</th>
+          
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of news">
+                              <td>{{ data["RANK_NAME"] }}</td>
+                              <td></td>
+                              <td>{{ data["ORDER_DATE"] | date : "dd/MM/yyyy" }}</td>
+                              <td>{{ data["RANK_NAME"] }}</td>
+                              <td>{{ data["FROM_DATE"] | date : "dd/MM/yyyy" }}</td>
+                              <td>{{ data["TO_DATE"] | date : "dd/MM/yyyy" }}</td>
+                              <td>
+                                {{
+                                  calculateDateDifference(
+                                    data["FROM_DATE"],
+                                    data["TO_DATE"]
+                                  )
+                                }}
+                              </td>
+                            </tr>
+                            <tr *ngIf="dataPostingList.length == 0">
+                              <th colspan="7" style="text-align: center">NA</th>
+                            </tr>
+                          </tbody>
+                        </table> -->
+
+                      <nz-table class="my-scroll no-wrap1" #table [nzData]="dataPostingList" nzBordered
+                        [nzSize]="'small'" [nzScroll]="{ x: '1100px', y: '60vh' }" nzShowSizeChanger="false"
+                        [nzFrontPagination]="false" style="white-space: pre-line">
+                        <thead>
+                          <tr>
+                            <th nzWidth="200px" nzAlign="center" style="font-weight: 600">
+                              Office
+                            </th>
+                            <th nzWidth="200px" nzAlign="center" style="font-weight: 600">
+                              Order No.
+                            </th>
+                            <th nzWidth="150px" nzAlign="center" style="font-weight: 600">
+                              Order Date
+                            </th>
+                            <th nzWidth="200px" nzAlign="center" style="font-weight: 600">
+                              Cadre
+                            </th>
+                            <th nzWidth="150px" nzAlign="center" style="font-weight: 600">
+                              From Date
+                            </th>
+                            <th nzWidth="150px" nzAlign="center" style="font-weight: 600">
+                              To Date
+                            </th>
+                            <th nzWidth="100px" nzAlign="center" style="font-weight: 600">
+                              Duration
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr *ngFor="let data of table.data; let i = index">
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              ">
+                              {{ data["OFFICE_NAME"] }}
+                            </td>
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              ">
+                              {{ data["ORDER_NO"] }}
+                            </td>
+
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              " nzAlign="center">
+                              {{ data["ORDER_DATE"] | date : "dd/MM/yyyy" }}
+                            </td>
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              ">
+                              {{ data["RANK_NAME"] }}
+                            </td>
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              " nzAlign="center">
+                              {{ data["FROM_DATE"] | date : "dd/MM/yyyy" }}
+                            </td>
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              " nzAlign="center">
+                              {{ data["TO_DATE"] | date : "dd/MM/yyyy" }}
+                            </td>
+                            <td style="
+                                text-wrap: auto;
+                                font-size: 13px !important;
+                              " nzAlign="center">
+                              {{
+                              calculateDateDifference(
+                              data["FROM_DATE"],
+                              data["TO_DATE"]
+                              )
+                              }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </nz-table>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row" style="width: 100%">
+                  <div class="col-12" style="text-align: end; margin-top: 20px">
+                    <a style="color: #f68831; font-size: 14px; font-weight: 600">Need a correction in profile ?</a>
+                    <!-- <button
+                      class="btn btn-primary px-4 validate"
+                      style="
+                        background-color: #f68831 !important;
+                        font-size: 13px;
+                        border: none;
+                      "
+                    >
+                      Change Request
+                    </button> -->
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="drawerVisible1s">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      padding: '30px',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="Dwidth" [nzVisible]="drawerVisible1s"
+    [nzTitle]="drawertitile" (nzOnClose)="drawerClosess()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-cmsview [servicedata]="servicedata" [dataPostingList]="dataPostingList" [empdataaaa]="empdataaaa"
+        [drawerClose]="closeCallbackss" [show]="true"></app-cmsview>
+    </ng-container>
+  </nz-drawer>
+</div>
+<!-- <div
+*ngIf="ser.ID != 9"
+(click)="getServices33(ser.ID)"
+class="icon-box1"
+style="cursor: pointer; padding: 15px 15px 5px 15px"
+>
+<div class="row">
+  <div
+    class="col-md-2 col-xl-2 col-lg-2 col-12 col-sm-12"
+    *ngIf="servises != undefined"
+  >
+    <img
+      src="{{ retrieveimgUrl }}service/{{ ser.IMG_URL }}"
+      height="70"
+      width="100%"
+      alt="service"
+    />
+  </div>
+  <div class="col-md-10 col-xl-10 col-lg-10 col-12 col-sm-12">
+    <div class="row">
+      <div
+        class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12"
+        style="align-self: center"
+      >
+        <h3
+          *ngIf="servises != undefined"
+          class="limit1"
+          style="
+            align-self: center;
+            display: flex;
+            align-items: center;
+          "
+        >
+          {{ ser.TITLE }}
+        </h3>
+      </div>
+   
+    </div>
+  </div>
+</div>
+
+</div> -->
+
+<div *ngIf="drawerVisiblerepresentation">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      padding: '10px ',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="Dwidthtt"
+    [nzVisible]="drawerVisiblerepresentation" [nzTitle]="drawertitilerepresentation"
+    (nzOnClose)="drawerClosessrepresentation()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-drawerforrepresentation [data]="employeedataaaa" [TPforview]="TPforview"
+        [drawerCloseTP]="closeCallbackssTP"></app-drawerforrepresentation>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<!-- 
+<button
+  type="button"
+  class="btn btn-primary"
+  data-toggle="modal"
+  data-target=".bd-example-modal-sm"
+>
+  Small modal
+</button>
+
+<div
+  class="modal fade bd-example-modal-sm"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="mySmallModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <nz-form-item>
+        <nz-form-label class="labelsize" nzRequired nzNoColon
+          >Cadre</nz-form-label
+        >
+        <nz-form-control>
+          <nz-select
+            class="inputsize"
+            nzSize="small"
+            nzAllowClear
+            nzShowSearch
+            disabled="true"
+            nzAllowClear
+            nzPlaceHolder="Select Cadre"
+            name="Ranksbscd"
+            [(ngModel)]="RANK_ID"
+          >
+            <nz-option
+              *ngFor="let role of ranksss"
+              [nzValue]="role.MDB_ID"
+              [nzLabel]="role.NAME"
+            >
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</div> -->
+
+<!-- <nz-modal
+  [(nzVisible)]="modelshowwwww"
+  nzTitle="Update Cadre"
+  nzClosable="false"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <nz-form-item>
+      <nz-form-label class="labelsize" nzRequired nzNoColon
+        >Cadre</nz-form-label
+      >
+      <nz-form-control>
+        <nz-select
+          nzAllowClear="false"
+          nzShowSearch
+          nzPlaceHolder="Select Cadre"
+          name="Ranksbscd"
+          [(ngModel)]="employeedataaaa11111.DESIGNATION_ID"
+        >
+          <nz-option
+            *ngFor="let role of ranksss"
+            [nzValue]="role.MDB_ID"
+            [nzLabel]="role.NAME"
+          >
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+</nz-modal> -->
+
+<nz-modal [(nzVisible)]="modelshowwwww" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="500px"
+  nzClosable="false" [nzFooter]="contextofrulesss" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Select Cadre</span>
+    <!-- <span *ngIf="verifystatus == 'A'" style="font-size: 15px; font-weight: 500"
+      >Are you sure you want to Approve ?</span
+    > -->
+    <hr style="margin: 8px 0" />
+    <nz-form-item>
+      <!-- <nz-form-label class="labelsize" nzRequired nzNoColon
+        >Cadre</nz-form-label
+      > -->
+      <nz-form-control>
+        <nz-select nzAllowClear="false" nzShowSearch nzPlaceHolder="Select Cadre" name="Ranksbscd"
+          [(ngModel)]="employeedataaaa11111.DESIGNATION_ID">
+          <nz-option *ngFor="let role of ranksss" [nzValue]="role.MDB_ID" [nzLabel]="role.NAME">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+  <ng-template #contextofrulesss>
+    <button nzSize="small" [nzLoading]="loadingRecords" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699; border-radius: 12px; font-size: 11px" (click)="handleOk()">
+      Update
+    </button>
+
+    <!-- <button
+      nzSize="small"
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      style="
+        background-color: white !important;
+        border-radius: 12px;
+        color: #006699;
+        font-size: 11px;
+        font-weight: 500;
+      "
+      (click)="cancel()"
+    >
+      Cancel
+    </button> -->
+  </ng-template>
+</nz-modal>

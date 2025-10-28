@@ -1,0 +1,2075 @@
+<div nz-row *ngIf="
+    datalistForSteps == null ||
+    datalistForSteps == undefined ||
+    datalistForSteps == '' ||
+    datalistForSteps.length == 0
+  ">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+    <div class="formname" style="text-align: center">
+      <h6 style="font-size: 15px; margin-bottom: 5px">
+        Application for Accommodation
+      </h6>
+    </div>
+    <p style="text-align: center; margin-bottom: 10px; font-size: 13px">
+      You can review your submitted applications, check those pending submission
+      or approval, and submit new accommodation applications as needed.
+    </p>
+  </div>
+</div>
+
+<div nz-row *ngIf="
+    datalistForSteps != undefined &&
+    datalistForSteps != null &&
+    datalistForSteps != '' &&
+    datalistForSteps.length > 0
+  ">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+    <div class="formname" style="text-align: center">
+      <h6 style="font-size: 15px; margin-bottom: 5px">
+        Accomodation Allotment Process
+      </h6>
+    </div>
+    <p style="text-align: center; margin-bottom: 10px; font-size: 13px">
+      Stay in the loop with instant updates on available quarters , seniority rankings, preferences, allotment status,
+      acceptance forms, and occupancy details through a single, user-friendly platform.
+    </p>
+  </div>
+</div>
+
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div nz-col nzSpan="24" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <div nz-row>
+        <div nzSpan="24">
+          <nz-form-item style="margin-right: 0px">
+            <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+              (click)="showFilter()">
+              <i nz-icon nzType="filter"></i>
+            </button>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Select Month</nz-form-label>
+                <nz-form-control nzErrorTip="Select Month">
+                  <nz-range-picker name="month" nzMode="month" nzAllowClear="false" [(ngModel)]="Monthrange"
+                    nzPlaceholder="Select Month" nzFormat="MMM/yyyy"
+                    (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="9">
+              <nz-form-item class="chsaaa">
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="3" nzPlaceHolder="Select Residence Type "
+                    name="Residence Type" nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_IDD">
+                    <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="10" style="display: flex; gap: 10px; margin-top: 31px">
+              <button nz-button nzType="primary" class="flexicons" (click)="applyFilter()">
+                <i nz-icon nzType="filter"></i>Apply Filter
+              </button>
+              <button nz-button nzType="primary" class="flexicons" (click)="clearFilter()">
+                <i nz-icon nzType="close"></i>Clear filter
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row *ngIf="totalRecords == 0 && !loadingRecords && !filter &&  dataList.length == 0 &&
+(datalistForSteps == null ||
+  datalistForSteps == undefined ||
+  datalistForSteps == '' ||
+  datalistForSteps.length == 0)">
+  <div nz-col nzSpan="7" style="text-align: center"></div>
+  <div nz-col nzSpan="10" style="text-align: center">
+    <nz-card style="background-color: #fafafa; text-align: center; margin-top: 50px">
+      <div class="row">
+        <div class="col-sm-12" style="padding: 0px">
+          <div class="container">
+            Application Form for Officers of the Income-Tax Department
+            Requesting Allotment of Residence from the Departmental Pool
+            Allotment Year {{ datee | date : "yyyy" }}
+          </div>
+          <button nz-button nzType="primary" (click)="add()" style="border-radius: 11px; margin-top: 20px">
+            Apply Now
+          </button>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="7" style="text-align: center"></div>
+</div>
+<div nz-row style="margin-top: 5px" *ngIf="
+    (datalistForSteps == null ||
+    datalistForSteps == undefined ||
+    datalistForSteps == '' ||
+    datalistForSteps.length == 0) && !loadingRecords
+  ">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="margin-bottom: 20px"
+    *ngFor="let show of dataList; let i = index">
+    <div class="cardstyle">
+      <div nz-row>
+        <div class="mainnam" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Name : {{ show.EMPLOYEE_NAME }}
+        </div>
+        <div class="mainnam" nz-col nzSpan="10" *ngIf="dataList != undefined && show.STATUS == 'A'; else elseapblock">
+          Application No. : {{ show.APPLICATION_NO }}
+        </div>
+        <ng-template #elseapblock>
+          <div class="mainnam" nz-col nzSpan="10"></div>
+        </ng-template>
+
+        <div class="subnamm" nz-col nzSpan="2" *ngIf="dataList != undefined && show.APPLICATION_FORM">
+          <a nz-button nz-tooltip nzTooltipTitle="View Application Form" style="
+              color: #1890ff;
+              padding: 0px !important;
+              border: none;
+              box-shadow: none;
+            " *ngIf="dataList != undefined" (click)="viewapplicationform(show.APPLICATION_FORM)">
+            <span nz-icon nzType="eye" nzTheme="outline"></span>
+          </a>
+        </div>
+        <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Designation : {{ show.DESIGNATION }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Grade Pay Level : {{ show.PAY_LEVEL }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Grade Pay : {{ show.GRADE_PAY }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Residence Type : {{ show.RESIDENCE_TYPE_NAME }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Date Of Birth : {{ show.DOB | date : "dd/MM/yyyy" }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+          Date Of Joining : {{ show.DATE_JOINING | date : "dd/MM/yyyy" }}
+        </div>
+      </div>
+      <div nz-col nzSpan="24" style="
+          align-self: center;
+          text-align: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          width: 100%;
+          overflow-x: auto;
+        ">
+        <nz-steps nzSize="small" [nzCurrent]="show.STEP_NO + 1" [nzLabelPlacement]="'vertical'">
+          <nz-step [nzDescription]="application"></nz-step>
+          <ng-template #application>
+            <span style="font-size: 11px; font-weight: 600">
+              Fill Application Form
+              <p style="font-size: 9px; margin-bottom: 1px" *ngIf="dataList != undefined">
+                {{ show.APPLICATION_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+              </p>
+            </span>
+          </ng-template>
+          <nz-step [nzDescription]="submit"></nz-step>
+          <ng-template #submit>
+            <span style="font-size: 11px; font-weight: 600">
+              Preview & Submit
+              <p style="font-size: 9px; margin-bottom: 1px" *ngIf="dataList != undefined">
+                {{ show.APP_SUBMIT_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+              </p>
+            </span>
+          </ng-template>
+          <nz-step *ngIf="show['STEP_NO'] != 2" [nzDescription]="Submitted"></nz-step>
+          <nz-step *ngIf="show['STEP_NO'] == 2 && show.STATUS == 'P'" [nzIcon]="submitted1" [nzDescription]="Submitted"
+            nzStatus="In Progress"></nz-step>
+          <nz-step *ngIf="
+              show['STEP_NO'] == 2 && (show.STATUS == 'A' || show.STATUS == 'R')
+            " [nzIcon]="submitted2" [nzDescription]="Submitted" nzStatus="In Progress"></nz-step>
+          <ng-template #submitted1>
+            <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: -7px" width="23" height="23" viewBox="0 0 24 24"
+              fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM7.33333 11.1429L10.4444 16.1429L16.6667 6H18L10.4444 18L6 11.1429H7.33333Z"
+                fill="#006699" />
+            </svg>
+          </ng-template>
+          <ng-template #submitted2>
+            <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: -7px" width="24" height="24" viewBox="0 0 24 24"
+              fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM7.33333 11.1429L10.4444 16.1429L16.6667 6H18L10.4444 18L6 11.1429H7.33333Z"
+                fill="#006699" />
+            </svg>
+          </ng-template>
+        </nz-steps>
+        <ng-template #Submitted>
+          <span style="font-size: 11px; font-weight: 600" *ngIf="show.STATUS == 'P' || show.STATUS == ''">
+            Pending For Verification
+          </span>
+          <span style="font-size: 11px; font-weight: 600; margin-top: -3px" *ngIf="show.STATUS == 'A'">
+            Approved
+            <p style="font-size: 9px; margin-bottom: 1px" *ngIf="dataList != undefined">
+              {{ show.APP_APPROVED_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+            </p>
+          </span>
+          <span style="font-size: 11px; font-weight: 600; margin-top: -3px" *ngIf="show.STATUS == 'R'">
+            Rejected
+            <p style="font-size: 9px; margin-bottom: 1px" *ngIf="dataList != undefined">
+              {{ show.APP_APPROVED_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+            </p>
+          </span>
+        </ng-template>
+      </div>
+      <div nz-col nzSpan="24" *ngIf="show.STEP_NO != 2 && show.STATUS == ''"
+        style="align-self: center; text-align: center; margin-top: 0px">
+        <button nz-button nzType="primary" (click)="Continuestatus(show)" style="
+            display: inline-flex;
+            padding: 0px 7px;
+            align-items: center;
+            border-radius: 11px;
+            float: right;
+            font-size: 11px;
+            margin-bottom: 6px;
+          ">
+          Continue Application
+        </button>
+      </div>
+
+      <div nz-row>
+        <div class="subnamm" nz-col nzSpan="16" style="margin-top: 0px" *ngIf="show.STATUS == 'R'">
+          <b>Rejection Remark:</b>&nbsp;
+          <span *ngIf="show.STATUS == 'R' && dataList != undefined" style="color: red; text-align: justify" nz-popover
+            nzPopoverTitle="Rejection Remark" [nzPopoverContent]="show.REMARK" nzPopoverPlacement="topLeft">{{
+            show.REMARK | slice : 0 : 70
+            }}{{ show.REMARK.length > 70 ? "..." : "" }}</span>
+        </div>
+        <div nz-col nzSpan="8" style="margin-top: 0px" *ngIf="remarkcondition == 'R' && i == 0">
+          <button nz-button nzType="primary" (click)="add1(show, Checklistdatasss)" style="
+              display: inline-flex;
+              padding: 0px 7px;
+              align-items: center;
+              border-radius: 11px;
+              float: right;
+              font-size: 11px;
+              margin-bottom: 6px;
+            ">
+            Re-apply Application
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div nz-row *ngIf="
+    datalistForSteps != undefined &&
+    datalistForSteps != null &&
+    datalistForSteps != '' &&
+    datalistForSteps.length > 0 && !loadingRecords
+  ">
+  <div *ngFor="let data of datalistForSteps; let n = index" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    style="margin-bottom: 10px; padding: 10px">
+    <div nz-row style="
+        background-color: #fff;
+        position: relative;
+        width: 100%;
+        cursor: pointer;
+        padding: 10px;
+        border: 1px solid #efefef;
+        border-radius: 10px;
+      ">
+      <div nz-col nzSpan="24" style="padding: 0px 5px; margin-bottom: 0px">
+        <div nz-row style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          ">
+          <div style="color: #000; font-size: 13px; font-weight: 600">
+            Residence {{ data.RESIDENCE_TYPE_NAME }}
+          </div>
+          <div style="
+              display: flex;
+              justify-content: flex-end;
+              font-weight: 600;
+              color: #000;
+              font-size: 13px;
+            ">
+            <span *ngIf="data.MONTH == 1" style="text-transform: uppercase">January</span>
+            <span *ngIf="data.MONTH == 2" style="text-transform: uppercase">February</span>
+            <span *ngIf="data.MONTH == 3" style="text-transform: uppercase">March</span>
+            <span *ngIf="data.MONTH == 4" style="text-transform: uppercase">April</span>
+            <span *ngIf="data.MONTH == 5" style="text-transform: uppercase">May</span>
+            <span *ngIf="data.MONTH == 6" style="text-transform: uppercase">June</span>
+            <span *ngIf="data.MONTH == 7" style="text-transform: uppercase">July</span>
+            <span *ngIf="data.MONTH == 8" style="text-transform: uppercase">August</span>
+            <span *ngIf="data.MONTH == 9" style="text-transform: uppercase">September</span>
+            <span *ngIf="data.MONTH == 10" style="text-transform: uppercase">October</span>
+            <span *ngIf="data.MONTH == 11" style="text-transform: uppercase">November</span>
+            <span *ngIf="data.MONTH == 12" style="text-transform: uppercase">December</span>
+            &nbsp;
+            {{ data.YEAR }}
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <div nz-row>
+          <div nz-row *ngIf="data.FINAL_ALLOTMENT_DETAILS.IS_BARRED == 1 && data.FINAL_ALLOTMENT_DETAILS.AUTO_BARRED==0 && data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS=='R'
+            && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')">
+            <div nz-col nzSpan="24">
+              <span style="font-weight: 500; color: red">
+                You are barred from further processing for
+                180 days
+                from
+                {{getdate(data)}}
+                due to {{data.FINAL_ALLOTMENT_DETAILS.NON_ACCEPTANCE_REMARK}}
+              </span>
+            </div>
+          </div>
+          <div nz-row *ngIf="data.FINAL_ALLOTMENT_DETAILS.IS_BARRED == 1 && data.FINAL_ALLOTMENT_DETAILS.AUTO_BARRED==1 && data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS=='R'
+            && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')">
+            <div nz-col nzSpan="24">
+              <span style="font-weight: 500; color: red">
+                You are barred from further processing for
+                180 days from {{getdate(data)}}
+                due to you are not taken any action on Acceptance Form.
+              </span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin-top: 5px; text-align: left; color: green" *ngIf="datalistForSteps != undefined &&
+                data.DRAFT_WAITING_FILE_URL != '' && data.DRAFT_WAITING_FILE_URL != null && data.DRAFT_WAITING_FILE_URL != undefined && data.STEP_NO == 0
+                && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')">
+              <span style="font-weight: 500" *ngIf="
+                  Timmerendloopdsen[n] != 0 || Timmerendloopdsen[n] != '';
+                  else sentimeendblock
+                ">
+                The Draft Seniority Order has been published. If you have any
+                objections, you can raise them using the 'Raise Objection'
+                button until
+                {{ data.SEN_OBJ_END_DATE_TIME | date : "dd/MM/yyyy HH:mm" }}
+              </span>
+              <ng-template #sentimeendblock>
+                <span style="font-weight: 500">The Draft Seniority Order has been published. To view the Draft Seniority
+                  Order, please click on the "Draft Seniority" button.</span>
+              </ng-template>
+            </div>
+
+            <div nz-col nzSpan="24" style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined &&
+                data.NOTICE_FILE_URL != '' &&
+                data.NOTICE_FILE_URL != null &&
+                data.NOTICE_FILE_URL != undefined &&
+                data.STEP_NO == 1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+              ">
+              <span style="font-weight: 500" *ngIf="
+                  Timmerendloopdsen[n] != 0 || Timmerendloopdsen[n] != '';
+                  else vacfmeendblock
+                ">
+                The Draft Seniority Order has been published. If you have any objections, you can raise them
+                using the 'Raise Objection' button until
+                {{ data.SEN_OBJ_END_DATE_TIME | date : "dd/MM/yyyy HH:mm" }}
+              </span>
+              <ng-template #vacfmeendblock>
+                <span style="font-weight: 500"> The Draft Seniority Order has been published. To view the Draft
+                  Seniority Order, please click on the "Draft Seniority" button.</span>
+              </ng-template>
+            </div>
+            <div nz-col nzSpan="24" style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined &&
+                data.FINAL_WAITING_FILE_URL != '' &&
+                data.FINAL_WAITING_FILE_URL != null &&
+                data.FINAL_WAITING_FILE_URL != undefined &&
+                (data.STEP_NO == 2 || data.STEP_NO == 3) && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+              ">
+              <span style="font-weight: 500" *ngIf="
+                  Timmerendlooppre[n] != 0 || Timmerendlooppre[n] != '';
+                  else preptimeendblock
+                ">
+                The Vacancy Notice & Final Seniority Order has been published. Please fill your
+                quarter preferences using the 'Fill Preference' button until
+                {{ data.PREFERENCE_END_DATE_TIME | date : "dd/MM/yyyy HH:mm" }}
+              </span>
+              <ng-template #preptimeendblock>
+                <span style="font-weight: 500">The Vacancy Notice & Final Seniority Order has been published. Your
+                  preference time is over, so you are not allowed to fill in your quarter preferences.</span>
+              </ng-template>
+            </div>
+
+            <div nz-col nzSpan="24" style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined &&
+                data.DRAFT_ALLOTMENT_FILE_URL != '' &&
+                data.DRAFT_ALLOTMENT_FILE_URL != null &&
+                data.DRAFT_ALLOTMENT_FILE_URL != undefined &&
+                data.STEP_NO == 4 && data.IS_ALLOTED==1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+              ">
+              <span style="font-weight: 500" *ngIf="
+                  Timmerendloopallot[n] != 0 || Timmerendloopallot[n] != '';
+                  else allltimeendblock
+                ">
+                The Draft Allotment Order has been published. If You have any
+                objection then you can raise objection on Draft Allotment Order
+                until
+                {{
+                data.ALLOTMENT_OBJ_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                }}
+              </span>
+              <ng-template #allltimeendblock>
+                <span style="font-weight: 500">The Draft Allotment Order has been published. If you raised
+                  any objection, check the objection status by clicking the
+                  arrow button.</span>
+              </ng-template>
+            </div>
+            <div nz-col nzSpan="24" style="margin-top: 5px; text-align: left; color: green" *ngIf="
+            datalistForSteps != undefined &&
+            data.DRAFT_ALLOTMENT_FILE_URL != '' &&
+            data.DRAFT_ALLOTMENT_FILE_URL != null &&
+            data.DRAFT_ALLOTMENT_FILE_URL != undefined &&
+            data.STEP_NO == 4 && data.IS_ALLOTED==0 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+          ">
+              <span style="font-weight: 500">
+                The draft allotment has been published, and you are not eligible for this month allotment process.
+                Please try again in the next month quarter's allotment process.
+              </span>
+            </div>
+            <div nz-col nzSpan="24" style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined &&
+                data.FINAL_ALLOTMENT_FILE_URL != '' &&
+                data.FINAL_ALLOTMENT_FILE_URL != null &&
+                data.FINAL_ALLOTMENT_FILE_URL != undefined &&
+                data.STEP_NO == 5 &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS != 'A' &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS != 'R' && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED != 1 &&
+                (data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER == '' ||
+                  data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER == null ||
+                  data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER == undefined) && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+              ">
+              <span style="font-weight: 500" *ngIf="
+                  Timmerendloopmis[n] != 0 || Timmerendloopmis[n] != '';
+                  else allltimeendblock
+                ">
+                Congratulations!!! The Final Allotment Order has been published
+                And
+                {{ data.FINAL_ALLOTMENT_DETAILS.FLAT_NAME }},
+                {{ data.FINAL_ALLOTMENT_DETAILS.AREA_NAME }} quarter has been
+                allocated to you. Now You can fill your quarter acceptance form
+                until
+                {{ data.ACCEPTANCE_END_DATE_TIME | date : "dd/MM/yyyy HH:mm" }}
+              </span>
+              <ng-template #allltimeendblock>
+                <span style="font-weight: 500">
+                  The Final Allotment Order has been published, and your quarter
+                  acceptance time is over. Therefore, you are no longer allowed
+                  to fill in the acceptance form</span>
+              </ng-template>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: red" *ngIf="
+                datalistForSteps != undefined &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'R' && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED == 0 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+              ">
+              Allocated quarter {{ data.FINAL_ALLOTMENT_DETAILS.FLAT_NAME }},
+              {{ data.FINAL_ALLOTMENT_DETAILS.AREA_NAME }} is rejected by
+              Inspector due to
+              {{ data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_REMARK }} on
+              {{
+              data.FINAL_ALLOTMENT_DETAILS.INSPETOR_APPROVE_DATE_TIME
+              | date : "dd/MM/yyyy HH:mm"
+              }}
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green;font-weight: 500;" *ngIf="
+                datalistForSteps != undefined &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'P' &&
+                data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != '' &&
+                data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != null &&
+                data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != undefined &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS != 'A' &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS != 'R' && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED == 0 &&
+                (Timmerendloopmis[n] > 0 || Timmerendloopmis[n] != '') && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+              ">
+              Your acceptance form has been successfully submitted. Please wait until the
+              acceptance period ends for further processing.
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '') &&
+                (data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A'|| data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'P') &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS ==
+                    undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == '') &&
+                data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != null &&
+                data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != undefined &&
+                data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != '' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                  null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER == '') && (Timmerendloopmis[n]== 0 || Timmerendloopmis[n] == '')
+              ">
+              <span style="font-weight: 500">Your acceptance form has been approved. Now you can take physical
+                possession of quarter or apply for renovation</span>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '') &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'P' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'R' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER !=
+                  null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER !=
+                  undefined &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER != '' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '' ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '0') &&
+                (Timmerendloopmis[n] > 0 || Timmerendloopmis[n] != '')
+              ">
+              <span style="font-weight: 500">
+                Your physical reminder letter has been generated. Please wait until the
+                acceptance period ends for further processing.
+              </span>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '') && 
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'P' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'R' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER !=
+                  null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER !=
+                  undefined &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER != '' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '' ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '0') &&
+                Timmerendloopmis[n] == 0
+              ">
+              <span style="font-weight: 500">
+                Your physical reminder letter has been
+                generated. You can now view your physical reminder letter and either
+                take physical possession of quarter or apply for renovation
+                <span *ngIf="
+                    datalistForSteps != undefined &&
+                    data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME != '' &&
+                    data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME !=
+                      null &&
+                    data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME !=
+                      undefined
+                  ">
+                  until
+                  {{
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME
+                  | date : "dd/MM/yyyy HH:mm"
+                  }}</span>
+                .
+              </span>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '') &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == 'P' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                  null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    '') &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '' ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '0') &&
+                Timmerendloopmis[n] == 0
+              ">
+              <span style="font-weight: 500">
+                Your renovation request has been submitted successfully and it is pending for approval.
+              </span>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '') &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == 'A' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                  null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    '') &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '' ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '0') &&
+                Timmerendloopmis[n] == 0
+              ">
+              <span style="font-weight: 500" *ngIf="
+              (Timmerendloopphend[n] != null &&Timmerendloopphend[n] != 0&& Timmerendloopphend[n] != '') && (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == '' ||
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == undefined ||
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == null)
+            ">
+                Your renovation request has been approved. Please wait until your quarter getting ready.
+              </span>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: red" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '') &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == 'R' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '' ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '0') &&
+                Timmerendloopmis[n] == 0
+              ">
+              <span style="font-weight: 500" *ngIf="
+              Timmerendloopphend[n] != 0 || Timmerendloopphend[n] != '';else renophendrejectblock
+            ">
+                Your renovation request has been rejected due to
+                {{ data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_REJECTION_REMARK }}.
+                Please proceed for submit physical possession of quarter until
+                {{
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME
+                | date : "dd/MM/yyyy HH:mm"
+                }}
+              </span>
+              <ng-template #renophendrejectblock>
+                <span style="font-weight: 500">
+                  Your renovation request has been rejected due to
+                  {{ data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_REJECTION_REMARK }}. You are not eligible for further
+                  processign because your physical possession of quarter taken time is over. You are
+                  barred for 180 days.</span>
+              </ng-template>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1  &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == 'A' &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                  null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER ==
+                    '') &&
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '' ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == undefined ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == null ||
+                  data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '0') &&
+                Timmerendloopmis[n] == 0
+              ">
+              <span style="font-weight: 500" *ngIf="
+              (Timmerendloopphend[n] == null ||Timmerendloopphend[n] == 0|| Timmerendloopphend[n] == '') && (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == '' ||
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == undefined ||
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == null) && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+            ">
+                Your renovation request has been approved. Please wait until your quarter getting ready.
+              </span>
+              <span style="font-weight: 500" *ngIf="
+              (Timmerendloopphend[n] != '' || Timmerendloopphend[n] != 0) && (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME != '' &&
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME != undefined &&
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME != null) && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+            ">
+                Your renovation request has been approved. Your quarter is ready, now you need to take physical
+                possession before {{data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME | date : 'dd/MM/yyyy HH:mm'}}.
+              </span>
+
+              <span style="font-weight: 500" *ngIf="
+              (Timmerendloopphend[n] == '' || Timmerendloopphend[n] == 0) && (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == '' ||
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == undefined ||
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_END_DATETIME == null)  && (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != '' &&
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != undefined &&
+              data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != null) && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')">
+                Your renovation request has been approved. You are not eligible for further processign because your
+                physical possession taken time is over. You are barred for 180 days.
+              </span>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf="
+                datalistForSteps != undefined && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 &&
+                data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS == 'A' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER !=
+                  null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER !=
+                  undefined &&
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER != '' &&
+                data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == '1' &&
+                Timmerendloopmis[n] == 0
+              ">
+              <span style="font-weight: 500"
+                *ngIf="data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA == undefined ||
+              data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA == '' ||
+              data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA == null && (data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='' || data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS ==null) ">
+                Congratulations!!! You have successfully taken physical possession
+                of quarter {{ data.FINAL_FLAT_TAKEN_DETAILS.FLAT_NAME }},
+                {{ data.FINAL_FLAT_TAKEN_DETAILS.AREA_NAME }}. Your allotment
+                process is completed.
+              </span>
+
+              <span style=" font-weight: 500"
+                *ngIf="data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != undefined &&
+              data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != '' &&
+              data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != null && (data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='' || data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS ==null) ">
+                Congratulations!!! You have successfully taken physical possession
+                of quarter {{ data.FINAL_FLAT_TAKEN_DETAILS.FLAT_NAME }},
+                {{ data.FINAL_FLAT_TAKEN_DETAILS.AREA_NAME }}. Now your HRA deduction is start from
+                {{data.FINAL_FLAT_TAKEN_DETAILS.HRA_GENERATED_DATE| date : 'dd/MM/yyyy'}}.
+              </span>
+
+              <span style="font-weight: 500;color: red;" *ngIf="
+              data.FINAL_FLAT_TAKEN_DETAILS
+                .IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&
+              data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == 1 && (data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='R') && (data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != null &&
+            data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != '')
+            ">
+                Your quarter surrender request has been rejected due to
+                {{ data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_REMARK }}.
+              </span>
+              <span style="font-weight: 500" *ngIf="
+              data.FINAL_FLAT_TAKEN_DETAILS
+                .IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&
+              data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == 1 && (data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='P') && (data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != null &&
+            data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != '')
+            ">
+                Your quarter surrender request has been submitted successfully and it is pending for approval.
+
+              </span>
+
+
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              style="margin-top: 5px; text-align: left; color: green" *ngIf=" (data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='A') && (data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER !== null &&
+            data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER !== undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER !== '')
+            ">
+              <span style="font-weight: 500;color: green;">
+                Your quarter surrender request has been approved. You are barred for 365 days.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+        style="align-self: center; text-align: center; margin-top: 20px">
+        <nz-steps nzSize="small" [nzCurrent]="data.STEP_NO" [nzLabelPlacement]="'vertical'">
+          <nz-step [nzTitle]="titile1Template"> </nz-step>
+          <nz-step [nzTitle]="titile2Template"></nz-step>
+          <nz-step [nzTitle]="titile3Template"></nz-step>
+          <nz-step [nzTitle]="titile4Template"></nz-step>
+          <nz-step [nzTitle]="titile5Template"></nz-step>
+          <nz-step [nzTitle]="titile6Template"></nz-step>
+          <ng-template #titile1Template>
+            <span style="font-size: 10px; font-weight: bold">
+              Draft Seniority
+              <p style="font-size: 8px" *ngIf="data.DRAFT_SEN_PUBLISH_DATE != undefined">
+                {{
+                data.DRAFT_SEN_PUBLISH_DATE | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </span>
+          </ng-template>
+
+          <ng-template #titile2Template>
+            <span style="font-size: 10px; font-weight: bold">
+              Vacancy Notice
+              <p style="font-size: 8px"
+                *ngIf="data.VACANCY_PUBLISH_DATE_TIME != undefined && data.VACANCY_PUBLISH_DATE_TIME != undefined">
+                {{
+                data.VACANCY_PUBLISH_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </span>
+          </ng-template>
+
+          <ng-template #titile3Template>
+            <span style="font-size: 10px; font-weight: bold">
+              Final Seniority
+              <p style="font-size: 8px" *ngIf="data.FINAL_SEN_PUBLISH_DATE != undefined">
+                {{
+                data.FINAL_SEN_PUBLISH_DATE | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </span>
+          </ng-template>
+
+          <ng-template #titile4Template>
+            <span style="font-size: 10px; font-weight: bold">
+              Preferences
+              <p style="font-size: 8px" *ngIf="data.PREFERANCE_SUBMIT_DATE_TIME != undefined">
+                {{
+                data.PREFERANCE_SUBMIT_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </span>
+          </ng-template>
+
+          <ng-template #titile5Template>
+            <span style="font-size: 10px; font-weight: bold"> Allotment <p style="font-size: 8px"
+                *ngIf="data.FINAL_ALLOTMENT_PUBLISH_DATE != undefined">
+                {{
+                data.FINAL_ALLOTMENT_PUBLISH_DATE | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </span>
+          </ng-template>
+
+          <ng-template #titile6Template>
+            <span style="font-size: 10px; font-weight: bold"> MIS <p style="font-size: 8px"
+                *ngIf=" data.FINAL_ALLOTMENT_DETAILS.UPLOAD_SUBMITE_DATE_TIME != undefined">
+                {{
+                data.FINAL_ALLOTMENT_DETAILS.UPLOAD_SUBMITE_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p> </span>
+          </ng-template>
+        </nz-steps>
+      </div>
+
+      <div nz-col nzSpan="24" style="align-self: center; margin-top: 0px">
+        <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          (click)="showmobfile1(data.DRAFT_WAITING_FILE_URL)" *ngIf="
+            data.DRAFT_WAITING_FILE_URL != null &&
+            data.DRAFT_WAITING_FILE_URL != '' &&
+            data.DRAFT_WAITING_FILE_URL != undefined
+          ">
+          <span nz-icon nzType="eye" nzTheme="outline"></span>Draft Seniority
+          Order
+        </button>
+        <button nz-button type="button" nzType="primary" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          *ngIf="
+            data.IS_FINAL == 0 &&
+            Timmerstartloopdsen[n] == 0 &&
+            (Timmerendloopdsen[n] != 0 || Timmerendloopdsen[n] != '')
+          " (click)="raiseObjection(data)">
+          <span>Raise Objection On Draft Seniority Order</span>
+        </button>
+        <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          (click)="OpenVacantNotice(data.NOTICE_FILE_URL)" *ngIf="
+            data.NOTICE_FILE_URL != null &&
+            data.NOTICE_FILE_URL != '' &&
+            data.NOTICE_FILE_URL != undefined && data.FINAL_WAITING_FILE_URL != null &&
+            data.FINAL_WAITING_FILE_URL != '' &&
+            data.FINAL_WAITING_FILE_URL != undefined
+          ">
+          <span nz-icon nzType="eye" nzTheme="outline"></span>Vacancy Notice
+        </button>
+        <button nz-button type="button" nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          *ngIf="
+            data.FINAL_WAITING_FILE_URL != null &&
+            data.FINAL_WAITING_FILE_URL != '' &&
+            data.FINAL_WAITING_FILE_URL != undefined
+          " (click)="showmobfile(data.FINAL_WAITING_FILE_URL)">
+          <span nz-icon nzType="eye" nzTheme="outline"></span>Final Seniority
+          Order
+        </button>
+
+        <span *ngIf="
+            data.STEP_NO > 2 &&
+            (data.DRAFT_ALLOTMENT_FILE_URL == null ||
+              data.DRAFT_ALLOTMENT_FILE_URL == '' ||
+              data.DRAFT_ALLOTMENT_FILE_URL == undefined)
+          ">
+          <span *ngIf="
+              data.PREFERENCE_STEP_NO == 0 &&
+              data['EMP_DATA'] != undefined &&
+              data['EMP_DATA'] != null &&
+              data['EMP_DATA'] != ''
+            ">
+            <button *ngIf="
+                data['EMP_DATA'] != undefined &&
+                data['EMP_DATA'][0]['UPLOAD_URL'] == undefined &&
+                !showw(n)
+              " nz-button nzType="primary" [disabled]="showw(n)" (click)="openadd(data)" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: white;
+              ">
+              <span>Fill Preferences</span>
+            </button>
+            <button *ngIf="data['EMP_DATA'] == undefined && !showw(n)" nz-button nzType="primary" [disabled]="showw(n)"
+              (click)="openadd(data)" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: white !important;
+              ">
+              <span>Fill Preferences</span>
+            </button>
+            <button *ngIf="
+                data['EMP_DATA'] != undefined &&
+                data['EMP_DATA'][0]['UPLOAD_URL'] != undefined &&
+                data['EMP_DATA'][0]['UPLOAD_URL'] != null &&
+                data['EMP_DATA'][0]['UPLOAD_URL'] != '' &&
+                !showw(n)
+              " nz-button nzType="primary" (click)="openadd(data)"
+              style="font-size: 12px; margin-top: 6px; margin-right: 10px">
+              <span>Edit Preferences</span>
+            </button>
+          </span>
+
+          <span style="text-align: right" *ngIf="
+              (data.PREFERENCE_STEP_NO == 0 && data['EMP_DATA'] == undefined) ||
+              data['EMP_DATA'] == null ||
+              data['EMP_DATA'] == ''
+            ">
+            <button *ngIf="!showw(n)" nz-button nzType="primary" [disabled]="showw(n)" (click)="openadd(data)" style="
+                color: white !important;
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+              ">
+              <span>Fill Preferences</span>
+            </button>
+          </span>
+        </span>
+        <span *ngIf="
+        data['EMP_DATA'] != undefined && data['EMP_DATA'] != null && data['EMP_DATA'] != ''">
+          <button *ngIf="
+              data['EMP_DATA'] != undefined &&
+              data['EMP_DATA'][0]['UPLOAD_URL'] != undefined &&
+              data['EMP_DATA'][0]['UPLOAD_URL'] != '' && (Timmerendlooppre[n] == 0 ||
+              Timmerendlooppre[n] == '')
+            " nz-button nzType="default" (click)="viewModal(data)"
+            style="font-size: 12px; margin-top: 6px; margin-right: 10px">
+            <span><span nz-icon nzType="eye" nzTheme="outline"></span> Proforma For Preference</span>
+          </button>
+        </span>
+        <!-- shubham -->
+
+        <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          (click)="draftallotmentpdf(data.DRAFT_ALLOTMENT_FILE_URL)" *ngIf="
+            data.DRAFT_ALLOTMENT_FILE_URL != null &&
+            data.DRAFT_ALLOTMENT_FILE_URL != '' &&
+            data.DRAFT_ALLOTMENT_FILE_URL != undefined
+          ">
+          <span nz-icon nzType="eye" nzTheme="outline"></span>Draft Allotment
+          Order
+        </button>
+        <button nz-button type="button" nzType="primary" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          *ngIf="
+            data.ALLOTMENT_IS_FINAL == 0 &&
+            Timmerstartloopallot[n] == 0 &&
+            (Timmerendloopallot[n] != 0 || Timmerendloopallot[n] != '') &&
+            data.STEP_NO > 3
+          " (click)="raiseObjectionforallotment(data)">
+          <span>Raise Objection On Draft Allotment Order</span>
+        </button>
+        <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+          (click)="finalallotementpdf(data.FINAL_ALLOTMENT_FILE_URL)" *ngIf="
+            data.FINAL_ALLOTMENT_FILE_URL != null &&
+            data.FINAL_ALLOTMENT_FILE_URL != '' &&
+            data.FINAL_ALLOTMENT_FILE_URL != undefined
+          ">
+          <span nz-icon nzType="eye" nzTheme="outline"></span>Final Allotment
+          Order
+        </button>
+        <span *ngIf="
+            data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER != null &&
+            data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER != undefined &&
+            data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER != ''
+          ">
+          <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px" (click)="
+              viewAllotmentLettershow(
+                data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER
+              )
+            ">
+            <span nz-icon nzType="eye" nzTheme="outline"></span>Allotment
+            Letter
+          </button>
+        </span>
+        <span *ngIf="
+            data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS != 'O' &&
+            data.FINAL_ALLOTMENT_DETAILS.INSPECTOR_STATUS != 'A' &&
+            (Timmerendloopmis[n] != '' || Timmerendloopmis[n] > 0) && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1
+          ">
+          <span *ngIf="
+              data.FINAL_ALLOTMENT_FILE_URL &&
+              data.FINAL_ALLOTMENT_DETAILS.STEP_NO != null &&
+              data.FINAL_ALLOTMENT_DETAILS.IS_ACCEPTANCE_LETTER_SUBMITTED !=
+                1 &&
+              data.FINAL_ALLOTMENT_DETAILS.UPLOAD_SUBMITE_DATE_TIME == null
+            ">
+            <button nz-button nzType="primary" *ngIf="!showwmis(i)" (click)="setidmis(data)" [disabled]="showwmis(i)"
+              (click)="Continuestatusacceptance(data.FINAL_ALLOTMENT_DETAILS)" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: #ffffff !important;
+              ">
+              Continue
+            </button>
+            <button nz-button nzType="primary" *ngIf="showwmis(i)" (click)="setidmis(data)" [disabled]="showwmis(i)"
+              (click)="Continuestatusacceptance(data.FINAL_ALLOTMENT_DETAILS)" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: #ffffff !important;
+              ">
+              Continue
+            </button>
+          </span>
+          <span *ngIf="
+              data.FINAL_ALLOTMENT_FILE_URL &&
+              data.FINAL_ALLOTMENT_DETAILS.STEP_NO == null &&
+              data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS != 'R' &&
+              data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS != 'O'
+            ">
+            <button nz-button nzType="primary" *ngIf="showwmis(i)" (click)="setidmis(data)" [disabled]="!showwmis(i)"
+              (click)="addacceptance()" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: #ffffff !important;
+              ">
+              Fill Acceptance
+            </button>
+            <button nz-button nzType="primary" *ngIf="!showwmis(i)" (click)="setidmis(data)" [disabled]="showwmis(i)"
+              (click)="addacceptance()" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: #ffffff !important;
+              ">
+              Fill Acceptance
+            </button>
+          </span>
+
+          <span *ngIf="
+              data.FINAL_ALLOTMENT_FILE_URL &&
+              data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS == 'A' &&
+              data.FINAL_ALLOTMENT_DETAILS.STEP_NO == null
+            ">
+            <button nz-button nzType="primary" *ngIf="showwmis(i)" (click)="setidmis(data)" [disabled]="!showwmis(i)"
+              (click)="addacceptance()" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: #ffffff !important;
+              ">
+              Fill Acceptance
+            </button>
+            <button nz-button nzType="primary" *ngIf="!showwmis(i)" (click)="setidmis(data)" [disabled]="showwmis(i)"
+              (click)="addacceptance()" style="
+                font-size: 12px;
+                margin-top: 6px;
+                margin-right: 10px;
+                color: #ffffff !important;">
+              Fill Acceptance
+            </button>
+          </span>
+        </span>
+        <span *ngIf="
+            data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != null &&
+            data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != undefined &&
+            data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER != ''
+          ">
+          <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+            (click)="viewAccl(data.FINAL_ALLOTMENT_DETAILS.ACCEPTANCE_LETTER)">
+            <span nz-icon nzType="eye" nzTheme="outline"></span>Acceptance Form
+          </button>
+        </span>
+        <span *ngIf="Timmerendloopmis[n] == 0 && data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != null &&
+        data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != undefined &&
+        data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != ''">
+          <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+            (click)="viewPhysicalReminder(data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER)">
+            <span nz-icon nzType="eye" nzTheme="outline"></span>Physical Letter
+          </button>
+        </span>
+        <span *ngIf="data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1 && (data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER==null || data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER==undefined || data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER=='')
+      ">
+          <span *ngIf="
+        (data.FINAL_ALLOTMENT_FILE_URL &&
+        data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS != 'R' &&
+        data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS != 'O' 
+        && (data.FINAL_ALLOTMENT_DETAILS.UPLOAD_SUBMITE_DATE_TIME==null || data.FINAL_ALLOTMENT_DETAILS.UPLOAD_SUBMITE_DATE_TIME==undefined || data.FINAL_ALLOTMENT_DETAILS.UPLOAD_SUBMITE_DATE_TIME=='')) 
+        || 
+        (data.FINAL_ALLOTMENT_FILE_URL && Timmerendloopmis[n] == 0 &&
+        data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'P' &&  data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'A' &&  data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS != 'R' && 
+        data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != null &&
+        data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != undefined &&
+        data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER != '' && 
+        (data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA == undefined ||
+        data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA == '' ||
+        data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA == null)) 
+        || (data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER != null &&
+        data.FINAL_FLAT_TAKEN_DETAILS.SEND_TO_CARETAKER_DATE_TIME ==
+          null &&
+        data.FINAL_FLAT_TAKEN_DETAILS.OCCUPANCY_TYPE == null &&
+        data.FINAL_FLAT_TAKEN_DETAILS
+          .NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null &&
+        data.FINAL_FLAT_TAKEN_DETAILS.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED != 1 &&
+         (data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS=='' || data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS==null ||data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS==undefined) &&
+        (Timmerendloopmis[n] == 0 || Timmerendloopmis[n] == ''))
+      ">
+            <button nz-button nzType="primary" *ngIf="!showwmis(i)" (click)="setidmis(data)" [disabled]="showwmis(i)"
+              (click)="add1acceptance()" style="
+          font-size: 12px;
+          margin-top: 6px;
+          margin-right: 10px;
+          color: #ffffff !important;
+        ">
+              Fill Non-Acceptance
+            </button>
+            <button nz-button nzType="primary" *ngIf="showwmis(i)" (click)="setidmis(data)" [disabled]="!showwmis(i)"
+              (click)="add1acceptance()" style="
+          font-size: 12px;
+          margin-top: 6px;
+          margin-right: 10px;
+          color: #ffffff !important;
+        ">
+              Fill Non-Acceptance
+            </button>
+          </span>
+        </span>
+        <span *ngIf="
+            data.FINAL_FLAT_TAKEN_DETAILS != undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS != '' &&
+            data.FINAL_FLAT_TAKEN_DETAILS != null && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1
+          ">
+          <button nz-button type="button" nzType="primary" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+            *ngIf="
+              (data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER != null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.SEND_TO_CARETAKER_DATE_TIME ==
+                  null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.OCCUPANCY_TYPE == null &&
+                data.FINAL_FLAT_TAKEN_DETAILS
+                  .NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED != 1 &&
+                 (data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS=='' || data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS==null ||data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS==undefined) &&
+                (Timmerendloopmis[n] == 0 || Timmerendloopmis[n] == ''))
+                 ||
+                (data.FINAL_FLAT_TAKEN_DETAILS.IS_APPLIEND_FOR_RENOVATION == 1 &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == 'A' && 
+                data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER !=null && data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER !='' && data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER !=undefined &&
+                data.FINAL_FLAT_TAKEN_DETAILS.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED != 1 &&
+                (Timmerendloopmis[n] == 0 || Timmerendloopmis[n] == '') && Timmerendloopphend[n]!='' && Timmerendloopphend[n] != null && Timmerendloopphend[n] != 0)
+                 ||
+              (data.FINAL_FLAT_TAKEN_DETAILS.IS_APPLIEND_FOR_RENOVATION == 1 &&
+                data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == 'R' &&
+                data.FINAL_FLAT_TAKEN_DETAILS
+                  .IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED != 1 &&
+                (Timmerendloopmis[n] == 0 || Timmerendloopmis[n] == '')&& Timmerendloopphend[n]!='')
+            " (click)="
+              selectocuu(data.FINAL_FLAT_TAKEN_DETAILS,data.FINAL_ALLOTMENT_DETAILS.PHYSICAL_OCCUPANCY_REMINDER, Timmerendloopphend[n])
+            ">
+            <span>Submit Caretaker Possession Letter</span>
+          </button>
+          <button nz-button type="button" nzType="primary" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+            *ngIf="
+              (data.FINAL_ALLOTMENT_DETAILS.ALLOTMENT_FINAL_LETTER != null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.SEND_TO_CARETAKER_DATE_TIME ==
+                  null &&
+                data.FINAL_FLAT_TAKEN_DETAILS.OCCUPANCY_TYPE == null &&
+                data.FINAL_FLAT_TAKEN_DETAILS
+                  .NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null &&
+                data.FINAL_FLAT_TAKEN_DETAILS
+                  .IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED != 1 && data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS == null &&
+                (Timmerendloopmis[n] == 0 || Timmerendloopmis[n] == ''))
+            " (click)="
+              applyforrennovation(data.FINAL_FLAT_TAKEN_DETAILS, data.FINAL_ALLOTMENT_DETAILS,Timmerendloopphend[n])
+            ">
+            <span>Apply For Renovation</span>
+          </button>
+          <button *ngIf="
+              data.FINAL_FLAT_TAKEN_DETAILS
+                .IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&
+              data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == 1
+            " nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px" (click)="
+              Viewoccupancyformletter(
+                data.FINAL_FLAT_TAKEN_DETAILS.PHYSICAL_OCCUPANCY_LETTER
+              )
+            ">
+            <span nz-icon nzType="eye" nzTheme="outline"></span>Caretaker Possession Letter
+          </button>
+          <span *ngIf="
+            data.FINAL_FLAT_TAKEN_DETAILS.HABITABLE_CERTIFICATE != null &&
+            data.FINAL_FLAT_TAKEN_DETAILS.HABITABLE_CERTIFICATE != undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS.HABITABLE_CERTIFICATE != ''
+          ">
+            <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px" (click)="
+              openCertificate(
+                data.FINAL_FLAT_TAKEN_DETAILS.HABITABLE_CERTIFICATE
+              )
+            ">
+              <span nz-icon nzType="eye" nzTheme="outline"></span> Habitable Certificate
+
+            </button>
+          </span>
+          <span *ngIf="
+              data.FINAL_FLAT_TAKEN_DETAILS
+                .IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&
+              data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == 1 && 
+              ( data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='R' || data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS =='' || data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_STATUS ==null)
+                && (data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != null &&
+            data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != '')
+            ">
+            <button nz-button nzType="primary" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+              (click)="applyforsurrender(data)">
+              Apply For Surrender Quarter
+            </button>
+          </span>
+          <span *ngIf="
+            data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER != null &&
+            data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER != undefined &&
+            data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER != ''
+          ">
+            <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px" (click)="
+              openCertificate1(
+                data.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER
+              )
+            ">
+              <span nz-icon nzType="eye" nzTheme="outline"></span> Vacation Certificate
+
+            </button>
+          </span>
+        </span>
+        <!-- <button *ngIf="data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING == 1 && data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != undefined &&
+        data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != '' &&
+        data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA != null" nz-button nzType="default"
+          style="font-size: 12px; margin-top: 6px; margin-right: 10px" (click)="
+              viewstopHRA(data.FINAL_FLAT_TAKEN_DETAILS.STOP_HRA)">
+          <span nz-icon nzType="eye" nzTheme="outline"></span> HRA Deduction Letter
+        </button> -->
+      </div>
+
+      <!-- shubham -->
+      <!-- </div> -->
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-top: 10px; text-align: left">
+        <p style="font-size: 12px; font-weight: 600" *ngIf="Timmerstartloopdsen[n] > 0 || Timmerstartloopdsen[n] != ''">
+          Draft Seniority Objection Time Starts In -
+          {{ Timmerstartloopdsen[n] }}
+        </p>
+        <p style="font-size: 12px; font-weight: 600" *ngIf="Timmerstartloopdsen[n] <= 0 && Timmerendloopdsen[n] != ''">
+          Draft Seniority Objection Time Ends In - {{ Timmerendloopdsen[n] }}
+        </p>
+        <p style="font-size: 12px; font-weight: 600" *ngIf="
+            Timmerstartlooppre[n] > 0 ||
+            (Timmerstartlooppre[n] != '' && data.STEP_NO == 3)
+          ">
+          Fill Preference Time Starts In :{{ Timmerstartlooppre[n] }}
+        </p>
+        <p style="font-size: 12px; font-weight: 600" *ngIf="
+            Timmerstartlooppre[n] <= 0 &&
+            (Timmerendlooppre[n] > 0 || Timmerendlooppre[n] != '') &&
+            data.STEP_NO == 3
+          ">
+          Fill Preference Time Ends In :{{ Timmerendlooppre[n] }}
+        </p>
+
+        <p style="font-size: 12px; font-weight: 600" *ngIf="
+            Timmerstartloopallot[n] > 0 ||
+            (Timmerstartloopallot[n] != '' && data.STEP_NO == 4)
+          ">
+          Objections On Allotment Starts In :{{ Timmerstartloopallot[n] }}
+        </p>
+        <p style="font-size: 12px; font-weight: 600" *ngIf="
+            Timmerstartloopallot[n] <= 0 &&
+            (Timmerendloopallot[n] > 0 || Timmerendloopallot[n] != '') &&
+            data.STEP_NO == 4
+          ">
+          Objections On Draft Allotment Ends In - {{ Timmerendloopallot[n] }}
+        </p>
+      </div>
+
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-top: 10px; text-align: left" *ngIf="
+          data.FINAL_ALLOTMENT_FILE_URL &&
+          data.FINAL_ALLOTMENT_DETAILS.IS_ACCEPTANCE_LETTER_SUBMITTED != 1 &&
+          data.FINAL_ALLOTMENT_DETAILS.TAKEN_STATUS == 'P' &&
+          Timmerendloopmis[n] != '' && data.FINAL_ALLOTMENT_DETAILS.IS_BARRED!=1
+        ">
+        <p style="font-size: 12px; font-weight: 600">
+          Acceptance Time Ends In - {{ Timmerendloopmis[n] }}
+        </p>
+      </div>
+      <p style="font-size: 12px; font-weight: 600" *ngIf="
+          Timmerendloopphend[n] != '' && Timmerendloopphend[n] != null &&
+          data.STEP_NO == 5 &&
+          Timmerendloopmis[n] == 0 &&
+          data.FINAL_FLAT_TAKEN_DETAILS.IS_LIVING != 1 && data.FINAL_FLAT_TAKEN_DETAILS.RENOVATION_STATUS!=='P' && data.IS_BARRED!=1 && (data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == null ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == undefined ||
+            data?.FINAL_FLAT_TAKEN_DETAILS.SURRENDER_INSPECTOR_LETTER == '')
+        ">
+        Physically Quarter Taken Time Ends In - {{ Timmerendloopphend[n] }}
+      </p>
+
+      <div nz-col nzSpan="24" *ngIf="uptrue[n]">
+        <div nz-row style="
+            padding-left: 10px;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            padding-right: 5px;
+            height: 98px;
+            overflow-y: auto;
+          ">
+          <hr />
+          <div nz-col [nzSpan]="ObjectionDataListallot != undefined &&
+          ObjectionDataListallot.length > 0 ? 12 : 24" class="my-box111">
+            <div>
+              <p style="font-weight: 500; font-size: 13px">
+                Objections On Draft Seniority Order
+              </p>
+              <nz-timeline *ngIf="ObjectionDataList.length > 0">
+                <nz-timeline-item *ngFor="let logg of ObjectionDataList" nzColor="green">
+                  <p style="
+                    margin-bottom: 0px !important;
+                    font-size: 11px !important;
+                  ">
+                    <b>Objection Remark : </b><span style="font-weight: 500">{{ logg.OBJECTION }}</span>
+                  </p>
+                  <p *ngIf="
+                    logg.RESOLVER_NAME != null &&
+                    logg.RESOLVER_NAME != '' &&
+                    logg.RESOLVER_NAME != undefined
+                  " style="
+                    font-size: 10px !important;
+                    margin-bottom: 0px !important;
+                  ">
+                    <b>Resolved By : </b>
+                    <span style="font-weight: 500">{{ logg.RESOLVER_NAME }}</span>
+                  </p>
+                  <p style="
+                    font-size: 10px !important;
+                    margin-bottom: 0px !important;
+                  ">
+                    <b>Objection Status : </b>
+                    <span style="font-weight: 500" *ngIf="logg.ACTION_STATUS == 'P'">Pending</span>
+                    <span style="font-weight: 500" *ngIf="logg.ACTION_STATUS == 'R'" style="color: red">Rejected</span>
+                    <span style="font-weight: 500" *ngIf="logg.ACTION_STATUS == 'A'"
+                      style="color: green">Approved</span>
+                  </p>
+                  <p style="font-size: 10px !important;margin-bottom: 0px;">
+                    <b>Objection Raise Datetime : </b>
+                    <span style="font-weight: 500">
+                      {{
+                      logg.RAISE_OBJECTION_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                      }}
+                    </span>
+                  </p>
+                </nz-timeline-item>
+              </nz-timeline>
+              <span *ngIf="ObjectionDataList.length == 0" style="font-size: 13px; font-weight: 500">Objections Not
+                Raised</span>
+            </div>
+          </div>
+          <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12" *ngIf="
+              ObjectionDataListallot != undefined &&
+                ObjectionDataListallot.length > 0 " class="my-box111">
+            <div>
+              <p style="font-weight: 500; font-size: 13px">
+                Objections On Draft Allotment Order
+              </p>
+              <nz-timeline *ngIf="ObjectionDataListallot.length > 0">
+                <nz-timeline-item *ngFor="let logg of ObjectionDataListallot" nzColor="green">
+                  <!-- <span style="font-weight: 500;">{{logg.STAGE_NAME}}</span> -->
+                  <p style="
+                    margin-bottom: 0px !important;
+                    font-size: 11px !important;
+                  ">
+                    <b>Objection Remark : </b><span style="font-weight: 500">{{ logg.OBJECTION }}</span>
+                  </p>
+                  <p *ngIf="
+                    logg.RESOLVER_NAME != null &&
+                    logg.RESOLVER_NAME != '' &&
+                    logg.RESOLVER_NAME != undefined
+                  " style="
+                    font-size: 10px !important;
+                    margin-bottom: 0px !important;
+                  ">
+                    <b>Resolved By : </b>
+                    <span style="font-weight: 500">{{ logg.RESOLVER_NAME }}</span>
+                  </p>
+                  <p style="
+                    font-size: 10px !important;
+                    margin-bottom: 0px !important;
+                  ">
+                    <b>Objection Status : </b>
+                    <span style="font-weight: 500" *ngIf="logg.ACTION_STATUS == 'P'">Pending</span>
+                    <span style="font-weight: 500" *ngIf="logg.ACTION_STATUS == 'R'" style="color: red">Rejected</span>
+                    <span style="font-weight: 500" *ngIf="logg.ACTION_STATUS == 'A'"
+                      style="color: green">Approved</span>
+                  </p>
+                  <p style="font-size: 10px !important;margin-bottom: 0px;">
+                    <b>Objection Raise Datetime : </b>
+                    <span style="font-weight: 500">
+                      {{
+                      logg.RAISE_OBJECTION_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                      }}
+                    </span>
+                  </p>
+                </nz-timeline-item>
+              </nz-timeline>
+              <span *ngIf="ObjectionDataListallot.length == 0" style="font-size: 13px">Objections Not Raised</span>
+            </div>
+            <!-- <ng-template #allotelseblock> -->
+            <!-- </ng-template> -->
+          </div>
+          <div *ngIf="
+          ObjectionDataListallot != undefined &&
+            ObjectionDataListallot.length == 0 " nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12"></div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="24" style="text-align: center; align-self: center; z-index: 1000">
+        <button nz-button nzType="default" nzShape="circle" (click)="updown(data, n)" *ngIf="!uptrue[n]" style="
+            top: 20px;
+            height: 21px !important;
+            min-width: 23px !important;
+            width: 23px;
+            padding: 0px 4px !important;
+          ">
+          <span nz-icon nzType="down"></span>
+        </button>
+        <button nz-button nzType="default" nzShape="circle" (click)="updown1(n)" *ngIf="uptrue[n]" style="
+            top: 20px;
+            height: 21px !important;
+            min-width: 23px !important;
+            width: 23px;
+            padding: 0px 4px !important;
+          ">
+          <span nz-icon nzType="up"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="
+      datalistForSteps != undefined &&
+      !isSpinning &&
+      datalistForSteps.length <= 0
+    ">
+    <div class="col-3"></div>
+    <div class="col-18" style="margin-top: 100px">
+      <div class="card" style="width: 100%">
+        <div class="card-body" style="padding: 25px">
+          <div class="row">
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+              <p class="card-text subnamm" style="font-size: 26px">
+                Data Not Found
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3"></div>
+  </div>
+</div>
+<div class="row" style="width: 100%" *ngIf="loadingRecords">
+  <div class="col-12" style="text-align: center; margin-top: 0px">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<!-- <div *ngIf="drawerVisible"> -->
+<!-- <div *ngIf="drawerVisible"> -->
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px',
+    'padding-top': '20px',
+    'padding-right': '0px',
+    'padding-left': '0px',
+    'font-size': '5px'
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzMaskStyle]="{
+    'padding-bottom': '53px',
+    'padding-top': '20px',
+    'padding-right': '0px',
+    'padding-left': '0px',
+    'font-size': '5px'
+  }" [nzWidth]="dwisth" [nzVisible]="drawerVisible" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)"
+  [nzTitle]="drawerTitle">
+  <ng-container *nzDrawerContent>
+    <app-application-form [drawerClose]="closeCallback" [data]="drawerData" [employerecordfilled]="isdetailsfilled"
+      [stage]="stages123" [data2]="Checklistdata" [empid]="employeedata" [isdraweropendedggg]="isdraweropended">
+    </app-application-form>
+  </ng-container>
+</nz-drawer>
+<!-- </div> -->
+<!-- </div> -->
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true" [nzTitle]="contexttitle" (nzOnCancel)="closeterms()"
+  [nzBodyStyle]="{
+    overflow: 'auto',
+    padding: '10px',
+    'font-size': '13px'
+  }" nzWidth="620px" nzClosable="true" [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <ul style="list-style: decimal" class="ruleslist">
+      <li>Must be a current employee in Income Tax Department Mumbai Office with proof.</li>
+      <li>Complete and submit the form with proper information, incomplete or invalid data forms may be rejected.</li>
+      <li>Submit required documents (ID, Joining Letter,..etc.)</li>
+      <li>Allocation based on availability and eligibility as per CBDT Rules; decisions are final.</li>
+      <li>Comply with residence policies; violations can lead to disciplinary action or eviction.</li>
+      <li>Information used for processing and managing applications; handled per privacy laws.</li>
+      <li>Terms can be amended; applicants will be notified of changes.</li>
+      <li>Submitting the form means agreeing to these terms and residence policies.</li>
+      <li>Once the data is submitted, you can't update them.</li>
+      <li>We may update these Terms at any time. Review them regularly.</li>
+      <li>These Terms are governed by the laws of CBDT Rule.</li>
+      <li>For questions, please contact us at <a href="mailto:mumbai.ito.tps1@incometax.gov.in"
+          style="color: #f68831">mumbai.ito.tps1@incometax.gov.in</a>.</li>
+    </ul>
+  </ng-container>
+  <ng-template #contexttitle>
+    <p style="font-size: 15px; margin-bottom: 0px">Terms & Conditions For Quarter Application Form</p>
+  </ng-template>
+  <ng-template #contextofrules>
+    <button nz-button nzType="primary" (click)="termsandconditions()" style="font-size: 13px">
+      I Agree
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- shubham -->
+<div *ngIf="drawerVisiblepre">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'100%'" [nzVisible]="drawerVisiblepre"
+    [nzTitle]="'Add Quarter Preferences'" (nzKeyboard)="(true)">
+    <app-preferencesnew-details *nzDrawerContent [drawerClose]="closeCallbackpre" [perfdata]="perfdata"
+      [dataListFlat]="dataListFlat" [datamap]="datamap" [count]="count" [dataList]="dataList"
+      [dataListFinal]="dataListFinal" [empdata]="empdata">
+    </app-preferencesnew-details>
+  </nz-drawer>
+</div>
+
+<!-- today -->
+<nz-modal [(nzVisible)]="RejectRemark" nzTitle="Raise Objection On Draft Seniority Order" nzCentered="true"
+  [nzBodyStyle]="{ padding: '5px', 'font-family': 'Poppins' }" nzWidth="550px" (nzOnCancel)="CancleRemark()"
+  nzMaskClosable="true" [nzFooter]="objFootersen">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="SpinningRejection">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="padding: 5px">
+          <nz-form-label nzRequired nzNoColon
+            style="margin-bottom: 8px !important; font-size: 14px !important">Objection</nz-form-label>
+          <nz-form-item>
+            <nz-form-control>
+              <textarea class="inputsize" required maxlength="512" placeHolder="Enter Your Objection" style="
+                  width: 100%;
+                  height: 100%;
+                  margin-bottom: 5px !important;
+                  font-size: 13px !important;
+                " [(ngModel)]="objectiondata.OBJECTION" name="REASON" [nzAutosize]="{ minRows: 2, maxRows: 3 }"
+                nz-input></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+  <ng-template #objFootersen>
+    <button nz-button nzType="primary" [nzLoading]="SpinningRejection" (click)="SubmitRemark()">
+      Raise Objection
+    </button>
+    <button nz-button nzType="default" [nzLoading]="SpinningRejection" (click)="CancleRemark()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="RejectRemarkallot" nzTitle="Raise Objection On Draft Allotment Order" nzCentered="true"
+  [nzBodyStyle]="{ padding: '5px', 'font-family': 'Poppins' }" nzWidth="600px" (nzOnCancel)="CancleRemarkforalot()"
+  [nzFooter]="ObjectionobjFootersen" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="SpinningRejection">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="padding: 5px">
+          <nz-form-label nzRequired nzNoColon>Objection</nz-form-label>
+          <nz-form-item>
+            <nz-form-control>
+              <textarea required maxlength="512" placeHolder="Enter Your Objection" style="width: 100%; height: 100%"
+                [(ngModel)]="objectiondataallot.OBJECTION" name="REASON" [nzAutosize]="{ minRows: 3, maxRows: 3 }"
+                nz-input></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+  <ng-template #ObjectionobjFootersen>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning" (click)="SubmitRemarkforallot()">
+      Raise Objection
+    </button>
+    <button nz-button nzType="default" [nzLoading]="isSpinning" (click)="CancleRemarkforalot()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- shreya today 02 -->
+<div *ngIf="drawerVisibleacceptance">
+  <nz-drawer [nzBodyStyle]="{
+  height: 'calc(100% - 55px)',
+  overflow: 'auto',
+  'padding-bottom': '53px',
+  'padding-top': '20px',
+  'padding-right': '20px',
+  'padding-left': '20px',
+}" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="dwisth"
+    [nzVisible]="drawerVisibleacceptance" (nzOnClose)="drawerCloseacceptance()" (nzKeyboard)="(true)"
+    [nzTitle]="drawerTitleacceptance">
+    <ng-container *nzDrawerContent>
+      <app-misdrawerforaccept [drawerClose]="closeCallbackacceptance" [data]="storeacceptcarddata"
+        [DataForSendLetters]="DataForSendLetters" [stage]="stages123acceptance" [empid]="employeedataacceptance"
+        [isdraweropendedggg]="isdraweropendedacceptance">
+      </app-misdrawerforaccept>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="Rulesandapply1accept" nzCentered="true" nzTitle="Terms & Conditions For Non-Acceptance"
+  (nzOnCancel)="agrrerejconfcancel()" [nzBodyStyle]="{ overflow: 'auto', padding: '10px' }" nzWidth="620px"
+  nzClosable="true" [nzFooter]="contextofrulesrejectacceptance" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <ul style="list-style: decimal; font-size: 13px;" class="ruleslist">
+      <li>If you submit the Non-Acceptance, you will be barred for the next 3 months.</li>
+      <li>You're eligible for submitting Non-Acceptance till Acceptance End Datetime.</li>
+      <li>If you do not fill out Acceptance / Non-Acceptance, you will be automatically barred for the next 3
+        months.</li>
+      <li>Once the data is submitted, you can't update them.</li>
+      <li>We may update these Terms at any time. Review them regularly.</li>
+      <li>These Terms are governed by the laws of CBDT Rule.</li>
+      <li>By filling out this form, you agree to these Terms and Conditions.</li>
+      <li>For questions, please contact us at <a href="mailto:mumbai.ito.tps1@incometax.gov.in"
+          style="color: #f68831">mumbai.ito.tps1@incometax.gov.in</a>.</li>
+    </ul>
+  </ng-container>
+
+  <ng-template #contextofrulesrejectacceptance>
+    <button nz-button nzType="default" (click)="agrrerejconfcancel()" style="font-size: 13px">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" (click)="agrrerejconf()" style="font-size: 13px">
+      I Agree
+    </button>
+
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="rejectremarkonacceptance" nzCentered="true" [nzTitle]="'Remark For Non-Acceptance'"
+  [nzBodyStyle]="{ padding: '0px 5px' }" nzWidth="570px" nzClosable="false" [nzFooter]="rejectremarkofootr"
+  nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="rejectflatLoading">
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-item class="nz-form-item1" style="margin-bottom: 0px;">
+            <nz-form-label nzRequired nzNoColon>Non-Acceptance Remark</nz-form-label>
+            <nz-form-control>
+              <textarea required maxlength="512" placeHolder="Enter Non-Acceptance Remark"
+                style="width: 100%; height: 100%" [(ngModel)]="storeacceptcarddata.NON_ACCEPTANCE_REMARK"
+                name="NON_ACCEPTANCE_REMARK" [nzAutosize]="{ minRows: 2, maxRows: 3 }" nz-input></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-top: 10px;margin-bottom: 10px;">
+          <span style="color: red;padding: 0px 10px;">Note : Please note that you will be barred for 3 months.</span>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+
+  <ng-template #rejectremarkofootr>
+    <button nz-button nzType="default" class="btn btn-primary" [nzLoading]="rejectflatLoading"
+      (click)="closerejectcon()">
+      Cancel
+    </button>
+
+    <button nz-button nzType="primary" [nzLoading]="rejectflatLoading" class="btn btn-primary"
+      (click)="rejectaccept(storeacceptcarddata)">
+      Submit Non-Acceptance
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="Rulesandapplyacceptance" nzCentered="true" nzTitle="Terms & Conditions For Acceptance Form"
+  (nzOnCancel)="closetermsacce()" [nzBodyStyle]="{ overflow: 'auto', padding: '10px' }" nzWidth="620px"
+  nzClosable="true" [nzFooter]="footsandapplyacceptance" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <ul style="list-style: decimal;font-size: 13px;" class="ruleslist">
+      <li>Provide accurate and complete information. Keep it up to date.</li>
+      <li>You're eligible for filling form till Acceptance End Datetime.</li>
+      <li>If you do not fill out Acceptance / Non-Acceptance, you will be automatically barred for the next 3
+        months.</li>
+      <li>Once the data is submitted, you can't update them.</li>
+      <li>We may update these Terms at any time. Review them regularly.</li>
+      <li>These Terms are governed by the laws of CBDT Rule.</li>
+      <li>By filling out this form, you agree to these Terms and Conditions.</li>
+      <li>For questions, please contact us at <a href="mailto:mumbai.ito.tps1@incometax.gov.in"
+          style="color: #f68831">mumbai.ito.tps1@incometax.gov.in</a>.</li>
+    </ul>
+  </ng-container>
+
+  <ng-template #footsandapplyacceptance>
+    <button nzSize="small" style="font-size: 11px" nz-button nzType="primary"
+      (click)="termsandconditionsacce(storeacceptcarddata)">
+      I Agree
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="viewphysicaloccupancyModalVisible">
+  <nz-modal [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '13px','padding-top': '0px','padding-right': '20px' }" nzCentered="true" [nzClosable]="true"
+    [nzMask]="true" [(nzVisible)]="viewphysicaloccupancyModalVisible" [nzTitle]="'Submit Caretaker Possession Letter'"
+    [nzMaskClosable]="false" [nzWidth]="430" [nzFooter]="forcarepossession" (nzOnCancel)="cancelconfph()"
+    (nzKeyboard)="(false)">
+    <ng-container *nzModalContent>
+      <div nz-row style="margin-top: 10px" nzGutter="8">
+        <div nz-col nzSpan="24">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item style="padding: 0px;">
+                <p style="font-size: 13px;white-space: inherit;margin-bottom: 7px;"><span
+                    style="color: red;">*</span>Upload Signed Copy of Caretaker Possession Letter</p>
+                <nz-form-control nzHasFeedback *ngIf="gradepaynotnull">
+                  <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="web.click()"
+                    [nzLoading]="isSpinning">
+                    Select File
+                    <input #web name="web" accept=".pdf" type="file" (change)="onfileweb($event)" style="display: none"
+                      required />
+                  </button>
+                </nz-form-control>
+
+                <div *ngIf="PHYSICAL_OCCUPANCY_LETTER != null" style="
+                  overflow: hidden;font-size: 11px;display: block;width: 100%;color: #1890ff;padding-left: 10px;">
+                  {{ PHYSICAL_OCCUPANCY_LETTER }} &nbsp;&nbsp;
+                  <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                    nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                    (click)="Viewoccupancyformletter(PHYSICAL_OCCUPANCY_LETTER)"></span>&nbsp;&nbsp;
+                  <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Delete File" nzTooltipPlacement="top"
+                    nz-tooltip style="cursor: pointer; color: red"
+                    (click)="clearGradepayletter(PHYSICAL_OCCUPANCY_LETTER,'physicalOccupancyLetter')"></span>
+                </div>
+              </nz-form-item>
+              <div nz-col nzSpan="24" *ngIf="progressBarweb">
+                <nz-progress [nzPercent]="percentweb"></nz-progress>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #forcarepossession>
+      <button nz-button nzType="default" (click)="cancelconfph()">
+        Cancel
+      </button>&nbsp;
+      <button nz-button nzType="primary" (click)="openpgCon()">
+        Submit Caretaker Possession Letter
+      </button>
+    </ng-template>
+  </nz-modal>
+</div>
+<nz-modal [(nzVisible)]="phconf" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="455px" nzClosable="true"
+  (nzOnCancel)="printOrderModalCancel()" [nzFooter]="contextofrulesph" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 17px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 15px; margin-bottom: 10px">
+      Are you sure want to submit signed copy of caretaker possession letter.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrulesph>
+    <button nz-button nzType="default" [nzLoading]="loadingRecords" class="btn btn-primary"
+      (click)="printOrderModalCancel()">
+      No
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+      (click)="approvephysical(storeacceptcarddata)">
+      Yes
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="showren">
+  <nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px','padding-top': '0px','padding-right': '13px','padding-left': '15px'
+  }" [nzClosable]="true" [nzMask]="true" [(nzVisible)]="showren" [nzTitle]="'Apply For Renovation'"
+    [nzMaskClosable]="false" [nzWidth]="400" (nzOnClose)="showrenCancel()" (nzKeyboard)="(false)">
+    <ng-container *nzDrawerContent>
+      <div nz-row style="margin-top: 10px">
+        <div nz-col nzSpan="24">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="padding: 5px">
+              <nz-form-item style="padding: 0px;">
+                <nz-form-label class="labelsizeph" nzRequired nzNoColon>Details For Renovation </nz-form-label>
+                <nz-form-control>
+                  <textarea maxlength="512" placeHolder="Please describe the required renovation details"
+                    style="width: 100%; height: 100%" [(ngModel)]="renovationdata.RENOVATION_REMARK"
+                    name="RENOVATION_REMARK" [nzAutosize]="{ minRows: 2, maxRows: 3 }" nz-input></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24" style="padding: 5px">
+              <nz-form-item style="padding: 0px;">
+                <nz-form-label nzNoColon class="labelsizeph">Attachment For Renovation</nz-form-label>
+                <nz-form-control *ngIf="gradepaynotnull1">
+                  <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="web1.click()"
+                    [nzLoading]="isSpinning">
+                    Select File
+                    <input #web1 name="webn" accept=".pdf" type="file" (change)="onfileweb1($event)"
+                      style="display: none" />
+                  </button>
+                </nz-form-control>
+
+                <div *ngIf="renovationdata.RENOVATION_ATTACHEMENTS != null" style="
+                    overflow: hidden;font-size: 11px;display: block;width: 100%;color: #1890ff;padding-left: 10px;">
+                  {{ renovationdata.RENOVATION_ATTACHEMENTS }} &nbsp;&nbsp;
+                  <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                    nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                    (click)="Viewoccupancyformletter1(renovationdata.RENOVATION_ATTACHEMENTS)"></span>&nbsp;&nbsp;
+                  <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Delete File" nzTooltipPlacement="top"
+                    nz-tooltip style="cursor: pointer; color: red"
+                    (click)="clearGradepayletter1(renovationdata.RENOVATION_ATTACHEMENTS,'renovationAttachments')"></span>
+                </div>
+              </nz-form-item>
+              <div nz-col nzSpan="24" *ngIf="progressBarweb1">
+                <nz-progress [nzPercent]="percentweb1"></nz-progress>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <button nz-button nzType="default" (click)="showrenCancel()">
+          Cancel
+        </button>&nbsp;
+        <button nz-button nzType="primary" (click)="openrenno()">
+          Apply For Renovation
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="phconf1" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="370px"
+  nzClosable="false" [nzFooter]="contextofrulesphrenn" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 17px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 15px; margin-bottom: 10px">
+      Are you sure want to apply for renovation.
+    </p>
+  </ng-container>
+  <ng-template #contextofrulesphrenn>
+    <button nz-button nzType="default" [nzLoading]="isSpinningrenovation" class="btn btn-primary"
+      (click)="printOrderModalCancel1()">
+      No
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinningrenovation" class="btn btn-primary"
+      (click)="removationgive(renovationdata)">
+      Yes
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+
+<!-- Surrender -->
+<div *ngIf="drawerVisibleSurrender">
+  <nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px','padding-top': '0px','padding-right': '13px','padding-left': '15px'
+  }" [nzClosable]="true" [nzMask]="true" [(nzVisible)]="drawerVisibleSurrender"
+    [nzTitle]="'Apply For Surrender Quarter'" [nzMaskClosable]="false" [nzWidth]="400"
+    (nzOnClose)="drawerCloseSurrender()" (nzKeyboard)="(false)">
+    <ng-container *nzDrawerContent>
+      <div nz-row style="margin-top: 10px">
+        <div nz-col nzSpan="24">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="padding: 5px">
+              <nz-form-item style="padding: 0px;">
+                <nz-form-label nzNoColon nzRequired class="labelsizeph"> License Fee Letter</nz-form-label>
+                <nz-form-control *ngIf="gradepaynotnull2">
+                  <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="webs1.click()"
+                    [nzLoading]="spinninglicense">
+                    Select File
+                    <input #webs1 name="webn" accept=".pdf" type="file" (change)="onfilewebs1($event)"
+                      style="display: none" />
+                  </button>
+                </nz-form-control>
+
+                <div *ngIf="LICENSE_FEE_LETTER != null" style="
+                    overflow: hidden;font-size: 11px;display: block;width: 100%;color: #1890ff;padding-left: 10px;">
+                  {{ LICENSE_FEE_LETTER }} &nbsp;&nbsp;
+                  <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                    nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                    (click)="Viewattachment(LICENSE_FEE_LETTER,'a')"></span>&nbsp;&nbsp;
+                  <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Delete File" nzTooltipPlacement="top"
+                    nz-tooltip style="cursor: pointer; color: red"
+                    (click)="clearGradepayletters1(LICENSE_FEE_LETTER,'licenseFeeLetter')"></span>
+                </div>
+              </nz-form-item>
+              <div nz-col nzSpan="24" *ngIf="progressBarwebs1">
+                <nz-progress [nzPercent]="percentwebs1"></nz-progress>
+              </div>
+            </div>
+
+            <div nz-col nzSpan="24" style="padding: 5px">
+              <nz-form-item style="padding: 0px;">
+                <nz-form-label nzNoColon nzRequired class="labelsizeph"> Light Bill Letter</nz-form-label>
+                <nz-form-control *ngIf="gradepaynotnull3">
+                  <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="webs2.click()"
+                    [nzLoading]="spinninglightbill">
+                    Select File
+                    <input #webs2 name="webn" accept=".pdf" type="file" (change)="onfilewebs2($event)"
+                      style="display: none" />
+                  </button>
+                </nz-form-control>
+
+                <div *ngIf="LIGHT_BILL_LETTER != null" style="
+                    overflow: hidden;font-size: 11px;display: block;width: 100%;color: #1890ff;padding-left: 10px;">
+                  {{ LIGHT_BILL_LETTER }} &nbsp;&nbsp;
+                  <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                    nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                    (click)="Viewattachment(LIGHT_BILL_LETTER,'b')"></span>&nbsp;&nbsp;
+                  <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Delete File" nzTooltipPlacement="top"
+                    nz-tooltip style="cursor: pointer; color: red"
+                    (click)="clearGradepayletters2(LIGHT_BILL_LETTER,'lightBillLetter')"></span>
+                </div>
+              </nz-form-item>
+              <div nz-col nzSpan="24" *ngIf="progressBarwebs2">
+                <nz-progress [nzPercent]="percentwebs2"></nz-progress>
+              </div>
+            </div>
+
+            <div nz-col nzSpan="24" style="padding: 5px">
+              <nz-form-item style="padding: 0px;">
+                <nz-form-label nzNoColon nzRequired class="labelsizeph"> Surrender Letter (Signed by
+                  Caretaker)</nz-form-label>
+                <nz-form-control *ngIf="gradepaynotnull4">
+                  <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="webs3.click()"
+                    [nzLoading]="spinningsurrenderletter">
+                    Select File
+                    <input #webs3 name="webn" accept=".pdf" type="file" (change)="onfilewebs3($event)"
+                      style="display: none" />
+                  </button>
+                </nz-form-control>
+
+                <div *ngIf="SIGNED_SURRENDER_LETTER != null" style="
+                    overflow: hidden;font-size: 11px;display: block;width: 100%;color: #1890ff;padding-left: 10px;">
+                  {{ SIGNED_SURRENDER_LETTER }} &nbsp;&nbsp;
+                  <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                    nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                    (click)="Viewattachment(SIGNED_SURRENDER_LETTER,'c')"></span>&nbsp;&nbsp;
+                  <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Delete File" nzTooltipPlacement="top"
+                    nz-tooltip style="cursor: pointer; color: red"
+                    (click)="clearGradepayletters3(SIGNED_SURRENDER_LETTER,'surrenderLetter')"></span>
+                </div>
+              </nz-form-item>
+              <div nz-col nzSpan="24" *ngIf="progressBarwebs3">
+                <nz-progress [nzPercent]="percentwebs3"></nz-progress>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <button nz-button nzType="default" (click)="drawerCloseSurrender()">
+          Cancel
+        </button>&nbsp;
+        <button nz-button nzType="primary" (click)="SurrenderQuarter()">
+          Apply For Surrender Quarter
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="confirmsurrnder" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="370px"
+  nzClosable="false" [nzFooter]="contextofrulesSurrender" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 17px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 15px; margin-bottom: 10px">
+      Are you sure want to apply for surrender quarter.
+    </p>
+  </ng-container>
+  <ng-template #contextofrulesSurrender>
+    <button nz-button nzType="default" [nzLoading]="isSpinningrenovation" class="btn btn-primary"
+      (click)="cancelsurrenderConfirm()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinningrenovation" class="btn btn-primary"
+      (click)="ConfirmSurrender()">
+      Apply
+    </button>
+  </ng-template>
+</nz-modal>

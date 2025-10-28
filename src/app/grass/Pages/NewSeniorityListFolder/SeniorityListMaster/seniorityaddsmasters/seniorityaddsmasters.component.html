@@ -1,0 +1,1207 @@
+<div nz-row style="margin: 10px 0">
+  <div nz-col nzSpan="24">
+    <nz-steps nzSize="small" [nzCurrent]="currentStage">
+      <nz-step *ngIf="isdraft == 'draft'" nzTitle="Generate Draft Order"></nz-step>
+      <nz-step *ngIf="isdraft == 'draft'" nzTitle="Preview Draft Order"></nz-step>
+      <nz-step *ngIf="isdraft == 'final'" nzTitle="Generate Final Order"></nz-step>
+      <nz-step *ngIf="isdraft == 'final'" nzTitle="Preview Final Order"></nz-step>
+    </nz-steps>
+  </div>
+</div>
+
+<div nz-row *ngIf="currentStage == 0 && isdraft == 'draft'">
+  <div nz-col nzSpan="24">
+    <div nz-row style="display: flex; justify-content: flex-end">
+      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="display: flex; justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+          <nz-form-item *ngIf="CastCategory == 'GN'" style="margin-right: 0px;padding-right: 0px;">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <input type="text" (keyup)="searchrecords()" name="search" nz-input placeholder="Search Records"
+                [(ngModel)]="searchfilteredrecords" />
+            </nz-input-group>
+
+            <ng-template #suffixIconButton>
+              <button nz-button nzType="primary" (click)="searchrecords()" nzSearch>
+                <i nz-icon nzType="search"></i>
+              </button>
+            </ng-template>
+          </nz-form-item>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable1 nzShowSizeChanger
+      [nzLoading]="loadingRecordsdraft" [nzFrontPagination]="false" [nzData]="showgeneratedlistone" [nzSize]="'small'"
+      [nzScroll]="{ x: '1800px', y: '55vh' }" style="white-space: inherit">
+      <thead>
+        <tr>
+          <th nzWidth="200px" nzLeft style="text-align: center; font-weight: 500; ">
+            Change Seniority
+          </th>
+          <th nzWidth="250px" nzLeft style="text-align: center; font-weight: 500; ">
+            Employee Name
+          </th>
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Current Seniority No.
+          </th>
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Last Month Seniority No.
+          </th>
+
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Designation
+          </th>
+          <th nzWidth="150px" style="text-align: center; font-weight: 500; ">
+            Mobile No.
+          </th>
+          <th nzWidth="150px" *ngIf="showcolumn" style="text-align: center; font-weight: 500; ">
+            Priority Date
+          </th>
+          <th nzWidth="150px" *ngIf="showcolumn" style="text-align: center; font-weight: 500; ">
+            Grade Pay Level
+          </th>
+          <th nzWidth="150px" style="text-align: center; font-weight: 500; ">
+            Joining Date
+          </th>
+          <th nzWidth="150px" *ngIf="showcolumn" style="text-align: center; font-weight: 500; ">
+            Retirement Date
+          </th>
+          <th nzWidth="150px" style="text-align: center; font-weight: 500; ">
+            Date Of Birth
+          </th>
+          <th nzWidth="250px" style="text-align: center; font-weight: 500; ">
+            Remark
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of ResidenceMasterTable1.data; let i = index">
+          <td nzLeft style="white-space: pre-line; text-align: center">
+            <a (click)="changeSenioritylistone(data)" style="color: #1890ff">
+              Change Seniority
+            </a>
+            <br />
+            <span *ngIf="data['REMARK'] != null && data['REMARK'] != undefined &&  data['REMARK'] != ''"
+              style="color: green; font-size: 10px">
+              Seniority Number has been <br /> Changed
+              from {{ data.PREVIOUS_SEQ_NO }} to {{ data.CURRENT_SEQ }}
+            </span>
+          </td>
+          <td nzLeft style="white-space: pre-line; text-align: left">
+            {{ data["EMPLOYEE_NAME"] ? data["EMPLOYEE_NAME"] : "_" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["CURRENT_SEQ"] ? data["CURRENT_SEQ"] : "_" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["OLD_SEQ"] ? data["OLD_SEQ"] : "_" }}
+          </td>
+
+          <td style="white-space: pre-line; text-align: center">
+            {{
+            data["DESIGNATION_SHORT_CODE"] ? data["DESIGNATION_SHORT_CODE"] : "_"
+            }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "_" }}
+          </td>
+          <td *ngIf="showcolumn" style="white-space: pre-line; text-align: center">
+            {{
+            data["DATE_OF_PRIORITY"]
+            ? (data["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td *ngIf="showcolumn" style="white-space: pre-line; text-align: center">
+            {{ data["GRADE_PAY_LEVEL"] ? data["GRADE_PAY_LEVEL"] : "_" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{
+            data["JOINING_DATE"]
+            ? (data["JOINING_DATE"] | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td *ngIf="showcolumn" style="white-space: pre-line; text-align: center">
+            {{
+            data["RETIREMENT_DATE"]
+            ? (data["RETIREMENT_DATE"] | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["DOB"] ? (data["DOB"] | date : "dd/MM/yyyy") : "_" }}
+          </td>
+          <td style="white-space: pre-line; text-align: left">
+            {{ data["REMARK"] ? data["REMARK"] : "_" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div nz-row *ngIf="currentStage == 1 && isdraft == 'draft'">
+  <div nz-col nzSpan="24" id="pageprint">
+    <nz-spin [nzSpinning]="IsspinningData">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="
+            font-weight: 700;
+            text-align: center;
+            font-size: 14px !important;
+            font-family: 'Times New Roman', Times, serif !important;
+          ">
+          <p>
+            Seniority List of Officers for allotment of Departmental Quarters
+            ({{ RESIDENCETYPENAME }}) for the cut-off period ending on
+            {{ lastmonthdate | date : "dd/MM/yyyy" }} is as under:
+          </p>
+        </div>
+
+        <div nz-col nzSpan="24" style="padding-left: 30px; padding-right: 30px">
+          <table class="tablestyle" style="margin-top: 16px; width: 100%;white-space: pre-line;">
+            <th style="text-align: left; padding: 5px 5px">Sr.No.</th>
+            <th style="text-align: left; padding: 5px 5px">Name</th>
+            <th style="text-align: left; padding: 5px 5px">Designation</th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Civil List No.
+            </th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Priority Date
+            </th>
+
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Present Pay Level
+            </th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Date of Present Pay Level
+            </th>
+
+            <th style="text-align: left; padding: 5px 5px">Date of Joining</th>
+
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Retirement Date
+            </th>
+            <th style="text-align: left; padding: 5px 5px">Date of Birth</th>
+
+            <th style="text-align: left; padding: 5px 5px">Category</th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Remark
+            </th>
+            <th *ngIf="!showcolumn" style="text-align: left; padding: 5px 5px">
+              Mobile Number
+            </th>
+            <tr *ngFor="let flow of showgeneratedlistone; let a = index">
+              <td style="text-align: center; padding: 5px 5px">
+                {{ a + 1 }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{ flow["EMPLOYEE_NAME"] ? flow["EMPLOYEE_NAME"] :"_"}}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{ flow["DESIGNATION_SHORT_CODE"] ? flow["DESIGNATION_SHORT_CODE"] :"_"}}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{ flow["CIVIL_LIST"] ? flow["CIVIL_LIST"] :"_"}}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{flow["DATE_OF_PRIORITY"]?(flow["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{ flow["GRADE_PAY_LEVEL"] ? flow["GRADE_PAY_LEVEL"] :"_"}}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{flow["PRESENT_PAY_LEVEL_DATE"]?(flow["PRESENT_PAY_LEVEL_DATE"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{flow["JOINING_DATE"]?(flow["JOINING_DATE"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{flow["RETIREMENT_DATE"]?(flow["RETIREMENT_DATE"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{flow["DOB"]?(flow["DOB"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                <span *ngIf="flow['CATEGORY_STATUS'] == 'CH'; else elseBlock1111">Change
+                  <span *ngIf="
+                      flow['CHANGE_REASON'] != '' &&
+                      flow['CHANGE_REASON'] != null &&
+                      flow['CHANGE_REASON'] != undefined
+                    ">
+                    <br /><span style="color: red">({{ flow["CHANGE_REASON"] }})</span>
+                  </span>
+                </span>
+                <ng-template #elseBlock1111>Initial</ng-template>
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                _
+              </td>
+              <td *ngIf="!showcolumn" style="text-align: left; padding: 5px 5px">
+                {{ flow["MOBILE_NO"] ? flow["MOBILE_NO"] :"_" }}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div nz-col nzSpan="24" style="text-align: center; font-size: 13px;margin-top: 20px;">
+          Note : This is computer generated order signature not required.
+        </div>
+      </div>
+    </nz-spin>
+  </div>
+</div>
+
+<div nz-row *ngIf="currentStage == 22222" style="display: flex; justify-content: center; align-items: center">
+  <form>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-col nzSpan="24">
+        <div nz-row style="display: flex; justify-content: center; align-items: center">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Objection Start Date</nz-form-label>
+              <nz-form-control nzErrorTip="Please Select Objection Start Date">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  [(ngModel)]="data.OBJ_START_DATE_TIME" name="OBJ_START_DATE_TIME"
+                  (nzOnOpenChange)="handleStartOpenChange($event)" [nzDisabledDate]="disabledDate11"
+                  (ngModelChange)="onStartChange($event)"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Objection End Date</nz-form-label>
+              <nz-form-control nzErrorTip="Please Select Objection End Date">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  (nzOnOpenChange)="handleEndOpenChange($event)" [nzDisabledDate]="disabledDate2"
+                  [(ngModel)]="data.OBJ_END_DATE_TIME" name="OBJ_END_DATE_TIME"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row style="display: flex; justify-content: center; align-items: center">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Preference Start Date</nz-form-label>
+              <nz-form-control nzErrorTip="Please Select Preference Start Date">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  [(ngModel)]="data.PREFERENCE_START_DATE_TIME" [nzDisabledDate]="disabledStartDate"
+                  (ngModelChange)="onStartChange1($event)" name="PREFERENCE_START_DATE_TIME"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Preference End Date</nz-form-label>
+              <nz-form-control nzErrorTip="Please Select Preference End Date">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  [(ngModel)]="data.PREFERENCE_END_DATE_TIME" name="PREFERENCE_END_DATE_TIME"
+                  [nzDisabledDate]="disabledEndDate1"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div nz-row *ngIf="currentStage == 333333">
+  <div nz-col nzSpan="24" style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    ">
+    <div>First Seniority Order Published</div>
+    <div *ngIf="data.FILE_URL != null" style="
+        overflow: hidden;
+        font-size: 13px;
+        display: block;
+        margin: auto;
+        width: 100%;
+        color: #1890ff;
+        padding-left: 44%;
+      ">
+      {{ data.FILE_URL }} &nbsp;&nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff" (click)="viewJoiningLetter(data.FILE_URL)"></span>
+    </div>
+  </div>
+</div>
+<div nz-row *ngIf="currentStage == 0 && isdraft == 'final'">
+  <div nz-col nzSpan="24">
+    <div nz-row style="display: flex; justify-content: flex-end">
+      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="display: flex; justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+          <nz-form-item *ngIf="CastCategoryPart2 == 'GN'" style="margin-right: 0px; padding-right: 0px">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <input type="text" (keyup)="searchrecordstwo()" name="search2" nz-input placeholder="Search Records"
+                [(ngModel)]="searchfilteredrecordstwo" />
+            </nz-input-group>
+
+            <ng-template #suffixIconButton>
+              <button nz-button nzType="primary" (click)="searchrecordstwo()" nzSearch>
+                <i nz-icon nzType="search"></i>
+              </button>
+            </ng-template>
+          </nz-form-item>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable nzShowSizeChanger [nzLoading]="loadingRecords"
+      [nzFrontPagination]="false" [nzData]="showgeneratedlist" [nzSize]="'small'"
+      [nzScroll]="{ x: '1800px', y: '55vh' }" style="white-space: inherit">
+      <thead>
+        <tr>
+          <th nzWidth="200px" nzLeft style="text-align: center; font-weight: 500; ">
+            Change Seniority
+          </th>
+          <th nzWidth="250px" nzLeft style="text-align: center; font-weight: 500; ">
+            Employee Name
+          </th>
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Current Seniority No
+          </th>
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Draft Seniority No
+          </th>
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Last Month Seniority No
+          </th>
+          <th nzWidth="200px" style="text-align: center; font-weight: 500; ">
+            Designation
+          </th>
+          <th nzWidth="150px" style="text-align: center; font-weight: 500; ">
+            Mobile No.
+          </th>
+          <th nzWidth="150px" *ngIf="showcolumn" style="text-align: center; font-weight: 500; ">
+            Priority Date
+          </th>
+          <th nzWidth="150px" *ngIf="showcolumn" style="text-align: center; font-weight: 500; ">
+            Grade Pay Level
+          </th>
+          <th nzWidth="150px" style="text-align: center; font-weight: 500; ">
+            Joining Date
+          </th>
+          <th nzWidth="150px" *ngIf="showcolumn" style="text-align: center; font-weight: 500; ">
+            Retirement Date
+          </th>
+          <th nzWidth="150px" style="text-align: center; font-weight: 500; ">
+            Date Of Birth
+          </th>
+          <th nzWidth="250px" style="text-align: center; font-weight: 500; ">
+            Remark
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of ResidenceMasterTable.data; let i = index">
+          <td nzLeft style="white-space: pre-line; text-align: center">
+            <a (click)="changeSeniority(data)" style="color: #1890ff">
+              Change Seniority
+            </a>
+            <br />
+            <span *ngIf="data['REMARK'] != null && data['REMARK'] != undefined &&  data['REMARK'] != ''"
+              style="color: green; font-size: 10px">
+              Seniority Number has been <br /> Changed
+              from {{ data.PREVIOUS_SEQ_NO }} to {{ data.CURRENT_SEQ_NO }}
+            </span>
+          </td>
+          <td nzLeft style="white-space: pre-line;text-align: left;">
+            <span *ngIf="data!=undefined">
+              {{
+              data["EMPLOYEE_NAME"]? data["EMPLOYEE_NAME"] :"_"}}
+            </span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["CURRENT_SEQ_NO"] ? data["CURRENT_SEQ_NO"] : "-" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["OLD_SEQ_NO"] ? data["OLD_SEQ_NO"] : "-" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["PREVIOUS_SEQ_NO"] ? data["PREVIOUS_SEQ_NO"] : "-" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["DESIGNATION_SHORT_CODE"] ? data["DESIGNATION_SHORT_CODE"] : "-" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td *ngIf="showcolumn" style="white-space: pre-line; text-align: center">
+            {{
+            data["DATE_OF_PRIORITY"]
+            ? (data["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td *ngIf="showcolumn" style="white-space: pre-line; text-align: center">
+            {{ data["GRADE_PAY_LEVEL"] ? data["GRADE_PAY_LEVEL"] : "-" }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{
+            data["DATE_OF_PRIORITY"]
+            ? (data["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td *ngIf="showcolumn" style="white-space: pre-line; text-align: center">
+            {{
+            data["RETIREMENT_DATE"]
+            ? (data["RETIREMENT_DATE"] | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["DOB"] ? (data["DOB"] | date : "dd/MM/yyyy") : "_" }}
+          </td>
+          <td style="white-space: pre-line; text-align: left">
+            <span *ngIf="data.REMARK != null">
+              <span *ngIf="data.REMARK.length >= 30" nz-popover [nzPopoverContent]="data.REMARK"
+                nzPopoverPlacement="topLeft">
+                {{
+                data["REMARK"] == null ? "-" : (data.REMARK | slice : 0 : 30)
+                }}{{ data.REMARK.length > 30 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.REMARK.length < 30">
+                {{
+                data["REMARK"] == null ? "-" : (data.REMARK | slice : 0 : 30)
+                }}{{ data.REMARK.length > 30 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.REMARK == null">_</span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<div nz-row *ngIf="currentStage == 1 && isdraft == 'final'">
+  <div nz-col nzSpan="24" id="pageprint1">
+    <nz-spin [nzSpinning]="IsspinningData1">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="
+            font-weight: 700;
+            text-align: center;
+            font-size: 14px !important;
+            font-family: 'Times New Roman', Times, serif !important;
+          ">
+          <p>
+            Final Seniority List of Officers for allotment of Departmental
+            Quarters ({{ RESIDENCETYPENAME }}) for the cut-off period ending on
+            {{ lastmonthdate | date : "dd/MM/yyyy" }} is as under:
+          </p>
+        </div>
+
+        <div nz-col nzSpan="24" style="padding-left: 20px; padding-right: 20px">
+          <table class="tablestyle" style="margin-top: 16px; width: 100%;white-space: pre-line;">
+            <th style="text-align: left; padding: 5px 5px">Sr.No</th>
+            <th style="text-align: left; padding: 5px 5px">Name</th>
+            <th style="text-align: left; padding: 5px 5px">Designation</th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Civil List No.
+            </th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Priority Date
+            </th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Present Pay Level
+            </th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Date of Present Pay Level
+            </th>
+            <th style="text-align: left; padding: 5px 5px">Date of Joining</th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Retirement Date
+            </th>
+            <th style="text-align: left; padding: 5px 5px">Date of Birth</th>
+            <th style="text-align: left; padding: 5px 5px">Category</th>
+            <th *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+              Remark
+            </th>
+            <th *ngIf="!showcolumn" style="text-align: left; padding: 5px 5px">
+              Mobile No.
+            </th>
+            <tr *ngFor="let flow of showgeneratedlist; let a = index">
+              <td style="text-align: center; padding: 5px 5px">
+                {{ a + 1 }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{ flow["EMPLOYEE_NAME"]? flow["EMPLOYEE_NAME"] :"_"}}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{ flow["DESIGNATION_SHORT_CODE"]? flow["DESIGNATION_SHORT_CODE"] :"_"}}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{ flow["CIVIL_LIST"] ? flow["CIVIL_LIST"] : "_" }}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{flow["DATE_OF_PRIORITY"]?(flow["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{ flow["GRADE_PAY_LEVEL"]? flow["GRADE_PAY_LEVEL"] : "_" }}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{flow["PRESENT_PAY_LEVEL_DATE"]?(flow["PRESENT_PAY_LEVEL_DATE"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{flow["DATE_OF_PRIORITY"]?(flow["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                {{flow["RETIREMENT_DATE"]?(flow["RETIREMENT_DATE"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                {{flow["DOB"]?(flow["DOB"] | date : "dd/MM/yyyy"):"_" }}
+              </td>
+              <td style="text-align: left; padding: 5px 5px">
+                <span *ngIf="flow['CATEGORY_STATUS'] == 'CH'; else elseBlock1111">Change
+                  <span *ngIf="
+                      flow['CHANGE_REASON'] != '' &&
+                      flow['CHANGE_REASON'] != null &&
+                      flow['CHANGE_REASON'] != undefined
+                    ">
+                    <br /><span style="color: red">({{ flow["CHANGE_REASON"] }})</span>
+                  </span>
+                </span>
+                <ng-template #elseBlock1111>Initial</ng-template>
+              </td>
+              <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                _
+              </td>
+              <td *ngIf="!showcolumn" style="text-align: left; padding: 5px 5px">
+                {{ flow["MOBILE_NO"]? flow["MOBILE_NO"]:"_"}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div nz-col nzSpan="24" style="text-align: center; font-size: 13px;margin-top: 20px;">
+          Note : This is computer generated order signature not required.
+        </div>
+      </div>
+    </nz-spin>
+  </div>
+</div>
+
+<div nz-row *ngIf="currentStage == 66666" style="display: flex; justify-content: center; align-items: center">
+  <form>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-col nzSpan="18" style="display: flex; justify-content: end">
+        <div nz-row style="display: flex; justify-content: center; align-items: center">
+          <div nz-col nzSpan="24" style="margin: 0 5px">
+            <nz-form-item style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+              ">
+              <nz-form-label nzRequired nzNoColon>Upload Signed Copy</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Upload Signed Copy PDF" *ngIf="FinalFileurlshow">
+                <a style="padding: 0px 10px; font-size: 12px" (click)="FinalFileUrl.click()">
+                  Upload Signed Copy Here
+                  <input #FinalFileUrl name="FINAL_FILE_URL" type="file" (change)="FinalFileUrlUpload($event)"
+                    style="display: none" required />
+                </a>
+              </nz-form-control>
+
+              <div *ngIf="finalpublish.FINAL_FILE_URL != null" style="
+                  overflow: hidden;
+                  font-size: 13px;
+                  display: block;
+                  margin: auto;
+                  width: 100%;
+                  color: #1890ff;
+                  padding-left: 10px;
+                ">
+                {{ finalpublish.FINAL_FILE_URL }} &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="viewFinalFileUrl(finalpublish.FINAL_FILE_URL)"></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red" (click)="
+                    clearFinalFileUrl(finalpublish.FINAL_FILE_URL, 'finalList')
+                  "></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar1">
+              <nz-progress [nzPercent]="percent1"></nz-progress>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzSpan="24">
+        <div nz-row style="display: flex; justify-content: center; align-items: center">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Preference Start Date</nz-form-label>
+              <nz-form-control nzErrorTip="Please Select Preference Start Date">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  [(ngModel)]="finalpublish.PREFERENCE_START_DATE_TIME" [nzDisabledDate]="disabledStartDate"
+                  (ngModelChange)="onStartChange1($event)" name="PREFERENCE_START_DATE_TIME"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Preference End Date</nz-form-label>
+              <nz-form-control nzErrorTip="Please Select Preference End Date">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  [(ngModel)]="finalpublish.PREFERENCE_END_DATE_TIME" name="PREFERENCE_END_DATE_TIME"
+                  [nzDisabledDate]="disabledEndDate1"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div nz-row *ngIf="currentStage == 7777" style="display: flex; justify-content: center; align-items: center">
+  <div nz-col nzSpan="24" style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    ">
+    <div>Final Seniority Order Published</div>
+    <div *ngIf="finalpublish.FINAL_FILE_URL != null" style="
+        overflow: hidden;
+        font-size: 13px;
+        display: block;
+        margin: auto;
+        width: 100%;
+        color: #1890ff;
+        padding-left: 44px;
+      ">
+      {{ finalpublish.FINAL_FILE_URL }} &nbsp;&nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff" (click)="viewFinalFileUrl(finalpublish.FINAL_FILE_URL)"></span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button nzType="default" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    Cancel
+  </button>
+
+  <button nzType="default" *ngIf="currentStage == 1 && isdraft == 'draft'" nz-button (click)="previousfromzerototwo()"
+    class="ant-btn" style="margin-right: 8px">
+    Previous
+  </button>
+
+  <button nzType="default" *ngIf="currentStage == 1 && isdraft == 'final'" nz-button
+    (click)="previousfromthreetoseven()" class="ant-btn" style="margin-right: 8px">
+    Previous
+  </button>
+
+  <button nzType="primary" *ngIf="currentStage == 0 && isdraft == 'draft'" nz-button (click)="SaveListandnextstep0()"
+    class="ant-btn" style="margin-right: 8px" [nzLoading]="saveandnextspin">
+    Save & Preview Draft Order
+  </button>
+  <button nz-button nzType="primary" style="margin-right: 8px" *ngIf="currentStage == 1 && isdraft == 'draft'"
+    (click)="printOrder1()" [nzLoading]="saveandnextspin">
+    Print
+  </button>
+
+  <button nzType="primary" *ngIf="currentStage == 1 && isdraft == 'draft'" nz-button (click)="SaveListandnextstep1()"
+    class="ant-btn" [nzLoading]="saveandnextspin" style="margin-right: 8px">
+    Publish Draft Seniority Order
+  </button>
+  <button nzType="primary" *ngIf="currentStage == 22222" nz-button [nzLoading]="publishSpin" class="ant-btn"
+    style="margin-right: 8px" (click)="publishtouserdraft()">
+    Publish To User
+  </button>
+  <button nzType="primary" *ngIf="currentStage == 0 && isdraft == 'final'" nz-button (click)="FinalgeneratedList()"
+    class="ant-btn" [nzLoading]="saveandnextspin" style="margin-right: 8px">
+    Save & Preview Final Order
+  </button>
+  <button nz-button nzType="primary" [nzLoading]="saveandnextspin" style="margin-right: 8px"
+    (click)="printFinalOrder1()" *ngIf="currentStage == 1 && isdraft == 'final'">
+    Print
+  </button>
+  <button nzType="primary" *ngIf="currentStage == 1 && isdraft == 'final'" nz-button class="ant-btn"
+    style="margin-right: 8px" (click)="publishtouserfinal()">
+    Publish Final Seniority Order
+  </button>
+</div>
+<div class="header">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>
+
+<nz-modal [(nzVisible)]="isVisibleseniority" [nzWidth]="400" nzMaskClosable="false" nzClosable="true"
+  nzTitle="Change Seniority Order" (nzOnCancel)="handleCancel()" [nzFooter]="changeeeee2"
+  [nzBodyStyle]="{'padding-top': '16px','padding-left': '13px','padding-right': '24px','padding-bottom': '18px'}">
+  <ng-container *nzModalContent>
+    <form>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Draft Seniority No.</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Draft Seniority No." disabled [(ngModel)]="num.CURRENT_SEQ_NO"
+                  name="newnumbvjfjhbnber" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>New Seniority No.</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="New Seniority No." [(ngModel)]="NEW_NO" name="newnumber"
+                  (keypress)="omit($event)" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Remark</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input placeholder="Enter Remark" [(ngModel)]="SECOND_REMARK" name="reason"
+                  [nzAutosize]="{ minRows: 2, maxRows: 3 }"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-spin>
+    </form>
+  </ng-container>
+  <ng-template #changeeeee2>
+    <button nz-button nzType="default" [nzLoading]="isSpinning" (click)="handleCancel()">
+      cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning" (click)="changelist()">
+      Change Seniority
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'Seniority Order PDFView'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div *ngIf="view == 1" style="height: 600px; overflow: auto">
+      <iframe [src]="SenioritylistPDF" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 2" style="height: 600px; overflow: auto">
+      <iframe [src]="SenioritylistPDF" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="isVisibleseniorityfirst" [nzWidth]="400" nzMaskClosable="false" nzClosable="true"
+  nzTitle="Change Seniority Order" (nzOnCancel)="handleCancelone()" [nzFooter]="changeeeee1"
+  [nzBodyStyle]="{'padding-top': '16px','padding-left': '13px','padding-right': '24px','padding-bottom': '18px'}">
+  <ng-container *nzModalContent>
+    <form>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Old Seniority No.</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Old Seniority No." disabled [(ngModel)]="num1.CURRENT_SEQ"
+                  name="newnumjfjhbnber" (keypress)="omit($event)" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>New Seniority No.</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="New Seniority No." [(ngModel)]="NEW_NO1" name="newnumhbnber"
+                  (keypress)="omit($event)" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Remark</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input placeholder="Enter Remark" [(ngModel)]="First_REMARK" name="reason"
+                  [nzAutosize]="{ minRows: 2, maxRows: 3 }"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-spin>
+    </form>
+  </ng-container>
+  <ng-template #changeeeee1>
+    <button nz-button nzType="default" [nzLoading]="isSpinning" (click)="handleCancelone()">
+      cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning" (click)="changelistfirst()">
+      Change Seniority
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="draftpublish" nzCentered="true"
+  [nzBodyStyle]="{ 'padding-top': '6px','padding-bottom': '15px','padding-left': '15px','padding-right': '15px' }"
+  nzWidth="500px" nzClosable="false" [nzFooter]="contextofrules1" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 16px; font-weight: 500">Are you sure want to publish Draft Seniority Order?</span>
+    <hr style="margin: 8px 0" />
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div nz-row>
+          <div nz-col nzSpan="12" style="display: none;">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Objection Start Datetime</nz-form-label>
+              <nz-form-control nzErrorTip="Select Objection Start Datetime">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm" disabled
+                  [(ngModel)]="data.OBJ_START_DATE_TIME" name="OBJ_START_DATE_TIME"
+                  (nzOnOpenChange)="handleStartOpenChange($event)" [nzDisabledDate]="disabledDate11"
+                  (ngModelChange)="onStartChange($event)"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Objection End Datetime</nz-form-label>
+              <nz-form-control nzErrorTip="Select Objection End Datetime">
+                <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm"
+                  (nzOnOpenChange)="handleEndOpenChange($event)" [nzDisabledDate]="disabledDate2"
+                  [(ngModel)]="data.OBJ_END_DATE_TIME" name="OBJ_END_DATE_TIME"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size: 13px; margin-bottom: 0px; margin-top: 10px; color: red; font-weight: 500">
+      <!-- Note : Please note that no changes can be made after the Draft Seniority Order is published. -->
+      Note : Please note that no changes can be made in draft seniority order once published.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules1>
+    <button nz-button nzType="default" [nzLoading]="isSpinning" class="btn btn-primary" (click)="canceldraft()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning" class="btn btn-primary"
+      style="background-color: #006699" (click)="UploadandSave()">
+      Publish Draft Seniority Order
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="finalpublish1" nzCentered="true"
+  [nzBodyStyle]="{ 'padding-top': '6px','padding-bottom': '15px','padding-left': '15px','padding-right': '15px' }"
+  nzWidth="500px" nzClosable="false" [nzFooter]="contextofrules2" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 16px; font-weight: 500">Are you sure want to Publish Final Seniority Order?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 13px; margin-bottom: 10px;margin-top: 10px; color: red; font-weight: 500">
+      <!-- Note : Please note that no changes can be made after the Final Seniority Order is published. -->
+      Note : Please note that no changes can be made in Final seniority order once published.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules2>
+    <button nz-button nzType="default" [nzLoading]="isSpinning" class="btn btn-primary" (click)="cancelfinal()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning" class="btn btn-primary"
+      style="background-color: #006699" (click)="UploadandSaveFinal()">
+      Publish Final Seniority Order
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+<div *ngIf="draftpublishpreview">
+  <nz-drawer [nzBodyStyle]="{
+        height: 'calc(100% - 55px)',
+        overflow: 'auto',
+        'padding-bottom': '53px'
+      }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'80%'"
+    [nzVisible]="draftpublishpreview" nzTitle="Draft Seniority Order" (nzOnClose)="closemodaldraft()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <div id="pageprintmodeldraft">
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <div nz-row style="
+              font-size: 12px !important;
+              font-family: 'Times New Roman', Times, serif;
+            ">
+              <div nz-col nzSpan="24" style="
+                font-weight: 700;
+                text-align: center;
+                font-size: 13px !important;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+                <p>
+                  Draft Seniority List of Officers for allotment of Departmental
+                  Quarters ({{ RESIDENCETYPENAME }}) for the cut-off period ending
+                  on {{ lastmonthdate | date : "dd/MM/yyyy" }} is as under:
+                </p>
+              </div>
+
+              <div nz-col nzSpan="24" style="padding-left: 30px; padding-right: 30px">
+                <table class="tablestyle" style="margin-top: 16px; width: 100%;white-space: pre-line;">
+                  <th style="text-align: center; padding: 5px 5px">Sr.No.</th>
+                  <th style="text-align: center; padding: 5px 5px">Name</th>
+                  <th style="text-align: center; padding: 5px 5px">Designation</th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Civil List No.
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Priority Date
+                  </th>
+
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Present Pay Level
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Date of Present Pay Level
+                  </th>
+
+                  <th style="text-align: center; padding: 5px 5px">
+                    Date of Joining
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Retirement Date
+                  </th>
+                  <th style="text-align: center; padding: 5px 5px">
+                    Date of Birth
+                  </th>
+                  <th style="text-align: center; padding: 5px 5px">Category</th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Remark
+                  </th>
+                  <th *ngIf="!showcolumn" style="text-align: center; padding: 5px 5px">
+                    Mobile No.
+                  </th>
+                  <tr *ngFor="let flow of showgeneratedlistone; let a = index">
+                    <td style="text-align: center; padding: 5px 5px">
+                      {{ a + 1 }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{ flow["EMPLOYEE_NAME"]? flow["EMPLOYEE_NAME"] :"_"}}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{ flow["DESIGNATION_SHORT_CODE"]? flow["DESIGNATION_SHORT_CODE"] :"_"}}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["CIVIL_LIST"]? flow["CIVIL_LIST"] :"_"}}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{flow["DATE_OF_PRIORITY"]?(flow["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy"):"_" }}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["GRADE_PAY_LEVEL"]? flow["GRADE_PAY_LEVEL"] :"_"}}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{flow["PRESENT_PAY_LEVEL_DATE"]?(flow["PRESENT_PAY_LEVEL_DATE"] | date : "dd/MM/yyyy"):"_" }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{flow["JOINING_DATE"]?(flow["JOINING_DATE"] | date : "dd/MM/yyyy"):"_" }}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{flow["RETIREMENT_DATE"]?(flow["RETIREMENT_DATE"] | date : "dd/MM/yyyy"):"_" }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{flow["DOB"]?(flow["DOB"] | date : "dd/MM/yyyy"):"_" }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      <span *ngIf="
+                        flow['CATEGORY_STATUS'] == 'CH';
+                        else elseBlock1111
+                      ">Change
+                        <span *ngIf="
+                          flow['CHANGE_REASON'] != '' &&
+                          flow['CHANGE_REASON'] != null &&
+                          flow['CHANGE_REASON'] != undefined
+                        ">
+                          <br /><span style="color: red">({{ flow["CHANGE_REASON"] }})</span>
+                        </span>
+                      </span>
+                      <ng-template #elseBlock1111>Initial</ng-template>
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      _
+                    </td>
+                    <td *ngIf="!showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["MOBILE_NO"]? flow["MOBILE_NO"]:"_" }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div nz-col nzSpan="24" style="text-align: center; font-size: 13px;margin-top: 20px;">
+                Note : This is computer generated order signature not required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <!-- <button nz-button nzType="primary" style="margin-right: 8px" [nzLoading]="pdfDownloaddraft"
+          (click)="downloadPdfdraft()">
+          Download
+        </button> -->
+        <button nz-button nzType="primary" printSectionId="pageprintmodeldraft" ngxPrint [useExistingCss]="true"
+          style="margin-right: 8px">
+          Print
+        </button>
+        <button nz-button nzType="default" (click)="closemodaldraft()">
+          Close
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="finalpublishpreview">
+  <nz-drawer [nzVisible]="finalpublishpreview" nzTitle="Final Seniority Order" [nzBodyStyle]="{
+  height: 'calc(100% - 55px)',
+  overflow: 'auto',
+  'padding-bottom': '53px','padding-top': '10px','padding-right': '15px','padding-left': '15px'
+}" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'80%'" (nzOnClose)="closemodalfinal()"
+    nzMaskClosable="false" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <div id="pageprintmodelfinal">
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <div nz-row style="
+              font-size: 12px !important;
+              font-family: 'Times New Roman', Times, serif;
+            ">
+              <div nz-col nzSpan="24" style="
+                font-weight: 700;
+                text-align: center;
+                font-size: 13px !important;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+                <p>
+                  Final Seniority List of Officers for allotment of Departmental
+                  Quarters ({{ RESIDENCETYPENAME }}) for the cut-off period ending
+                  on {{ lastmonthdate | date : "dd/MM/yyyy" }} is as under:
+                </p>
+              </div>
+
+              <div nz-col nzSpan="24" style="padding-left: 20px; padding-right: 20px">
+                <table class="tablestyle" style="margin-top: 16px; width: 100%;white-space: pre-line;">
+                  <th style="text-align: center; padding: 5px 5px">Sr.No.</th>
+                  <th style="text-align: center; padding: 5px 5px">Name</th>
+                  <th style="text-align: center; padding: 5px 5px">Designation</th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Civil List No.
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Priority Date
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Present Pay Level
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Date of Present Pay Level
+                  </th>
+                  <th style="text-align: center; padding: 5px 5px">
+                    Date of Joining
+                  </th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Retirement Date
+                  </th>
+
+                  <th style="text-align: center; padding: 5px 5px">
+                    Date of Birth
+                  </th>
+                  <th style="text-align: center; padding: 5px 5px">Category</th>
+                  <th *ngIf="showcolumn" style="text-align: center; padding: 5px 5px">
+                    Remark
+                  </th>
+                  <th *ngIf="!showcolumn" style="text-align: center; padding: 5px 5px">
+                    Mobile No.
+                  </th>
+                  <tr *ngFor="let flow of showgeneratedlist; let a = index">
+                    <td style="text-align: center; padding: 5px 5px">
+                      {{ a + 1 }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{ flow["EMPLOYEE_NAME"] }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{ flow["DESIGNATION_SHORT_CODE"] }}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["CIVIL_LIST"] }}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy" }}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["GRADE_PAY_LEVEL"] }}
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["PRESENT_PAY_LEVEL_DATE"] | date : "dd/MM/yyyy" }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{ flow["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy" }}
+                    </td>
+
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["RETIREMENT_DATE"] | date : "dd/MM/yyyy" }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      {{ flow["DOB"] | date : "dd/MM/yyyy" }}
+                    </td>
+                    <td style="text-align: left; padding: 5px 5px">
+                      <span *ngIf="
+                        flow['CATEGORY_STATUS'] == 'CH';
+                        else elseBlock1111
+                      ">Change
+                        <span *ngIf="
+                          flow['CHANGE_REASON'] != '' &&
+                          flow['CHANGE_REASON'] != null &&
+                          flow['CHANGE_REASON'] != undefined
+                        ">
+                          <br /><span style="color: red">({{ flow["CHANGE_REASON"] }})</span>
+                        </span>
+                      </span>
+                      <ng-template #elseBlock1111>Initial</ng-template>
+                    </td>
+                    <td *ngIf="showcolumn" style="text-align: left; padding: 5px 5px">
+                      -
+                    </td>
+                    <td *ngIf="!showcolumn" style="text-align: left; padding: 5px 5px">
+                      {{ flow["MOBILE_NO"] }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div nz-col nzSpan="24" style="text-align: center; font-size: 13px;margin-top: 20px;">
+                Note : This is computer generated order signature not required.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <!-- <button nz-button nzType="primary" style="margin-right: 8px" [nzLoading]="pdfDownloadfinal"
+          (click)="downloadPdffinal()">
+          Download
+        </button> -->
+        <button nz-button nzType="primary" printSectionId="pageprintmodelfinal" ngxPrint [useExistingCss]="true"
+          style="margin-right: 8px">
+          Print
+        </button>
+        <button nz-button nzType="default" (click)="closemodalfinal()">
+          Close
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>

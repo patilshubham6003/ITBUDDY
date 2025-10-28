@@ -1,0 +1,119 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+    <div class="col-12" style="text-align: center; margin-top: 10%">
+        <div v-if="loading" class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
+</div>
+<main *ngIf="!isSpinning" id="main">
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="breadcrumb-hero" style="padding: 10px 0;">
+            <div class="container">
+                <div class="breadcrumb-hero">
+                    <h2 style="font-weight: 500;color: white;">Photo Gallery</h2>
+                    <ol>
+                        <li><a routerLink="/" style="text-decoration: None;color: white;">Home</a></li>
+                        <li>Photo Gallery </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="portfolio" class="portfolio" style="padding-top: 30px;">
+        <div class="container">
+            <div class="row" *ngIf="videocount>0">
+                <div class="col-lg-12 d-flex justify-content-center" data-aos="fade-up">
+                    <ul id="portfolio-flters" style="width: inherit;">
+                        <li data-filter="*" class="filter-active" class="list-inline-item "
+                            [ngStyle]="showcolor1 == 1 ? {'background':'#f68831'} : {'background':'white'}"
+                            (click)="allData()" data-filter="*">{{datas.NAME}}
+                            <a [ngStyle]="showcolor1 == 1 ? {'color':'white'} : {'color':'black'}">All</a>
+                        </li>
+                        <li data-filter="*" *ngFor="let data of galleryCategory;let i=index;let j=index;"
+                            class="filter-active" style="margin-left: 1%;" (click)="allApp(data)"
+                            class="list-inline-item "
+                            [ngStyle]="showcolor == j ? {'background':'#f68831'} : {'background':'white'}"
+                            data-filter="*" (click)="getI(i)">
+                            <a [ngStyle]="showcolor == j ? {'color':'white'} : {'color':'black'}">
+                                {{data.NAME}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row " data-aos="fade-up" style="height: 100%;">
+                <div class="col-lg-4 col-md-6 portfolio-item filter-app"
+                    *ngFor="let data of gallery;let i=index;let j=index;">
+                    <div class="portfolio-wrap" (click)="show(data.IMG_URL,i,j)">
+                        <div class="gallery-content">
+                            <div class="fc-icon text-center">
+                                <a>
+                                    <img src="{{imgurl}}gallary/{{data.IMG_URL}}" alt="gallery" height="300"
+                                        width="100%" (click)="show(data.IMG_URL,i,j)">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="portfolio-info1">
+                            <h5 style="color: black;
+                            font-weight: 400;font-size: 16px;">{{data.TITLE}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="videocount<=0">
+                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                    style="text-align: center; height: 200px;margin-top: 100px;">
+                    <h1 style="color: #006699;">Data Not Found</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>
+
+<button type="button" #eventmod style="display:none" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#eventmod">
+    Launch demo modal
+</button>
+<div style="top:80px" class="modal fade" id="eventmod" tabindex="-1" role="dialog" aria-labelledby="eventmodlabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: transparent;border: none;">
+            <div id="carouselExampleControls" class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="row" style="width: 100%;">
+                        <div class="col-12" style="text-align: right;">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="    position: absolute;
+                            z-index: 1000;background-color: aliceblue;"></button>
+                        </div>
+                    </div>
+
+                    <ul *ngFor="let data of gallery;let i=index;first as isFirst">
+                        <div *ngIf="ImageGalerytrue" class='carousel-item active'>
+                            <li style="list-style-type: none;"><img src="{{imgurl}}gallary/{{imggg}}"
+                                    class="d-block w-100" alt="..." height="500px"></li>
+                        </div>
+                        <div *ngIf="!ImageGalerytrue" [ngClass]="isFirst ? 'carousel-item active' : 'carousel-item' ">
+                            <li style="list-style-type: none;"><img src="{{imgurl}}gallary/{{data.IMG_URL}}"
+                                    class="d-block w-100" alt="..." height="500px"></li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" style="margin-left: -3%;"
+                data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" (click)="clickprev()" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" style="margin-right: -9%;"
+                data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" (click)="clicknext()" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>

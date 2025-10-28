@@ -1,0 +1,254 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Employee Name</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Employee Name">
+              <input
+                nz-input
+                name="demo1name"
+                required
+                [pattern]="namepatt"
+                maxlength="128"
+                placeHolder="Enter Employee Name"
+                [(ngModel)]="data.NAME"
+                maxlength="128"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Email Id </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please enter email id">
+              <input
+                nz-input
+                name="clientessmail"
+                [pattern]="emailpattern"
+                [(ngModel)]="data.EMAIL_ID"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Mobile No</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Mobile No">
+              <nz-input-group style="width: 100%">
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.MOBILE_NO"
+                  name="grsadePay"
+                  type="text"
+                  maxlength="10"
+                  placeHolder="Enter Employee Basic Pay"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Employee Code</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Employee Code ">
+              <input
+                nz-input
+                autocomplete="off"
+                maxlength="16"
+                name="EmployeeCode"
+                [(ngModel)]="data.EMPLOYEE_CODE"
+                type="text"
+                placeHolder="Enter Employee Code"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Basic Pay</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Basic Pay">
+              <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.GRADE_PAY"
+                  name="gradePay"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Employee Basic Pay"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Password</nz-form-label>
+            <nz-form-control nzErrorTip="Please enter contact person name">
+              <nz-input-group [nzSuffix]="suffixTemplate">
+                <input
+                  [type]="passwordVisible ? 'text' : 'password'"
+                  name="password"
+                  [(ngModel)]="data.PASSWORD"
+                  nz-input
+                  placeholder="Password"
+                  required
+                />
+                <ng-template #suffixTemplate> </ng-template>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Designation</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Designation">
+              <input
+                nz-input
+                autocomplete="off"
+                name="Designation"
+                maxlength="256"
+                [pattern]="namepatt"
+                type="text"
+                [(ngModel)]="data.DESIGNATION"
+                placeHolder="Enter The Designation"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Office Name</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Office Name">
+              <input
+                nz-input
+                autocomplete="off"
+                name="Office Name"
+                maxlength="256"
+                [pattern]="namepatt"
+                type="text"
+                [(ngModel)]="data.OFFICE_NAME"
+                placeHolder="Enter The Office Name"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Location</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Location">
+              <input
+                nz-input
+                autocomplete="off"
+                name="Location"
+                type="text"
+                maxlength="256"
+                [(ngModel)]="data.LOCATION"
+                placeHolder="Enter The Location"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >DDO Of The Official</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter DDO Of The Official">
+              <input
+                nz-input
+                autocomplete="off"
+                name="DDOOfficial"
+                type="text"
+                maxlength="256"
+                [(ngModel)]="data.DDO_OF_THE_OFFICIAL"
+                placeHolder="Enter The DDO"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Address</nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Address">
+              <nz-textarea-count [nzMaxCharacterCount]="512">
+                <textarea
+                  maxlength="50"
+                  required
+                  rows="2"
+                  maxlength="512"
+                  placeHolder="Enter The Address"
+                  [(ngModel)]="data.ADDRESS"
+                  name="addressline1"
+                  nz-input
+                ></textarea>
+              </nz-textarea-count>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(websitebannerPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      nz-dropdown
+      [nzLoading]="isSpinning"
+      (click)="save(false, websitebannerPage)"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(websitebannerPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

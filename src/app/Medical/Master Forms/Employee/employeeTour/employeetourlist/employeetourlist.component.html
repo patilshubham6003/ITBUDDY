@@ -1,0 +1,1150 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname"><b> Tour List </b></div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="aboutsearch"
+            (keyup)="keyup($event)"
+            (keydown.enter)="onKeypressEvent($event)"
+            [(ngModel)]="searchText"
+            nz-input
+            placeholder=" Search Record"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="search(true)"
+            id="button"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Tour
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="dataList"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '1650px', y: '55vh' }"
+      nzBordered
+    >
+      <thead>
+        <tr>
+          <th nzWidth="60px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th nzWidth="40px" style="font-weight: bold; text-align: center">
+            Delete
+          </th>
+          <th nzWidth="50px" style="font-weight: bold; text-align: center">
+            Order's
+          </th>
+
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DESIGNATION"
+            [nzSortFn]="true"
+          >
+            Employee Designation
+          </th>
+          <th
+            nzWidth="50px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="BASIC_PAY"
+            [nzSortFn]="true"
+          >
+            Basic Pay
+          </th>
+
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="HEADQUARTERS_NAME"
+            [nzSortFn]="true"
+          >
+            Office Name
+          </th>
+
+          <th
+            nzWidth="60px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="MOBILE_NO"
+            [nzSortFn]="true"
+          >
+            Mobile No
+          </th>
+          <th
+            nzWidth="50px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="GRADE_PAY_LEVEL"
+            [nzSortFn]="true"
+          >
+            Gradepay Level
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td style="text-align: center">
+            <div
+              *ngIf="
+                (data.TOUR_STATUS != 'P' &&
+                  data.TOUR_STATUS != 'T' &&
+                  data.TOUR_STATUS != 'C') ||
+                data.TOUR_STATUS == 'R'
+              "
+              style="padding: 3px"
+            >
+              <span style="cursor: pointer" (click)="edit(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px blue solid;
+                    border-radius: 0px;
+                  "
+                  [nzColor]="'blue'"
+                >
+                  <i nz-icon nzType="edit"></i> Verify Claim
+                </nz-tag>
+              </span>
+            </div>
+          </td>
+          <td style="text-align: center">
+            <span
+              *ngIf="
+                (data.TOUR_STATUS != 'P' &&
+                  data.TOUR_STATUS != 'T' &&
+                  data.TOUR_STATUS != 'C') ||
+                data.TOUR_STATUS == 'R'
+              "
+              style="cursor: pointer"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure want delete?"
+              nzPopconfirmPlacement="top"
+              (nzOnConfirm)="deleteConfirm(data)"
+              (nzOnCancel)="deleteCancel()"
+            >
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="twotone"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+              >
+              </span>
+            </span>
+          </td>
+          <td style="text-align: center">
+            &nbsp;
+            <span style="cursor: pointer" (click)="tourprtaordervisible(data)">
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(0, 6, 37) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                Tour Part A
+              </nz-tag>
+            </span>
+
+            <!-- &nbsp;
+  
+              <span style="cursor: pointer" (click)="tourpart_b(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 0, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Tour Part B
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+  
+              <span
+                style="cursor: pointer"
+                (click)="chceklistaordervisible(data)"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Check list
+                </nz-tag>
+              </span> -->
+            <!-- &nbsp;
+  
+              <span style="cursor: pointer" (click)="biillsection(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 0, 0) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Bill Section
+                </nz-tag>
+              </span> -->
+
+            <!-- &nbsp;
+              <span style="cursor: pointer" (click)="selfsanction(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(72, 99, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Self Declaration Certificate
+                </nz-tag>
+              </span> -->
+
+            <!-- &nbsp;
+              <span style="cursor: pointer" (click)="toursanction(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(72, 99, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Tour Sanction Order
+                </nz-tag>
+              </span> -->
+
+            <!-- &nbsp;
+  
+              <span
+                style="cursor: pointer"
+                (click)="travellingaordervisible(data)"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Travelling allounce
+                </nz-tag>
+              </span> -->
+            <!-- &nbsp;
+  
+              <span style="cursor: pointer" (click)="placeordervisible(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Place Order
+                </nz-tag>
+              </span> -->
+            <!-- &nbsp;
+              <span style="cursor: pointer" (click)="aheshorder(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 88, 88) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Adesh
+                </nz-tag>
+              </span> -->
+            <!-- &nbsp;
+              <span style="cursor: pointer" (click)="certificateduplicate(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(109, 109, 109) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Cerificate Duplicate
+                </nz-tag>
+              </span> -->
+
+            <!-- &nbsp; -->
+            <!-- <span style="cursor: pointer" (click)="aayakrbhavan(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 0, 0) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Aaykar
+                </nz-tag>
+              </span> -->
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DESIGNATION }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.BASIC_PAY }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.HEADQUARTERS_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.GRADE_PAY_LEVEL }}
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- <thead>
+          <tr>
+            <th nzWidth="90px" style="font-weight: bold; text-align: center">
+              Action
+            </th>
+            <th nzWidth="60px" style="font-weight: bold; text-align: center">
+              Delete
+            </th>
+            <th nzWidth="820px" style="font-weight: bold; text-align: center">
+              Order's
+            </th>
+            <th
+              nzWidth="250px"
+              style="font-weight: bold; text-align: center"
+              nzColumnKey="EMPLOYEE_NAME"
+            >
+              Applicant Name
+            </th>
+  
+            <th
+              nzWidth="270px"
+              style="font-weight: bold; text-align: center"
+              nzColumnKey="DESIGNATION"
+            >
+              Employee Designation
+            </th>
+  
+            <th
+              nzWidth="220px"
+              style="font-weight: bold; text-align: center"
+              nzColumnKey="OFFICE_NAME"
+            >
+              Office Name
+            </th>
+            <th
+              nzWidth="220px"
+              style="font-weight: bold; text-align: center"
+              nzColumnKey="ADDRESS"
+            >
+              Rh
+            </th>
+            <th
+              nzWidth="220px"
+              style="font-weight: bold; text-align: center"
+              nzColumnKey="NEW_OFFICE_NAME"
+            >
+              C l
+            </th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let data of basicTable.data; let i = index">
+            <td>
+              <div style="padding: 3px">
+                <span style="cursor: pointer" (click)="edit(data)">
+                  <nz-tag
+                    style="
+                      padding: 3px;
+                      border: 1px blue solid;
+                      border-radius: 0px;
+                    "
+                    [nzColor]="'blue'"
+                  >
+                    <i nz-icon nzType="edit"></i> Verify Claim
+                  </nz-tag>
+                </span>
+              </div>
+            </td>
+            <td style="text-align: center">
+              <span
+                style="cursor: pointer"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure want delete?"
+                nzPopconfirmPlacement="top"
+                (nzOnConfirm)="deleteConfirm(data)"
+                (nzOnCancel)="deleteCancel()"
+              >
+                <span
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="twotone"
+                  nz-tooltip
+                  nzTooltipTitle="Delete"
+                >
+                </span>
+              </span>
+            </td>
+            <td>
+              &nbsp;
+              <span style="cursor: pointer" (click)="tourprtaordervisible(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Tour Part A
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+  
+              <span style="cursor: pointer" (click)="tourpart_b(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 0, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Tour Part B
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+  
+              <span
+                style="cursor: pointer"
+                (click)="chceklistaordervisible(data)"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Check list
+                </nz-tag>
+              </span>
+              &nbsp;
+  
+              <span style="cursor: pointer" (click)="biillsection(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 0, 0) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Bill Section
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+              <span style="cursor: pointer" (click)="selfsanction(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(72, 99, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Self Declaration Certificate
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+              <span style="cursor: pointer" (click)="toursanction(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(72, 99, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Tour Sanction Order
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+  
+              <span
+                style="cursor: pointer"
+                (click)="travellingaordervisible(data)"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Travelling allounce
+                </nz-tag>
+              </span>
+              &nbsp;
+  
+              <span style="cursor: pointer" (click)="placeordervisible(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Place Order
+                </nz-tag>
+              </span>
+              &nbsp;
+              <span style="cursor: pointer" (click)="aheshorder(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 88, 88) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Adesh
+                </nz-tag>
+              </span>
+              &nbsp;
+              <span style="cursor: pointer" (click)="certificateduplicate(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(109, 109, 109) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Cerificate Duplicate
+                </nz-tag>
+              </span>
+  
+              &nbsp;
+              <span style="cursor: pointer" (click)="aayakrbhavan(data)">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 0, 0) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Aaykar
+                </nz-tag>
+              </span>
+            </td>
+  
+            <td style="text-align: center; white-space: pre-line" nzWidth="250px">
+              {{ data.EMPLOYEE_NAME }}
+            </td>
+  
+            <td style="text-align: center; white-space: pre-line" nzWidth="270px">
+              {{ data.DESIGNATION }}
+            </td>
+  
+            <td style="text-align: center; white-space: pre-line" nzWidth="220px">
+              {{ data.HEADQUARTERS_NAME }}
+            </td>
+            <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+              {{ data.R_H }}
+            </td>
+            <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+              {{ data.C_L }}
+            </td>
+          </tr>
+        </tbody> -->
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1000"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-employeetouradd
+      [drawerClose]="closeCallback"
+      [current]="currentStage"
+      [isSpinning]="isSpin"
+      [tourID]="tourID"
+      [particularoftours]="particularoftours"
+      [particularofhotelsdata]="particularofhotelsdata"
+      [detailsandpurpose]="detailsandpurpose"
+      [data]="drawerData"
+      [empID]="empID"
+      [editdata]="editdata"
+      [data2]="detailsjourneyofpurpose"
+    ></app-employeetouradd>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1250"
+  [nzKeyboard]="true"
+  [nzVisible]="aayakarbhavan"
+  [nzTitle]="drawerTitle6"
+  (nzOnClose)="aayakarbhavanclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-aaykarbhvan
+      [drawerClose]="closeCallbackaayakarbhavan"
+      [aayakarbhavandata]="aayakarbhavandata"
+      [SECTION_TYPE]="SECTION_TYPE"
+      [SIGNNAME]="NAME"
+      [NAME_HN]="NAME_HN"
+      [OFFICE_NAME]="OFFICE_NAME"
+      [OFFICE_NAME_HN]="OFFICE_NAME_HN"
+      [POST]="POST"
+      [POST_HN]="POST_HN"
+    ></app-aaykarbhvan>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1150"
+  [nzKeyboard]="true"
+  [nzVisible]="adheshorder"
+  [nzTitle]="drawerTitle3"
+  (nzOnClose)="adheshdrawerclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-adheshorder
+      [adheshdata]="adheshdata"
+      [drawerClose]="closeCallbackadhesh"
+      [SIGNNAME]="NAME"
+      [NAME_HN]="NAME_HN"
+      [OFFICE_NAME_HN]="OFFICE_NAME_HN"
+      [POST]="POST"
+      [POST_HN]="POST_HN"
+      [OFFICE_NAME]="OFFICE_NAME"
+    ></app-adheshorder>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1000"
+  [nzKeyboard]="true"
+  [nzVisible]="tourprtaorder"
+  [nzTitle]="drawerTitle1"
+  (nzOnClose)="tourpartaorderclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-part-a
+      [drawerClose]="closebacktourprta"
+      [particularoftours]="particularoftours"
+      [particularofcity]="particularofcity"
+      [detailsandpurpose]="detailsandpurpose"
+      [particularofhotelsdata]="particularofhotelsdata"
+      [partadata]="partadata"
+      [fooddata]="fooddata"
+    ></app-part-a>
+  </ng-container>
+</nz-drawer>
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="950"
+    [nzKeyboard]="true"
+    [nzVisible]="trvellingbalanceaorder"
+    [nzTitle]="drawerTitle10"
+    (nzOnClose)="travellingaorderclose()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-travellingallouncebill
+        [drawerClose]="closebacktravelling"
+        [tourtravellingllounce]="tourtravellingllounce"
+        [travellingdata]="travellingdata"
+      ></app-travellingallouncebill>
+    </ng-container>
+  </nz-drawer> -->
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="950"
+  [nzKeyboard]="true"
+  [nzVisible]="trvellingbalanceaorder"
+  [nzTitle]="drawerTitle10"
+  (nzOnClose)="travellingaorderclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-travellingallouncebill
+      [drawerClose]="closebacktravelling"
+      [tourtravellingllounce]="tourtravellingllounce"
+      [travellingdata]="travellingdata"
+    ></app-travellingallouncebill>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzKeyboard]="true"
+  [nzVisible]="toursancationorder"
+  [nzTitle]="drawerTitle8"
+  (nzOnClose)="toursanctionclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-toursantionorder
+      [drawerClose]="closebacktour"
+      [toursanctionorder]="toursanctionorder"
+      [tousanctionorder]="tousanctionorder"
+      [SECTION_TYPE]="SECTION_TYPE"
+      [SIGNNAME]="NAME"
+      [NAME_HN]="NAME_HN"
+      [OFFICE_NAME]="OFFICE_NAME"
+      [OFFICE_NAME_HN]="OFFICE_NAME_HN"
+      [POST]="POST"
+      [POST_HN]="POST_HN"
+    ></app-toursantionorder>
+  </ng-container>
+</nz-drawer>
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+  
+      overflow: 'auto',
+  
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="850"
+    [nzKeyboard]="true"
+    [nzVisible]="billsection"
+    [nzTitle]="drawerTitle5"
+    (nzOnClose)="billsectionclose()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-billsection
+        [drawerClose]="closeCallbackbillsetion"
+        [data]="billDrawerData"
+        [billsectiondata]="billsectiondata"
+      ></app-billsection>
+    </ng-container>
+  </nz-drawer> -->
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+
+    overflow: 'auto',
+
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1000"
+  [nzKeyboard]="true"
+  [nzVisible]="billsection"
+  [nzTitle]="drawerTitle5"
+  (nzOnClose)="billsectionclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-billsection
+      [drawerClose]="closeCallbackbillsetion"
+      [billDrawerData]="billDrawerData"
+      [billsectiondata]="billsectiondata"
+    ></app-billsection>
+  </ng-container>
+</nz-drawer>
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="850"
+    [nzKeyboard]="true"
+    [nzVisible]="selfsancationorder"
+    [nzTitle]="drawerTitle7"
+    (nzOnClose)="selfsanctionclose()"
+  >
+   <ng-container *nzDrawerContent>
+      <app-self-declaration-certificate
+        [drawerClose]="closeCalselfsnction"
+        [selftoursanctionorder]="selftoursanctionorder"
+      ></app-self-declaration-certificate>
+    </ng-container>
+  </nz-drawer> -->
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="850"
+  [nzKeyboard]="true"
+  [nzVisible]="selfsancationorder"
+  [nzTitle]="'Self Declaration Certificate'"
+  (nzOnClose)="selfsanctionclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-self-declaration-certificate
+      [drawerClose]="closeCalselfsnction"
+      [selftoursanctionorder]="selftoursanctionorder"
+      [selfdeclarationdata]="selfdeclarationdata"
+    ></app-self-declaration-certificate>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="850"
+  [nzKeyboard]="true"
+  [nzVisible]="duplicatecertificte"
+  [nzTitle]="drawerTitle4"
+  (nzOnClose)="certificateduplicaterawerclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-certificateduplicate
+      [drawerClose]="closeCallbackacertificateduplicate"
+      [certificatedata]="certificatedata"
+      [particularofhotelsdata1]="particularofhotelsdata1"
+    ></app-certificateduplicate>
+  </ng-container>
+</nz-drawer>
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="900"
+    [nzKeyboard]="true"
+    [nzVisible]="tourpartbvisible"
+    [nzTitle]="drawerTitle2"
+    (nzOnClose)="tourpartb()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-tour-part-b [drawerClose]="closeCallbacktourpartb"></app-tour-part-b>
+    </ng-container>
+  </nz-drawer> -->
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="900"
+  [nzKeyboard]="true"
+  [nzVisible]="tourpartbvisible"
+  [nzTitle]="drawerTitle2"
+  (nzOnClose)="tourpartb()"
+>
+  <ng-container *nzDrawerContent>
+    <app-tour-part-b
+      [drawerClose]="closeCallbacktourpartb"
+      [tourpartbdata]="tourpartbdata"
+      [totalamountofpartb]="totalamountofpartb"
+    ></app-tour-part-b>
+  </ng-container>
+</nz-drawer>
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="900"
+    [nzKeyboard]="true"
+    [nzVisible]="placealongorder"
+    [nzTitle]="drawerTitle9"
+    (nzOnClose)="placeorderclose()"
+  >
+   <ng-container *nzDrawerContent>
+      <app-placealongside
+        [drawerClose]="closebackplacealong"
+      ></app-placealongside>
+    </ng-container>
+  </nz-drawer> -->
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="900"
+    [nzKeyboard]="true"
+    [nzVisible]="placealongorder"
+    [nzTitle]="'Place Order'"
+    (nzOnClose)="placeorderclose()"
+  >
+ <ng-container *nzDrawerContent>
+      <app-placealongside
+        [drawerClose]="closebackplacealong"
+        [airtotal]="airtotal"
+        [ShipBoattotal]="ShipBoattotal"
+        [Roadtotal]="Roadtotal"
+        [Railtotal]="Railtotal"
+        [alltotal]="alltotal"
+      ></app-placealongside>
+    </ng-container>
+  </nz-drawer> -->
+
+<!-- <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="900"
+    [nzKeyboard]="true"
+    [nzVisible]="placealongorder"
+    [nzTitle]="drawerTitle9"
+    (nzOnClose)="placeorderclose()">
+<ng-container *nzDrawerContent>
+      <app-placealongside
+        [drawerClose]="closebackplacealong"
+        [airtotal]="airtotal"
+        [ShipBoattotal]="ShipBoattotal"
+        [Roadtotal]="Roadtotal"
+        [Railtotal]="Railtotal"
+        [placeorderdata]="placeorderdata"
+        [alltotal]="alltotal"
+        [nettotalamountplaceorder]="nettotalamountplaceorder"
+        [advanceamountta]="advanceamountta"></app-placealongside>
+    </ng-container>
+  </nz-drawer> -->
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzKeyboard]="true"
+  [nzVisible]="placealongorder"
+  [nzTitle]="drawerTitle9"
+  (nzOnClose)="placeorderclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-placealongside
+      [drawerClose]="closebackplacealong"
+      [airtotal]="airtotal"
+      [ShipBoattotal]="ShipBoattotal"
+      [Roadtotal]="Roadtotal"
+      [Railtotal]="Railtotal"
+      [placeorderdata]="placeorderdata"
+      [alltotal]="alltotal"
+      [nettotalamountplaceorder]="nettotalamountplaceorder"
+      [advanceamountta]="advanceamountta"
+      [accototal]="accototal"
+      [detailsandpurpose]="detailsandpurpose"
+    ></app-placealongside>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="900"
+  [nzKeyboard]="true"
+  [nzVisible]="checklistorder"
+  [nzTitle]="drawerTitle11"
+  (nzOnClose)="checklistorderclose()"
+>
+  <ng-container *nzDrawerContent>
+    <app-checklist
+      [drawerClose]="closebackchecklist"
+      [checklist]="checklist"
+      [checklistyesno]="checklistyesno"
+      [SECTION_TYPE]="SECTION_TYPE"
+      [SIGNNAME]="NAME"
+      [NAME_HN]="NAME_HN"
+      [OFFICE_NAME]="OFFICE_NAME"
+      [OFFICE_NAME_HN]="OFFICE_NAME_HN"
+      [POST]="POST"
+      [POST_HN]="POST_HN"
+    ></app-checklist>
+  </ng-container>
+</nz-drawer>

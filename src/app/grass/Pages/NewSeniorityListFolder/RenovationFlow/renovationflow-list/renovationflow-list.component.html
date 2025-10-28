@@ -1,0 +1,4776 @@
+<!-- main buttons -->
+<!-- <div nz-row style="justify-content: space-evenly; margin-bottom: 10px">
+
+    <div style="text-align: center">
+        <button [ngClass]="openreceiveddiv1 ? 'button-29' : 'button-28'"
+            [disabled]="mislistdata != undefined && mislistdata.RENOVATION == 0" role="button"
+            (click)="clickCardsMain1('MAIN_TREPHYA')">
+            Renovation Request
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{ mislistdata.RENOVATION ? mislistdata.RENOVATION : "0" }}
+            </span>
+        </button>
+    </div>
+</div>
+<hr style="margin: 3px !important" /> -->
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+    <b>Manage Renovation Requests</b>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="12"
+    nzLg="12"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <button
+        style="margin-right: 10px"
+        [nzType]="isFilterApplied"
+        nz-button
+        (click)="showFilter()"
+        nz-tooltip
+        nzTooltipTitle="Filter "
+      >
+        <i nz-icon nzType="filter"></i>
+      </button>
+
+      <nz-form-item style="margin-right: 0px">
+        <nz-input-group
+          nzSearch
+          [nzAddOnAfter]="suffixIconButton"
+          style="max-width: 250px"
+        >
+          <input
+            type="text"
+            name="searchText"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="7">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+                <nz-form-control>
+                  <nz-range-picker
+                    name="month1"
+                    nzMode="month"
+                    [(ngModel)]="selectFromMonth"
+                    nzPlaceholder="Please select Month & year"
+                    nzFormat="MMM/yyyy"
+                    (ngModelChange)="onChangemonth($event)"
+                  ></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="9">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzNoColon class="filter"
+                  >Residence Type</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    nzPlaceHolder="Please Select Residence Type "
+                    name="Residence Type"
+                    nzMode="multiple"
+                    [nzMaxTagCount]="3"
+                    [(ngModel)]="RESIDENCE_TYPE_IDD"
+                  >
+                    <nz-option
+                      *ngFor="let type of emp"
+                      [nzValue]="type.ID"
+                      [nzLabel]="type.TYPE"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="8"
+              style="display: flex; gap: 10px; margin-top: 31px"
+            >
+              <button
+                nz-button
+                [nzLoading]="isSpinning"
+                nzType="primary"
+                class="flexicons"
+                (click)="applyFilter()"
+              >
+                <i nz-icon nzType="filter"></i>Apply Filter
+              </button>
+              <button nz-button nzType="default" (click)="clearFilter()">
+                <i nz-icon nzType="close"></i>Clear filter
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <hr style="margin: 3px !important" /> -->
+<!-- renovation clicks -->
+<div
+  nz-row
+  nzGutter="10"
+  style="
+    margin-bottom: 0px;
+    margin-top: 0px;
+    justify-content: center;
+    margin-top: 10px !important;
+  "
+  *ngIf="openreceiveddiv1"
+>
+  <div nz-col nzSpan="6" style="text-align: center">
+    <button
+      [ngClass]="searchdata == 'TREPHYA' ? 'button-29' : 'button-28'"
+      role="button"
+      (click)="clickCards4('TREPHYA')"
+    >
+      Renovation Request
+    </button>
+  </div>
+  <div nz-col nzSpan="6" style="text-align: center">
+    <button
+      [ngClass]="searchdata == 'RREMINDER' ? 'button-29' : 'button-28'"
+      role="button"
+      (click)="clickCards4('RREMINDER')"
+    >
+      Physical Letter
+    </button>
+  </div>
+  <div nz-col nzSpan="6" style="text-align: center">
+    <button
+      [ngClass]="searchdata == 'RTPHYA' ? 'button-29' : 'button-28'"
+      role="button"
+      (click)="clickCards4('RTPHYA')"
+    >
+      Physical Possession
+    </button>
+  </div>
+  <div nz-col nzSpan="6" style="text-align: center">
+    <button
+      [ngClass]="searchdata == 'RDHRAL' ? 'button-29' : 'button-28'"
+      role="button"
+      (click)="clickCards4('RDHRAL')"
+    >
+      Generated HRA Letter
+    </button>
+  </div>
+  <div nz-col nzSpan="6" style="text-align: center; margin-top: 10px">
+    <button
+      [ngClass]="searchdata == 'RPNONACC' ? 'button-29' : 'button-28'"
+      role="button"
+      (click)="clickCards4('RPNONACC')"
+    >
+      Non-Acceptance
+    </button>
+  </div>
+  <div nz-col nzSpan="8" style="text-align: center; margin-top: 10px">
+    <button
+      [ngClass]="searchdata == 'RPBARD' ? 'button-29' : 'button-28'"
+      role="button"
+      (click)="clickCards4('RPBARD')"
+    >
+      Barred Due To No Action Taken
+    </button>
+  </div>
+
+  <!-- <div style="text-align: center">
+        <button [ngClass]="searchdata == 'TREPHYA' ? 'button-29' : 'button-28'" role="button"
+            [disabled]="mislistdata != undefined && mislistdata.RENOVATION == 0" (click)="clickCards4('TREPHYA')">
+            Renovation Request
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{ mislistdata.RENOVATION ? mislistdata.RENOVATION : "0" }}
+            </span>
+        </button>
+    </div>
+    <div style="text-align: center">
+        <button [ngClass]="searchdata == 'RREMINDER' ? 'button-29' : 'button-28'" role="button" [disabled]="
+        mislistdata != undefined && mislistdata.R_PHYSICAL_REMINDER == 0
+      " (click)="clickCards4('RREMINDER')" [disabled]="mislistdata.R_PHYSICAL_REMINDER == 0">
+            Physical Letter
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{mislistdata.R_PHYSICAL_REMINDER? mislistdata.R_PHYSICAL_REMINDER: "0"}}
+            </span>
+        </button>
+    </div>
+    <div style="text-align: center">
+        <button [ngClass]="searchdata == 'RTPHYA' ? 'button-29' : 'button-28'" role="button" [disabled]="
+        mislistdata != undefined && mislistdata.R_PHYSICAL_POSSESSION == 0
+      " (click)="clickCards4('RTPHYA')" [disabled]="mislistdata.R_PHYSICAL_POSSESSION == 0">
+            Physical Possession
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{mislistdata.R_PHYSICAL_POSSESSION? mislistdata.R_PHYSICAL_POSSESSION: "0"}}
+            </span>
+        </button>
+    </div>
+    <div style="text-align: center">
+        <button [ngClass]="searchdata == 'RDHRAL' ? 'button-29' : 'button-28'" role="button"
+            [disabled]="mislistdata != undefined && mislistdata.R_HRA == 0" (click)="clickCards4('RDHRAL')"
+            [disabled]="mislistdata.R_HRA == 0">
+            Generated HRA Letter
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{ mislistdata.R_HRA ? mislistdata.R_HRA : "0" }}
+            </span>
+        </button>
+    </div>
+    <div style="text-align: center">
+        <button [ngClass]="searchdata == 'RPNONACC' ? 'button-29' : 'button-28'" role="button"
+            [disabled]="mislistdata != undefined && mislistdata.R_NON_ACCEPTANCE == 0" (click)="clickCards4('RPNONACC')"
+            [disabled]="mislistdata.R_NON_ACCEPTANCE == 0">
+            Non-Acceptance
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{ mislistdata.R_NON_ACCEPTANCE ? mislistdata.R_NON_ACCEPTANCE : "0" }}
+            </span>
+        </button>
+    </div>
+    <div style="text-align: center">
+        <button [ngClass]="searchdata == 'RPBARD' ? 'button-29' : 'button-28'" role="button"
+            [disabled]="mislistdata != undefined && mislistdata.R_BARD_COUNT == 0" (click)="clickCards4('RPBARD')"
+            [disabled]="mislistdata.R_BARD_COUNT == 0">
+            Barred Due To No Action Taken
+            <span *ngIf="mislistdata != undefined && mislistdata != null" style="padding: 0px 0px 0px 15px">
+                {{ mislistdata.R_BARD_COUNT ? mislistdata.R_BARD_COUNT : "0" }}
+            </span>
+        </button>
+    </div> -->
+</div>
+<!-- renovation clicks end -->
+
+<!-- main renovation -->
+<div nz-row *ngIf="searchdata == 'TREPHYA'">
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #TotalTREPHYA
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="datalistForTotalTREPHYA"
+      [nzLoading]="isRecordLoadingTREPHYA"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'auto', y: '75vh' }"
+      [nzTotal]="totalRecordsTotalTREPHYA"
+      [(nzPageIndex)]="pageIndexTotalTREPHYA"
+      [(nzPageSize)]="pageSizeTotalTREPHYA"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sortTotalTREPHYA($event)"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="440px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="230px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="230px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="230px"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            nzColumnKey="{{ 'MOBILE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            City
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'AREA_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Area
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'BUILDING_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Building Name
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Quarter Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of TotalTREPHYA.data; let n = index">
+          <td style="text-align: center">
+            <nz-tag
+              *ngIf="data.RENOVATION_STATUS == 'A'"
+              nzColor="success"
+              style="
+                cursor: pointer;
+                font-size: 13px !important;
+                padding: 1px 5px;
+                font-weight: bold;
+              "
+            >
+              Renovation Request Approved </nz-tag
+            >&nbsp;
+            <nz-tag
+              *ngIf="data.RENOVATION_STATUS == 'R'"
+              nzColor="error"
+              style="
+                cursor: pointer;
+                font-size: 13px !important;
+                padding: 1px 5px;
+                font-weight: bold;
+              "
+              >Renovation Rejected</nz-tag
+            >
+            &nbsp;
+            <button
+              *ngIf="data.RENOVATION_STATUS == 'P'"
+              nz-button
+              nzType="primary"
+              (click)="approverenovation(data, false)"
+              style="
+                color: white !important;
+                border-radius: 10px;
+                font-size: 12px;
+              "
+            >
+              <span>View Renovation Request</span></button
+            >&nbsp;<button
+              *ngIf="
+                data.HABITABLE_CERTIFICATE != null &&
+                data.HABITABLE_CERTIFICATE != undefined &&
+                data.HABITABLE_CERTIFICATE != ''
+              "
+              nz-button
+              nzType="primary"
+              (click)="openCertificate(data.HABITABLE_CERTIFICATE)"
+              style="
+                color: white !important;
+                border-radius: 10px;
+                margin-bottom: 5px;
+                font-size: 12px;
+              "
+            >
+              <span>View Habitable Certificate</span></button
+            >&nbsp;
+            <button
+              *ngIf="
+                (data.PHYSICAL_OCCUPANCY_LETTER == null ||
+                  data.PHYSICAL_OCCUPANCY_LETTER == undefined ||
+                  data.PHYSICAL_OCCUPANCY_LETTER == '') &&
+                data.IS_BARRED != 1 &&
+                data.RENOVATION_STATUS == 'A' &&
+                (data.PHYSICAL_OCCUPANCY_REMINDER == null ||
+                  data.PHYSICAL_OCCUPANCY_REMINDER == '' ||
+                  data.PHYSICAL_OCCUPANCY_REMINDER == undefined) &&
+                (Timmerendloopphend[n] != 0 || Timmerendloopphend[n] != '')
+              "
+              nz-button
+              nzType="primary"
+              (click)="generatephy(data)"
+              style="
+                color: white !important;
+                border-radius: 10px;
+                font-size: 12px;
+              "
+            >
+              <span> Generate Physical Letter </span></button
+            >&nbsp;
+          </td>
+          <td style="text-align: center">
+            <span *ngIf="data.FLAT_APPLICATION_NO != null">
+              <span
+                *ngIf="data.FLAT_APPLICATION_NO.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.FLAT_APPLICATION_NO"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMPLOYEE_NAME != null">
+              <span
+                *ngIf="data.EMPLOYEE_NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMPLOYEE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMPLOYEE_NAME.length < 20">
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.DESIGNATION != null">
+              <span
+                *ngIf="data.DESIGNATION.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.DESIGNATION"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.DESIGNATION.length < 20">
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.DESIGNATION == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 20">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<!-- renovation reminder -->
+<div nz-row *ngIf="searchdata === 'RREMINDER'">
+  <div
+    nz-col
+    nzSpan="24"
+    style="text-align: right"
+    *ngIf="EmployeeAcceptancelist.length > 0"
+  ></div>
+
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #datatablerr
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="datalistForTotalRREMINDER"
+      [nzLoading]="isRecordLoadingRREMINDER"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'auto', y: '390px' }"
+      [nzTotal]="totalRecordsTotalRREMINDER"
+      [(nzPageIndex)]="pageIndexTotalRREMINDER"
+      [(nzPageSize)]="pageSizeTotalRREMINDER"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sortTotalRREMINDER($event)"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th
+            nzLeft
+            nzWidth="270px"
+            style="font-weight: bold; text-align: center"
+          >
+            Action
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="240px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            nzColumnKey="{{ 'MOBILE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            City
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'AREA_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Area
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'BUILDING_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Building Name
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Quarter Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let data of datatablerr.data; let i = index"
+          style="text-align: center"
+        >
+          <td nzLeft style="text-align: center">
+            <button
+              *ngIf="
+                data.INSPECTOR_STATUS == 'A' &&
+                data.PHYSICAL_OCCUPANCY_REMINDER != null &&
+                data.PHYSICAL_OCCUPANCY_REMINDER != '' &&
+                data.PHYSICAL_OCCUPANCY_REMINDER != undefined
+              "
+              nz-button
+              nzType="default"
+              (click)="
+                Viewoccupancyformletter111(data.PHYSICAL_OCCUPANCY_REMINDER)
+              "
+              style="border-radius: 10px; font-size: 12px"
+            >
+              <span style="display: flex; align-items: center">
+                <span nz-icon nzType="eye" nzTheme="outline"></span
+                >&nbsp;Physical Letter</span
+              >
+            </button>
+          </td>
+          <td>
+            <span *ngIf="data.FLAT_APPLICATION_NO != null">
+              <span
+                *ngIf="data.FLAT_APPLICATION_NO.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.FLAT_APPLICATION_NO"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMPLOYEE_NAME != null">
+              <span
+                *ngIf="data.EMPLOYEE_NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMPLOYEE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMPLOYEE_NAME.length < 20">
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.DESIGNATION != null">
+              <span
+                *ngIf="data.DESIGNATION.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.DESIGNATION"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.DESIGNATION.length < 20">
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.DESIGNATION == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 20">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- renovation physical acceptance -->
+<div nz-row *ngIf="searchdata == 'RTPHYA'">
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #TotalRTPHYA
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="datalistForTotalRTPHYA"
+      [nzLoading]="isRecordLoadingRTPHYA"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'auto', y: '75vh' }"
+      [nzTotal]="totalRecordsTotalRTPHYA"
+      [(nzPageIndex)]="pageIndexTotalRTPHYA"
+      [(nzPageSize)]="pageSizeTotalRTPHYA"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sortTotalRTPHYA($event)"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="500px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="240px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            nzColumnKey="{{ 'MOBILE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            City
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'AREA_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Area
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'BUILDING_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Building Name
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Quarter Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of TotalRTPHYA.data" style="text-align: center">
+          <td>
+            <span
+              *ngIf="
+                data.PHYSICAL_OCCUPANCY_LETTER != null &&
+                data.PHYSICAL_OCCUPANCY_LETTER != undefined &&
+                data.PHYSICAL_OCCUPANCY_LETTER != '' &&
+                data.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1
+              "
+            >
+              <button
+                nz-button
+                nzType="default"
+                (click)="
+                  Viewoccupancyformletter(data.PHYSICAL_OCCUPANCY_LETTER)
+                "
+                style="border-radius: 10px; font-size: 12px"
+              >
+                <span style="display: flex; align-items: center">
+                  <span nz-icon nzType="eye" nzTheme="outline"></span>&nbsp;
+                  Physical Possession Letter</span
+                >
+              </button> </span
+            >&nbsp;
+
+            <span
+              *ngIf="
+                data.PHYSICAL_OCCUPANCY_LETTER != null &&
+                data.PHYSICAL_OCCUPANCY_LETTER != undefined &&
+                data.PHYSICAL_OCCUPANCY_LETTER != '' &&
+                (data.STOP_HRA == null ||
+                  data.STOP_HRA == undefined ||
+                  data.STOP_HRA == '')
+              "
+            >
+              <button
+                nz-button
+                nzType="primary"
+                (click)="generatestophra(data)"
+                style="border-radius: 10px; font-size: 12px"
+              >
+                <span>Generate HRA Deduction Letter</span>
+              </button>
+            </span>
+          </td>
+
+          <td>
+            <span *ngIf="data.FLAT_APPLICATION_NO != null">
+              <span
+                *ngIf="data.FLAT_APPLICATION_NO.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.FLAT_APPLICATION_NO"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMPLOYEE_NAME != null">
+              <span
+                *ngIf="data.EMPLOYEE_NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMPLOYEE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMPLOYEE_NAME.length < 20">
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.DESIGNATION != null">
+              <span
+                *ngIf="data.DESIGNATION.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.DESIGNATION"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.DESIGNATION.length < 20">
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.DESIGNATION == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 20">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<!-- renovation hra -->
+<div nz-row *ngIf="searchdata == 'RDHRAL'">
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #TotalRDHRAL
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="EmployeeRDHRALlist"
+      [nzLoading]="isRecordLoadingRDHRAL"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'auto', y: '75vh' }"
+      [nzTotal]="totalRecordsTotalRDHRAL"
+      [(nzPageIndex)]="pageIndexTotalRDHRAL"
+      [(nzPageSize)]="pageSizeTotalRDHRAL"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sortTotalRDHRAL($event)"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="250px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="240px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            nzColumnKey="{{ 'MOBILE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            City
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'AREA_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Area
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'BUILDING_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Building Name
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Quarter Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of TotalRDHRAL.data">
+          <td style="text-align: center">
+            <span
+              *ngIf="
+                data.STOP_HRA != null &&
+                data.STOP_HRA != undefined &&
+                data.STOP_HRA != ''
+              "
+            >
+              <button
+                nz-button
+                nzType="default"
+                (click)="viewhra(data.STOP_HRA)"
+                style="border-radius: 10px; font-size: 12px"
+              >
+                <span style="display: flex; align-items: center">
+                  <span nz-icon nzType="eye" nzTheme="outline"></span>&nbsp;HRA
+                  Deduction Letter</span
+                >
+              </button>
+            </span>
+          </td>
+
+          <td style="text-align: center">
+            <span *ngIf="data.FLAT_APPLICATION_NO != null">
+              <span
+                *ngIf="data.FLAT_APPLICATION_NO.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.FLAT_APPLICATION_NO"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMPLOYEE_NAME != null">
+              <span
+                *ngIf="data.EMPLOYEE_NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMPLOYEE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMPLOYEE_NAME.length < 20">
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.DESIGNATION != null">
+              <span
+                *ngIf="data.DESIGNATION.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.DESIGNATION"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.DESIGNATION.length < 20">
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.DESIGNATION == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 20">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- renovation non acceptance -->
+<div nz-row *ngIf="searchdata == 'RPNONACC'">
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #TotalRPNONACC
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="datalistForTotalRPNONACC"
+      [nzLoading]="isRecordLoadingRPNONACC"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'auto', y: '75vh' }"
+      [nzTotal]="totalRecordsTotalRPNONACC"
+      [(nzPageIndex)]="pageIndexTotalRPNONACC"
+      [(nzPageSize)]="pageSizeTotalRPNONACC"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sortTotalRPNONACC($event)"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="240px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            nzColumnKey="{{ 'MOBILE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            City
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'AREA_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Area
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'BUILDING_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Building Name
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Quarter Name
+          </th>
+
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'INSPETOR_APPROVE_DATE_TIME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Rejected Datetime
+          </th>
+          <th
+            nzWidth="250px"
+            nzColumnKey="{{ 'INSPECTOR_REMARK' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Rejection Remark
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'FLAT_REJECTED_DATE_TIME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Non-Acceptance Datetime
+          </th>
+          <th
+            nzWidth="250px"
+            nzColumnKey="{{ 'NON_ACCEPTANCE_REMARK' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Non-Acceptance Remark
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of TotalRPNONACC.data" style="text-align: center">
+          <td>
+            <span *ngIf="data.FLAT_APPLICATION_NO != null">
+              <span
+                *ngIf="data.FLAT_APPLICATION_NO.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.FLAT_APPLICATION_NO"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMPLOYEE_NAME != null">
+              <span
+                *ngIf="data.EMPLOYEE_NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMPLOYEE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMPLOYEE_NAME.length < 20">
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.DESIGNATION != null">
+              <span
+                *ngIf="data.DESIGNATION.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.DESIGNATION"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.DESIGNATION.length < 20">
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.DESIGNATION == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 20">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+          </td>
+
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{
+              data["INSPETOR_APPROVE_DATE_TIME"]
+                ? (data["INSPETOR_APPROVE_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm")
+                : "-"
+            }}
+          </td>
+          <td>
+            <span *ngIf="data.INSPECTOR_REMARK != null">
+              <span
+                *ngIf="data.INSPECTOR_REMARK.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.INSPECTOR_REMARK"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["INSPECTOR_REMARK"] == null
+                    ? "-"
+                    : (data.INSPECTOR_REMARK | slice : 0 : 20)
+                }}{{ data.INSPECTOR_REMARK.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.INSPECTOR_REMARK.length < 20">
+                {{
+                  data["INSPECTOR_REMARK"] == null
+                    ? "-"
+                    : (data.INSPECTOR_REMARK | slice : 0 : 20)
+                }}{{ data.INSPECTOR_REMARK.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.INSPECTOR_REMARK == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{
+              data["FLAT_REJECTED_DATE_TIME"]
+                ? (data["FLAT_REJECTED_DATE_TIME"] | date : "dd/MM/yyyy HH:mm")
+                : "-"
+            }}
+          </td>
+          <td>
+            <span *ngIf="data.NON_ACCEPTANCE_REMARK != null">
+              <span
+                *ngIf="data.NON_ACCEPTANCE_REMARK.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.NON_ACCEPTANCE_REMARK"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["NON_ACCEPTANCE_REMARK"] == null
+                    ? "-"
+                    : (data.NON_ACCEPTANCE_REMARK | slice : 0 : 20)
+                }}{{ data.NON_ACCEPTANCE_REMARK.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.NON_ACCEPTANCE_REMARK.length < 20">
+                {{
+                  data["NON_ACCEPTANCE_REMARK"] == null
+                    ? "-"
+                    : (data.NON_ACCEPTANCE_REMARK | slice : 0 : 20)
+                }}{{ data.NON_ACCEPTANCE_REMARK.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.NON_ACCEPTANCE_REMARK == null">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- renovation barred after physical -->
+<div nz-row *ngIf="searchdata == 'RPBARD'">
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #TotalRPBARD
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="datalistForTotalRPBARD"
+      [nzLoading]="isRecordLoadingRPBARD"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: 'auto', y: '75vh' }"
+      [nzTotal]="totalRecordsTotalRPBARD"
+      [(nzPageIndex)]="pageIndexTotalRPBARD"
+      [(nzPageSize)]="pageSizeTotalRPBARD"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sortTotalRPBARD($event)"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="155px"
+            nzColumnKey="{{ 'INSPETOR_APPROVE_DATE_TIME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Approved Datetime
+          </th>
+          <th
+            nzWidth="240px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="240px"
+            nzColumnKey="{{ 'EMAIL_ID' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            nzColumnKey="{{ 'MOBILE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            City
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'AREA_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Area
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'BUILDING_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Building Name
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'FLAT_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Quarter Name
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of TotalRPBARD.data" style="text-align: center">
+          <td>
+            <span *ngIf="data.FLAT_APPLICATION_NO != null">
+              <span
+                *ngIf="data.FLAT_APPLICATION_NO.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.FLAT_APPLICATION_NO"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                {{
+                  data["FLAT_APPLICATION_NO"] == null
+                    ? "-"
+                    : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{
+              data["INSPETOR_APPROVE_DATE_TIME"]
+                ? (data["INSPETOR_APPROVE_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm")
+                : "-"
+            }}
+          </td>
+          <td>
+            <span *ngIf="data.EMPLOYEE_NAME != null">
+              <span
+                *ngIf="data.EMPLOYEE_NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMPLOYEE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMPLOYEE_NAME.length < 20">
+                {{
+                  data["EMPLOYEE_NAME"] == null
+                    ? "-"
+                    : (data.EMPLOYEE_NAME | slice : 0 : 20)
+                }}{{ data.EMPLOYEE_NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+          </td>
+          <td style="white-space: pre-line; text-align: center">
+            {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.DESIGNATION != null">
+              <span
+                *ngIf="data.DESIGNATION.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.DESIGNATION"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.DESIGNATION.length < 20">
+                {{
+                  data["DESIGNATION"] == null
+                    ? "-"
+                    : (data.DESIGNATION | slice : 0 : 20)
+                }}{{ data.DESIGNATION.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.DESIGNATION == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 20">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 20)
+                }}{{ data.EMAIL_ID.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+          </td>
+          <td
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<!-- shubham -->
+
+<div *ngIf="printOrderModalVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1000"
+    [nzVisible]="printOrderModalVisible"
+    [nzTitle]="printOrderModalVisibletitle"
+    (nzOnClose)="printOrderModalCancel()"
+    (nzKeyboard)="(false)"
+  >
+    <ng-container *nzDrawerContent>
+      <nz-steps [nzCurrent]="acceptancestep" nzSize="small">
+        <nz-step nzTitle="View Acceptance"></nz-step>
+        <nz-step nzTitle="Generate Physical Letter "></nz-step>
+      </nz-steps>
+      <hr />
+      <div *ngIf="acceptancestep == 0" style="width: 100%">
+        <iframe
+          [src]="viewPdfSafe"
+          style="width: 100%; height: 600px"
+          frameborder="0"
+        ></iframe>
+      </div>
+      <div *ngIf="acceptancestep == 1" style="width: 100%">
+        <div nz-row nzGutter="12">
+          <div nz-col nzSpan="6" class="my-box" style="margin-top: 0px">
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Signature </nz-form-label>
+                  <nz-form-control nzErrorTip="Select Signature">
+                    <nz-select
+                      name="NEW_SIGNATURE_ID"
+                      [(ngModel)]="dataAllotmentPublish.NEW_SIGNATURE_ID"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      style="width: 100%"
+                      (ngModelChange)="signature($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Select Date</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Select Date">
+                    <nz-date-picker
+                      nzFormat="dd/MM/yyyy"
+                      nzAllowClear="false"
+                      [nzDisabledDate]="disabledStartDate"
+                      [(ngModel)]="todaysdateee1"
+                      style="width: 100%"
+                      name="todaysdateee1"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Physical Possession Date
+                  </nz-form-label>
+                  <nz-form-control nzErrorTip="Select Date">
+                    <nz-date-picker
+                      nzFormat="dd/MM/yyyy"
+                      nzAllowClear="false"
+                      [nzDisabledDate]="disabledStartDate11"
+                      [(ngModel)]="dateeeeeforremnderPH"
+                      style="width: 100%"
+                      name="possessionDatefsdf"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <div nz-col nzSpan="18" class="my-box">
+            <nz-spin [nzSpinning]="IsspinningData">
+              <div style="margin-top: 0px">
+                <div id="Prntmodal11111">
+                  <div style="margin-left: 40px; margin-right: 5px">
+                    <div style="margin-left: 5px">
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 12px;
+                              text-align: left;
+                              padding: 5px 5px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>कार्यालय</div>
+                            <div>प्रधान मुख्य आयकर आयुक्त</div>
+                            <div>तिसरी मंजिल, आयकर भवन,</div>
+                            <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                          </td>
+                          <td
+                            style="
+                              width: 20%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <img
+                              *ngIf="KeyImage === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                            <img
+                              *ngIf="KeyImage === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                          </td>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 12px;
+                              text-align: left;
+                              padding: 5px 5px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>Office of the</div>
+                            <div>Pr. Chief Commissioner of Income Tax</div>
+                            <div>3rd Floor, Aayakar Bhavan,</div>
+                            <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                          </td>
+                        </tr>
+                      </table>
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 12px">
+                          <td
+                            style="
+                              width: 40%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-right: 0px;
+                            "
+                          >
+                            <div>फोन: 022-22017654</div>
+                          </td>
+                          <td
+                            style="
+                              width: 60%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            "
+                          >
+                            <div style="text-align: end">
+                              Email: mumbai.pccit@incometax.gov.in
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <!-- <table style="border-collapse: collapse; width: 100%">
+                                                <tr>
+                                                    <td style="
+                              width: 100%;
+                              text-align: left;
+                              padding: 5px 8px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            ">
+                                                        <div style="font-size: 13px !important">
+                                                            भारत सरकार
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            GOVERNMENT OF INDIA
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            OFFICE OF THE
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            <b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX,
+                                                                MUMBAI</b>
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD,
+                                                            MUMBAI-20
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            (022)2200 6385(DIRECT), (022)2209 6738 (FAX),
+                                                            (022)2203 9131 EXTN.2328.
+                                                        </div>
+                                                        <div style="font-size: 13px !important">
+                                                            e-mail:<a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table> -->
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 13px">
+                          <td
+                            style="
+                              width: 75%;
+                              text-align: left;
+                              padding: 5px 14px;
+                              border: 1px solid black;
+                              font-size: 13px;
+                            "
+                          >
+                            No. Pr.CCIT/Mum/Admn./ Qrtrs/{{
+                              accetrejectdata.RESIDENCE_TYPE_NAME != undefined
+                                ? accetrejectdata.RESIDENCE_TYPE_NAME
+                                : ""
+                            }}/{{
+                              todaysyear != undefined
+                                ? (todaysyear | date : "yyyy")
+                                : ""
+                            }}-
+                            {{
+                              nextyear != undefined
+                                ? (nextyear | date : "yyyy")
+                                : ""
+                            }}
+                          </td>
+                          <td
+                            style="
+                              width: 25%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              font-size: 13px;
+                            "
+                          >
+                            Date :
+                            {{ todaysdateee1 | date : "dd/MM/yyyy" }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div style="line-height: 1.9">
+                      <div
+                        style="
+                          padding-left: 20px;
+                          font-size: 13px;
+                          margin-top: 14px;
+                        "
+                      >
+                        To<br />
+                        Shri/Smt./Ms. {{ accetrejectdata.EMPLOYEE_NAME }}<br />
+                        Ma'am/Sir,
+                      </div>
+                      <br />
+                      <div
+                        style="
+                          padding-left: 40px;
+                          font-size: 13px;
+                          margin-bottom: 10px;
+                        "
+                      >
+                        Sub: Taking Physical possession of Government
+                        accommodation at Bldg no.
+                        {{
+                          accetrejectdata.BUILDING_NAME != undefined
+                            ? accetrejectdata.BUILDING_NAME
+                            : ""
+                        }}, Quarter no.
+                        {{
+                          accetrejectdata.FLAT_NAME != undefined
+                            ? accetrejectdata.FLAT_NAME
+                            : ""
+                        }},
+                        {{
+                          accetrejectdata.CITY_NAME != undefined
+                            ? accetrejectdata.CITY_NAME
+                            : ""
+                        }},
+                        {{
+                          accetrejectdata.RESIDENCE_TYPE_NAME != undefined
+                            ? accetrejectdata.RESIDENCE_TYPE_NAME
+                            : ""
+                        }}. -reg.
+                      </div>
+
+                      <div
+                        style="
+                          text-align: center;
+                          margin-bottom: 10px;
+                          font-size: 15px;
+                        "
+                      >
+                        *****
+                      </div>
+                      <div
+                        style="
+                          padding-left: 40px;
+                          font-size: 13px;
+                          margin-bottom: 10px;
+                          text-align: justify;
+                        "
+                      >
+                        Please refer to the above.
+                      </div>
+
+                      <div
+                        style="
+                          margin-bottom: 10px;
+                          padding-left: 20px;
+                          font-size: 13px;
+                          text-align: justify;
+                        "
+                      >
+                        2.&nbsp;&nbsp;&nbsp;As per records available in this
+                        office, it is observed that government accommodation at
+                        Bldg no.
+                        {{
+                          accetrejectdata.BUILDING_NAME != undefined
+                            ? accetrejectdata.BUILDING_NAME
+                            : ""
+                        }}, Quarter no.{{
+                          accetrejectdata.FLAT_NAME != undefined
+                            ? accetrejectdata.FLAT_NAME
+                            : ""
+                        }},
+                        {{
+                          accetrejectdata.CITY_NAME != undefined
+                            ? accetrejectdata.CITY_NAME
+                            : ""
+                        }},
+                        {{
+                          accetrejectdata.RESIDENCE_TYPE_NAME != undefined
+                            ? accetrejectdata.RESIDENCE_TYPE_NAME
+                            : ""
+                        }}, Type-III. was allotted to you vide letter dated
+                        {{
+                          accetrejectdata.ALLOTMENT_DATE_TIME
+                            | date : "dd/MM/yyyy"
+                        }}. for which you have filed acceptance letter on
+                        {{
+                          accetrejectdata.ACCEPTANCE_LETTER_DATE_TIME
+                            | date : "dd/MM/yyyy"
+                        }}
+                      </div>
+                      <div
+                        style="
+                          padding-left: 20px;
+                          font-size: 13px;
+                          margin-bottom: 10px;
+                          text-align: justify;
+                        "
+                      >
+                        3.&nbsp;&nbsp;&nbsp;In this regard, kindly note that the
+                        last date of taking physical possession is
+                        {{ dateeeeeforremnderPH | date : "dd/MM/yyyy" }}. You
+                        are requested to submit an intimation of physical
+                        possession by the above-mentioned date. Kindly also note
+                        that if you fail to take the physical possession of the
+                        allotted quarter by the above-mentioned date, your
+                        allotment is liable to be cancelled.
+                      </div>
+                      <!-- <br /> -->
+                      <div
+                        style="
+                          float: right;
+                          text-align: center;
+                          margin-top: auto;
+                          width: 100%;
+                          padding-top: 15%;
+                          font-weight: 600;
+                        "
+                      >
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="POST"> {{ POST }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: none">
+                  <div id="Prntmodal11111forback">
+                    <div style="margin-left: 40px; margin-right: 5px">
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 12px;
+                              text-align: left;
+                              padding: 5px 5px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>कार्यालय</div>
+                            <div>प्रधान मुख्य आयकर आयुक्त</div>
+                            <div>तिसरी मंजिल, आयकर भवन,</div>
+                            <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                          </td>
+                          <td
+                            style="
+                              width: 20%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <img
+                              *ngIf="KeyImage === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                            <img
+                              *ngIf="KeyImage === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                          </td>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 12px;
+                              text-align: left;
+                              padding: 5px 5px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>Office of the</div>
+                            <div>Pr. Chief Commissioner of Income Tax</div>
+                            <div>3rd Floor, Aayakar Bhavan,</div>
+                            <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                          </td>
+                        </tr>
+                      </table>
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 12px">
+                          <td
+                            style="
+                              width: 40%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-right: 0px;
+                            "
+                          >
+                            <div>फोन: 022-22017654</div>
+                          </td>
+                          <td
+                            style="
+                              width: 60%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            "
+                          >
+                            <div style="text-align: end">
+                              Email: mumbai.pccit@incometax.gov.in
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <!-- <table style="border-collapse: collapse; width: 100%">
+                                                <tr>
+                                                    <td style="
+                              width: 100%;
+                              text-align: left;
+                              padding: 5px 8px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            ">
+                                                        <div style="font-size: 16px !important">
+                                                            भारत सरकार
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            GOVERNMENT OF INDIA
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            OFFICE OF THE
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            <b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX,
+                                                                MUMBAI</b>
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD,
+                                                            MUMBAI-20
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            (022)2200 6385(DIRECT), (022)2209 6738 (FAX),
+                                                            (022)2203 9131 EXTN.2328.
+                                                        </div>
+                                                        <div style="font-size: 16px !important">
+                                                            e-mail:<a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table> -->
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 14px">
+                          <td
+                            style="
+                              width: 75%;
+                              text-align: left;
+                              padding: 5px 14px;
+                              border: 1px solid black;
+                              font-size: 16px;
+                            "
+                          >
+                            No. Pr.CCIT/Mum/Admn./ Qrtrs/{{
+                              accetrejectdata.RESIDENCE_TYPE_NAME != undefined
+                                ? accetrejectdata.RESIDENCE_TYPE_NAME
+                                : ""
+                            }}/{{
+                              todaysyear != undefined
+                                ? (todaysyear | date : "yyyy")
+                                : ""
+                            }}-
+                            {{
+                              nextyear != undefined
+                                ? (nextyear | date : "yyyy")
+                                : ""
+                            }}
+                          </td>
+                          <td
+                            style="
+                              width: 25%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              font-size: 16px;
+                            "
+                          >
+                            Date :
+                            {{ todaysdateee1 | date : "dd/MM/yyyy" }}
+                          </td>
+                        </tr>
+                      </table>
+
+                      <div style="line-height: 1.9">
+                        <div
+                          style="
+                            padding-left: 20px;
+                            font-size: 16px;
+                            margin-top: 25px;
+                          "
+                        >
+                          To<br />
+                          Shri/Smt./Ms. {{ accetrejectdata.EMPLOYEE_NAME
+                          }}<br />
+                          Ma'am/Sir,
+                        </div>
+                        <br />
+                        <div
+                          style="
+                            padding-left: 40px;
+                            font-size: 14px;
+                            margin-bottom: 0px;
+                            margin-top: 0px;
+                          "
+                        >
+                          Sub: Taking Physical possession of Government
+                          accommodation at Bldg no.
+                          {{
+                            accetrejectdata.BUILDING_NAME != undefined
+                              ? accetrejectdata.BUILDING_NAME
+                              : ""
+                          }}, Quarter no.
+                          {{
+                            accetrejectdata.FLAT_NAME != undefined
+                              ? accetrejectdata.FLAT_NAME
+                              : ""
+                          }},
+                          {{
+                            accetrejectdata.CITY_NAME != undefined
+                              ? accetrejectdata.CITY_NAME
+                              : ""
+                          }},
+                          {{
+                            accetrejectdata.RESIDENCE_TYPE_NAME != undefined
+                              ? accetrejectdata.RESIDENCE_TYPE_NAME
+                              : ""
+                          }}. -reg.
+                        </div>
+                        <br />
+                        <div
+                          style="
+                            text-align: center;
+                            margin-bottom: 10px;
+                            font-size: 16px;
+                          "
+                        >
+                          *****
+                        </div>
+                        <div
+                          style="
+                            padding-left: 40px;
+                            font-size: 15px;
+                            margin-bottom: 20px;
+                            text-align: justify;
+                          "
+                        >
+                          Please refer to the above.
+                        </div>
+
+                        <div
+                          style="
+                            margin-bottom: 10px;
+                            padding-left: 20px;
+                            font-size: 15px;
+                            text-align: justify;
+                          "
+                        >
+                          2.&nbsp;&nbsp;&nbsp;As per records available in this
+                          office, it is observed that government accommodation
+                          at Bldg no.
+                          {{
+                            accetrejectdata.BUILDING_NAME != undefined
+                              ? accetrejectdata.BUILDING_NAME
+                              : ""
+                          }}, Quarter no.{{
+                            accetrejectdata.FLAT_NAME != undefined
+                              ? accetrejectdata.FLAT_NAME
+                              : ""
+                          }},
+                          {{
+                            accetrejectdata.CITY_NAME != undefined
+                              ? accetrejectdata.CITY_NAME
+                              : ""
+                          }},
+                          {{
+                            accetrejectdata.RESIDENCE_TYPE_NAME != undefined
+                              ? accetrejectdata.RESIDENCE_TYPE_NAME
+                              : ""
+                          }}, Type-III. was allotted to you vide letter dated
+                          {{
+                            accetrejectdata.ALLOTMENT_DATE_TIME
+                              | date : "dd/MM/yyyy"
+                          }}. for which you have filed acceptance letter on
+                          {{
+                            accetrejectdata.ACCEPTANCE_LETTER_DATE_TIME
+                              | date : "dd/MM/yyyy"
+                          }}
+                        </div>
+                        <div
+                          style="
+                            padding-left: 20px;
+                            font-size: 15px;
+                            margin-bottom: 10px;
+                            text-align: justify;
+                          "
+                        >
+                          3.&nbsp;&nbsp;&nbsp;In this regard, kindly note that
+                          the last date of taking physical possession is
+                          {{ dateeeeeforremnderPH | date : "dd/MM/yyyy" }}. You
+                          are requested to submit an intimation of physical
+                          possession by the above-mentioned date. Kindly also
+                          note that if you fail to take the physical possession
+                          of the allotted quarter by the above-mentioned date,
+                          your allotment is liable to be cancelled.
+                        </div>
+                        <br />
+                        <!-- <div style="text-align: center;font-size: 14px;"><b>
+                            Note : This is computer generated letter, signature not required.</b>
+                        </div> -->
+                      </div>
+
+                      <div
+                        style="width: 100%; margin-top: 100px; font-weight: 600"
+                      >
+                        <div
+                          style="
+                            float: right;
+                            text-align: center;
+                            line-height: 1.5;
+                            padding-right: 32px;
+                          "
+                        >
+                          <!-- <div
+                        style="
+                          float: right;
+                          text-align: center;
+                          margin-top: auto;
+                          width: 100%;
+                          padding-top: 15%;
+                          font-weight: 600;
+                        "
+                      > -->
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="POST"> {{ POST }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-spin>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button
+          nz-button
+          nzType="default"
+          (click)="printOrderModalCancel()"
+          style="margin-right: 8px"
+        >
+          Close
+        </button>
+        <button
+          *ngIf="acceptancestep == 0"
+          style="margin-right: 8px"
+          nz-button
+          nzType="primary"
+          (click)="AcceptAcceptancenext(accetrejectdata)"
+        >
+          Accept & Next
+        </button>
+        <button
+          *ngIf="acceptancestep == 1"
+          style="margin-right: 8px"
+          nz-button
+          nzType="default"
+          (click)="previousd()"
+        >
+          Previous
+        </button>
+        <button
+          *ngIf="acceptancestep == 1"
+          style="margin-right: 8px"
+          nz-button
+          nzType="primary"
+          printSectionId="Prntmodal11111"
+          ngxPrint
+          [useExistingCss]="true"
+        >
+          Print
+        </button>
+        <button
+          *ngIf="acceptancestep == 1"
+          [nzLoading]="isSpinning"
+          nz-button
+          nzType="primary"
+          (click)="ApprovependingAcceptanceAccept1111(accetrejectdata)"
+        >
+          Generate Physical Letter
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal
+  [(nzVisible)]="ApprovependingAcceptance"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px"
+  nzClosable="false"
+  [nzFooter]="ApprovependingAcceptanceModalfooter"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500"
+      >Are you sure want to Approve this Acceptance Form?</span
+    >
+    <hr style="margin: 8px 0" />
+    <p
+      style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500"
+    >
+      *Please note that changes cannot be made after Approved.
+    </p>
+  </ng-container>
+
+  <ng-template #ApprovependingAcceptanceModalfooter>
+    <button
+      nz-button
+      nzType="primary"
+      class="btn btn-primary"
+      [nzLoading]="isSpinning"
+      style="background-color: #006699"
+      (click)="cancelApprovependingAcceptance()"
+    >
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="POPreview">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    (nzOnClose)="getdata()"
+    [nzMaskClosable]="false"
+    [nzWidth]="1000"
+    [nzVisible]="POPreview"
+    [nzTitle]="' Generate Physical Letter '"
+    (nzKeyboard)="(false)"
+  >
+    <ng-container *nzDrawerContent>
+      <nz-spin [nzSpinning]="isSpinningmodal">
+        <div nz-row>
+          <div nz-col nzSpan="6" class="my-box">
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Signature </nz-form-label>
+                  <nz-form-control nzErrorTip="Select Signature">
+                    <nz-select
+                      name="NEW_SIGNATURE_ID1"
+                      [(ngModel)]="NEW_SIGNATURE_ID"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      style="width: 100%"
+                      (ngModelChange)="signature($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Select Date</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Select Date">
+                    <nz-date-picker
+                      nzFormat="dd/MM/yyyy"
+                      nzAllowClear="false"
+                      [nzDisabledDate]="disabledStartDate"
+                      [(ngModel)]="todaysdateee"
+                      style="width: 100%"
+                      name="todaysdateee"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Physical Possession Date
+                  </nz-form-label>
+                  <nz-form-control nzErrorTip="Select Date">
+                    <nz-date-picker
+                      nzFormat="dd/MM/yyyy"
+                      nzAllowClear="false"
+                      [nzDisabledDate]="disabledStartDate"
+                      [(ngModel)]="dateeeeeforremnder"
+                      style="width: 100%"
+                      name="possessionDate"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <div class="my-box" nz-col nzSpan="18">
+            <nz-spin [nzSpinning]="IsspinningData">
+              <div>
+                <div id="Prntmodal111">
+                  <div style="margin-left: 40px; margin-right: 5px">
+                    <div style="margin-left: 5px">
+                      <!-- <table style="border-collapse: collapse; width: 100%">
+                        <tr>
+                          <td style="
+                              width: 100%;
+                              text-align: left;
+                              padding: 5px 8px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            ">
+                            <div style="font-size: 13px !important">
+                              भारत सरकार
+                            </div>
+                            <div style="font-size: 13px !important">
+                              GOVERNMENT OF INDIA
+                            </div>
+                            <div style="font-size: 13px !important">
+                              कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई
+                            </div>
+                            <div style="font-size: 13px !important">
+                              OFFICE OF THE
+                            </div>
+                            <div style="font-size: 13px !important">
+                              <b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX,
+                                MUMBAI</b>
+                            </div>
+                            <div style="font-size: 13px !important">
+                              3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD,
+                              MUMBAI-20
+                            </div>
+                            <div style="font-size: 13px !important">
+                              (022)2200 6385 (DIRECT), (022)2209 6738 (FAX),
+                              (022)2203 9131 EXTN.2328.
+                            </div>
+                            <div style="font-size: 13px !important">
+                              e-mail:<a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                            </div>
+                          </td>
+                        </tr>
+                      </table> -->
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 14px;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>कार्यालय</div>
+                            <div>प्रधान मुख्य आयकर आयुक्त</div>
+                            <div>तिसरी मंजिल, आयकर भवन,</div>
+                            <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                          </td>
+                          <td
+                            style="
+                              width: 20%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <img
+                              *ngIf="KeyImage === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                            <img
+                              *ngIf="KeyImage === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                          </td>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 14px;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>Office of the</div>
+                            <div>Pr. Chief Commissioner of Income Tax</div>
+                            <div>3rd Floor, Aayakar Bhavan,</div>
+                            <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                          </td>
+                        </tr>
+                      </table>
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 13px">
+                          <td
+                            style="
+                              width: 40%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-right: 0px;
+                            "
+                          >
+                            <div>फोन: 022-22017654</div>
+                          </td>
+                          <td
+                            style="
+                              width: 60%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            "
+                          >
+                            <div style="text-align: end">
+                              Email: mumbai.pccit@incometax.gov.in
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 13px">
+                          <td
+                            style="
+                              width: 75%;
+                              text-align: left;
+                              padding: 5px 13px;
+                              border: 1px solid black;
+                              font-size: 13px;
+                            "
+                          >
+                            No. Pr.CCIT/Mum/Admn./ Qrtrs/{{
+                              empdata.RESIDENCE_TYPE_NAME != undefined
+                                ? empdata.RESIDENCE_TYPE_NAME
+                                : ""
+                            }}/{{ todaysyear != undefined ? todaysyear : "" }}-
+                            {{ nextyear != undefined ? nextyear : "" }}
+                          </td>
+                          <td
+                            style="
+                              width: 25%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              font-size: 13px;
+                            "
+                          >
+                            Date :
+                            {{ todaysdateee | date : "dd/MM/yyyy" }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div style="line-height: 1.9">
+                      <div
+                        style="
+                          padding-left: 20px;
+                          font-size: 14px;
+                          margin-top: 15px;
+                        "
+                      >
+                        To<br />
+                        Shri/Smt./Ms. {{ empdata.EMPLOYEE_NAME }}<br />
+                        Ma'am/Sir,
+                      </div>
+                      <br />
+                      <div
+                        style="
+                          padding-left: 40px;
+                          font-size: 14px;
+                          margin-bottom: 10px;
+                        "
+                      >
+                        Sub: Taking Physical possession of Government
+                        accommodation at Bldg no.
+                        {{
+                          empdata.BUILDING_NAME != undefined
+                            ? empdata.BUILDING_NAME
+                            : ""
+                        }}, Quarter no.{{
+                          empdata.FLAT_NAME != undefined
+                            ? empdata.FLAT_NAME
+                            : ""
+                        }},
+                        {{
+                          empdata.CITY_NAME != undefined
+                            ? empdata.CITY_NAME
+                            : ""
+                        }},
+                        {{
+                          empdata.RESIDENCE_TYPE_NAME != undefined
+                            ? empdata.RESIDENCE_TYPE_NAME
+                            : ""
+                        }}. -reg.
+                      </div>
+
+                      <div
+                        style="
+                          text-align: center;
+                          margin-bottom: 10px;
+                          font-size: 14px;
+                        "
+                      >
+                        *****
+                      </div>
+                      <div
+                        style="
+                          padding-left: 40px;
+                          font-size: 14px;
+                          margin-bottom: 10px;
+                          text-align: justify;
+                        "
+                      >
+                        Please refer to the above.
+                      </div>
+
+                      <div
+                        style="
+                          margin-bottom: 10px;
+                          padding-left: 20px;
+                          font-size: 14px;
+                          text-align: justify;
+                        "
+                      >
+                        2.&nbsp;&nbsp;&nbsp;As per records available in this
+                        office, it is observed that government accommodation at
+                        Bldg no.
+                        {{
+                          empdata.BUILDING_NAME != undefined
+                            ? empdata.BUILDING_NAME
+                            : ""
+                        }}, Quarter no.{{
+                          empdata.FLAT_NAME != undefined
+                            ? empdata.FLAT_NAME
+                            : ""
+                        }},
+                        {{
+                          empdata.CITY_NAME != undefined
+                            ? empdata.CITY_NAME
+                            : ""
+                        }},
+                        {{
+                          empdata.RESIDENCE_TYPE_NAME != undefined
+                            ? empdata.RESIDENCE_TYPE_NAME
+                            : ""
+                        }}, Type-III. was allotted to you vide letter dated
+                        {{ empdata.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy" }}.
+                        for which you have filed acceptance letter on
+                        {{
+                          empdata.ACCEPTANCE_LETTER_DATE_TIME
+                            | date : "dd/MM/yyyy"
+                        }}
+                      </div>
+                      <div
+                        style="
+                          padding-left: 20px;
+                          font-size: 14px;
+                          margin-bottom: 10px;
+                          text-align: justify;
+                        "
+                      >
+                        3.&nbsp;&nbsp;&nbsp;In this regard, kindly note that the
+                        last date of taking physical possession is
+                        {{ dateeeeeforremnder | date : "dd/MM/yyyy" }}. You are
+                        requested to submit an intimation of physical possession
+                        by the above-mentioned date. Kindly also note that if
+                        you fail to take the physical possession of the allotted
+                        quarter by the above-mentioned date, your allotment is
+                        liable to be cancelled.
+                      </div>
+                      <div
+                        style="
+                          float: right;
+                          text-align: center;
+                          margin-top: auto;
+                          margin-bottom: 30px;
+                          width: 100%;
+                          padding-top: 10%;
+                          font-weight: 600;
+                        "
+                      >
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="POST"> {{ POST }}</span>
+                          </div>
+                        </div>
+                        <!-- </div> -->
+                      </div>
+
+                      <div style="text-align: center">
+                        <b>
+                          Note : This is computer generated letter signature not
+                          required.</b
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: none">
+                  <div id="Prntmodal111bbb">
+                    <div style="margin-left: 40px; margin-right: 5px">
+                      <div style="margin-left: 5px">
+                        <!-- <table style="border-collapse: collapse; width: 100%">
+                          <tr>
+                            <td style="
+                                width: 100%;
+                                text-align: left;
+                                padding: 5px 8px;
+                                border: 1px solid black;
+                                text-align: center;
+                                border-bottom: none;
+                              ">
+                              <div style="font-size: 15px !important">
+                                भारत सरकार
+                              </div>
+                              <div style="font-size: 15px !important">
+                                GOVERNMENT OF INDIA
+                              </div>
+                              <div style="font-size: 15px !important">
+                                कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई
+                              </div>
+                              <div style="font-size: 15px !important">
+                                OFFICE OF THE
+                              </div>
+                              <div style="font-size: 15px !important">
+                                <b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX,
+                                  MUMBAI</b>
+                              </div>
+                              <div style="font-size: 15px !important">
+                                3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD,
+                                MUMBAI-20
+                              </div>
+                              <div style="font-size: 15px !important">
+                                (022)2200 6385 (DIRECT), (022)2209 6738 (FAX),
+                                (022)2203 9131 EXTN.2328.
+                              </div>
+                              <div style="font-size: 15px !important">
+                                e-mail:<a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                              </div>
+                            </td>
+                          </tr>
+                        </table> -->
+
+                        <table style="border-collapse: collapse; width: 100%">
+                          <tr>
+                            <td
+                              style="
+                                width: 40%;
+                                font-size: 14px;
+                                text-align: left;
+                                padding: 5px 10px;
+                                border: 1px solid black;
+                                text-align: center;
+                                border-bottom: none;
+                              "
+                            >
+                              <div>कार्यालय</div>
+                              <div>प्रधान मुख्य आयकर आयुक्त</div>
+                              <div>तिसरी मंजिल, आयकर भवन,</div>
+                              <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                            </td>
+                            <td
+                              style="
+                                width: 20%;
+                                text-align: left;
+                                padding: 5px 15px;
+                                border: 1px solid black;
+                                text-align: center;
+                                border-bottom: none;
+                              "
+                            >
+                              <img
+                                *ngIf="KeyImage === 'itbuddy'"
+                                src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                                alt="Government of India"
+                                class="image"
+                                width="70px"
+                                height="110px"
+                                style="padding: 4px 5px"
+                              />
+                              <img
+                                *ngIf="KeyImage === 'incometax'"
+                                src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                                alt="Government of India"
+                                class="image"
+                                width="70px"
+                                height="110px"
+                                style="padding: 4px 5px"
+                              />
+                            </td>
+                            <td
+                              style="
+                                width: 40%;
+                                font-size: 14px;
+                                text-align: left;
+                                padding: 5px 10px;
+                                border: 1px solid black;
+                                text-align: center;
+                                border-bottom: none;
+                              "
+                            >
+                              <div>Office of the</div>
+                              <div>Pr. Chief Commissioner of Income Tax</div>
+                              <div>3rd Floor, Aayakar Bhavan,</div>
+                              <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                            </td>
+                          </tr>
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%">
+                          <tr style="font-size: 13px">
+                            <td
+                              style="
+                                width: 40%;
+                                text-align: left;
+                                padding: 5px 15px;
+                                border: 1px solid black;
+                                border-bottom: 0px;
+                                border-right: 0px;
+                              "
+                            >
+                              <div>फोन: 022-22017654</div>
+                            </td>
+                            <td
+                              style="
+                                width: 60%;
+                                text-align: left;
+                                padding: 5px 10px;
+                                border: 1px solid black;
+                                border-bottom: 0px;
+                                border-left: 0px;
+                              "
+                            >
+                              <div style="text-align: end">
+                                Email: mumbai.pccit@incometax.gov.in
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                        <table style="border-collapse: collapse; width: 100%">
+                          <tr style="font-size: 14px">
+                            <td
+                              style="
+                                width: 75%;
+                                text-align: left;
+                                padding: 5px 15px;
+                                border: 1px solid black;
+                                font-size: 14px;
+                              "
+                            >
+                              No. Pr.CCIT/Mum/Admn./ Qrtrs/{{
+                                empdata.RESIDENCE_TYPE_NAME != undefined
+                                  ? empdata.RESIDENCE_TYPE_NAME
+                                  : ""
+                              }}/{{
+                                todaysyear != undefined ? todaysyear : ""
+                              }}-
+                              {{ nextyear != undefined ? nextyear : "" }}
+                            </td>
+                            <td
+                              style="
+                                width: 25%;
+                                text-align: left;
+                                padding: 5px 10px;
+                                border: 1px solid black;
+                                font-size: 14px;
+                              "
+                            >
+                              Date :
+                              {{ todaysdateee | date : "dd/MM/yyyy" }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                      <div style="line-height: 1.9">
+                        <div
+                          style="
+                            padding-left: 20px;
+                            font-size: 17px;
+                            margin-top: 15px;
+                          "
+                        >
+                          To<br />
+                          Shri/Smt./Ms. {{ empdata.EMPLOYEE_NAME }}<br />
+                          Ma'am/Sir,
+                        </div>
+                        <br />
+                        <div
+                          style="
+                            padding-left: 40px;
+                            font-size: 17px;
+                            margin-bottom: 10px;
+                          "
+                        >
+                          Sub: Taking Physical possession of Government
+                          accommodation at Bldg no.
+                          {{
+                            empdata.BUILDING_NAME != undefined
+                              ? empdata.BUILDING_NAME
+                              : ""
+                          }}, Quarter no.{{
+                            empdata.FLAT_NAME != undefined
+                              ? empdata.FLAT_NAME
+                              : ""
+                          }},
+                          {{
+                            empdata.CITY_NAME != undefined
+                              ? empdata.CITY_NAME
+                              : ""
+                          }},
+                          {{
+                            empdata.RESIDENCE_TYPE_NAME != undefined
+                              ? empdata.RESIDENCE_TYPE_NAME
+                              : ""
+                          }}. -reg.
+                        </div>
+
+                        <div
+                          style="
+                            text-align: center;
+                            margin-bottom: 10px;
+                            font-size: 17px;
+                          "
+                        >
+                          *****
+                        </div>
+                        <div
+                          style="
+                            padding-left: 40px;
+                            font-size: 17px;
+                            margin-bottom: 10px;
+                            text-align: justify;
+                          "
+                        >
+                          Please refer to the above.
+                        </div>
+
+                        <div
+                          style="
+                            margin-bottom: 10px;
+                            padding-left: 20px;
+                            font-size: 17px;
+                            text-align: justify;
+                          "
+                        >
+                          2.&nbsp;&nbsp;&nbsp;As per records available in this
+                          office, it is observed that government accommodation
+                          at Bldg no.
+                          {{
+                            empdata.BUILDING_NAME != undefined
+                              ? empdata.BUILDING_NAME
+                              : ""
+                          }}, Quarter no.{{
+                            empdata.FLAT_NAME != undefined
+                              ? empdata.FLAT_NAME
+                              : ""
+                          }},
+                          {{
+                            empdata.CITY_NAME != undefined
+                              ? empdata.CITY_NAME
+                              : ""
+                          }},
+                          {{
+                            empdata.RESIDENCE_TYPE_NAME != undefined
+                              ? empdata.RESIDENCE_TYPE_NAME
+                              : ""
+                          }}, Type-III. was allotted to you vide letter dated
+                          {{
+                            empdata.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy"
+                          }}. for which you have filed acceptance letter on
+                          {{
+                            empdata.ACCEPTANCE_LETTER_DATE_TIME
+                              | date : "dd/MM/yyyy"
+                          }}
+                        </div>
+                        <div
+                          style="
+                            padding-left: 20px;
+                            font-size: 17px;
+                            margin-bottom: 10px;
+                            text-align: justify;
+                          "
+                        >
+                          3.&nbsp;&nbsp;&nbsp;In this regard, kindly note that
+                          the last date of taking physical possession is
+                          {{ dateeeeeforremnder | date : "dd/MM/yyyy" }}. You
+                          are requested to submit an intimation of physical
+                          possession by the above-mentioned date. Kindly also
+                          note that if you fail to take the physical possession
+                          of the allotted quarter by the above-mentioned date,
+                          your allotment is liable to be cancelled.
+                        </div>
+                        <div
+                          style="
+                            float: right;
+                            text-align: center;
+                            margin-top: auto;
+                            margin-bottom: 30px;
+                            width: 100%;
+                            padding-top: 10%;
+                            font-weight: 600;
+                          "
+                        >
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="POST"> {{ POST }}</span>
+                            </div>
+                          </div>
+                          <!-- </div> -->
+                        </div>
+                        <br />
+                        <div style="text-align: center">
+                          <b>
+                            Note : This is computer generated letter signature
+                            not required.</b
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-spin>
+          </div>
+        </div>
+      </nz-spin>
+      <div class="footer">
+        <button
+          nz-button
+          nzType="default"
+          style="margin-right: 8px"
+          [nzLoading]="IsspinningData"
+          (click)="getdata()"
+        >
+          Cancel
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          printSectionId="Prntmodal111"
+          [nzLoading]="IsspinningData"
+          ngxPrint
+          [useExistingCss]="true"
+          style="margin-right: 8px; color: white !important"
+        >
+          Print
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          [nzLoading]="IsspinningData"
+          (click)="generaterenovationphysicalreminder()"
+          style="color: white !important"
+        >
+          Generate Physical Letter
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="renovationshow">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px',
+      'padding-left': '14px',
+      'padding-right': '14px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="510"
+    (nzOnClose)="cancelrenovation()"
+    [nzVisible]="renovationshow"
+    [nzTitle]="'Renovation Request'"
+    (nzKeyboard)="(false)"
+  >
+    <ng-container *nzDrawerContent>
+      <nz-spin [nzSpinning]="isSpinningrenovation">
+        <div style="padding: 5px" class="my-boxObj">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <label style="font-weight: 500; display: block"
+                >Employee Name:
+                <span
+                  style="font-weight: 400; font-size: 13px"
+                  *ngIf="renovationdatad != undefined"
+                >
+                  {{ renovationdatad.EMPLOYEE_NAME }}</span
+                >
+              </label>
+            </div>
+            <div nz-col nzSpan="24" *ngIf="renovationdatad != undefined">
+              <label style="font-weight: 500; display: block"
+                >Employee Code:
+                <span style="font-weight: 400; font-size: 13px">
+                  {{
+                    renovationdatad.EMPLOYEE_CODE
+                      ? renovationdatad.EMPLOYEE_CODE
+                      : "-"
+                  }}
+                </span>
+              </label>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24" *ngIf="renovationdatad != undefined">
+              <label style="font-weight: 500; display: block"
+                >Designation:
+                <span style="font-weight: 400; font-size: 13px">{{
+                  renovationdatad.DESIGNATION
+                }}</span>
+              </label>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24" *ngIf="renovationdatad != undefined">
+              <label style="font-weight: 500; display: block"
+                >Renovation Remark :
+                <span style="font-weight: 400; font-size: 13px">
+                  {{ renovationdatad.RENOVATION_REMARK }}</span
+                ></label
+              >
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              *ngIf="
+                renovationdatad.RENOVATION_ATTACHEMENTS != null &&
+                renovationdatad.RENOVATION_ATTACHEMENTS != undefined &&
+                renovationdatad.RENOVATION_ATTACHEMENTS != ''
+              "
+            >
+              <label
+                style="font-weight: 500; display: block"
+                *ngIf="renovationdatad != undefined"
+                >Attachment:
+                <span style="font-weight: 400; font-size: 13px">
+                  {{ renovationdatad.RENOVATION_ATTACHEMENTS }} &nbsp;
+                  <span
+                    nz-icon
+                    nzTooltipTitle="Preview"
+                    nzTooltipPlacement="top"
+                    nz-tooltip
+                    nzType="eye"
+                    nzTheme="outline"
+                    style="cursor: pointer; color: #1890ff"
+                    (click)="
+                      Viewoccupancyformletter1(
+                        renovationdatad.RENOVATION_ATTACHEMENTS
+                      )
+                    "
+                  ></span> </span
+              ></label>
+            </div>
+          </div>
+        </div>
+        <!-- <div nz-row *ngIf="renovationdatad!=undefined">
+          <div nz-col nzSpan="24">
+            <nz-form-item class="nz-form-item1">
+              <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon>Renovation Status</nz-form-label>
+              <nz-form-control>
+                <nz-radio-group name="type" [(ngModel)]="renst">
+                  <label nz-radio nzValue="A">Approve</label>
+                  <label nz-radio nzValue="R">Reject</label>
+                </nz-radio-group>
+              </nz-form-control></nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" style="padding: 5px" *ngIf="renst == 'R'">
+            <nz-form-item class="nz-form-item1">
+              <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon>Rejection Remark</nz-form-label>
+              <nz-form-control nzRequired nzErrorTip>
+                <textarea required maxlength="512" placeHolder="Enter Rejection Remark"
+                  style="width: 100%; height: 100%" [(ngModel)]="renovationdatad.RENOVATION_REJECTION_REMARK"
+                  name="RENOVATION_REJECTION_REMARK" [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div> -->
+      </nz-spin>
+
+      <div class="footer" *ngIf="renovationdatad != undefined">
+        <button
+          nz-button
+          nzType="default"
+          class="btn btn-primary"
+          [nzLoading]="isSpinningrenovation"
+          (click)="cancelrenovation()"
+        >
+          Cancel</button
+        >&nbsp;
+
+        <button
+          *ngIf="renst == 'R'"
+          nz-button
+          nzType="primary"
+          class="btn btn-primary"
+          [nzLoading]="isSpinningrenovation"
+          style="background-color: red"
+          (click)="rejectrenovation()"
+        >
+          Reject Renovation</button
+        >&nbsp;
+        <button
+          *ngIf="renst == 'A'"
+          nz-button
+          nzType="primary"
+          class="btn btn-primary"
+          [nzLoading]="isSpinningrenovation"
+          (click)="approverrenovation()"
+        >
+          Approve Renovation</button
+        >&nbsp;
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal
+  [(nzVisible)]="TechnicalModal22"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px"
+  nzClosable="true"
+  [nzTitle]="'Technical Occupancy Details'"
+  (nzOnCancel)="CancelTechnicalModal22()"
+  [nzFooter]="TechnicalModalmmodalfooter11"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <p
+      *ngIf="tecoccy != undefined && tecoccy != null && tecoccy != ''"
+      style="font-size: 14px"
+    >
+      <span><b>Technical Occupancy Remark : </b></span> &nbsp;
+      {{ tecoccy.TECHNICAL_REMARK }}
+    </p>
+    <p
+      *ngIf="tecoccy != undefined && tecoccy != null && tecoccy != ''"
+      style="font-size: 14px"
+    >
+      <span><b>Technical Occupancy Date : </b></span> &nbsp;
+      {{ tecoccy.TECHNICAL_TAKEN_DATE_TIME | date : "dd/MM/yyyy" }}
+    </p>
+    <p
+      *ngIf="tecoccy != undefined && tecoccy != null && tecoccy != ''"
+      style="font-size: 14px"
+    >
+      <span><b>Technical Occupancy Remaining days :</b></span> &nbsp;
+      {{ getdateee(tecoccy.TECHNICAL_TAKEN_DATE_TIME) }} Days
+    </p>
+  </ng-container>
+
+  <ng-template #TechnicalModalmmodalfooter11>
+    <button
+      nz-button
+      nzType="default"
+      class="btn btn-primary"
+      (click)="CancelTechnicalModal22()"
+    >
+      close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [nzWidth]="1200"
+  [(nzVisible)]="VisibleOccupancyLetter"
+  nzMaskClosable="false"
+  nzClosable="true"
+  [nzContent]="VisibleOccupancyLetterContent"
+  [nzTitle]="'Approve / Reject Occupancy'"
+  (nzOnCancel)="VisibleOccupancyLetterContentCancel()"
+  [nzFooter]="OccupancyLetterContentFooter"
+>
+  <ng-template #VisibleOccupancyLetterContent>
+    <div *ngIf="view11 == 1" style="height: 500px; overflow: auto">
+      <iframe
+        [src]="viewPdfSafe12"
+        style="width: 1000px; height: 500px"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </ng-template>
+  <ng-template #OccupancyLetterContentFooter>
+    <button
+      nz-button
+      nzType="default"
+      (click)="VisibleOccupancyLetterContentCancel()"
+    >
+      Close
+    </button>
+
+    <button nz-button nzType="primary" (click)="RejectOccupancyLetter()">
+      Reject
+    </button>
+    <button nz-button nzType="primary" (click)="ApproveOccupancyLetter()">
+      Approve
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="OccupancyConfirm"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px"
+  nzClosable="false"
+  [nzFooter]="Occupancyconfirmmodalfooter"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500"
+      >Are you sure want to Approve this Acceptance Form?</span
+    >
+    <hr style="margin: 8px 0" />
+    <p
+      style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500"
+    >
+      *Please note that changes cannot be made after Approved.
+    </p>
+  </ng-container>
+
+  <ng-template #Occupancyconfirmmodalfooter>
+    <button
+      nz-button
+      nzType="default"
+      class="btn btn-primary"
+      [nzLoading]="isSpinning"
+      (click)="Occupancyconfimok()"
+    >
+      Yes
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      class="btn btn-primary"
+      [nzLoading]="isSpinning"
+      (click)="CancelOccupancyConfirm()"
+    >
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="Rejectaccupancyremark"
+  nzCentered="true"
+  nzTitle="Reject Occupancy"
+  [nzBodyStyle]="{ padding: '0px 5px' }"
+  nzWidth="570px"
+  nzClosable="true"
+  (nzOnCancel)="Rejectaccupancymodal()"
+  [nzFooter]="contextofrules212"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24" style="padding: 5px">
+        <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon
+          >Remark</nz-form-label
+        >
+        <nz-form-item>
+          <nz-form-control nzRequired nzErrorTip>
+            <textarea
+              required
+              maxlength="512"
+              placeHolder="Enter The Remark"
+              style="width: 100%; height: 100%"
+              [(ngModel)]="REJECT_OCCUPANCY_REMARK"
+              name="RejectOccupancyRemark"
+              [nzAutosize]="{ minRows: 3, maxRows: 3 }"
+              nz-input
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #contextofrules212>
+    <button
+      nz-button
+      nzType="default"
+      class="btn btn-primary"
+      (click)="Rejectaccupancymodal()"
+    >
+      Cancel
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      class="btn btn-primary"
+      [nzLoading]="isSpinningReject"
+      style="background-color: red"
+      (click)="Rejectoccuancyconfirm()"
+    >
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>
+<div *ngIf="showstophra">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1200"
+    [nzVisible]="showstophra"
+    [nzTitle]="showstophratitle"
+    (nzOnClose)="stophracancel()"
+    (nzKeyboard)="(false)"
+  >
+    <ng-container *nzDrawerContent>
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzSpan="6" class="my-box">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon>Signature </nz-form-label>
+                <nz-form-control nzErrorTip="Select Signature">
+                  <nz-select
+                    name="GRASS_SIGNATURE_ID1"
+                    [(ngModel)]="dataAllotmentPublishHRA.HRA_SIGNATURE_ID"
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    style="width: 100%"
+                    (ngModelChange)="signature($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon>Letter Date</nz-form-label>
+                <nz-form-control nzErrorTip="Select Letter Date">
+                  <nz-date-picker
+                    nzFormat="dd/MM/yyyy"
+                    nzAllowClear="false"
+                    [(ngModel)]="todaysdatelatter"
+                    style="width: 100%"
+                    name="todaysdatelatter"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon
+                  >DDO Of The Official</nz-form-label
+                >
+                <nz-form-control
+                  nzErrorTip="Select Correct DDO Of The Official"
+                >
+                  <nz-select
+                    name="DDO_OF_THE_OFFICIAL"
+                    style="width: 100%"
+                    nzShowSearch
+                    nzPlaceHolder="Select DDO Of The Official"
+                    [(ngModel)]="stophradata.DDO_ID"
+                    (ngModelChange)="getddoname($event)"
+                  >
+                    <nz-option
+                      *ngFor="let offices of ddoOfTheOfficialDataList"
+                      [nzLabel]="offices.HEAD_OF_OFFICE"
+                      [nzValue]="offices.ID"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon
+                  >Water Charges</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Enter Correct Water Charges">
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      maxlength="8"
+                      autocomplete="off"
+                      [(ngModel)]="stophradata.WATER_CHARGES"
+                      name="WATER_CHARGES"
+                      (keypress)="onlynumdot($event)"
+                      type="text"
+                      placeHolder="Enter Water Charges"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon>License Fees</nz-form-label>
+                <nz-form-control nzErrorTip="Enter Correct License Fees">
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      maxlength="8"
+                      autocomplete="off"
+                      (keypress)="onlynumdot($event)"
+                      [(ngModel)]="stophradata.LICENSE_FEES"
+                      name="LICENSE_FEES"
+                      type="text"
+                      placeHolder="Enter License Fees"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item class="nz-form-item1">
+                <nz-form-label nzRequired nzNoColon>w.e.f. Date</nz-form-label>
+                <nz-form-control nzErrorTip="Select w.e.f. Date">
+                  <nz-date-picker
+                    nzFormat="dd/MM/yyyy"
+                    [(ngModel)]="wefdate"
+                    style="width: 100%"
+                    name="wefdate"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="18">
+          <div class="my-box">
+            <div id="stophraprint1">
+              <div
+                style="
+                  padding: 8px;
+                  font-family: Arial, Helvetica, sans-serif;
+                  margin-left: 50px;
+                "
+              >
+                <div>
+                  <table style="border-collapse: collapse; width: 100%">
+                    <tr>
+                      <td
+                        style="
+                          width: 40%;
+                          font-size: 14px;
+                          text-align: left;
+                          padding: 5px 10px;
+                          border: 1px solid black;
+                          text-align: center;
+                          border-bottom: none;
+                        "
+                      >
+                        <div>कार्यालय</div>
+                        <div>प्रधान मुख्य आयकर आयुक्त</div>
+                        <div>तिसरी मंजिल, आयकर भवन,</div>
+                        <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                      </td>
+                      <td
+                        style="
+                          width: 20%;
+                          text-align: left;
+                          padding: 5px 15px;
+                          border: 1px solid black;
+                          text-align: center;
+                          border-bottom: none;
+                        "
+                      >
+                        <img
+                          *ngIf="KeyImage === 'itbuddy'"
+                          src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                          alt="Government of India"
+                          class="image"
+                          width="70px"
+                          height="110px"
+                          style="padding: 4px 5px"
+                        />
+                        <img
+                          *ngIf="KeyImage === 'incometax'"
+                          src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                          alt="Government of India"
+                          class="image"
+                          width="70px"
+                          height="110px"
+                          style="padding: 4px 5px"
+                        />
+                      </td>
+                      <td
+                        style="
+                          width: 40%;
+                          font-size: 14px;
+                          text-align: left;
+                          padding: 5px 10px;
+                          border: 1px solid black;
+                          text-align: center;
+                          border-bottom: none;
+                        "
+                      >
+                        <div>Office of the</div>
+                        <div>Pr. Chief Commissioner of Income Tax</div>
+                        <div>3rd Floor, Aayakar Bhavan,</div>
+                        <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                      </td>
+                    </tr>
+                  </table>
+                  <table style="border-collapse: collapse; width: 100%">
+                    <tr style="font-size: 13px">
+                      <td
+                        style="
+                          width: 40%;
+                          text-align: left;
+                          padding: 5px 15px;
+                          border: 1px solid black;
+                          border-bottom: 0px;
+                          border-right: 0px;
+                        "
+                      >
+                        <div>फोन: 022-22017654</div>
+                      </td>
+                      <td
+                        style="
+                          width: 60%;
+                          text-align: left;
+                          padding: 5px 10px;
+                          border: 1px solid black;
+                          border-bottom: 0px;
+                          border-left: 0px;
+                        "
+                      >
+                        <div style="text-align: end">
+                          Email: mumbai.pccit@incometax.gov.in
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                  <table
+                    style="
+                      width: 100%;
+                      font-size: 13px;
+                      font-family: 'Times New Roman', Times, serif !important;
+                      border: 1px solid black;
+                    "
+                  >
+                    <tr>
+                      <td class="forTDTH1" style="text-align: left">
+                        No. Pr.CCIT/MUM/HQ/Admin/DCIT/HRADedn./PR/C-17/2024-25
+                      </td>
+                      <td class="forTDTH1">
+                        Date :- {{ todaysdatelatter | date : "dd/MM/yyyy" }}
+                      </td>
+                    </tr>
+                  </table>
+                  <br />
+                </div>
+                <div>
+                  <p>
+                    To<br />
+                    The A.O.,<br />
+                    {{ DDONAME ? DDONAME : "" }}
+                  </p>
+                  <p style="margin-left: 60px">
+                    Sub: Deduction of HRA of
+                    <span style="text-decoration: underline"
+                      >Bldg no.{{ stophradata.FLAT_NAME }}, Quarter no.
+                      {{ stophradata.FLAT_NAME }}, {{ stophradata.AREA_NAME }},
+                      {{ stophradata.RESIDENCE_TYPE_NAME }}</span
+                    >
+                    -reg.
+                  </p>
+
+                  <p style="text-align: center">*****</p>
+
+                  <p style="text-align: justify !important">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Please find enclosed email/letter dated
+                    {{
+                      stophradata.PHYSICAL_TAKEN_DATE_TIME | date : "dd/MM/yyyy"
+                    }}
+                    received from, Inspector intimating that he/she has taken
+                    physical possession of Quarter No
+                    <span style="text-decoration: underline"
+                      >Bldg no.{{ stophradata.FLAT_NAME }}, Quarter no.
+                      {{ stophradata.FLAT_NAME }}, {{ stophradata.AREA_NAME }},
+                      {{ stophradata.RESIDENCE_TYPE_NAME }}</span
+                    >
+                    on
+                    {{
+                      stophradata.PHYSICAL_TAKEN_DATE_TIME | date : "dd/MM/yyyy"
+                    }}
+                    In this regard you are directed to make HRA deduction w.e.f
+                    {{ wefdate | date : "dd/MM/yyyy" }}
+                  </p>
+
+                  <p style="text-align: justify !important">
+                    2. Details of the license fees and water charges are given
+                    below;
+                  </p>
+                  <p style="text-align: justify !important">
+                    i) License Fee for Type
+                    {{ stophradata.RESIDENCE_TYPE_NAME }} quarter at
+                    {{ stophradata.AREA_NAME }} is Rs.
+                    {{ stophradata.LICENSE_FEES }} per month.<br />
+                    ii) Water Charges for Type
+                    {{ stophradata.RESIDENCE_TYPE_NAME }} quarter at
+                    {{ stophradata.AREA_NAME }} is Rs.
+                    {{ stophradata.WATER_CHARGES }} per month
+                  </p>
+
+                  <p style="text-align: justify !important">
+                    3. The same is forwarded for necessary action at your end.
+                  </p>
+                  <div style="text-align: center"></div>
+
+                  <!-- <div
+                  style="
+                    text-align: center;
+                    font-size: 13px;
+                    margin-top: 20px;
+                    font-weight: bold;
+                  "
+                >
+                  Note : This is computer generated letter signature not
+                  required.
+                </div> -->
+                  <div
+                    style="
+                      float: right;
+                      text-align: center;
+                      margin-top: auto;
+                      width: 100%;
+                      padding-top: 15%;
+                      font-weight: 600;
+                    "
+                  >
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="POST"> {{ POST }}</span>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: none">
+              <div id="stophraprint">
+                <div
+                  style="
+                    padding: 8px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    margin-left: 50px;
+                  "
+                >
+                  <div>
+                    <table style="border-collapse: collapse; width: 100%">
+                      <tr>
+                        <td
+                          style="
+                            width: 40%;
+                            font-size: 14px;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                            text-align: center;
+                            border-bottom: none;
+                          "
+                        >
+                          <div>कार्यालय</div>
+                          <div>प्रधान मुख्य आयकर आयुक्त</div>
+                          <div>तिसरी मंजिल, आयकर भवन,</div>
+                          <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                        </td>
+                        <td
+                          style="
+                            width: 20%;
+                            text-align: left;
+                            padding: 5px 15px;
+                            border: 1px solid black;
+                            text-align: center;
+                            border-bottom: none;
+                          "
+                        >
+                          <img
+                            *ngIf="KeyImage === 'itbuddy'"
+                            src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                            alt="Government of India"
+                            class="image"
+                            width="70px"
+                            height="110px"
+                            style="padding: 4px 5px"
+                          />
+                          <img
+                            *ngIf="KeyImage === 'incometax'"
+                            src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                            alt="Government of India"
+                            class="image"
+                            width="70px"
+                            height="110px"
+                            style="padding: 4px 5px"
+                          />
+                        </td>
+                        <td
+                          style="
+                            width: 40%;
+                            font-size: 14px;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                            text-align: center;
+                            border-bottom: none;
+                          "
+                        >
+                          <div>Office of the</div>
+                          <div>Pr. Chief Commissioner of Income Tax</div>
+                          <div>3rd Floor, Aayakar Bhavan,</div>
+                          <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                        </td>
+                      </tr>
+                    </table>
+                    <table style="border-collapse: collapse; width: 100%">
+                      <tr style="font-size: 13px">
+                        <td
+                          style="
+                            width: 40%;
+                            text-align: left;
+                            padding: 5px 15px;
+                            border: 1px solid black;
+                            border-bottom: 0px;
+                            border-right: 0px;
+                          "
+                        >
+                          <div>फोन: 022-22017654</div>
+                        </td>
+                        <td
+                          style="
+                            width: 60%;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                            border-bottom: 0px;
+                            border-left: 0px;
+                          "
+                        >
+                          <div style="text-align: end">
+                            Email: mumbai.pccit@incometax.gov.in
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div>
+                    <table
+                      style="
+                        width: 100%;
+                        font-size: 13px;
+                        font-family: 'Times New Roman', Times, serif !important;
+                        border: 1px solid black;
+                      "
+                    >
+                      <tr>
+                        <td class="forTDTH1" style="text-align: left">
+                          No. Pr.CCIT/MUM/HQ/Admin/DCIT/HRADedn./PR/C-17/2024-25
+                        </td>
+                        <td class="forTDTH1">
+                          Date :- {{ todaysdatelatter | date : "dd/MM/yyyy" }}
+                        </td>
+                      </tr>
+                    </table>
+                    <br />
+                  </div>
+                  <div>
+                    <p>
+                      To<br />
+                      The A.O.,<br />
+                      {{ DDONAME ? DDONAME : "" }}
+                    </p>
+                    <p style="margin-left: 60px">
+                      Sub: Deduction of HRA of
+                      <span style="text-decoration: underline"
+                        >Bldg no.{{ stophradata.FLAT_NAME }}, Quarter no.
+                        {{ stophradata.FLAT_NAME }},
+                        {{ stophradata.AREA_NAME }},
+                        {{ stophradata.RESIDENCE_TYPE_NAME }}</span
+                      >
+                      -reg.
+                    </p>
+
+                    <p style="text-align: center">*****</p>
+
+                    <p style="text-align: justify !important">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      Please find enclosed email/letter dated
+                      {{
+                        stophradata.PHYSICAL_TAKEN_DATE_TIME
+                          | date : "dd/MM/yyyy"
+                      }}
+                      received from, Inspector intimating that he/she has taken
+                      physical possession of Quarter No
+                      <span style="text-decoration: underline"
+                        >Bldg no.{{ stophradata.FLAT_NAME }}, Quarter no.
+                        {{ stophradata.FLAT_NAME }},
+                        {{ stophradata.AREA_NAME }},
+                        {{ stophradata.RESIDENCE_TYPE_NAME }}</span
+                      >
+                      on
+                      {{
+                        stophradata.PHYSICAL_TAKEN_DATE_TIME
+                          | date : "dd/MM/yyyy"
+                      }}
+                      In this regard you are directed to make HRA deduction
+                      w.e.f
+                      {{ wefdate | date : "dd/MM/yyyy" }}
+                    </p>
+
+                    <p style="text-align: justify !important">
+                      2. Details of the license fees and water charges are given
+                      below;
+                    </p>
+                    <p style="text-align: justify !important">
+                      i) License Fee for Type
+                      {{ stophradata.RESIDENCE_TYPE_NAME }} quarter at
+                      {{ stophradata.AREA_NAME }} is Rs.
+                      {{ stophradata.LICENSE_FEES }} per month.<br />
+                      ii) Water Charges for Type
+                      {{ stophradata.RESIDENCE_TYPE_NAME }} quarter at
+                      {{ stophradata.AREA_NAME }} is Rs.
+                      {{ stophradata.WATER_CHARGES }} per month
+                    </p>
+
+                    <p style="text-align: justify !important">
+                      3. The same is forwarded for necessary action at your end.
+                    </p>
+                    <div style="text-align: center"></div>
+
+                    <!-- <div
+                  style="
+                    text-align: center;
+                    font-size: 13px;
+                    margin-top: 20px;
+                    font-weight: bold;
+                  "
+                >
+                  Note : This is computer generated letter signature not
+                  required.
+                </div> -->
+                    <div
+                      style="width: 100%; margin-top: 100px; font-weight: 600"
+                    >
+                      <div
+                        style="
+                          float: right;
+                          text-align: center;
+                          line-height: 1.5;
+                          padding-right: 32px;
+                        "
+                      >
+                        <!-- <div
+                        style="
+                          float: right;
+                          text-align: center;
+                          margin-top: auto;
+                          width: 100%;
+                          padding-top: 15%;
+                          font-weight: 600;
+                        "
+                      > -->
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                          </div>
+                        </div>
+                        <div nz-row>
+                          <div nz-col nzSpan="16"></div>
+                          <div nz-col nzSpan="8">
+                            <span *ngIf="POST"> {{ POST }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <button
+          nz-button
+          nzType="default"
+          [nzLoading]="isSpinning"
+          (click)="stophracancel()"
+        >
+          Close
+        </button>
+        &nbsp;
+        <button
+          [nzLoading]="isSpinning"
+          nz-button
+          nzType="primary"
+          (click)="generatestophrafinal(stophradata)"
+        >
+          Generate HRA Deduction Letter
+        </button>
+      </div>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal
+  [(nzVisible)]="generatephysical"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px"
+  nzClosable="false"
+  [nzFooter]="generatephysicalfooter"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500"
+      >Are you sure want to Generate Physical Letter?</span
+    >
+    <hr style="margin: 8px 0" />
+    <p
+      style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500"
+    >
+      Note : Please note that no changes can be made in reminder letter once
+      generated.
+    </p>
+  </ng-container>
+
+  <ng-template #generatephysicalfooter>
+    <button
+      nz-button
+      nzType="default"
+      class="btn btn-primary"
+      [nzLoading]="isSpinning"
+      (click)="printOrderModalCancel11()"
+    >
+      Cancel
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      class="btn btn-primary"
+      [nzLoading]="isSpinning"
+      style="background-color: #006699"
+      (click)="ApprovependingAcceptanceAccept(accetrejectdata)"
+    >
+      Generate Physical Letter
+    </button>
+  </ng-template>
+</nz-modal>

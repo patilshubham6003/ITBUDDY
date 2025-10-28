@@ -1,0 +1,759 @@
+<form nz-form>
+  <div
+    class="myboxxxx"
+    style="padding-top: 1px; margin-top: 10px; padding-bottom: 0px"
+  >
+    <div class="row" style="width: 100%">
+      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Employee Name</nz-form-label
+          >
+          <input
+            nz-input
+            name="EMPLOYEE_NAME"
+            class="inputsize"
+            [disabled]="true"
+            [(ngModel)]="data.NAME"
+            maxlength="64"
+            autocomplete="off"
+            (keypress)="alphaOnly($event)"
+            required
+            placeholder="Enter Employee Name"
+          />
+        </nz-form-item>
+      </div>
+      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Email ID</nz-form-label
+          >
+          <input
+            nz-input
+            name="Email"
+            class="inputsize"
+            [disabled]="istruemail"
+            [(ngModel)]="data.EMAIL_ID"
+            maxlength="64"
+            autocomplete="off"
+            required
+            placeholder="Enter Email ID"
+          />
+        </nz-form-item>
+      </div>
+      <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Employee Code</nz-form-label
+          >
+          <input
+            nz-input
+            name="name"
+            class="inputsize"
+            [(ngModel)]="data.EMPLOYEE_CODE"
+            maxlength="8"
+            autocomplete="off"
+            (keypress)="omit($event)"
+            required
+            [disabled]="true"
+            placeholder="Employee Code"
+          />
+        </nz-form-item>
+      </div>
+      <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Mobile No.</nz-form-label
+          >
+          <input
+            nz-input
+            name="MOBILE_NO"
+            class="inputsize"
+            [disabled]="istrumobile"
+            [(ngModel)]="data.MOBILE_NO"
+            maxlength="10"
+            autocomplete="off"
+            (keypress)="omit($event)"
+            [pattern]="mobpattern"
+            placeholder="Enter Mobile No."
+            required
+          />
+        </nz-form-item>
+      </div>
+      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Current Cadre</nz-form-label
+          >
+          <input
+            nz-input
+            name="DESIGNATION"
+            class="inputsize"
+            [disabled]="TPforview"
+            [(ngModel)]="data.CADRE"
+            maxlength="64"
+            autocomplete="off"
+            required
+            placeholder="Enter Cadre"
+          />
+        </nz-form-item>
+      </div>
+
+      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Period Spent In Current Office
+          </nz-form-label>
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <div nz-row nzGutter="2">
+                <div nz-col nzSpan="12">
+                  <!-- <nz-form-label class="labelsize" nzNoColon
+                    >
+                  </nz-form-label> -->
+                  <nz-form-control>
+                    <nz-date-picker
+                      class="datesize"
+                      nzFormat="dd/MM/yyyy"
+                      [(ngModel)]="data.TENURE_CURRENT_POSTING_YR"
+                      [nzPlaceHolder]="'From Date'"
+                      name="FROM_DATE"
+                      [disabled]="TPforview"
+                      style="width: 100%; padding-bottom: 3px; padding-top: 3px"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </div>
+                <div nz-col nzSpan="12">
+                  <!-- <nz-form-label class="labelsize" nzNoColon>To </nz-form-label> -->
+                  <nz-form-control>
+                    <nz-date-picker
+                      class="datesize"
+                      nzFormat="dd/MM/yyyy"
+                      [(ngModel)]="data.TENURE_CURRENT_POSTING_MNT"
+                      name="TO_DATE"
+                      [disabled]="TPforview"
+                      [nzDisabledDate]="disabledDate"
+                      [nzPlaceHolder]="'To Date'"
+                      style="width: 100%; padding-bottom: 3px; padding-top: 3px"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Month</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker
+                  nzMode="month"
+                  nzFormat="MMM/yyyy"
+                  [(ngModel)]="date1"
+                  name="date1"
+                  style="width: 100%; padding-bottom: 3px; padding-top: 3px"
+                  (ngModelChange)="onChange($event)"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+
+          <!-- <div class="row" style="width: 100%">
+            <div class="col-6">
+              <input
+                nz-input
+                name="Year" 
+                [disabled]="TPforview"
+                class="inputsize"
+                [(ngModel)]="data.TENURE_CURRENT_POSTING_YR"
+                maxlength="2"
+                (keypress)="omit($event)"
+                autocomplete="off"
+                required
+                placeholder="Enter in Years"
+              />
+            </div>
+            <div class="col-6">
+              <input
+                nz-input
+                name="month"
+                class="inputsize"
+                [(ngModel)]="data.TENURE_CURRENT_POSTING_MNT"
+                maxlength="2"
+                (keypress)="omit($event)"
+                [disabled]="TPforview"
+                autocomplete="off"
+                required
+                placeholder="Enter in Months"
+              />
+            </div>
+          </div> -->
+
+          <!-- <nz-select
+            [(ngModel)]="data.SPEND_DAY_IN_OFFICE"
+            style="width: 100%"
+            nzSize="small"
+            autocomplete="off"
+            nzPlaceHolder="Period Spent In Office"
+            class="inputsize1"
+            required
+            name="selctoption"
+            nzShowSearch
+            nzAllowClear
+          >
+            <nz-option nzValue="0-6 Months" nzLabel="0-6 Months"></nz-option>
+            <nz-option nzValue="1-2 Years" nzLabel="1-2 Years"></nz-option>
+            <nz-option nzValue="2-3 Years" nzLabel="2-3 Years"></nz-option>
+            <nz-option nzValue="3-4 Years" nzLabel="3-4 Years"></nz-option>
+            <nz-option nzValue="4-5 Years" nzLabel="4-5 Years"></nz-option>
+          </nz-select> -->
+        </nz-form-item>
+      </div>
+      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+        <nz-form-item>
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Current Posting</nz-form-label
+          >
+          <input
+            nz-input
+            name="CURRENT_POSTING"
+            class="inputsize"
+            [(ngModel)]="data.CURRENT_POSTING"
+            maxlength="64"
+            [disabled]="TPforview"
+            autocomplete="off"
+            required
+            placeholder="Enter Current Posting"
+          />
+        </nz-form-item>
+      </div>
+
+      <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 colsspadding">
+        <nz-form-item
+          style="
+            display: inline-block;
+            margin-bottom: 5px;
+            width: -webkit-fill-available;
+            padding: 0px 10px;
+          "
+        >
+          <nz-form-label class="labelsize" nzRequired nzNoColon
+            >Current Residential Address</nz-form-label
+          >
+          <nz-form-control>
+            <textarea
+              rows="1"
+              nz-input
+              minlength="1"
+              [disabled]="TPforview"
+              class="inputsize"
+              name="adddetails"
+              maxlength="300"
+              [nzAutosize]="{ minRows: 1, maxRows: 3 }"
+              placeholder="Enter Current Residential Address"
+              [(ngModel)]="data.CURRENT_RESIDENT_ADD"
+            ></textarea>
+            <small
+              style="color: red"
+              *ngIf="data.CURRENT_RESIDENT_ADD != undefined"
+            >
+              {{ data.CURRENT_RESIDENT_ADD.length }}/300
+            </small>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </div>
+  <div class="myboxxxx11" style="padding-top: 1px; padding-bottom: 0px">
+    <div class="row" style="width: 100%">
+      <div
+        class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 colsspadding myboxxxxmar"
+      >
+        <div style="padding-top: 1px; padding-bottom: 0px">
+          <div class="row" style="width: 100%">
+            <div
+              class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding"
+            >
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzRequired nzNoColon>
+                  Building 1
+                </nz-form-label>
+                <nz-select
+                  name="RequestedBuilding1"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [disabled]="TPforview"
+                  nzPlaceHolder=" Building 1"
+                  (ngModelChange)="GetReqOfficeData1($event)"
+                  [(ngModel)]="data.BUILDING_1"
+                  class="inputsize1"
+                  [nzLoading]="loadBuilding"
+                  nzSize="small"
+                >
+                  <nz-option
+                    *ngFor="let building of ReqBuildinglist"
+                    [nzValue]="building.name"
+                    [nzLabel]="building.name"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div
+              class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding"
+            >
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzRequired nzNoColon>
+                  Building 2
+                </nz-form-label>
+                <nz-select
+                  name="RequestedBuilding2"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [disabled]="TPforview"
+                  nzPlaceHolder=" Building 2"
+                  (ngModelChange)="GetReqOfficeData2($event)"
+                  [(ngModel)]="data.BUILDING_2"
+                  class="inputsize1"
+                  [nzLoading]="loadBuilding"
+                  nzSize="small"
+                >
+                  <nz-option
+                    *ngFor="let building of ReqBuildinglist2"
+                    [nzValue]="building.name"
+                    [nzLabel]="building.name"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div
+              class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding"
+            >
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzRequired nzNoColon>
+                  Building 3</nz-form-label
+                >
+                <nz-select
+                  name="RequestedBuilding3"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [disabled]="TPforview"
+                  nzPlaceHolder=" Building 3"
+                  (ngModelChange)="GetReqOfficeData3($event)"
+                  [(ngModel)]="data.BUILDING_3"
+                  class="inputsize1"
+                  [nzLoading]="loadBuilding"
+                  nzSize="small"
+                >
+                  <nz-option
+                    *ngFor="let building of ReqBuildinglist3"
+                    [nzValue]="building.name"
+                    [nzLabel]="building.name"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div
+              class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding"
+            >
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzRequired nzNoColon>
+                  Charge 1</nz-form-label
+                >
+                <nz-select
+                  name="RequestedOffice1"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [disabled]="TPforview"
+                  nzSize="small"
+                  nzPlaceHolder=" Charge 1"
+                  (ngModelChange)="officengchange1($event)"
+                  [(ngModel)]="data.CHARGE_1"
+                  class="inputsize1"
+                >
+                  <nz-option
+                    *ngFor="let option of officed1"
+                    [nzValue]="option.value"
+                    [nzLabel]="option.value"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div
+              class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding"
+            >
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzRequired nzNoColon>
+                  Charge 2</nz-form-label
+                >
+                <nz-select
+                  name="RequestedOffice2"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  nzSize="small"
+                  nzPlaceHolder=" Charge 2"
+                  [disabled]="TPforview"
+                  (ngModelChange)="officengchange2($event)"
+                  [(ngModel)]="data.CHARGE_2"
+                  class="inputsize1"
+                >
+                  <nz-option
+                    *ngFor="let option of officed2"
+                    [nzValue]="option.value"
+                    [nzLabel]="option.value"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div
+              class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding"
+            >
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzRequired nzNoColon>
+                  Charge 3
+                </nz-form-label>
+                <nz-select
+                  name="RequestedOffice3"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [disabled]="TPforview"
+                  nzSize="small"
+                  nzPlaceHolder=" Charge 3"
+                  (ngModelChange)="officengchange3($event)"
+                  [(ngModel)]="data.CHARGE_3"
+                  class="inputsize1"
+                >
+                  <nz-option
+                    *ngFor="let option of officed3"
+                    [nzValue]="option.value"
+                    [nzLabel]="option.value"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 colsspadding myboxxxxmar"
+      >
+        <div style="padding-top: 1px; padding-bottom: 0px">
+          <div class="row" style="width: 100%">
+            <div
+              class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 colsspadding"
+            >
+              <nz-form-item
+                style="
+                  display: inline-block;
+                  margin-bottom: 5px;
+                  width: -webkit-fill-available;
+                  padding: 0px 10px;
+                "
+              >
+                <nz-form-label class="labelsize" nzNoColon
+                  >Request Explain in details (word limit between 20 to
+                  300)</nz-form-label
+                >
+                <nz-form-control>
+                  <textarea
+                    rows="5"
+                    nz-input
+                    [disabled]="TPforview"
+                    minlength="1"
+                    maxlength="1800"
+                    class="inputsize"
+                    name="REQUEST"
+                    placeholder="Enter Request"
+                    [(ngModel)]="data.REQUEST"
+                  ></textarea>
+                  <small
+                    style="color: red"
+                    *ngIf="data.REQUEST != undefined && data.REQUEST != null"
+                  >
+                    {{ data.REQUEST.length }}/1800
+                  </small>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 colsspadding">
+              <nz-form-item
+                style="
+                  display: inline-block;
+                  margin-bottom: 5px;
+                  width: -webkit-fill-available;
+                  padding: 0px 10px;
+                "
+              >
+                <nz-form-label class="labelsize" nzNoColon
+                  >Primary Reason for request of transfer
+                </nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    style="width: 100%"
+                    nzSize="small"
+                    autocomplete="off"
+                    class="inputsize1"
+                    required
+                    [disabled]="TPforview"
+                    class="inputsize"
+                    name="REASON_FOR_REQUEST"
+                    [nzPlaceHolder]="
+                      'Select Primary Reason for request of transfer'
+                    "
+                    [(ngModel)]="data.REASON_FOR_REQUEST"
+                    nzShowSearch
+                    nzAllowClear
+                  >
+                    <nz-option
+                      nzValue="Medical Grounds"
+                      nzLabel="Medical Grounds"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="Education Of Children"
+                      nzLabel="Education Of Children"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="Travel Difficulty"
+                      nzLabel="Travel Difficulty"
+                    ></nz-option>
+                    <nz-option
+                      nzValue="Area Of Interest"
+                      nzLabel="Area Of Interest"
+                    ></nz-option>
+                    <nz-option nzValue="Others" nzLabel="Others"></nz-option>
+                  </nz-select>
+                  <!-- <textarea
+                    rows="2"
+                    [disabled]="TPforview"
+                    nz-input
+                    minlength="1"
+                    maxlength="300"
+                    class="inputsize"
+                    name="REASON_FOR_REQUEST"
+                    placeholder="Enter Primary Reason for request of transfer  "
+                    [(ngModel)]="data.REASON_FOR_REQUEST"
+                  ></textarea>
+                  <small
+                    style="color: red"
+                    *ngIf="
+                      data.REASON_FOR_REQUEST != undefined &&
+                      data.REASON_FOR_REQUEST != null
+                    "
+                  >
+                    {{ data.REASON_FOR_REQUEST.length }}/300
+                  </small> -->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div class="col-6 col-sm-5 col-md-5 col-lg-5 col-xl-5 colsspadding">
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzNoColon
+                  >Attachment (If any) &nbsp;<span
+                    nz-icon
+                    nzType="paper-clip"
+                    nzTheme="outline"
+                  ></span
+                ></nz-form-label>
+
+                <nz-form-control
+                  *ngIf="
+                    data.ATTACHMENT == undefined ||
+                    data.ATTACHMENT == null ||
+                    data.ATTACHMENT == ''
+                  "
+                >
+                  <button
+                    nz-button
+                    style="padding: 0px 10px; height: 26px; font-size: 10px"
+                    (click)="attachments.click()"
+                    [nzLoading]="loadattach"
+                  >
+                    Select File
+                    <input
+                      #attachments
+                      name="attachments"
+                      class="inputsize"
+                      type="file"
+                      (change)="onFileSelectAttachments($event)"
+                      accept=".pdf, .png, .jpeg, .jpg"
+                      (click)="attachments.value = ''"
+                      style="display: none"
+                      required
+                    />
+                  </button>
+                </nz-form-control>
+
+                <div
+                  *ngIf="
+                    data.ATTACHMENT &&
+                    data.ATTACHMENT != undefined &&
+                    data.ATTACHMENT != null &&
+                    data.ATTACHMENT != ''
+                  "
+                  style="
+                    overflow: hidden;
+                    font-size: 9px;
+                    display: block;
+                    width: 100%;
+                    color: #1890ff;
+                  "
+                >
+                  {{ data.ATTACHMENT }} &nbsp;&nbsp;
+                  <span
+                    nz-icon
+                    nzType="eye"
+                    nzTheme="outline"
+                    nzTooltipTitle="view"
+                    nzTooltipPlacement="top"
+                    nz-tooltip
+                    style="cursor: pointer"
+                    (click)="showimg()"
+                  >
+                  </span>
+                  &nbsp;
+                  <span
+                    *ngIf="!TPforview"
+                    nz-icon
+                    nzType="delete"
+                    nzTheme="outline"
+                    nzTooltipTitle="Remove"
+                    nzTooltipPlacement="top"
+                    nz-tooltip
+                    style="cursor: pointer; color: red"
+                    (click)="clearAttachments()"
+                  >
+                  </span>
+                </div>
+              </nz-form-item>
+              <div *ngIf="progressBar">
+                <nz-progress [nzPercent]="percent"></nz-progress>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="footer" style="text-align: center" *ngIf="!TPforview">
+  <button
+    type="button"
+    nz-button
+    [nzLoading]="loadingRecords"
+    class="btn"
+    style="
+      border-radius: 50px;
+      background-color: #069 !important;
+      margin-bottom: 0px;
+    "
+    (click)="UpdateTransferForm()"
+  >
+    Submit
+  </button>
+</div>
+
+<nz-modal
+  [(nzVisible)]="openconfirmationmodel"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="500px"
+  nzClosable="false"
+  [nzFooter]="contextofrulesss"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500"
+      >Are you sure you want to submit the form ?</span
+    >
+
+    <hr style="margin: 8px 0" />
+  </ng-container>
+  <ng-template #contextofrulesss>
+    <button
+      nzSize="small"
+      [nzLoading]="loadingRecords"
+      nz-button
+      nzType="primary"
+      class="btn btn-primary"
+      style="
+        background-color: #006699;
+        border-radius: 12px;
+        font-size: 11px;
+        margin-bottom: 0px !important;
+      "
+      (click)="verify()"
+    >
+      Yes
+    </button>
+
+    <button
+      nzSize="small"
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      style="
+        background-color: white !important;
+        border-radius: 12px;
+        color: #006699;
+        font-size: 11px;
+        font-weight: 500;
+      "
+      (click)="cancel()"
+    >
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="openconfirmationmodel11"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="700px"
+  nzClosable="false"
+  [nzFooter]="contextofrulesss111"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <nz-result
+      nzStatus="success"
+      nzTitle="Congratulations! You have successfully submitted the form."
+      [nzSubTitle]="'Your Application number is' + appcode"
+    >
+    </nz-result>
+  </ng-container>
+  <ng-template #contextofrulesss111>
+    <button
+      nzSize="small"
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      style="
+        background-color: white !important;
+        border-radius: 12px;
+        color: #006699;
+        font-size: 11px;
+        font-weight: 500;
+      "
+      (click)="cancel11()"
+    >
+      close
+    </button>
+  </ng-template>
+</nz-modal>

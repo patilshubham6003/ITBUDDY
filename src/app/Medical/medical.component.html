@@ -1,0 +1,918 @@
+<nz-layout class="app-layout" *ngIf="isLogedIn && roleId != 2">
+  <!-- <nz-layout class="app-layout" *ngIf="isLogedIn && pageName != 'livepreview'"> -->
+  <nz-sider
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+  >
+    <div class="sidebar-logo">
+      <!-- <a href="https://ng.ant.design/" target="_blank"> -->
+      <!-- <img src="http://chitalelms.tecpool.in/assets/chitalelogo.jpeg" alt="logo"> -->
+      <div>
+        <h1
+          style="
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-transform: uppercase;
+          "
+        >
+          {{ isCollapsed ? "" : USERNAME }}
+        </h1>
+      </div>
+      <!-- </a> -->
+    </div>
+
+    <div style="overflow: auto; height: 561px">
+      <ul nz-menu nzMode="inline" nzTheme="dark">
+        <ng-container
+          *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"
+        ></ng-container>
+
+        <ng-template #menuTpl let-menus>
+          <ng-container *ngFor="let menu of menus">
+            <li
+              *ngIf="!menu.children"
+              nz-menu-item
+              [nzPaddingLeft]="menu.level * 24"
+              [nzDisabled]="menu.disabled"
+              nzMatchRouter
+            >
+              <a [routerLink]="[menu.link]"
+                ><i
+                  nz-icon
+                  [nzType]="menu.icon"
+                  *ngIf="
+                    menu.icon != undefined &&
+                    menu.icon != ' ' &&
+                    menu.icon != null
+                  "
+                ></i
+                >{{ isCollapsed ? "" : menu.title }}</a
+              >
+            </li>
+
+            <li
+              *ngIf="menu.children"
+              nz-submenu
+              [nzPaddingLeft]="menu.level * 24"
+              [nzOpen]="menu.open"
+              [nzTitle]="menu.title"
+              [nzIcon]="menu.icon"
+              [nzDisabled]="menu.disabled"
+            >
+              <ul>
+                <ng-container
+                  *ngTemplateOutlet="
+                    menuTpl;
+                    context: { $implicit: menu.children }
+                  "
+                ></ng-container>
+              </ul>
+            </li>
+          </ng-container>
+        </ng-template>
+      </ul>
+    </div>
+  </nz-sider>
+
+  <nz-layout>
+    <nz-header class="header1">
+      <div nz-row class="app-header">
+        <div nz-col nzSpan="12">
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i
+              class="trigger"
+              nz-icon
+              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            >
+            </i>
+          </span>
+        </div>
+
+        <div nz-col nzSpan="12" style="text-align: right; padding-right: 1%">
+          <!-- <button nz-button nzType="primary" (click)="showModal()" nzShape="circle" nzTooltipTitle="Create Issue"
+              nzTooltipPlacement="top" nz-tooltip>
+              <i nz-icon nzType="plus"></i>
+            </button> -->
+          <!-- <span nz-tooltip nzTooltipTitle="About Us">
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="info($event)"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="info" nzTheme="outline"></i></button
+          ></span> -->
+          <span
+            *ngIf="getconditionsss"
+            nz-tooltip
+            nzTooltipTitle="Update Profile"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="edit()"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="user" nzTheme="outline"></i></button
+          ></span>
+          <span
+            nz-tooltip
+            nzTooltipTitle="Change Password"
+            *ngIf="employeeedit == 1"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="changepass()"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="setting" nzTheme="outline"></i></button
+          ></span>
+
+          <span
+            nz-tooltip
+            nzTooltipTitle="Change Password"
+            *ngIf="employeeedit != 1"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="changepass1()"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="setting" nzTheme="outline"></i>
+            </button>
+          </span>
+          <button
+            nz-button
+            nzType="primary"
+            routerLink="/"
+            [nzLoading]="isSpinning"
+            nzShape="circle"
+            nzTooltipTitle="Back to Website"
+            nzTooltipPlacement="top"
+            nz-tooltip
+          >
+            <i nz-icon nzType="home"></i>
+          </button>
+        </div>
+      </div>
+    </nz-header>
+
+    <nz-content>
+      <div
+        class="inner-content"
+        style="max-height: 90vh !important; overflow-x: auto"
+      >
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- <nz-footer>
+          Proudly Designed & Developed By,
+          <a href="https://www.uvtechsoft.com/" target="_blank"
+            >UjjVilas Technologies & Software Pvt. Ltd.</a
+          >
+        </nz-footer> -->
+    </nz-content>
+    <nz-footer style="text-align: center !important">
+      Copyright 2023
+      <a href="https://www.uvtechsoft.com/" target="_blank"
+        >UjjVilas Technologies & Software Pvt. Ltd.</a
+      >
+      All rights reserved.
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+
+<nz-layout class="app-layout" *ngIf="isLogedIn && roleId == 2">
+  <!-- <nz-layout class="app-layout" *ngIf="isLogedIn && pageName != 'livepreview'"> -->
+
+  <!-- <nz-layout> -->
+  <nz-header class="header1">
+    <div nz-row class="app-header" style="background: #006699 !important">
+      <!-- <div nz-col nzSpan="12">
+            <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+              <i
+                class="trigger"
+                nz-icon
+                [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+              >
+              </i>
+            </span>
+          </div> -->
+      <div
+        nz-col
+        nzSpan="1"
+        style="justify-content: end; display: flex; align-items: center"
+      >
+        <button
+          nzType="primary"
+          nzShape="circle"
+          [routerLink]="['']"
+          nzTooltipTitle="Home"
+          nzTooltipPlacement="bottom"
+          nz-button
+          nz-tooltip
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="20"
+            viewBox="0 0 26 20"
+            fill="none"
+          >
+            <path
+              d="M12.6553 5.18853L4.33368 11.9683V19.2856C4.33368 19.4751 4.40976 19.6568 4.54519 19.7908C4.68063 19.9247 4.86431 20 5.05584 20L10.1137 19.9871C10.3046 19.9861 10.4874 19.9104 10.622 19.7766C10.7567 19.6427 10.8323 19.4615 10.8323 19.2727V14.9994C10.8323 14.81 10.9084 14.6283 11.0438 14.4943C11.1792 14.3603 11.3629 14.2851 11.5544 14.2851H14.4431C14.6346 14.2851 14.8183 14.3603 14.9538 14.4943C15.0892 14.6283 15.1653 14.81 15.1653 14.9994V19.2696C15.165 19.3636 15.1834 19.4567 15.2196 19.5436C15.2558 19.6306 15.3089 19.7096 15.376 19.7761C15.4431 19.8427 15.5228 19.8955 15.6106 19.9316C15.6983 19.9676 15.7924 19.9862 15.8874 19.9862L20.9435 20C21.135 20 21.3187 19.9247 21.4542 19.7908C21.5896 19.6568 21.6657 19.4751 21.6657 19.2856V11.9634L13.3459 5.18853C13.2481 5.11054 13.1262 5.06801 13.0006 5.06801C12.8749 5.06801 12.7531 5.11054 12.6553 5.18853ZM25.8001 9.79663L22.0268 6.71995V0.535774C22.0268 0.393678 21.9697 0.257402 21.8681 0.156925C21.7665 0.0564476 21.6288 0 21.4851 0H18.9575C18.8139 0 18.6761 0.0564476 18.5746 0.156925C18.473 0.257402 18.4159 0.393678 18.4159 0.535774V3.77765L14.375 0.488894C13.9872 0.173224 13.5005 0.000631028 12.9983 0.000631028C12.4961 0.000631028 12.0095 0.173224 11.6217 0.488894L0.196564 9.79663C0.141719 9.84147 0.0963433 9.89656 0.0630297 9.95876C0.0297162 10.021 0.0091177 10.089 0.0024112 10.1591C-0.00429529 10.2292 0.00302166 10.2999 0.023944 10.3671C0.0448663 10.4344 0.0789839 10.497 0.124347 10.5512L1.2753 11.9353C1.32054 11.9897 1.37619 12.0347 1.43905 12.0678C1.50192 12.101 1.57077 12.1215 1.64166 12.1282C1.71256 12.135 1.7841 12.1279 1.8522 12.1072C1.92031 12.0866 1.98363 12.0529 2.03854 12.008L12.6553 3.35796C12.7531 3.27998 12.8749 3.23745 13.0006 3.23745C13.1262 3.23745 13.2481 3.27998 13.3459 3.35796L23.9631 12.008C24.0179 12.0529 24.0811 12.0867 24.1491 12.1074C24.2171 12.1281 24.2886 12.1353 24.3594 12.1287C24.4303 12.122 24.4991 12.1016 24.562 12.0687C24.6248 12.0357 24.6805 11.9909 24.7259 11.9366L25.8768 10.5525C25.9221 10.498 25.9561 10.4351 25.9768 10.3675C25.9974 10.3 26.0044 10.229 25.9973 10.1588C25.9902 10.0886 25.9691 10.0204 25.9352 9.95824C25.9014 9.89609 25.8554 9.84117 25.8001 9.79663Z"
+              fill="white"
+            />
+          </svg>
+        </button>
+      </div>
+      <div nz-col nzSpan="11" style="text-align: left">
+        <b
+          *ngIf="serviceid == 6"
+          style="
+            color: white !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.4;
+          "
+        >
+          &nbsp;Leave Travel Concession
+        </b>
+        <b
+          *ngIf="serviceid == 4"
+          style="
+            color: white !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.4;
+          "
+        >
+          &nbsp;Travelling Allowance for TOUR
+        </b>
+        <b
+          *ngIf="serviceid == 7"
+          style="
+            color: white !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.4;
+          "
+        >
+          &nbsp;Travelling Allowance for TRANSFER
+        </b>
+        <b
+          *ngIf="serviceid == 3"
+          style="
+            color: white !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.4;
+          "
+        >
+          &nbsp;Medical Claim Reimburesment System
+        </b>
+      </div>
+
+      <div
+        nz-col
+        nzSpan="12"
+        style="display: flex; justify-content: flex-end; align-items: center"
+      >
+        <!-- <button nz-button nzType="primary" (click)="showModal()" nzShape="circle" nzTooltipTitle="Create Issue"
+              nzTooltipPlacement="top" nz-tooltip>
+              <i nz-icon nzType="plus"></i>
+            </button> -->
+
+        <!-- <button
+          (click)="info($event)"
+          nzType="primary"
+          nzShape="circle"
+          nzTooltipTitle="Info"
+          nzTooltipPlacement="bottom"
+          nz-button
+          nz-tooltip
+          style="margin-right: 10px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M10 20C7.34784 20 4.8043 18.9464 2.92893 17.0711C1.05357 15.1957 0 12.6522 0 10C0 7.34784 1.05357 4.8043 2.92893 2.92893C4.8043 1.05357 7.34784 0 10 0C12.6522 0 15.1957 1.05357 17.0711 2.92893C18.9464 4.8043 20 7.34784 20 10C20 12.6522 18.9464 15.1957 17.0711 17.0711C15.1957 18.9464 12.6522 20 10 20ZM10 18C12.1217 18 14.1566 17.1571 15.6569 15.6569C17.1571 14.1566 18 12.1217 18 10C18 7.87827 17.1571 5.84344 15.6569 4.34315C14.1566 2.84285 12.1217 2 10 2C7.87827 2 5.84344 2.84285 4.34315 4.34315C2.84285 5.84344 2 7.87827 2 10C2 12.1217 2.84285 14.1566 4.34315 15.6569C5.84344 17.1571 7.87827 18 10 18ZM10 9C10.2652 9 10.5196 9.10536 10.7071 9.29289C10.8946 9.48043 11 9.73478 11 10V14C11 14.2652 10.8946 14.5196 10.7071 14.7071C10.5196 14.8946 10.2652 15 10 15C9.73478 15 9.48043 14.8946 9.29289 14.7071C9.10536 14.5196 9 14.2652 9 14V10C9 9.73478 9.10536 9.48043 9.29289 9.29289C9.48043 9.10536 9.73478 9 10 9ZM10 5C10.2652 5 10.5196 5.10536 10.7071 5.29289C10.8946 5.48043 11 5.73478 11 6C11 6.26522 10.8946 6.51957 10.7071 6.70711C10.5196 6.89464 10.2652 7 10 7C9.73478 7 9.48043 6.89464 9.29289 6.70711C9.10536 6.51957 9 6.26522 9 6C9 5.73478 9.10536 5.48043 9.29289 5.29289C9.48043 5.10536 9.73478 5 10 5Z"
+              fill="white"
+            />
+          </svg>
+        </button> -->
+
+        <!-- <button
+          nzType="primary"
+          nzShape="circle"
+          (click)="add()"
+          nzTooltipTitle="Profile"
+          nzTooltipPlacement="bottom"
+          nz-button
+          nz-tooltip
+          style="margin-right: 10px"
+        >
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+            >
+              <path
+                d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M11.0007 14.3333C13.3018 14.3333 15.1673 12.4679 15.1673 10.1667C15.1673 7.86548 13.3018 6 11.0007 6C8.69946 6 6.83398 7.86548 6.83398 10.1667C6.83398 12.4679 8.69946 14.3333 11.0007 14.3333Z"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M4.3125 18.4378C4.93949 17.2028 5.89621 16.1656 7.07661 15.4411C8.257 14.7165 9.61498 14.333 11 14.333C12.385 14.333 13.743 14.7165 14.9234 15.4411C16.1038 16.1656 17.0605 17.2028 17.6875 18.4378"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </button> -->
+
+        <button
+          nzType="primary"
+          nzShape="circle"
+          class="vv"
+          data-bs-toggle="modal"
+          data-bs-target="#changepasss"
+          nzTooltipTitle="Change Password"
+          nzTooltipPlacement="bottom"
+          nz-button
+          nz-tooltip
+          style="margin-right: 10px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="15"
+            height="20"
+            viewBox="0 0 15 20"
+            fill="none"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M2.77672 6.63658C0.263131 6.63658 -0.00223708 7.27765 1.40579e-05 9.73017C0.00200035 11.7038 0.00014984 13.6774 0.00014984 15.6509C0.00014984 20.8349 0.265784 19.9188 7.47551 19.9188C16.1392 19.9188 14.938 21.5937 14.9491 9.73017C14.9515 7.26878 14.6701 6.63658 12.172 6.63658C11.982 4.43904 12.455 3.68609 11.2301 1.93475C9.44936 -0.611495 5.5733 -0.676853 3.71783 1.93099C2.49785 3.64574 2.96701 4.4736 2.77672 6.63658ZM3.68115 13.1833L2.3502 13.1852C2.5295 13.5895 3.87078 14.854 4.11205 15.0534C4.71668 14.5619 5.42247 13.6101 5.95242 13.2127L4.61405 13.1784C4.69244 11.9179 5.21894 11.2338 5.92408 10.7709C7.0756 10.0147 7.65494 10.3355 8.81917 10.6278L9.39388 9.98407C7.97513 8.65701 3.82192 9.34407 3.68115 13.1833ZM8.99913 13.1829H10.2595C10.3854 14.3658 9.59264 15.2386 8.99529 15.6012C7.66394 16.4093 7.36812 15.946 6.13012 15.7706L5.48537 16.4687C7.01257 16.9776 7.87078 17.414 9.46949 16.425C10.728 15.6464 10.8843 14.9473 11.2926 13.1829L12.6141 13.1731C12.3455 12.7679 11.1471 11.4919 10.6809 11.2874C10.4479 11.6211 10.1691 11.8548 9.86807 12.1601C9.69208 12.3385 9.59489 12.4309 9.41797 12.609C9.13129 12.8976 9.16148 12.8198 8.99913 13.1829ZM4.59207 6.62408L10.3542 6.63524C10.4241 5.47333 10.4837 4.07164 9.96102 3.21729C8.77295 1.27513 6.04035 1.40584 4.99065 3.21971C4.48733 4.0894 4.53434 5.45154 4.59207 6.62408Z"
+              fill="white"
+            />
+          </svg>
+        </button>
+        <button
+          (click)="logout()"
+          nzType="primary"
+          nzShape="circle"
+          nzTooltipTitle="Logout"
+          nzTooltipPlacement="bottom"
+          nz-button
+          nz-tooltip
+          style="margin-right: 25px"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="20"
+            viewBox="0 0 22 20"
+            fill="none"
+          >
+            <path
+              d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 2.81829e-06 10 2.81829e-06C11.5527 -0.00116364 13.0842 0.359775 14.4729 1.05414C15.8617 1.74851 17.0693 2.75718 18 4H15.29C14.1352 2.98176 12.7112 2.31836 11.1887 2.0894C9.66625 1.86044 8.11007 2.07566 6.70689 2.70922C5.30371 3.34277 4.11315 4.36776 3.27807 5.66119C2.44299 6.95462 1.99887 8.46153 1.999 10.0011C1.99913 11.5407 2.4435 13.0475 3.27879 14.3408C4.11409 15.6341 5.30482 16.6589 6.7081 17.2922C8.11139 17.9255 9.66761 18.1405 11.19 17.9113C12.7125 17.6821 14.1364 17.0184 15.291 16H18.001C17.0702 17.243 15.8624 18.2517 14.4735 18.9461C13.0846 19.6405 11.5528 20.0013 10 20ZM17 14V11H9V9H17V6L22 10L17 14Z"
+              fill="white"
+            />
+          </svg>
+        </button>
+
+        <!-- <span nz-tooltip nzTooltipTitle="About Us">
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="info($event)"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="info" nzTheme="outline"></i></button
+          ></span> -->
+        <!-- <span
+            *ngIf="employeeedit != 1"
+            nz-tooltip
+            nzTooltipTitle="Update Profile"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="edit()"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="user" nzTheme="outline"></i></button
+          ></span> -->
+        <!-- <span
+            nz-tooltip
+            nzTooltipTitle="Change Password"
+            *ngIf="employeeedit == 1"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="changepass()"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="setting" nzTheme="outline"></i></button
+          ></span> -->
+
+        <!-- <span
+            nz-tooltip
+            nzTooltipTitle="Change Password"
+            *ngIf="employeeedit != 1"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              nzShape="circle"
+              (click)="changepass1()"
+              style="margin-right: 10px"
+            >
+              <i nz-icon nzType="setting" nzTheme="outline"></i>
+            </button>
+          </span> -->
+        <!-- <button
+            nz-button
+            nzType="primary"
+            routerLink="/"
+            [nzLoading]="isSpinning"
+            nzShape="circle"
+            nzTooltipTitle="Back to website"
+            nzTooltipPlacement="top"
+            nz-tooltip
+          >
+            <i nz-icon nzType="home"></i>
+          </button> -->
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-content style="margin: 0px !important">
+    <div class="inner-content" style="padding: 24px !important">
+      <router-outlet></router-outlet>
+    </div>
+
+    <!-- <nz-footer>
+          Proudly Designed & Developed By,
+          <a href="https://www.uvtechsoft.com/" target="_blank"
+            >UjjVilas Technologies & Software Pvt. Ltd.</a
+          >
+        </nz-footer> -->
+  </nz-content>
+  <nz-footer style="text-align: center">
+    Copyright 2023
+    <a href="https://www.uvtechsoft.com/" target="_blank"
+      >UjjVilas Technologies & Software Pvt. Ltd.</a
+    >
+    All rights reserved.
+  </nz-footer>
+  <!-- </nz-layout> -->
+</nz-layout>
+
+<nz-modal
+  [(nzVisible)]="isVisible1"
+  [nzWidth]="'350px'"
+  (nzOnCancel)="handleCancel1()"
+  nzTitle="Change Password"
+>
+  <ng-container *nzModalContent>
+    <form nz-form #resetform *ngIf="showconfirm == false">
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Current Password
+            </nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid Current Password">
+              <input
+                nz-input
+                name="currpass"
+                placeholder="Enter your current password"
+                [(ngModel)]="PASSWORD"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+
+    <form nz-form #resetform *ngIf="showconfirm == true">
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>New Password </nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid New Password">
+              <input
+                nz-input
+                name="newpass"
+                placeholder="Enter your New Password"
+                [(ngModel)]="NEW_PASSWORD"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Confirm Password
+            </nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid Confirm Password">
+              <input
+                nz-input
+                name="confpass"
+                placeholder="Enter New Password To Confirm"
+                [(ngModel)]="CONFPASSWORD"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <button
+      *ngIf="showconfirm == false"
+      nz-button
+      nzType="default"
+      (click)="checkpass()"
+    >
+      Check
+    </button>
+    <button
+      *ngIf="showconfirm == true"
+      nz-button
+      nzType="default"
+      (click)="confpass()"
+    >
+      Change Password
+    </button>
+  </div>
+</nz-modal>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="550"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-employeeupdate
+      [drawerClose]="closeCallback"
+      [drawerVisible]="drawerVisible"
+      [data]="drawerData"
+    ></app-employeeupdate>
+  </ng-container>
+</nz-drawer>
+
+<nz-layout
+  *ngIf="
+    (!isLogedIn && pageName == 'login') ||
+    (!isLogedIn && pageName != 'employeelogin')
+  "
+>
+  <!-- <nz-layout class="app-layout"> -->
+  <!-- <app-login></app-login> -->
+</nz-layout>
+<!-- <nz-layout *ngIf="!isLogedIn && pageName == 'employeelogin'">
+  <app-employeelogin
+      *ngIf="!isLogedIn && pageName == 'employeelogin'"
+    ></app-employeelogin>
+</nz-layout> -->
+
+<nz-modal
+  [(nzVisible)]="isVisible2"
+  [nzWidth]="'350px'"
+  (nzOnCancel)="handleCancel11()"
+  nzTitle="Change Password"
+>
+  <ng-container *nzModalContent>
+    <form nz-form #resetform *ngIf="showconfirm == false">
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Current Password
+            </nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid Current Password">
+              <input
+                nz-input
+                name="currpass"
+                placeholder="Enter your current password"
+                [(ngModel)]="PASSWORD"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+
+    <form nz-form #resetform *ngIf="showconfirm == true">
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>New Password </nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid New Password">
+              <input
+                nz-input
+                name="newpass"
+                placeholder="Enter your New Password"
+                [(ngModel)]="NEW_PASSWORD"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Confirm Password
+            </nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid Confirm Password">
+              <input
+                nz-input
+                name="confpass"
+                placeholder="Enter New Password To Confirm"
+                [(ngModel)]="CONFPASSWORD"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <button
+      *ngIf="showconfirm == false"
+      nz-button
+      nzType="default"
+      (click)="checkpassemp()"
+    >
+      Check
+    </button>
+    <button
+      *ngIf="showconfirm == true"
+      nz-button
+      nzType="default"
+      (click)="confpassemp()"
+    >
+      Change Password
+    </button>
+  </div>
+</nz-modal>
+
+<div
+  class="modal fade"
+  id="changepasss"
+  tabindex="-1"
+  aria-labelledby="changepasssd"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  style="overflow-x: hidden; overflow-y: auto"
+>
+  <div class="modal-dialog" style="max-width: 315px !important">
+    <div class="modal-content">
+      <div class="modal-header" style="padding-top: 10px; padding-bottom: 10px">
+        <h5 class="modal-title" style="margin-bottom: 0px">Change Password</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+        <button
+          type="button"
+          style="display: none"
+          #closechangeppp
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div
+        class="modal-body"
+        style="
+          border-bottom: 4px groove #006699;
+          border-top: 4px groove #006699;
+          padding: 0px;
+        "
+      >
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form action="#">
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">
+                  Old Password</label
+                >
+                <div class="input-group">
+                  <input
+                    autocomplete="off"
+                    [type]="pass3 ? 'text' : 'password'"
+                    autocomplete="off"
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="changepassss.PASSWORD"
+                    placeholder="Enter Old Password"
+                    name="pasccs"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span
+                      style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      "
+                      toggle="#password-field"
+                      (click)="showpass3()"
+                      [ngClass]="{
+                        'bi bi-eye': !pass3,
+                        'bi bi-eye-slash': pass3
+                      }"
+                      class="fa input-group-text"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px"
+                  >New Password</label
+                >
+                <div class="input-group mb-0">
+                  <input
+                    autocomplete="off"
+                    [type]="pass4 ? 'text' : 'password'"
+                    [(ngModel)]="changepassss.NEW_PASSWORD"
+                    class="form-control"
+                    placeholder="Enter New Password"
+                    name="cpass"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span
+                      style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      "
+                      toggle="#password-field"
+                      (click)="showpass4()"
+                      [ngClass]="{
+                        'bi bi-eye': !pass4,
+                        'bi bi-eye-slash': pass4
+                      }"
+                      class="fa input-group-text"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px"
+                  >Retype New Password</label
+                >
+                <div class="input-group mb-0">
+                  <input
+                    autocomplete="off"
+                    [type]="pass11 ? 'text' : 'password'"
+                    [(ngModel)]="RETYPE_PASSWORD"
+                    class="form-control"
+                    placeholder="Retype New Password"
+                    name="cpass"
+                    required
+                  />
+                  <div class="input-group-append">
+                    <span
+                      style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      "
+                      toggle="#password-field"
+                      (click)="showp()"
+                      [ngClass]="{
+                        'bi bi-eye': !pass11,
+                        'bi bi-eye-slash': pass11
+                      }"
+                      class="fa input-group-text"
+                    ></span>
+                  </div>
+                </div>
+                <span
+                  style="font-weight: 400; font-size: 11px; margin-top: 7px"
+                >
+                  *Enter minimum 8 alphanumeric characters with special
+                  symbols.</span
+                >
+              </div>
+              <div
+                class="mt-4"
+                style="text-align: center; margin-top: 20px !important"
+              >
+                <button
+                  *ngIf="!otpSpinning"
+                  (click)="changepasss()"
+                  class="btn btn-primary px-4 validate"
+                  style="
+                    background-color: #006699 !important;
+                    width: 100%;
+                    color: white;
+                  "
+                >
+                  Change Password <i class="icon-long-arrow-right"></i>
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="drawerVisible1">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="Dwidth"
+    [nzVisible]="drawerVisible1"
+    [nzTitle]="drawerTitle1"
+    (nzOnClose)="drawerClose1()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-medical-employee-profile-new
+        [personalinformation]="drawerDatapersonal"
+        [empstatus]="empstatus"
+        [drawerClose]="closeCallback1"
+        [addnew]="addnew"
+      ></app-medical-employee-profile-new>
+    </ng-container>
+  </nz-drawer>
+</div>

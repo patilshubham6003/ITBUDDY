@@ -1,0 +1,154 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 15px !important;
+    font-weight: bold;
+    margin-bottom: 0px;
+    color: black;
+}
+
+.card-description {
+    color: #333;
+}
+
+.card-content {
+    font-size: 18px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    color: green;
+    margin-bottom: 0px;
+    padding: 5px 0px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.card-description {
+    color: #333;
+}
+
+/* 05-04-2024 */
+.cardposting {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+
+
+.cardposting:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.cardposting-content {
+    padding: 5px;
+}
+
+.cardstyle {
+    margin-top: 8px;
+    position: relative;
+    cursor: pointer;
+    width: 99%;
+    padding: 10px;
+    border: 1px solid #c5bebe;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0px rgba(252, 252, 252, 0.1);
+    background-color: #fdfdfd;
+    box-shadow: inset 0 0 5px rgb(151, 150, 150);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2495f1d2;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2495f1d2;
+}
+.abc {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}
+
+/* nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+} */
+
+
+.textOverflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.filter-box nz-form-item {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+
+  .table-row:nth-child(odd) {
+    background-color: #edf6ff; /* Light gray */
+}
+
+.table-row:nth-child(even) {
+    background-color: #ffffff; /* White */
+}
+
+  .grey-background {
+    background-color: #edf6ff !important;
+}
+
+.white-background {
+    background-color: #ffffff !important;
+
+}

@@ -1,0 +1,279 @@
+
+<div nz-row nzType="flex">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="10"
+    nzLg="10"
+    nzXl="10"
+    style="display: flex"
+  >
+    <div class="formname" style="padding-top: 3px">{{ formTitle }}</div>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="14"
+    nzLg="14"
+    nzXl="14"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item style="margin-right: 10px">
+        <button
+          nz-button
+          nzTooltipTitle="Download Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="search(true, true)"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <!-- <nz-form-item style="margin-right: 0px">
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input
+              (keydown.enter)="onKeypressEvent($event)"
+              type="text"
+              nz-input
+              name="searchempp"
+              [(ngModel)]="searchText"
+              placeholder="Search office"
+            />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button
+              nz-button
+              nzType="primary"
+              id="button"
+              (click)="search(true)"
+              nzSearch
+            >
+              <span nz-icon nzType="search"></span>
+            </button>
+          </ng-template>
+        </nz-form-item> -->
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <span
+      *ngIf="dataList != undefined"
+      style="
+        font-size: 11px;
+        margin-bottom: 0px;
+        padding-left: 0px;
+        color: blue;
+        font-weight: 600;
+      "
+    >
+      Total Records: &nbsp; {{ totalRecords }}</span
+    >
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row style="width: 100%">
+            <!-- <div nz-col nzSpan="4">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Month</nz-form-label>
+                  <nz-form-control>
+                    <nz-date-picker
+                      nzMode="month"
+                      nzFormat="MMM/yyyy"
+                      [(ngModel)]="date1"
+                      name="date1"
+                      style="width: 100%; padding-bottom: 3px; padding-top: 3px"
+                      (ngModelChange)="onChange($event)"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+            <div nz-col nzSpan="7">
+              <nz-form-item>
+                <nz-form-label class="labelsize" nzNoColon>Office</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    class="inputsize"
+                    nzSize="small"
+                    nzPlaceHolder="Select Office"
+                    style="width: 100%"
+                   
+                    name="Office"
+                    [(ngModel)]="OFFICE_ID"
+                    [nzShowArrow]="true"
+                  >
+                    <nz-option
+                      *ngFor="let list of Offices"
+                      [nzValue]="list.MDB_ID"
+                      [nzLabel]="list.NAME"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8" style="align-self: end">
+              <nz-form-item>
+                <button
+                  style="margin-right: 10px;font-size: 10px !important;"
+                  nz-button
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply filter
+                </button>
+                <button style=" font-size: 10px !important;"  nz-button nzType="default" (click)="clearFilter()">
+                  <i nz-icon nzType="delete"></i>Clear Filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      id="summer"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageSizeChange)="search(true)"
+      [nzSize]="'small'"
+      [nzPageSizeOptions]="[10, 20, 30, 40, 100, 200, 300, 400, 500]"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ y: '350px', x: '1200' }"
+      style="white-space: pre-line"
+    >
+      <thead>
+        <tr>
+          <th nzLeft nzWidth="200px" [nzSortFn]="true" nzColumnKey="RANK_NAME">
+            <b>Cadre Name</b>
+          </th>
+          <th nzLeft nzWidth="200px" [nzSortFn]="true" nzColumnKey="OFFICE_NAME">
+            <b>Office Name</b>
+          </th>
+          <th
+            nzWidth="100px"
+            [nzSortFn]="true"
+            nzColumnKey="SANCTION_STRENGTH"
+          >
+            <b>Sanctioned Strength</b>
+          </th>
+          <!-- <th
+              nzWidth="100px"
+              [nzSortFn]="true"
+              nzColumnKey="MINIMUM_REQUIRED_STRENGTH"
+            >
+              <b>Proposed Sanctioned Strength</b>
+            </th> -->
+          <th nzWidth="100px" [nzSortFn]="true" nzColumnKey="CURRENT_WORKING">
+            <b>Current Working Strength</b>
+          </th>
+          <th
+            nzWidth="100px"
+            [nzSortFn]="true"
+            nzColumnKey="SHORTAGE"
+          >
+            <b>Shortage</b>
+          </th>
+          <th
+            nzWidth="100px"
+            [nzSortFn]="true"
+            nzColumnKey="SHORTAGE_PERCENTAGE"
+          >
+            <b>Shortage (%)</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: left" nzLeft>
+            <span *ngIf="data.RANK_NAME != null">
+              <span
+                *ngIf="data.RANK_NAME.length >= 40"
+                nz-popover
+                [nzPopoverContent]="data.RANK_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{ data["RANK_NAME"] == null ? "-" : (data.RANK_NAME | slice : 0 : 40)
+                }}{{ data.RANK_NAME.length > 40 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.RANK_NAME.length < 40">
+                {{ data["RANK_NAME"] == null ? "-" : (data.RANK_NAME | slice : 0 : 40)
+                }}{{ data.RANK_NAME.length > 40 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.RANK_NAME == null">-</span>
+          </td>
+          <td style="text-align: left" nzLeft>
+            <span *ngIf="data.OFFICE_NAME != null">
+              <span
+                *ngIf="data.OFFICE_NAME.length >= 40"
+                nz-popover
+                [nzPopoverContent]="data.OFFICE_NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["OFFICE_NAME"] == null
+                    ? "-"
+                    : (data.OFFICE_NAME | slice : 0 : 40)
+                }}{{ data.OFFICE_NAME.length > 40 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.OFFICE_NAME.length < 40">
+                {{
+                  data["OFFICE_NAME"] == null
+                    ? "-"
+                    : (data.OFFICE_NAME | slice : 0 : 40)
+                }}{{ data.OFFICE_NAME.length > 40 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.OFFICE_NAME == null">-</span>
+          </td>
+          <td align="center">
+            {{ data.SANCTION_STRENGTH ? data.SANCTION_STRENGTH : "-" }}
+          </td>
+    
+          <td align="center">
+            {{ data.CURRENT_WORKING ? data.CURRENT_WORKING : "-" }}
+          </td>
+          <td align="center">
+            {{ data.SHORTAGE ? data.SHORTAGE : "-" }}
+          </td>
+          <td align="center">
+            {{
+              data.SHORTAGE_PERCENTAGE
+                ? data.SHORTAGE_PERCENTAGE
+                : "-"
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<!-- </div> -->

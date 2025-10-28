@@ -1,0 +1,111 @@
+<div>
+    <form nz-form #myForm="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row>
+                <div nz-col nzSpan="10" class="my-box">
+
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+
+                            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Name">
+                                <input nz-input name="name" placeHolder="Enter Name" (keypress)="alphaOnly($event)"
+                                    [pattern]="namepatt" [(ngModel)]="data.TABLE_NAME" required />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Sample Excel File</nz-form-label>
+                            <nz-form-control nzHasFeedback nzErrorTip="Sample Excel File">
+                                <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px;"
+                                    (click)="fileInput.click()">
+                                    Upload Excel
+                                    <input #fileInput name="otherimage"   type="file"  
+                                        (change)="onFileSelected($event)" style="display: none;" required />
+                                </button>
+                      
+                            </nz-form-control>
+                        </nz-form-item>
+                        <div nz-col nzSpan="23" *ngIf="fileURL !=null"
+                        style="overflow: hidden; padding-left: 11px; font-size: 13px;">
+                        {{fileURL.name}}
+                    </div>
+
+                    </div>
+                    <div nz-col nzSpan="23 " style="margin-left: 12px;" *ngIf="fileURL==null && data.EXCEL_URL != ''">
+                    {{ data.EXCEL_URL }}
+                        <button (click)="removeImage()" [nzSize]="'default'" nz-button
+                            style="margin-left: 50%; margin-top: 10px; ">
+                            <nz-badge>
+                                <i style="font-size: 15px; color: red;" name="excelurl" [(ngModel)]="data.EXCEL_URL" nz-icon
+                                    nzType="delete"></i>
+                            </nz-badge>
+                        </button>
+                    </div>
+    
+
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
+                            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Sequence No">
+                                <input nz-input placeHolder="Enter Sequence No." (keypress)="omit($event)" maxlength="5"
+                                    name="seqno" [(ngModel)]="data.SEQUENCE_NO" required />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon>Status</nz-form-label>
+                            <nz-form-control>
+                                <nz-switch name="is_active" [(ngModel)]="data.STATUS"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+                <div nz-col nzSpan="14"  style="margin-top: 9px;">
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+
+                            <nz-form-label nzRequired nzNoColon>Column Json</nz-form-label>
+
+                            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Valid Column Json">
+                                <textarea nzAllowClear nz-input rows="12" name="ColumnJSon"
+                                    placeHolder="Enter Column Json" [(ngModel)]="data.COLUMN_JSON" 
+                                    required>
+                            </textarea>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+
+    <div class="footer">
+        <button type="button" nz-button (click)="close(myForm)" class="ant-btn"
+            style="margin-right: 8px;"><span>Cancel</span></button>
+
+        <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" (click)="save(false,myForm)"><span>Save & Close</span></button>
+
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px;background-color: #40a9ff;">
+                    <a style="color:white" (click)="save(true,myForm)">Save & New</a>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+
+        <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+            (click)="save(false,myForm)"><span>Update & close</span></button>
+    </div>
+
+    <div class="header">
+        <button type="button" nz-button (click)="close(myForm)" class="ant-btn" style="margin-right: 8px;"><i nz-icon
+                nzType="close" nzTheme="outline"></i></button>
+    </div>
+</div>

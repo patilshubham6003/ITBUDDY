@@ -1,0 +1,144 @@
+<div *ngIf="transferallounceorder != undefined">
+  <form nz-form>
+    <div style="padding-left: 7%; margin-right: 2%">
+      <div></div>
+      <h3 style="text-align: center">
+        <U> CERTIFICATE OF ASSUMPTION OF CHARGE </U>
+      </h3>
+      <br /><br />
+      <p>
+        Certified that I have in the forenoon of this day (20.10.2022) assumed
+        the charge of Assistant Commissioner of Income-tax, (OSD) in the office
+        of Pr. CCIT, Mumbai Region in pursuance of the CBDT's office order No.
+        213 of 2022 in F. No. A-22013/1/2022-Ad.VI dated 30.09.2022
+      </p>
+      <br /><br />
+      <p>Signature:</p>
+      <p>
+        Name in Block Letters :
+        <b style="text-transform: uppercase">{{
+          transferallounceorder.NAME
+        }}</b>
+      </p>
+      <p>
+        Designation : <b>{{ transferallounceorder.DESIGNATION }}</b>
+      </p>
+      <p>
+        Station : <b>{{ transferallounceorder.STATION_NAME }}</b>
+      </p>
+      <p>Date :</p>
+      <br /><br />
+      <p><u> Copy forwarded to :- </u></p>
+      <p>1. The Pr. Chief Commissioner of Income-Tax, Mumbai.</p>
+      <p>2. The Commissioner of Income Tax (Admin. & TPS), Mumbai.</p>
+      <p>3. The I.T.O., Service Book Cell, Mumbai.</p>
+      <p>4. The Sr. A.O., Z.A.O., CBDT, Mumbai.</p>
+      <p>5. Office Copy</p>
+    </div>
+  </form>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Certificate Of Assumption Of Charge'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-size: 14px;
+              font-family: Arial, Helvetica, sans-serif;
+            "
+          >
+            <div>
+              <h3><U> CERTIFICATE OF ASSUMPTION OF CHARGE </U></h3>
+              <br /><br />
+              <p>
+                Certified that I have in the forenoon og this day (20.10.2022)
+                assumed the charge of Assistant Commissioner of Income-tax,
+                (OSD) in the office of Pr. CCIT, Mumbai Region in pursuance of
+                the CBDT's office order No. 213 of 2022 in F. No.
+                A-22013/1/2022-Ad.VI dated 30.09.2022
+              </p>
+              <br /><br />
+              <p>Signature:</p>
+              <p>
+                Name in Block Letters :
+                <b style="text-transform: uppercase">{{
+                  transferallounceorder.NAME
+                }}</b>
+              </p>
+              <p>
+                Designation : <b>{{ transferallounceorder.DESIGNATION }}</b>
+              </p>
+              <p>
+                Station : <b>{{ transferallounceorder.STATION_NAME }}</b>
+              </p>
+              <p>Date :</p>
+              <br /><br />
+              <p><u> Copy forwarded to :- </u></p>
+              <p>1. The Pr. Chief Commissioner of Income-Tax, Mumbai.</p>
+              <p>2. The Commissioner of Income Tax (Admin. & TPS), Mumbai.</p>
+              <p>3. The I.T.O., Service Book Cell, Mumbai.</p>
+              <p>4. The Sr. A.O., Z.A.O., CBDT, Mumbai.</p>
+              <p>5. Office Copy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

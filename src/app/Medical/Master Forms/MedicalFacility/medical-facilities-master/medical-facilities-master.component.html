@@ -1,0 +1,152 @@
+<div nz-row nzType="flex">
+  <div nz-col nzSpan="8">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+  <div nz-col nzSpan="16" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            (keydown.enter)="onKeypressEvent($event)"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>New Medical Facility
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #datatable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '800px', y: '55vh' }"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="20px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <!-- <th nzWidth="20px" style="font-weight: bold; text-align: center;" [nzSortFn]="true">Seq No.</th> -->
+
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NAME' }}"
+            [nzSortFn]="true"
+          >
+            Name
+          </th>
+
+          <th
+            nzWidth="20px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'STATUS' }}"
+            [nzSortFn]="true"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of datatable.data" style="text-align: center">
+          <td style="text-align: center">
+            <a nz-button nzType="link" (click)="edit(data)"
+              ><i nz-icon nzType="edit" nzTheme="outline"></i
+            ></a>
+          </td>
+
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["NAME"] }}
+          </td>
+
+          <!-- <td style="text-align: center;white-space: pre-line;">{{data['STATUS']}}</td> -->
+
+          <td style="text-align: center; white-space: pre-line">
+            <i
+              nz-icon
+              *ngIf="data['STATUS']"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="!data['STATUS']"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<!-- <nz-drawer [nzBodyStyle]="{height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px'}" [nzClosable]="true"
+    [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="getwidth()" [nzVisible]="Visible" [nzTitle]="drawerTitle"
+    (nzOnClose)="closeDrawer()" (nzKeyboard)="true">
+<ng-container *nzDrawerContent>
+    <app-add-medical-facility [closeDrawer]="closeDrawercallback" [data]="drawerData">
+    </app-add-medical-facility>
+</ng-container >
+</nz-drawer> -->
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="450"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-add-medical-facility
+      [drawerClose]="closeCallback"
+      [drawerVisible]="drawerVisible"
+      [data]="drawerData"
+    ></app-add-medical-facility>
+  </ng-container>
+</nz-drawer>

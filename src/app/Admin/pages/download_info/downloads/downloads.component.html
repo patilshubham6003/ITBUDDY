@@ -1,0 +1,266 @@
+<div class="my-box">
+  <form nz-form #downloadPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Title</nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Title">
+              <input nz-input name="Title" required [(ngModel)]="data.TITLE" maxlength="256" required
+                placeHolder="Enter Title" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="Visible==false">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Service Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Service Name">
+              <nz-select nzShowSearch nzAllowClear nzMode="multiple" nzPlaceHolder="Please Select Service Name "
+                name="Service Name" [(ngModel)]="data.serviceData" (ngModelChange)="clickdatassss(data.serviceData)"
+                required>
+
+                <nz-option *ngFor="let data of serviceName" [nzValue]="data.ID" [nzLabel]="data.TITLE">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>File Type</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+              <div nz-col nzSpan="18">
+                <nz-radio-group [(ngModel)]="data['FILE_TYPE']" name="radiogroup">
+                  <label nz-radio nzValue="M">Manual</label>
+                  <label nz-radio nzValue="C">Circulars</label>
+                  <label nz-radio nzValue="TV">Training Videos</label>
+                </nz-radio-group>
+              </div>
+
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div *ngIf="data.FILE_TYPE=='M'" nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>PDF File </nz-form-label>
+
+            <nz-form-control nzHasFeedback>
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="fileInput.click()">
+                Select PDF
+                <input #fileInput name="image" [(ngModel)]="data.FILE_URL" type="file" accept="application/pdf"
+                  (change)="onFileSelected($event)" style="display: none" required />
+              </button>
+              <span *ngIf="data.FILE_URL != ''">
+                <button (click)="clear(data.FILE_URL,'downloadFile')" [nzSize]="'default'" nz-button
+                  style="margin-left: 20%">
+
+                  <nz-badge>
+                    <i style="font-size: 15px; color: red" nz-icon nzType="delete"></i>
+                  </nz-badge>
+
+                </button>
+              </span>
+            </nz-form-control>
+          </nz-form-item>
+          <div nz-row>
+            <div nz-col nzSpan="22" *ngIf="data.FILE_URL != ''">
+              {{data.FILE_URL}}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div nz-row>
+        <div *ngIf="data.FILE_TYPE=='C'" nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>PDF File </nz-form-label>
+
+            <nz-form-control nzHasFeedback>
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="fileInputC.click()">
+                Select PDF
+                <input #fileInputC name="cFileType" [(ngModel)]="data.FILE_URL" type="file" accept="application/pdf"
+                  (change)="onFileSelectedforC($event)" style="display: none" required />
+              </button>
+              <span *ngIf="data.FILE_URL != ''">
+                <button (click)="clearforC(data.FILE_URL,'downloadFile')" [nzSize]="'default'" nz-button
+                  style="margin-left: 20%">
+
+                  <nz-badge>
+                    <i style="font-size: 15px; color: red" nz-icon nzType="delete"></i>
+                  </nz-badge>
+
+                </button>
+              </span>
+            </nz-form-control>
+          </nz-form-item>
+          <div nz-row>
+            <div nz-col nzSpan="22" *ngIf="data.FILE_URL != ''">
+              {{ data.FILE_URL }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-row *ngIf="data.FILE_TYPE=='TV'">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> Video </nz-form-label>
+            <nz-form-control nzHasFeedback>
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="fileInputTV.click()">
+                Select Video
+                <input #fileInputTV name="TVFileType" type="file" accept="video/*"
+                  (change)="onFileSelectedforTV($event)" style="display: none" required />
+              </button>
+              <span *ngIf="data.FILE_URL != ''">
+                <button (click)="clearforTV(data.FILE_URL,'downloadFile')" [nzSize]="'default'" nz-button
+                  style="margin-left: 10px">
+                  <nz-badge>
+                    <i style="font-size: 15px; color: red" nz-icon nzType="delete"></i>
+                  </nz-badge>
+                </button>
+              </span>
+            </nz-form-control>
+          </nz-form-item>
+          <div nz-row>
+            <div nz-col nzSpan="24" *ngIf="fileURLforTV != null"
+              style="overflow: hidden; padding-left: 11px; font-size: 11px">
+              <video [src]="image1" style="width: 350px; height: 200px;" controls>
+                <source src="{{imgurl}}downloadFile/{{data.FILE_URL}}" type="video/mp4">
+                <source src="{{imgurl}}downloadFile/{{data.FILE_URL}}" type="video/webm">
+                <source src="{{imgurl}}downloadFile/{{data.FILE_URL}}" type="video/ogg">
+              </video>
+            </div>
+            <div nz-col nzSpan="24" *ngIf="fileURLforTV == null && data.FILE_URL != ''"
+              style="overflow: hidden; padding-left: 11px; font-size: 11px">
+              <video style="width: 350px; height: 200px;" controls>
+                <source src="{{imgurl}}downloadFile/{{data.FILE_URL}}" type="video/mp4">
+                <source src="{{imgurl}}downloadFile/{{data.FILE_URL}}" type="video/webm">
+                <source src="{{imgurl}}downloadFile/{{data.FILE_URL}}" type="video/ogg">
+              </video>
+              <br />
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Image
+              <span *ngIf="data.VIDEO_THUMBNAIL == ''">
+                <span style="color: red; font-size: 10px !important; margin-left: 5px">
+                  ( Image Must Be 480px Height And 480px Width )
+                </span>
+              </span></nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Image Url is required">
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="inputFile.click()">
+                Choose File
+                <input #inputFile type="file" accept="image/*" (change)="onFileSelectedIMAGE_URL($event)"
+                  (click)="inputFile.value = ''" value="" style="display: none" />
+              </button>
+              <span *ngIf="data.VIDEO_THUMBNAIL != ''">
+                <button (click)="clearimage(data.VIDEO_THUMBNAIL,'downloadVideo')" [nzSize]="'default'" nz-button
+                  style="margin-left: 10px">
+
+                  <nz-badge>
+                    <i style="font-size: 15px; color: red" nz-icon nzType="delete"></i>
+                  </nz-badge>
+
+                </button>
+              </span>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div *ngIf="fileDataIMAGE_URL != null">
+            <img width="100%" style="margin-left: 10px;height: 200px;" [src]="image" />
+          </div>
+          <!-- <div nz-row>
+        <div nz-col nzSpan="24"> -->
+          <nz-form-item *ngIf="fileDataIMAGE_URL == null && data.VIDEO_THUMBNAIL != ''">
+            <img width="100%" style="margin-top: 10px;height: 200px;"
+              src="{{ imgurl }}downloadVideo/{{ data.VIDEO_THUMBNAIL }}" />
+          </nz-form-item>
+          <!-- </div>
+        </div> -->
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Video Description</nz-form-label>
+            <nz-form-control nzHasFeedback>
+
+              <textarea nz-input rows="4" name="description" type="description" [(ngModel)]="data.VIDEO_DESCRIPTION"
+                placeholder="Please Enter description" required>
+
+              </textarea>
+              <small style="color: red" *ngIf="data.VIDEO_DESCRIPTION != undefined">
+                {{ data.VIDEO_DESCRIPTION.length }}/1024
+              </small>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No">
+              <input nz-input autocomplete="off" name="sequenceNo" (keypress)="omit($event)" type="text" maxlength="6"
+                [(ngModel)]="data.SEQUENCE_NO" placeHolder="Enter Sequence No" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+
+            <nz-form-control>
+              <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.STATUS"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Is New</nz-form-label>
+
+            <nz-form-control>
+              <nz-switch name="isnew" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_LATEST"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+<div class="footer">
+  <button type="button" nz-button (click)="close(downloadPage)" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+    [nzLoading]="isSpinning" (click)="save(false, downloadPage)">
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+        <a style="color: white" (click)="save(true, downloadPage)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false, downloadPage)">
+    <span>Update & Close</span>
+  </button>
+</div>

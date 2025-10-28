@@ -1,0 +1,525 @@
+<div *ngIf="data != undefined">
+  <form nz-form #AddNewRecord="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Is Long Journey?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                [(ngModel)]="data.IS_LONG_JOURNEY"
+                (ngModelChange)="Journeychange($event)"
+                name="IS_LONG_JOURNEY"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+              >
+              </nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Name of Hotel</nz-form-label>
+              <nz-form-control nzErrorTip="Please Enter Name of Hotel">
+                <input
+                  nz-input
+                  name="fromstcffation"
+                  placeHolder="Name of Hotel"
+                  autocomplete="off"
+                  maxlength="510"
+                  [pattern]="namepatt"
+                  [(ngModel)]="data.NAME_OF_HOTEL"
+                  required
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div> -->
+
+        <div nz-col nzSpan="12" *ngIf="data.IS_LONG_JOURNEY == true">
+          <nz-form-item>
+            <!-- <nz-form-label *ngIf="data.IS_LONG_JOURNEY==false" nzRequired nzNoColon>Date</nz-form-label> -->
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              *ngIf="data.IS_LONG_JOURNEY == true"
+              nzRequired
+              nzNoColon
+              >Start Date</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please  Select to Date">
+              <nz-date-picker
+                name="Date"
+                [(ngModel)]="data.EXPENSE_DATE"
+                (ngModelChange)="startDateDays($event)"
+                style="width: 100%"
+                required
+                nzFormat="dd/MM/yyyy"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="8" *ngIf="data.IS_LONG_JOURNEY == false">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              *ngIf="data.IS_LONG_JOURNEY == false"
+              nzRequired
+              nzNoColon
+              >Date</nz-form-label
+            >
+            <!-- <nz-form-label *ngIf="data.IS_LONG_JOURNEY==true" nzRequired nzNoColon>Start Date</nz-form-label> -->
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please  Select to Date">
+              <nz-date-picker
+                name="Date"
+                [(ngModel)]="data.EXPENSE_DATE"
+                style="width: 100%"
+                required
+                nzFormat="dd/MM/yyyy"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="data.IS_LONG_JOURNEY == true">
+          <nz-form-item>
+            <nz-form-label
+              nzRequired
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzNoColon
+              >End Date</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please  Select to Date">
+              <nz-date-picker
+                name="JOURNEY_END_DATE"
+                [(ngModel)]="data.JOURNEY_END_DATE"
+                (ngModelChange)="endDateDays($event)"
+                style="width: 100%"
+                required
+                nzFormat="dd/MM/yyyy"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="8" *ngIf="data.IS_LONG_JOURNEY == false">
+          <nz-form-item>
+            <nz-form-label
+              nzRequired
+              nzNoColon
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              >Start Time</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please  Select to Time">
+              <nz-time-picker
+                name="time1"
+                (ngModelChange)="calculateTimeDifference($event)"
+                [(ngModel)]="data.START_TIME"
+                nzFormat="HH:mm"
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+                required
+              ></nz-time-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="8" *ngIf="data.IS_LONG_JOURNEY == false">
+          <nz-form-item>
+            <nz-form-label
+              nzRequired
+              nzNoColon
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+            >
+              End Time</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please  Select to Time">
+              <nz-time-picker
+                name="time2"
+                (ngModelChange)="calculateTimeDifference2($event)"
+                [(ngModel)]="data.END_TIME"
+                nzFormat="HH:mm"
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+                required
+              ></nz-time-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- <div nz-col nzSpan="16">
+                    <div>Is Food Bill Is Attached</div>
+                </div> -->
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              nzRequired
+              nzNoColon
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              >Claimed Amount</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Amount">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  (ngModelChange)="calculateamt($event)"
+                  [(ngModel)]="data.EXPENSE_AMOUNT"
+                  name="amountttt"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Claimed Amount"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              nzRequired
+              nzNoColon
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              >Allowed Percentage</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter GST">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnAfter="%"
+              >
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="notAboveHundred($event)"
+                  (ngModelChange)="calculateAmtPercentage($event)"
+                  [(ngModel)]="data.ALLOWED_PERCENTAGE"
+                  name="Allowed"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Allowed Percentage"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24" *ngIf="data.IS_LONG_JOURNEY == false">
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 1' ||
+              gradpaylevel == 'Level 2' ||
+              gradpaylevel == 'Level 3' ||
+              gradpaylevel == 'Level 4' ||
+              gradpaylevel == 'Level 5'
+            "
+          >
+          </span>
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 6' ||
+              gradpaylevel == 'Level 7' ||
+              gradpaylevel == 'Level 8'
+            "
+            >Note: Maximum Admissible Amount Is ₹ 500.
+          </span>
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 9' ||
+              gradpaylevel == 'Level 10' ||
+              gradpaylevel == 'Level 11'
+            "
+            >Note: Maximum Admissible Amount Is ₹ 800.</span
+          >
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="gradpaylevel == 'Level 12' || gradpaylevel == 'Level 13'"
+            >Note: Maximum Admissible Amount Is ₹ 1000.</span
+          >
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 14' ||
+              gradpaylevel == 'Level 15' ||
+              gradpaylevel == 'Level 16' ||
+              gradpaylevel == 'Level 17'
+            "
+            >Note: Maximum Admissible Amount Is ₹ 1200.</span
+          >
+        </div>
+        <div nz-col nzSpan="24" *ngIf="data.IS_LONG_JOURNEY == true">
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 1' ||
+              gradpaylevel == 'Level 2' ||
+              gradpaylevel == 'Level 3' ||
+              gradpaylevel == 'Level 4' ||
+              gradpaylevel == 'Level 5'
+            "
+          >
+          </span>
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 6' ||
+              gradpaylevel == 'Level 7' ||
+              gradpaylevel == 'Level 8'
+            "
+            >Note: Maximum Admissible Amount Is ₹ {{ maxAdmissibleAmount }}.
+          </span>
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 9' ||
+              gradpaylevel == 'Level 10' ||
+              gradpaylevel == 'Level 11'
+            "
+            >Note: Maximum Admissible Amount Is ₹
+            {{ maxAdmissibleAmount }}.</span
+          >
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="gradpaylevel == 'Level 12' || gradpaylevel == 'Level 13'"
+            >Note: Maximum Admissible Amount Is ₹
+            {{ maxAdmissibleAmount }}.</span
+          >
+          <span
+            style="color: red; padding-left: 10px"
+            *ngIf="
+              gradpaylevel == 'Level 14' ||
+              gradpaylevel == 'Level 15' ||
+              gradpaylevel == 'Level 16' ||
+              gradpaylevel == 'Level 17'
+            "
+            >Note: Maximum Admissible Amount Is ₹
+            {{ maxAdmissibleAmount }}.</span
+          >
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="show == true">
+          <nz-form-item>
+            <nz-form-label
+              nzRequired
+              nzNoColon
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              >Admisible Amount</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Admisible Amount">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.FOOD_ADMISIBLE_AMOUNT"
+                  name="Admisible"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Total Admisible Amount"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon [ngClass]="isShowCSS ? 'labelsize' : ''"
+              >Is Food Bill Is Attached?</nz-form-label
+            >
+            <nz-form-control>
+              <nz-switch
+                [(ngModel)]="data.IS_VOUCHER"
+                name="IS_VOUCHER"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+              >
+              </nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col nzSpan="12">
+       
+        </div> -->
+        <div nz-col nzSpan="14" *ngIf="data.IS_VOUCHER == true">
+          <nz-form-item>
+            <nz-form-label nzNoColon [ngClass]="isShowCSS ? 'labelsize' : ''"
+              >Voucher</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 28px; padding: 0px 7px; font-size: 12px"
+                (click)="fileInput1.click()"
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+              >
+                Select File
+                <input
+                  #fileInput1
+                  name="VOUCHER_URL"
+                  type="file"
+                  (change)="onFileSelected($event)"
+                  [(ngModel)]="data.VOUCHER_URL"
+                  style="display: none"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </button>
+            </nz-form-control>
+            <span *ngIf="progressBartourFoodVoucher">
+              <nz-progress
+                [style.width]="percenttourFoodVoucher + '%'"
+                [nzPercent]="percenttourFoodVoucher"
+                >{{ percenttourFoodVoucher }}%</nz-progress
+              >
+            </span>
+          </nz-form-item>
+        </div>
+        <div
+          nz-col
+          nzSpan="10"
+          *ngIf="
+            data.VOUCHER_URL != null &&
+            data.VOUCHER_URL != undefined &&
+            data.VOUCHER_URL != '' &&
+            data.IS_VOUCHER == true
+          "
+        >
+          <nz-form-item style="margin-top: 30px">
+            <nz-form-control>
+              <button
+                nz-button
+                style="height: 28px; padding: 0px 7px; font-size: 12px"
+                (click)="viewAssumptionPDF(data.VOUCHER_URL)"
+              >
+                Open PDF File
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nzType="primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, AddNewRecord)"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff"
+        >
+          <a style="color: white" (click)="save(true, AddNewRecord)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID && !isAdmin"
+      (click)="save(false, AddNewRecord)"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="1200"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'PDFview'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <div
+      *ngIf="
+        sanitizedLink != null &&
+        sanitizedLink != undefined &&
+        sanitizedLink != ''
+      "
+      style="height: 600px; overflow: auto"
+    >
+      <iframe
+        [src]="sanitizedLink"
+        style="width: 1150px; height: 600px"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>

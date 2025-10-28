@@ -1,0 +1,143 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form nzLayout="inline">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>New User
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ x: '1300px', y: '45vh' }"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="10%" style="text-align: center">Edit</th>
+          <th nzWidth="20%" style="text-align: center">Category</th>
+          <th nzWidth="20%" style="text-align: center">Parent Name</th>
+          <th nzWidth="20%" style="text-align: center">Name</th>
+          <th nzWidth="30%" style="text-align: center">Email</th>
+          <th nzWidth="15%" style="text-align: center">Mobile</th>
+          <!-- <th
+            *ngFor="let column of columns"
+            nzColumnKey="{{ column[0] }}"
+            [nzSortFn]="true"
+          >
+            {{ column[1] }}
+          </th>  -->
+          <th
+            nzWidth="10%"
+            style="text-align: center"
+            nzColumnKey="IS_ACTIVE"
+            [nzSortFn]="true"
+          >
+            Active
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center">
+            <a (click)="edit(data)"
+              ><i nz-icon nzType="edit" nzTheme="outline"></i
+            ></a>
+          </td>
+          <td style="white-space: pre-line">{{ data.TASK_CATEGORY_NAME }}</td>
+          <td style="white-space: pre-line">
+            <span *ngIf="data.PARENT_USER_ID == 0">None</span>
+            <span *ngIf="data.PARENT_USER_ID != 0">{{
+              data.PARENT_USER_NAME
+            }}</span>
+          </td>
+          <td style="white-space: pre-line">{{ data.NAME }}</td>
+          <td style="white-space: pre-line">{{ data.EMAIL_ID }}</td>
+          <td style="white-space: pre-line">{{ data.MOBILE_NUMBER }}</td>
+          <td style="text-align: center">
+            <i
+              nz-icon
+              *ngIf="data.IS_ACTIVE"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="!data.IS_ACTIVE"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="400"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <app-user
+    *nzDrawerContent
+    [drawerClose]="closeCallback"
+    [show]="show"
+    [show1]="show1"
+    [data]="drawerData"
+  ></app-user>
+</nz-drawer>

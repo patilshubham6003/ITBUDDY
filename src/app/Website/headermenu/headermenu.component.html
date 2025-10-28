@@ -1,0 +1,2361 @@
+<div id="wrapper" class="open" *ngIf="!show">
+  <div id="top-bar" class="et-top-bar top-bar" style="
+      min-height: 40px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background: url(./assets/img/header-background.jpg) no-repeat top right;
+    ">
+    <div class="container" style="max-width: 90vw !important">
+      <div class="topbar-items topbar-left">
+        <div class="et-top-bar-text text-1">
+          <img src="assets/img/logo.png" alt="logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<header id="header" class="fixed-top d-flex align-items-center" *ngIf="!show">
+  <div class="container d-flex align-items-center justify-content-between" style="max-width: 90vw !important">
+    <div class="header-right-items header-items"
+      style="-webkit-box-flex: 1; display: flex; justify-content: flex-start">
+      <nav id="navbar" style="padding-top: 0px; padding-bottom: 0px"
+        [ngClass]="showw == 1 ? 'navbar-mobile' : 'navbar'">
+        <ul>
+          <li>
+            <a href="https://www.incometaxmumbai.gov.in/staging/" style="padding-left: 0px"><svg
+                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                <path
+                  d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5" />
+              </svg></a>
+          </li>
+          <li>
+            <a class="vv" routerLink="/" style="padding-left: 20px">Home</a>
+          </li>
+          <!-- <li><a class="vv" routerLink="/about-us">About Us</a></li> -->
+          <li><a class="vv" routerLink="/">Services</a></li>
+          <!-- <li><a class="vv" routerLink="/service">Services</a></li> -->
+          <!-- <li><a class="vv" routerLink="/transfer-request">Transfer Request</a></li> -->
+          <!-- <li><a class="vv" routerLink="/faq">FAQ</a></li> -->
+          <!-- <li class="dropdown">
+            <a class="vv" (click)="droppp()">Downloads<i class="bi bi-chevron-down"></i></a>
+            <ul [ngClass]="showwwd == 1 ? 'dropdown-active' : ''">
+              <li>
+                <a class="vv" routerLink="/manuals" (click)="servicedetailroutecon()">Manuals</a>
+              </li>
+              <li>
+                <a class="vv" routerLink="/circulars" (click)="servicedetailroutecon()">Circulars</a>
+              </li>
+              <li>
+                <a class="vv" routerLink="/traning-videos" (click)="servicedetailroutecon()">Training Videos</a>
+              </li>
+            </ul>
+          </li> -->
+          <li><a class="vv" routerLink="/notifications">News & Updates</a></li>
+          <li><a class="vv" routerLink="/contact-us">Contact Us</a></li>
+          <li>
+            <a *ngIf="show && roledata.length > 1" data-bs-toggle="modal" data-bs-target="#rolemapmod" class="vv">Change
+              Role</a>
+          </li>
+        </ul>
+        <i *ngIf="!showmobile" (click)="open()" class="bi bi-list mobile-nav-toggle" style="color: white">
+        </i>
+        <i *ngIf="showmobile" (click)="close()" class="bi mobile-nav-toggle bi-x">
+        </i>
+      </nav>
+    </div>
+    <div class="header-right-items header-items" style="-webkit-box-flex: 1; display: flex; justify-content: flex-end">
+      <nav id="navbar" style="padding-top: 0px; padding-bottom: 0px"
+        [ngClass]="showw == 1 ? 'navbar-mobile' : 'navbar'">
+        <ul>
+          <li *ngIf="!isLoggedIn">
+            <div class="header-right-items header-items">
+              <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getcityy()"
+                style="color: white; font-size: 13px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>&nbsp;&nbsp; Employee Login</a>
+            </div>
+          </li>
+          <li *ngIf="isLoggedIn" class="dropdown" (click)="drop1()">
+            <a class="vv1" style="color: white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+              </svg>
+              &nbsp; &nbsp;Hi {{ userPname }}<i class="bi bi-chevron-down"></i></a>
+            <ul style="left: -70px !important" [ngClass]="showww1 == 1 ? 'dropdown-active' : ''">
+              <li *ngIf="IS_ITHR_DATA && rroleIdd == '2'&&  employeedataaaa112323 != undefined &&
+              (employeedataaaa112323.DESIGNATION_ID == 11 ||
+                employeedataaaa112323.DESIGNATION_ID == 17 ||
+                employeedataaaa112323.DESIGNATION_ID == 44 ||
+                employeedataaaa112323.DESIGNATION_ID == 22 ||
+                employeedataaaa112323.DESIGNATION_ID == 21 ||
+                employeedataaaa112323.DESIGNATION_ID == 20 ||
+                employeedataaaa112323.DESIGNATION_ID == 25 ||
+                employeedataaaa112323.DESIGNATION_ID == 19 ||
+                employeedataaaa112323.DESIGNATION_ID == 12 ||
+                employeedataaaa112323.DESIGNATION_ID == 39 ||
+                employeedataaaa112323.DESIGNATION_ID == 40 ||
+                employeedataaaa112323.DESIGNATION_ID == 16 ||
+                employeedataaaa112323.DESIGNATION_ID == 13  ||
+                employeedataaaa112323.DESIGNATION_ID == 43  ||
+                employeedataaaa112323.DESIGNATION_ID == 23  ||
+                employeedataaaa112323.DESIGNATION_ID == 6  ||
+                employeedataaaa112323.DESIGNATION_ID == 41  ||
+                employeedataaaa112323.DESIGNATION_ID == 37  ||
+                employeedataaaa112323.DESIGNATION_ID == 38  
+                )">
+                <a class="vv" (click)="add(true)">My Profile</a>
+              </li>
+
+              <li *ngIf="rroleIdd == '2'&&  employeedataaaa112323 != undefined &&
+              (employeedataaaa112323.DESIGNATION_ID != 11 &&
+                employeedataaaa112323.DESIGNATION_ID != 17 &&
+                employeedataaaa112323.DESIGNATION_ID != 44 &&
+                employeedataaaa112323.DESIGNATION_ID != 22 &&
+                employeedataaaa112323.DESIGNATION_ID != 21 &&
+                employeedataaaa112323.DESIGNATION_ID != 20 &&
+                employeedataaaa112323.DESIGNATION_ID != 25 &&
+                employeedataaaa112323.DESIGNATION_ID != 19 &&
+                employeedataaaa112323.DESIGNATION_ID != 12 &&
+                employeedataaaa112323.DESIGNATION_ID != 39 &&
+                employeedataaaa112323.DESIGNATION_ID != 40 &&
+                employeedataaaa112323.DESIGNATION_ID != 16 &&
+                employeedataaaa112323.DESIGNATION_ID != 13 &&
+                employeedataaaa112323.DESIGNATION_ID != 43  &&
+                employeedataaaa112323.DESIGNATION_ID != 23  &&
+                employeedataaaa112323.DESIGNATION_ID != 6  &&
+                employeedataaaa112323.DESIGNATION_ID != 41  &&
+                employeedataaaa112323.DESIGNATION_ID != 37  &&
+                employeedataaaa112323.DESIGNATION_ID != 38  )">
+                <a class="vv" (click)="add(false)">My Profile</a>
+              </li>
+              <!-- <li>
+                <a class="vv" routerLink="/feedback-form" *ngIf="rroleIdd == 2"
+                  >Feedback Form</a
+                >
+              </li> -->
+              <li *ngIf="adminshow || getcondition()">
+                <a class="vv" routerLink="/admin/web-dashboard">Admin Dashboard</a>
+              </li>
+              <li *ngIf="!show && roledata.length > 1">
+                <a class="vv" data-bs-toggle="modal" data-bs-target="#rolemapmod">Change Role</a>
+              </li>
+              <!-- <li *ngIf="show && rolecountw > 0" class="dropdown">
+                <a class="vv" (click)="dropserv()"
+                  >Services<i class="bi bi-chevron-down"></i
+                ></a>
+                <ul [ngClass]="showservs == 1 ? 'dropdown-active' : ''">
+                  <li *ngFor="let roles of Roleservises">
+                    <a
+                      class="vv"
+                      (click)="getServices(roles.ID)"
+                      style="font-weight: 400"
+                      >{{ roles.TITLE }}</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li *ngIf="!show && rolecountw > 0" class="dropdown">
+                <a class="vv" (click)="dropserv()"
+                  >Services<i class="bi bi-chevron-down"></i
+                ></a>
+                <ul
+                  class="scrollserv"
+                  [ngClass]="showservs == 1 ? 'dropdown-active' : ''"
+                >
+                  <li
+                    *ngFor="let roles of Roleservises"
+                    style="min-width: 320px !important"
+                  >
+                    <a
+                      style="
+                        width: 310px;
+                        white-space: pre-line;
+                        font-weight: 400;
+                      "
+                      class="vv"
+                      (click)="getServices(roles.ID)"
+                      >{{ roles.TITLE }}</a
+                    >
+                  </li>
+                </ul>
+              </li> -->
+              <li>
+                <a class="vv" data-bs-toggle="modal" data-bs-target="#changepasss">Change Password</a>
+              </li>
+              <li *ngIf="rroleIdd == '2'">
+                <a class="vv" (click)="changecader()">Change Cadre</a>
+              </li>
+              <li><a class="vv" (click)="logout()">Logout</a></li>
+            </ul>
+            <!-- </div> -->
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div id="wrapper" class="open" *ngIf="show">
+  <div class="et-top-bar top-bar">
+    <div class="header-contents container" style="
+        display: flex;
+        align-items: center;
+        padding: 6px;
+        justify-content: space-between;
+      ">
+      <div>
+        <div class="logo-holder">
+          <a class="logolink">
+            <img src="assets/img/logo.png" alt="Income Tax Department - Mumbai Region" style="max-height: 50px" />
+          </a>
+        </div>
+      </div>
+      <div style="display: flex">
+        <div class="hamburger-menu">
+          <button class="menu-toggle mobile-toggle" *ngIf="!showmobile" (click)="open()">
+            <span class="bars">
+              <i *ngIf="!showmobile" (click)="open()" class="bi bi-list mobile-nav-toggle"
+                style="color: white; font-size: 23px"></i></span>
+          </button>
+
+          <button class="menu-toggle mobile-toggle" *ngIf="showmobile" (click)="close()">
+            <span class="bars">
+              <i class="bi mobile-nav-toggle bi-x" style="color: white; font-size: 23px">
+              </i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header id="header" class="fixed-top d-flex align-items-center" *ngIf="show"
+  style="background: none !important; height: 0px !important">
+  <div class="container d-flex align-items-center justify-content-between">
+    <nav id="navbar" style="padding-top: 0px; padding-bottom: 0px" [ngClass]="showw == 1 ? 'navbar-mobile' : 'navbar'">
+      <ul>
+        <li><a class="vv" routerLink="/" style="color: #006699">Home</a></li>
+        <!-- <li><a class="vv" routerLink="/about-us" style="color: #006699;">About Us</a></li> -->
+        <li>
+          <!-- <a class="vv" routerLink="/service" style="color: #006699" -->
+          <a class="vv" routerLink="/" style="color: #006699">Services</a>
+        </li>
+        <!-- <li>
+          <a class="vv" routerLink="/transfer-request" style="color: #006699">Transfer Request</a>
+        </li> -->
+        <!-- <li><a class="vv" routerLink="/faq" style="color: #006699;">FAQ</a></li> -->
+        <!-- <li class="dropdown">
+          <a class="vv" (click)="droppp()" style="color: #006699;">Downloads<i class="bi bi-chevron-down"></i></a>
+          <ul [ngClass]="showwwd == 1 ? 'dropdown-active' : ''">
+            <li>
+              <a class="vv" routerLink="/manuals" (click)="servicedetailroutecon()" style="color: #006699;">Manuals</a>
+            </li>
+            <li>
+              <a class="vv" routerLink="/circulars" (click)="servicedetailroutecon()"
+                style="color: #006699;">Circulars</a>
+            </li>
+            <li>
+              <a class="vv" routerLink="/traning-videos" (click)="servicedetailroutecon()"
+                style="color: #006699;">Training Videos</a>
+            </li>
+          </ul>
+        </li> -->
+        <li>
+          <a class="vv" routerLink="/notifications" style="color: #006699">News & Updates</a>
+        </li>
+        <li>
+          <a class="vv" routerLink="/contact-us" style="color: #006699">Contact Us</a>
+        </li>
+        <li *ngIf="show && roledata.length > 1">
+          <a data-bs-toggle="modal" data-bs-target="#rolemapmod" class="vv" style="color: #006699">Change Role</a>
+        </li>
+        <li *ngIf="!isLoggedIn">
+          <div class="header-right-items header-items">
+            <a data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getcityy()"
+              style="color: white; font-size: 13px; color: #006699"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+              </svg>&nbsp;&nbsp; Employee Login</a>
+          </div>
+        </li>
+        <li *ngIf="isLoggedIn" class="dropdown" (click)="drop1()">
+          <a style="color: #006699; font-weight: 600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill"
+              viewBox="0 0 16 16">
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+            </svg>
+            &nbsp;Hi {{ userPname }} &nbsp;<i class="bi bi-chevron-down"></i></a>
+          <ul style="left: -70px !important" [ngClass]="showww1 == 1 ? 'dropdown-active' : ''">
+            <li *ngIf="IS_ITHR_DATA && rroleIdd == '2'&&  employeedataaaa112323 != undefined &&
+            (employeedataaaa112323.DESIGNATION_ID == 11 ||
+              employeedataaaa112323.DESIGNATION_ID == 17 ||
+              employeedataaaa112323.DESIGNATION_ID == 44 ||
+              employeedataaaa112323.DESIGNATION_ID == 22 ||
+              employeedataaaa112323.DESIGNATION_ID == 21 ||
+              employeedataaaa112323.DESIGNATION_ID == 20 ||
+              employeedataaaa112323.DESIGNATION_ID == 25 ||
+              employeedataaaa112323.DESIGNATION_ID == 19 ||
+              employeedataaaa112323.DESIGNATION_ID == 12 ||
+              employeedataaaa112323.DESIGNATION_ID == 39 ||
+              employeedataaaa112323.DESIGNATION_ID == 40 ||
+              employeedataaaa112323.DESIGNATION_ID == 16 ||
+              employeedataaaa112323.DESIGNATION_ID == 13 ||
+                employeedataaaa112323.DESIGNATION_ID == 43  ||
+                employeedataaaa112323.DESIGNATION_ID == 23  ||
+                employeedataaaa112323.DESIGNATION_ID == 6  ||
+                employeedataaaa112323.DESIGNATION_ID == 41  ||
+                employeedataaaa112323.DESIGNATION_ID == 37  ||
+                employeedataaaa112323.DESIGNATION_ID == 38  )">
+              <a class="vv" (click)="add(true)" style="color: #006699">My Profile</a>
+            </li>
+            <li *ngIf="rroleIdd == '2'&&  employeedataaaa112323 != undefined &&
+            (employeedataaaa112323.DESIGNATION_ID != 11 &&
+              employeedataaaa112323.DESIGNATION_ID != 17 &&
+              employeedataaaa112323.DESIGNATION_ID != 44 &&
+              employeedataaaa112323.DESIGNATION_ID != 22 &&
+              employeedataaaa112323.DESIGNATION_ID != 21 &&
+              employeedataaaa112323.DESIGNATION_ID != 20 &&
+              employeedataaaa112323.DESIGNATION_ID != 25 &&
+              employeedataaaa112323.DESIGNATION_ID != 19 &&
+              employeedataaaa112323.DESIGNATION_ID != 12 &&
+              employeedataaaa112323.DESIGNATION_ID != 39 &&
+              employeedataaaa112323.DESIGNATION_ID != 40 &&
+              employeedataaaa112323.DESIGNATION_ID != 16 &&
+              employeedataaaa112323.DESIGNATION_ID != 13 &&
+                employeedataaaa112323.DESIGNATION_ID != 43  &&
+                employeedataaaa112323.DESIGNATION_ID != 23  &&
+                employeedataaaa112323.DESIGNATION_ID != 6  &&
+                employeedataaaa112323.DESIGNATION_ID != 41  &&
+                employeedataaaa112323.DESIGNATION_ID != 37  &&
+                employeedataaaa112323.DESIGNATION_ID != 38  )">
+              <a class="vv" (click)="add(false)" style="color: #006699">My Profile</a>
+            </li>
+            <!-- <li>
+              <a class="vv" routerLink="/feedback-form" *ngIf="rroleIdd == 2"
+                >Feedback Form</a
+              >
+            </li> -->
+            <li *ngIf="adminshow">
+              <a class="vv" routerLink="/admin/web-dashboard" style="color: #006699">Admin Dashboard</a>
+            </li>
+            <li *ngIf="!show && roledata.length > 1">
+              <a class="vv" data-bs-toggle="modal" data-bs-target="#rolemapmod" style="color: #006699">Change Role</a>
+            </li>
+            <!-- <li *ngIf="show && rolecountw > 0" class="dropdown">
+              <a class="vv" (click)="dropserv()" style="color: #006699"
+                >Services<i class="bi bi-chevron-down"></i
+              ></a>
+              <ul [ngClass]="showservs == 1 ? 'dropdown-active' : ''">
+                <li *ngFor="let roles of Roleservises">
+                  <a
+                    class="vv"
+                    (click)="getServices(roles.ID)"
+                    style="font-weight: 400; color: #006699"
+                    >{{ roles.TITLE }}</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li *ngIf="!show && rolecountw > 0" class="dropdown">
+              <a class="vv" (click)="dropserv()" style="color: #006699"
+                >Services<i class="bi bi-chevron-down"></i
+              ></a>
+              <ul
+                class="scrollserv"
+                [ngClass]="showservs == 1 ? 'dropdown-active' : ''"
+              >
+                <li
+                  *ngFor="let roles of Roleservises"
+                  style="min-width: 320px !important"
+                >
+                  <a
+                    style="
+                      width: 310px;
+                      white-space: pre-line;
+                      font-weight: 400;
+                      color: #006699;
+                    "
+                    class="vv"
+                    (click)="getServices(roles.ID)"
+                    >{{ roles.TITLE }}</a
+                  >
+                </li>
+              </ul>
+            </li> -->
+            <li>
+              <a class="vv" data-bs-toggle="modal" data-bs-target="#changepasss" style="color: #006699">Change
+                Password</a>
+            </li>
+            <li>
+              <a class="vv" (click)="logout()" style="color: #006699">Logout</a>
+            </li>
+          </ul>
+          <!-- </div> -->
+        </li>
+      </ul>
+
+      <i *ngIf="showmobile" (click)="close()" class="bi mobile-nav-toggle bi-x">
+      </i>
+    </nav>
+  </div>
+</header>
+
+<button type="button" id="datastore" class="btn btn-primary" style="display: none" data-bs-toggle="modal"
+  data-bs-target="#exampleModal" (click)="getcityy()">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" [ngStyle]="{
+      'max-width':
+        (newprocess && !newprocessotp && !newprocessregistrationcoomplete) ||
+        oldregistration
+          ? '720px'
+          : '345px',
+      margin: 'auto'
+    }">
+    <div class="modal-content" *ngIf="!newprocess">
+      <div class="modal-header" *ngIf="!showforgot1 && !showforgot2 && !showforgot3">
+        <h5 class="modal-title" style="font-weight: 600; font-size: 20px">
+          LOGIN
+        </h5>
+        <button type="button" #clodemail style="display: none" class="btn-close" id="loginClose" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-header" *ngIf="showforgot1 && !showforgot2 && !showforgot3">
+        <h5 class="modal-title" style="font-weight: 600; font-size: 20px">
+          Forgot Password
+        </h5>
+      </div>
+      <div class="modal-header" *ngIf="showforgot2 && !showforgot1 && !showforgot3">
+        <h5 class="modal-title" style="font-weight: 600; font-size: 20px">
+          Verify OTP
+        </h5>
+      </div>
+      <div class="modal-header" *ngIf="showforgot3 && !showforgot2 && !showforgot1">
+        <h5 class="modal-title" style="font-weight: 600; font-size: 20px">
+          Change Password
+        </h5>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+        ">
+        <div class="form-box" style="padding: 1rem 0.5rem 0rem 0.5rem">
+          <div>
+            <div style="
+                text-align: right;
+                font-weight: 700;
+                margin-top: -20px;
+                margin-right: -10px;
+                font-size: 18px;
+              ">
+              <span class="hov" aria-hidden="true" (click)="closeModal()" data-dismiss="modal"><i
+                  class="icon-close"></i></span>
+            </div>
+            <form action="#" *ngIf="!showforgot1 && !showforgot2 && !showforgot3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 col-12" *ngIf="adminloginn">
+                    <label class="inpTitle" style="margin-bottom: 5px">Email ID<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <input placeholder="Enter Email ID" type="email" class="form-control" id="Email_ID"
+                        [(ngModel)]="PHONE" name="Email_ID" required (input)="PHONE = PHONE.trim()"
+                        autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-12" *ngIf="adminloginn">
+                    <label class="inpTitle" style="margin-bottom: 5px">Password<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <input autocomplete="off" placeholder="Enter Password"
+                        [type]="fieldTextType ? 'text' : 'password'" class="form-control" id="PASSWORD"
+                        [(ngModel)]="PASSWORD" name="PASSWORD" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 11px;
+                            line-height: 1;
+                            border-radius: 0px;
+                          " toggle="#password-field" (click)="toggleFieldTextType()" [ngClass]="{
+                            'bi bi-eye': !fieldTextType,
+                            'bi bi-eye-slash': fieldTextType
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="text-align: end; margin-top: 5px" *ngIf="adminloginn">
+                    <a (click)="backtoemployeelogin()" style="
+                        font-size: 13px;
+                        color: #f68831;
+                        font-weight: 600;
+                        cursor: pointer;
+                      ">
+                      Back to Employee Login</a>
+                  </div>
+
+                  <div class="col-md-12 col-12" *ngIf="!adminloginn">
+                    <label class="inpTitle" style="margin-bottom: 5px">Employee Code<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <!-- <input autocomplete="off" placeholder="Enter Email ID" type="text"
+                        class="form-control" id="register-Number" [(ngModel)]="PHONE" name="register-Number" required
+                        (input)="PHONE = PHONE.trim()" /> -->
+                      <input autocomplete="off" type="text" maxlength="6"
+                        [disabled]="IS_SIGNED_UP == null ? false : true" (keypress)="omit($event)"
+                        placeholder="Enter Employee Code" class="form-control inp" name="empcode"
+                        [(ngModel)]="EMPLOYEE_CODE" required />
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-12" style="text-align: justify; font-size: 13px"
+                    *ngIf="IS_SIGNED_UP == null && !adminloginn">
+                    <span>Kindly ensure that only the correct employee code is
+                      entered, and avoid entering the civil code.</span>
+                  </div>
+
+                  <div style="text-align: end; margin-top: 5px" *ngIf="IS_SIGNED_UP == null && !adminloginn">
+                    <a (click)="adminlogin()" style="font-size: 13px; color: #f68831; font-weight: 600">
+                      Click here for Administrative Login</a>
+                  </div>
+                  <!-- <div
+                    class="col-md-12 col-12"
+                    style="text-align: justify; font-size: 13px"
+                    *ngIf="statusssss == 0 && !adminloginn"
+                  >
+                    <span style="color: red"
+                      >Your account already exists in our database. Please contact the administrator to activate your account</span
+                    >
+                  </div> -->
+
+                  <div class="col-md-12 col-12" *ngIf="
+                      IS_SIGNED_UP == 0 &&
+                      !adminloginn &&
+                      !showwwmobile &&
+                      showwwmail
+                    ">
+                    <label class="inpTitle" style="margin-bottom: 5px">Name Based Email Id<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <input placeholder="Enter Name Based Email Id" type="email" class="form-control" id="Email_ID"
+                        [(ngModel)]="PHONE" name="Email_ID" required (input)="PHONE = PHONE.trim()"
+                        autocomplete="off" />
+                    </div>
+                    <div style="text-align: justify" *ngIf="errormsgforemail">
+                      Email ID does not match in our database. Please use valid
+                      Email Id or skip the Email and use Mobile Number for
+                      verification.
+                    </div>
+                    <div style="text-align: end; margin-top: 5px" *ngIf="errormsgforemail">
+                      <a (click)="skipemail()" style="font-size: 13px; color: #f68831">
+                        Skip Email and use Mobile Number for verification.</a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-12" *ngIf="
+                      IS_SIGNED_UP == 0 &&
+                      !adminloginn &&
+                      showwwmobile &&
+                      !showwwmail
+                    ">
+                    <label class="inpTitle">Mobile No.<span style="color: red">*</span></label>
+                    <!-- [disabled]="disbalemobile" -->
+                    <div class="input-group">
+                      <input autocomplete="off" type="text" class="form-control inp" id="mobile1" maxlength="10"
+                        placeholder="Enter Mobile No." [(ngModel)]="MOBILE_NO" name="mobile" (keypress)="omit($event)"
+                        required />
+                    </div>
+                    <div style="text-align: justify" *ngIf="errormsgformobile">
+                      Email ID and mobile number do not match our database.
+                      Please register.
+                    </div>
+                    <div style="text-align: end" *ngIf="errormsgformobile">
+                      <a (click)="gotoregister()" style="font-size: 13px; color: #f68831">
+                        Register here</a>
+                    </div>
+                  </div>
+
+                  <!-- <div
+                    *ngIf="
+                      IS_SIGNED_UP == 0 &&
+                      !adminloginn &&
+                      !showwwmobile &&
+                      showwwmail &&
+                      IS_MOBILE == 0
+                    "
+                  >
+                    <div style="text-align: justify" *ngIf="errormsgformobile">
+                      Email ID do not match our database. Please register.
+                    </div>
+                    <div style="text-align: end" *ngIf="errormsgformobile">
+                      <a
+                        (click)="gotoregister()"
+                        style="font-size: 13px; color: #f68831"
+                      >
+                        Register here</a
+                      >
+                    </div>
+                  </div> -->
+
+                  <div class="col-md-12 col-12" *ngIf="IS_SIGNED_UP == 1">
+                    <label class="inpTitle" style="margin-bottom: 5px">Password<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <input autocomplete="off" placeholder="Enter Password"
+                        [type]="fieldTextType ? 'text' : 'password'" class="form-control" id="PASSWORD"
+                        [(ngModel)]="PASSWORD" name="PASSWORD" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 11px;
+                            line-height: 1;
+                            border-radius: 0px;
+                          " toggle="#password-field" (click)="toggleFieldTextType()" [ngClass]="{
+                            'bi bi-eye': !fieldTextType,
+                            'bi bi-eye-slash': fieldTextType
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4" style="text-align: center; margin-top: 11px !important">
+                <button *ngIf="!otpSpinning && IS_SIGNED_UP == null && !adminloginn" (click)="checkemail()"
+                  class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    width: 100%;
+                    border: none;
+                  ">
+                  Next
+                  <i class="bi bi-arrow-right" style="color: white"></i>
+                </button>
+                <button *ngIf="
+                    (!otpSpinning && IS_SIGNED_UP == 1) ||
+                    (!otpSpinning && adminloginn)
+                  " (click)="checklogin()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    width: 100%;
+                    border: none;
+                  ">
+                  Login
+                  <i class="icon-long-arrow-right"></i>
+                </button>
+                <button *ngIf="
+                    !emailload &&
+                    IS_SIGNED_UP == 0 &&
+                    showwwmobile &&
+                    !showwwmail
+                  " (click)="getotpfornewprocessmobile()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    width: 100%;
+                    border: none;
+                  ">
+                  Get OTP
+                  <i class="icon-long-arrow-right"></i>
+                </button>
+                <button *ngIf="
+                    !emailload &&
+                    IS_SIGNED_UP == 0 &&
+                    !showwwmobile &&
+                    showwwmail
+                  " (click)="getotpfornewprocessemail()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    width: 100%;
+                    border: none;
+                  ">
+                  Get OTP
+                  <i class="icon-long-arrow-right"></i>
+                </button>
+
+                <div *ngIf="otpSpinning || emailload">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="IS_SIGNED_UP == 1">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 forgetsty" style="margin-top: 13px">
+                  <a (click)="forgotPass()">Forgot Password ?</a>
+                </div>
+              </div>
+            </form>
+
+            <form action="#" *ngIf="showforgot1 && !showforgot2 && !showforgot3">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 col-12">
+                    <label class="inpTitle" style="margin-bottom: 5px">Email ID<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <input autocomplete="off" placeholder="Enter Email ID" type="text" class="form-control"
+                        id="register-Number" [(ngModel)]="PHONE" (input)="PHONE = PHONE.trim()" name="register-Number1"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-12">
+                    <label class="inpTitle" style="margin-bottom: 5px">Employee Code<span
+                        style="color: red">&nbsp;*</span></label>
+                    <div class="input-group" style="margin-bottom: 10px">
+                      <input autocomplete="off" type="text" placeholder="Enter Employee Code" class="form-control inp"
+                        name="empcode" [(ngModel)]="EMPLOYEE_CODE" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4" style="text-align: center; margin-top: 1rem !important">
+                <button class="btn btn-primary px-4 validate" *ngIf="!otpSpinning" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  " (click)="checknumber()">
+                  Get OTP
+                  <i class="icon-long-arrow-right"></i>
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <form action="#" *ngIf="showforgot2 && !showforgot1 && !showforgot3">
+              <div class="form-group" style="margin-bottom: 0px">
+                <div *ngIf="isEmail" style="
+                    font-size: 14px;
+                    text-align: justify;
+                    font-family: 'Poppins', sans-serif !important;
+                  ">
+                  We've sent a 6-digit OTP to your Email Id
+                  <b>{{ PHONE }}</b> Please check your Email to retrieve the
+                  OTP.
+                </div>
+                <div *ngIf="!isEmail" style="
+                    font-size: 14px;
+                    text-align: justify;
+                    font-family: 'Poppins', sans-serif !important;
+                  ">
+                  We've sent a 6-digit OTP to your Mobile No.
+                  <b>{{ PHONE }}</b> Please check your SMS/Whatsapp to retrieve
+                  the OTP.
+                </div>
+                <div id="otp" style="text-align: center; margin-top: 15px">
+                  <input type="text" (onInputChange)="onOtpChange3($event)" name="otp11" autocomplete="off"
+                    placeholder="Please enter OTP" class="form-control inp" maxlength="6" [(ngModel)]="OTP11" required
+                    style="
+                      border-bottom: 2px solid #f68831 !important;
+                      border-radius: 0px;
+                      border: none;
+                      margin-top: 15px;
+                    " />
+                </div>
+                <div class="row" style="margin-top: 15px">
+                  <div class="col-6">
+                    <a class="forgetsty" (click)="openloginmod()">
+                      {{ changedtext }}
+                    </a>
+                  </div>
+                  <div class="col-6" style="text-align: right">
+                    <a *ngIf="resendTrue && !showTimer" class="forgetsty">
+                      Resend OTP
+                    </a>
+                    <a *ngIf="resendTrue && showTimer" class="forgetsty">
+                      Resend OTP({{ 180 - timerMobile }})
+                    </a>
+                  </div>
+                </div>
+                <div style="text-align: center; margin-top: 15px !important">
+                  <button *ngIf="!otpSpinning" (click)="verifynumber()" class="btn btn-primary validate" style="
+                      background-color: #f68831 !important;
+                      width: 100%;
+                      font-size: 15px;
+                      border: none;
+                    ">
+                    Verify
+                  </button>
+                  <div *ngIf="otpSpinning">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">Loading</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <form action="#" *ngIf="showforgot3 && !showforgot1 && !showforgot2">
+              <div class="form-group">
+                <label class="inpTitle" style="margin-bottom: 5px">Please Enter Password</label>
+                <div class="input-group">
+                  <input autocomplete="off" [type]="pass3 ? 'text' : 'password'" autocomplete="off" type="password"
+                    class="form-control inp" [(ngModel)]="PASS" placeholder="Enter New Password" name="pass" required />
+                  <div class="input-group-append">
+                    <span style="padding: 11px; line-height: 1; border-radius: 0px" toggle="#password-field"
+                      (click)="showpass3()" [ngClass]="{
+                        'bi bi-eye': !pass3,
+                        'bi bi-eye-slash': pass3
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="inpTitle" style="margin-bottom: 5px">Retype Password</label>
+                <div class="input-group">
+                  <input autocomplete="off" [type]="pass4 ? 'text' : 'password'" class="form-control inp"
+                    [(ngModel)]="CPASS" placeholder="Retype Password" name="cpass" required />
+                  <div class="input-group-append">
+                    <span style="padding: 11px; line-height: 1; border-radius: 0px" toggle="#password-field"
+                      (click)="showpass4()" [ngClass]="{
+                        'bi bi-eye': !pass4,
+                        'bi bi-eye-slash': pass4
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+                <span style="font-weight: 500; font-size: 12px; margin-top: 8px">*Enter minimum 8 alphanumeric
+                  characters with special
+                  symbols.</span>
+              </div>
+              <div style="text-align: center; margin-top: 1rem !important">
+                <button *ngIf="!otpSpinning" (click)="Changepass()" class="btn btn-primary validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 14px;
+                    width: 100%;
+                    border: none;
+                  ">
+                  Change Password
+                  <i class="icon-long-arrow-right"></i>
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-content" *ngIf="newprocess">
+      <div class="modal-header" *ngIf="newprocess">
+        <!-- <h5 *ngIf="newprocess && !newprocessotp && !newProcessRegistration && !newprocessregistrationcoomplete" class="modal-title" style="font-weight: 600; font-size: 20px">
+          LOGIN
+        </h5> -->
+        <h5 *ngIf="
+            newprocess &&
+            newprocessotp &&
+            !newprocessregistrationcoomplete &&
+            !oldregistration
+          " class="modal-title" style="font-weight: 600; font-size: 20px">
+          Verify OTP
+        </h5>
+        <h5 *ngIf="newprocess && !newprocessotp && !oldregistration" class="modal-title"
+          style="font-weight: 600; font-size: 20px">
+          Registration
+        </h5>
+        <h5 *ngIf="newprocess && oldregistration" class="modal-title" style="font-weight: 600; font-size: 20px">
+          Sign Up
+        </h5>
+        <button type="button" #clodemail style="display: none" class="btn-close" id="loginClose" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+        ">
+        <div class="form-box" style="padding: 1rem 0.5rem 0rem 0.5rem">
+          <div>
+            <div style="
+                text-align: right;
+                font-weight: 700;
+                margin-top: -20px;
+                margin-right: -10px;
+                font-size: 18px;
+              ">
+              <span class="hov" aria-hidden="true" (click)="closeModal()" data-dismiss="modal"><i
+                  class="icon-close"></i></span>
+            </div>
+
+            <form action="#" *ngIf="
+                newprocess &&
+                newprocessotp &&
+                !newprocessregistrationcoomplete &&
+                !oldregistration
+              ">
+              <div class="form-group" style="margin-bottom: 0px">
+                <div style="
+                    font-size: 14px;
+                    text-align: justify;
+                    font-family: 'Poppins', sans-serif !important;
+                  ">
+                  <span *ngIf="!showwwmobile && showwwmail">
+                    We've sent a 6-digit OTP to your Email Id
+                    <b>{{ PHONE }}</b> Please check your Email to retrieve the
+                    OTP.</span>
+                  <span *ngIf="showwwmobile && !showwwmail">
+                    We've sent a 6-digit OTP to your Mobile No.
+                    <b>{{ MOBILE_NO }}</b> Please check your SMS to retrieve the
+                    OTP.</span>
+                </div>
+
+                <div id="otp" style="text-align: center; margin-top: 15px">
+                  <input type="text" (onInputChange)="onOtpChange3($event)" name="otp11" autocomplete="off"
+                    placeholder="Please enter OTP" class="form-control inp" maxlength="6" [(ngModel)]="OTP11" required
+                    style="
+                      border-bottom: 2px solid #f68831 !important;
+                      border-radius: 0px;
+                      border: none;
+                      margin-top: 15px;
+                    " />
+                </div>
+                <div class="row" style="margin-top: 15px">
+                  <!-- <div class="col-6" >
+                    <a class="forgetsty" (click)="openloginmod111()">
+                      Change Email Id
+                    </a>
+                  </div> -->
+
+                  <div class="col-6" *ngIf="!showwwmobile && showwwmail && !IS_MOBILE">
+                    <a (click)="gotoregisterNew()" style="font-size: 13px; color: #f68831">
+                      Register here</a>
+                  </div>
+
+                  <div [class.col-6]="!showwwmobile && showwwmail && !IS_MOBILE"
+                    [class.col-12]="showwwmobile || !showwwmail || IS_MOBILE" style="text-align: right"
+                    *ngIf="!showwwmobile && showwwmail">
+                    <a *ngIf="resendTrue && !showTimer" class="forgetsty" (click)="getotpfornewprocessNewEmail()">
+                      Resend OTP
+                    </a>
+                    <a *ngIf="resendTrue && showTimer" class="forgetsty" style="cursor: pointer">
+                      Resend OTP({{ 180 - timerMobile }})
+                    </a>
+                  </div>
+                  <div class="col-12" style="text-align: right" *ngIf="showwwmobile && !showwwmail">
+                    <a *ngIf="resendTrue && !showTimer" class="forgetsty" (click)="getotpfornewprocessNewMobile()">
+                      Resend OTP
+                    </a>
+                    <a *ngIf="resendTrue && showTimer" class="forgetsty" style="cursor: pointer">
+                      Resend OTP({{ 180 - timerMobile }})
+                    </a>
+                  </div>
+
+                  <div class="col-12" *ngIf="!showwwmobile && showwwmail && IS_MOBILE" style="margin-top: 10px">
+                    <span style="font-size: 13px">
+                      Don't have access to email?
+
+                      <a class="forgetstyNew" (click)="openloginmod111New()">
+                        Send OTP to mobile.
+                      </a>
+                    </span>
+                  </div>
+                </div>
+                <div style="text-align: center; margin-top: 15px !important">
+                  <button *ngIf="!otpSpinning && !showwwmobile && showwwmail" (click)="verifyemailnewprocessmail()"
+                    class="btn btn-primary validate" style="
+                      background-color: #f68831 !important;
+                      width: 100%;
+                      font-size: 15px;
+                      border: none;
+                    ">
+                    Verify
+                  </button>
+                  <button *ngIf="!otpSpinning && showwwmobile && !showwwmail" (click)="verifyemailnewprocessMobile()"
+                    class="btn btn-primary validate" style="
+                      background-color: #f68831 !important;
+                      width: 100%;
+                      font-size: 15px;
+                      border: none;
+                    ">
+                    Verify
+                  </button>
+                  <div *ngIf="otpSpinning">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">Loading</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <form *ngIf="oldregistration">
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)"
+                      [disabled]="disableregistrationname" required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email ID"
+                      [disabled]="disableregistrationemail" class="form-control inp" name="emailid"
+                      [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Mobile No.<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" type="text" [disabled]="disableregistrationmobile"
+                        class="form-control inp" id="mobile1" maxlength="10" placeholder="Enter Mobile No."
+                        [(ngModel)]="MOBILE_NO" name="mobile" (keypress)="omit($event)" required />
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group">
+                    <label class="inpTitle">Employee Code<span style="color: red">*</span></label>
+                    <input disabled autocomplete="off" type="text" placeholder="Enter Employee Code"
+                      class="form-control inp" name="empcode" [(ngModel)]="EMPLOYEE_CODE" disabled required />
+                  </div>
+
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Password<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" [type]="pass1 ? 'text' : 'password'" placeholder="Ex:John@123"
+                        class="form-control inp" [(ngModel)]="PASSWORD" name="PASSWORDSSS" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 10px;
+                            line-height: 1;
+                            border-radius: 0px;
+                            border-top-right-radius: 0.375rem;
+                            border-bottom-right-radius: 0.375rem;
+                          " toggle="#password-field" (click)="showpass1()" [ngClass]="{
+                            'bi bi-eye': !pass1,
+                            'bi bi-eye-slash': pass1
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Confirm Password<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" [type]="pass2 ? 'text' : 'password'" placeholder="Ex:John@123"
+                        class="form-control inp" [(ngModel)]="CONFIRM_PASSWORD" name="CONFIRM_PASSWORDSS" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 10px;
+                            line-height: 1;
+                            border-radius: 0px;
+                            border-top-right-radius: 0.375rem;
+                            border-bottom-right-radius: 0.375rem;
+                          " toggle="#password-field" (click)="showpass2()" [ngClass]="{
+                            'bi bi-eye': !pass2,
+                            'bi bi-eye-slash': pass2
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <div class="col-md-12 col-12">
+                    <input id="agrrrr" type="checkbox" class="form-check-input" name="agrrrr"
+                      (click)="agrreconfirmation1()" style="cursor: pointer; border: 2px solid #415be2" />&nbsp; By
+                    clicking Sign Up, I hereby acknowledge and
+                    accept the
+                    <a (click)="agrreconfirmation()" style="color: #f68831" data-bs-dismiss="modal">Terms &
+                      Conditions</a>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" [disabled]="isagreedisable" (click)="Register()"
+                  class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Sign Up
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <form *ngIf="
+                newprocess &&
+                !newprocessotp &&
+                !newprocessregistrationcoomplete &&
+                !oldregistration
+              ">
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-12 col-12 form-group" style="text-align: justify; font-size: 13px">
+                    <p style="text-align: justify; font-size: 13px">
+                      Note: The employee code was not found in our database, or
+                      your mobile number and email ID do not exist in our
+                      records.Please complete the registration process with
+                      accurate details. After registration, your application
+                      will undergo verification, which may take up to 7 working
+                      days.
+                    </p>
+                  </div>
+
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)" required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email ID" class="form-control inp"
+                      name="emailid" [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Mobile No.<span style="color: red">*</span></label>
+                    <!-- [disabled]="disbalemobile" -->
+                    <div class="input-group">
+                      <input autocomplete="off" type="text" class="form-control inp" id="mobile1" maxlength="10"
+                        placeholder="Enter Mobile No." [(ngModel)]="MOBILE_NO" name="mobile" (keypress)="omit($event)"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group">
+                    <label class="inpTitle">Employee Code<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" maxlength="6" (ngModelChange)="omit111($event)"
+                      placeholder="Enter Employee Code" class="form-control inp" name="empcode" disabled
+                      [(ngModel)]="EMPLOYEE_CODE" required />
+                  </div>
+
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Place of Current Posting<span style="color: red">*</span></label>
+                    <input autocomplete="off" style="height: 35px !important"
+                      placeholder="Enter Place of Current Posting" class="form-control inp"
+                      name="PLACE_OF_CURRENT_POSTING" [(ngModel)]="PLACE_OF_CURRENT_POSTING" />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Joining Date<span style="color: red">*</span></label>
+                    <!-- [disabled]="disbalemobile" -->
+                    <div class="input-group">
+                      <input class="form-control inp" [(ngModel)]="DOJ" id="Joining Date" name="Joining Date"
+                        style="padding: 9px; height: 34px !important" type="date" placeholder="select Joining Date"
+                        [max]="maxJoiningDate" />
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">ID Proof<span style="color: red">*</span></label>
+
+                    <div class="input-group">
+                      <input *ngIf="
+                          ID_PROOF == null ||
+                          ID_PROOF == '' ||
+                          ID_PROOF == undefined
+                        " type="file" class="form-control inp" id="ID_PROOF" name="ID_PROOF"
+                        (change)="checkImagedoc($event)" required />
+
+                      <div>
+                        {{ ID_PROOF }} &nbsp;<span *ngIf="
+                            ID_PROOF != null &&
+                            ID_PROOF != '' &&
+                            ID_PROOF != undefined
+                          " nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                          nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                          (click)="viewidproof(ID_PROOF)"></span>&nbsp;&nbsp;
+                        <span *ngIf="
+                            ID_PROOF != null &&
+                            ID_PROOF != '' &&
+                            ID_PROOF != undefined
+                          " nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                          nz-tooltip style="cursor: pointer; color: red" (click)="clearifproff()"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Latest Pay Slip</label>
+
+                    <div class="input-group">
+                      <input *ngIf="
+                          PAY_SLIP == null ||
+                          PAY_SLIP == '' ||
+                          PAY_SLIP == undefined
+                        " type="file" class="form-control inp" id="PAY_SLIP" name="PAY_SLIP"
+                        (change)="checkImagedocpay($event)" required />
+                      <div>
+                        {{ PAY_SLIP }} &nbsp;
+                        <span *ngIf="
+                            PAY_SLIP != null &&
+                            PAY_SLIP != '' &&
+                            PAY_SLIP != undefined
+                          " nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                          nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                          (click)="viewidproofpay(PAY_SLIP)"></span>&nbsp;&nbsp;
+                        <span *ngIf="
+                            PAY_SLIP != null &&
+                            PAY_SLIP != '' &&
+                            PAY_SLIP != undefined
+                          " nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                          nz-tooltip style="cursor: pointer; color: red" (click)="clearifproffpay()"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Password<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" [type]="pass1 ? 'text' : 'password'" placeholder="Ex:John@123"
+                        class="form-control inp" [(ngModel)]="PASSWORD" name="PASSWORDSSS" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 10px;
+                            line-height: 1;
+                            border-radius: 0px;
+                            border-top-right-radius: 0.375rem;
+                            border-bottom-right-radius: 0.375rem;
+                          " toggle="#password-field" (click)="showpass1()" [ngClass]="{
+                            'bi bi-eye': !pass1,
+                            'bi bi-eye-slash': pass1
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Confirm Password<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" [type]="pass2 ? 'text' : 'password'" placeholder="Ex:John@123"
+                        class="form-control inp" [(ngModel)]="CONFIRM_PASSWORD" name="CONFIRM_PASSWORDSS" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 10px;
+                            line-height: 1;
+                            border-radius: 0px;
+                            border-top-right-radius: 0.375rem;
+                            border-bottom-right-radius: 0.375rem;
+                          " toggle="#password-field" (click)="showpass2()" [ngClass]="{
+                            'bi bi-eye': !pass2,
+                            'bi bi-eye-slash': pass2
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" (click)="Registernewprocess()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Register
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div *ngIf="newprocessregistrationcoomplete && !oldregistration">
+              <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="green" class="bi bi-check2-circle"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                  <path
+                    d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                </svg>
+              </div>
+              <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+                <h3 class="modal-title" style="font-size: 21px; color: #f68831">
+                  Thank you for registering
+                </h3>
+                <h5 style="
+                    font-size: 15px;
+                    text-align: justify;
+                    margin-top: 20px;
+                    font-weight: 400;
+                  ">
+                  Your registration has been successfully completed. Please wait
+                  for admin approval.
+                </h5>
+              </div>
+            </div>
+
+            <div class="modal-footer" style="justify-content: center" *ngIf="newprocessregistrationcoomplete">
+              <button type="button" style="background-color: #f68831; border: none" class="btn btn-secondary"
+                data-bs-dismiss="modal" (click)="cloderegistermodakl()">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#otpve" style="display: none" #otpve></a>
+<div class="modal fade" id="otpve" tabindex="-1" aria-labelledby="bsdiusm" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog" style="max-width: 318px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size: 18px">
+          Verify Mobile Number
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+        ">
+        <button style="display: none" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          #clodeOTP aria-label="Close" id="closeotpmobileee">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="form-box" style="padding: 0px">
+          <div>
+            <form action="#" style="max-width: 460px !important">
+              <div class="form-group" style="margin-bottom: 0px">
+                <div style="
+                    font-size: 15px;
+                    text-align: justify;
+                    font-family: 'Poppins', sans-serif !important;
+                  ">
+                  We've sent a 6-digit OTP to your Mobile No.
+                  <b>{{ MOBILE_NO }}</b>. Please check your SMS/WhatsApp to retrieve the OTP.
+                </div>
+                <div id="otp" style="text-align: center">
+                  <input type="text" (onInputChange)="onOtpChange($event)" name="otp" placeholder="Please enter OTP"
+                    class="form-control inp" maxlength="6" [(ngModel)]="OTP" required style="
+                      border-bottom: 2px solid #f68831 !important;
+                      border-radius: 0px;
+                      border: none;
+                      margin-top: 15px;
+                    " />
+                </div>
+                <div class="row" style="margin-top: 15px">
+                  <div class="col-6">
+                    <a class="forgetsty" (click)="closeeotpppp()">
+                      Change Mobile No.
+                    </a>
+                  </div>
+                  <div class="col-6" style="text-align: right">
+                    <a *ngIf="resendTrue && !showTimer" (click)="resendOTPmobile()" class="forgetsty">
+                      Resend OTP
+                    </a>
+                    <a aria-disabled="true" *ngIf="resendTrue && showTimer" class="forgetsty">
+                      Resend OTP({{ 180 - timerMobile }})
+                    </a>
+                  </div>
+                </div>
+                <div style="text-align: center; margin-top: 18px !important">
+                  <button *ngIf="!otpSpinning" (click)="verify()" class="btn btn-primary px-4 validate" style="
+                      background-color: #f68831 !important;
+                      font-size: 15px;
+                      border: none;
+                    ">
+                    Verify
+                  </button>
+                  <div *ngIf="otpSpinning">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">Loading</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#otpve1" style="display: none" #otpve1></a>
+<div class="modal fade" id="otpve1" tabindex="-1" aria-labelledby="ioscbjh" aria-hidden="true" data-bs-backdrop="static"
+  data-bs-keyboard="false">
+  <div class="modal-dialog" style="max-width: 318px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size: 18px">Verify Email ID</h5>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+        ">
+        <button style="display: none" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          #clodeOTP1 aria-label="Close" id="emailotpcclose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="form-box" style="padding: 0px">
+          <div>
+            <form action="#" style="max-width: 460px !important">
+              <div class="form-group" style="margin-bottom: 0px">
+                <div style="
+                    font-size: 14px;
+                    text-align: justify;
+                    font-family: 'Poppins', sans-serif !important;
+                  ">
+                  We've sent a 6-digit OTP to your email
+                  <b>{{ EMAIL_ID }}</b> Please check your email to retrieve the
+                  OTP.
+                </div>
+                <div id="otp1" style="text-align: center">
+                  <input type="text" (onInputChange)="onOtpChange1($event)" name="otp1" autocomplete="off"
+                    placeholder="Please enter OTP" class="form-control inp" maxlength="6" [(ngModel)]="OTP1" required
+                    style="
+                      border-bottom: 2px solid #f68831 !important;
+                      border-radius: 0px;
+                      border: none;
+                      margin-top: 15px;
+                    " />
+                </div>
+                <div class="row">
+                  <div class="col-6"></div>
+                  <div class="col-6" style="text-align: right">
+                    <a *ngIf="resendTrue && !showTimer" (click)="resendOTPemail()" class="forgetsty">
+                      Resend OTP
+                    </a>
+                    <a aria-disabled="true" *ngIf="resendTrue && showTimer" class="forgetsty">
+                      Resend OTP({{ 180 - timerMobile }})
+                    </a>
+                  </div>
+                </div>
+                <div class="mt-4" style="text-align: center; margin-top: 1.5rem !important">
+                  <button *ngIf="!otpSpinning" (click)="verify1()" class="btn btn-primary px-4 validate" style="
+                      background-color: #f68831 !important;
+                      font-size: 15px;
+                      border: none;
+                    ">
+                    Verify
+                  </button>
+                  <div *ngIf="otpSpinning">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">Loading</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" style="display: none" data-bs-toggle="modal" #openregi1
+  data-bs-target="#openregi1">
+  Launch demo modal
+</button>
+<div class="modal fade" id="openregi1" tabindex="-1" aria-labelledby="opsdnbnb" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 720px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" style="display: none" class="btn-close" id="pppvacy" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+          padding: 0px 15px 0px 5px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form>
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)" disabled required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email ID" disabled
+                      class="form-control inp" name="emailid" [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Mobile No.<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" type="text" [disabled]="disbalemobile" class="form-control inp"
+                        id="mobile1" maxlength="10" placeholder="Enter Mobile No." [(ngModel)]="MOBILE_NO" name="mobile"
+                        (keypress)="omit($event)" required />
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group">
+                    <label class="inpTitle">Employee Code<span style="color: red">*</span></label>
+                    <input disabled autocomplete="off" type="text" placeholder="Enter Employee Code"
+                      class="form-control inp" name="empcode" [(ngModel)]="EMPLOYEE_CODE" required />
+                  </div>
+
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Password<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" [type]="pass1 ? 'text' : 'password'" placeholder="Ex:John@123"
+                        class="form-control inp" [(ngModel)]="PASSWORD" name="PASSWORDSSS" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 10px;
+                            line-height: 1;
+                            border-radius: 0px;
+                            border-top-right-radius: 0.375rem;
+                            border-bottom-right-radius: 0.375rem;
+                          " toggle="#password-field" (click)="showpass1()" [ngClass]="{
+                            'bi bi-eye': !pass1,
+                            'bi bi-eye-slash': pass1
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Confirm Password<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" [type]="pass2 ? 'text' : 'password'" placeholder="Ex:John@123"
+                        class="form-control inp" [(ngModel)]="CONFIRM_PASSWORD" name="CONFIRM_PASSWORDSS" required />
+                      <div class="input-group-append">
+                        <span style="
+                            padding: 10px;
+                            line-height: 1;
+                            border-radius: 0px;
+                            border-top-right-radius: 0.375rem;
+                            border-bottom-right-radius: 0.375rem;
+                          " toggle="#password-field" (click)="showpass2()" [ngClass]="{
+                            'bi bi-eye': !pass2,
+                            'bi bi-eye-slash': pass2
+                          }" class="fa input-group-text"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <div class="col-md-12 col-12">
+                    <input id="agrrrr" type="checkbox" class="form-check-input" name="agrrrr"
+                      (click)="agrreconfirmation1()" style="cursor: pointer; border: 2px solid #415be2" />&nbsp; By
+                    clicking Sign Up, I hereby acknowledge and
+                    accept the
+                    <a (click)="agrreconfirmation()" style="color: #f68831" data-bs-dismiss="modal">Terms &
+                      Conditions</a>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" [disabled]="isagreedisable" (click)="Register()"
+                  class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Sign Up
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Email verification -->
+<button type="button" class="btn btn-primary" style="display: none" data-bs-toggle="modal" #openregi
+  data-bs-target="#openregi">
+  Launch demo modal
+</button>
+<div class="modal fade" id="openregi" tabindex="-1" aria-labelledby="opdbjbs" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 700px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal1()"></button>
+        <button type="button" style="display: none" class="btn-close" id="emailregiClose" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+          padding: 0px 15px 0px 5px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form>
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)" required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email" class="form-control inp"
+                      name="emailid" [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div *ngIf="!emailtrue" class="col-md-12 col-12 form-group" style="
+                      align-self: center;
+                      text-align: center;
+                      margin-top: 10px;
+                    ">
+                    <button *ngIf="!emailload" (click)="check1()" class="btn btn-primary px-4 validate"
+                      style="background-color: #f68831 !important; border: none">
+                      Get OTP
+                    </button>
+                    <div *ngIf="emailload">
+                      <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="emailtrue" class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" (click)="Register()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Sign Up
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" style="display: none" data-bs-toggle="modal" #openotpmodemail
+  data-bs-target="#openotpmodemail">
+  Launch demo modal
+</button>
+<!-- Email verification1 -->
+<div class="modal fade" id="openotpmodemail" tabindex="-1" aria-labelledby="opendbhsdb" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 700px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+        <button type="button" style="display: none" class="btn-close" id="emailviribhb" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+          padding: 0px 15px 0px 5px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form>
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)" required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email" class="form-control inp"
+                      name="emailid" [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div *ngIf="!emailtrue" class="col-md-12 col-12 form-group" style="
+                      align-self: center;
+                      text-align: center;
+                      margin-top: 10px;
+                    ">
+                    <button *ngIf="!emailload" (click)="check1()" class="btn btn-primary px-4 validate"
+                      style="background-color: #f68831 !important; border: none">
+                      Get OTP
+                    </button>
+                    <div *ngIf="emailload">
+                      <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="emailtrue" class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" (click)="Register()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Sign Up
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- mobile verification -->
+<button type="button" class="btn btn-primary" style="display: none" data-bs-toggle="modal" #openregi2
+  data-bs-target="#openregi2">
+  Launch demo modal
+</button>
+<div class="modal fade" id="openregi2" tabindex="-1" aria-labelledby="openreghmn" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 700px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+        <button type="button" style="display: none" class="btn-close" id="register1111" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+          padding: 0px 15px 0px 5px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form>
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)" required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email" disabled class="form-control inp"
+                      name="emailid" [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Mobile No.<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" type="text" class="form-control inp" id="hmobile" maxlength="10"
+                        placeholder="Enter Mobile No." [(ngModel)]="MOBILE_NO" name="mobile1" (keypress)="omit($event)"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="
+                      align-self: center;
+                      text-align: center;
+                      margin-top: 10px;
+                    ">
+                    <button *ngIf="!mobileload" (click)="check()" class="btn btn-primary px-4 validate"
+                      style="background-color: #f68831 !important; border: none">
+                      Get OTP
+                    </button>
+                    <div *ngIf="mobileload">
+                      <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="emailtrue && mobilevery" class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" (click)="Register()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Sign Up
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- mobile verification1 -->
+<button type="button" class="btn btn-primary" style="display: none" data-bs-toggle="modal" #openotpmodmobile
+  data-bs-target="#openotpmodmobile">
+  Launch demo modal
+</button>
+<div class="modal fade" id="openotpmodmobile" tabindex="-1" aria-labelledby="opensss" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 700px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+        <button type="button" style="display: none" id="regist11111" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+          padding: 0px 15px 0px 5px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form>
+              <div class="form-group" style="margin-bottom: 0.5rem">
+                <div class="row">
+                  <div class="col-md-6 col-12 form-group">
+                    <label class="inpTitle">Full Name<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="text" placeholder="Enter Full Name" class="form-control inp"
+                      name="fname" [(ngModel)]="NAME" (keypress)="alphaonly($event)" required />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem; padding-right: 0px">
+                    <label class="inpTitle">Email ID<span style="color: red">*</span></label>
+                    <input autocomplete="off" type="email" placeholder="Enter Email" disabled class="form-control inp"
+                      name="emailid" [(ngModel)]="EMAIL_ID" />
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="margin-bottom: 0.5rem">
+                    <label class="inpTitle">Mobile No.<span style="color: red">*</span></label>
+                    <div class="input-group">
+                      <input autocomplete="off" type="text" class="form-control inp" id="mobile" maxlength="10"
+                        placeholder="Enter Mobile No." [(ngModel)]="MOBILE_NO" name="mobile3" (keypress)="omit($event)"
+                        required />
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12 form-group" style="
+                      align-self: center;
+                      text-align: center;
+                      margin-top: 10px;
+                    ">
+                    <button *ngIf="!mobileload" (click)="check()" class="btn btn-primary px-4 validate"
+                      style="background-color: #f68831 !important; border: none">
+                      Get OTP
+                    </button>
+                    <div *ngIf="mobileload">
+                      <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="emailtrue && mobilevery" class="mt-4" style="
+                  text-align: center;
+                  margin-top: 11px !important;
+                  margin-bottom: 5px;
+                ">
+                <button *ngIf="!otpSpinning" (click)="Register()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    font-size: 15px;
+                    border: none;
+                  ">
+                  Sign Up
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a style="display: none" #regsuccessmodal1111 data-bs-toggle="modal" data-bs-target="#regsuccessmodal1111">nvghv</a>
+<div class="modal fade" id="regsuccessmodal1111" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="basicD" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div>
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="green" class="bi bi-check2-circle"
+              viewBox="0 0 16 16">
+              <path
+                d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+              <path
+                d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+            </svg>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+            <h3 class="modal-title" style="font-size: 21px; color: #f68831">
+              Thank you for registering
+            </h3>
+            <h5 style="
+                font-size: 15px;
+                text-align: justify;
+                margin-top: 20px;
+                font-weight: 400;
+              ">
+              Your registration process has been completed successfully. Please
+              log in.
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" style="background-color: #f68831; border: none" class="btn btn-secondary"
+          data-bs-dismiss="modal" (click)="cloderegistermodakl()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a style="display: none" #rolemapmod data-bs-toggle="modal" data-bs-target="#rolemapmod">nvghv</a>
+<div class="modal fade" id="rolemapmod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="basicD" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 700px !important">
+    <div class="modal-content">
+      <button type="button" style="display: none" id="rolemapmodclosed" class="btn-close" data-bs-dismiss="modal"
+        aria-label="Close"></button>
+      <div class="modal-body">
+        <div class="row" style="justify-content: center">
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+            <h3 class="modal-title" style="margin-bottom: 10px; color: #f68831; font-size: 22px">
+              Please select your role
+            </h3>
+          </div>
+
+          <div class="section_our_solution">
+            <div class="row" style="justify-content: center">
+              <div class="col-lg-4 col-md-4 col-sm-12" *ngFor="let role of roledata">
+                <div class="our_solution_category" (click)="changerole(role)"
+                  style="margin-bottom: 24px; cursor: pointer">
+                  <div class="solution_cards_box">
+                    <div class="solution_card">
+                      <div class="hover_color_bubble"></div>
+                      <div class="so_top_icon" style="text-align: center">
+                        <svg enable-background="new -27 23 101 100" height="100px" id="malecostume_1_" version="1.1"
+                          height="100%" viewBox="-27 23 101 100" width="100%" xml:space="preserve"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+                          xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <g>
+                            <g>
+                              <circle cx="23" cy="73" fill="#F5EEE5" r="50" />
+                              <g>
+                                <defs>
+                                  <circle cx="23" cy="73" id="SVGID_1_" r="50" />
+                                </defs>
+                                <clipPath id="SVGID_2_">
+                                  <use overflow="visible" xlink:href="#SVGID_1_" />
+                                </clipPath>
+                                <path clip-path="url(#SVGID_2_)"
+                                  d="M38,98.9l27.9,7.7c3.2,1.1,5.7,3.5,7.1,6.6v9.8H-27v-9.8      c1.3-3.1,3.9-5.5,7.1-6.6L8,98.9V84h30V98.9z"
+                                  fill="#D4B08C" />
+                                <g clip-path="url(#SVGID_2_)">
+                                  <defs>
+                                    <path
+                                      d="M38,98.9l27.9,7.7c3.2,1.1,5.7,3.5,7.1,6.6v9.8H-27v-9.8c1.3-3.1,3.9-5.5,7.1-6.6L8,98.9V84h30V98.9z"
+                                      id="SVGID_3_" />
+                                  </defs>
+                                  <clipPath id="SVGID_4_">
+                                    <use overflow="visible" xlink:href="#SVGID_3_" />
+                                  </clipPath>
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#1E1E23"
+                                    points="23.2,103 16,103 11.2,98 -27,98 -27,123 23.2,123 73.3,123        73.3,98 35.2,98 30.4,103      " />
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#C1CAD4"
+                                    points="23,103 24,103 38.7,95.3 32.9,124.2 23,123.1 13.1,124.2 7.3,95.3        22,103      " />
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#216DD9"
+                                    points="20.5,112 25.5,112 29.5,124 16.5,124      " />
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#249CF2"
+                                    points="12.5,103 33.5,103 25.5,112 20.5,112      " />
+                                  <path clip-path="url(#SVGID_4_)"
+                                    d="M38.5,93l-14.4,10l10.8,11L39,94L38.5,93z M7.5,93l14.4,10l-10.8,11L7,94       L7.5,93z"
+                                    fill="#FFFFFF" />
+                                </g>
+                              </g>
+                              <path
+                                d="M23,97c-1.5,0-3.5-0.3-4.8-0.9c-1.6-0.7-7.2-4.6-9.1-6.3c-2.5-2.3-3.8-5.1-4.2-10S3,57.5,3,53.5     C3,47.8,8.1,39,23,39l0,0l0,0l0,0l0,0C37.9,39,43,47.8,43,53.5c0,4-1.5,21.5-1.9,26.4s-1.6,7.7-4.2,10c-1.9,1.7-7.6,5.6-9.1,6.3     C26.5,96.7,24.5,97,23,97L23,97z"
+                                fill="#F2CEA5" />
+                              <path
+                                d="M30,83l-14,0c-0.4,0-0.6,0.4-0.4,0.8c1.3,2.3,3.7,3.5,6.7,3.7c3.1,0.2,6.5-1.3,8.1-3.7     C30.6,83.5,30.4,83,30,83z"
+                                fill="#A3705F" />
+                              <circle cx="32" cy="68" fill="#262626" r="2" />
+                              <circle cx="14" cy="68" fill="#262626" r="2" />
+                              <path d="M8,65c0,0,1.1-3,6.1-3c3.4,0,5.4,1.5,6.4,3" fill="none" stroke="#CC9872"
+                                stroke-width="2" />
+                              <path d="M38.1,65c0,0-1.1-3-6.1-3c-4.8,0-7,3-7,5c0,1.9,0,9,0,9" fill="none"
+                                stroke="#BB8660" stroke-width="2" />
+                              <path
+                                d="M41.8,71.2c0,0,0.8-6.3,3.7-7.2c0.4-1.8,1.5-7,1.5-9.9s-0.3-5.7-1.9-8.1c-1.8-2.6-5.6-4.1-7.6-4.1     c-2.3,1.4-7.7,4.6-9.4,6.5c-0.9,1,0.4,1.8,0.4,1.8s1.2-0.5,1.7-0.6c2.5-0.7,8-1.2,9.7,1.3C42,53.9,42,62.7,42,64     C42,65.2,41.8,71.2,41.8,71.2z"
+                                fill="#D98C21" />
+                              <path
+                                d="M0.5,64c2.9,1,3.7,7.2,3.7,7.2S4,65.2,4,64c0-1.6,0.2-9.1,3.4-12.7c3.6-4,8.4-5.3,11.1-3.5     c1.4,0.9,6.1,5.5,11.1,1.7c3-2.3,8.5-7.5,8.5-7.5s-2.9-8.9-16.1-7.9c-5.6,0.5-11.8-0.9-11.8-0.9s-0.1,2.5,0.9,3.8     C2.8,39.4,0.1,45.4-0.7,50c-0.2,0.9-0.3,1.8-0.3,2.7c0,0.5,0,1,0,1.4C-1,57,0.1,62.1,0.5,64z"
+                                fill="#E6A422" />
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                      <div class="solu_title" style="text-align: center">
+                        <h4>{{ role.ROLE_NAME }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="changepasss" tabindex="-1" aria-labelledby="changepasssd" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 315px !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+        <button type="button" style="display: none" #closechangeppp class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #f68831;
+          border-top: 4px groove #f68831;
+          padding: 0px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form action="#">
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">
+                  Old Password</label>
+                <div class="input-group">
+                  <input autocomplete="off" [type]="pass3 ? 'text' : 'password'" autocomplete="off" type="password"
+                    class="form-control" [(ngModel)]="changepass.PASSWORD" placeholder="Enter Old Password"
+                    name="pasccs" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showpass3()" [ngClass]="{
+                        'bi bi-eye': !pass3,
+                        'bi bi-eye-slash': pass3
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">New Password</label>
+                <div class="input-group mb-0">
+                  <input autocomplete="off" [type]="pass4 ? 'text' : 'password'" [(ngModel)]="changepass.NEW_PASSWORD"
+                    class="form-control" placeholder="Enter New Password" name="cpass" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showpass4()" [ngClass]="{
+                        'bi bi-eye': !pass4,
+                        'bi bi-eye-slash': pass4
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">Retype New Password</label>
+                <div class="input-group mb-0">
+                  <input autocomplete="off" [type]="pass11 ? 'text' : 'password'" [(ngModel)]="RETYPE_PASSWORD"
+                    class="form-control" placeholder="Retype New Password" name="cpass" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showp()" [ngClass]="{
+                        'bi bi-eye': !pass11,
+                        'bi bi-eye-slash': pass11
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+                <span style="font-weight: 400; font-size: 11px; margin-top: 7px">
+                  *Enter minimum 8 alphanumeric characters with special
+                  symbols.</span>
+              </div>
+              <div class="mt-4" style="text-align: center; margin-top: 20px !important">
+                <button *ngIf="!otpSpinning" (click)="changepasss()" class="btn btn-primary px-4 validate" style="
+                    background-color: #f68831 !important;
+                    width: 100%;
+                    border: none;
+                  ">
+                  Change Password <i class="icon-long-arrow-right"></i>
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '25px' }" nzWidth="1000px" nzClosable="false"
+  [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="text-align: center; position: sticky; top: 0">
+      Terms & Conditions
+    </h5>
+    <p>1. <b>Introduction</b></p>
+    <p>Welcome</p>
+    <p>
+      We value your privacy and are committed to safeguarding your personal
+      information. This Terms & Conditions outlines how we collect, use,
+      disclose, and protect your data. By using our services, you consent to the
+      practices described in this policy.
+    </p>
+    <p>2. <b>Information Collection</b></p>
+    <p>
+      We collect information that you provide directly when you interact with
+      our website, products, and services. This may include personal details
+      such as your name, contact information, and relevant identifiers.
+    </p>
+    <p>3. <b>Use of Information </b></p>
+    <p>
+      We use the information collected to improve our services, personalize user
+      experiences, and communicate with you. Your data may be used for
+      administrative purposes, responding to inquiries, and providing relevant
+      updates.
+    </p>
+    <p>4. <b>Data Protection </b></p>
+    <p>
+      We employ robust security measures to protect your information from
+      unauthorized access, disclosure, alteration, or destruction. Our security
+      protocols adhere to industry standards to ensure your data's integrity.
+    </p>
+    <p>5. <b>Disclosure to Third Parties </b></p>
+    <p>
+      We do not sell or share your personal information with third parties for
+      their marketing purposes. However, we may share data with trusted partners
+      and service providers who assist us in delivering our services
+      effectively.
+    </p>
+    <p>6. <b>Cookies and Tracking </b></p>
+    <p>
+      We use cookies and similar technologies to enhance your browsing
+      experience. Cookies enable us to analyze site usage patterns, optimize
+      content, and tailor advertisements. You can manage cookie preferences
+      through your browser settings.
+    </p>
+    <p>7. <b>Links to External Sites </b></p>
+    <p>
+      Our website may contain links to external sites. We are not responsible
+      for the content or privacy practices of these sites. We encourage you to
+      review their respective privacy policies.
+    </p>
+    <p>8. <b>Changes to Terms & Conditions </b></p>
+    <p>
+      We may update this Terms & Conditions periodically to reflect changes in
+      our practices. The updated version will be posted on our website, and your
+      continued use of our services constitutes your acceptance of these
+      changes.
+    </p>
+    <p>9. <b>Contact Us </b></p>
+    <p>
+      For any questions, concerns, or inquiries regarding this Terms &
+      Conditions, please contact us at
+      <a href="mailto:mumbai.ito.tps1@incometax.gov.in" style="color: #f68831">mumbai.ito.tps1@incometax.gov.in</a>.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules>
+    <button nz-button nzType="primary" class="btn btn-primary" style="background-color: #f68831; border: none"
+      (click)="handleOk()">
+      I Understood
+    </button>
+  </ng-template>
+</nz-modal>
+
+<a data-bs-toggle="modal" data-bs-target="#exampleModal111w" style="display: none" #exampleModal111w></a>
+<div class="modal fade" id="exampleModal111w" tabindex="-1" aria-labelledby="exampleModal111wLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="
+            background-image: url('assets/img/bbbb.jpg') !important;
+            background-size: cover;
+          ">
+          <div class="hero-container" data-aos="fade-up">
+            <h1>Coming Soon</h1>
+            <h2>We are Working on it.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#ggggggggg11" style="display: none" #ggggggggg11></a>
+<div class="modal fade" id="ggggggggg11" tabindex="-1" aria-labelledby="ggggggggg11Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="
+            background-image: url('assets/img/bbbb.jpg') !important;
+            background-size: cover;
+          ">
+          <div class="hero-container" data-aos="fade-up">
+            <h1>Coming Soon</h1>
+            <h2>We are Working on it.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a data-bs-toggle="modal" data-bs-target="#outofservice1" style="display: none" #outofservice1></a>
+<div class="modal fade" id="outofservice1" tabindex="-1" aria-labelledby="outofservice1Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: transparent">
+      <div class="modal-body" style="text-align: center">
+        <section id="hero" style="background: transparent !important">
+          <div class="hero-container" data-aos="fade-up">
+            <h2>This specific service is not customized for your usage.</h2>
+            <a data-bs-dismiss="modal" class="btn-get-started scrollto">Close</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="drawerVisible1">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="Dwidth" [nzVisible]="drawerVisible1"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-employee [personalinformation]="drawerDatapersonal" [empstatus]="empstatus" [drawerClose]="closeCallback"
+        [addnew]="addnew"></app-employee>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="modelshowwwww" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="500px"
+  nzClosable="false" [nzFooter]="contextofrulesss" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Update Cadre</span>
+    <!-- <span *ngIf="verifystatus == 'A'" style="font-size: 15px; font-weight: 500"
+      >Are you sure you want to Approve ?</span
+    > -->
+    <hr style="margin: 8px 0" />
+    <nz-form-item>
+      <!-- <nz-form-label class="labelsize" nzRequired nzNoColon
+        >Cadre</nz-form-label
+      > -->
+      <nz-form-control>
+        <nz-select nzAllowClear="false" nzShowSearch nzPlaceHolder="Select Cadre" name="Ranksbscd"
+          [(ngModel)]="employeedataaaa11111.DESIGNATION_ID">
+          <nz-option *ngFor="let role of ranksss" [nzValue]="role.MDB_ID" [nzLabel]="role.NAME">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+  <ng-template #contextofrulesss>
+    <button nzSize="small" [nzLoading]="loadingRecords" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699; border-radius: 12px; font-size: 11px" (click)="handleOkkkkkkkkkkkkkk()">
+      Update
+    </button>
+
+    <button nzSize="small" nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary" style="
+        background-color: white !important;
+        border-radius: 12px;
+        color: #006699;
+        font-size: 11px;
+        font-weight: 500;
+      " (click)="cancel121221()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+<div *ngIf="drawerVisible2">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="Dwidth" [nzVisible]="drawerVisible2"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-oldemployeeprofile [personalinformation]="drawerDatapersonal" [empstatus]="empstatus"
+        [drawerClose]="closeCallback" [addnew]="addnew"></app-oldemployeeprofile>
+    </ng-container>
+  </nz-drawer>
+</div>

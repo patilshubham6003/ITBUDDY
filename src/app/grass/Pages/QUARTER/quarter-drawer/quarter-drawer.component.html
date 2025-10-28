@@ -1,0 +1,204 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>City Name</nz-form-label>
+            <nz-form-control>
+              <nz-select name="cityid" [(ngModel)]="data.CITY_ID" nzAllowClear nzShowSearch [disabled]="roleid == 14"
+                nzPlaceHolder="Select city" (ngModelChange)="changecity($event)">
+                <nz-option *ngFor="let city of cityList;" [nzValue]="city.ID" [nzLabel]="city.NAME">{{city.NAME}}
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Area Name</nz-form-label>
+            <nz-form-control>
+              <nz-select name="AREA_ID" [(ngModel)]="data.AREA_ID" nzAllowClear nzShowSearch [disabled]="roleid == 14"
+                nzPlaceHolder="Select Area" (ngModelChange)="changearea($event)">
+                <nz-option *ngFor="let area of areaList;" [nzValue]="area.ID" [nzLabel]="area.NAME">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Building Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Building Name">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Building Name" name="BuildingjhgName"
+                [disabled]="roleid == 14" [(ngModel)]="data.BUILDING_ID" required
+                (ngModelChange)="ChangeBuilding($event)">
+                <nz-option *ngFor="let data of BuildingList" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Floor </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Floor ">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Floor" name="Floorjhg"
+                [disabled]="roleid == 14" [(ngModel)]="data.FLOOR_ID" required>
+                <nz-option *ngFor="let floor of FloorNo" [nzValue]="floor.ID" [nzLabel]="floor.NAME">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Quarter Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Quarter Name">
+              <input nz-input name="FlatName" [(ngModel)]="data.NAME" maxlength="256" required [disabled]="roleid == 14"
+                placeHolder="Enter Quarter Name" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Residence Type</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Residence Type">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Residence Type " name="Residence Type"
+                [disabled]="roleid == 14" [(ngModel)]="data.RESIDENCE_TYPE_ID" required>
+                <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Room Type</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Room Type">
+              <nz-select name="Room Type" nzShowSearch nzAllowClear style="width: 100%" nzPlaceHolder="Select Room Type"
+                [disabled]="roleid == 14" [(ngModel)]="data.ROOM_TYPE">
+                <nz-option [nzValue]="'1 BHK'" [nzLabel]="'1 BHK'"> </nz-option>
+                <nz-option [nzValue]="'2 BHK'" [nzLabel]="'2 BHK'"> </nz-option>
+                <nz-option [nzValue]="'3 BHK'" [nzLabel]="'3 BHK'"> </nz-option>
+                <nz-option [nzValue]="'1 RK'" [nzLabel]="'1 RK'"> </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Available Status</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Available Status">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Available Status " [disabled]="roleid == 14"
+                name="Available Status" [(ngModel)]="data.AVAILABLE_STATUS" required>
+                <nz-option nzValue="B" nzLabel="Booked"></nz-option>
+                <nz-option nzValue="A" nzLabel="Available"></nz-option>
+                <nz-option nzValue="U" nzLabel="Under Maintainance"></nz-option>
+                <!-- <nz-option nzValue="NA" nzLabel="Not Available"></nz-option> -->
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Category</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Category">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Category" [disabled]="roleid == 14"
+                name="falt_category" [(ngModel)]="data.CATEGORY" required>
+                <nz-option nzValue="DP" nzLabel="Departmental Pool"></nz-option>
+                <nz-option nzValue="LP" nzLabel="Ladies Pool"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Temporary Available Status</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Temporary Available Status">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Temporary Available Status "
+                [disabled]="roleid == 15" name="Temporary Available Status" [(ngModel)]="data.TEMP_STATUS" required>
+                <nz-option nzValue="B" nzLabel="Booked"></nz-option>
+                <nz-option nzValue="A" nzLabel="Available"></nz-option>
+                <nz-option nzValue="U" nzLabel="Under Maintainance"></nz-option>
+                <nz-option nzValue="NA" nzLabel="Not Available"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Reserver For</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Reserver For">
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Reserver For" [disabled]="roleid == 14"
+                name="RESERVED_FOR" [(ngModel)]="data.RESERVED_FOR" required>
+                <nz-option nzValue="A" nzLabel="All"></nz-option>
+                <nz-option nzValue="SC" nzLabel="Scheduled Cast"></nz-option>
+                <nz-option nzValue="ST" nzLabel="Scheduled Tribes"></nz-option>
+                <nz-option nzValue="Female" nzLabel="Women"></nz-option>
+                <nz-option nzValue="S" nzLabel="Senior Citizen"></nz-option>
+                <!-- <nz-option nzValue="SC" nzLabel="Ladies Pool"></nz-option> -->
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Sequence No">
+              <input nz-input autocomplete="off" name="sequenceNo" (keypress)="omit($event)" type="text" maxlength="11"
+                [disabled]="roleid == 14" [(ngModel)]="data.SEQUENCE_NO" placeHolder="Enter Sequence No" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No" [disabled]="roleid == 14"
+                [(ngModel)]="data.STATUS"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button (click)="close(websitebannerPage)" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+          <a style="color: white" (click)="save(true, websitebannerPage)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false, websitebannerPage)">
+      <span>Update & Close</span>
+    </button>
+  </div>
+
+  <div class="header">
+    <button type="button" nz-button (click)="close(websitebannerPage)" class="ant-btn" style="margin-right: 8px">
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

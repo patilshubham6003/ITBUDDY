@@ -1,0 +1,142 @@
+<div nz-col style="margin: 0 10px 0 0;">
+  <div class="formname"> {{formTitle}}</div>
+</div>
+<form nz-form #websitebannerPage="ngForm">
+  <nz-spin [nzSpinning]="isSpinning">
+    <div nz-row class="my-box">
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>City Name</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select City">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select City " name="CITY"
+              (ngModelChange)="changecity($event)" [(ngModel)]="CITY" required>
+              <nz-option *ngFor="let city of CityList" [nzValue]="city.ID" [nzLabel]="city.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Area Name</nz-form-label>
+          <nz-form-control>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please Select Area Name " name="AREA"
+              (ngModelChange)="changearea($event)" [(ngModel)]="AREA">
+              <nz-option *ngFor="let area of AreaList" [nzValue]="area.ID" [nzLabel]="area.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Block Name</nz-form-label>
+          <nz-form-control>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please Select Block Name " name="BLOCK"
+              [(ngModel)]="BLOCK">
+              <nz-option *ngFor="let block of BlockList" [nzValue]="block.ID" [nzLabel]="block.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Residence Type</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select Residence Type">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please Select Residence Type " name="TYPE_OF_RESIDENCE"
+              [(ngModel)]="TYPE_OF_RESIDENCE" required>
+              <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.RESIDENCE_TYPE_ID"
+                [nzLabel]="type.RESIDENCE_TYPE_NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="3" style="margin-top: 31px;">
+        <button nzType="primary" nz-button class="ant-btn" (click)="findflats()" style="margin-right: 8px">
+          Apply
+        </button>
+      </div>
+
+    </div>
+  </nz-spin>
+</form>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{  y: '250px' }">
+
+      <thead>
+        <tr>
+          <th nzWidth="80px" style="text-align: center;">
+            <b>City </b>
+          </th>
+          <th nzWidth="110px" style="text-align: center;">
+            <b> Area </b>
+          </th>
+          <th nzWidth="110px" style="text-align: center;">
+            <b> Block </b>
+          </th>
+          <th nzWidth="120px" style="text-align: center;">
+            <b> Building </b>
+          </th>
+          <th nzWidth="80px" style="text-align: center;">
+            <b> Quarter Number </b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of ResidenceMasterTable.data">
+          <td style="white-space: pre-line;text-align: center;">{{data['CITY_NAME']}}</td>
+          <td style="white-space: pre-line;text-align: center;">{{data['AREA_NAME']}}</td>
+          <td style="white-space: pre-line;text-align: center;">{{data['BLOCK_NAME']}}</td>
+          <td style="white-space: pre-line;text-align: center;">{{data['BUILDING_NAME']}}</td>
+          <td style="white-space: pre-line;text-align: center;">{{data['NO_OF_FLATS']}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div class="my-box" style="display: flex; justify-content: center;align-items: center;gap: 10px;">
+
+  <button nzType="primary" nz-button [routerLink]="['/grass/AllotementMaster']">
+    Apply Quarter Request
+  </button>
+
+  <button nzType="primary" nz-button (click)="viewflatvacancy()">
+    View Quarter Vacancy
+  </button>
+
+  <!-- <button nzType="primary" nz-button (click)="ViewSeniorityList()">
+    View Seniority Order
+  </button>
+
+  <button nzType="primary" nz-button (click)="applyflatpreference()">
+    Apply Quarter Preference
+  </button> -->
+
+
+</div>
+
+<!-- <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="800" [nzVisible]="vacancyvisible"
+    [nzTitle]="vacancyTitle" (nzOnClose)="vacancyvisibleclose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-notice-vacant [drawerClose]="vacancyclose111" [drawerVisible]="vacancyvisible"
+            [data]="values"></app-notice-vacant>
+    </ng-container>
+</nz-drawer> -->
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="800" [nzVisible]="vacancyvisible"
+  [nzTitle]="vacancyTitle" (nzOnClose)="vacancyvisibleclose()" (nzKeyboard)="true">
+  <ng-container *nzDrawerContent>
+    <app-vacancy [drawerClose]="vacancyclose111" [drawerVisible]="vacancyvisible" [data]="values"></app-vacancy>
+  </ng-container>
+</nz-drawer>

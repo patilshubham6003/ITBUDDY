@@ -1,0 +1,2499 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="20"
+    nzLg="20"
+    nzXl="8"
+    style="padding-left: 10px"
+  >
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="4"
+    nzXl="16"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            (keydown.enter)="onKeypressEvent($event)"
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            id="button"
+            nz-button
+            nzType="primary"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <!-- <nz-form-item>
+          <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+            <i nz-icon nzType="plus" ></i>Add New Claim
+          </button>
+        </nz-form-item> -->
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item style="margin-top: 1px; width: 113%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="BILL_FILIING_DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="5" style="margin-left: 39px">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Hospital Type</nz-form-label>
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  name="hospitalType"
+                  [(ngModel)]="TYPE_OF_HOSPITAL"
+                  nzPlaceHolder="Select Hospital Type"
+                >
+                  <nz-option nzLabel="Empanelled" nzValue="1"></nz-option>
+                  <nz-option nzLabel="Non-Empanelled" nzValue="2"></nz-option>
+                  <nz-option nzLabel="Governemnt" nzValue="3"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="5" style="margin-left: 39px">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Stage Name</nz-form-label>
+                <nz-select
+                  name="stageName"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [(ngModel)]="STAGE_NAME"
+                  nzPlaceHolder="Select Stage Name"
+                  nzMode="multiple"
+                >
+                  <nz-option
+                    *ngFor="let stage of stages"
+                    [nzValue]="stage.ID"
+                    [nzLabel]="stage.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 45px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row style="padding-top: 5px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+    <div style="text-align: center">
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('ALL', ' ')"
+          nz-button
+          [nzType]="totalButton"
+          style="border: 1px solid blue; color: blue"
+        >
+          All : {{ allClaimCount }}
+        </button>
+      </span>
+
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('N', '3,4')"
+          nz-button
+          [nzType]="newButton"
+          style="border: 1px solid blue; color: blue"
+        >
+          New : {{ allNewCount }}
+        </button>
+      </span>
+
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('F', '6,7,9,11,15')"
+          nz-button
+          [nzType]="forwardButton"
+          style="border: 1px solid #000000; color: black"
+        >
+          Forwarded : {{ allForwardCount }}
+        </button>
+      </span>
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('R', '5')"
+          nz-button
+          [nzType]="rejectButton"
+          style="border: 1px solid #f70000; color: red"
+        >
+          Rejected : {{ allRejectCount }}
+        </button>
+      </span>
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('Q', '8,10,12,14,16')"
+          nz-button
+          [nzType]="queryButton"
+          style="border: 1px solid blue; color: blue"
+        >
+          Queried : {{ allQueryCount }}
+        </button>
+      </span>
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('A', '17')"
+          nz-button
+          [nzType]="approvedButton"
+          style="border: 1px solid #000000; color: black"
+        >
+          Approved : {{ allApprovedCount }}
+        </button>
+      </span>
+      <span style="padding-left: 5px; padding-right: 5px">
+        <button
+          (click)="applyStageFilter('Z', '13')"
+          nz-button
+          [nzType]="readyButton"
+          style="border: 1px solid red; color: red"
+        >
+          Ready For Zonal : {{ allReadyCount }}
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="dataList"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '6000px', y: '55vh' }"
+      nzBordered
+    >
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th nzWidth="450px">Action</th>
+          <th nzWidth="120px">Claim File</th>
+          <th nzWidth="100px">Log</th>
+          <th nzWidth="250px" nzColumnKey="EMPLOYEE_NAME" [nzSortFn]="true">
+            Applicant Name
+          </th>
+          <th nzWidth="210px" nzColumnKey="CLAIM_STAGE_NAME" [nzSortFn]="true">
+            Status
+          </th>
+          <th nzWidth="150px" nzColumnKey="CLAIM_NO" [nzSortFn]="true">
+            Claim No
+          </th>
+
+          <th nzWidth="110px" nzColumnKey="MOBILE_NO" [nzSortFn]="true">
+            Mobile No.
+          </th>
+          <th nzWidth="150px" nzColumnKey="EMPLOYEE_CODE" [nzSortFn]="true">
+            Employee Code
+          </th>
+          <th
+            nzWidth="270px"
+            nzColumnKey="EMPLOYEE_DESIGNATION"
+            [nzSortFn]="true"
+          >
+            Employee Designation
+          </th>
+          <th nzWidth="220px" nzColumnKey="PATIENT_NAME" [nzSortFn]="true">
+            Patient Name
+          </th>
+          <th
+            nzWidth="170px"
+            nzColumnKey="RELATION_WITH_PATIENT"
+            [nzSortFn]="true"
+          >
+            Patient Relation
+          </th>
+          <th nzWidth="150px" nzColumnKey="BILL_FILIING_DATE" [nzSortFn]="true">
+            Bill Filling Date
+          </th>
+          <th nzWidth="190px" nzColumnKey="ADMISSIBLE_AMOUNT" [nzSortFn]="true">
+            Admissible Amount(₹)
+          </th>
+
+          <th nzWidth="370px" nzColumnKey="TREATEMENT_TYPE" [nzSortFn]="true">
+            Treatment Type
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="TREATMENT_START_DATE"
+            [nzSortFn]="true"
+          >
+            Treatment Start Date
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="TREATMENT_END_DATE"
+            [nzSortFn]="true"
+          >
+            Treatment End Date
+          </th>
+          <th nzWidth="260px" nzColumnKey="ACCREDITATION" [nzSortFn]="true">
+            Empanelled Hospital Accrediation
+          </th>
+          <th
+            nzWidth="210px"
+            nzColumnKey="CLAIM_ACCREDITATION"
+            [nzSortFn]="true"
+          >
+            Accrediation
+          </th>
+
+          <th nzWidth="180px" nzColumnKey="HOSPITAL_TYPE" [nzSortFn]="true">
+            Hospital Type
+          </th>
+          <th nzWidth="400px" nzColumnKey="HOSPITAL_NAME" [nzSortFn]="true">
+            Hospital Name
+          </th>
+          <th
+            nzWidth="400px"
+            nzColumnKey="EMPANELLED_HOSPITAL_NAME"
+            [nzSortFn]="true"
+          >
+            Empanelled Hospital Name
+          </th>
+
+          <th nzWidth="200px" nzColumnKey="WARD_TYPE" [nzSortFn]="true">
+            Ward Entitlement
+          </th>
+
+          <th
+            nzWidth="400px"
+            nzColumnKey="NATURE_OF_TREATMENT"
+            [nzSortFn]="true"
+          >
+            Nature Of Treatment
+          </th>
+          <th nzWidth="150px" nzColumnKey="CHECKLIST_STATUS" [nzSortFn]="true">
+            Accept / Reject
+          </th>
+          <th nzWidth="300px" nzColumnKey="REJECT_REMARK" [nzSortFn]="true">
+            Remark
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <!-- <td align="center">
+                          <a (click)="edit()"><i nz-icon nzType="edit"></i></a>
+                      </td> -->
+
+          <td nzWidth="400px">
+            <div style="padding: 3px">
+              <span *ngIf="data.CURRENT_STAGE_ID == 6">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px blue solid;
+                    border-radius: 0px;
+                  "
+                  [nzColor]="'blue'"
+                >
+                  <a (click)="openAnnextureFile(data)">
+                    <span nz-icon nzType="eye" nzTheme="outline"></span>
+                    Annexure File
+                  </a>
+                </nz-tag>
+
+                &nbsp;
+
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px blue solid;
+                    border-radius: 0px;
+                  "
+                  [nzColor]="'blue'"
+                >
+                  <a (click)="openPrintOrderModal(data)">
+                    <span nz-icon nzType="eye" nzTheme="outline"></span> Order
+                    File
+                  </a>
+                </nz-tag>
+              </span>
+              &nbsp;
+
+              <span *ngIf="data.CURRENT_STAGE_ID == 6">
+                <span
+                  style="cursor: pointer"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure to reject claim ?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="rejectByAO(data)"
+                  (nzOnCancel)="cancel()"
+                >
+                  <nz-tag
+                    style="
+                      padding: 3px;
+                      border: 1px green solid;
+                      border-radius: 5px;
+                    "
+                    [nzColor]="'green'"
+                  >
+                    Claim Reject
+                  </nz-tag>
+                </span>
+              </span>
+
+              &nbsp;
+
+              <span *ngIf="data.CURRENT_STAGE_ID == 6">
+                <span
+                  style="cursor: pointer"
+                  nz-popconfirm
+                  nzPopconfirmTitle="Are you sure want forward this claim file ?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="openApproveModalHP(data)"
+                  (nzOnCancel)="cancel()"
+                >
+                  <nz-tag
+                    style="
+                      padding: 3px;
+                      border: 1px green solid;
+                      border-radius: 5px;
+                    "
+                    [nzColor]="'green'"
+                  >
+                    Forward File
+                  </nz-tag>
+                </span>
+              </span>
+            </div>
+          </td>
+          <td align="center" nzWidth="120px">
+            <a *ngIf="data.CHECKLIST_STATUS == 'A'" (click)="viewFile(data)">
+              <span nz-icon nzType="eye" nzTheme="outline"></span> Claim File
+            </a>
+          </td>
+          <td align="center" nzWidth="100px">
+            <a (click)="openLogDrawer()">
+              <span nz-icon nzType="eye" nzTheme="outline"></span> View
+            </a>
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="250px">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="210px">
+            {{ data.CLAIM_STAGE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.CLAIM_NO }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line" nzWidth="110px">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.EMPLOYEE_CODE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="270px">
+            {{ data.EMPLOYEE_DESIGNATION }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="220px">
+            {{ data.PATIENT_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="170px">
+            {{ data.RELATION_WITH_PATIENT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.BILL_FILIING_DATE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="190px">
+            {{ data.ADMISSIBLE_AMOUNT }}
+          </td>
+
+          <td style="text-align: center" nzWidth="370px">
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT'"
+              >OPD Treatment / Test Entitled</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'IT'"
+              >Indoor Treatment</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT,IT'"
+              >OPD Treatment / Test Entitled & Indoor Treatment</span
+            >
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.TREATMENT_START_DATE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.TREATMENT_END_DATE }}
+          </td>
+
+          <td style="text-align: center" nzWidth="260px">
+            <span nz-icon *ngIf="data['ACCREDITATION'] == 'N'">NAHB</span>
+            <span nz-icon *ngIf="data['ACCREDITATION'] == 'NN'">Non NAHB</span>
+            <span nz-icon *ngIf="data['ACCREDITATION'] == 'SP'"
+              >Super Speciality</span
+            >
+          </td>
+          <td style="text-align: center" nzWidth="180px">
+            <span nz-icon *ngIf="data['CLAIM_ACCREDITATION'] == 'N'">NAHB</span>
+            <span nz-icon *ngIf="data['CLAIM_ACCREDITATION'] == 'NN'"
+              >Non NAHB</span
+            >
+            <span nz-icon *ngIf="data['CLAIM_ACCREDITATION'] == 'SP'"
+              >Super Speciality</span
+            >
+          </td>
+
+          <td style="text-align: center" nzWidth="180px">
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'E'">Empanelled</span>
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'NE'"
+              >Non Empanelled</span
+            >
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'G'">Government</span>
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.HOSPITAL_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.EMPANELLED_HOSPITAL_NAME }}
+          </td>
+
+          <td style="text-align: center" nzWidth="200px">
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'P'">Pvt </span>
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'S'">Semi Pvt</span>
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'G'">General</span>
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.NATURE_OF_TREATMENT }}
+          </td>
+          <td style="text-align: center" nzWidth="150px">
+            <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'A'">
+              Claim Accept
+            </span>
+            <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'R'"
+              >Claim Reject</span
+            >
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="300px">
+            {{ data.REJECT_REMARK }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-addclaimmaster
+      [drawerClose]="closeCallback"
+      [data]="drawerData"
+      [empID]="empID"
+      [claimID]="claimID"
+      [current]="currentStage"
+    ></app-addclaimmaster>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1200"
+  [nzVisible]="orderDrawerVisible"
+  [nzTitle]="orderDrawerTitle"
+  (nzOnClose)="orderDrawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-claim-application-drawer
+      [amountinwordsh]="amountinwordsh"
+      [amountinwords]="amountinwords"
+      [orderdata]="orderdata"
+      [drawerClose]="orderDrawerCloseCallback"
+    >
+    </app-claim-application-drawer>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1200"
+  [nzVisible]="investigationDrawerVisible"
+  [nzTitle]="investigationDrawerTitle"
+  (nzOnClose)="investigationDrawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-add-investigation-master-revised
+      [drawerClose]="investigationDrawerCloseCallback"
+      [data]="investigationDrawerData"
+      [claimData]="claimData"
+      [showlayoutDataList]="showlayoutDataList"
+      [total]="total"
+      [total1]="total1"
+    >
+    </app-add-investigation-master-revised>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzVisible]="drawerLogVisible"
+  [nzTitle]="drawerLogTitle"
+  (nzOnClose)="drawerLogClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-claim-log-drawer
+      [drawerClose]="closeLogCallback"
+      [data]="drawerLogData"
+    ></app-claim-log-drawer>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="handleCancel()">
+  <div *nzModalContent>
+    <nz-form-item>
+      <nz-form-label nzRequired nzNoColon>Forward Claim To</nz-form-label>
+
+      <nz-input-group>
+        <nz-select
+          name="ForwardTo"
+          style="width: 100%"
+          nzShowSearch
+          nzPlaceHolder="Select Hospital Type"
+        >
+          <nz-option [nzValue]="'STO'" [nzLabel]="'STO'"> </nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-item>
+  </div>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">Send</button>
+  </div>
+</nz-modal>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzVisible]="drawerClaimVisible"
+  [nzTitle]="drawerClaimTitle"
+  (nzOnClose)="drawerClaimClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <div *ngIf="drawerClaimData != undefined">
+      <div style="text-align: right; margin-bottom: 5px">
+        <button nz-button nzType="default" printSectionId="claimFile" ngxPrint>
+          Print
+        </button>
+
+        <button
+          nz-button
+          nzType="primary"
+          [nzLoading]="pdfDownload"
+          (click)="generatePDF()"
+          style="margin-left: 20px"
+        >
+          Download
+        </button>
+      </div>
+
+      <div style="height: 80vh; overflow-y: scroll">
+        <div id="claimFile" #claimFile>
+          <div style="font-family: Arial, Helvetica, sans-serif !important">
+            <div
+              style="
+                text-align: center;
+                font-weight: bold;
+                font-size: 20px;
+                margin-bottom: 10px;
+                margin-top: 10px;
+              "
+            >
+              Medical Reimbursement Claim
+            </div>
+
+            <table
+              class="table"
+              style="
+                font-size: 12px;
+                page-break-inside: avoid !important;
+                border: 1px solid black !important;
+                border-collapse: collapse !important;
+              "
+            >
+              <tr>
+                <td style="width: 5%; text-align: center !important">1.</td>
+                <td style="width: 46%">Name of the Applicant</td>
+                <td style="width: 4%; text-align: center !important">:</td>
+                <td style="width: 45%">
+                  {{ drawerClaimData.EMPLOYEE_NAME }}
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center !important">2.</td>
+                <td>Designation & Office</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  {{ drawerClaimData.EMPLOYEE_DESIGNATION }},
+                  {{ drawerClaimData.EMPLOYEE_OFFICE_NAME }}
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">3.</td>
+                <td>DDO of the Official</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  {{ drawerClaimData.DDO_OF_THE_OFFICIAL }}
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">4.</td>
+                <td>Employee Code No.</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  {{ drawerClaimData.EMPLOYEE_CODE }}
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">5.</td>
+                <td>Patient's Relationship</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span
+                    *ngIf="drawerClaimData.RELATION_WITH_PATIENT == 'Self'"
+                    >{{ drawerClaimData.RELATION_WITH_PATIENT }}</span
+                  >
+                  <span *ngIf="drawerClaimData.RELATION_WITH_PATIENT != 'Self'"
+                    >{{ drawerClaimData.RELATION_WITH_PATIENT }} ,
+                    {{ drawerClaimData.PATIENT_NAME }}</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">6.</td>
+                <td>Whether CGHS/CS (MA) Beneficiary</td>
+                <td style="text-align: center !important">:</td>
+                <td>CGHS Card No.{{ drawerClaimData.CGHS_CARD_NO }}</td>
+              </tr>
+
+              <tr>
+                <td rowspan="2" style="text-align: center !important">7.</td>
+                <td>Whether emergency treatment is availed?</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span *ngIf="drawerClaimData.EMERGENCY_TREATEMENT == 1">
+                    Yes
+                  </span>
+                  <span *ngIf="drawerClaimData.EMERGENCY_TREATEMENT == 0">
+                    No
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>If not, date of CGHS/AMA's reference.</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span *ngIf="drawerClaimData.NATURE_OF_TREATMENT == 0">
+                    <span
+                      *ngIf="
+                        drawerClaimData != undefined &&
+                        drawerClaimData.IS_PERMISSION_TAKEN_FROM_HOD !=
+                          undefined
+                      "
+                    >
+                      CGHS Reference letter dated
+                      {{ drawerClaimData.CGHS_AMA_REFERENCE_DATE }}
+                    </span>
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td rowspan="2" style="text-align: center !important">8.</td>
+                <td>Date of filing the bill.</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  {{ drawerClaimData.BILL_FILIING_DATE | date : "dd/MM/yyyy" }}
+                </td>
+              </tr>
+              <tr>
+                <td>Whether the bill is filed in time?</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.IS_PERMISSION_TAKEN_FROM_HOD != undefined
+                    "
+                  >
+                    <span *ngIf="drawerClaimData.BILL_FILLED_INTIME == 1">
+                      Yes
+                    </span>
+                    <span *ngIf="drawerClaimData.BILL_FILLED_INTIME == 0">
+                      No
+                      <span
+                        *ngIf="
+                          drawerClaimData.DELAY_CONDOLENCE_DATE != undefined &&
+                          drawerClaimData.DELAY_CONDOLENCE_DATE != null
+                        "
+                      >
+                        , Condonation letter dated
+                        {{ drawerClaimData.DELAY_CONDOLENCE_DATE }}
+                      </span>
+                    </span>
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td rowspan="2" style="text-align: center !important">9.</td>
+                <td>
+                  Name of the Hospital Diagnostic Centre (Empanelled /
+                  Non-empanelled / Government)
+                </td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span *ngIf="drawerClaimData['HOSPITAL_TYPE'] == 'E'"
+                    >Empanelled -
+                    {{ drawerClaimData.EMPANELLED_HOSPITAL_NAME }}</span
+                  >
+                  <span *ngIf="drawerClaimData['HOSPITAL_TYPE'] == 'NE'"
+                    >Non Empanelled - {{ drawerClaimData.HOSPITAL_NAME }}</span
+                  >
+                  <span *ngIf="drawerClaimData['HOSPITAL_TYPE'] == 'G'"
+                    >Government - {{ drawerClaimData.HOSPITAL_NAME }}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  If Private Hospital / Diagnostic Centre, whether
+                  permission/ex-post facto approval taken from HOD or not?
+                </td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span
+                    nz-icon
+                    *ngIf="
+                      drawerClaimData['HOSPITAL_TYPE'] == 'NE' &&
+                      drawerClaimData != undefined &&
+                      drawerClaimData.IS_PERMISSION_TAKEN_FROM_HOD != undefined
+                    "
+                  >
+                    <span
+                      *ngIf="drawerClaimData.IS_PERMISSION_TAKEN_FROM_HOD == 1"
+                    >
+                      Yes, Permission Letter Vide Date
+                      {{
+                        drawerClaimData.HOD_PERMISSION_DATE
+                          | date : "dd/MM/yyyy"
+                      }}
+                    </span>
+                    <span
+                      *ngIf="
+                        drawerClaimData.IS_PERMISSION_TAKEN_FROM_HOD == 0 &&
+                        drawerClaimData.EXPO_FACTO_PERMISSION == 0
+                      "
+                    >
+                      NA</span
+                    >
+                    <span
+                      *ngIf="
+                        drawerClaimData.IS_PERMISSION_TAKEN_FROM_HOD == 0 &&
+                        drawerClaimData.EXPO_FACTO_PERMISSION == 1
+                      "
+                    >
+                      Yes, Expost Facto Permission Letter Vide Date
+                      {{
+                        drawerClaimData.EXPO_FACTO_DATE | date : "dd/MM/yyyy"
+                      }}</span
+                    >
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">10.</td>
+                <td>Nature of treatment / tests</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  {{ drawerClaimData.NATURE_OF_TREATMENT }}
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center !important">11.</td>
+                <td>Period of treatment / tests</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  {{
+                    drawerClaimData.TREATMENT_START_DATE | date : "dd/MM/yyyy"
+                  }}
+                  To
+                  {{ drawerClaimData.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center !important">12.</td>
+                <td>Amount of reimbursement claimed</td>
+                <td style="text-align: center !important">:</td>
+                <td>₹ {{ drawerClaimData.CLAIMED_AMOUNT }}</td>
+              </tr>
+              <tr>
+                <td style="text-align: center !important">13.</td>
+                <td>Amount of reimbursement admissible</td>
+                <td style="text-align: center !important">:</td>
+                <td>₹ {{ drawerClaimData.ADMISSIBLE_AMOUNT }}</td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">14.</td>
+                <td>Advance taken, if any</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span *ngIf="drawerClaimData.IS_ADVANCE_TAKEN == 1">
+                    Yes, ₹ {{ drawerClaimData.ADVANCE_AMOUNT }}
+                  </span>
+                  <span *ngIf="drawerClaimData.IS_ADVANCE_TAKEN == 0">
+                    No
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">15.</td>
+                <td>Net amount payable/recoverable</td>
+                <td style="text-align: center !important">:</td>
+                <td>
+                  <span
+                    *ngIf="
+                      drawerClaimData.ADMISSIBLE_AMOUNT != undefined &&
+                      drawerClaimData.ADMISSIBLE_AMOUNT != null &&
+                      drawerClaimData.ADVANCE_AMOUNT != undefined &&
+                      drawerClaimData.ADVANCE_AMOUNT != null
+                    "
+                  >
+                    ₹{{
+                      drawerClaimData.ADMISSIBLE_AMOUNT -
+                        drawerClaimData.ADVANCE_AMOUNT
+                    }}
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData.ADMISSIBLE_AMOUNT != undefined &&
+                      drawerClaimData.ADMISSIBLE_AMOUNT != null &&
+                      (drawerClaimData.ADVANCE_AMOUNT == undefined ||
+                        drawerClaimData.ADVANCE_AMOUNT == null)
+                    "
+                  >
+                    {{ drawerClaimData.ADMISSIBLE_AMOUNT }}
+                  </span>
+                </td>
+              </tr>
+            </table>
+
+            <div
+              style="
+                font-size: 12px;
+                text-align: justify;
+                margin: 20px 10px;
+                page-break-inside: avoid !important;
+              "
+            >
+              a) In view of the prior permission from HOD/Emergency Certificate
+              furnished from the hospital, recommended for medical
+              reimbursement.
+              <br />
+              b) Neither any permission from the HOD is taken nor any Emergency
+              Certificate is furnished from the hospital, hence not recommended
+              for medical reimbursement.
+              <br />
+              c) In view of the treatment taken at
+              <span *ngIf="drawerClaimData['HOSPITAL_TYPE'] == 'E'"
+                >Empanelled</span
+              >
+              <span *ngIf="drawerClaimData['HOSPITAL_TYPE'] == 'NE'"
+                >Non Empanelled</span
+              >
+              <span *ngIf="drawerClaimData['HOSPITAL_TYPE'] == 'G'"
+                >Government</span
+              >
+              Lab/Hospital, recommended for medical reimbursement.
+              <br />
+              d) The patient is taking lifelong treatment, for which permission
+              has been granted vide letter dated
+              <span style="border-bottom: 1px solid grey">
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+              </span>
+              . The present bill relates to continuous treatment taken by the
+              official.
+              <br />
+              e) The admissible amount is worked out as per CGHS rate.
+            </div>
+
+            <div
+              style="
+                font-weight: bold;
+                margin: 10px 0px;
+                page-break-inside: avoid !important;
+              "
+            >
+              The checklist of the above mentioned bill is as under : -
+            </div>
+            <table
+              class="table"
+              style="
+                font-size: 12px;
+                page-break-inside: avoid !important;
+                border: 1px solid black !important;
+                border-collapse: collapse !important;
+              "
+            >
+              <tr>
+                <td style="width: 5%; text-align: center !important">1.</td>
+                <td style="width: 80%">
+                  Forwarding letter (through proper channel)
+                </td>
+                <td style="width: 15%; text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.IS_FORWARDING_LETTER == 1
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.IS_FORWARDING_LETTER == 0
+                    "
+                  >
+                    No</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center !important">2.</td>
+                <td>Medical Reimbursement Claim (MRC) form for (CGHS/CSMA)</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.MEDICAL_REIMBURSMENT_CLAIM_FORM_FOR_CGHS ==
+                        1
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.MEDICAL_REIMBURSMENT_CLAIM_FORM_FOR_CGHS ==
+                        0
+                    "
+                  >
+                    No</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">3.</td>
+                <td>Copy of CGHS Card for both beneficiary and patient</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.COPY_OF_CGHS_CARD == 'Y'
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.COPY_OF_CGHS_CARD == 'N'
+                    "
+                  >
+                    No</span
+                  >
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.COPY_OF_CGHS_CARD == 'NA'
+                    "
+                  >
+                    NA</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">4.</td>
+                <td>Discharge Card</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.DISCHARGE_CARD == 'Y'
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.DISCHARGE_CARD == 'N'
+                    "
+                  >
+                    No</span
+                  >
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.DISCHARGE_CARD == 'NA'
+                    "
+                  >
+                    NA</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">5.</td>
+                <td>
+                  Form No.3 in case the medical claim is of the official's
+                  family member for AMA Beneficiary
+                </td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.FORM_NO_3_MEDICAL_CLAIM == 'Y'
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.FORM_NO_3_MEDICAL_CLAIM == 'N'
+                    "
+                  >
+                    No</span
+                  >
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.FORM_NO_3_MEDICAL_CLAIM == 'NA'
+                    "
+                  >
+                    NA</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">6.</td>
+                <td>Final Bill in Original along with one Xerox Copy</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.FINAL_BILL_ORIGINAL_ALONG_WITH_XEROX == 1
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.FINAL_BILL_ORIGINAL_ALONG_WITH_XEROX == 0
+                    "
+                  >
+                    No</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">7.</td>
+                <td>Pay Slip of the period of treatment</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.PAYSLIP_OF_PERIOD_OF_TREATMENT == 1
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.PAYSLIP_OF_PERIOD_OF_TREATMENT == 0
+                    "
+                  >
+                    No</span
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td style="text-align: center !important">8.</td>
+                <td>Bank mandate form alongwith cancelled Cheque</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.BANK_MANDATE_FORM_ALONG_WITH_CANCELLED_CHEQUE ==
+                        1
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.BANK_MANDATE_FORM_ALONG_WITH_CANCELLED_CHEQUE ==
+                        0
+                    "
+                  >
+                    No</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center !important">9.</td>
+                <td>Prescription of medicines purchased from outside</td>
+                <td style="text-align: center !important">
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.PRESCIPTION_OF_MEDICINES_PURSCHASED_OUTSIDE ==
+                        'Y'
+                    "
+                  >
+                    Yes
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.PRESCIPTION_OF_MEDICINES_PURSCHASED_OUTSIDE ==
+                        'N'
+                    "
+                  >
+                    No</span
+                  >
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.PRESCIPTION_OF_MEDICINES_PURSCHASED_OUTSIDE ==
+                        'NA'
+                    "
+                  >
+                    NA</span
+                  >
+                </td>
+              </tr>
+            </table>
+
+            <div
+              style="
+                text-align: justify;
+                margin-top: 60px;
+                page-break-inside: avoid !important;
+              "
+            >
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;The Commissioner of
+              Income-tax (Admn. & TPS), Mumbai, may kindly peruse and consider
+              to sanction an amount of Rs.
+              {{ drawerClaimData.ADMISSIBLE_AMOUNT }}({{ amountInwords }}) to be
+              reimbursed to {{ drawerClaimData.EMPLOYEE_NAME }},
+              {{ drawerClaimData.EMPLOYEE_DESIGNATION }},
+              {{ drawerClaimData.EMPLOYEE_OFFICE_NAME }}. Sanction Order (2
+              copies) is put up for signature, please.
+            </div>
+
+            <div
+              style="
+                page-break-inside: avoid !important;
+                display: inline-flex;
+                width: 100% !important;
+                margin-top: 60px;
+              "
+            >
+              <div style="width: 60% !important">Prepared & verified by :</div>
+              <div style="width: 40% !important">Checked by :</div>
+            </div>
+
+            <div
+              style="
+                page-break-inside: avoid !important;
+                display: inline-flex;
+                width: 100% !important;
+                margin-top: 60px;
+              "
+            >
+              <div style="width: 60% !important">
+                Jt.CIT(HQ)Personnel,Mumbai.
+              </div>
+              <div style="width: 40% !important">ITO Welfare & SG, Mumbai.</div>
+            </div>
+
+            <div
+              style="
+                page-break-inside: avoid !important;
+                display: inline-flex;
+                width: 100% !important;
+                margin-top: 60px;
+              "
+            >
+              <div style="width: 100% !important; font-weight: bold">
+                CIT(Admin & TPS)Personnel,Mumbai.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal
+  nzWidth="380px"
+  [(nzVisible)]="isApproveVisible"
+  nzTitle="Transfer File "
+  [nzFooter]="approveFooter"
+  [nzContent]="approveModalContentHP"
+  (nzOnCancel)="handleApproveCancel()"
+>
+  <ng-template #approveModalContentHP>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item
+            style="
+              display: inline-block;
+              margin-bottom: 5px;
+              width: -webkit-fill-available;
+              padding: 0px 10px;
+            "
+          >
+            <nz-form-label nzRequired nzNoColon> Select Name </nz-form-label>
+            <nz-form-control nzErrorTip="Please Select Name">
+              <nz-select
+                nzShowSearch
+                name="APPROVER_ID"
+                [(ngModel)]="USER_ID"
+                nzAllowClear
+                nzPlaceHolder="Select Name"
+                style="width: 300px"
+              >
+                <nz-option
+                  *ngFor="let item of users"
+                  [nzLabel]="item.NAME"
+                  [nzValue]="item.ID"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item
+            style="
+              display: inline-block;
+              margin-bottom: 5px;
+              width: -webkit-fill-available;
+              padding: 0px 10px;
+            "
+          >
+            <nz-form-label nzNoColon>Remark</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Valid Remark"
+            >
+              <textarea
+                nz-input
+                rows="2"
+                name="remark"
+                placeHolder="Enter Remark"
+                [(ngModel)]="REMARK"
+                maxlength="500"
+              >
+              </textarea>
+            </nz-form-control>
+
+            <span *ngIf="REMARK" style="font-size: 10px; color: red">
+              {{ REMARK.length }}/ 500
+            </span>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #approveFooter>
+    <button nz-button nzType="default" (click)="handleApproveCancel()">
+      Cancel
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isApproveModalConfirmLoading"
+      (click)="handleApproveOk()"
+    >
+      Send
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="AnnexureVisible"
+  (nzOnCancel)="AnnexureCancel()"
+  [nzWidth]="850"
+  [nzContent]="printAnnexureModalContent"
+  [nzTitle]="'Annexure File'"
+  [nzFooter]="printAnnexureModalFooter"
+>
+  <ng-template #printAnnexureModalContent>
+    <div style="height: 450px; overflow: auto">
+      <div id="printAnnexureModal">
+        <div style="font-family: Arial, Helvetica, sans-serif !important">
+          <span style="margin-left: 45%"><b>ANNEXURE 'A'</b></span>
+
+          <table style="overflow: none; width: 100%">
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b
+                    >NAME :
+
+                    <span *ngIf="drawerClaimData != undefined">
+                      {{ drawerClaimData.EMPLOYEE_NAME }}
+                    </span></b
+                  >
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>BASIC PAY</b>
+                </td>
+
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="drawerClaimData != undefined">
+                    {{ drawerClaimData.GRADE_PAY }}
+                  </span>
+                </td>
+              </tr>
+              <tr style="width: 30px">
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                  rowspan="2"
+                >
+                  <b>
+                    Designation :
+                    <span *ngIf="drawerClaimData != undefined">
+                      {{ drawerClaimData.EMPLOYEE_DESIGNATION }},
+                      {{ drawerClaimData.EMPLOYEE_OFFICE_NAME }}
+                    </span></b
+                  >
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>CGHS CARD NO :</b>
+                </td>
+
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="drawerClaimData != undefined">
+                    {{ drawerClaimData.CGHS_CARD_NO }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>EMPLOYEE CODE</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <span *ngIf="drawerClaimData != undefined">
+                    {{ drawerClaimData.EMPLOYEE_CODE }}
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b
+                    >PATIENT :
+                    <span *ngIf="drawerClaimData != undefined">
+                      {{ drawerClaimData.RELATION_WITH_PATIENT }}
+                      <span
+                        *ngIf="drawerClaimData.RELATION_WITH_PATIENT != 'Self'"
+                      >
+                        - {{ drawerClaimData.PATIENT_NAME }}
+                      </span>
+                    </span>
+                    <!-- <span   *ngIf="drawerClaimData != undefined">
+                    {{ drawerClaimData.RELATION_WITH_PATIENT }} -
+                    {{ drawerClaimData.PATIENT_NAME }} - {{ drawerClaimData.CGHS_CARD_NO }}
+                  </span> -->
+                  </b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 10px;
+                  "
+                >
+                  <b></b>
+                </td>
+
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 10px;
+                  "
+                ></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table style="overflow: none; width: 100%">
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>NATURE OF TREATMENT</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <span *ngIf="drawerClaimData != undefined">
+                    : {{ drawerClaimData.NATURE_OF_TREATMENT }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>PERIOD</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <span *ngIf="drawerClaimData != undefined">
+                    :
+                    {{
+                      drawerClaimData.TREATMENT_START_DATE | date : "dd/MM/yyyy"
+                    }}
+                    To
+                    {{
+                      drawerClaimData.TREATMENT_END_DATE | date : "dd/MM/yyyy"
+                    }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>NAME OF HOSPITAL</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.HOSPITAL_TYPE == 'E'
+                    "
+                  >
+                    : {{ drawerClaimData.EMPANELLED_HOSPITAL_NAME }} ({{
+                      drawerClaimData.HOSPITAL_ADDRESS
+                    }})
+                  </span>
+                  <span
+                    *ngIf="
+                      drawerClaimData != undefined &&
+                      drawerClaimData.HOSPITAL_TYPE != 'E'
+                    "
+                  >
+                    : {{ drawerClaimData.HOSPITAL_NAME }} ({{
+                      drawerClaimData.HOSPITAL_ADDRESS
+                    }})
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>EMERGENCY OR NOT</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <span *ngIf="drawerClaimData != undefined">
+                    <span
+                      nz-col
+                      nzSpan="24"
+                      *ngIf="drawerClaimData.EMERGENCY_TREATEMENT == 1"
+                      >EMERGENCY</span
+                    >
+                    <span
+                      nz-col
+                      nzSpan="24"
+                      *ngIf="drawerClaimData.EMERGENCY_TREATEMENT == 0"
+                      >NO</span
+                    >
+                  </span>
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>REFERRED RATE LIST</b>
+                </td>
+                <td
+                  colspan="3"
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  REFRED_RATE_LIST
+                  <!-- : {{ REFRED_RATE_LIST }} -->
+                  <!-- : {{ this.REFRED_RATE_LIST }} -->
+                </td>
+              </tr>
+              <!-- </tbody>
+        </table>
+        <table style="overflow: none; width: 100%">
+          <tbody> -->
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>PARTICULARS</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>SCHEDULE NO.</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>CLAIMED AMOUNT</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>ADMISSIBLE AMOUNT</b>
+                </td>
+              </tr>
+
+              <tr *ngFor="let data of showlayoutDataList; let i = index">
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  {{ data.PARTICULARS }}
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  {{ data["CODE_NO"] }}
+                  <span
+                    *ngIf="
+                      data['SHORT_CODE'] != undefined &&
+                      data['SHORT_CODE'] != null &&
+                      data['SHORT_CODE'] != ''
+                    "
+                    >({{ data["SHORT_CODE"] }})</span
+                  >
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  {{ data.CLAIMED_AMOUNT }}
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  {{ data.ADMISSIBLE_AMOUNT }}
+                </td>
+              </tr>
+
+              <tr>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <b>Total</b>
+                </td>
+                <td style="border: 1px solid black; padding-left: 6px"></td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <b>{{ total }}</b>
+                </td>
+                <td
+                  style="
+                    border: 1px solid black;
+                    padding-left: 6px;
+                    font-size: 11px;
+                  "
+                >
+                  <b>{{ total1 }}</b>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br />
+          <div nz-col nzSpan="24" *ngIf="drawerClaimData != undefined">
+            {{ drawerClaimData.ANNEXURE_REMARK }}
+          </div>
+          <br />
+          <div style="font-size: 13px">
+            <span> Prepared By:</span>
+          </div>
+          <div style="margin-top: 30px; font-size: 13px">
+            <span> Checked By:</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #printAnnexureModalFooter>
+    <button nz-button nzType="default" (click)="AnnexureCancel()">Close</button>
+
+    <button
+      nz-button
+      nzType="default"
+      printSectionId="printAnnexureModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button nz-button nzType="primary" [nzLoading]="pdfDownload">
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Sanction Order'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="printOrderModal">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 30px;
+              font-family: Arial, Helvetica, sans-serif !important;
+            "
+          >
+            <div>
+              <div nz-row>
+                <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                  <div style="text-align: right">
+                    <img
+                      src="assets/govtOfIndia.png"
+                      alt=""
+                      height="130px"
+                      width="100px"
+                    />
+                  </div>
+                </div>
+
+                <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                  <div
+                    style="width: 100%; text-align: center; font-weight: bold"
+                  >
+                    <div>भारत सरकार</div>
+                    <div style="text-transform: uppercase">
+                      Government Of India
+                    </div>
+                    <div>
+                      कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई
+                    </div>
+                    <div style="text-transform: uppercase">
+                      Office Of The Commissioner of Income-Tax (Admin, & TPS)
+                    </div>
+                    <div>
+                      तीसरी मंजिल, आयकर भवन, महर्षी कर्वे रोड, मुंबई -20
+                    </div>
+                    <div style="text-transform: uppercase">
+                      3<sup style="text-transform: lowercase">rd</sup> Floor,
+                      aayakar bhavan, Maharshi Karve Road, Mumbai-20
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                style="
+                  width: 100%;
+                  border: 1px solid black;
+                  padding: 10px;
+                  margin-top: 10px;
+                  font-size: 13px;
+                "
+              >
+                <div nz-row>
+                  <div nz-col nzSpan="12">{{ orderdata.FILE_NO }}</div>
+
+                  <div nz-col nzSpan="12" style="text-align: right">
+                    दिनांक
+                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <!-- {{ orderdata.ORDER_DATE | date : "dd MMM yyyy" }} -->
+                </div>
+              </div>
+
+              <div
+                style="
+                  text-align: center;
+                  margin-top: 20px;
+                  margin-bottom: 10px;
+                  font-size: 13px;
+                "
+              >
+                <b>स्वीकृति आदेश/ SANCTION ORDER</b>
+              </div>
+              <div style="font-size: 14px !important">
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{ orderdata.EMPLOYEE_NAME_HN }} {{ orderdata.DESIGNATION }},
+                  को उनके द्वारा दिनांक
+                  {{
+                    orderdata.TREATMENT_START_DATE | date : "dd MMM yyyy"
+                  }}&nbsp; से
+                  {{
+                    orderdata.TREATMENT_END_DATE | date : "dd MMM yyyy"
+                  }}&nbsp; को
+                  {{ orderdata.HOSPITAL_NAME_HN }}
+
+                  में
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father'"
+                      >उनके पिता</span
+                    >
+                    <span
+                      *ngIf="orderdata.RELATION_WITH_PATIENT == 'Grand-Father'"
+                      >उनके दादाजी</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Wife'"
+                      >उनकी पत्नी</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Husband'"
+                      >उनके पती</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Son'"
+                      >उनका बेटा</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Daughter'"
+                      >उनकी बेटी</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Sister'"
+                      >उनकी बहन</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Brother'"
+                      >उनके भाई</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'"
+                      >उनकी मां</span
+                    >
+                    <span
+                      *ngIf="orderdata.RELATION_WITH_PATIENT == 'Grand-Mother'"
+                      >उनकी दादी मां</span
+                    >
+
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Mother'">
+                      &nbsp;{{ orderdata.PATIENT_NAME_HN }} के</span
+                    >
+                    <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'">
+                      &nbsp;{{ orderdata.PATIENT_NAME_HN }} कि</span
+                    >
+                  </span>
+
+                  &nbsp;
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                    स्वयं कि</span
+                  >
+                  {{ orderdata.NATURE_OF_TREATMENT }}
+                  के इलाज के लिए खर्च की गई राशि, जो
+                  <b
+                    >रुपये {{ orderdata.ADMISSIBLE_AMOUNT }}&nbsp; ({{
+                      amountinwordsh
+                    }})</b
+                  >
+                  से अधिक नहीं है, को सीजीएचएस दर के अनुसार चिकित्सा व्यय की
+                  प्रतिपूर्ती के लिए स्वीकृति प्रदान की जाती है। यह मंजूरी
+                  स्वास्थ्य एवं परिवार कल्याण मंत्रालय, भारत सरकार द्वारा जारी
+                  दिनांक 18.03.1992 के कार्यालय ज्ञापन सं.
+                  एस-11012/1/91/सीजीएचएस (पी) खंड 1 के माध्यम से मुझे प्रदत्त
+                  शक्तियो का प्रयोग करते हुए जारी की जाती है।
+                </p>
+
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sanction is hereby
+                  accorded for the reimbursement of medical expenses as per CGHS
+                  rate for an amount not exceeding
+                  <b
+                    >Rs {{ orderdata.ADMISSIBLE_AMOUNT }}&nbsp; ({{
+                      amountinwords
+                    }})</b
+                  >
+                  incurred by {{ orderdata.EMPLOYEE_NAME }}&nbsp;,
+                  {{ orderdata.DESIGNATION }}
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                    for his/her {{ orderdata.RELATION_WITH_PATIENT }}
+                    {{ orderdata.PATIENT_NAME }}</span
+                  >
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                    Self</span
+                  >
+                  &nbsp; for&nbsp;{{ orderdata.NATURE_OF_TREATMENT }}, at
+                  <span
+                    *ngIf="
+                      orderdata.HOSPITAL_ID != undefined ||
+                      orderdata.HOSPITAL_ID != null
+                    "
+                  >
+                    {{ orderdata.EMPANELLED_HOSPITAL_NAME }}</span
+                  >
+                  <span
+                    *ngIf="
+                      orderdata.HOSPITAL_ID == undefined ||
+                      orderdata.HOSPITAL_ID == null
+                    "
+                  >
+                    {{ orderdata.HOSPITAL_NAME }}
+                  </span>
+                  from
+                  {{ orderdata.TREATMENT_START_DATE | date : "dd MMM yyyy" }} to
+                  {{ orderdata.TREATMENT_END_DATE | date : "dd MMM yyyy" }}.
+                  This sanction is issued in exercise of the powers vested in me
+                  vide Office Memorandum No.S-11012/1/91/CGHS(P) Vol. | dated
+                  18.03.1992 issued by the Ministry of Health & Family Welfare ,
+                  Government of India.
+                </p>
+
+                <p
+                  *ngIf="
+                    orderdata.EMERGENCY_TREATEMENT == 1 &&
+                    orderdata.DOCTOR_EMERGENCY_CERTIFICATE_TAKEN == 1 &&
+                    orderdata.IS_HOSPITAL_EMPLANELLED == 0
+                  "
+                >
+                  यह आपात स्थिति का मामला था, जिसके लिए तत्काल उपचार की आवश्यकता
+                  थी अतः गैर-पैनलबद्ध अस्पताल में भर्ती कराया गया था|
+                </p>
+
+                <p
+                  *ngIf="
+                    orderdata.EMERGENCY_TREATEMENT == 1 &&
+                    orderdata.DOCTOR_EMERGENCY_CERTIFICATE_TAKEN == 1 &&
+                    orderdata.IS_HOSPITAL_EMPLANELLED == 0
+                  "
+                >
+                  It was a case of emergency , necessitating immediate treatment
+                  and was asmitted in a non-empanelled hospital.
+                </p>
+
+                <p
+                  *ngIf="
+                    (orderdata.EXPO_FACTO_PERMISSION == 1 &&
+                      orderdata.EMERGENCY_TREATEMENT == 1 &&
+                      orderdata.DOCTOR_EMERGENCY_CERTIFICATE_TAKEN == 0) ||
+                    (orderdata.EXPO_FACTO_PERMISSION == 1 &&
+                      orderdata.EMERGENCY_TREATEMENT == 0 &&
+                      orderdata.REFERENCE_FORM_CGHS_AMA_TAKEN == 1 &&
+                      orderdata.IS_HOSPITAL_EMPLANELLED == 0 &&
+                      orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 0) ||
+                    (orderdata.EXPO_FACTO_PERMISSION == 1 &&
+                      orderdata.REFERENCE_FORM_CGHS_AMA_TAKEN == 0 &&
+                      orderdata.EMERGENCY_TREATEMENT == 0) ||
+                    orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 1
+                  "
+                >
+                  दिनांक
+                  <span *ngIf="orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 0">
+                    {{ orderdata.EXPO_FACTO_DATE }}
+                  </span>
+                  <span *ngIf="orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 1">
+                    {{ orderdata.HOD_PERMISSION_DATE }}
+                  </span>
+                  के पत्र द्वारा उपरोक्त उपचार के लिये कार्योत्तर अनुमति प्रदान
+                  की गई है।
+                </p>
+
+                <p
+                  *ngIf="
+                    (orderdata.EXPO_FACTO_PERMISExpostSION == 1 &&
+                      orderdata.EMERGENCY_TREATEMENT == 1 &&
+                      orderdata.DOCTOR_EMERGENCY_CERTIFICATE_TAKEN == 0) ||
+                    (orderdata.EXPO_FACTO_PERMISSION == 1 &&
+                      orderdata.EMERGENCY_TREATEMENT == 0 &&
+                      orderdata.REFERENCE_FORM_CGHS_AMA_TAKEN == 1 &&
+                      orderdata.IS_HOSPITAL_EMPLANELLED == 0 &&
+                      orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 0) ||
+                    (orderdata.EXPO_FACTO_PERMISSION == 1 &&
+                      orderdata.REFERENCE_FORM_CGHS_AMA_TAKEN == 0 &&
+                      orderdata.EMERGENCY_TREATEMENT == 0) ||
+                    orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 1
+                  "
+                >
+                  <span *ngIf="orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 0">
+                    Expost Facto Permission for the above treatment has been
+                    granted vide letter dated {{ orderdata.EXPO_FACTO_DATE }}
+                  </span>
+                  <span *ngIf="orderdata.IS_PERMISSION_TAKEN_FROM_HOD == 1">
+                    Permission for the above treatement has been granted vide
+                    letter dated {{ orderdata.HOD_PERMISSION_DATE }}
+                  </span>
+                </p>
+                <!-- <p
+                *ngIf="
+                  orderdata.IS_BILL_FILLED_IN_TIME == 1 &&
+                  orderdata.IS_HOSPITAL_EMPLANELLED == 1 &&
+                  orderdata.EXPO_FACTO_PERMISSION == 1
+                "
+              >
+                दिनांक 10/01/2023 के पत्र द्वारा उपरोक्त उपचार के लिए अनुमति
+                प्रदान की गई है।
+              </p>
+              <p
+                *ngIf="
+                  orderdata.IS_BILL_FILLED_IN_TIME == 1 &&
+                  orderdata.IS_HOSPITAL_EMPLANELLED == 1 &&
+                  orderdata.EXPO_FACTO_PERMISSION == 1
+                "
+              >
+                Permission for the above treatment has been granted vide letter
+                dated 10/01/2023
+              </p> -->
+
+                <p
+                  *ngIf="
+                    orderdata.EMERGENCY_TREATEMENT == 1 &&
+                    orderdata.DOCTOR_EMERGENCY_CERTIFICATE_TAKEN == 1 &&
+                    orderdata.IS_HOSPITAL_EMPLANELLED == 1
+                  "
+                >
+                  यह आपात स्थिति का मामला था जिसमें तत्काल प्रवेश की आवश्यकता थी
+                  और उसे पैनलबद्ध अस्पताल में भर्ती कराया गया था.
+                </p>
+                <p
+                  *ngIf="
+                    orderdata.EMERGENCY_TREATEMENT == 1 &&
+                    orderdata.DOCTOR_EMERGENCY_CERTIFICATE_TAKEN == 1 &&
+                    orderdata.IS_HOSPITAL_EMPLANELLED == 1
+                  "
+                >
+                  It was a case of Emergency necessitating immediate admission
+                  and was admitted in empanelled hospital.
+                </p>
+                <p>
+                  उक्त व्यथ को वित्तीय वर्ष 2022-2023 के लिए विभाग को आबंटित
+                  मुख्य शीर्ष "2021-चिकित्सा" के अंतर्गत अनुदान के नामे डाला
+                  जाए।
+                </p>
+
+                <p>
+                  The above expenditure should be debited to the grant under
+                  major head "2021" Medical Allotment to the Department for the
+                  <b>F.Y 2022-2023</b>
+                </p>
+
+                <p>
+                  हिंदी और अंग्रेजी संस्करण में किसी भी भिन्नता के मामले में
+                  आदेश का अंग्रेजी संस्करण मान्य होगा।
+                </p>
+
+                <p>
+                  The English version of the order will prevail in case of any
+                  variation in Hindi & English version
+                </p>
+
+                <div style="margin-top: 100px; font-size: 13px">
+                  <div nz-row>
+                    <div nz-col nzSpan="15"></div>
+
+                    <div nz-col nzSpan="9" style="text-align: center">
+                      <div>(विनय सिन्हा)</div>
+                      <div style="font-weight: bold">
+                        आयकर आयुक्त (प्रशासन एवं टीपीएस) , मुंबई
+                      </div>
+                    </div>
+                  </div>
+
+                  <div nz-row>
+                    <div nz-col nzSpan="15"></div>
+
+                    <div nz-col nzSpan="9" style="text-align: center">
+                      <div>(Vinay Sinha)</div>
+                      <div style="font-weight: bold; font-size: 13px">
+                        Commissioner Of Income Tax(Admin & TPS),Mumbai.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="page-break-inside: avoid !important; font-size: 13px"
+                >
+                  <div style="margin-top: 50px"><b>प्रतिलिपी/Copy to:</b></div>
+                  <div style="margin-top: 20px">
+                    1) डीडीओ,कल्याण और एसजी,मुंबई (2 प्रतियां) फॉर्म एमआरसी
+                    (एस), अस्पताल रसीद, डिस्चार्ज सारांश आदि के साथ|
+                  </div>
+                  <div>
+                    1) DDO , Welfare & SG , Mumbai (2 copies) alongwith Form
+                    MRC(S) , hospital receipts , discharge summary etc.
+                  </div>
+                  <div style="margin-top: 20px">
+                    2) ZAO , प्री-चेक युनिट, मुंबई - चेक
+                    <b> {{ orderdata.EMPLOYEE_NAME_HN }}</b> के पक्ष में तैयार
+                    किया जा सकता है। |
+                  </div>
+                  <div>
+                    2) ZAO , Pre-check unit , Mumbai - Cheque may be drawn in
+                    favour of {{ orderdata.EMPLOYEE_NAME }}.
+                  </div>
+
+                  <div style="margin-top: 20px">
+                    3)<b>
+                      {{ orderdata.EMPLOYEE_NAME_HN }},
+                      {{ orderdata.DESIGNATION }}
+                      {{ orderdata.EMPLOYEE_OFFICE_NAME }},</b
+                    >
+                    स्वीकार्य राशि की गणना की प्रति के साथ |
+                  </div>
+
+                  <div>
+                    3)
+                    <b
+                      >{{ orderdata.EMPLOYEE_NAME }} ,
+                      {{ orderdata.DESIGNATION }}. ,
+                    </b>
+                    along with copy of working of admissible amount
+                  </div>
+
+                  <div style="margin-top: 100px">
+                    <div nz-row>
+                      <div nz-col nzSpan="15"></div>
+
+                      <div nz-col nzSpan="9" style="text-align: center">
+                        <div style="font-weight: bold">(सुहास एस सालसकर)</div>
+                        <div>आयकर अधिकारी (मुख्‍यालय)</div>
+                        <div>कल्याण और कर्मचारी शिकायत, मुंबई</div>
+                      </div>
+                    </div>
+
+                    <div nz-row>
+                      <div nz-col nzSpan="15"></div>
+
+                      <div nz-col nzSpan="9" style="text-align: center">
+                        <div style="font-weight: bold">(Suhas S. Salaskar)</div>
+                        <div>Income Tax Officer(HQ)</div>
+                        <div>Welfare & S.G, Mumbai</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      printSectionId="printOrderModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button nz-button nzType="primary" [nzLoading]="pdfDownload">
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  nzWidth="380px"
+  [(nzVisible)]="isRejectByAOVisible"
+  nzTitle="Reject Claim File "
+  [nzFooter]="salesFooter"
+  [nzContent]="rejectModalContentHP"
+  (nzOnCancel)="handleRejectCancel()"
+>
+  <ng-template #rejectModalContentHP>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <!-- <div nz-col nzSpan="24">
+        <nz-form-item
+          style="
+            display: inline-block;
+            margin-bottom: 5px;
+            width: -webkit-fill-available;
+            padding: 0px 10px;
+          "
+        >
+          <nz-form-label nzRequired nzNoColon> Select AO </nz-form-label>
+          <nz-form-control nzErrorTip="Please Select AO">
+            <nz-select
+              nzShowSearch
+              name="APPROVER_ID"
+              [(ngModel)]="AO_ID"
+              nzAllowClear
+              nzPlaceHolder="Select AO"
+              style="width: 300px"
+            >
+              <nz-option
+                *ngFor="let item of users"
+                [nzLabel]="item.NAME"
+                [nzValue]="item.ID"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div> -->
+
+        <div nz-col nzSpan="24">
+          <nz-form-item
+            style="
+              display: inline-block;
+              margin-bottom: 5px;
+              width: -webkit-fill-available;
+              padding: 0px 10px;
+            "
+          >
+            <nz-form-label nzRequired nzNoColon>Remark</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Valid Remark"
+            >
+              <textarea
+                nz-input
+                rows="2"
+                name="remark"
+                placeHolder="Enter Remark"
+                [(ngModel)]="REMARK"
+                maxlength="500"
+                required
+              >
+              </textarea>
+            </nz-form-control>
+
+            <span *ngIf="REMARK" style="font-size: 10px; color: red">
+              {{ REMARK.length }}/ 500
+            </span>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #salesFooter>
+    <button nz-button nzType="default" (click)="handleRejectCancel()">
+      Cancel
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isApproveModalConfirmLoading"
+      (click)="handleRejectOk()"
+    >
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>

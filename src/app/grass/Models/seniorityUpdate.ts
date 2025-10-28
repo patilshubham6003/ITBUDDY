@@ -1,0 +1,10 @@
+export class seniorityUpdate {
+  MONTH: any
+  YEAR: any
+  RESIDENCE_TYPE: any
+
+  PREFERANCE_ADDED_DATETIME: any
+
+  PREFERANCE_PRINT_DATETIME: any
+  PREFERANCE_UPLOAD_DATETIME: any
+}

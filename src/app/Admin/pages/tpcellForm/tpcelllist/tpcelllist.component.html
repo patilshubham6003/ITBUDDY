@@ -1,0 +1,26 @@
+<div nz-row>
+    <div nz-col nzSpan="4"></div>
+    <div nz-col nzSpan="16">
+        <nz-card style="background-color: #fafafa;text-align: center;margin-top: 100px;">
+            <div class="row">
+                <div class="col-12" style="padding: 0px">
+                    <button nz-button nzType="primary" (click)="add()" style="border-radius: 12px;">
+                        Add Employee
+                    </button>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <div nz-col nzSpan="4"></div>
+</div>
+<nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '12px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="450" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <app-tpcelldrawer *nzDrawerContent [drawerClose]="closeCallback" [isdrawerVisible]="drawerVisible"
+        [isEmailVisible]="isEmailVisible" [isEmpCodevisible]="isEmpCodevisible" [data]="drawerData"
+        [showEmployeeSearch]="showEmployeeSearch"></app-tpcelldrawer>
+</nz-drawer>

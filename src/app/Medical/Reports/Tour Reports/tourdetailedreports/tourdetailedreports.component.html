@@ -1,0 +1,239 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">Tour Detailed Summary Report</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+            (keyup)="keyup($event)"
+            nz-input
+            placeholder="Search"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Inspector Name</nz-form-label>
+                <nz-select
+                  name="InspectorName"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  nzPlaceHolder="Select Inspector Name"
+                  (ngModelChange)="selectinspectorevent($event)"
+                  [(ngModel)]="type"
+                >
+                  <nz-option
+                    *ngFor="let iname of inspectorname"
+                    [nzValue]="iname.ID"
+                    [nzLabel]="iname.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item>
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      [nzSize]="'small'"
+      (nzPageIndexChange)="search()"
+      [nzScroll]="{ x: '1800px', y: '55vh' }"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th
+            nzWidth="170px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'INSPECTOR_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Inspector Name
+          </th>
+          <th
+            nzWidth="230px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DESIGNATION"
+            [nzSortFn]="true"
+          >
+            Employee Designation
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="BASIC_PAY"
+            [nzSortFn]="true"
+          >
+            Basic Pay
+          </th>
+
+          <th
+            nzWidth="220px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="HEADQUARTERS_NAME"
+            [nzSortFn]="true"
+          >
+            Office Name
+          </th>
+
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="MOBILE_NO"
+            [nzSortFn]="true"
+          >
+            Mobile No
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="GRADE_PAY_LEVEL"
+            [nzSortFn]="true"
+          >
+            Gradepay Level
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="white-space: pre-line" align="center">
+            {{ data["INSPECTOR_NAME"] }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DESIGNATION }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.BASIC_PAY }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.HEADQUARTERS_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.GRADE_PAY_LEVEL }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

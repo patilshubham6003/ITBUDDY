@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "city_name": "Mumbai",
+        "name": "Apex Hospital",
+        "address": "Vaishali Heights, Chandavakar Road, Borivali (W), Mumbai- 400 092, 022-42457000",
+        "contacts": "022-42457000",
+        "emails": "tanvi@apexhospitals.in, networkinghead@apexhospitals.in",
+        "nodalofficer": "Vikas Visshwakarma Mahek",
+        "mobilenos": "7303414204, 9320867015",
+        "accreditation": "Non-NABH",
+        "empanelledfor": "All",
+        "memorandumid": "ABC456",
+        "IS_ACTIVE": true
+    },
+    {
+        "id": 2,
+        "city_name": "Mumbai",
+        "name": "Ashtvinayak Hospital & Super Speciality Hospital",
+        "address": "Plot No. 10, Sector-6, Khanda Colony,Near Khandeswar Lake, New Panvel (W), Navi Mumbai - 410206",
+        "contacts": "022-27453681022-27453683",
+        "emails": "asthvinayakhospital@gmail.com",
+        "nodalofficer": "Dr Manoj Verma, Dr Balaji Janrao",
+        "mobilenos": "9769541567, 9920130129",
+        "accreditation": "Non-NABH",
+        "empanelledfor": "All",
+        "memorandumid": "ABC457",
+        "IS_ACTIVE": true
+    },
+    {
+        "id": 3,
+        "city_name": "Mumbai",
+        "name": "Balaji Hospital",
+        "address": "Victoria Road, Cross Lane No.Iii, Byculla(E) Mumbai-400027",
+        "contacts": "022-23740000",
+        "emails": "balajihospital@gmail.com",
+        "nodalofficer": "Sanjay",
+        "mobilenos": "9987506082, 986956331",
+        "accreditation": "Non-NABH",
+        "empanelledfor": "All",
+        "memorandumid": "ABC457",
+        "IS_ACTIVE": true
+    },
+    {
+        "id": 4,
+        "city_name": "Mumbai",
+        "name": "Niramaya Hospital",
+        "address": "Plot No 5A, Sector - 4, Next to Balbharti School,Kharghar, Navi Mumbai - 510 210",
+        "contacts": "022-27747761, 022-27747762",
+        "emails": "niramayakharghar@gmail.com",
+        "nodalofficer": "Dr Amit Thadhani, Ms. Shivali",
+        "mobilenos": "9323367776, 9323367776",
+        "accreditation": "Non-NABH",
+        "empanelledfor": "All",
+        "memorandumid": "ABC458",
+        "IS_ACTIVE": true
+    },
+    {
+        "id": 5,
+        "city_name": "Mumbai",
+        "name": "Shantiniketan Hospital",
+        "address": "E- Bldg. Ground Floor, Shantiniketan, L.B.S. Marg, Ghatkopar (West), Mumbai 400 086",
+        "contacts": "022-25001005,  022-25001024 ",
+        "emails": "shantiniketanhospital@gmail.com",
+        "nodalofficer": "Vikas Visshwakarma Mahek",
+        "mobilenos": "7303414204, 9320867015",
+        "accreditation": "Non-NABH",
+        "empanelledfor": "All",
+        "memorandumid": "ABC456",
+        "IS_ACTIVE": true
+    }
+]

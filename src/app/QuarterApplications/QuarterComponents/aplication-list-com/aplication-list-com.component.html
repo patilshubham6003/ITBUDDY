@@ -1,0 +1,288 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-col nzXs="20" nzSm="20" nzMd="16" nzLg="16" nzXl="8">
+    <b>
+      <div class="formname">{{ formTitle }}</div>
+    </b>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8" nzXl="16" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzType="primary" name="olink" (click)="generateOpenModal()" nzJustify="end">
+          <i nz-icon nzType="link"></i>Generate Link
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="searchdata" nz-input placeholder="Search Records" [(ngModel)]="searchText"
+            (keyup)="keyup($event)" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch id="searchBtn">
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item style="margin-right: 0px">
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>New Quarter
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)" [nzSize]="'small'" [nzScroll]="{ x: '3400px', y: '360px' }"
+      style="white-space: inherit; padding-top: 0px">
+      <thead>
+        <tr>
+          <th nzWidth="35px" nzAlign="center" nzLeft><b>Action</b></th>
+          <th nzWidth="80px" [nzColumnKey]="'BUILDING_NAME'" [nzSortFn]="true" nzAlign="center">
+            <b>Building Name</b>
+          </th>
+          <th nzWidth="100px" [nzColumnKey]="'NAME'" [nzSortFn]="true" nzAlign="center">
+            <b>Name</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'FLAT_ID'" [nzSortFn]="true" nzAlign="center">
+            <b>Quarter</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'FLOOR_ID'" [nzSortFn]="true" nzAlign="center">
+            <b>Floor</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'MOBILE_NO'" [nzSortFn]="true" nzAlign="center">
+            <b>Mobile No.</b>
+          </th>
+          <th nzWidth="90px" [nzColumnKey]="'EMAIL_ID'" [nzSortFn]="true" nzAlign="center">
+            <b> Email ID</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'GENDER'" [nzSortFn]="true" nzAlign="center">
+            <b>Gender</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'DOB'" [nzSortFn]="true" nzAlign="center">
+            <b>Date Of Birth</b>
+          </th>
+          <th nzWidth="70px" [nzColumnKey]="'CAST'" [nzSortFn]="true" nzAlign="center">
+            <b>Caste</b>
+          </th>
+          <th nzWidth="90px" [nzColumnKey]="'DESIGNATION_NAME'" [nzSortFn]="true" nzAlign="center">
+            <b>Designation</b>
+          </th>
+          <th nzWidth="60px" [nzColumnKey]="'GRADE_PAY_LEVEL'" [nzSortFn]="true" nzAlign="center">
+            <b>Grade Pay Level</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'BASIC_PAY'" [nzSortFn]="true" nzAlign="center">
+            <b>Basic Pay</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'EMPLOYEE_CODE'" [nzSortFn]="true" nzAlign="center">
+            <b>Employee Code</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'JOINING_DATE'" [nzSortFn]="true" nzAlign="center">
+            <b>Joining Date</b>
+          </th>
+          <th nzWidth="60px" [nzColumnKey]="'ALLOTMENT_DATE_TIME'" [nzSortFn]="true" nzAlign="center">
+            <b>Allotment Date</b>
+          </th>
+          <th nzWidth="70px" [nzColumnKey]="'DATE_OF_PRIORITY'" [nzSortFn]="true" nzAlign="center">
+            <b>Date Of Priority</b>
+          </th>
+
+          <th nzWidth="70px" [nzColumnKey]="'PRESENT_PAY_LEVEL_DATE'" [nzSortFn]="true" nzAlign="center">
+            <b>Present Pay Level Date</b>
+          </th>
+          <th nzWidth="60px" [nzColumnKey]="'RETIREMENT_DATE'" [nzSortFn]="true" nzAlign="center">
+            <b>Retirement Date</b>
+          </th>
+          <th nzWidth="70px" [nzColumnKey]="'OCCUPANCY_TYPE'" [nzSortFn]="true" nzAlign="center">
+            <b>Occupancy Type</b>
+          </th>
+          <th nzWidth="70px" [nzColumnKey]="'CHECK_CONDITION'" [nzSortFn]="true" nzAlign="center">
+            <b>Allotment Time</b>
+          </th>
+          <th nzWidth="70px" [nzColumnKey]="'CIVIL_LIST'" [nzSortFn]="true" nzAlign="center">
+            <b>Civil List No.</b>
+          </th>
+          <th nzWidth="50px" [nzColumnKey]="'STATUS'" [nzSortFn]="true" nzAlign="center">
+            <b>Status</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzAlign="center" nzLeft>
+            <a nz-button nzType="link" (click)="edit(data)" *ngIf="data.STATUS != 'A'"><span nz-icon nzType="edit"
+                nzTheme="outline"></span></a>
+            <a nz-button nzType="link" (click)="viewDetails(data)" *ngIf="data.STATUS == 'A'"><span nz-icon nzType="eye"
+                nzTheme="outline"></span></a>
+          </td>
+          <td>{{ data.BUILDING_NAME ? data.BUILDING_NAME : "_" }}</td>
+          <td>{{ data.EMPLOYEE_NAME ? data.EMPLOYEE_NAME : "_" }}</td>
+          <td nzAlign="center">{{ data.FLAT_ID ? data.FLAT_ID : "_" }}</td>
+          <td nzAlign="center">{{ data.FLOOR_ID ? data.FLOOR_ID : "_" }}</td>
+          <td nzAlign="center">{{ data.MOBILE_NO ? data.MOBILE_NO : "_" }}</td>
+          <td>{{ data.EMAIL_ID ? data.EMAIL_ID : "_" }}</td>
+          <td nzAlign="center">
+            <span *ngIf="data.GENDER == 'Other'">Other</span>
+            <span *ngIf="data.GENDER == 'Female'">Female</span>
+            <span *ngIf="data.GENDER == 'Male'">Male</span>
+          </td>
+          <td nzAlign="center">
+            {{ data.DOB ? (data.DOB | date : "dd/MM/yyyy") : "_" }}
+          </td>
+          <td nzAlign="center">
+            <span *ngIf="data.CAST == 'ST'">Scheduled Tribes</span>
+            <span *ngIf="data.CAST == 'SC'">Scheduled Caste</span>
+            <span *ngIf="data.CAST == 'GN'">General</span>
+          </td>
+          <td nzAlign="center">
+            {{ data.DESIGNATION_NAME ? data.DESIGNATION_NAME : "_" }}
+          </td>
+          <td nzAlign="center">
+            {{ data.GRADE_PAY_LEVEL ? data.GRADE_PAY_LEVEL : "_" }}
+          </td>
+          <td nzAlign="center">{{ data.BASIC_PAY ? data.BASIC_PAY : "_" }}</td>
+          <td nzAlign="center">
+            {{ data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : "_" }}
+          </td>
+          <td nzAlign="center">
+            {{
+            data.JOINING_DATE
+            ? (data.JOINING_DATE | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td nzAlign="center">
+            {{
+            data.ALLOTMENT_DATE_TIME
+            ? (data.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td nzAlign="center">
+            {{
+            data.DATE_OF_PRIORITY
+            ? (data.DATE_OF_PRIORITY | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td nzAlign="center">
+            {{
+            data.PRESENT_PAY_LEVEL_DATE
+            ? (data.PRESENT_PAY_LEVEL_DATE | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td nzAlign="center">
+            {{
+            data.RETIREMENT_DATE
+            ? (data.RETIREMENT_DATE | date : "dd/MM/yyyy")
+            : "_"
+            }}
+          </td>
+          <td nzAlign="center">
+            <span *ngIf="data.OCCUPANCY_TYPE == 'P'">Physical</span>
+            <span *ngIf="data.OCCUPANCY_TYPE == 'T'">Technical</span>
+          </td>
+          <td nzAlign="center">
+            <span *ngIf="data.CHECK_CONDITION == 1">Firts Time</span>
+            <span *ngIf="data.CHECK_CONDITION == 2">Second Time</span>
+          </td>
+          <td nzAlign="center">
+            {{ data.CIVIL_LIST ? data.CIVIL_LIST : "_" }}
+          </td>
+          <td nzAlign="center">
+            <span *ngIf="data.STATUS == 'P'">
+              <nz-tag [nzColor]="'gold'">Pending</nz-tag></span>
+            <span *ngIf="data.STATUS == 'A'">
+              <nz-tag [nzColor]="'green'">Approved</nz-tag>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<div *ngIf="drawerVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '15px',
+      'padding-left': '15px',
+      'padding-right': '15px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="800" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <app-edit-quarter-apllication *nzDrawerContent [drawerClose]="closeCallback" [checkItsView]="checkItsView"
+      [data]="drawerData"></app-edit-quarter-apllication>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerVisible1">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '15px',
+      'padding-left': '15px',
+      'padding-right': '15px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="300" [nzVisible]="drawerVisible1"
+    [nzTitle]="drawerTitle1" (nzOnClose)="drawerClose1()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-addnew-flat-of-quarter [drawerClose1]="closeCallback1" [drawerVisible1]="drawerVisible1"
+        [data]="drawerData1"></app-addnew-flat-of-quarter>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="visibleGenerateModal" nzCentered="true" [nzTitle]="generatetitle"
+  (nzOnCancel)="closeGenerateLink()" [nzBodyStyle]="{ overflow: 'auto', padding: '11px', 'font-size': '11px' }"
+  nzWidth="350px" nzClosable="true" [nzFooter]="null" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item style="
+            display: inline-block !important;
+            margin-bottom: 5px !important;
+            width: -webkit-fill-available !important;
+            padding: 0px 10px !important;
+          ">
+          <nz-form-label nzRequired nzNoColon>Building Name</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Building Name">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Building Name" name="BuildinName"
+              [(ngModel)]="GenerateBuildingName" required (ngModelChange)="generateLink($event)">
+              <nz-option *ngFor="let data of GenerateBuilding" [nzValue]="data.ID" [nzLabel]="data.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24" *ngIf="GeneratedLink">
+        <nz-form-item style="
+            display: inline-block !important;
+            margin-bottom: 5px !important;
+            width: -webkit-fill-available !important;
+            padding: 0px 10px !important;
+          ">
+          <nz-form-label nzNoColon>Copy URL</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Select Building Name">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <input type="text" nz-input placeholder="URL" [(ngModel)]="GeneratedLink" />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <button nz-button nzType="primary" nzSearch (click)="copyLink(GeneratedLink)">
+                <span nz-icon nzType="copy"></span>
+              </button>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #generatetitle>
+    <p style="font-size: 15px; margin-bottom: 0px">Generate Link</p>
+  </ng-template>
+</nz-modal>

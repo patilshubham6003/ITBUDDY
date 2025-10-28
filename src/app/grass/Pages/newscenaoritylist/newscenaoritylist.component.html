@@ -1,0 +1,740 @@
+<section id="blog" class="blog" style="padding-top: 0px; padding-bottom: 0px">
+  <div class="container" data-aos="fade-up">
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <div class="formname" style="text-align: center">
+          <h6 style="font-size: 15px; margin-bottom: 5px">Seniority Order</h6>
+        </div>
+        <p style="text-align: justify; margin-bottom: 5px; font-size: 13px">
+          The seniority order in a residential quarter is indeed a system or
+          hierarchy used to determine the priority or precedence of residents
+          when allocating residential quarters. This system helps ensure
+          fairness and transparency in the allocation process. The process for
+          generating a list of employees based on their Date of Joining and Date
+          of Birth, and then allowing employees to raise objections after a
+          draft order is published
+        </p>
+      </div>
+    </div>
+
+    <div nz-row nzType="flex" style="margin-bottom: 5px">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: flex-end">
+        <button style="margin-right: 10px" [nzType]="isFilterApplied" nz-button (click)="showFilter()" nz-tooltip
+          nzTooltipTitle="Filter ">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+          <div class="filter-box">
+            <form nz-form>
+              <div nz-row>
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Select Month</nz-form-label>
+                    <nz-form-control>
+                      <nz-range-picker nzSize="small" name="month1" nzMode="month" class="datesize"
+                        [(ngModel)]="selectFromMonth" nzPlaceholder="Please select Month & year" nzFormat="MMM/yyyy"
+                        (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="5">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Residence Type</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzAllowClear nzPlaceHolder="Please Select Residence Type "
+                        name="Residence Type" nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_ID"
+                        (ngModelChange)="changetostring($event)">
+                        <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.RESIDENCE_TYPE_ID"
+                          [nzLabel]="type.RESIDENCE_TYPE_NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="14" style="display: flex; gap: 10px; margin-top: 25px">
+                  <button nz-button nzSize="small" style="font-size: 10px" [nzLoading]="isSpinning" nzType="primary"
+                    class="flexicons" (click)="applyFilter()">
+                    <i nz-icon nzType="filter"></i>Apply Filter
+                  </button>
+                  <button nz-button nzSize="small" style="font-size: 10px" nzType="primary" (click)="clearFilter()">
+                    <i nz-icon nzType="close"></i>Clear filter
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- <div class="col-lg-3" style="padding: 0px">
+        <div
+          style="box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1); border-radius: 6px"
+        >
+          <div
+            class="sidebar"
+            style="
+              margin: 0px;
+              box-shadow: none;
+              border: 0.5px solid #dee2e6;
+              padding: 11px;
+              border-radius: 6px 6px 0px 0px;
+            "
+          >
+            <h3
+              class="sidebar-title"
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+                font-size: 16px;
+                margin-bottom: 0px;
+              "
+            >
+              <span sty>Filter</span>
+              <span style="cursor: pointer"
+                ><a
+                  (click)="applyFilter()"
+                  style="
+                    padding: 1px 5px;
+                    font-size: 10px;
+                    background-color: #006699;
+                    border: none;
+                  "
+                  class="btn btn-primary"
+                  >Apply</a
+                >&nbsp; &nbsp;<a
+                  (click)="clearFilter()"
+                  class="btn btn-primary"
+                  style="
+                    padding: 1px 5px;
+                    font-size: 10px;
+                    font-weight: 500;
+                    color: black;
+                    background-color: white;
+                    border: 1px solid #006699;
+                  "
+                  >Clear</a
+                ></span
+              >
+            </h3>
+          </div>
+          <div
+            class="sidebar"
+            style="
+              margin: 0px;
+              box-shadow: none;
+              padding: 11px;
+              border-left: 0.5px solid #dee2e6;
+              border-radius: 0px 0px 6px 6px;
+              border-right: 0.5px solid #dee2e6;
+              border-bottom: 1px solid #dee2e6;
+            "
+          >
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    style="
+                      padding: 8px;
+                      font-size: 12px;
+                      font-weight: 500;
+                      background-color: #f1f2f57a;
+                    "
+                    type="button"
+                    nzSize="small"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    <span>Residence Type</span>
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body" style="padding: 10px">
+                    <h3
+                      class="sidebar-title"
+                      *ngIf="
+                        RESIDENCE_TYPE_ID != null &&
+                        RESIDENCE_TYPE_ID != undefined &&
+                        RESIDENCE_TYPE_ID != ''
+                      "
+                      style="
+                        font-size: 12px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: end;
+                      "
+                    >
+                      <span
+                        (click)="clearFilterresidencetype()"
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 11px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+
+                    <nz-select
+                      nzSize="small"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Please Select Residence Type "
+                      name="Residence Type"
+                      nzMode="multiple"
+                      [(ngModel)]="RESIDENCE_TYPE_ID"
+                      (ngModelChange)="changetostring($event)"
+                    >
+                      <nz-option
+                        *ngFor="let type of ResidenceTypelist"
+                        [nzValue]="type.RESIDENCE_TYPE_ID"
+                        [nzLabel]="type.RESIDENCE_TYPE_NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    style="
+                      padding: 8px;
+                      font-size: 12px;
+                      font-weight: 500;
+                      background-color: #f1f2f57a;
+                    "
+                    type="button"
+                    nzSize="small"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    Month & Year
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body fscroll" style="padding: 10px">
+                    <h3
+                      class="sidebar-title"
+                      style="
+                        font-size: 10px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 5px;
+                      "
+                    >
+                      <span>Select Month & Year</span>
+                      <span
+                        (click)="clearFilterfrommonth()"
+                        *ngIf="frommonth"
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 11px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <div
+                      class="sidebar-item categories"
+                      style="margin-bottom: 10px"
+                    >
+                      <nz-range-picker
+                        nzSize="small"
+                        name="month1"
+                        nzMode="month"
+                        class="datesize"
+                        [(ngModel)]="selectFromMonth"
+                        nzPlaceholder="Please select Month & year"
+                        nzFormat="MMM/yyyy"
+                        (ngModelChange)="onChangemonth($event)"
+                      ></nz-range-picker>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-lg-12 entries">
+        <div class="card" style="box-shadow: none">
+          <div nz-row>
+            <div nz-col nzSpan="12" style="margin-bottom: 10px;padding: 10px !important"
+              *ngFor="let data of listview; let n = index">
+              <div nz-row style="
+                  background-color: #fff;
+                  position: relative;
+                  width: 100%;
+                  cursor: pointer;
+                  padding: 7px;
+                  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+                  border: 1px solid #efefef;
+                  border-radius: 10px;
+                ">
+                <div nz-col nzSpan="24">
+                  <div nz-row style="
+                      background-color: #fff;
+                      position: relative;
+                      width: 100%;
+                      cursor: pointer;
+                      padding: 4px;
+                      border: 1px solid #efefef;
+                      border-radius: 10px;
+                    ">
+                    <div style="
+                        color: #000;
+                        font-size: 12px;
+                        font-weight: 700;
+                        line-height: normal;
+                      " nz-col nzSpan="12">
+                      RESIDENCE {{ data.RESIDENCE_TYPE_NAME }}
+                    </div>
+                    <div style="
+                        color: #000;
+                        font-size: 12px;
+                        text-align: right;
+                        font-weight: 500;
+                        line-height: normal;
+                      " nz-col nzSpan="12">
+                      <span *ngIf="data.MONTH == 1">JANUARY</span>
+                      <span *ngIf="data.MONTH == 2">FEBRUARY</span>
+                      <span *ngIf="data.MONTH == 3">MARCH</span>
+                      <span *ngIf="data.MONTH == 4">APRIL</span>
+                      <span *ngIf="data.MONTH == 5">MAY</span>
+                      <span *ngIf="data.MONTH == 6">JUNE</span>
+                      <span *ngIf="data.MONTH == 7">JULY</span>
+                      <span *ngIf="data.MONTH == 8">AUGUST</span>
+                      <span *ngIf="data.MONTH == 9">SEPTEMBER</span>
+                      <span *ngIf="data.MONTH == 10">OCTOBER</span>
+                      <span *ngIf="data.MONTH == 11">NOVEMBER</span>
+                      <span *ngIf="data.MONTH == 12">DECEMBER</span>
+                      {{ data.YEAR }}
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="
+                    align-self: center;
+                    text-align: center;
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                  ">
+                  <nz-steps nzSize="small" [nzCurrent]="checkstep(data, n)" [nzLabelPlacement]="'vertical'">
+                    <nz-step class="diddv" nz-button [nzTitle]="titile1Template">
+                    </nz-step>
+                    <!-- (click)="viewAssumptionPDF(data.FILE_URL)" -->
+                    <ng-template #titile1Template>
+                      <span style="font-size: 10px; font-weight: bold">
+                        View Draft Seniority Order
+                        <p style="font-size: 8px" *ngIf="data.CREATION_DATE_TIME != undefined">
+                          {{
+                          data.CREATION_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                          }}
+                        </p>
+                      </span>
+                    </ng-template>
+                    <ng-template #titile1Template1 style="width: 190px !important">
+                      <span style="font-size: 10px; font-weight: bold">
+                        Objection Start Time
+                        <p style="font-size: 8px" *ngIf="data.OBJ_START_DATE_TIME != undefined">
+                          {{
+                          data.OBJ_START_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                          }}
+                        </p>
+                      </span>
+                    </ng-template>
+                    <ng-template #titile1Template2 style="width: 190px !important">
+                      <span style="font-size: 10px; font-weight: bold">
+                        Objection End Time
+                        <p style="font-size: 8px" *ngIf="data.OBJ_END_DATE_TIME != undefined">
+                          {{
+                          data.OBJ_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                          }}
+                        </p>
+                      </span>
+                    </ng-template>
+                    <ng-template #titile1Template3>
+                      <span style="font-size: 10px; font-weight: bold">
+                        View Final Seniority Order
+                        <p style="font-size: 8px" *ngIf="data.FINAL_PUBLISH_DATETIME != undefined">
+                          {{
+                          data.FINAL_PUBLISH_DATETIME
+                          | date : "dd/MM/yyyy HH:mm"
+                          }}
+                        </p>
+                      </span>
+                    </ng-template>
+                    <ng-template #titile1Template14>
+                      <span style="font-size: 10px; font-weight: bold"><b>View Final Seniority Order</b>
+                        <p style="font-size: 8px" *ngIf="data.FINAL_PUBLISH_DATETIME != undefined">
+                          <b>{{
+                            data.FINAL_PUBLISH_DATETIME
+                            | date : "dd/MM/yyyy HH:mm"
+                            }}</b>
+                        </p>
+                      </span>
+                    </ng-template>
+                    <ng-template #titile1Template4>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM7.33333 11.1429L10.4444 16.1429L16.6667 6H18L10.4444 18L6 11.1429H7.33333Z"
+                          fill="#006699" />
+                      </svg>
+                    </ng-template>
+
+                    <nz-step class="diddv" [nzTitle]="titile1Template1"></nz-step>
+
+                    <nz-step class="diddv" [nzTitle]="titile1Template2"></nz-step>
+
+                    <nz-step class="diddv" *ngIf="data['STEP_NO'] != 3" nz-button [nzDisabled]="data.IS_FINAL == false"
+                      [nzTitle]="titile1Template3">
+                    </nz-step>
+
+                    <nz-step class="diddv" nz-button *ngIf="data['STEP_NO'] == 3" [nzIcon]="titile1Template4"
+                      [nzTitle]="titile1Template14" nzStatus="In Progress">
+                    </nz-step>
+                  </nz-steps>
+                  <!-- (click)="viewAssumptionPDF(data.FINAL_FILE_URL)" -->
+                </div>
+
+                <div nz-col nzXs="24" nzSm="24" nzMd="9" nzLg="9" nzXl="9" style="margin-top: 10px; text-align: left">
+                  <p style="font-size: 10px" *ngIf="Timmerstartloop[n] > 0 || Timmerstartloop[n] != ''">
+                    Objections Start In :{{ Timmerstartloop[n] }}
+                  </p>
+                  <p style="font-size: 10px" *ngIf="Timmerstartloop[n] <= 0 && Timmerendloop[n] != ''">
+                    Objections Ends In :{{ Timmerendloop[n] }}
+                  </p>
+
+                  <!-- <p></p> -->
+                </div>
+                <div nz-col nzXs="24" nzSm="24" nzMd="15" nzLg="15" nzXl="15"
+                  style="margin-top: 5px; text-align: right; margin-bottom: 6px">
+                  <!-- <button type="button" nzSize='small' nz-button class="ant-btn"
+                        style="margin-right: 8px; color: #FFF; background-color: #006699;"
+                        (click)="viewAssumptionPDF(data.FILE_URL)">
+                        <span>View Order</span>
+                      </button> -->
+                  <button type="button" nzSize="small" nz-button class="ant-btn" style="
+                      margin-right: 8px;
+                      color: #fff;
+                      background-color: #006699;
+                      font-size: 10px;
+                    " (click)="showmobfile1(data.FILE_URL)">
+                    <span>View Draft Order</span>
+                  </button>
+                  <button type="button" nzSize="small" nz-button class="ant-btn" *ngIf="
+                      data.SHOW_DATA == true &&
+                      data.SHOW_OBJ == true &&
+                      showid != n &&
+                      data.IS_FINAL == 0
+                    " style="
+                      margin-right: 8px;
+                      color: #fff;
+                      background-color: #006699;
+                      font-size: 10px;
+                    " (click)="raiseObjection(data)">
+                    <span>Raise Objection</span>
+                  </button>
+                  <button type="button" nzSize="small" nz-button class="ant-btn" *ngIf="data.IS_FINAL == 1" style="
+                      margin-right: 8px;
+                      color: #fff;
+                      background-color: #006699;
+                      font-size: 10px;
+                    " (click)="showfinal(data, data)">
+                    <span>View Final Order</span>
+                  </button>
+                </div>
+
+                <!-- <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style='margin-top: 10px;' *ngIf="Timmerloop[n] > 0 || Timmerloop[n]!= ''">
+                      <button type="button" nz-button class="ant-btn"
+                        style="margin-right: 8px; color: #FFF; background-color: #006699; float: right;"
+                        (click)="raiseObjection(data)">
+                        <span>Raise Objection</span>
+                      </button>
+                    </div> -->
+
+                <br />
+                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="showid == n">
+                  <!-- <p>{{ data.CREATED_MODIFIED_DATE |date:'dd/MM/yyyy' }}</p> -->
+                  <div *ngIf="!isRecordLoadingdata">
+                    <div nz-row *ngIf="
+                        data.SHOW_DATA == true &&
+                        data.SHOW_OBJ == true &&
+                        showid != n &&
+                        data.IS_FINAL == 0
+                      ">
+                      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12"></div>
+                      <div *ngIf="
+                          data.SHOW_DATA == true &&
+                          data.SHOW_OBJ == true &&
+                          showid != n &&
+                          data.IS_FINAL == 0
+                        " nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12" style="text-align: right">
+                        <!-- <a  (click)="raiseObjection(data)">Add Objection</a> -->
+                        <nz-tag [nzColor]="'blue'" (click)="raiseObjection(data)">Add Objection</nz-tag>
+                      </div>
+                    </div>
+
+                    <div *ngIf="showid == n" style="
+                        padding-left: 10px;
+                        padding-top: 5px;
+                        padding-bottom: 10px;
+                        padding-right: 5px;
+                        height: 98px;
+                        overflow-y: auto;
+                      ">
+                      <nz-timeline *ngIf="ObjectionDataList.length > 0">
+                        <nz-timeline-item *ngFor="let logg of ObjectionDataList" nzColor="green">
+                          <!-- <span style="font-weight: 500;">{{logg.STAGE_NAME}}</span> -->
+                          <p style="
+                              margin-bottom: 0px !important;
+                              font-size: 11px !important;
+                              font-weight: 500 !important;
+                            ">
+                            <b>Objection :</b>{{ logg.OBJECTION }}
+                          </p>
+                          <p *ngIf="
+                              logg.FILE_URL != null &&
+                              logg.FILE_URL != '' &&
+                              logg.FILE_URL != undefined
+                            " style="
+                              margin-bottom: 0px !important;
+                              font-size: 11px !important;
+                              cursor: pointer;
+                              font-weight: 500 !important;
+                              margin-bottom: 0px !important;
+                            " (click)="viewAssumptionAttached(logg.FILE_URL)">
+                            <b>Attachment :</b>{{ logg.FILE_URL }} &nbsp;
+                            <span nz-icon nzType="eye" nzTheme="outline"></span>
+                          </p>
+                          <p *ngIf="
+                              logg.RESOLVER_NAME != null &&
+                              logg.RESOLVER_NAME != '' &&
+                              logg.RESOLVER_NAME != undefined
+                            " style="
+                              font-size: 10px !important;
+                              font-weight: 500 !important;
+                              margin-bottom: 0px !important;
+                            ">
+                            <b>Resolved By :</b> {{ logg.RESOLVER_NAME }}
+                          </p>
+                          <p style="
+                              font-size: 10px !important;
+                              font-weight: 500 !important;
+                              margin-bottom: 0px !important;
+                            ">
+                            <b>Objection Status :</b>
+                            <b *ngIf="logg.ACTION_STATUS == 'P'">Pending</b>
+                            <b *ngIf="logg.ACTION_STATUS == 'R'" style="color: red">Rejected</b>
+                            <b *ngIf="logg.ACTION_STATUS == 'A'" style="color: green">Approved</b>
+                          </p>
+                          <p style="
+                              font-size: 10px !important;
+                              font-weight: 500 !important;
+                            ">
+                            <b>Objection Raise Datetime :</b>
+                            {{
+                            logg.RAISE_OBJECTION_DATE_TIME
+                            | date : "dd/MM/yyyy HH:mm"
+                            }}
+                          </p>
+                        </nz-timeline-item>
+                      </nz-timeline>
+                      <span *ngIf="ObjectionDataList.length == 0">No Record</span>
+                    </div>
+                    <div class="spinner-border text-success" role="status" *ngIf="isRecordLoadingdata">
+                      <span class="visually-hidden">Loading</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-row style="text-align: center" *ngIf="
+                  data.SHOW_DATA == true &&
+                  (data.IS_FINAL == 0 || data.IS_FINAL == 1)
+                ">
+                <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-top: -12px">
+                  <button nz-tooltip nzTooltipTitle="View Objections" nzTooltipPlacement="button" *ngIf="showid != n"
+                    nz-button nzShape="circle" (click)="showstatus(data, n)" nzJustify="end">
+                    <span nz-icon nzType="down" nzTheme="outline"></span>
+                  </button>
+
+                  <button nz-tooltip nzTooltipTitle="View Objections" nzTooltipPlacement="button" *ngIf="showid == n"
+                    nz-button nzShape="circle" (click)="onGetLeave()" nzJustify="end">
+                    <span nz-icon nzType="up" nzTheme="outline"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+              <div class="col-12" style="text-align: center; margin-top: 5%">
+                <div v-if="loading" class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+              *ngIf="!isRecordLoading && listview.length <= 0">
+              <div class="col-3"></div>
+
+              <div class="col-18" style="margin-top: 100px">
+                <div class="card" style="width: 100%; box-shadow: none !important">
+                  <div class="card-body" style="padding: 25px">
+                    <div class="row">
+                      <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                        <p class="card-text subnamm" style="font-size: 26px">
+                          Data Not Found
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'Seniority Order PDFView'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div style="height: 600px; overflow: auto">
+      <iframe [src]="getchange" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="AttachedpdfsVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="Attachedpdfs" [nzTitle]="'PDFview'" (nzOnCancel)="AttachedpdfsCancel()" [nzFooter]="AttachedpdfsFooter">
+  <ng-template #Attachedpdfs>
+    <iframe [src]="viewattachedpdf" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+  </ng-template>
+  <ng-template #AttachedpdfsFooter>
+    <button nz-button nzType="default" (click)="AttachedpdfsCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal nzWidth="1000px" [(nzVisible)]="isVisible2" nzTitle="Final Seniority Order Type 3"
+  (nzOnCancel)="handleCancelpdf()" (nzOnOk)="handleOkpdf()">
+  <ng-container *nzModalContent>
+    <!-- <iframe [src]="sanitizedLink" style="width: 1150px; height: 600px"
+    frameborder="0">
+
+    </iframe> -->
+    <object [data]="sanitizedLink1" type="application/pdf" width="100%" height="592px;"></object>
+  </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="RejectRemark" nzTitle="Raise Objection" nzCentered="true"
+  [nzBodyStyle]="{ padding: '5px', 'font-family': 'Poppins' }" nzWidth="600px" (nzOnCancel)="CancleRemark()"
+  nzMaskClosable="true" [nzFooter]="objFooter">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="SpinningRejection">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="padding: 5px">
+          <nz-form-label class="labelsize" nzRequired nzNoColon>Objection</nz-form-label>
+          <nz-form-item>
+            <nz-form-control nzErrorTip>
+              <textarea class="inputsize" required maxlength="512" placeHolder="Enter The Objection"
+                style="width: 100%; height: 100%" [(ngModel)]="objectiondata.OBJECTION" name="REASON"
+                [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <!-- <div nz-col nzSpan="12" style="padding: 5px">
+          <nz-form-label class="labelsize" nzNoColon>Upload Attachment</nz-form-label>
+          <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required" *ngIf="attachment1">
+              <button nz-button style="padding: 0px 10px; font-size: 10px" (click)="Attachmentonepdf.click()">
+                Select File
+                <input #Attachmentonepdf name="FILE_URL" type="file" accept="application/pdf"
+                  (change)="onFileATTACHMENT1($event)" style="display: none" required />
+              </button>
+            </nz-form-control>
+
+            <div *ngIf="objectiondata.FILE_URL != null" style="
+                overflow: hidden;
+                font-size: 11px;
+                display: block;
+                width: 100%;
+                color: #1890ff;
+                padding-left: 5px;
+              ">
+              {{ objectiondata.FILE_URL }} &nbsp;&nbsp;
+              <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+                style="cursor: pointer; color: #1890ff"
+                (click)="viewAssumptionAttached(objectiondata.FILE_URL)"></span>&nbsp;&nbsp;
+              <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                nz-tooltip style="cursor: pointer; color: red" (click)="ATTACHMENT1clear()"></span>
+            </div>
+          </nz-form-item>
+        </div> -->
+      </div>
+    </nz-spin>
+  </ng-container>
+  <ng-template #objFooter>
+    <button nz-button nzType="primary" [nzLoading]="SpinningRejection" (click)="SubmitRemark()">
+      Submit
+    </button>
+    <!-- <button
+      nz-button
+      nzType="primary"
+      style="margin-right: 8px">
+      Cancel
+    </button> -->
+    <button nz-button nzType="default" [nzLoading]="SpinningRejection" (click)="CancleRemark()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>

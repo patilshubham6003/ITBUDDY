@@ -1,0 +1,24 @@
+td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.c {
+  text-align: center;
+}
+
+table,
+th {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+@media print {
+  @page {
+    margin-bottom: 25px;
+  }
+
+  .print-style {
+    page-break-inside: avoid;
+  }
+}

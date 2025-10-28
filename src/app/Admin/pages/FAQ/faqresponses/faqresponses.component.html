@@ -1,0 +1,178 @@
+<div nz-row nzType="flex">
+  {{ getFAQID(data.ID) }}
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="24"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row nzGutter="8">
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-radio-group name="status" [(ngModel)]="RESPONSE_TYPE">
+                  <label nz-radio nzValue="P">Positive</label>
+                  <label nz-radio nzValue="N">Negative</label>
+                </nz-radio-group>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7">
+              <nz-form-item>
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  nzType="primary"
+                  (click)="applyFilter(data.ID)"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear Filter
+                </button>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="3"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #FaqResponsetable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '800px',  }"
+      [nzSize]="'small'"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="applyFilter(data.ID)"
+      (nzPageSizeChange)="applyFilter(data.ID)"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th  nzWidth="20px" style="font-weight: bold; text-align: center">
+            <span>Action</span>
+          </th>
+          {{
+            data.RESPONSE_TYPE
+          }}
+          <th
+          nzWidth="40px"
+            nzColumnKey="{{ 'USER_MOBILE' }}"
+            style="font-weight: bold; text-align: center"
+          >
+            User Mobile
+          </th>
+          <th
+          nzWidth="40px"
+            nzColumnKey="{{ 'USER_EMAIL_ID' }}"
+            style="font-weight: bold; text-align: center"
+          >
+            User Email
+          </th>
+          <th
+          nzWidth="80px"
+            nzColumnKey="{{ 'SUGGESTION' }}"
+            style="font-weight: bold; text-align: center"
+          >
+            Suggesstion
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of FaqResponsetable.data">
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.RESPONSE_TYPE == 'N'">
+              <a
+                style="color: rgb(63, 128, 180); text-align: center"
+                (click)="edit(data, data.RESPONSE_TYPE, data.ID)"
+                >{{ getName(data.RESPONSE_TYPE) }}</a
+              >
+            </span>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <p *ngIf="data.USER_MOBILE == null">None</p>
+            {{ data["USER_MOBILE"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            <p *ngIf="data.USER_EMAIL_ID == null">None</p>
+            {{ data["USER_EMAIL_ID"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            <p *ngIf="data.SUGGESTION == null">None</p>
+            {{ data["SUGGESTION"] }}
+          </td>
+          <!-- <td>{{ data.USER_MOBILE }}</td>
+          <td>{{ data.USER_EMAIL_ID }}</td>
+          <td>{{ data.SUGGESTION }}</td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="700"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerCloseFaq()"
+  (nzKeyboard)="(true)"
+>
+  <app-faq
+    *nzDrawerContent
+    [drawerClose]="closeCallback"
+    [data]="drawerData"
+  ></app-faq>
+</nz-drawer>

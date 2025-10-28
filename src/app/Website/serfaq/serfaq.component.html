@@ -1,0 +1,63 @@
+<section id="services" class="about1"
+    style="background-color: #f4f4f454 !important; padding-top: 45px;padding-bottom: 35px;">
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row" style="margin-bottom: 40px;">
+            <div class="col-12 col-sm-12 col-md-6 col-xl-6 col-lg-6">
+                <h2 style="margin-bottom: 0px; color: black;font-size: 25px;">Frequently Asked Questions</h2>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-xl-6 col-lg-6">
+                <div class="input-group">
+                    <input autocomplete="off" placeholder="Search FAQ" class="form-control" name="search"
+                        (keyup)="searchFaq(searchText)" [(ngModel)]="searchText" style="border-radius: 0px" />
+
+                    <div class="input-group-append">
+                        <span *ngIf="!showx" style="
+                          padding: 10px;
+                          border-radius: 0px;
+                          font-size: 20px;
+                          cursor: pointer;
+                        " class="fa input-group-text bi bi-search" (click)="searchFaq(searchText)"></span>
+                        <span *ngIf="showx" style="
+                          padding: 11px;
+                          border-radius: 0px;
+                          font-size: 20px;
+                          cursor: pointer;
+                        " class="fa input-group-text bi bi-x" (click)="searchFaq1()"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="faqcount>0 && faqs!=''">
+            <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12">
+                <div class="accordion" *ngFor="let data of faqs; let i = index" [attr.id]="'accordionExample' + i"
+                    style="margin-bottom: 15px;">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" [attr.id]="'heading' + i">
+                            <button style="font-size: 16px;font-weight: 500;" class="accordion-button " type="button"
+                                [attr.data-bs-toggle]="'collapse'+ i" [attr.data-bs-target]="'#collapse' + i"
+                                [attr.aria-expanded]="activeIndex == i ? 'true' : 'false'"
+                                [attr.aria-controls]="'collapse' + i" (click)="toggleAccordion(i)">
+                                <span class="accordion-text">{{ data.QUESTION }}</span>
+                                <span class="arrow-icon"
+                                    [ngClass]="{'bi bi-chevron-up': activeIndex === i, 'bi bi-chevron-down': activeIndex !== i}"></span>
+                            </button>
+                        </h2>
+                        <div [attr.id]="'collapse' + i" class="accordion-collapse collapse"
+                            [class.show]="activeIndex == i" [attr.aria-labelledby]="'heading' + i"
+                            [attr.data-bs-parent]="'#accordionExample' + i">
+                            <div class="accordion-body" style="font-size: 15px;text-align: justify;">
+                                {{ data.ANSWER }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="faqcount==0 && faqs==''">
+            <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                style="text-align: center; height: 50px;margin-top: 35px;">
+                <h1 style="color: #006699;font-size: 25px;">Data Not Found</h1>
+            </div>
+        </div>
+    </div>
+</section>

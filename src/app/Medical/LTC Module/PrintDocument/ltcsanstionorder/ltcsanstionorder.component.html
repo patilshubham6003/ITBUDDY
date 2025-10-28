@@ -1,0 +1,478 @@
+<div *ngIf="LTCdata != undefined">
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+          <div class="my-box">
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >File Number (in Hindi)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="File Number (in Hindi) is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      nz-input
+                      placeholder="Enter File Number (in Hindi)"
+                      autocomplete="off"
+                      name="FILE_NO_HN"
+                      type="text"
+                      [(ngModel)]="LTCdata.FILE_NO_HN"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of Employee (in English)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Name of Employee is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      nz-input
+                      autocomplete="off"
+                      name="EMPLOYEE_NAME"
+                      type="text"
+                      [(ngModel)]="LTCdata.EMPLOYEE_NAME"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of Employee(in hindi)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Name of Employee is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      nz-input
+                      placeholder="Enter Name of Employee(in hindi)"
+                      autocomplete="off"
+                      name="EMPLOYEE_NAME_HN"
+                      type="text"
+                      [(ngModel)]="LTCdata.EMPLOYEE_NAME_HN"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16">
+          <div class="my-box" style="padding: 10px">
+            <div>
+              <div style="font-family: Arial, Helvetica, sans-serif !important">
+                <div
+                  style="
+                    text-align: center;
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  "
+                >
+                  <b>कार्यालय</b>
+                  <p style="text-align: center; font-size: 15px">
+                    <b>अपर आयकर आयुक्त (मुख्या.) कार्मिक,</b>
+
+                    <br /><b
+                      >राजपत्रित छुट्टी यात्रा रियायात / यात्रा भत्ता अनुभाग,</b
+                    >
+                    <br /><b
+                      >क. सं. 123बी., पहली मंजिल, एम. के. मार्ग, मुंबई -
+                      400020</b
+                    >
+                  </p>
+                </div>
+                <div style="font-size: 14px !important">
+                  <div nz-row [nzGutter]="10" style="border: 1px solid">
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: left"
+                    >
+                      <p style="margin-bottom: 0px">
+                        <b>{{ LTCdata.FILE_NO_HN }}</b>
+                      </p>
+                    </div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: right"
+                    >
+                      <b
+                        >दिनांक :
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </b>
+                    </div>
+                  </div>
+
+                  <p style="text-align: center"><b>मंजूरी आदेश</b></p>
+                  <p>
+                    श्री/श्रीमती/ {{ LTCdata.EMPLOYEE_NAME_HN }} को गोवा (स्थान)
+                    में तथा वापसी के लिए छुट्टी यात्रा रियायत (एल.टी.सी.)
+                    {{ namount }}/- केवल राशि के भुगतान के सामान्य वित्तीय नियम
+                    के नियम 231 के अधीन, मंजूरी दी जाती है। यह यात्रा दिनांक
+                    <span *ngFor="let data of formdata7; let k = index"
+                      ><b>{{ data.FROM_DATETIME | date : "dd-MM-yyyy" }}</b>
+                    </span>
+                    से शुरू होगी |
+                  </p>
+                  <p style="text-align: left">
+                    Expenditure of LTC Advance <br />
+                    For F.Y. 2022-2023 debited <br />From the head, Salary
+                  </p>
+                  <div nz-row [nzGutter]="10">
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: left"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    >
+                      <b
+                        >अपर आयकर आयुक्त (मख्या.) (कार्मिक),<br />
+                        मुंबई</b
+                      >
+                    </div>
+                  </div>
+
+                  <p>प्रतिलिपि प्रेषित:-</p>
+                  <p style="margin-bottom: 10px">
+                    1. लेखा अधिकारी, आयकर आयुक्त का फील्ड पे यूनिट, मुंबई
+                    वित्तीय यात्रा भत्ता अग्रिम के बिल सहित ।
+                  </p>
+                  <p>
+                    2. संबंधित अधिकारी के पत्र सं 001 दिनांक 11.04.2023 के
+                    संदर्भ में सूचित किया जाता है कि अग्रिम राशि का समायोजन
+                    एकमुश्त किया जाएगा। दौरे का यात्रा भता अग्रिम के संबंध में
+                    क्लेम, अग्रिम निकासी की तारीख या वासी यात्रा समापत्ति की
+                    तारीख से 30 दिनों के भीतर दिया जाना चाहिए। इस क्लेम को इस
+                    कार्यालय में देने से पहले, यदि यात्रा भत्ता अग्रिम की
+                    अतिरिक्त राशि है तो बैंक चालान के माध्यम से भारतीय स्टेट
+                    बैंक, चर्चगेट ब्रान्च में इस राशि का भुगतान कर दिया जाए। यदि
+                    यह क्लेम सक्षम प्राधिकारी द्वारा पारित दौरा मंजूरी आदेश के
+                    बिना तथा / या दौरा यात्रा भत्ता ..की अतिरिक्त राशि के भुगतान
+                    के लिए जाने पर दिया जाता है तो सामान्य वित्तीय नियम की धारा
+                    178/2 के अधीन ब्याज लिया जाएगा।
+                  </p>
+                  <div nz-row [nzGutter]="10">
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: left"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    >
+                      <b
+                        >अपर आयकर आयुक्त (मख्या.) (कार्मिक),<br />
+                        मुंबई</b
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      class="ant-btn"
+      style="margin-right: 8px"
+      (click)="close()"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="Save()"
+      [nzLoading]="loadingRecords"
+    >
+      <span>Save & Preview</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Certificate'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="printOrderModal">
+          <div>
+            <div
+              style="
+                font-family: Arial, Helvetica, sans-serif !important ;
+                margin-left: 50px;
+              "
+            >
+              <div
+                style="
+                  text-align: center;
+                  margin-top: 20px;
+                  margin-bottom: 10px;
+                  font-size: 13px;
+                "
+              >
+                <b>कार्यालय</b>
+                <p style="text-align: center; font-size: 15px">
+                  <b>अपर आयकर आयुक्त (मुख्या.) कार्मिक,</b>
+
+                  <br /><b
+                    >राजपत्रित छुट्टी यात्रा रियायात / यात्रा भत्ता अनुभाग,</b
+                  >
+                  <br /><b
+                    >क. सं. 123बी., पहली मंजिल, एम. के. मार्ग, मुंबई - 400020</b
+                  >
+                </p>
+              </div>
+              <div style="font-size: 14px !important">
+                <div nz-row [nzGutter]="10" style="border: 1px solid">
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                    style="text-align: left"
+                  >
+                    <p style="margin-bottom: 0px">
+                      <b>{{ LTCdata.FILE_NO_HN }}</b>
+                    </p>
+                  </div>
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                    style="text-align: right"
+                  >
+                    <b
+                      >दिनांक :
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </b>
+                  </div>
+                </div>
+
+                <p style="text-align: center"><b>मंजूरी आदेश</b></p>
+                <p>
+                  श्री/श्रीमती/ {{ LTCdata.EMPLOYEE_NAME_HN }} को गोवा (स्थान)
+                  में तथा वापसी के लिए छुट्टी यात्रा रियायत (एल.टी.सी.)
+                  {{ namount }}/- केवल राशि के भुगतान के सामान्य वित्तीय नियम के
+                  नियम 231 के अधीन, मंजूरी दी जाती है। यह यात्रा दिनांक
+                  <span *ngFor="let data of formdata7; let k = index"
+                    ><b>{{ data.FROM_DATETIME | date : "dd-MM-yyyy" }}</b>
+                  </span>
+                  से शुरू होगी |
+                </p>
+                <p style="text-align: left">
+                  Expenditure of LTC Advance <br />
+                  For F.Y. 2022-2023 debited <br />From the head, Salary
+                </p>
+                <div nz-row [nzGutter]="10">
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                    style="text-align: left"
+                  ></div>
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                    style="text-align: center"
+                  >
+                    <b
+                      >अपर आयकर आयुक्त (मख्या.) (कार्मिक),<br />
+                      मुंबई</b
+                    >
+                  </div>
+                </div>
+
+                <p>प्रतिलिपि प्रेषित:-</p>
+                <p style="margin-bottom: 10px">
+                  1. लेखा अधिकारी, आयकर आयुक्त का फील्ड पे यूनिट, मुंबई वित्तीय
+                  यात्रा भत्ता अग्रिम के बिल सहित ।
+                </p>
+                <p>
+                  2. संबंधित अधिकारी के पत्र सं 001 दिनांक 11.04.2023 के संदर्भ
+                  में सूचित किया जाता है कि अग्रिम राशि का समायोजन एकमुश्त किया
+                  जाएगा। दौरे का यात्रा भता अग्रिम के संबंध में क्लेम, अग्रिम
+                  निकासी की तारीख या वासी यात्रा समापत्ति की तारीख से 30 दिनों
+                  के भीतर दिया जाना चाहिए। इस क्लेम को इस कार्यालय में देने से
+                  पहले, यदि यात्रा भत्ता अग्रिम की अतिरिक्त राशि है तो बैंक
+                  चालान के माध्यम से भारतीय स्टेट बैंक, चर्चगेट ब्रान्च में इस
+                  राशि का भुगतान कर दिया जाए। यदि यह क्लेम सक्षम प्राधिकारी
+                  द्वारा पारित दौरा मंजूरी आदेश के बिना तथा / या दौरा यात्रा
+                  भत्ता ..की अतिरिक्त राशि के भुगतान के लिए जाने पर दिया जाता है
+                  तो सामान्य वित्तीय नियम की धारा 178/2 के अधीन ब्याज लिया
+                  जाएगा।
+                </p>
+                <div nz-row [nzGutter]="10">
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                    style="text-align: left"
+                  ></div>
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                    style="text-align: center"
+                  >
+                    <b
+                      >अपर आयकर आयुक्त (मख्या.) (कार्मिक),<br />
+                      मुंबई</b
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="printOrderModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="generatePDF()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

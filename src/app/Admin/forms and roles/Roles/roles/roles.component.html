@@ -1,0 +1,65 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname"> {{formTitle}}</div>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex;justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" autocomplete="off" name="search" (keydown.enter)="search(true)" nz-input
+            placeholder="Search Records" [(ngModel)]="searchText" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>New Role
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<!--  -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize" (nzQueryParams)="sort($event)" nzSize="small" [nzScroll]="{ x: '1500px', y: '300px' }"
+      (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+      <thead>
+        <tr>
+          <th style="text-align: center;">Edit</th>
+          <th style="text-align: center;">Forms</th>
+          <th *ngFor="let column of columns" nzColumnKey="{{column[0]}}" [nzSortFn]="true">{{column[1]}}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center;"><a (click)="edit(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></a>
+          </td>
+          <td style="text-align: center;"><a (click)="MapForms(data)"><i nz-icon nzType="form"
+                nzTheme="outline"></i></a></td>
+          <td *ngFor="let column of columns" style="white-space: pre-line;">{{data[column[0]]}}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'35%'" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+
+  <app-role *nzDrawerContent [drawerClose]="closeCallback" [data]="drawerData"></app-role>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100" [nzVisible]="drawerVisible1"
+  [nzTitle]="drawerTitle1" (nzOnClose)="drawerClose1()" (nzKeyboard)="true">
+
+  <app-roledetails *nzDrawerContent [drawerClose]="closeCallback1" [drawerVisible]="drawerVisible1" [data]="drawerData1"
+    [roleDetailsData]="drawerData2"></app-roledetails>
+</nz-drawer>

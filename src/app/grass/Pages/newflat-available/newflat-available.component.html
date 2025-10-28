@@ -1,0 +1,742 @@
+<section id="blog" class="blog" style="padding-top: 0px; padding-bottom: 0px">
+  <div class="container" data-aos="fade-up">
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <div class="formname" style="text-align: center">
+          <h6 style="font-size: 15px;margin-bottom: 5px;">Quarter Availability</h6>
+        </div>
+        <p style="text-align: justify;margin-bottom: 10px;font-size: 13px">
+          Below is the list of available Quarters for which you can submit an application. This list is generated based
+          on the residence types permitted for you, determined by your current grade pay in the system. You have the
+          option to apply filters on the left side based on room type, residence type, and location preferences to
+          narrow down your choices.
+        </p>
+      </div>
+    </div>
+
+    <div nz-row nzType="flex" style="margin-bottom: 5px">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: flex-end">
+        <button style="margin-right: 10px" [nzType]="isFilterApplied" nz-button (click)="showFilter()" nz-tooltip
+          nzTooltipTitle="Filter ">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+          <div class="filter-box">
+            <form nz-form>
+              <div nz-row>
+
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Residence Type</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear nzSize="small"
+                        nzPlaceHolder="Select Residence Type" name="recidencetype" [(ngModel)]="RECIDENCE" required
+                        (ngModelChange)="selectrecidence($event)">
+                        <nz-option *ngFor="let city of RecidenceList1" [nzValue]="city.RESIDENCE_TYPE_ID"
+                          [nzLabel]="city.RESIDENCE_TYPE_NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>City</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear
+                        nzPlaceHolder="Select City Name" name="service_name11" [(ngModel)]="CITY" required
+                        (ngModelChange)="selectcity($event)">
+                        <nz-option *ngFor="let city of CityList" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Area</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear
+                        nzPlaceHolder="Select Area Name" name="areaname" [(ngModel)]="AREA" required
+                        (ngModelChange)="selectarea($event)">
+                        <nz-option *ngFor="let city of AreaList2" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Building</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear
+                        nzPlaceHolder="Select Building Name" name="building1" [(ngModel)]="BUILDING" required
+                        (ngModelChange)="selectbuilding($event)">
+                        <nz-option *ngFor="let city of BuildingListdat1" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Building</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear
+                        nzPlaceHolder="Select Building Name" name="building1" [(ngModel)]="BUILDING" required
+                        (ngModelChange)="selectbuilding($event)">
+                        <nz-option *ngFor="let city of BuildingListdat1" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Floor</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear
+                        nzPlaceHolder="Select Floor Name" name="FloorListdat" [(ngModel)]="FLOOR" required
+                        (ngModelChange)="selectfloor($event)">
+                        <nz-option *ngFor="let city of FloorListdat1" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="4">
+                  <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Quarter</nz-form-label>
+                    <nz-form-control>
+                      <nz-select nzSize="small" nzShowSearch nzMode="multiple" nzAllowClear
+                        nzPlaceHolder="Select Quarter Name" name="blockname" [(ngModel)]="FALTSS" required
+                        (ngModelChange)="selectblock($event)">
+                        <nz-option *ngFor="let city of faltListdat1" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="6" style="display: flex; gap: 10px; margin-top: 25px">
+                  <button nz-button nzSize="small" style="font-size: 10px" [nzLoading]="loadingRecords" nzType="primary"
+                    class="flexicons" (click)="applyFilter()">
+                    <i nz-icon nzType="filter"></i>Apply Filter
+                  </button>
+                  <button nz-button nzSize="small" style="font-size: 10px" nzType="primary" (click)="clearfilt()">
+                    <i nz-icon nzType="close"></i>Clear filter
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-lg-2" style="padding: 0px">
+        <div
+          style="box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1); border-radius: 6px"
+        >
+          <div
+            class="sidebar"
+            style="
+              margin: 0px;
+              box-shadow: none;
+              border: 0.5px solid #dee2e6;
+              padding: 8px;
+              border-radius: 6px 6px 0px 0px;
+            "
+          >
+            <h3
+              class="sidebar-title"
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+                font-size: 14px;
+                margin-bottom: 0px;
+              "
+            >
+              <span sty>Filter</span>
+              <span style="cursor: pointer"
+                ><a
+                  (click)="applyFilter()"
+                  style="
+                    padding: 1px 5px;
+                    font-size: 11px;
+                    background-color: #006699;
+                    border: none;
+                  "
+                  class="btn btn-primary"
+                  >Apply</a
+                >&nbsp; &nbsp;<a
+                  (click)="clearfilt()"
+                  class="btn btn-primary"
+                  style="
+                    padding: 1px 5px;
+                    font-size: 11px;
+                    font-weight: 500;
+                    color: black;
+                    background-color: white;
+                    border: 1px solid #006699;
+                  "
+                  >Clear</a
+                ></span
+              >
+            </h3>
+          </div>
+          <div
+            class="sidebar"
+            style="
+              margin: 0px;
+              box-shadow: none;
+              padding: 8px;
+              border-left: 0.5px solid #dee2e6;
+              border-radius: 0px 0px 6px 6px;
+              border-right: 0.5px solid #dee2e6;
+              border-bottom: 1px solid #dee2e6;
+            "
+          >
+            <div class="accordion" id="accordionExample">
+              
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    style="
+                      padding: 8px;
+                      font-size: 12px;
+                      font-weight: 500;
+                      background-color: #f1f2f57a;
+                    "
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    <span>Residence Type</span>
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse show"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body" style="padding: 10px">
+                    <h3
+                      class="sidebar-title"
+                      *ngIf="
+                        this.recicence1 != null &&
+                        this.recicence1 != undefined &&
+                        this.recicence1 != ''
+                      "
+                      style="
+                        font-size: 12px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: end;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <span
+                        (click)="applyFilterRecidence()"
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 11px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <nz-select  nzSize="small"
+                      nzShowSearch
+                      nzMode="multiple"
+                      nzAllowClear
+                      nzSize="small"
+                      nzPlaceHolder="Select Residence Type"
+                      name="recidencetype"
+                      [(ngModel)]="RECIDENCE"
+                      required
+                      (ngModelChange)="selectrecidence($event)"
+                    >
+                      <nz-option
+                        *ngFor="let city of RecidenceList1"
+                        [nzValue]="city.RESIDENCE_TYPE_ID"
+                        [nzLabel]="city.RESIDENCE_TYPE_NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    style="
+                      padding: 8px;
+                      font-size: 12px;
+                      font-weight: 500;
+                      background-color: #f1f2f57a;
+                    "
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    Location
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample"
+                >
+                  <div class="accordion-body fscroll" style="padding: 10px">
+                    <h3
+                      class="sidebar-title"
+                      style="
+                        font-size: 11px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <span>City</span>
+                      <span
+                        (click)="clearfiltCity()"
+                        *ngIf="
+                          this.city1 != null &&
+                          this.city1 != undefined &&
+                          this.city1 != ''
+                        "
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 12px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <div
+                      class="sidebar-item categories"
+                      style="margin-bottom: 9px"
+                    >
+                      <nz-select  nzSize="small"
+                        nzShowSearch
+                        nzMode="multiple"
+                        nzAllowClear
+                        nzPlaceHolder="Select City Name"
+                        name="service_name11"
+                        [(ngModel)]="CITY"
+                        required
+                        (ngModelChange)="selectcity($event)"
+                      >
+                        <nz-option
+                          *ngFor="let city of CityList"
+                          [nzValue]="city.ID"
+                          [nzLabel]="city.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </div>
+                    <h3
+                      class="sidebar-title"
+                      style="
+                        font-size: 11px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <span>Area</span>
+                      <span
+                        (click)="clearfiltArea()"
+                        *ngIf="
+                          this.area1 != null &&
+                          this.area1 != undefined &&
+                          this.area1 != ''
+                        "
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 12px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <div
+                      class="sidebar-item categories"
+                      style="margin-bottom: 9px"
+                    >
+                      <nz-select  nzSize="small"
+                        nzShowSearch
+                        nzMode="multiple"
+                        nzAllowClear
+                        nzPlaceHolder="Select Area Name"
+                        name="areaname"
+                        [(ngModel)]="AREA"
+                        required
+                        (ngModelChange)="selectarea($event)"
+                      >
+                        <nz-option
+                          *ngFor="let city of AreaList2"
+                          [nzValue]="city.ID"
+                          [nzLabel]="city.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </div>
+                    <h3
+                      class="sidebar-title"
+                      style="
+                        font-size: 11px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <span>Building</span>
+                      <span
+                        (click)="clearfiltBuilding()"
+                        *ngIf="
+                          this.building1 != null &&
+                          this.building1 != undefined &&
+                          this.building1 != ''
+                        "
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 12px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <div
+                      class="sidebar-item categories"
+                      style="margin-bottom: 9px"
+                    >
+                      <nz-select  nzSize="small"
+                        nzShowSearch
+                        nzMode="multiple"
+                        nzAllowClear
+                        nzPlaceHolder="Select Building Name"
+                        name="building1"
+                        [(ngModel)]="BUILDING"
+                        required
+                        (ngModelChange)="selectbuilding($event)"
+                      >
+                        <nz-option
+                          *ngFor="let city of BuildingListdat1"
+                          [nzValue]="city.ID"
+                          [nzLabel]="city.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </div>
+                    <h3
+                      class="sidebar-title"
+                      style="
+                        font-size: 11px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <span>Floor</span>
+                      <span
+                        (click)="clearfiltFloor()"
+                        *ngIf="
+                          this.floor1 != null &&
+                          this.floor1 != undefined &&
+                          this.floor1 != ''
+                        "
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 12px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <div
+                      class="sidebar-item categories"
+                      style="margin-bottom: 9px"
+                    >
+                      <nz-select  nzSize="small"
+                        nzShowSearch
+                        nzMode="multiple"
+                        nzAllowClear
+                        nzPlaceHolder="Select Floor Name"
+                        name="FloorListdat"
+                        [(ngModel)]="FLOOR"
+                        required
+                        (ngModelChange)="selectfloor($event)"
+                      >
+                        <nz-option
+                          *ngFor="let city of FloorListdat1"
+                          [nzValue]="city.ID"
+                          [nzLabel]="city.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </div>
+                    <h3
+                      class="sidebar-title"
+                      style="
+                        font-size: 11px;
+                        font-weight: 500;
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 4px;
+                      "
+                    >
+                      <span>Quarter</span>
+                      <span
+                        (click)="clearfiltBlock()"
+                        *ngIf="
+                          this.block1 != null &&
+                          this.block1 != undefined &&
+                          this.block1 != ''
+                        "
+                        style="
+                          cursor: pointer;
+                          font-weight: 500;
+                          font-size: 12px;
+                          color: #006699;
+                        "
+                        >Reset</span
+                      >
+                    </h3>
+                    <div
+                      class="sidebar-item categories"
+                      style="margin-bottom: 9px"
+                    >
+                      <nz-select  nzSize="small"
+                        nzShowSearch
+                        nzMode="multiple"
+                        nzAllowClear
+                        nzPlaceHolder="Select Quarter Name"
+                        name="blockname"
+                        [(ngModel)]="FALTSS"
+                        required
+                        (ngModelChange)="selectblock($event)"
+                      >
+                        <nz-option
+                          *ngFor="let city of faltListdat1"
+                          [nzValue]="city.ID"
+                          [nzLabel]="city.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-lg-12 entries ">
+        <div class="card" style="box-shadow: none">
+          <div class="card-body " style="padding: 0px 0px">
+            <div class="table-responsive fscroll1" #scrollContainerflat (scroll)="onScroll()" style="margin-top: 0px">
+              <div class="row" *ngIf="totalRecords > 0 && !loadingRecords" style="padding: 0px 5px">
+                <div class="col-12" style="display: flex; font-size: 500; margin-bottom: 10px;margin-top: 5px;">
+                  <div style="
+                      border: 1px solid blue;
+                      padding: 5px;
+                      border-radius: 5px 0px 0px 5px;
+                      background-color: #006699;
+                      color: white;
+                      font-size: 11px;
+                      font-weight: 500;
+                    ">
+                    Total Available Quarters
+                  </div>
+                  <div style="
+                      border: 1px solid #0000ff4d;
+                      padding: 5px;
+                      border-radius: 0px 5px 5px 0px;
+                      background-color: rgb(49 71 191 / 83%);
+                      font-size: 11px;
+                      font-weight: 500;
+                      color: white;
+                      width: 42px;
+                      text-align: center;
+                    ">
+                    {{ totalcountofflat }}
+                  </div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <div *ngIf="totalRecords1 > 0 && fil" style="
+                      border: 1px solid blue;
+                      padding: 5px;
+                      border-radius: 5px 0px 0px 5px;
+                      background-color: #006699;
+                      color: white;
+                      font-size: 11px;
+                      font-weight: 500;
+                    ">
+                    Matching Records
+                  </div>
+                  <div *ngIf="totalRecords1 > 0 && fil" style="
+                      border: 1px solid #0000ff4d;
+                      padding: 5px;
+                      border-radius: 0px 5px 5px 0px;
+                      background-color: rgb(49 71 191 / 83%);
+                      font-size: 11px;
+                      font-weight: 500;
+                      color: white;
+                      width: 42px;
+                      text-align: center;
+                    ">
+                    {{ totalRecords1 }}
+                  </div>
+                </div>
+
+                <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-12" style="margin-bottom: 9px"
+                  *ngFor="let data of dataList">
+                  <div class="card" style="
+                      width: 100%;
+                      border: 1px solid #006699;
+                      margin-bottom: 0px;
+                    ">
+                    <div class="card-body flatcardh" style="padding: 10px;">
+                      <h6 class="card-title mainnam limit1" *ngIf="dataList != undefined">
+                        {{ data["AREA_NAME"] }}, {{ data["CITY_NAME"] }}
+                      </h6>
+                      <div class="row">
+                        <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12" style="display: flex">
+                          <span nz-icon style="    align-self: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 18 20"
+                              fill="none">
+                              <path
+                                d="M5.14286 5.78125V4.21875C5.14286 3.96094 5.35983 3.75 5.62501 3.75H7.23215C7.49733 3.75 7.71429 3.96094 7.71429 4.21875V5.78125C7.71429 6.03906 7.49733 6.25 7.23215 6.25H5.62501C5.35983 6.25 5.14286 6.03906 5.14286 5.78125ZM10.7679 6.25H12.375C12.6402 6.25 12.8572 6.03906 12.8572 5.78125V4.21875C12.8572 3.96094 12.6402 3.75 12.375 3.75H10.7679C10.5027 3.75 10.2857 3.96094 10.2857 4.21875V5.78125C10.2857 6.03906 10.5027 6.25 10.7679 6.25ZM5.62501 10H7.23215C7.49733 10 7.71429 9.78906 7.71429 9.53125V7.96875C7.71429 7.71094 7.49733 7.5 7.23215 7.5H5.62501C5.35983 7.5 5.14286 7.71094 5.14286 7.96875V9.53125C5.14286 9.78906 5.35983 10 5.62501 10ZM10.7679 10H12.375C12.6402 10 12.8572 9.78906 12.8572 9.53125V7.96875C12.8572 7.71094 12.6402 7.5 12.375 7.5H10.7679C10.5027 7.5 10.2857 7.71094 10.2857 7.96875V9.53125C10.2857 9.78906 10.5027 10 10.7679 10ZM7.71429 13.2812V11.7188C7.71429 11.4609 7.49733 11.25 7.23215 11.25H5.62501C5.35983 11.25 5.14286 11.4609 5.14286 11.7188V13.2812C5.14286 13.5391 5.35983 13.75 5.62501 13.75H7.23215C7.49733 13.75 7.71429 13.5391 7.71429 13.2812ZM10.7679 13.75H12.375C12.6402 13.75 12.8572 13.5391 12.8572 13.2812V11.7188C12.8572 11.4609 12.6402 11.25 12.375 11.25H10.7679C10.5027 11.25 10.2857 11.4609 10.2857 11.7188V13.2812C10.2857 13.5391 10.5027 13.75 10.7679 13.75ZM18 18.5938V20H0V18.5938C0 18.3359 0.216965 18.125 0.482143 18.125H1.26563V0.9375C1.26563 0.417969 1.69554 0 2.22991 0H15.7701C16.3045 0 16.7344 0.417969 16.7344 0.9375V18.125H17.5179C17.7831 18.125 18 18.3359 18 18.5938ZM3.1942 18.0859H7.71429V15.4688C7.71429 15.2109 7.93126 15 8.19644 15H9.80358C10.0688 15 10.2857 15.2109 10.2857 15.4688V18.0859H14.8058V1.91406L3.21429 1.875L3.1942 18.0859Z"
+                                fill="#6A6A6A" />
+                            </svg>
+                          </span>
+                          &nbsp;&nbsp;
+                          <p style="    align-self: center;" class="card-text subnamm" *ngIf="dataList != undefined">
+                            {{ data["BUILDING_NAME"] }}
+                          </p>
+                        </div>
+                        <div class="col-12 col-xl-4 col-lg-4 col-md-12 col-sm-12"
+                          style="display: flex; margin-top: 0px">
+                          <span nz-icon style="    align-self: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"
+                              fill="none">
+                              <g clip-path="url(#clip0_442_950)">
+                                <path
+                                  d="M9.99935 1.66699L1.66602 5.83366L9.99935 10.0003L18.3327 5.83366L9.99935 1.66699Z"
+                                  stroke="#6A6A6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1.66602 14.167L9.99935 18.3337L18.3327 14.167" stroke="#6A6A6A"
+                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M1.66602 10L9.99935 14.1667L18.3327 10" stroke="#6A6A6A" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_442_950">
+                                  <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                          </span>
+                          &nbsp;&nbsp;
+                          <p style="    align-self: center;" class="card-text subnamm" *ngIf="dataList != undefined">
+                            {{ data["ROOM_TYPE"] }}
+                          </p>
+                        </div>
+                        <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12"
+                          style="display: flex; margin-top: 8px">
+                          <span nz-icon style="    align-self: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 22 22"
+                              fill="none">
+                              <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M1.21564 1.11094L1.11825 1.20837L1.00773 1.37156L1.00735 8.71907L1.11825 8.88088L1.21564 8.97866L1.37912 9.08921H1.58314L1.74628 8.97866L1.84367 8.88088L1.95457 8.71765L1.95707 1.95003H10.5242L10.5263 3.95787L10.6372 4.11964L10.7346 4.21742L10.8977 4.32798H11.1021L11.2652 4.21742L11.3626 4.11964L11.4731 3.95645L11.4764 1.95003H20.0428V9.56779H11.476L11.4731 6.1328L11.3626 5.96957L11.2649 5.87217L11.1032 5.76124H10.897L10.7346 5.87075L10.6358 5.96957L10.5263 6.13207V10.1473L10.6372 10.3091L10.7346 10.4069L10.8977 10.5175L12.4278 10.5207L12.4303 15.8608L12.5408 16.0233L12.6386 16.1203L12.8003 16.2312L13.0057 16.2309L13.1689 16.1203L13.2666 16.0229L13.3772 15.8597L13.38 10.52H20.0428V20.0424H13.3797L13.3775 18.0343L13.2666 17.8725L13.1696 17.7751L13.0072 17.6641H12.801L12.6386 17.7736L12.5394 17.8725L12.4303 18.035L12.4275 20.0424H9.81012L9.80765 18.0343L9.6971 17.8725L9.59971 17.7751L9.43765 17.6641H9.23151L9.06873 17.7736L8.96991 17.8725L8.86044 18.035L8.85759 20.0424H1.95707V15.2812H8.85832L8.86044 15.8608L8.97099 16.0233L9.06873 16.1203L9.23044 16.2312L9.43623 16.2309L9.59936 16.1203L9.6971 16.0229L9.80765 15.8597V14.7017L9.6971 14.5399L9.59971 14.4421L9.43765 14.3315L1.95707 14.329L1.95457 13.2748L1.84367 13.1112L1.74628 13.0138L1.58457 12.9029H1.37843L1.21564 13.0124L1.11682 13.1112L1.00735 13.2741L1.0102 20.7422C1.0038 20.9143 0.95937 20.8755 1.12429 20.8755C1.12429 21.0405 1.08555 20.996 1.25757 20.9896L20.7412 20.9893C20.9143 20.9964 20.8759 21.0408 20.8759 20.8755C21.0408 20.8755 20.9964 20.9142 20.9893 20.7411L20.9925 1.37156L20.8816 1.20837L20.7838 1.11094L20.6225 1L1.37912 1.00035L1.21564 1.11094Z"
+                                fill="#6A6A6A" stroke="#6A6A6A" stroke-width="0.5" />
+                            </svg>
+                          </span>
+                          &nbsp;&nbsp;
+                          <p style="    align-self: center;" class="card-text subnamm" *ngIf="dataList != undefined">
+                            {{ data["FLOOR_NAME"] }}
+                          </p>
+                        </div>
+                        <div class="col-12 col-xl-4 col-lg-4 col-md-12 col-sm-12"
+                          style="display: flex; margin-top: 8px">
+                          <span nz-icon style="    align-self: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="18" viewBox="0 0 16 20"
+                              fill="none">
+                              <path
+                                d="M6.8214 0.00311995L6.9218 0.01982L15.4218 2.01982C15.7267 2.09156 15.9511 2.34361 15.993 2.64702L16 2.74988V17.2499C16 17.5631 15.8061 17.8393 15.5203 17.9495L15.4218 17.9799L6.9218 19.9799C6.4846 20.0828 6.0645 19.7822 6.0067 19.3515L6 19.2499V0.74988C6 0.33534 6.3313 0.01368 6.7225 0L6.8214 0.00311995ZM7.5 1.69683V18.3029L14.5 16.6559V3.34389L7.5 1.69683ZM5 1.99988V3.49988H1.5V16.4999H5V17.9999H0.75C0.3703 17.9999 0.0565098 17.7177 0.00684977 17.3517L0 17.2499V2.74988C0 2.37019 0.28215 2.05639 0.64823 2.00673L0.75 1.99988H5ZM10 8.9999C10.5523 8.9999 11 9.4476 11 9.9999C11 10.5522 10.5523 10.9999 10 10.9999C9.4477 10.9999 9 10.5522 9 9.9999C9 9.4476 9.4477 8.9999 10 8.9999Z"
+                                fill="#6A6A6A" />
+                            </svg>
+                          </span>
+                          &nbsp;&nbsp;
+                          <p style="    align-self: center;" class="card-text subnamm" *ngIf="dataList != undefined">
+                            Quarter No. {{ data["NAME"] }}
+                          </p>
+                        </div>
+                        <div class="col-12">
+                          <!-- <p *ngIf="data.ROSTER_POINT_NO!=10 || data.ROSTER_POINT_NO!=20 || data.ROSTER_POINT_NO!=40 || data.ROSTER_POINT_NO!=50 || data.ROSTER_POINT_NO!=10 || data.ROSTER_POINT_NO!=20 || data.ROSTER_POINT_NO!=40 || data.ROSTER_POINT_NO!=50" style="color: red;padding: 8px;margin-bottom: 0px"></p> -->
+                          <p *ngIf="data.ROSTER_POINT_NO==10 || data.ROSTER_POINT_NO==20 || data.ROSTER_POINT_NO==40 || data.ROSTER_POINT_NO==50"
+                            style="color: red;margin-bottom: 0px;
+                          font-size: 11px;
+                          font-weight: 600;">*Note : This Quarter is Reserved for Scheduled Caste (SC)</p>
+                          <p *ngIf="data.ROSTER_POINT_NO==30 || data.ROSTER_POINT_NO==60" style="color: red;margin-bottom: 0px;
+                          font-size: 11px;
+                          font-weight: 600;">*Note : This Quarter is Reserved for Scheduled Tribe (ST)</p>
+                          <!-- <p *ngIf="data.RESERVED_FOR=='Female'" style="color: red;margin-bottom: 0px;
+                           font-size: 11px;
+                           font-weight: 600;">*Note : This Quarter is Reserved for Women</p>
+                           <p *ngIf="data.RESERVED_FOR=='S'" style="color: red;margin-bottom: 0px;
+                           font-size: 11px;
+                           font-weight: 600;">*Note : This Quarter is reserved for Senior Citizen</p> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="totalRecords == 0 && !loadingRecords" style="width: 100%">
+                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                  style="text-align: center; height: 130px; margin-top: 100px">
+                  <h3 style="color: #006699">Data Not Found</h3>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="width: 100%" *ngIf="loadingRecords">
+              <div class="col-12" style="text-align: center; margin-top: 5%">
+                <div v-if="loading" class="spinner">
+                  <div class="rect1"></div>
+                  <div class="rect2"></div>
+                  <div class="rect3"></div>
+                  <div class="rect4"></div>
+                  <div class="rect5"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

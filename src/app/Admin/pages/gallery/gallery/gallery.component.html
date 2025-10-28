@@ -1,0 +1,168 @@
+<div class="my-boxxxxxxx">
+    <form nz-form>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Title</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Title is required">
+                <input
+                  nz-input
+                  name="title"
+                  type="text"
+                  [(ngModel)]="data.TITLE"
+                  placeholder="Please Enter Title"
+                  required
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row>
+             
+        <div nz-col nzSpan="10">
+            <nz-form-item>
+                <nz-form-label  nzRequired nzNoColon>Category</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Please Select Category ">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Category..."
+                    [(ngModel)]="data.CATEGORY_ID" name="category_name" required>
+                    <nz-option *ngFor="let role of details" [nzLabel]="role.NAME"
+                        [nzValue]="role.ID"></nz-option>
+                </nz-select>
+            </nz-form-control>
+            </nz-form-item>
+        </div>
+            <div nz-col nzSpan="7">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Sequence No is required">
+                  <input nz-input name="galleryseq" maxlength="6"  style="width: 100%"
+                  [(ngModel)]="data.SEQUENCE_NO" (keypress)="omit($event)" required />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="5">
+              <nz-form-item>
+                <nz-form-label style="padding-left: 15px" nzNoColon
+                  >Status</nz-form-label
+                >
+                <nz-form-control>
+                  <nz-switch
+                    style="padding-left: 15px"
+                    name="status"
+                    nzCheckedChildren="Yes"
+                    nzUnCheckedChildren="No"
+                    [(ngModel)]="data.STATUS"
+                  ></nz-switch></nz-form-control
+              ></nz-form-item>
+            </div>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Image
+                </nz-form-label>
+                <br>
+                <span *ngIf="data.IMG_URL == ''">
+                  <span style="color: red; font-size: 10px !important; margin-left: 5px">
+                      ( Image Must Be 800px Height )
+                  </span>
+              </span>
+              <nz-form-control nzHasFeedback nzErrorTip="Image Url is required">
+                <button
+                  nz-button
+                  style="height: 28px; padding: 0px 7px; font-size: 12px"
+                  (click)="inputFile.click()"
+                >
+                  Choose File
+                  <input
+                    #inputFile
+                    type="file"
+                    accept="image/*"
+                    (change)="onFileSelectedIMAGE_URL($event)"
+                    (click)="inputFile.value = ''"
+                    value=""
+                    style="display: none"
+                  />
+                </button>
+                <span *ngIf="data.IMG_URL != ''">
+                  <button (click)="clear(data.IMG_URL,'gallary')"  [nzSize]="'default'" nz-button style="margin-left: 10px">
+
+                      <nz-badge>
+                          <i style="font-size: 15px; color: red" nz-icon
+                              nzType="delete"></i>
+                      </nz-badge>
+
+                  </button>
+              </span>
+              </nz-form-control>
+            </nz-form-item>
+          
+          <div
+            *ngIf="fileDataIMAGE_URL != null"
+            style="overflow: hidden; padding-left: 11px; font-size: 11px"
+          >
+          <img width="70%" style="margin-left: 10px" [src]="image" />
+
+          </div>
+        
+          <div nz-row>
+            <div nz-col nzSpan="24">
+                  <nz-form-item *ngIf="fileDataIMAGE_URL == null && data.IMG_URL != ''" style="margin-top: 20px">
+                        <img class="img" width="70%" src="{{ imgurl }}gallary/{{ data.IMG_URL }}" />
+                    </nz-form-item>
+                
+            </div>
+        </div>
+        </div>
+  
+      
+      </nz-spin>
+    </form>
+</div>
+    <div class="footer" >
+      <button
+        type="button"
+        nz-button
+        (click)="close()"
+        class="ant-btn"
+        style="margin-right: 8px"
+      >
+        <span>Cancel</span>
+      </button>
+      <button
+        type="button"
+        class="ant-btn ant-btn-primary"
+        *ngIf="!data.ID"
+        nz-button
+        nz-dropdown
+        [nzDropdownMenu]="menu"
+        (click)="save(false)"
+      >
+        <span>Save & Close</span>
+      </button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li
+            nz-menu-item
+            class="menuc"
+            style="border-radius: 4px; background-color: #40a9ff"
+          >
+            <a (click)="save(true)">Save & New</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+      <button
+        type="button"
+        class="ant-btn ant-btn-primary"
+        nz-button
+        [nzLoading]="isSpinning"
+        *ngIf="data.ID"
+        (click)="save(false)"
+      >
+        <span>Update & close</span>
+      </button>
+    </div>
+  

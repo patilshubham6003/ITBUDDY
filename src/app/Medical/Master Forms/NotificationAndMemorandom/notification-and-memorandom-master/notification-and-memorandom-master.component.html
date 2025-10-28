@@ -1,0 +1,121 @@
+<div nz-row nzType="flex">
+  <div nz-col nzSpan="8">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div nz-col nzSpan="16" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            (keydown.enter)="onKeypressEvent($event)"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            nzSearch
+            (click)="search(true)"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>
+          Add New Notification/ Memorandum
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzSize]="'small'"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [nzScroll]="{ x: '1000px', y: '55vh' }"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="60px" style="text-align: center">Edit</th>
+          <th nzWidth="100px" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true">
+            Name
+          </th>
+          <th nzWidth="60px" nzColumnKey="{{ 'DATE' }}" [nzSortFn]="true">
+            Date
+          </th>
+          <th nzWidth="80px" nzColumnKey="{{ 'FILE_NO' }}" [nzSortFn]="true">
+            File No
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center">
+            <a nz-button nzType="link" (click)="edit(data)"
+              ><i nz-icon nzType="edit" nzTheme="outline"></i
+            ></a>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DATE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FILE_NO"] }}
+          </td>
+        </tr>
+        <tr></tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="500"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-notification-and-memorandom-drawer
+      [drawerClose]="closeCallback"
+      [data]="drawerData"
+    ></app-notification-and-memorandom-drawer>
+  </ng-container>
+</nz-drawer>

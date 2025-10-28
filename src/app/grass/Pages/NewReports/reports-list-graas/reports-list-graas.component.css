@@ -1,0 +1,30 @@
+.hover {
+    padding: 5px 5px 5px 5px;
+    width: 50%;
+    height: 50px;
+}
+
+.boxhover {
+    padding: 5px 5px 5px 5px;
+    width: 225%;
+    height: 50px;
+}
+
+.zoom {
+    padding: 50px;
+    transition: transform .2s;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.zoom:hover {
+    transform: scale(1.1);
+}
+
+.formname {
+    color: rgba(0, 0, 0, .85);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+}

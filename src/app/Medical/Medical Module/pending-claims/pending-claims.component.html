@@ -1,0 +1,465 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="12"
+    nzLg="12"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            (keydown.enter)="onKeypressEvent($event)"
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="search()"
+            id="button"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item style="margin-top: 1px; width: 113%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="BILL_FILIING_DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <!-- [(ngModel)]="data" -->
+            <div nz-col nzSpan="5" style="margin-left: 39px">
+              <nz-form-item class="nz-form-item">
+                <nz-form-label nzNoColon>Claim Type</nz-form-label>
+
+                <nz-form-control>
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    name="ClaimType"
+                    [(ngModel)]="TYPE_OF_CLAIM"
+                    nzPlaceHolder="Select Claim Type"
+                  >
+                    <nz-option nzLabel="Final Claim" nzValue="0"></nz-option>
+                    <nz-option nzLabel="Advance Claim" nzValue="1"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- [(ngModel)]="STAGE_ID" -->
+
+            <!-- </div>
+                    <div nz-row nzGutter="8"> -->
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 20px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="7"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="dataList"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '3600px', y: '55vh' }"
+      nzBordered
+    >
+      <thead>
+        <tr>
+          <th
+            nzLeft
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+          >
+            Action
+          </th>
+          <th
+            nzLeft
+            nzWidth="180px"
+            nzColumnKey="IS_APPLYING_FOR_ADVANCE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Claim Type
+          </th>
+          <!-- <th
+            nzWidth="180px"
+            nzColumnKey="CLAIM_STAGE_NAME"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Status
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="CLAIM_NO"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Claim No
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center">
+            Uploaded Claim File
+          </th> -->
+          <th
+            nzWidth="250px"
+            nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Applicant Name
+          </th>
+          <th
+            nzWidth="110px"
+            nzColumnKey="MOBILE_NO"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="EMPLOYEE_CODE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="270px"
+            nzColumnKey="DESIGNATION"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Employee Designation
+          </th>
+          <th
+            nzWidth="220px"
+            nzColumnKey="PATIENT_NAME"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Patient Name
+          </th>
+          <th
+            nzWidth="170px"
+            nzColumnKey="RELATION_WITH_PATIENT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Patient Relation
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="BILL_FILIING_DATE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Bill Filling Date
+          </th>
+          <!-- <th
+            nzWidth="190px"
+            nzColumnKey="ADMISSIBLE_AMOUNT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Admissible Amount(₹)
+          </th> -->
+
+          <th
+            nzWidth="370px"
+            nzColumnKey="TREATEMENT_TYPE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Treatment Type
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="TREATMENT_START_DATE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Treatment Start Date
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="TREATMENT_END_DATE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Treatment End Date
+          </th>
+          <th
+            nzWidth="200px"
+            nzColumnKey="WARD_TYPE"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Ward Entitlement
+          </th>
+
+          <th
+            nzWidth="210px"
+            nzColumnKey="OPD_TREATEMENT_AMOUNT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            OPD Treatment Amount
+          </th>
+          <th
+            nzWidth="220px"
+            nzColumnKey="INDOOR_TREATEMENT_AMOUNT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Indoor Treatment Amount
+          </th>
+          <th
+            nzWidth="230px"
+            nzColumnKey="TEST_OR_INVESTIGATION_AMOUNT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Tests/Investigation Amount
+          </th>
+          <th
+            nzWidth="210px"
+            nzColumnKey="TOTAL_ADVANCE_CLAIMED_AMOUNT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Total Amount Claimed
+          </th>
+
+          <th
+            nzWidth="400px"
+            nzColumnKey="NATURE_OF_TREATMENT"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Nature Of Treatment
+          </th>
+          <!-- <th
+            nzWidth="150px"
+            nzColumnKey="CHECKLIST_STATUS"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Accept / Reject
+          </th>
+          <th
+            nzWidth="300px"
+            nzColumnKey="REJECT_REMARK"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Remark
+          </th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <!-- <td align="center">
+                        <a (click)="edit()"><i nz-icon nzType="edit"></i></a>
+                    </td> -->
+
+          <td nzLeft nzWidth="100px">
+            <div style="padding: 3px">
+              <span
+                *ngIf="data.CURRENT_STAGE_ID <= 3"
+                style="cursor: pointer"
+                (click)="pickClaim(data)"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px blue solid;
+                    border-radius: 0px;
+                  "
+                  [nzColor]="'blue'"
+                >
+                  Pick Claim
+                </nz-tag>
+              </span>
+            </div>
+          </td>
+
+          <td
+            nzLeft
+            style="text-align: center; white-space: pre-line"
+            nzWidth="180px"
+          >
+            <span *ngIf="!data.IS_APPLYING_FOR_ADVANCE">Final Claim</span>
+            <span *ngIf="data.IS_APPLYING_FOR_ADVANCE">Advance Claim</span>
+          </td>
+          <!-- <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.CLAIM_STAGE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.CLAIM_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            <a *ngIf="data.CLAIM_FORM != null" (click)="viewFileNew1111(data)">
+              <span nz-icon nzType="eye" nzTheme="outline"></span>
+            </a>
+          </td> -->
+          <td style="text-align: center; white-space: pre-line" nzWidth="250px">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="110px">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.EMPLOYEE_CODE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="270px">
+            {{ data.DESIGNATION }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="220px">
+            {{ data.PATIENT_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="170px">
+            {{ data.RELATION_WITH_PATIENT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.BILL_FILIING_DATE | date : "dd/MM/yyyy" }}
+          </td>
+          <!-- <td style="text-align: center; white-space: pre-line" nzWidth="190px">
+            {{ data.ADMISSIBLE_AMOUNT }}
+          </td> -->
+
+          <td style="text-align: center" nzWidth="370px">
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT'"
+              >OPD Treatment / Test Entitled</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'IT'"
+              >Indoor Treatment</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT,IT'"
+              >OPD Treatment / Test Entitled & Indoor Treatment</span
+            >
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="180px">
+            {{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}
+          </td>
+          <td style="text-align: center" nzWidth="200px">
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'P'">Pvt </span>
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'S'">Semi Pvt</span>
+            <span nz-icon *ngIf="data['WARD_TYPE'] == 'G'">General</span>
+          </td>
+
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.OPD_TREATEMENT_AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.INDOOR_TREATEMENT_AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.TEST_OR_INVESTIGATION_AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.TOTAL_ADVANCE_CLAIMED_AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="400px">
+            {{ data.NATURE_OF_TREATMENT }}
+          </td>
+          <!-- <td style="text-align: center" nzWidth="150px">
+            <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'A'">
+              Claim Accept
+            </span>
+            <span nz-icon *ngIf="data['CHECKLIST_STATUS'] == 'R'"
+              >Claim Reject</span
+            >
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="300px">
+            {{ data.REJECT_REMARK }}
+          </td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

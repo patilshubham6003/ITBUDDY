@@ -1,0 +1,96 @@
+.ddd {
+    display: inline-block !important;
+    margin-bottom: 5px !important;
+    width: -webkit-fill-available !important;
+    padding: 0px 10px !important;
+}
+
+.abc {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}
+
+.modelsub {
+    color: #6A6A6A;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inner-table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.inner-table-td,
+.inner-table-th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.textOverflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+nz-form-item.modalElements {
+    display: inline-block;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+}
+
+
+.cardstyle {
+    margin-top: 10px;
+    background-color: #FFF;
+    position: relative;
+    width: 98%;
+    cursor: pointer;
+    padding: 10px;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid #efefef;
+    border-radius: 10px;
+}
+
+.mainnam {
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0px rgba(252, 252, 252, 0.1);
+    background-color: #fdfdfd;
+    box-shadow: inset 0 0 5px rgb(151, 150, 150);
+    border-radius: 10px;
+    /* display: none; */
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2495f1d2;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2495f1d2;
+}

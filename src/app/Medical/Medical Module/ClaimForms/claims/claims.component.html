@@ -1,0 +1,162 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i> Add New Claim
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="EMPLOYEE_MASTER"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzSize]="'small'"
+      (nzPageSizeChange)="search(true)"
+      nzBordered
+    >
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th>Edit</th>
+          <th>Action</th>
+          <th nzShowSort nzSortKey="NAME">Name</th>
+          <th nzShowSort nzSortKey="DATE">Designation & Office</th>
+          <th nzShowSort nzSortKey="DATE">DDO Of the Official</th>
+          <th nzShowSort nzSortKey="DATE">EMP Code NO.</th>
+          <th nzShowSort nzSortKey="DATE">Patient's Relationship</th>
+          <th nzShowSort nzSortKey="DATE">CGHS/CS (MA) Beneficiary</th>
+          <th nzShowSort nzSortKey="DATE">Emergency Treatment is avalled</th>
+          <th nzShowSort nzSortKey="DATE">Date of CGHS/AMA's Reference</th>
+          <th nzShowSort nzSortKey="DATE">Date Of Bill</th>
+          <th nzShowSort nzSortKey="DATE">Bill is Filed in time</th>
+          <th nzShowSort nzSortKey="DATE">Name Of Hospital</th>
+          <th nzShowSort nzSortKey="DATE">Nature Of Treatment</th>
+          <th nzShowSort nzSortKey="DATE">Period Of Treatment</th>
+          <th nzShowSort nzSortKey="DATE">Amount of reimbursement claimed</th>
+          <th nzShowSort nzSortKey="DATE">
+            Amount of reimbursement Admissible
+          </th>
+          <th nzShowSort nzSortKey="DATE">Advance taken</th>
+          <th nzShowSort nzSortKey="DATE">Net amount Payable/recoverable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>
+            <a (click)="edit()"><i nz-icon nzType="edit"></i></a>
+          </td>
+          <td>
+            <button nz-button [nzSize]="size" nzType="primary">
+              Annexture
+            </button>
+            &nbsp;
+            <button
+              nz-button
+              [nzSize]="size"
+              nzType="default"
+              style="
+                background-color: #ff6565;
+                color: white;
+                border-radius: 2px;
+              "
+            >
+              Order
+            </button>
+            &nbsp;
+            <button
+              nz-button
+              [nzSize]="size"
+              nzType="default"
+              style="
+                background-color: #ba31ff;
+                color: white;
+                border-radius: 2px;
+              "
+              (click)="showModal()"
+            >
+              Forward
+            </button>
+            &nbsp;
+          </td>
+          <td>{{ data.NAME_OF_APPLICATION }}</td>
+          <td>{{ data.DESIGNATION_OFFICE }}</td>
+          <td>{{ data.DDO_OFFICIAL }}</td>
+          <td>{{ data.EMP_CODE_NO }}</td>
+          <td>{{ data.PATIENTS_RELATION }}</td>
+          <td>{{ data.CGHS_OR_CS }}</td>
+          <td>{{ data.IS_EMERGENCY_TREATMENT }}</td>
+          <td>{{ data.DATE_OF_CGHS }}</td>
+          <td>{{ data.DATE_OF_BILL }}</td>
+          <td>{{ data.IS_BILLFIELD }}</td>
+          <td>{{ data.NAME_OF_HOSPITAL }}</td>
+          <td>{{ data.TREATMENT_NATURE }}</td>
+          <td>{{ data.TREATMENT_PERIOD }}</td>
+          <td>{{ data.REIMBURSMENT_CLAIMED }}</td>
+          <td>{{ data.REIMBURSMENT_ADMISSIBLE }}</td>
+          <td>{{ data.ADVANCE_TACKEN }}</td>
+          <td>{{ data.NET_AMOUNT_PAYABLE }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="handleCancel()">
+  <div *nzModalContent>
+    <nz-form-item>
+      <nz-form-label nzRequired nzNoColon>Forward Claim To</nz-form-label>
+      <nz-input-group>
+        <nz-select
+          name="ForwardTo"
+          style="width: 100%"
+          nzShowSearch
+          nzPlaceHolder="Select Hospital Type"
+        >
+          <nz-option [nzValue]="'STO'" [nzLabel]="'STO'"></nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-item>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">Send</button>
+  </div>
+</nz-modal>

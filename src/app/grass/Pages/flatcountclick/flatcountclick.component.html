@@ -1,0 +1,153 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+            <nz-form-item style="margin-right: 0px;">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" (keyup)="search(true)" name="search" nz-input placeholder="Search Records"
+                        [(ngModel)]="searchText" />
+                </nz-input-group>
+
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="6"></div>
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'ALL'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('ALL')">Total Quarters
+                <span *ngIf="pendingscounts != undefined && pendingscounts != null">{{
+                    pendingscounts['TOTAL_COUNT']
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'A'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('A')">Vacant Quarters
+                <span *ngIf="pendingscounts != undefined && pendingscounts != null">{{
+                    pendingscounts['TOTAL_AVAILABLE']
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'B'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('B')">Occupied Quarters
+                <span *ngIf="pendingscounts != undefined && pendingscounts != null">{{
+                    pendingscounts['TOTAL_BOOKED']
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="6"></div>
+</div>
+
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '2200px', y: '60vh' }"
+            [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)"
+            style="white-space: pre-line;">
+            <thead>
+                <tr>
+                    <th nzWidth="150px" nzColumnKey="{{ 'AVAILABLE_STATUS' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Available Status
+                    </th>
+                    <th nzWidth="180px" nzColumnKey="{{ 'CITY_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        City Name
+                    </th>
+                    <th nzWidth="200px" nzColumnKey="{{ 'AREA_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Area Name
+                    </th>
+                    <th nzWidth="180px" nzColumnKey="{{ 'BUILDING_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Building Name
+                    </th>
+                    <th nzWidth="160px" nzColumnKey="{{ 'FLOOR_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Floor Name
+                    </th>
+                    <th nzWidth="160px" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Quarter Name
+                    </th>
+                    <th nzWidth="150px" nzColumnKey="{{ 'RESIDENCE_TYPE_ID' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Residence Type
+                    </th>
+
+                    <th nzWidth="210px" style="font-weight: bold; text-align: center">
+                        Employee Name
+                    </th>
+                    <th nzWidth="140px" style="font-weight: bold; text-align: center">
+                        Employee Code
+                    </th>
+                    <th nzWidth="200px" style="font-weight: bold; text-align: center">
+                        Designation
+                    </th>
+                    <th nzWidth="80px" nzColumnKey="{{ 'STATUS' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody style="text-align: center">
+                <tr *ngFor="let data of datatable.data" style="text-align: center">
+                    <td style="text-align: center; white-space: pre-line">
+                        <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'B'">Booked</span>
+                        <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'A'">Available</span>
+                        <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'U'">Under
+                            Maintenance</span>
+                        <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'NA'">Not
+                            Available</span>
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["CITY_NAME"]? data["CITY_NAME"]:"_" }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["AREA_NAME"]? data["AREA_NAME"]:"_" }}
+                    </td>
+
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["BUILDING_NAME"]?data["BUILDING_NAME"] :"_" }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["FLOOR_NAME"]? data["FLOOR_NAME"] : '_' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["NAME"]?data["NAME"]:"_" }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["RESIDENCE_TYPE_NAME"]?data["RESIDENCE_TYPE_NAME"]:"_" }}
+                    </td>
+
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["EMPLOYEE_NAME"]? data["EMPLOYEE_NAME"] :'-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["EMPLOYEE_CODE"]? data["EMPLOYEE_CODE"]:'-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["DESIGNATION"]? data["DESIGNATION"]:'-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+                            [nzTwotoneColor]="'#52c41a'"></i>
+                        <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+                            [nzTwotoneColor]="'#f50'"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+    <div class="col-12" style="text-align: center; margin-top: 10%">
+        <div v-if="loading" class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
+</div>
+<main id="main" *ngIf="!isSpinning">
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="breadcrumb-hero" style="padding: 10px 0;">
+            <div class="container">
+                <div class="breadcrumb-hero">
+                    <h2 style="font-weight: 500;color: white;">Manuals</h2>
+                    <ol>
+                        <li><a routerLink="/" style="text-decoration: None;color: white;">Home</a></li>
+                        <li *ngIf="servDEtailcondition!='T'">Manuals</li>
+                        <li *ngIf="servDEtailcondition=='T'" routerLink="/service/service-detail"
+                            style="cursor: pointer;">Service Details</li>
+                        <li *ngIf="servDEtailcondition=='T'">Manuals</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="blog" class="blog" style="padding-top: 40px;padding-bottom: 40px;">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="sidebar" style="margin: 0px;">
+                        <h3 class="sidebar-title"
+                            style="display: flex;justify-content: space-between;font-weight: 600;">
+                            <span>Filter</span>
+                            <span (click)="clearfilt()" *ngIf="filt"
+                                style="cursor: pointer;font-weight: 600;">Clear</span>
+                        </h3>
+                        <hr>
+                        <h3 class="sidebar-title" style="font-size: 15px;font-weight: 500;">Service</h3>
+                        <div class="sidebar-item categories">
+                            <nz-select nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="Select Services"
+                                [(ngModel)]="SERVICE_IDS" name="service_name" style="width:100%;"
+                                (ngModelChange)="selectservice($event)">
+                                <nz-option *ngFor="let role of servises" [nzLabel]="role.TITLE" [nzValue]="role.ID"
+                                    style="width:100%;"></nz-option>
+                            </nz-select>
+                        </div>
+                        <hr>
+                        <h3 class="sidebar-title" style="font-size: 15px;font-weight: 500;">From Date</h3>
+                        <div class="sidebar-item categories">
+                            <nz-date-picker name="nmbcnk" nzFormat="dd/MM/yyyy" [(ngModel)]="date"
+                                (ngModelChange)="datefilt($event)" style="width: 100%;"></nz-date-picker>
+                        </div>
+                        <hr>
+                        <h3 class="sidebar-title" style="font-size: 15px;font-weight: 500;">To Date</h3>
+                        <div class="sidebar-item categories">
+                            <nz-date-picker name="nmbcnkk" nzFormat="dd/MM/yyyy" [(ngModel)]="date1"
+                                (ngModelChange)="datefilt1($event)" style="width: 100%;"></nz-date-picker>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-lg-9 entries">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-lg-12" style="padding-left: 0px;padding-right: 0px;">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="fm-search">
+                                            <div class="mb-0">
+                                                <div class="input-group input-group-lg">
+                                                    <span *ngIf="!showx" (click)="searchBlogs(searchText)"
+                                                        class="input-group-text bg-transparent"><i
+                                                            class="fa fa-search"></i></span>
+                                                    <span *ngIf="showx" (click)="searchBlogs1()"
+                                                        class="input-group-text bg-transparent"><i
+                                                            class="bi bi-x"></i></span>
+                                                    <input autocomplete="off" placeholder="Search" class="form-control"
+                                                        name="fsearchh" (keyup)="searchBlogs(searchText)"
+                                                        [(ngModel)]="searchText">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive mt-3 fscroll">
+                                            <table class="table table-striped table-hover table-sm mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>TITLE
+                                                        </th>
+                                                        <th>DATE</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of typeM">
+                                                        <td style="width: 75%;padding: 10px 0.25rem;">
+                                                            <a *ngIf="typeM!=undefined" target="_blank"
+                                                                href="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}"
+                                                                style="color: black;">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div><i
+                                                                            class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                                                    </div>
+                                                                    <div class="font-weight-bold limit"
+                                                                        *ngIf="typeM!=undefined">
+                                                                        <img *ngIf="data.IS_LATEST==1"
+                                                                            src="assets/img/newgif.gif"
+                                                                            alt="new">&nbsp;{{data.TITLE}}
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </td>
+                                                        <td style="width: 20%;padding: 10px 0.25rem;">
+                                                            <span *ngIf="typeM!=undefined">
+                                                                {{data.CREATED_MODIFIED_DATE |
+                                                                date:'dd/MM/yyyy'}}</span>
+                                                        </td>
+                                                        <td style="width: 5%;padding: 10px 0.25rem;">
+                                                            <a *ngIf="typeM!=undefined" target="_blank"
+                                                                href="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}"
+                                                                style="color: black;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                                                    height="18" fill="#006699" class="bi bi-eye-fill"
+                                                                    viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                                    <path
+                                                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                                                </svg></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="row" *ngIf="ncounts == 0" style="width: 100%;">
+                                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                                                    style="text-align: center; height: 130px;margin-top: 100px;">
+                                                    <h3 style="color: #006699;">Data Not Found</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>

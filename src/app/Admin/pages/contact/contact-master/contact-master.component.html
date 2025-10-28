@@ -1,0 +1,80 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6">
+    <b>
+      <div class="formname">{{ formTitle }}</div>
+    </b>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" nz-input placeholder="Search Records" [(ngModel)]="searchText"
+          (keydown.enter)="search(true)" />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Contact
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1"  [nzSize]="'small'" nzBordered #table
+    nzShowSizeChanger [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
+    [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+    (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)"   [nzScroll]="{ x: '1500px', y: '360px' }" style="white-space: inherit;">
+    
+      <thead>
+        <tr>
+          <th nzWidth="80px" nzAlign="center"><b>Action</b></th>
+          <th nzWidth="200px" [nzColumnKey]="'EMAIL_ID'" [nzSortFn]="true" nzAlign="center"><b>Email ID</b></th>
+          <th nzWidth="350px"[nzColumnKey]="'ADDRESS'" [nzSortFn]="true" nzAlign="center"><b>Address</b></th>
+          <th nzWidth="150px" [nzColumnKey]="'CONTACT_NO'" [nzSortFn]="true" nzAlign="center"><b>Contact No</b></th>
+          <th nzWidth="100px" [nzColumnKey]="'LONGITUDE'" [nzSortFn]="true" nzAlign="center"><b>Longitude</b></th>
+          <th nzWidth="100px "[nzColumnKey]="'LATITUDE'" [nzSortFn]="true" nzAlign="center"><b>Latitude</b></th>
+          <th nzWidth="80px"[nzColumnKey]="'STATUS'" [nzSortFn]="true" nzAlign="center"><b>Status</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzAlign="center">
+            <a nz-button nzType="link" (click)="edit(data)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>
+          </td>
+          <td>{{data.EMAIL_ID}}</td>
+          <td nz-popover nzPopoverTitle="Address" [nzPopoverContent]="data.ADDRESS" nzPopoverPlacement="topLeft">{{
+            data.ADDRESS | slice:0:40 }}{{ data.ADDRESS.length > 40 ? "..." : "" }}</td>
+          <td nzAlign="center">{{data.CONTACT_NO}}</td>
+          <td nzAlign="center">{{data.LONGITUDE}}</td>
+          <td nzAlign="center">{{data.LATITUDE}}</td>
+          <td nzAlign="center">
+            <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+
+            <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <app-contacts *nzDrawerContent [drawerClose]="closeCallback" [data]="drawerData"></app-contacts>
+</nz-drawer>

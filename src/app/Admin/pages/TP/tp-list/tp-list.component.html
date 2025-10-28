@@ -1,0 +1,726 @@
+<div nz-row nzType="flex">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="14"
+    nzLg="14"
+    nzXl="14"
+    style="display: flex"
+  >
+    <div class="formname" style="padding-top: 3px">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="10"
+    nzLg="10"
+    nzXl="10"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item style="margin-right: 0px">
+        <button
+          nz-button
+          nzTooltipTitle="Download Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="convertInExcel()"
+          style="margin-right: 6px"
+          [nzLoading]="loadexcel"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i></button
+        >&nbsp;
+        <button
+          [nzType]="isFilterApplied"
+          style="margin-right: 10px"
+          nz-button
+          (click)="showFilter()"
+          nz-tooltip
+          nzTooltipTitle="Filter "
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item style="margin-right: 0px">
+        <nz-input-group
+          nzSearch
+          [nzAddOnAfter]="suffixIconButton"
+          style="max-width: 250px"
+        >
+          <input
+            type="text"
+            name="searchText"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <span
+      *ngIf="dataList != undefined"
+      style="
+        font-size: 11px;
+        margin-bottom: 0px;
+        padding-left: 0px;
+        color: blue;
+        font-weight: 600;
+      "
+    >
+      Total Records: &nbsp; {{ totalRecords1 }}</span
+    >&nbsp;&nbsp;&nbsp;&nbsp;
+    <span
+      *ngIf="showddetails && dataList != undefined"
+      style="font-size: 11px; margin-bottom: 0px; color: blue; font-weight: 600"
+    >
+      Matching Records: &nbsp; {{ totalRecords }}</span
+    >
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item style="margin-right: 10px !important">
+                <nz-form-label nzRequired nzNoColon
+                  >Application Date</nz-form-label
+                >
+                <nz-range-picker
+                  style="width: 100%"
+                  [nzFormat]="'dd/MM/yyyy'"
+                  name="selectedDate"
+                  [(ngModel)]="appdate"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="6">
+                            <nz-form-item style="margin-right: 10px!important;">
+                                <nz-form-label nzNoColon>Office</nz-form-label>
+                                <nz-select nzShowSearch nzAllowClear nzMode="multiple" nzPlaceHolder="Select Office"
+                                    [nzShowArrow]="true" style="width: 100%;font-weight: 100 !important;"
+                                    [nzMaxTagCount]="2" name="Officetrans" [(ngModel)]="OFFICE_ID_transfer">
+                                    <nz-option *ngFor="let list of Offices" [nzValue]="list.ID"
+                                        [nzLabel]="list.NAME"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div> -->
+            <!-- <div nz-col nzSpan="6">
+                            <nz-form-item style="margin-right: 10px!important;">
+                                <nz-form-label nzNoColon>Cadre</nz-form-label>
+                                <nz-select nzShowSearch nzAllowClear nzMode="multiple" nzPlaceHolder="Select Cadre"
+                                    [nzShowArrow]="true" style="width: 100%;font-weight: 100 !important;"
+                                    [nzMaxTagCount]="2" name="RANK_ID_transfer" [(ngModel)]="RANK_ID_transfer">
+                                    <nz-option *ngFor="let list of ranklist" [nzValue]="list.ID"
+                                        [nzLabel]="list.NAME"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div> -->
+            <!-- <div nz-col nzSpan="6">
+                            <nz-form-item style="margin-right: 0px !important;">
+                                <nz-form-label nzNoColon>Reason Type</nz-form-label>
+                                <nz-select name="Reason_transfer" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Select Reason Type" [(ngModel)]="REASON_FOR_TRANSFER"
+                                    class="inputsize1">
+                                    <nz-option nzValue="Medical" nzLabel="Medical"></nz-option>
+                                    <nz-option nzValue="Family" nzLabel="Family"></nz-option>
+                                    <nz-option nzValue="Retirement" nzLabel="Retirement"></nz-option>
+                                    <nz-option nzValue="Other" nzLabel="Other"></nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div> -->
+            <div
+              nz-col
+              nzSpan="6"
+              style="display: flex; gap: 10px; padding-top: 0px"
+            >
+              <button
+                nz-button
+                style="margin-top: 31px"
+                [nzLoading]="loadingRecords"
+                nzType="primary"
+                class="flexicons"
+                (click)="applyFilter()"
+              >
+                <i nz-icon nzType="filter"></i>Apply Filter
+              </button>
+              <button
+                nz-button
+                style="margin-top: 31px"
+                nzType="primary"
+                class="flexicons"
+                (click)="clearFilter()"
+              >
+                <i nz-icon nzType="delete"></i>Clear filter
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzSize="small"
+      nzBordered
+      #langMasterTable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      style="white-space: pre-line"
+      (nzPageSizeChange)="search()"
+      [nzScroll]="{ y: '60vh', x: '3500px' }"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th
+            nzLeft
+            nzWidth="170px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="APPLICATION_DATE"
+          >
+            Application Date
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="NAME"
+          >
+            Name
+          </th>
+          <th
+            nzWidth="200px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="APPLICATION_NO"
+          >
+            Application No.
+          </th>
+          <th
+            nzWidth="150px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="EMPLOYEE_CODE"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="190px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="EMAIL_ID"
+          >
+            Email ID
+          </th>
+          <th
+            nzWidth="130px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="MOBILE_NO"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="230px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="CURRENT_POSTING"
+          >
+            Current posting
+          </th>
+          <th
+            nzWidth="230px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="CADRE"
+          >
+            Currect Cadre
+          </th>
+          <th nzWidth="280px" style="text-align: center">
+            Period Spent In Current Office
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="ADDRESS"
+          >
+            Current Residential Address
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="BUILDING_1"
+          >
+            Requested Buiding 1
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="BUILDING_2"
+          >
+            Requested Buiding 2
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="BUILDING_3"
+          >
+            Requested Buiding 3
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="CHARGE_1"
+          >
+            Requested Charge 1
+          </th>
+
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="CHARGE_2"
+          >
+            Requested Charge 2
+          </th>
+
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="CHARGE_3"
+          >
+            Requested Charge 3
+          </th>
+
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="REASON_FOR_REQUEST"
+          >
+            Primary Reason for request of transfer
+          </th>
+          <th
+            nzWidth="250px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="REQUEST"
+          >
+            Request
+          </th>
+
+          <th
+            nzWidth="200px"
+            style="text-align: center"
+            [nzSortFn]="true"
+            nzColumnKey="ATTACHMENTS"
+          >
+            Attachment
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of langMasterTable.data">
+          <td
+            nzLeft
+            class="textOverflow"
+            style="white-space: pre-line; text-align: center"
+          >
+            {{
+              data["APPLICATION_DATE"]
+                ? (data["APPLICATION_DATE"] | date : "dd/MM/yyyy HH:mm")
+                : "-"
+            }}
+          </td>
+          <td>
+            <span *ngIf="data.NAME != null">
+              <span
+                *ngIf="data.NAME.length >= 20"
+                nz-popover
+                [nzPopoverContent]="data.NAME"
+                nzPopoverPlacement="topLeft"
+              >
+                {{ data["NAME"] == null ? "-" : (data.NAME | slice : 0 : 20)
+                }}{{ data.NAME.length > 20 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.NAME.length < 20">
+                {{ data["NAME"] == null ? "-" : (data.NAME | slice : 0 : 20)
+                }}{{ data.NAME.length > 20 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.NAME == null">-</span>
+          </td>
+          <td align="center">
+            {{ data.APPLICATION_NO }}
+          </td>
+          <td align="center" class="textOverflow" style="white-space: pre-line">
+            {{ data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.EMAIL_ID != null">
+              <span
+                *ngIf="data.EMAIL_ID.length >= 17"
+                nz-popover
+                [nzPopoverContent]="data.EMAIL_ID"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 17)
+                }}{{ data.EMAIL_ID.length > 17 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.EMAIL_ID.length < 17">
+                {{
+                  data["EMAIL_ID"] == null
+                    ? "-"
+                    : (data.EMAIL_ID | slice : 0 : 17)
+                }}{{ data.EMAIL_ID.length > 17 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.EMAIL_ID == null">-</span>
+          </td>
+          <td align="center" class="textOverflow" style="white-space: pre-line">
+            {{ data.MOBILE_NO ? data.MOBILE_NO : "-" }}
+          </td>
+          <td>
+            <span *ngIf="data.CURRENT_POSTING != null">
+              <span
+                *ngIf="data.CURRENT_POSTING.length >= 23"
+                nz-popover
+                [nzPopoverContent]="data.CURRENT_POSTING"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["CURRENT_POSTING"] == null
+                    ? "-"
+                    : (data.CURRENT_POSTING | slice : 0 : 23)
+                }}{{ data.CURRENT_POSTING.length > 23 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.CURRENT_POSTING.length < 23">
+                {{
+                  data["CURRENT_POSTING"] == null
+                    ? "-"
+                    : (data.CURRENT_POSTING | slice : 0 : 23)
+                }}{{ data.CURRENT_POSTING.length > 23 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.CURRENT_POSTING == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.CADRE != null">
+              <span
+                *ngIf="data.CADRE.length >= 25"
+                nz-popover
+                [nzPopoverContent]="data.CADRE"
+                nzPopoverPlacement="topLeft"
+              >
+                {{ data["CADRE"] == null ? "-" : (data.CADRE | slice : 0 : 25)
+                }}{{ data.CADRE.length > 25 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.CADRE.length < 25">
+                {{ data["CADRE"] == null ? "-" : (data.CADRE | slice : 0 : 25)
+                }}{{ data.CADRE.length > 25 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.CADRE == null">-</span>
+          </td>
+          <td align="center" class="textOverflow" style="white-space: pre-line">
+            {{
+              data.TENURE_CURRENT_POSTING_YR
+                ? (data.TENURE_CURRENT_POSTING_YR | date : "dd/MM/yyyy")
+                : ""
+            }}
+            -
+            {{
+              data.TENURE_CURRENT_POSTING_MNT
+                ? (data.TENURE_CURRENT_POSTING_MNT | date : "dd/MM/yyyy")
+                : ""
+            }}
+          </td>
+          <td>
+            <span *ngIf="data.CURRENT_RESIDENT_ADD != null">
+              <span
+                *ngIf="data.CURRENT_RESIDENT_ADD.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.CURRENT_RESIDENT_ADD"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["CURRENT_RESIDENT_ADD"] == null
+                    ? "-"
+                    : (data.CURRENT_RESIDENT_ADD | slice : 0 : 22)
+                }}{{ data.CURRENT_RESIDENT_ADD.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.CURRENT_RESIDENT_ADD.length < 22">
+                {{
+                  data["CURRENT_RESIDENT_ADD"] == null
+                    ? "-"
+                    : (data.CURRENT_RESIDENT_ADD | slice : 0 : 22)
+                }}{{ data.CURRENT_RESIDENT_ADD.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.CURRENT_RESIDENT_ADD == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.BUILDING_1 != null">
+              <span
+                *ngIf="data.BUILDING_1.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.BUILDING_1"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["BUILDING_1"] == null
+                    ? "-"
+                    : (data.BUILDING_1 | slice : 0 : 22)
+                }}{{ data.BUILDING_1.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.BUILDING_1.length < 22">
+                {{
+                  data["BUILDING_1"] == null
+                    ? "-"
+                    : (data.BUILDING_1 | slice : 0 : 22)
+                }}{{ data.BUILDING_1.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.BUILDING_1 == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.BUILDING_2 != null">
+              <span
+                *ngIf="data.BUILDING_2.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.BUILDING_2"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["BUILDING_2"] == null
+                    ? "-"
+                    : (data.BUILDING_2 | slice : 0 : 22)
+                }}{{ data.BUILDING_2.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.BUILDING_2.length < 22">
+                {{
+                  data["BUILDING_2"] == null
+                    ? "-"
+                    : (data.BUILDING_2 | slice : 0 : 22)
+                }}{{ data.BUILDING_2.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.BUILDING_2 == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.BUILDING_3 != null">
+              <span
+                *ngIf="data.BUILDING_3.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.BUILDING_3"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["BUILDING_3"] == null
+                    ? "-"
+                    : (data.BUILDING_3 | slice : 0 : 22)
+                }}{{ data.BUILDING_3.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.BUILDING_3.length < 22">
+                {{
+                  data["BUILDING_3"] == null
+                    ? "-"
+                    : (data.BUILDING_3 | slice : 0 : 22)
+                }}{{ data.BUILDING_3.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.BUILDING_3 == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.CHARGE_1 != null">
+              <span
+                *ngIf="data.CHARGE_1.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.CHARGE_1"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["CHARGE_1"] == null
+                    ? "-"
+                    : (data.CHARGE_1 | slice : 0 : 22)
+                }}{{ data.CHARGE_1.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.CHARGE_1.length < 22">
+                {{
+                  data["CHARGE_1"] == null
+                    ? "-"
+                    : (data.CHARGE_1 | slice : 0 : 22)
+                }}{{ data.CHARGE_1.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.CHARGE_1 == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.CHARGE_2 != null">
+              <span
+                *ngIf="data.CHARGE_2.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.CHARGE_2"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["CHARGE_2"] == null
+                    ? "-"
+                    : (data.CHARGE_2 | slice : 0 : 22)
+                }}{{ data.CHARGE_2.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.CHARGE_2.length < 22">
+                {{
+                  data["CHARGE_2"] == null
+                    ? "-"
+                    : (data.CHARGE_2 | slice : 0 : 22)
+                }}{{ data.CHARGE_2.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.CHARGE_2 == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.CHARGE_3 != null">
+              <span
+                *ngIf="data.CHARGE_3.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.CHARGE_3"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["CHARGE_3"] == null
+                    ? "-"
+                    : (data.CHARGE_3 | slice : 0 : 22)
+                }}{{ data.CHARGE_3.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.CHARGE_3.length < 22">
+                {{
+                  data["CHARGE_3"] == null
+                    ? "-"
+                    : (data.CHARGE_3 | slice : 0 : 22)
+                }}{{ data.CHARGE_3.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.CHARGE_3 == null">-</span>
+          </td>
+
+          <td>
+            <span *ngIf="data.REASON_FOR_REQUEST != null">
+              <span
+                *ngIf="data.REASON_FOR_REQUEST.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.REASON_FOR_REQUEST"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["REASON_FOR_REQUEST"] == null
+                    ? "-"
+                    : (data.REASON_FOR_REQUEST | slice : 0 : 22)
+                }}{{ data.REASON_FOR_REQUEST.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.REASON_FOR_REQUEST.length < 22">
+                {{
+                  data["REASON_FOR_REQUEST"] == null
+                    ? "-"
+                    : (data.REASON_FOR_REQUEST | slice : 0 : 22)
+                }}{{ data.REASON_FOR_REQUEST.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.REASON_FOR_REQUEST == null">-</span>
+          </td>
+          <td>
+            <span *ngIf="data.REQUEST != null">
+              <span
+                *ngIf="data.REQUEST.length >= 22"
+                nz-popover
+                [nzPopoverContent]="data.REQUEST"
+                nzPopoverPlacement="topLeft"
+              >
+                {{
+                  data["REQUEST"] == null
+                    ? "-"
+                    : (data.REQUEST | slice : 0 : 22)
+                }}{{ data.REQUEST.length > 22 ? "..." : "" }}
+              </span>
+              <span *ngIf="data.REQUEST.length < 22">
+                {{
+                  data["REQUEST"] == null
+                    ? "-"
+                    : (data.REQUEST | slice : 0 : 22)
+                }}{{ data.REQUEST.length > 22 ? "..." : "" }}
+              </span>
+            </span>
+            <span *ngIf="data.REQUEST == null">-</span>
+          </td>
+
+          <td align="center" class="textOverflow" style="white-space: pre-line">
+            <!-- {{ data.ATTACHMENT == null ? "-" : data["ATTACHMENT"] }} &nbsp; -->
+            <span
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              *ngIf="dataList != undefined && data.ATTACHMENT != null"
+              (click)="cricular_viewIcard1(data.ATTACHMENT)"
+            >
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

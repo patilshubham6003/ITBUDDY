@@ -1,0 +1,51 @@
+<div>
+  <form nz-form>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-table
+            class="my-scroll no-wrap1"
+            nzBordered
+            #basicTable
+            nzShowSizeChanger
+            [nzData]="LOG_MASTER"
+            [(nzPageIndex)]="pageIndex"
+            [nzSize]="'small'"
+            [nzFrontPagination]="false"
+            [nzLoading]="loadingRecords"
+            [nzTotal]="totalRecords"
+            [(nzPageSize)]="pageSize"
+          >
+            <thead (nzSortChange)="sort($event)" nzSingleSort>
+              <tr>
+                <th nzShowSort nzSortKey="DATE">Date & Time</th>
+                <th nzShowSort nzSortKey="ACTION">Action</th>
+                <th nzShowSort nzSortKey="PERFORMEDBY">Performed By</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.DATE }}</td>
+                <td>{{ data.ACTION }}</td>
+                <td>{{ data.PERFORMEDBY }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+  </div>
+</div>

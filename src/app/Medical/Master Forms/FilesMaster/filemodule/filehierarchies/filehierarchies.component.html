@@ -1,0 +1,102 @@
+<div>
+    <form nz-form #fileHierarchy="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+
+            <div nz-row>
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Parent Name </nz-form-label>
+                        <nz-input-group>
+                            <nz-select name="parent_id" nzShowSearch [nzLoading]="loadingForm" style="width: 100%"
+                                nzPlaceHolder="Select Parent Name" [(ngModel)]="data.PARENT_ID">
+                                <nz-option nzValue="0" nzLabel="None"></nz-option>
+                                <nz-option *ngFor="let val of FileHierarchy" [nzValue]="val.ID" [nzLabel]="val.NAME">
+                                </nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-row>
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Name</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+                            <input nz-input name="name" type="text" maxlength="128" [(ngModel)]="data.NAME" required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+         
+            <div nz-row>
+                <div nz-col nzSpan="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Code</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+                            <input nz-input name="code" maxlength="128" type="text" [(ngModel)]="data.CODE" required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="12">
+                    <nz-form-item>
+                        <nz-form-label>Is Last Node</nz-form-label>
+                        <nz-form-control>
+                            <nz-switch name="status" [(ngModel)]="IS_LAST"></nz-switch>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>Is Advanced File ?</nz-form-label>
+        
+                      <nz-form-control>
+                        <label
+                          nz-checkbox
+                          name="type"
+                          [(ngModel)]="IS_ADVANCE"
+                          >Is Advance?</label
+                        >
+                        <!-- <nz-switch name="IS_ADVANCE" [(ngModel)]="IS_ADVANCE"></nz-switch> -->
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col *ngIf="IS_ADVANCE==true" nzSpan="24">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Final Hierarchy
+                        </nz-form-label>
+                        <nz-input-group>
+                            <nz-select name="FinalHierarchy" [(ngModel)]="data.FINAL_HIRARCHY_ID" 
+                                style="width: 100%" nzShowSearch nzPlaceHolder="Select Final Hierarchy">
+                                <nz-option *ngFor="let data of FinalHierarchy" [nzValue]="data.ID"
+                                    [nzLabel]="data.HIRARCHY_NAME"></nz-option>
+                            </nz-select>
+                        </nz-input-group>
+                    </nz-form-item>
+                </div>
+            </div>
+            
+        </nz-spin>
+    </form>
+    <div class="footer">
+        <button type="button" nz-button (click)="close(fileHierarchy)" class="ant-btn"
+            style="margin-right: 8px;"><span>Cancel</span></button>
+        <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" (click)="save(false,fileHierarchy)"><span>Save & Close</span></button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px;background-color: #40a9ff;">
+                    <a (click)="save(true,fileHierarchy)">Save & New</a>
+                </li>
+            </ul>
+        </nz-dropdown-menu>
+        <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+            (click)="save(false,fileHierarchy)"><span>Update & close</span></button>
+    </div>
+</div>
+
+<div class="header">
+    <button type="button" nz-button (click)="close(fileHierarchy)" class="ant-btn" style="margin-right: 8px">
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+</div>

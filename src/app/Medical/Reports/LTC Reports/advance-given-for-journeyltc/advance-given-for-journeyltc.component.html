@@ -1,0 +1,213 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">Advance Given Journey Report</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+            (keyup)="keyup($event)"
+            nz-input
+            placeholder="Search"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="1"></div>
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="display: flex">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [nzSize]="'small'"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzScroll]="{ x: '1300px', y: '55vh' }"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+
+          <th
+            nzWidth="70px"
+            nzColumnKey="{{ 'NATURE_OF_LEAVE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Nature of Leave
+          </th>
+          <th
+            nzWidth="70px"
+            nzColumnKey="{{ 'LEAVE_START_DATE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Leave Start Date
+          </th>
+          <th
+            nzWidth="70px"
+            nzColumnKey="{{ 'LEAVE_END_DATE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Leave End Date
+          </th>
+          <th
+            nzWidth="70px"
+            nzColumnKey="{{ 'IS_ADVANCE_TAKEN' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Is Advance Taken
+          </th>
+          <th
+            nzWidth="70px"
+            nzColumnKey="{{ 'AMOUNT_OF_ADVANCE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Amount of Advance(₹)
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="white-space: pre-line" align="center">
+            {{ data["EMPLOYEE_NAME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["NATURE_OF_LEAVE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["LEAVE_START_DATE"] | date : "dd MM yyyy" }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["LEAVE_END_DATE"] | date : "dd MM yyyy" }}
+          </td>
+
+          <td style="white-space: pre-line" align="center">
+            {{ data["IS_ADVANCE_TAKEN"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["AMOUNT_OF_ADVANCE"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

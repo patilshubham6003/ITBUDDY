@@ -1,0 +1,392 @@
+<div>
+  <form nz-form class="ant-advanced-search-form" #httpForm="ngForm">
+    <!-- <div nz-row>
+     
+    </div> -->
+    <div nz-row *ngIf="drawerforwhat == 'P'">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Office Name </nz-form-label>
+
+          <nz-select
+            name="Office"
+            nzAllowClear
+            nzShowSearch
+            nzPlaceHolder="Select Office"
+            [(ngModel)]="data.OFFICE_ID"
+            [nzLoading]="isSpinningforoffice"
+          >
+            <nz-option
+              *ngFor="let off of office"
+              [nzValue]="off.MDB_ID"
+              [nzLabel]="off.NAME"
+            >
+            </nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Cadre Name </nz-form-label>
+
+          <nz-select
+            name="Rank"
+            nzAllowClear
+            nzShowSearch
+            nzPlaceHolder="Select Cadre"
+            [(ngModel)]="data.RANK_ID"
+            [nzLoading]="isSpinningforrank"
+          >
+            <nz-option
+              *ngFor="let rank of rank"
+              [nzValue]="rank.MDB_ID"
+              [nzLabel]="rank.NAME"
+            >
+            </nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Order Type </nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              name="orderrrrr"
+              [(ngModel)]="data['ORDER_TYPE']"
+              placeholder="Enter Order type"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Order Date </nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              name="DOJ_PRESENT_POST"
+              nzFormat="dd/MM/yyyy"
+              disabled
+              nzPlaceHolder="Order Date"
+              [(ngModel)]="data.ORDER_DATE"
+              style="width: 100%"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Order No </nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              disabled
+              name="order"
+              [(ngModel)]="data.ORDER_NO"
+              placeholder="Enter Order No"
+              minlength="2"
+              maxlength="128"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- </div> -->
+
+      <!-- <div nz-row> -->
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <!-- <nz-form-control> -->
+          <!-- <input
+              nz-input
+              name="FROM_DATE"
+              placeHolder="DD/MM/YYYY"
+              autocomplete="off"
+              autofill="off"
+              pattern="\d{2}/\d{2}/\d{4}"
+              (input)="onDOB($event, 'FD')"
+              (keypress)="omit($event)"
+              [(ngModel)]="data.FROM_DATE"
+              maxlength="10"
+            />
+            <span *ngIf="data.FROM_DATE">
+              <small
+                style="color: red; font-weight: normal"
+                *ngIf="showInvalidDateError(data.FROM_DATE)"
+              >
+                Invalid Date
+              </small>
+            </span>
+          </nz-form-control> -->
+
+          <nz-form-label nzNoColon>From Date</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              name="FROM_DATE"
+              nzFormat="dd/MM/yyyy"
+              nzPlaceHolder="From Date"
+              [(ngModel)]="data.FROM_DATE"
+              style="width: 100%"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>To Date</nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              name="TO_DATE"
+              nzFormat="dd/MM/yyyy"
+              nzPlaceHolder="to Date"
+              [(ngModel)]="data.TO_DATE"
+              style="width: 100%"
+            ></nz-date-picker>
+          </nz-form-control>
+          <!-- <nz-form-control>
+            <input
+              nz-input
+              name="TO_DATE"
+              placeHolder="DD/MM/YYYY"
+              autocomplete="off"
+              autofill="off"
+              pattern="\d{2}/\d{2}/\d{4}"
+              (input)="onDOB($event, 'TD')"
+              (keypress)="omit($event)"
+              [(ngModel)]="data.TO_DATE"
+              maxlength="10"
+            />
+            <span *ngIf="data.TO_DATE">
+              <small
+                style="color: red; font-weight: normal"
+                *ngIf="showInvalidDateError(data.TO_DATE)"
+              >
+                Invalid Date
+              </small>
+            </span>
+          </nz-form-control> -->
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <nz-form-item class="nz-form-item">
+          <nz-form-label nzRequired nzNoColon>Remark</nz-form-label>
+          <nz-form-control
+            nzHasFeedback
+            nzErrorTip="Please Enter Valid Remark "
+          >
+            <textarea
+              name="remark"
+              style="width: 100%"
+              [(ngModel)]="data.REMARK1"
+              nz-input
+              [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+              maxlength="256"
+              placeholder="Please Enter Remark"
+              draggable="false"
+              required
+            ></textarea>
+            <h6
+              style="color: red; font-size: 0.67rem; font-weight: 400"
+              *ngIf="data.REMARK1 != undefined"
+            >
+              {{ data.REMARK1.length }}/256
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Proof Document</nz-form-label>
+          <nz-form-control
+            nzHasFeedback
+            nzErrorTip="PDF File is required"
+            *ngIf="
+              data.PROOF == null || data.PROOF == undefined || data.PROOF == ''
+            "
+          >
+            <button
+              [nzLoading]="isbUTTONSpinning || isSpinning"
+              nz-button
+              style="padding: 0px 10px; font-size: 12px"
+              (click)="Gradepaydrawnletter.click()"
+            >
+              Select File
+              <input
+                #Gradepaydrawnletter
+                name="PROOF"
+                type="file"
+                (change)="onFileSelectedTransfer2($event)"
+                style="display: none"
+                required
+              />
+            </button>
+          </nz-form-control>
+
+          <div
+            *ngIf="data.PROOF != null"
+            style="
+              overflow: hidden;
+              font-size: 13px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 10px;
+            "
+          >
+            {{ data.PROOF }} &nbsp;&nbsp;
+            <span
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="viewidproof(data.PROOF)"
+            ></span
+            >&nbsp;&nbsp;
+            <span
+              nz-icon
+              nzType="delete"
+              nzTheme="outline"
+              nzTooltipTitle="Remove"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              style="cursor: pointer; color: red"
+              (click)="clearGradepayletter()"
+            ></span>
+          </div>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div nz-row *ngIf="drawerforwhat == 'G'">
+      <div nz-col nzSpan="24">
+        <nz-form-item class="nz-form-item">
+          <nz-form-label nzRequired nzNoColon>Remark</nz-form-label>
+          <nz-form-control
+            nzHasFeedback
+            nzErrorTip="Please Enter Valid Remark "
+          >
+            <textarea
+              name="remark"
+              style="width: 100%"
+              [(ngModel)]="REMARK"
+              nz-input
+              [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+              maxlength="256"
+              placeholder="Please Enter Remark"
+              draggable="false"
+              required
+            ></textarea>
+            <h6
+              style="color: red; font-size: 0.67rem; font-weight: 400"
+              *ngIf="REMARK != undefined"
+            >
+              {{ REMARK.length }}/256
+            </h6>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Proof Document</nz-form-label>
+          <nz-form-control
+            nzHasFeedback
+            nzErrorTip="PDF File is required"
+            *ngIf="PROOF == null || PROOF == undefined || PROOF == ''"
+          >
+            <button
+              [nzLoading]="isbUTTONSpinning || isSpinning"
+              nz-button
+              style="padding: 0px 10px; font-size: 12px"
+              (click)="Gradepaydrawnletter.click()"
+            >
+              Select File
+              <input
+                #Gradepaydrawnletter
+                name="PROOF"
+                type="file"
+                (change)="onFileSelectedTransfer222($event)"
+                style="display: none"
+                required
+              />
+            </button>
+          </nz-form-control>
+
+          <div
+            *ngIf="PROOF != null"
+            style="
+              overflow: hidden;
+              font-size: 13px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 10px;
+            "
+          >
+            {{ PROOF }} &nbsp;&nbsp;
+            <span
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="viewidproof(PROOF)"
+            ></span
+            >&nbsp;&nbsp;
+            <span
+              nz-icon
+              nzType="delete"
+              nzTheme="outline"
+              nzTooltipTitle="Remove"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              style="cursor: pointer; color: red"
+              (click)="clearGradepayletter()"
+            ></span>
+          </div>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      *ngIf="drawerforwhat == 'P'"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isbUTTONSpinning || isSpinning"
+      (click)="save(false)"
+    >
+      <span>Submit Change Request</span>
+    </button>
+    <button
+      type="button"
+      *ngIf="drawerforwhat == 'G'"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isbUTTONSpinning || isSpinning"
+      (click)="save11(false)"
+    >
+      <span>Submit general Change Request</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+table,
+tr,
+td {
+  border: 1px solid black;
+}
+
+.a {
+  width: 50px;
+  text-align: center;
+}
+
+.b {
+  width: 150px;
+  text-align: center;
+}
+
+.box {
+  width: 300px;
+  height: 100px;
+  border: 1px solid black;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.box2 {
+  width: 300px;
+  border: 1px solid black;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+.header {
+  position: absolute;
+  top: 0px;
+  /* bottom: 0px; */
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  /* left: 0px; */
+  right: 0px;
+  /* background: #fff; */
+}

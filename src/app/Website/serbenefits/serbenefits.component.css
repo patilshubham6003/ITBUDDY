@@ -1,0 +1,99 @@
+.about1 .icon-box1 {
+  padding: 25px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 8px;
+  transition: all 0.3s ease-out 0s;
+  background-color: white;
+}
+
+.about1 .icon-box1 img {
+  border-radius: 0px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  font-size: 32px;
+  line-height: 0;
+  transition: all 0.4s ease-out 0s;
+  background-color: white;
+}
+
+@media screen and (max-width: 1260px) {
+  .about1 .icon-box1 img {
+    width: 50px;
+    height: 50px;
+  }
+}
+div,a,footer,li,ui,p,h4,h1,h2,h3,h5,section,span,main{
+  font-family: 'Hanken Grotesk', sans-serif !important;
+  
+}
+
+@media screen and (min-width: 1261px) {
+  .about1 .icon-box1 img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.about1 .icon-box1 h3 {
+  color: #3d3e3b;
+  margin-bottom: 10px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.about1 .icon-box1 p {
+  padding-left: 0px;
+  margin-bottom: 0px;
+  text-align: justify;
+  color: black;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 400;
+}
+
+.about1 .icon-box1:hover h3 {
+  color: #006699;
+}
+
+.about1 .icon-box1:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.limit1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+.limit {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(173, 172, 172);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #006699;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006699;
+}
+
+.slick-slide {
+  height: 245px !important;
+}

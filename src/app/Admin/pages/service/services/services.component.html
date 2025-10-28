@@ -1,0 +1,228 @@
+<div class="my-boxxxxxxx">
+  <form nz-form #servicePage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Title</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Title is required">
+              <!-- <textarea nz-input rows="2" name="description" [(ngModel)]="data.DESCRIPTION" required ></textarea> -->
+              <input nz-input name="title" type="text" [(ngModel)]="data.TITLE" placeholder="Please Enter Title"
+                required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Description</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Description is required">
+
+              <textarea nz-input rows="4" name="description" type="text" [(ngModel)]="data.DESCRIPTION"
+                placeholder="Please Enter description" required ></textarea>
+                <small style="color: red" *ngIf="data.DESCRIPTION != undefined">
+                  {{data.DESCRIPTION.length}}/256
+                </small>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Service Route</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Service Route is required">
+              <input nz-input name="service_route" type="text" [(ngModel)]="data.SERVICE_ROUTE"
+              required placeHolder="Enter Service Route" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Short Code is required">
+              <input nz-input name="short_code" type="text" [(ngModel)]="data.SHORT_CODE" (keypress)="alphaonly($event)"
+                maxlength="10" required placeHolder="Enter Short Code" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+         <!-- <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Stat Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Stat Name is required">
+                <input nz-input name="Stat_name" type="text" style="width: 100%"
+                [(ngModel)]="data.STAT_NAME" required placeHolder="Enter Stat Name" />
+            </nz-form-control>
+          </nz-form-item>
+        </div> -->
+       
+        <!-- <div nz-col nzSpan="5">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon>Count</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="count" type="number" style="width: 100%"
+                [(ngModel)]="data.COUNT" required disabled />
+              </nz-form-control></nz-form-item>
+        </div>
+         -->
+         <div nz-col nzSpan="12">
+          <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Roles</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please Select Role ">
+                  <nz-select  nzMode="multiple" [nzMaxTagCount]="3" nzShowSearch nzAllowClear nzPlaceHolder="Select Role..."
+                      [(ngModel)]="data.ROLE_DATA" name="role_ame" required>
+                      <nz-option *ngFor="let role of details" [nzLabel]="role.NAME"
+                          [nzValue]="role.ID"></nz-option>
+                  </nz-select>
+              </nz-form-control>
+          </nz-form-item>
+      </div>
+         <div nz-col nzSpan="7">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Sequence No is required">
+                <input nz-input name="service_seq" maxlength="6"  style="width: 100%"
+                [(ngModel)]="data.SEQUENCE_NO" (keypress)="omit($event)" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+       
+        <div nz-col nzSpan="5">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch style="padding-left: 15px" name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.STATUS"></nz-switch></nz-form-control></nz-form-item>
+        </div>
+        
+        
+      </div>
+
+    
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Image
+            </nz-form-label>
+            <br>
+            <span *ngIf="data.IMG_URL == ''">
+              <span style="color: red; font-size: 10px !important; margin-left: 5px">
+                  ( Image Must Be 67px Height And 80px Width )
+              </span>
+          </span>
+            <nz-form-control nzHasFeedback nzErrorTip="Image Urls is required">
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="inputFile.click()">
+                Choose File
+                <input #inputFile type="file" accept="image/*" (change)="onFileSelectedIMAGE_URL($event)"
+                  (click)="inputFile.value = ''" value="" style="display: none" />
+              </button>
+              
+              <span *ngIf="data.IMG_URL != ''">
+                <button (click)="clear(data.IMG_URL,'service')" [nzSize]="'default'" nz-button style="margin-left:10px">
+
+                    <nz-badge>
+                        <i style="font-size: 15px; color: red" nz-icon
+                            nzType="delete"></i>
+                    </nz-badge>
+
+                </button>
+            </span>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div *ngIf="fileDataIMAGE_URL != null">
+            <img width="40%" style="margin-left: 10px" [src]="image" />
+          </div>
+
+          <!-- <div nz-row> -->
+            <!-- <div nz-col nzSpan="24"> -->
+                <!-- <div nz-row style="margin-top: 20px"> -->
+          <div nz-col nzSpan="24" *ngIf="fileDataIMAGE_URL == null && data.IMG_URL != ''" style="margin-top: 20px">
+            <img class="img" width="40%" src="{{ imgurl }}service/{{ data.IMG_URL }}" />
+        <!-- </div>
+</div> -->
+<!-- </div> -->
+</div>
+
+        </div>
+
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Service Image Url
+            </nz-form-label>
+            <br>
+            <span *ngIf="data.SERVICE_IMG == ''">
+              <span style="color: red; font-size: 10px !important; margin-left: 5px">
+                  ( Image Must Be 220px Height And 356px Width )
+              </span>
+          </span>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Service Image.">
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px"
+                  (click)="fileInput1.click()">
+                  Choose Image
+
+                  <input #fileInput1 name="otherimage" type="file"   (click)="fileInput1.value = ''"
+                  value=""
+                      accept=".png, .jpg, .jpeg" (change)="onFileSelectedimage($event)" style="display: none"
+                      required />
+              </button>
+
+
+              <span *ngIf="data.SERVICE_IMG != ''">
+                  <button (click)="clear1(data.SERVICE_IMG,'serviceImg')"  [nzSize]="'default'" nz-button style="margin-left: 10px">
+
+                      <nz-badge>
+                          <i style="font-size: 15px; color: red" nz-icon
+                              nzType="delete"></i>
+                      </nz-badge>
+
+                  </button>
+              </span>
+
+          </nz-form-control>
+          </nz-form-item>
+        <div *ngIf="fileDataURL != null">
+          <img width="100%" style="margin-left: 10px" [src]="image1" />
+        </div>
+<!--      
+          <div nz-row>
+            <div nz-col nzSpan="24"> -->
+              <nz-form-item *ngIf="fileDataURL == null && data.SERVICE_IMG != ''" style="margin-top: 20px">
+                <img class="img" width="100%" src="{{ imgurl }}serviceImg/{{ data.SERVICE_IMG }}" />
+              </nz-form-item>
+            <!-- </div>
+          </div> -->
+        </div>
+      </div>
+ </nz-spin>
+  </form>
+</div>
+  <div class="footer">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+      <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+      (click)="save(false,servicePage)">
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+          <a (click)="save(true,servicePage)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+      (click)="save(false,servicePage)">
+      <span>Update & close</span>
+    </button>
+  </div>

@@ -1,0 +1,174 @@
+.card-header:first-child {
+  border-radius: calc(5px - 1px) calc(5px - 1px) 0 0;
+  padding: 15px 20px;
+}
+
+.card-header:first-child {
+  border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+
+.card-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: transparent;
+}
+
+.card {
+  border: none;
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+.m-b-30 {
+  margin-bottom: 30px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  color: #282828;
+}
+
+.breadcrumbs ol {
+  display: inline-flex;
+  margin: 0px 0;
+}
+
+.breadcrumbs ol li+li::before {
+  color: #f5f7f2;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(173, 172, 172);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #006699;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006699;
+}
+
+.card-footer__events {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  text-align: end;
+  background-color: white;
+  width: 100%;
+  padding: 8px 19px 7px 8px;
+  height: 46px;
+}
+
+.btnloadm {
+  background-color: #006699;
+  color: white;
+  border-radius: 5px;
+  padding: 4px 5px;
+  font-weight: 300;
+  font-size: 13px;
+}
+
+.limit1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+}
+
+.limit {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+@media screen and (max-width: 767px) {
+  .fscroll {
+    height: 240px;
+    max-height: 240px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .fscroll {
+    height: 200px;
+    max-height: 200px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .fscroll {
+    height: 230px;
+    max-height: 230px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+div,a,footer,li,ui,p,h4,h1,h2,h3,h5,section,span,main{
+  font-family: 'Hanken Grotesk', sans-serif !important;
+  
+}
+
+@media screen and (min-width: 1400px) {
+  .fscroll {
+    height: 280px;
+    max-height: 280px;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imghh {
+    height: 60px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .imghh {
+    height: 30px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .imghh {
+    height: 50px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .imghh {
+    height: 60px;
+    width: 100%;
+  }
+}

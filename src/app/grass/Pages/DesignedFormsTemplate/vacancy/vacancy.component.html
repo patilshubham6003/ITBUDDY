@@ -1,0 +1,343 @@
+<div>
+  <form nz-form #VacancyPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div class="my-box" style="height: 591px; overflow-y: scroll; padding-right: 20px">
+        <div nz-row>
+          <div style="border: 1px solid; border-bottom: none" nz-col nzXs="4" nzSm="4" nzMd="4" nzLg="4" nzXl="4"
+            nzSpan="4">
+            <div style="text-align: center">
+              <img src="assets/govtOfIndia.png" alt="" height="70%" width="70%" />
+            </div>
+          </div>
+
+          <div nz-col nzSpan="20" nzXs="20" nzSm="20" nzMd="20" nzLg="20" nzXl="20">
+            <div style="
+                width: 100%;
+                text-align: center;
+                border: 1px solid;
+                border-left: none;
+                border-bottom: none;
+              ">
+              <div>भारत सरकार</div>
+              <div style="text-transform: uppercase; margin-left: 40px">
+                Government Of India
+              </div>
+              <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+              <div style="text-transform: uppercase">OFFICE OF THE</div>
+              <div style="font-weight: bold">
+                PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX
+              </div>
+              <div style="
+                  text-transform: uppercase;
+                  margin-left: 10px;
+                  margin-right: 7px;
+                ">
+                3<sup style="text-transform: lowercase">RD</sup>&nbsp; FLOOR,
+                AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20.
+              </div>
+              <div style="text-transform: uppercase">
+                (022)2200 6385 (DIRECT), (022)2209 6738 (FAX), (022)2203
+                9131 EXTN.2328
+              </div>
+              <div style="text-transform: lowercase">
+                e-mail: mumbai.dcit.hq.admin@incometax.gov.in
+              </div>
+            </div>
+          </div>
+          <div style="width: 100%; border: 1px solid black; font-size: 14px">
+            <div nz-row>
+              <div nz-col nzSpan="19" style="padding-left: 10px">
+                No.Pr.CC.MUM/Admn./Accom/Type-IV(Special)/2023-2024
+              </div>
+              <div nz-col nzSpan="5" style="
+                  text-align: left;
+                  border-left: 1px solid;
+                  padding-left: 10px;
+                ">
+                Date :
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-left: 15px; text-align: justify">
+          <div style="
+              font-weight: bold;
+              text-decoration: underline;
+              text-align: center;
+            ">
+            NOTICE
+          </div>
+          <div style="
+              font-weight: bold;
+              text-decoration: underline;
+              text-align: center;
+            ">
+            VACANCY FOR ALLOTMENT OF TYPE -IV (SPECIAL) QUARTERS, FOR CUT-OFF
+          </div>
+          <div style="
+              font-weight: bold;
+              text-decoration: underline;
+              text-align: center;
+            ">
+            PERIOD ENDING ON 30.06.2023
+          </div>
+          <br />
+          <p>
+            &nbsp; &nbsp;&nbsp;It is hereby brought to the notice of all the
+            eligible officers who have applied for
+            <b>Type- IV (Special) Quarter,</b> that the following quarter is
+            available for allotment for the
+            <b>cut-off period ending on 30.06.2023:</b>
+          </p>
+
+          <div nzJustify="space-between">
+            <table id="" style="width: 80%; margin-left: 78px; text-align: center">
+              <tr>
+                <th class="sr">Sr.No</th>
+                <th>Quarter No.</th>
+                <th>Location</th>
+                <th>Category</th>
+              </tr>
+
+              <tr>
+                <td>1</td>
+                <td>C-22</td>
+                <td>Pedder Road</td>
+                <td>Regular Category</td>
+              </tr>
+            </table>
+          </div>
+          <br>
+
+          <div>
+            2. &nbsp;&nbsp;&nbsp; The officers who have earlier filed
+            application for allotment of quarters need to file their <b style="text-decoration: underline;">"specific
+              preferences"</b> with respect to this notice in order to be considered
+            for allotment, failing which they will not be considered for
+            allotment of the above cited quarter.
+          </div>
+          <br />
+          <div>
+            2.1 &nbsp;&nbsp;&nbsp; Please note that if applicants wish to bid
+            for more than one type of quarter then preferences for each type of
+            quarter should be send through separate mail.
+          </div>
+          <br />
+          <div>
+            3. &nbsp;&nbsp;&nbsp; In light of the above, eligible officers
+            desirous of occupying the above Quarters may file their preferences of
+            quarters at the earliest but not later than <b style="text-decoration: underline;">/07/2023.</b> The
+            preferences should be sent only through name /designation based
+            official e- mail I'ds of the officer at mumbai.dcit.hq.admin@incometax.gov.in, only, so that the same will
+            be taken into consideration promptly. Preference filed physically
+            (hardcopy) will not be accepted and the same will not be taken into
+            consideration.
+          </div>
+
+          <br /><br /><br /><br />
+
+          <div nz-row>
+            <div nz-col nzSpan="10"></div>
+            <div nz-col nzSpan="14">
+              <div style="text-align: end"><b>(ANAND RAJ)</b></div>
+              <div style="text-align: end">
+                Dy. Commissioner of Income-tax (HQ)
+              </div>
+              <div style="text-align: end">Administration, Mumbai</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button type="button" nz-button class="ant-btn" style="margin-right: 8px" (click)="close(VacancyPage)">
+      <span>Cancel</span>
+    </button>
+
+    <button type="button" class="ant-btn ant-btn-primary" (click)="save()" nz-button>
+      <span>Save & Preview</span>
+    </button>
+  </div>
+  <div class="header">
+    <button type="button" nz-button (click)="close(VacancyPage)" class="ant-btn" style="margin-right: 8px">
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+
+<nz-modal [nzWidth]="getwidth()" [(nzVisible)]="printVacancyModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printVacancyModalContent" [nzTitle]="'Vacancy Letter'" (nzOnCancel)="printVacancyModalCancel()"
+  [nzFooter]="printVacancyModalFooter">
+  <ng-template #printVacancyModalContent>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div style="height: 450px; overflow: auto">
+        <div id="printVacancyModal">
+          <div style="
+              margin-right: 10px;
+              padding: 3px;
+              margin-left: 15px;
+              text-align: justify;
+            ">
+            <div nz-row>
+              <div style="border: 1px solid; border-bottom: none" nz-col nzXs="4" nzSm="4" nzMd="4" nzLg="4" nzXl="4"
+                nzSpan="4">
+                <div style="text-align: center;margin-top: 40px">
+                  <img src="assets/govtOfIndia.png" alt="" height="145px" width="92px" />
+                </div>
+              </div>
+
+              <div nz-col nzSpan="20" nzXs="20" nzSm="20" nzMd="20" nzLg="20" nzXl="20">
+                <div style="
+                    width: 100%;
+                    text-align: center;
+                    border: 1px solid;
+                    border-left: none;
+                    border-bottom: none;
+                  ">
+                  <div>भारत सरकार</div>
+                  <div style="text-transform: uppercase; margin-left: 40px">
+                    Government Of India
+                  </div>
+                  <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                  <div style="text-transform: uppercase">OFFICE OF THE</div>
+                  <div style="font-weight: bold">
+                    PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX
+                  </div>
+                  <div style="text-transform: uppercase">
+                    3<sup style="text-transform: lowercase">RD</sup>&nbsp;
+                    FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20.
+                  </div>
+                  <div style="text-transform: uppercase">
+                    (022)2200 6385 (DIRECT), (022)2209 6738(FAX), (022)2203
+                    9131 EXTN.2328
+                  </div>
+                  <div style="text-transform: lowercase">
+                    e-mail: mumbai.dcit.hq.admin@incometax.gov.in
+                  </div>
+                </div>
+              </div>
+              <div style="width: 100%; border: 1px solid black; font-size: 14px">
+                <div nz-row>
+                  <div nz-col nzSpan="19" style="padding-left: 10px">
+                    No.Pr.CC.MUM/Admn./Accom/Type-IV(Special)/2023-2024
+                  </div>
+                  <div nz-col nzSpan="5" style="
+                      text-align: left;
+                      border-left: 1px solid;
+                      padding-left: 10px;
+                    ">
+                    Date :
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-left: 15px; text-align: justify">
+              <div style="
+                  font-weight: bold;
+                  text-decoration: underline;
+                  text-align: center;
+                ">
+                NOTICE
+              </div>
+              <div style="
+                  font-weight: bold;
+                  text-decoration: underline;
+                  text-align: center;
+                ">
+                VACANCY FOR ALLOTMENT OF TYPE -IV (SPECIAL) QUARTERS, FOR
+                CUT-OFF
+              </div>
+              <div style="
+                  font-weight: bold;
+                  text-decoration: underline;
+                  text-align: center;
+                ">
+                PERIOD ENDING ON 30.06.2023
+              </div>
+              <br />
+              <p>
+                &nbsp; &nbsp;&nbsp;It is hereby brought to the notice of all the
+                eligible officers who have applied for
+                <b>Type- IV (Special) Quarter,</b> that the following quarter is
+                available for allotment for the
+                <b>cut-off period ending on 30.06.2023:</b>
+              </p>
+              <table style="width: 80%; margin-left: 78px; text-align: center">
+                <tr>
+                  <th>Sr.No</th>
+                  <th>Quarter No.</th>
+                  <th>Location</th>
+                  <th>Category</th>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>C-22</td>
+                  <td>Pedder Road</td>
+                  <td>Regular Category</td>
+                </tr>
+              </table>
+
+              <br>
+
+              <div>
+                2. &nbsp;&nbsp;&nbsp; The officers who have earlier filed
+                application for allotment of quarters need to file their
+                <b style="text-decoration: underline;">"specific preferences"</b> with respect to this notice in order
+                to
+                be considered for allotment, failing which they will not be
+                considered for allotment of the above cited quarter.
+              </div>
+              <br />
+              <div>
+                2.1 &nbsp;&nbsp;&nbsp; Please note that if applicants wish to
+                bid for more than one type of quarter then preferences for each
+                type of quarter should be send through separate mail.
+              </div>
+              <br />
+              <div>
+                3. &nbsp;&nbsp;&nbsp; In light of the above, eligible officers
+                desirous of occupying the above Quarters may file their preferences
+                of quarters at the earliest but not later than <b style="text-decoration: underline;">/07/2023.</b> The
+                preferences should be sent only through name /designation based
+                official e- mail I'ds of the officer at mumbai.dcit.hq.admin@incometax.gov.in, only, so that the same
+                will be taken into consideration promptly. Preference filed
+                physically (hardcopy) will not be accepted and the same will not
+                be taken into consideration.
+              </div>
+
+              <br /><br /><br /><br />
+
+              <div nz-row>
+                <div nz-col nzSpan="10"></div>
+                <div nz-col nzSpan="14">
+                  <div style="text-align: end"><b>(ANAND RAJ)</b></div>
+                  <div style="text-align: end">
+                    Dy. Commissioner of Income-tax (HQ)
+                  </div>
+                  <div style="text-align: end">Administration, Mumbai</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printVacancyModalFooter>
+    <button nz-button nzType="default" (click)="printVacancyModalCancel()">
+      Close
+    </button>
+
+    <button nz-button nzType="default" printSectionId="printVacancyModal" ngxPrint [useExistingCss]="true">
+      Print
+    </button>
+
+    <button nz-button nzType="primary" [nzLoading]="pdfDownload" (click)="generatePDF()">
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

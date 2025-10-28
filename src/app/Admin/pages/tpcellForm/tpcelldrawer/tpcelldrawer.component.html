@@ -1,0 +1,108 @@
+<div>
+    <form nz-form #employee="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row class="my-boxxxxxxx" *ngIf="showEmployeeSearch">
+                <span style="font-size: 11px; color: red">
+                    *Note : Search Employee Using Employee Code (Minimum 3 Digit).
+                </span>
+
+                <div nz-col nzSpan="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon> Employee Code</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                                <input type="text" name="EMPLOYEE_CODEsearch" (keypress)="omit($event)" maxlength="8"
+                                    nz-input placeholder="Search" [(ngModel)]="EMPLOYEE_CODE" autocomplete="off" />
+                            </nz-input-group>
+                            <ng-template #suffixIconButton>
+                                <button nz-button nzType="primary" (click)="searchEmployee(EMPLOYEE_CODE)" nzSearch
+                                    id="searchBtn">
+                                    <i nz-icon nzType="search"></i>
+                                </button>
+                            </ng-template>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div nz-col nzSpan="12"></div>
+            </div>
+
+            <div class="my-boxxxxxxx">
+                <div nz-row>
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon> Name</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input name="Name" type="text" [(ngModel)]="data.NAME" placeholder="Enter Name"
+                                    required />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Email ID</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input name="Nameee" type="text" placeholder="Enter Email"
+                                    [(ngModel)]="data.EMAIL_ID" required />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <!-- [disabled]="!isEmailVisible" -->
+                <div nz-row>
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Employee Code</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input name="Employee Code" type="text" (keypress)="omit($event)" maxlength="8"
+                                    [disabled]="data.ID ? true : false" (keypress)="omit($event)"
+                                    placeholder="Employee Code" [(ngModel)]="data.EMPLOYEE_CODE" required />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                    <!-- [disabled]="!isEmpCodevisible" -->
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzNoColon>Mobile Number</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input name="Mobile Number" type="text" minlength="10" maxlength="10"
+                                    [pattern]="mobpattern" (keypress)="omit($event)" placeholder="Enter Mobile No"
+                                    [(ngModel)]="data.MOBILE_NO" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label nzNoColon> Status </nz-form-label>
+                            <nz-form-control>
+                                <nz-switch name="STATUS" [(ngModel)]="data.STATUS" nzCheckedChildren="Yes"
+                                    nzUnCheckedChildren="No"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+</div>
+<div class="footer">
+    <button type="button" nz-button (click)="close()" [nzLoading]="isSpinningSave" class="ant-btn"
+        style="margin-right: 8px">
+        <span>Cancel</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" [nzLoading]="isSpinningSave" *ngIf="!data.ID" nz-button
+        nz-dropdown [nzDropdownMenu]="menu" (click)="save(false, employee)">
+        <span>Save & Close</span>
+    </button>
+    <button type="button" class="ant-btn ant-btn-primary" [nzLoading]="isSpinningSave" *ngIf="data.ID" nz-button
+        nz-dropdown [nzDropdownMenu]="menu" (click)="save(false, employee)">
+        <span>Update & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+            <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+                <a (click)="save(true, employee)">Save & New</a>
+            </li>
+        </ul>
+    </nz-dropdown-menu>
+</div>

@@ -1,0 +1,338 @@
+<form nz-form>
+    <nz-spin [nzSpinning]="isSpinningCom">
+        <div nz-row class="my-box">
+            <div nz-col nzSpan="24">
+                <div class="cardstyle" style="padding-bottom: 0px">
+                    <div nz-row>
+                        <div class="mainnam" nz-col nzSpan="12">
+                            <b>Application No. :
+                                <span *ngIf="data != undefined">{{
+                                    data["APPLICATION_NO"]
+                                    }}</span></b>
+                        </div>
+                        <div class="mainnam" nz-col nzSpan="12">
+                            <b>Application Date :
+                                <span *ngIf="data != undefined">{{
+                                    data["REQUESTED_DATETIME"]
+                                    ? (data["REQUESTED_DATETIME"] | date : "dd/MM/yyyy")
+                                    : "-"
+                                    }}</span></b>
+                        </div>
+                        <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                            <b>Name :</b>
+                            <span *ngIf="data != undefined" nz-popover [nzPopoverContent]="porankcontent"
+                                nzPopoverPlacement="topLeft">
+                                {{ data.EMPLOYEE_NAME ? data.EMPLOYEE_NAME : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontent>
+                            <span *ngIf="data != undefined">{{
+                                data.EMPLOYEE_NAME
+                                }}</span>
+                        </ng-template>
+                        <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                            <b>Employee Code :</b>
+                            <span nz-popover [nzPopoverContent]="porankcontentEMPLOYEE_CODE" *ngIf="data != undefined"
+                                nzPopoverPlacement="topLeft">
+                                {{ data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentEMPLOYEE_CODE>
+                            <span *ngIf="data != undefined">{{
+                                data.EMPLOYEE_CODE
+                                }}</span>
+                        </ng-template>
+                        <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                            <b>Email ID :</b>
+                            <span nz-popover [nzPopoverContent]="porankcontentEMAIL_ID" *ngIf="data != undefined"
+                                nzPopoverPlacement="topLeft">
+                                {{ data.EMAIL_ID ? data.EMAIL_ID : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentEMAIL_ID>
+                            <span *ngIf="data != undefined">{{ data.EMAIL_ID }}</span>
+                        </ng-template>
+
+                        <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                            <b>Mobile No :</b>
+                            <span nz-popover [nzPopoverContent]="porankcontentMOBILE_NO" *ngIf="data != undefined"
+                                nzPopoverPlacement="topLeft">
+                                {{ data.MOBILE_NO ? data.MOBILE_NO : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentMOBILE_NO>
+                            <span *ngIf="data != undefined">{{
+                                data.MOBILE_NO
+                                }}</span>
+                        </ng-template>
+
+                        <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                            <b>Current Cadre :</b>
+                            <span nz-popover [nzPopoverContent]="porankcontentDESIGNATION_NAME"
+                                *ngIf="data != undefined" nzPopoverPlacement="topLeft">
+                                {{ data.DESIGNATION_NAME ? data.DESIGNATION_NAME : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentDESIGNATION_NAME>
+                            <span *ngIf="data != undefined">{{
+                                data.DESIGNATION_NAME
+                                }}</span>
+                        </ng-template>
+                        <div class="modelsub textOverflow" nz-col nzSpan="12" style="text-align: start">
+                            <b>Current Office :</b>
+                            <span nz-popover [nzPopoverContent]="porankcontentCURRENT_OFFICE_NAME"
+                                *ngIf="data != undefined" nzPopoverPlacement="topLeft">
+                                {{
+                                data.CURRENT_OFFICE_NAME ? data.CURRENT_OFFICE_NAME : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentCURRENT_OFFICE_NAME>
+                            <span *ngIf="data != undefined">{{
+                                data.CURRENT_OFFICE_NAME
+                                }}</span>
+                        </ng-template>
+
+                    </div>
+                    <div nz-row>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Building 1 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_BUILDING_NAME" nzPopoverPlacement="topLeft">
+                                {{ data.REQ_BUILDING_NAME ? data.REQ_BUILDING_NAME : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_BUILDING_NAME>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_BUILDING_NAME
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Charge 1 :</b>
+                            <span nz-popover *ngIf="data != undefined" [nzPopoverContent]="porankcontentREQ_OFFICE_NAME"
+                                nzPopoverPlacement="topLeft">
+                                {{ data.REQ_OFFICE_ID ? data.REQ_OFFICE_ID : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_OFFICE_NAME>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_OFFICE_ID
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Building 2 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_2" nzPopoverPlacement="topLeft">
+                                {{
+                                data.REQ_BUILDING_NAME_2 ? data.REQ_BUILDING_NAME_2 : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_BUILDING_NAME_2>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_BUILDING_NAME_2
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Charge 2 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_OFFICE_NAME_2" nzPopoverPlacement="topLeft">
+                                {{ data.REQ_OFFICE_ID_2 ? data.REQ_OFFICE_ID_2 : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_OFFICE_NAME_2>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_OFFICE_ID_2
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Building 3 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_3" nzPopoverPlacement="topLeft">
+                                {{
+                                data.REQ_BUILDING_NAME_3 ? data.REQ_BUILDING_NAME_3 : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_BUILDING_NAME_3>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_BUILDING_NAME_3
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Charge 3 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_OFFICE_NAME_3" nzPopoverPlacement="topLeft">
+                                {{ data.REQ_OFFICE_ID_3 ? data.REQ_OFFICE_ID_3 : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_OFFICE_NAME_3>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_OFFICE_ID_3
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Building 4 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_4" nzPopoverPlacement="topLeft">
+                                {{
+                                data.REQ_BUILDING_NAME_4 ? data.REQ_BUILDING_NAME_4 : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_BUILDING_NAME_4>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_BUILDING_NAME_4
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Charge 4 :</b><span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_OFFICE_NAME_4" nzPopoverPlacement="topLeft">
+                                {{ data.REQ_OFFICE_ID_4 ? data.REQ_OFFICE_ID_4 : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_OFFICE_NAME_4>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_OFFICE_ID_4
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Building 5 :</b>
+                            <span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_BUILDING_NAME_5" nzPopoverPlacement="topLeft">
+                                {{
+                                data.REQ_BUILDING_NAME_5 ? data.REQ_BUILDING_NAME_5 : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_BUILDING_NAME_5>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_BUILDING_NAME_5
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Requested Charge 5 :</b><span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREQ_OFFICE_ID_5" nzPopoverPlacement="topLeft">
+                                {{ data.REQ_OFFICE_ID_5 ? data.REQ_OFFICE_ID_5 : "-" }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREQ_OFFICE_ID_5>
+                            <span *ngIf="data != undefined">{{
+                                data.REQ_OFFICE_ID_5
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Reason Type :</b><span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentREASON_FOR_TRANSFER" nzPopoverPlacement="topLeft">
+                                {{
+                                data.REASON_FOR_TRANSFER ? data.REASON_FOR_TRANSFER : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentREASON_FOR_TRANSFER>
+                            <span *ngIf="data != undefined">{{
+                                data.REASON_FOR_TRANSFER
+                                }}</span>
+                        </ng-template>
+                        <div nz-col nzSpan="12" class="modelsub textOverflow"
+                            style="margin-top: 1px; margin-bottom: 1px">
+                            <b>Reason For Transfer :</b><span nz-popover *ngIf="data != undefined"
+                                [nzPopoverContent]="porankcontentSUMMARY_OF_TRANSFER" nzPopoverPlacement="topLeft">
+                                {{
+                                data.SUMMARY_OF_TRANSFER ? data.SUMMARY_OF_TRANSFER : "-"
+                                }}
+                            </span>
+                        </div>
+                        <ng-template #porankcontentSUMMARY_OF_TRANSFER>
+                            <span *ngIf="data != undefined">{{
+                                data.SUMMARY_OF_TRANSFER
+                                }}</span>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div nz-row class="my-box">
+            <div nz-col nzSpan="16">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzNoColon>Officer Request</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="HA_REQUEST" class="inputsize" [(ngModel)]="data.HA_REQUEST" maxlength="70"
+                            autocomplete="off" placeholder="Enter Officer Request" />
+                        <!-- <nz-select [(ngModel)]="data.HA_REQUEST" style="width: 100%" nzSize="small" autocomplete="off"
+                            nzPlaceHolder="Select Officer Request Type" class="inputsize" required name="HA_REQUEST"
+                            nzShowSearch nzAllowClear>
+                            <nz-option nzValue="Officer Name" nzLabel="Officer Name"></nz-option>
+                            <nz-option nzValue="Request Through Letter" nzLabel="Request Through Letter"></nz-option>
+                            <nz-option nzValue="Request Through WhatsApp"
+                                nzLabel="Request Through WhatsApp"></nz-option>
+                            <nz-option nzValue="Request Through Mail" nzLabel="Request Through Mail"></nz-option>
+                        </nz-select> -->
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="12" *ngIf="data.HA_REQUEST == 'Officer Name'">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzRequired nzNoColon>Officer Name</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input name="HA_REQUEST_NAME" class="inputsize" [(ngModel)]="data.HA_REQUEST_NAME"
+                            maxlength="70" autocomplete="off" (keypress)="alphaOnly($event)" required
+                            placeholder="Enter Officer Name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div> -->
+            <div nz-col nzSpan="8">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzNoColon>Officer Request Date</nz-form-label>
+                    <nz-form-control>
+                        <nz-date-picker name="HA_DATE" [nzDisabledDate]="disabledDate2222" class="datesize"
+                            nzPlaceHolder="Select Request Date" nzFormat="dd/MM/yyyy" [(ngModel)]="data.HA_DATE"
+                            style="width: 100%"></nz-date-picker>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col nzSpan="24">
+                <nz-form-item>
+                    <nz-form-label class="labelsize" nzNoColon>Officer Remark</nz-form-label>
+                    <nz-form-control>
+                        <textarea rows="1" nz-input minlength="1" class="inputsize" name="HA_REMARK"
+                            [nzAutosize]="{ minRows: 1, maxRows: 3 }" placeholder="Enter Officer Remark"
+                            [(ngModel)]="data.HA_REMARK"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </nz-spin>
+</form>
+<div class="footer">
+    <button type="button" nz-button [nzLoading]="isSpinningCom" (click)="close()" class="ant-btn"
+        style="margin-right: 8px">
+        <span>Cancel</span>
+    </button>
+    <button type="button" [nzLoading]="isSpinningCom" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button
+        nz-dropdown [nzDropdownMenu]="menu" (click)="save(false)">
+        <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+            <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+                <a (click)="save(true)">Save & New</a>
+            </li>
+        </ul>
+    </nz-dropdown-menu>
+    <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinningCom" *ngIf="data.ID"
+        (click)="save(false)">
+        <span>Update & close</span>
+    </button>
+</div>

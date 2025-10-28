@@ -1,0 +1,372 @@
+<div>
+  <form nz-form>
+    <div nz-row [nzGutter]="10">
+      <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+        <div class="my-box">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Signature</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="userid"
+                    [(ngModel)]="aayakarbhavandata.SIGNATURE_ID"
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Choose Signature"
+                    (ngModelChange)="signature($event)"
+                  >
+                    <nz-option
+                      *ngFor="let user of Signaturearray"
+                      [nzValue]="user.ID"
+                      [nzLabel]="user.NAME"
+                    >
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="24"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Bank Number</nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Order no. is required"
+                >
+                  <input
+                    style="width: 100%"
+                    name="OrderNumber"
+                    maxlength="64"
+                    nz-input
+                    placeholder="Enter Bank Number"
+                    type="text"
+                    [(ngModel)]="aayakarbhavandata.IKAR_BANK_ACCOUNT_NO"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="24"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Pran Number</nz-form-label>
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Order no. is required"
+                >
+                  <input
+                    style="width: 100%"
+                    name="Pran"
+                    maxlength="64"
+                    nz-input
+                    placeholder="Enter Pran Number"
+                    type="text"
+                    [(ngModel)]="aayakarbhavandata.IKAR_PRN_NO"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16">
+        <div class="my-box" style="padding: 10px">
+          <div>
+            <div style="width: 100%">
+              <br /><br />
+              <div style="text-align: center">DDO Gazetted, Ayakar Bhawan</div>
+              <div style="display: flex; gap: 330px">
+                <div>Controller: ZAO(CBDT), Mumbai</div>
+                <div>Salary Month</div>
+              </div>
+
+              <div style="margin-top: 60px; font-size: 14px">
+                <div nz-row>
+                  <div nz-col nzSpan="14">
+                    <p style="margin-top: -16px">
+                      Employee Name:
+                      <b>{{ aayakarbhavandata.EMPLOYEE_NAME }}</b>
+                    </p>
+                    <p style="margin-top: -16px">
+                      Designation:
+                      <b>{{ aayakarbhavandata.DESIGNATION }}</b>
+                    </p>
+                    <p style="margin-top: -16px">
+                      Payment For The Period :01/04/2023 To 30/04/2023
+                    </p>
+                    <p style="margin-top: -16px">
+                      Pay Band:<b>{{ aayakarbhavandata.GRADE_PAY_LEVEL }}</b>
+                    </p>
+                    <p style="margin-top: -16px">
+                      PRAN No:
+                      <b>{{ aayakarbhavandata.IKAR_PRN_NO }}</b>
+                    </p>
+                  </div>
+                  <div nz-col nzSpan="8">
+                    <p style="margin-top: -16px">
+                      Basic Pay:<b>{{ aayakarbhavandata.GRADE_PAY }}</b>
+                    </p>
+                    <p style="margin-top: -16px">
+                      Bank A/c No:<b>{{
+                        aayakarbhavandata.IKAR_BANK_ACCOUNT_NO
+                      }}</b>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br /><br />
+            <div style="text-align: center; font-weight: bold">
+              <div style="text-transform: uppercase">
+                <u> एस. आर-61 के अधीन आदेश</u>
+              </div>
+            </div>
+            <br />
+            <div>
+              <p>
+                <!-- &nbsp;&nbsp;&nbsp;<b>{{aayakarbhavandata.EMPLOYEE_NAME_HN}}, {{aayakarbhavandata.DESIGNATION}},</b> मुंबई, -->
+                कार्यालय- प्र.आ.आ.-19, मुंबई, के दिनांक 30.04.2023 से 02.05.2023
+                तक जिला एंव सत्र न्यायालय चण्डीगढ़ में केन्द्रीय जाँच ब्यूरो
+                बनाम गुरुनाम सिंह केस के सिलसिले में मुंबई से चण्डीगढ़ जाने तथा
+                वापस आने हेतु एस. आर. 61 के अधीन एतदद्वारा स्वीकृति प्रदान की
+                जाती है ।
+              </p>
+              <br />
+              <p>
+                &nbsp;&nbsp;&nbsp; प्रमाणित किया जाता है कि यह दौरा सरकारी
+                कामकाज के सिलसिले में किया जा रहा है और दौरा लोकहित में है ।
+              </p>
+            </div>
+            <div style="margin-top: 100px; font-size: 13px">
+              <div nz-row>
+                <div nz-col nzSpan="12"></div>
+
+                <div nz-col nzSpan="12" style="text-align: center">
+                  <div>(जी. मल्लिकार्जुन)</div>
+                  <div style="font-weight: bold; font-size: 13px">
+                    प्रधान आयकर आयुक्त-19,
+                  </div>
+                  <div style="font-weight: bold; font-size: 13px">मुंबई</div>
+                </div>
+              </div>
+            </div>
+
+            <p><u> प्रतिलिपि प्रेषित-:- </u></p>
+            <p>१. वेतन बिल अनुभाग, मुंबई</p>
+            <p>२. क्षेत्रीय लेखा अधिकारी, मुंबई</p>
+            <p>३. संबंधित अधिकारी</p>
+            <div style="margin-top: 100px; font-size: 13px">
+              <div nz-row>
+                <div nz-col nzSpan="15"></div>
+
+                <div nz-col nzSpan="9" style="text-align: center">
+                  <div style="font-weight: bold">({{ NAME_HN }})</div>
+                  <div>{{ POST_HN }}</div>
+                  <div>{{ OFFICE_NAME_HN }}</div>
+                  <div style="font-weight: bold">({{ SIGNNAME }})</div>
+                  <div>{{ POST }}</div>
+                  <div>{{ OFFICE_NAME }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Aaykar'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+              <div style="width: 100%">
+                <br /><br />
+                <div style="text-align: center">
+                  DDO Gazetted, Ayakar Bhawan
+                </div>
+                <div style="display: flex; gap: 330px">
+                  <div>Controller: ZAO(CBDT), Mumbai</div>
+                  <div>Salary Month</div>
+                </div>
+
+                <div style="margin-top: 60px; font-size: 14px">
+                  <div nz-row>
+                    <div nz-col nzSpan="14">
+                      <p style="margin-top: -16px">
+                        Employee Name:
+                        <b>{{ aayakarbhavandata.EMPLOYEE_NAME }}</b>
+                      </p>
+                      <p style="margin-top: -16px">
+                        Designation:
+                        <b>{{ aayakarbhavandata.DESIGNATION }}</b>
+                      </p>
+                      <p style="margin-top: -16px">
+                        Payment For The Period :01/04/2023 To 30/04/2023
+                      </p>
+                      <p style="margin-top: -16px">
+                        Pay Band:<b>{{ aayakarbhavandata.GRADE_PAY_LEVEL }}</b>
+                      </p>
+                      <p style="margin-top: -16px">
+                        PRAN No:
+                        <b>{{ aayakarbhavandata.IKAR_PRN_NO }}</b>
+                      </p>
+                    </div>
+                    <div nz-col nzSpan="8">
+                      <p style="margin-top: -16px">
+                        Basic Pay:<b>{{ aayakarbhavandata.GRADE_PAY }}</b>
+                      </p>
+                      <p style="margin-top: -16px">
+                        Bank A/c No:
+                        <b>{{ aayakarbhavandata.IKAR_BANK_ACCOUNT_NO }}</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br /><br />
+              <div style="text-align: center; font-weight: bold">
+                <div style="text-transform: uppercase">
+                  <u> एस. आर-61 के अधीन आदेश</u>
+                </div>
+              </div>
+              <br />
+              <div>
+                <p>
+                  &nbsp;&nbsp;&nbsp;श्री कृष्ण कुमार, आयकर अधिकारी-23(1)(1),
+                  मुंबई, कार्यालय- प्र.आ.आ.-19, मुंबई, के दिनांक 30.04.2023 से
+                  02.05.2023 तक जिला एंव सत्र न्यायालय चण्डीगढ़ में केन्द्रीय
+                  जाँच ब्यूरो बनाम गुरुनाम सिंह केस के सिलसिले में मुंबई से
+                  चण्डीगढ़ जाने तथा वापस आने हेतु एस. आर. 61 के अधीन एतदद्वारा
+                  स्वीकृति प्रदान की जाती है ।
+                </p>
+                <br />
+                <p>
+                  &nbsp;&nbsp;&nbsp; प्रमाणित किया जाता है कि यह दौरा सरकारी
+                  कामकाज के सिलसिले में किया जा रहा है और दौरा लोकहित में है ।
+                </p>
+              </div>
+              <div style="margin-top: 100px; font-size: 13px">
+                <div nz-row>
+                  <div nz-col nzSpan="12"></div>
+
+                  <div nz-col nzSpan="12" style="text-align: center">
+                    <div>(जी. मल्लिकार्जुन)</div>
+                    <div style="font-weight: bold; font-size: 13px">
+                      प्रधान आयकर आयुक्त-19,
+                    </div>
+                    <div style="font-weight: bold; font-size: 13px">मुंबई</div>
+                  </div>
+                </div>
+              </div>
+
+              <p><u> प्रतिलिपि प्रेषित-:- </u></p>
+              <p>१. वेतन बिल अनुभाग, मुंबई</p>
+              <p>२. क्षेत्रीय लेखा अधिकारी, मुंबई</p>
+              <p>३. संबंधित अधिकारी</p>
+              <div style="margin-top: 100px; font-size: 13px">
+                <div nz-row>
+                  <div nz-col nzSpan="15"></div>
+
+                  <div nz-col nzSpan="9" style="text-align: center">
+                    <div style="font-weight: bold">({{ NAME_HN }})</div>
+                    <div>{{ POST_HN }}</div>
+                    <div>{{ OFFICE_NAME_HN }}</div>
+                    <div style="font-weight: bold">({{ SIGNNAME }})</div>
+                    <div>{{ POST }}</div>
+                    <div>{{ OFFICE_NAME }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

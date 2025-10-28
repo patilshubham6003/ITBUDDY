@@ -1,0 +1,233 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+          (click)="importInExcel()" [nzLoading]="exportLoading">
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" [(ngModel)]="searchText" (keydown.enter)="onKeypressEvent($event)"
+            (keyup)="keyup($event)" nz-input placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Caretaker Name</nz-form-label>
+                <nz-select name="CaretakerName" nzMode="multiple" nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Caretaker Name" [(ngModel)]="CaretakerName">
+                  <nz-option *ngFor="let careT of CaretakerData" [nzValue]="careT.ID" [nzLabel]="careT.USER_NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-select name="ResidenceType" nzMode="multiple" nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Residence Type" [(ngModel)]="ResidenceType">
+                  <nz-option *ngFor="let res of ResidenceTypeData" [nzValue]="res.ID" [nzLabel]="res.TYPE">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>City</nz-form-label>
+                <nz-select name="city" nzMode="multiple" nzAllowClear style="width: 100%" nzPlaceHolder="Select City"
+                  [(ngModel)]="City">
+                  <nz-option *ngFor="let city of CityData" [nzValue]="city.ID" [nzLabel]="city.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Area Name</nz-form-label>
+                <nz-select name="area" nzMode="multiple" nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Area Name" [(ngModel)]="Area">
+                  <nz-option *ngFor="let area of AreaData" [nzValue]="area.ID" [nzLabel]="area.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Building Name</nz-form-label>
+                <nz-select name="building" nzAllowClear nzMode="multiple" style="width: 100%"
+                  nzPlaceHolder="Select Building Name" [(ngModel)]="Building">
+                  <nz-option *ngFor="let building of BuildingData" [nzValue]="building.ID" [nzLabel]="building.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Floor Name</nz-form-label>
+                <nz-select name="floor" nzMode="multiple" nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Floor Name" [(ngModel)]="Floor">
+                  <nz-option *ngFor="let floor of FloorData" [nzValue]="floor.ID" [nzLabel]="floor.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Quarter Name</nz-form-label>
+                <nz-select name="flat" nzAllowClear nzMode="multiple" style="width: 100%"
+                  nzPlaceHolder="Select Quarter Name" [(ngModel)]="Flat">
+                  <nz-option *ngFor="let flat of FlatData" [nzValue]="flat.ID" [nzLabel]="flat.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Status</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="status" [(ngModel)]="STATUS" nzAllowClear nzPlaceHolder="Choose Status">
+                    <nz-option [nzValue]="'A'" [nzLabel]="' Available'"></nz-option>
+                    <nz-option [nzValue]="'B'" [nzLabel]="'Booked'"></nz-option>
+                    <nz-option [nzValue]="'AC'" [nzLabel]="' Acceptance Form Filled '"></nz-option>
+                    <nz-option [nzValue]="'UN'" [nzLabel]="' Under Maintenance'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="10">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="display: flex">
+                <button style="margin-right: 10px; margin-top: -14px" nz-button [nzLoading]="isSpinning"
+                  nzType="primary" (click)="applyFilter()">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button style="margin-right: 10px; margin-top: -14px" nz-button nzType="primary"
+                  (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table id="excel-table" class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      [nzScroll]="{ x: '1500px', y: '55vh' }" (nzPageSizeChange)="search()" (nzQueryParams)="sort($event)">
+      <thead nzSingleSort>
+        <tr>
+          <th nzWidth="130px" style="font-weight: bold; text-align: center" nzColumnKey="CARETAKER_NAME"
+            [nzSortFn]="true">
+            Care Taker Name
+          </th>
+          <th nzWidth="120px" style="font-weight: bold; text-align: center" nzColumnKey="RESIDENCE_TYPE_NAME"
+            [nzSortFn]="true">
+            Residence Type
+          </th>
+
+          <th nzWidth="90px" nzColumnKey="CITY_NAME" [nzSortFn]="true" style="font-weight: bold; text-align: center">
+            City Name
+          </th>
+
+          <th nzWidth="90px" style="font-weight: bold; text-align: center" nzColumnKey="AREA_NAME" [nzSortFn]="true">
+            Area Name
+          </th>
+
+          <th nzWidth="90px" style="font-weight: bold; text-align: center" nzColumnKey="BUILDING_NAME"
+            [nzSortFn]="true">
+            Building Name
+          </th>
+
+          <th nzWidth="90px" style="font-weight: bold; text-align: center" nzColumnKey="FLOOR_NAME" [nzSortFn]="true">
+            Floor Name
+          </th>
+          <th nzWidth="90px" style="font-weight: bold; text-align: center" nzColumnKey="NAME" [nzSortFn]="true">
+            Quarter Name
+          </th>
+          <th nzWidth="60px" style="font-weight: bold; text-align: center" nzColumnKey="STATUS" [nzSortFn]="true">
+            Status
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: left; white-space: pre-line">
+            {{ data.CARETAKER_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.RESIDENCE_TYPE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.CITY_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.AREA_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.BUILDING_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.FLOOR_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.AVAILABLE_STATUS == 'A'">Available</span>
+            <span *ngIf="data.AVAILABLE_STATUS == 'B'">Booked</span>
+            <span *ngIf="data.AVAILABLE_STATUS == 'AC'">
+              Acceptance Form Filled
+            </span>
+            <span *ngIf="data.AVAILABLE_STATUS == 'UN'">
+              Under Maintenance</span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

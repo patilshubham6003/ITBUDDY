@@ -1,0 +1,1380 @@
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<div>
+  <form nz-form #referanceHODPermissionPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+          <div class="my-box">
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <!-- <div>
+                  <nz-form-item>
+                   
+                    <nz-radio-group
+                      [(ngModel)]="orderdata.PAY_BILL"
+                      name="radiogaz"
+                    >
+                      <label nz-radio nzValue="NonGazPay">Welfare & S.G </label>
+                      <label nz-radio nzValue="GazPay">Gaz Pay Bill</label>
+                    </nz-radio-group>
+                  </nz-form-item>
+                </div> -->
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Signature</nz-form-label
+                    >
+                    <nz-form-control>
+                      <nz-select
+                        name="userid"
+                        [(ngModel)]="orderdata.SIGNATURE_ID"
+                        nzAllowClear
+                        nzShowSearch
+                        nzPlaceHolder="Choose Signature"
+                        (ngModelChange)="signature($event)"
+                      >
+                        <nz-option
+                          *ngFor="let user of Signaturearray"
+                          [nzValue]="user.ID"
+                          [nzLabel]="user.NAME"
+                        >
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >HOD Referance Permission Number</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Order No. Is Required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="OrderNumber"
+                      nz-input
+                      placeholder="Enter order number"
+                      type="text"
+                      [(ngModel)]="queData.PERMISSION_NO"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>CGHS Name</nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="CGHS Name is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="cghsname"
+                      nz-input
+                      placeholder="Enter CGHS Name"
+                      type="text"
+                      [(ngModel)]="queData.CGHS_NAME"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Name of applicant</nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Name of applicant is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="EMPLOYEE_NAME"
+                      nz-input
+                      placeholder="Enter name in english"
+                      autocomplete="off"
+                      type="text"
+                      disabled="true"
+                      [(ngModel)]="orderdata.EMPLOYEE_NAME"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of applicant (in hindi)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="City Name is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      nz-input
+                      placeholder="Enter name in hindi"
+                      autocomplete="off"
+                      name="EMPLOYEE_NAME_HN"
+                      type="text"
+                      [(ngModel)]="orderdata.EMPLOYEE_NAME_HN"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Name of patient </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Name of patient is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="PATIENT_NAME"
+                      nz-input
+                      placeholder="Enter name in english"
+                      autocomplete="off"
+                      type="text"
+                      disabled="true"
+                      [(ngModel)]="orderdata.PATIENT_NAME"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Name of patient(in hindi)</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Name of patient(in hindi) is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      nz-input
+                      placeholder="Enter name of patient in hindi"
+                      autocomplete="off"
+                      name="PATIENT_NAME_HN"
+                      type="text"
+                      [(ngModel)]="orderdata.PATIENT_NAME_HN"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div *ngFor="let data of HospitalMapping; let i = index">
+              <div class="my-box">
+                <div nz-row>
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>
+                        Name of Hospital
+                      </nz-form-label>
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Hospital is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="NAMENAME{{ i }}"
+                          nz-input
+                          placeholder="Enter name in english"
+                          autocomplete="off"
+                          type="text"
+                          disabled="true"
+                          [(ngModel)]="data.NAME"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Name of Hospital(in hindi)</nz-form-label
+                      >
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Hospital(in hindi) is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          nz-input
+                          placeholder="Enter name of Hospital in hindi"
+                          autocomplete="off"
+                          name="NAME_HN{{ i }}"
+                          type="text"
+                          [(ngModel)]="data.NAME_HN"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzNoColon
+                        >Address of Hospital
+                      </nz-form-label>
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Address is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="ADDRESS{{ i }}"
+                          nz-input
+                          placeholder="Enter Address in english"
+                          autocomplete="off"
+                          type="text"
+                          [(ngModel)]="data.ADDRESS"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Address of Hospital(in hindi)</nz-form-label
+                      >
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Address of Hospital(in hindi) is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          nz-input
+                          placeholder="Enter Address of Hospital in hindi"
+                          autocomplete="off"
+                          name="ADDRESS_HN{{ i }}"
+                          type="text"
+                          [(ngModel)]="data.ADDRESS_HN"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+                <div>
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Show In Order</nz-form-label
+                    >
+                    <nz-form-control>
+                      <nz-switch
+                        name="IS_VISIBLE_IN_ORDER{{ i }}"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        [(ngModel)]="HospitalMapping[i].IS_VISIBLE_IN_ORDER"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16">
+          <div class="my-box" style="padding: 10px">
+            <div>
+              <div nz-row>
+                <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                  <div style="text-align: right">
+                    <img
+                      src="assets/govtOfIndia.png"
+                      alt=""
+                      height="140%"
+                      width="140%"
+                    />
+                  </div>
+                </div>
+
+                <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                  <div
+                    style="width: 100%; text-align: center; font-weight: bold"
+                  >
+                    <div>भारत सरकार</div>
+                    <div style="text-transform: uppercase">
+                      Government Of India
+                    </div>
+                    <div>
+                      कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई
+                    </div>
+                    <div style="text-transform: uppercase">
+                      Office Of The Commissioner of Income-Tax (Admin, & TPS)
+                    </div>
+                    <div>
+                      तीसरी मंजिल, आयकर भवन, महर्षी कर्वे रोड, मुंबई -20
+                    </div>
+                    <div style="text-transform: uppercase">
+                      3<sup style="text-transform: lowercase">rd</sup> Floor,
+                      aayakar bhavan, Maharshi Karve Road, Mumbai-20
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div nz-row>
+                <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                  <div style="margin-left: 585%">
+                    <img
+                      src="assets/govtOfIndia.png"
+                      alt=""
+                      height="130px"
+                      width="100px"
+                    />
+                  </div>
+                </div>
+
+                <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                  <div
+                    style="
+                      width: 100%;
+                      text-align: center;
+                      font-weight: bold;
+                      margin-top: 21%;
+                    "
+                  >
+                    <div>भारत सरकार</div>
+                    <div style="text-transform: uppercase">
+                      Government Of India
+                    </div>
+                    <div>
+                      कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई
+                    </div>
+                    <div style="text-transform: uppercase">Office Of The</div>
+                    <div>Commissioner of Income-Tax (Admin, & TPS)</div>
+
+                    <div style="text-transform: uppercase">
+                      3<sup>rd</sup> Floor, aayakar bhavan, Maharshi Karve Road,
+                      Mumbai-400020
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div
+                style="
+                  width: 100%;
+                  border: 1px solid black;
+                  padding: 5px;
+                  margin-top: 10px;
+                  font-size: 15px;
+                "
+              >
+                <div nz-row>
+                  <div nz-col nzSpan="16">
+                    <b>{{ queData.PERMISSION_NO }}</b>
+                  </div>
+                  <div nz-col nzSpan="8" style="text-align: right">
+                    <b>दिनांक</b>
+                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-left: 44%; margin-top: 20px">
+                <p>
+                  <b><u>अनुमति पत्र</u></b>
+                </p>
+              </div>
+              <div style="margin-left: 40%; margin-top: -13px">
+                <p>
+                  <b><u>PERMISSION LETTER</u></b>
+                </p>
+              </div>
+              <p>
+                <b
+                  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                    orderdata.EMPLOYEE_NAME_HN
+                  }}, {{ orderdata.DESIGNATION }},</b
+                >
+                को
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father'"
+                    >उनके पिता &nbsp;{{ orderdata.PATIENT_NAME_HN }} के
+                    लिए</span
+                  >
+                  <!-- <span
+                        *ngIf="
+                          orderdata.RELATION_WITH_PATIENT == 'Grand-Father'
+                        "
+                        >उनके दादाजी</span
+                      > -->
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Wife'"
+                    >उनकी पत्नी &nbsp;{{ orderdata.PATIENT_NAME_HN }} के
+                    लिए</span
+                  >
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Husband'"
+                    >उनके पती &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए
+                  </span>
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Son'"
+                    >उनका बेटे &nbsp;{{ orderdata.PATIENT_NAME_HN }}
+                    के लिए
+                  </span>
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Daughter'"
+                    >उनकी बेटी &nbsp;{{ orderdata.PATIENT_NAME_HN }} के
+                    लिए</span
+                  >
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Sister'"
+                    >उनकी बहन &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                  >
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Brother'"
+                    >उनके भाई &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                  >
+                  <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'"
+                    >उनकी मां &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                  >
+                  <!-- <span
+                        *ngIf="
+                          orderdata.RELATION_WITH_PATIENT == 'Grand-Mother'
+                        "
+                        >उनकी दादी मां</span
+                      > -->
+                  <span
+                    *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                    >उनके ससुर &nbsp;{{ orderdata.PATIENT_NAME_HN }} के
+                    लिए</span
+                  >
+                  <span
+                    *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                    >उनकी सासू मां &nbsp;{{ orderdata.PATIENT_NAME_HN }} के
+                    लिए</span
+                  >
+                </span>
+
+                &nbsp;
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                  स्वयं के लिए</span
+                >
+                <span *ngFor="let data of HospitalMapping; let k = index">
+                  <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                    {{ data.NAME_HN }} ,{{ data.ADDRESS_HN }} ,{{
+                      data.TYPE == "E"
+                        ? "Empanelled"
+                        : data.TYPE == "NE"
+                        ? "Non Empanelled"
+                        : data.TYPE == "G"
+                        ? "Government"
+                        : ""
+                    }}
+                    <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                    <!-- <span *ngIf="HospitalMapping.length - 2 == k">और</span> -->
+                  </span>
+                </span>
+                अस्पताल में {{ orderdata.NATURE_OF_TREATMENT }} के लिए एतदद्वारा
+                अनुमति प्रदान की जाती है। यह अनुमति उन्हें उनके दिनांक
+                {{ orderdata.LETTER_DATE }} के आवेदन तथा चिकित्सा अधिकारी,
+                सीजीएचएस <b>{{ queData.CGHS_NAME }}</b> द्वारा दिए गए दिनांक
+                {{ orderdata.REFERRAL_DATE }} के संदर्भ पत्र को ध्यान में रखते
+                हुए दी गई है।
+              </p>
+
+              <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permission is hereby granted to
+                <b>
+                  {{ orderdata.EMPLOYEE_NAME }}, {{ orderdata.DESIGNATION }},</b
+                >
+                for {{ orderdata.NATURE_OF_TREATMENT }} from
+                <span *ngFor="let data of HospitalMapping; let k = index">
+                  <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                    {{ data.NAME }} ,{{ data.ADDRESS }} ,{{
+                      data.TYPE == "E"
+                        ? "Empanelled"
+                        : data.TYPE == "NE"
+                        ? "Non Empanelled"
+                        : data.TYPE == "G"
+                        ? "Government"
+                        : ""
+                    }}
+                    <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                    <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                  </span>
+                </span>
+                for his/her {{ orderdata.RELATION_WITH_PATIENT }}
+                {{ orderdata.PATIENT_NAME }}. This permission is granted
+                considering his application dated
+                {{ orderdata.LETTER_DATE }} and the referral dated
+                {{ orderdata.REFERRAL_DATE }}
+                given by Medical Officer, CGHS <b>{{ queData.CGHS_NAME }}</b
+                >.
+              </p>
+
+              कर्मचारी/अधिकारी का मूल वेतन रु
+              <b>{{ orderdata.GRADE_PAY }}/-</b> है।<br />
+
+              The basic pay of the official/officer is Rs.
+              <b>{{ orderdata.GRADE_PAY }}/-</b> <br />
+              <div>
+                <br />
+                <b>आंतरिक इलाज के लिए निम्नानुसार हकदार होंगे:</b><br />
+
+                1. मूल वेतन रु 36,500/- तक
+
+                <div style="margin-left: 315px; margin-top: -18px">
+                  जनरल वार्ड
+                </div>
+
+                2. मूल वेतन रु 36,501 से 50,500 तक
+
+                <div style="margin-left: 315px; margin-top: -18px">
+                  सेमी प्रायवेट वार्ड
+                </div>
+
+                3. मूल वेतन रु 50,501 एवं इससे अधिक
+
+                <div style="margin-left: 315px; margin-top: -18px">
+                  प्रायवेट वार्ड
+                </div>
+              </div>
+              <br />
+              <b
+                >The Entitlement of Indoor Treatment will be under as under:-</b
+              >
+              <br />
+              1. Basic pay up to Rs. 36,500/-
+              <div style="margin-left: 342px; margin-top: -22px">
+                General Ward
+              </div>
+              2. Basic pay from Rs. 36,501/- to 50,500/-
+              <div style="margin-left: 342px; margin-top: -22px">
+                Semi-private Ward
+              </div>
+              3. Basic pay Rs. 50,501/- and above
+              <div style="margin-left: 342px; margin-top: -22px">
+                Private Ward
+              </div>
+              <br />
+
+              <b>अलग अलग वर्गों के लिए अधिकतम कमरा किराया निम्नानुसार होगा:-</b
+              ><br />
+              <div style="display: inline">
+                <div style="width: 32%; display: inline-flex">जनरल वार्ड</div>
+
+                <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+                <div style="width: 32%; display: inline-flex">रु1000/-</div>
+              </div>
+
+              <div style="display: inline">
+                <div style="width: 32%; display: inline-flex">
+                  सेमी प्रायवेट वार्ड
+                </div>
+
+                <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+                <div style="width: 32%; display: inline-flex">रु 2000/-</div>
+              </div>
+
+              <div style="display: inline">
+                <div style="width: 32%; display: inline-flex">
+                  प्रायवेट वार्ड
+                </div>
+
+                <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+                <div style="width: 32%; display: inline-flex">रु 3000/-</div>
+              </div>
+
+              <div style="display: inline">
+                <div style="width: 32%; display: inline-flex">
+                  दिन की देखभाल
+                </div>
+
+                <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+                <div style="width: 32%; display: inline-flex">रु 500/-</div>
+              </div>
+
+              <div>
+                <br />
+                The <b>Maximum Bed charges</b> for different categories will be
+                under:-
+              </div>
+
+              1. General Ward
+              <div style="margin-left: 315px; margin-top: -18px">
+                -Rs. 1000/- per Day
+              </div>
+              2. Semi-private Ward
+              <div style="margin-left: 315px; margin-top: -18px">
+                -Rs.2000/- per day
+              </div>
+              3. Private Ward
+              <div style="margin-left: 315px; margin-top: -18px">
+                -Rs. 3000/- per day
+              </div>
+              4. Day Care(6-8 hours admission)
+
+              <div style="margin-left: 315px; margin-top: -18px">
+                -Rs. 500/- per day
+              </div>
+              <br />
+
+              <p style="margin-top: -18px">
+                The reimbursement of medical expenses shall be as per the CGHS
+                approved rates. This permission is valid for the period of six
+                months only
+              </p>
+
+              <p style="margin-top: -8px">
+                चिकित्सा व्ययाँ की अदायगी सीजीएचएस के अनुमोदित दरों के अनुसार
+                होगी। यह अनुमति मात्र 6 महीने की अवधि के लिए वैध है।
+              </p>
+
+              <p style="margin-top: -8px">
+                The English version of the order will prevail in case of any
+                variation in Hindi & English Version.
+              </p>
+
+              <!-- <div style="margin-top: 100px; margin-left: 59%">
+                <b>(विनय सिन्हा)</b>
+              </div>
+              <div style="margin-left: 59%"><b>(Vinay Sinha)</b></div>
+              <div style="margin-top: 5px; margin-left: 50%">
+                आयकर आयुक्त (प्रशा एवं करदाता सेवा)
+              </div>
+              <div style="margin-top: 0px; margin-left: 46%">
+                Commissioner of Income Tax (Admn. & TPS)
+              </div>
+              <div style="margin-left: 63%">मुंबई</div>
+              <div style="margin-left: 61%">Mumbai.</div> -->
+              <div nz-row>
+                <div nz-col nzSpan="10"></div>
+
+                <div
+                  nz-col
+                  nzSpan="14"
+                  style="text-align: center; padding-top: 70px"
+                >
+                  <span>
+                    <div style="font-weight: bold">(विनय सिन्हा)</div>
+                    <div style="font-weight: bold">(Vinay Sinha)</div>
+                    <div>आयकर आयुक्त (प्रशा एवं करदाता सेवा),मुंबई</div>
+                    <div>Commissioner of Income Tax (Admin. & TPS),Mumbai</div>
+                  </span>
+                </div>
+              </div>
+
+              <div style="margin-top: 30px">
+                प्रतिलिपि :
+                <b>
+                  {{ orderdata.EMPLOYEE_NAME_HN }},
+                  {{ orderdata.DESIGNATION }}</b
+                >
+              </div>
+              <div>{{ orderdata.OFFICE_NAME }}</div>
+              <div style="margin-top: 5px">
+                <u>Copy to:</u>
+              </div>
+              <div>
+                <b
+                  >{{ orderdata.EMPLOYEE_NAME }}, {{ orderdata.DESIGNATION }}</b
+                >
+              </div>
+              <div>{{ orderdata.OFFICE_NAME }}</div>
+
+              <div nz-row>
+                <div nz-col nzSpan="10"></div>
+
+                <!-- <div
+                  nz-col
+                  nzSpan="14"
+                  style="text-align: center"
+                  *ngIf="SECTION_TYPE == 'welfare'"
+                >
+                  <span>
+                    <div style="font-weight: bold">(रीतेश कुमार)</div>
+                    <div style="font-weight: bold">(Ritesh Kumar)</div>
+                    <div>आयकर अधिकारी (मुख्या),</div>
+                    <div>Income Tax Officer (HQ)</div>
+                    <div>वेल्फेयर & कर्मचारी शिकायत, मुंबई</div>
+                    <div>Welfare & Staff Grievance, Mumbai</div>
+                  </span>
+                </div> -->
+                <div nz-col nzSpan="14" style="text-align: center">
+                  <div style="font-weight: bold">({{ NAME_HN }})</div>
+                  <div style="font-weight: bold">({{ NAME }})</div>
+                  <div>{{ POST_HN }}</div>
+                  <div>{{ POST }}</div>
+                  <div>{{ OFFICE_NAME_HN }}</div>
+                  <div>{{ OFFICE_NAME }}</div>
+                </div>
+              </div>
+
+              <!-- <div nz-row>
+                <div nz-col nzSpan="13"></div>
+
+                <div
+                  nz-col
+                  nzSpan="11"
+                  style="text-align: center"
+                  *ngIf="SECTION_TYPE == 'gazpay'"
+                >
+                  <span>
+                    <div style="font-weight: bold">(जितेंद्र रा चांदेकर)</div>
+                    <div style="font-weight: bold">आयकर अधिकारी</div>
+                    <div>राजपत्रित वेतन बिल अनुभाग II, मुंबई</div>
+
+                    <div><b>(Jitendra R Chandekar)</b></div>
+                    <div>Income Tax Officer</div>
+                    <div>Gaz Pay Bill Section II, Personnel, Mumbai</div>
+                  </span>
+                </div>
+              </div> -->
+
+              <!-- <div class="footer">
+                  <button
+                    type="button"
+                    nz-button
+                    class="ant-btn"
+                    style="margin-right: 8px"
+                    (click)="drawerClose()"
+                  >
+                    <span>Cancel</span>
+                  </button>
+                </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      class="ant-btn"
+      style="margin-right: 8px"
+      (click)="close(referanceHODPermissionPage)"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="Save()"
+    >
+      <span>Save & Preview</span>
+    </button>
+    <!-- <button nz-button nzType="primary"  (click)="pakagedata()">
+                    Save and Next
+                </button> -->
+
+    <!-- <button
+              type="button"
+              class="ant-btn ant-btn-primary"
+              nz-button
+              (click)="openPrintOrderModal()"
+            >
+              <span>Preview</span>
+            </button> -->
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(referanceHODPermissionPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'HOD Permission Letter'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div style="height: 500px; overflow: auto">
+        <div id="printOrderModal">
+          <div>
+            <div nz-row>
+              <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                <div style="text-align: right">
+                  <img
+                    src="assets/govtOfIndia.png"
+                    alt=""
+                    height="130px"
+                    width="90px"
+                  />
+                </div>
+              </div>
+
+              <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                <div style="width: 100%; text-align: center; font-weight: bold">
+                  <div>भारत सरकार</div>
+                  <div style="text-transform: uppercase">
+                    Government Of India
+                  </div>
+                  <div>कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई</div>
+                  <div style="text-transform: uppercase">
+                    Office Of The Commissioner of Income-Tax (Admin, & TPS)
+                  </div>
+                  <div>तीसरी मंजिल, आयकर भवन, महर्षी कर्वे रोड, मुंबई -20</div>
+                  <div style="text-transform: uppercase">
+                    3<sup style="text-transform: lowercase">rd</sup> Floor,
+                    aayakar bhavan, Maharshi Karve Road, Mumbai-20
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div nz-row>
+              <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                <div style="margin-left: 585%">
+                  <img
+                    src="assets/govtOfIndia.png"
+                    alt=""
+                    height="130px"
+                    width="100px"
+                  />
+                </div>
+              </div>
+
+              <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                <div
+                  style="
+                    width: 100%;
+                    text-align: center;
+                    font-weight: bold;
+                    margin-top: 21%;
+                  "
+                >
+                  <div>भारत सरकार</div>
+                  <div style="text-transform: uppercase">
+                    Government Of India
+                  </div>
+                  <div>
+                    कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई
+                  </div>
+                  <div style="text-transform: uppercase">Office Of The</div>
+                  <div>Commissioner of Income-Tax (Admin, & TPS)</div>
+
+                  <div style="text-transform: uppercase">
+                    3<sup>rd</sup> Floor, aayakar bhavan, Maharshi Karve Road,
+                    Mumbai-400020
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div
+              style="
+                width: 100%;
+                border: 1px solid black;
+                padding: 5px;
+                margin-top: 10px;
+                font-size: 15px;
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <b>{{ queData.PERMISSION_NO }}</b>
+                </div>
+                <div nz-col nzSpan="12" style="text-align: right">
+                  <b>दिनांक</b>
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-left: 44%; margin-top: 20px">
+              <p>
+                <b><u>अनुमति पत्र</u></b>
+              </p>
+            </div>
+            <div style="margin-left: 40%; margin-top: -13px">
+              <p>
+                <b><u>PERMISSION LETTER</u></b>
+              </p>
+            </div>
+            <p>
+              <b
+                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ orderdata.EMPLOYEE_NAME_HN }},
+                {{ orderdata.DESIGNATION }},</b
+              >
+              को
+              <span *ngIf="orderdata.RELATION_WITH_PATIENT != 'Self'">
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father'"
+                  >उनके पिता &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <!-- <span
+                      *ngIf="
+                        orderdata.RELATION_WITH_PATIENT == 'Grand-Father'
+                      "
+                      >उनके दादाजी</span
+                    > -->
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Wife'"
+                  >उनकी पत्नी &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Husband'"
+                  >उनके पती &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए
+                </span>
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Son'"
+                  >उनका बेटे &nbsp;{{ orderdata.PATIENT_NAME_HN }}
+                  के लिए
+                </span>
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Daughter'"
+                  >उनकी बेटी &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Sister'"
+                  >उनकी बहन &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Brother'"
+                  >उनके भाई &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother'"
+                  >उनकी मां &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <!-- <span
+                      *ngIf="
+                        orderdata.RELATION_WITH_PATIENT == 'Grand-Mother'
+                      "
+                      >उनकी दादी मां</span
+                    > -->
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                  >उनके ससुर &nbsp;{{ orderdata.PATIENT_NAME_HN }} के लिए</span
+                >
+                <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                  >उनकी सासू मां &nbsp;{{ orderdata.PATIENT_NAME_HN }} के
+                  लिए</span
+                >
+              </span>
+
+              &nbsp;
+              <span *ngIf="orderdata.RELATION_WITH_PATIENT == 'Self'">
+                स्वयं के लिए</span
+              >
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME_HN }} ,{{ data.ADDRESS_HN }} ,{{
+                    data.TYPE == "E"
+                      ? "Empanelled"
+                      : data.TYPE == "NE"
+                      ? "Non Empanelled"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">और</span> -->
+                </span>
+              </span>
+              अस्पताल में {{ orderdata.NATURE_OF_TREATMENT }} के लिए एतदद्वारा
+              अनुमति प्रदान की जाती है। यह अनुमति उन्हें उनके दिनांक
+              {{ orderdata.LETTER_DATE }} के आवेदन तथा चिकित्सा अधिकारी,
+              सीजीएचएस <b>{{ queData.CGHS_NAME }}</b> द्वारा दिए गए दिनांक
+              {{ orderdata.REFERRAL_DATE }} के संदर्भ पत्र को ध्यान में रखते हुए
+              दी गई है।
+            </p>
+
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Permission is hereby granted to
+              <b>
+                {{ orderdata.EMPLOYEE_NAME }}, {{ orderdata.DESIGNATION }},</b
+              >
+              for {{ orderdata.NATURE_OF_TREATMENT }} from
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME }} ,{{ data.ADDRESS }} ,{{
+                    data.TYPE == "E"
+                      ? "Empanelled"
+                      : data.TYPE == "NE"
+                      ? "Non Empanelled"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+              for his/her {{ orderdata.RELATION_WITH_PATIENT }}
+              {{ orderdata.PATIENT_NAME }}. This permission is granted
+              considering his application dated {{ orderdata.LETTER_DATE }} and
+              the referral dated
+              {{ orderdata.REFERRAL_DATE }}
+              given by Medical Officer, CGHS <b>{{ queData.CGHS_NAME }}</b
+              >.
+            </p>
+
+            कर्मचारी/अधिकारी का मूल वेतन रु
+            <b>{{ orderdata.GRADE_PAY }}/-</b> है।<br />
+
+            The basic pay of the official/officer is Rs.
+            <b>{{ orderdata.GRADE_PAY }}/-</b> <br />
+            <div>
+              <br />
+              <b>आंतरिक इलाज के लिए निम्नानुसार हकदार होंगे:</b><br />
+
+              1. मूल वेतन रु 36,500/- तक
+
+              <div style="margin-left: 315px; margin-top: -18px">
+                जनरल वार्ड
+              </div>
+
+              2. मूल वेतन रु 36,501 से 50,500 तक
+
+              <div style="margin-left: 315px; margin-top: -18px">
+                सेमी प्रायवेट वार्ड
+              </div>
+
+              3. मूल वेतन रु 50,501 एवं इससे अधिक
+
+              <div style="margin-left: 315px; margin-top: -18px">
+                प्रायवेट वार्ड
+              </div>
+            </div>
+            <br />
+            <b>The Entitlement of Indoor Treatment will be under as under:-</b>
+            <br />
+            1. Basic pay up to Rs. 36,500/-
+            <div style="margin-left: 342px; margin-top: -22px">
+              General Ward
+            </div>
+            2. Basic pay from Rs. 36,501/- to 50,500/-
+            <div style="margin-left: 342px; margin-top: -22px">
+              Semi-private Ward
+            </div>
+            3. Basic pay Rs. 50,501/- and above
+            <div style="margin-left: 342px; margin-top: -22px">
+              Private Ward
+            </div>
+            <br />
+
+            <b>अलग अलग वर्गों के लिए अधिकतम कमरा किराया निम्नानुसार होगा:-</b
+            ><br />
+            <div style="display: inline">
+              <div style="width: 32%; display: inline-flex">जनरल वार्ड</div>
+
+              <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+              <div style="width: 32%; display: inline-flex">रु1000/-</div>
+            </div>
+
+            <div style="display: inline">
+              <div style="width: 32%; display: inline-flex">
+                सेमी प्रायवेट वार्ड
+              </div>
+
+              <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+              <div style="width: 32%; display: inline-flex">रु 2000/-</div>
+            </div>
+
+            <div style="display: inline">
+              <div style="width: 32%; display: inline-flex">प्रायवेट वार्ड</div>
+
+              <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+              <div style="width: 32%; display: inline-flex">रु 3000/-</div>
+            </div>
+
+            <div style="display: inline">
+              <div style="width: 32%; display: inline-flex">दिन की देखभाल</div>
+
+              <div style="width: 32%; display: inline-flex">प्रतिदिन</div>
+
+              <div style="width: 32%; display: inline-flex">रु 500/-</div>
+            </div>
+
+            <div>
+              <br />
+              The <b>Maximum Bed charges</b> for different categories will be
+              under:-
+            </div>
+
+            1. General Ward
+            <div style="margin-left: 315px; margin-top: -18px">
+              -Rs. 1000/- per Day
+            </div>
+            2. Semi-private Ward
+            <div style="margin-left: 315px; margin-top: -18px">
+              -Rs.2000/- per day
+            </div>
+            3. Private Ward
+            <div style="margin-left: 315px; margin-top: -18px">
+              -Rs. 3000/- per day
+            </div>
+            4. Day Care(6-8 hours admission)
+
+            <div style="margin-left: 315px; margin-top: -18px">
+              -Rs. 500/- per day
+            </div>
+            <br />
+
+            <p style="margin-top: -18px">
+              The reimbursement of medical expenses shall be as per the CGHS
+              approved rates. This permission is valid for the period of six
+              months only
+            </p>
+
+            <p style="margin-top: -8px">
+              चिकित्सा व्ययाँ की अदायगी सीजीएचएस के अनुमोदित दरों के अनुसार
+              होगी। यह अनुमति मात्र 6 महीने की अवधि के लिए वैध है।
+            </p>
+
+            <p style="margin-top: -8px">
+              The English version of the order will prevail in case of any
+              variation in Hindi & English Version.
+            </p>
+
+            <!-- <div style="margin-top: 100px; margin-left: 59%">
+              <b>(विनय सिन्हा)</b>
+            </div>
+            <div style="margin-left: 59%"><b>(Vinay Sinha)</b></div>
+            <div style="margin-top: 5px; margin-left: 50%">
+              आयकर आयुक्त (प्रशा एवं करदाता सेवा)
+            </div>
+            <div style="margin-top: 0px; margin-left: 46%">
+              Commissioner of Income Tax (Admn. & TPS)
+            </div>
+            <div style="margin-left: 63%">मुंबई</div>
+            <div style="margin-left: 61%">Mumbai.</div> -->
+            <div nz-row>
+              <div nz-col nzSpan="10"></div>
+
+              <div
+                nz-col
+                nzSpan="14"
+                style="text-align: center; padding-top: 70px"
+              >
+                <span>
+                  <div style="font-weight: bold">(विनय सिन्हा)</div>
+                  <div style="font-weight: bold">(Vinay Sinha)</div>
+                  <div>आयकर आयुक्त (प्रशा एवं करदाता सेवा),मुंबई</div>
+                  <div>Commissioner of Income Tax (Admin. & TPS),Mumbai</div>
+                </span>
+              </div>
+            </div>
+
+            <div style="margin-top: 30px">
+              प्रतिलिपि :
+              <b>
+                {{ orderdata.EMPLOYEE_NAME_HN }}, {{ orderdata.DESIGNATION }}</b
+              >
+            </div>
+            <div>{{ orderdata.OFFICE_NAME }}</div>
+            <div style="margin-top: 5px">
+              <u>Copy to:</u>
+            </div>
+            <div>
+              <b>{{ orderdata.EMPLOYEE_NAME }}, {{ orderdata.DESIGNATION }}</b>
+            </div>
+            <div>{{ orderdata.OFFICE_NAME }}</div>
+
+            <div nz-row>
+              <div nz-col nzSpan="10"></div>
+
+              <!-- <div
+                nz-col
+                nzSpan="14"
+                style="text-align: center"
+                *ngIf="SECTION_TYPE == 'welfare'"
+              >
+                <span>
+                  <div style="font-weight: bold">(रीतेश कुमार)</div>
+                  <div style="font-weight: bold">(Ritesh Kumar)</div>
+                  <div>आयकर अधिकारी (मुख्या),</div>
+                  <div>Income Tax Officer (HQ)</div>
+                  <div>वेल्फेयर & कर्मचारी शिकायत, मुंबई</div>
+                  <div>Welfare & Staff Grievance, Mumbai</div>
+                </span>
+              </div> -->
+              <div nz-col nzSpan="14" style="text-align: center">
+                <div style="font-weight: bold">({{ NAME_HN }})</div>
+                <div style="font-weight: bold">({{ NAME }})</div>
+                <div>{{ POST_HN }}</div>
+                <div>{{ POST }}</div>
+                <div>{{ OFFICE_NAME_HN }}</div>
+                <div>{{ OFFICE_NAME }}</div>
+              </div>
+            </div>
+
+            <!-- <div nz-row>
+              <div nz-col nzSpan="13"></div>
+
+              <div
+                nz-col
+                nzSpan="11"
+                style="text-align: center"
+                *ngIf="SECTION_TYPE == 'gazpay'"
+              >
+                <span>
+                  <div style="font-weight: bold">(जितेंद्र रा चांदेकर)</div>
+                  <div style="font-weight: bold">आयकर अधिकारी</div>
+                  <div>राजपत्रित वेतन बिल अनुभाग II, मुंबई</div>
+
+                  <div><b>(Jitendra R Chandekar)</b></div>
+                  <div>Income Tax Officer</div>
+                  <div>Gaz Pay Bill Section II, Personnel, Mumbai</div>
+                </span>
+              </div>
+            </div> -->
+
+            <!-- <div class="footer">
+                <button
+                  type="button"
+                  nz-button
+                  class="ant-btn"
+                  style="margin-right: 8px"
+                  (click)="drawerClose()"
+                >
+                  <span>Cancel</span>
+                </button>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      printSectionId="printOrderModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="generatePDF()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

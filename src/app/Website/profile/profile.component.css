@@ -1,0 +1,235 @@
+.img-account-profile {
+  height: 10rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.card {
+  box-shadow: none;
+}
+
+.card .card-header {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.card-header:first-child {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+
+.card-header {
+  padding: 0.6rem 1rem;
+  margin-bottom: 0;
+  background-color: rgba(33, 40, 50, 0.03);
+  border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+
+.form-control,
+.dataTable-input {
+  display: block;
+  width: 100%;
+  padding: 7px;
+    font-size: 0.875rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+  line-height: 1;
+  color: #69707a;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #c5ccd6;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+  color: #0061f2;
+  border-bottom-color: #0061f2;
+}
+
+.nav-borders .nav-link {
+  color: #69707a;
+  border-bottom-width: 0.125rem;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(173, 172, 172);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #006699;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006699;
+}
+
+table,
+th,
+td {
+  border: 1px solid #c5ccd6;
+}
+
+
+.btnt {
+  background-color: #0d6efd;
+  color: white;
+  width: 30%;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+
+
+  background-clip: padding-box;
+  border: 1px solid #c5ccd6;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.neww {
+  background: #f68831;
+  padding: 8px 25px;
+  border-radius: 50px;
+  color: #fff;
+  border: #f68831;
+}
+
+.breadcrumbs ol {
+  display: inline-flex;
+  margin: 0px 0;
+}
+
+.breadcrumbs ol li+li::before {
+  color: #f5f7f2;
+}
+
+.bb {
+  font-weight: 600;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border: 2px solid #006699;
+  box-shadow: none;
+}
+
+@media screen and (max-width: 500px) {
+  .alignbt {
+    text-align: left;
+  }
+}
+
+@media screen and (min-width: 501px) {
+  .alignbt {
+    text-align: right;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .imgavatar {
+    width: 88% !important;
+    height: 200px !important;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .imgavatar {
+    width: 57% !important;
+    height: 200px !important;
+  }
+}
+
+@media screen and (min-width: 501px) {
+  .imgavatar {
+    width: 33% !important;
+    height: 200px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .imgavatar {
+    width: 66% !important;
+    height: 200px !important;
+  }
+}
+
+#PanCard {
+  text-transform: uppercase;
+}
+
+#PanCard::placeholder {
+  text-transform: initial;
+  /* Set it to "initial" to reset the transformation for the placeholder */
+}
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+
+.avatar.sm {
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: .818125rem;
+}
+
+.table-nowrap .table td,
+.table-nowrap .table th {
+  white-space: nowrap;
+}
+
+.table>:not(caption)>*>* {
+  padding: 0.75rem 1.25rem;
+  border-bottom-width: 1px;
+}
+
+table th {
+  font-weight: 600;
+  background-color: #eeecfd !important;
+}
+
+label {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  .arrowdirect {
+    position: absolute;
+    right: 34px;
+    top: 39%;
+    pointer-events: none;
+    transform: translateY(-50%);
+
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .arrowdirect {
+    position: absolute;
+    right: 38px;
+    top: 32%;
+    pointer-events: none;
+    transform: translateY(-55%);
+  }
+}

@@ -1,0 +1,75 @@
+<div nz-row nzType="flex" style="justify-content: space-between;">
+    <div nz-col style="margin: 0 10px 0 0;">
+        <div class="formname"> {{formTitle}}</div>
+    </div>
+
+    <div nz-col style="display: flex;justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+            <nz-form-item>
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="citysearch" (keyup)="keyup($event)" [(ngModel)]="searchText" nz-input
+                        placeholder="Search " />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" (click)="search()" class="flexicons" nzSearch><i nz-icon
+                            nzType="search"></i></button>
+                </ng-template>
+            </nz-form-item>
+            <nz-form-item>
+                <button nz-button nzType="primary" (click)="add()" class="flexicons">
+                    <i nz-icon nzType="plus"></i> Add New City
+                </button>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+<div nz-row style="margin-top: 10px;">
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #Citytable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzTotal]="totalRecords"
+            [nzScroll]="{ y: '390px' }" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+
+            <thead>
+                <tr>
+                    <th nzWidth="50px" style="text-align: center; font-weight: bold;"> Action </th>
+                    <th nzWidth="120px" style="text-align: center; font-weight: bold; " nzColumnKey="{{'NAME'}}"
+                        [nzSortFn]="true"> City Name</th>
+                        <th nzWidth="50px" style="text-align: center; font-weight: bold; " nzColumnKey="{{'SHORT_CODE'}}"
+                        [nzSortFn]="true">Short Code</th>
+                    <th nzColumnKey="{{'STATUS'}}" [nzSortFn]="true" nzWidth="50px"
+                        style="text-align: center;font-weight: bold;"> Status </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of Citytable.data; let i = index">
+                    <td style="text-align: center;">
+                        <a (click)="edit(data)" style="color: #1890ff;"> Edit </a>
+                    </td>
+                    <td nzWidth="100px" style=" white-space: pre-line; text-align: center;"> {{data.NAME}}</td>
+                    <td nzWidth="100px" style=" white-space: pre-line; text-align: center;"> {{data.SHORT_CODE}}<p *ngIf="data.SHORT_CODE=='' || data.SHORT_CODE==null" style="text-align: center;">-</p></td>
+
+                    <!-- <td style="text-align: center;">
+                        <nz-switch name="Status{{i}}" nzCheckedChildren="On" nzUnCheckedChildren="Off"
+                            (ngModelChange)="statusChange(data,$event)" [(ngModel)]="data.STATUS">
+                        </nz-switch>
+                    </td> -->
+                    <td style="text-align: center;white-space: pre-line;">
+                        <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+                          [nzTwotoneColor]="'#52c41a'"></i>
+                        <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+                          [nzTwotoneColor]="'#f50'"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="420" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-add-city [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData"></app-add-city>
+    </ng-container>
+</nz-drawer>

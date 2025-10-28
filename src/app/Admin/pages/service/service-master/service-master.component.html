@@ -1,0 +1,81 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-row nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6">
+    <b>
+      <div class="formname">{{ formTitle }}</div>
+    </b>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" nz-input placeholder="Search Records" [(ngModel)]="searchText"
+          (keydown.enter)="search(true)" />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <span nz-icon nzType="search"></span>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <span nz-icon nzType="plus"></span>Add New Service</button>
+      </nz-form-item>
+
+    </form>
+  </div>
+</div>
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" [nzScroll]="{ x: '1000px',y: '360px' }" [nzSize]="'small'" nzBordered #table nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" nzSize="small" style="white-space: pre-wrap;">
+      <thead>
+        <tr>
+          <th nzWidth="80px" nzAlign="center"><b>Action</b></th>
+          <th nzWidth="130px" nzAlign="center" [nzColumnKey]="'SEQUENCE_NO'" [nzSortFn]="true"><b>Sequence No</b></th>
+          <th nzWidth="400px" nzAlign="center" [nzColumnKey]="'TITLE'" [nzSortFn]="true"><b>Title</b></th>
+          <th nzWidth="400px" nzAlign="center" [nzColumnKey]="'DESCRIPTION'" [nzSortFn]="true"><b>Description</b></th>
+          <th nzWidth="350px" nzAlign="center" [nzColumnKey]="'SERVICE_ROUTE'" [nzSortFn]="true"><b>Service Route</b></th>
+          <th nzWidth="130px" nzAlign="center" [nzColumnKey]="'SHORT_CODE'" [nzSortFn]="true"><b>Short Code</b></th>
+          <th nzWidth="80px" nzAlign="center" nzColumnKey="STATUS" [nzSortFn]="true"><b>Status</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzAlign="center">
+            <a nz-button nzType="link" (click)="edit(data)"><span nz-icon nzType="edit" nzTheme="outline"></span></a>
+          </td>
+          
+          <td nzAlign="center">{{data.SEQUENCE_NO}}</td>
+          <td nzWidth="100px" nz-popover nzPopoverTitle="Title" [nzPopoverContent]="data.TITLE" nzPopoverPlacement="topLeft">{{
+            data.TITLE | slice:0:40 }}{{ data.TITLE.length > 40 ? "..." : "" }}</td>
+          <td style="width: 100px !important;" nz-popover nzPopoverTitle="Description" [nzPopoverContent]="data.DESCRIPTION" nzPopoverPlacement="topLeft">{{
+            data.DESCRIPTION | slice:0:40 }}{{ data.DESCRIPTION.length > 40 ? "..." : "" }}</td>
+            <td>{{data.SERVICE_ROUTE}}</td>
+            <td>{{data.SHORT_CODE}}</td>
+          <td nzAlign="center">
+            <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+
+            <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="700" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <app-services *nzDrawerContent [drawerClose]="closeCallback" [data]="drawerData"></app-services>
+</nz-drawer>

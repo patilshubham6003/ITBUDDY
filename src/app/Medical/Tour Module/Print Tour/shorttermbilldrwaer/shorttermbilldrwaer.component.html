@@ -1,0 +1,581 @@
+<div class="form1">
+  <div nz-row [nzGutter]="10">
+    <div nz-col nzSpan="7">
+      <div class="my-box" style="height: 75vh; overflow-y: auto; margin: 13px">
+        <div nz-row>
+          <div nz-col nzSpan="20">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Signature 1</nz-form-label>
+              <nz-form-control>
+                <nz-select
+                  name="userid"
+                  [(ngModel)]="AdvanceShortBillView.ADV_TOUR_GAR_SIGNATURE_1"
+                  nzAllowClear
+                  nzShowSearch
+                  nzPlaceHolder="Choose Signature"
+                  (ngModelChange)="signature($event)"
+                >
+                  <nz-option
+                    *ngFor="let user of Signaturearray"
+                    [nzValue]="user.ID"
+                    [nzLabel]="user.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="4">
+            <nz-form-item style="padding: 0px !important">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-control>
+                <button nz-button nzType="primary" (click)="opensignature()">
+                  <i nz-icon nzType="plus"></i>
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="20">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Signature 2</nz-form-label>
+              <nz-form-control>
+                <nz-select
+                  name="userid2"
+                  [(ngModel)]="AdvanceShortBillView.ADV_TOUR_GAR_SIGNATURE_2"
+                  nzAllowClear
+                  nzShowSearch
+                  nzPlaceHolder="Choose Signature"
+                  (ngModelChange)="signature1($event)"
+                >
+                  <nz-option
+                    *ngFor="let user of Signaturearray"
+                    [nzValue]="user.ID"
+                    [nzLabel]="user.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="4">
+            <nz-form-item style="padding: 0px !important">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-control>
+                <button nz-button nzType="primary" (click)="opensignature()">
+                  <i nz-icon nzType="plus"></i>
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <!-- <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Advance Bill Number</nz-form-label>
+
+            <nz-input-group>
+              <input type="text" autocomplete="off" name="ADVANCE_BILL_NO" nz-input placeholder="Enter Bill Number"
+                [(ngModel)]="LTCGARdata.ADVANCE_BILL_NO" />
+            </nz-input-group>
+          </nz-form-item>
+        </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- <div nz-col nzSpan="1">
+
+    </div> -->
+    <div
+      nz-col
+      nzSpan="17"
+      style="height: 75vh; overflow-y: auto"
+      class="my-box"
+    >
+      <div nz-row>
+        <div nz-col nzSpan="4"></div>
+        <div nz-col nzSpan="20">
+          <p style="text-align: center; font-weight: bold">G.A.R 37</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="4"></div>
+        <div nz-col nzSpan="20">
+          <p style="text-align: center">
+            BILL FOR SHORT TERM ADVANCES OF THE MINISTRY/DEPARTMENT/OFFICE<br />
+            OF<br />
+            FOR THE MONTH OF <b>{{ getcurrentmonthyear() }}</b>
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -13px">
+            Bill No: {{ TOURdata.ADVANCE_BILL_NO }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -13px">Type of advance:TA TOUR</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <!-- <p style=" margin-top: -13px">
+        
+          <span style="margin-left: 150px" class="v3"></span
+          ><span style="margin-left: 150px" class="v4"></span>
+        </p> -->
+          <div nz-row>
+            <div nz-col nzSpan="8">Grant No.-NA</div>
+            <div nz-col nzSpan="8">Major Head-DTE</div>
+            <div nz-col nzSpan="8">Minor Head-NA</div>
+          </div>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p>Sub Head:NA</p>
+        </div>
+      </div>
+      <div>
+        <table style="border: 1px solid black; margin-left: 106px">
+          <tr>
+            <th>SI No.</th>
+            <th>
+              Section of establishment and name of incumbent width PBR folio
+              number
+            </th>
+            <th>whether permanent. quasi-permanent or temporary</th>
+            <th>Pay</th>
+            <th>Whether surety taken</th>
+            <th>Amount of advance in ₹</th>
+            <th>Remarks</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>
+              <b>{{ TOURdata.EMPLOYEE_NAME }}</b>
+            </td>
+            <td>{{ TOURdata.SERVICE_TYPE }}</td>
+            <td>{{ TOURdata.GRADE_PAY_LEVEL }}</td>
+            <td>NA</td>
+            <td>{{ TOURdata.FINAL_ADVANCE_AMOUNT }}</td>
+            <td>TOUR Advance</td>
+          </tr>
+        </table>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p>
+            Certifies that entries have been made in respective P.B.R. folios
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p>
+            Total Amount required for payment:Rs.{{
+              TOURdata.FINAL_ADVANCE_AMOUNT
+            }}
+            /-
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -15px">
+            Rupees (in words)-<b>{{
+              ggetinwords(TOURdata.FINAL_ADVANCE_AMOUNT)
+            }}</b>
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -15px">Received Payment-DDO</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: 33px" *ngIf="POST">{{ POST }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px" *ngIf="OFFICE_NAME">{{ OFFICE_NAME }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px"></p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: 33px" *ngIf="POST1">{{ POST1 }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px" *ngIf="OFFICE_NAME1">
+            {{ OFFICE_NAME1 }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px"></p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <p style="text-align: center; margin-top: -18px">
+            <b>(For use in pay and accounts office)</b>
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            Passed For Payment of
+            Rs..........................................................................
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            (Rupees..........................................................................................................................)
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            Payment through
+            Cheque(S)No..................................................
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            Date.................Pay and Accounts Officer/Cheque Drawing D.D.O.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="showmodal()"
+  >
+    <span>Download or Print</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Application'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <div id="excel-table" class="form1" style="height: 450px; overflow: auto">
+      <div nz-row>
+        <div nz-col nzSpan="4"></div>
+        <div nz-col nzSpan="20">
+          <p style="text-align: center; font-weight: bold">G.A.R 37</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="4"></div>
+        <div nz-col nzSpan="20">
+          <p style="text-align: center">
+            BILL FOR SHORT TERM ADVANCES OF THE MINISTRY/DEPARTMENT/OFFICE<br />
+            OF<br />
+            FOR THE MONTH OF <b>{{ getcurrentmonthyear() }}</b>
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -13px">
+            Bill No: {{ TOURdata.ADVANCE_BILL_NO }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -13px">Type of advance:TA TOUR</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <!-- <p style=" margin-top: -13px">
+          
+            <span style="margin-left: 150px" class="v3"></span
+            ><span style="margin-left: 150px" class="v4"></span>
+          </p> -->
+          <div nz-row>
+            <div nz-col nzSpan="8">Grant No.-NA</div>
+            <div nz-col nzSpan="8">Major Head-DTE</div>
+            <div nz-col nzSpan="8">Minor Head-NA</div>
+          </div>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p>Sub Head:NA</p>
+        </div>
+      </div>
+      <div>
+        <table style="border: 1px solid black; margin-left: 96px">
+          <tr>
+            <th>SI No.</th>
+            <th>
+              Section of establishment and name of incumbent width PBR folio
+              number
+            </th>
+            <th>whether permanent. quasi-permanent or temporary</th>
+            <th>Pay</th>
+            <th>Whether surety taken</th>
+            <th>Amount of advance in ₹</th>
+            <th>Remarks</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>
+              <b>{{ TOURdata.EMPLOYEE_NAME }}</b>
+            </td>
+            <td>{{ TOURdata.SERVICE_TYPE }}</td>
+            <td>{{ TOURdata.GRADE_PAY_LEVEL }}</td>
+            <td>NA</td>
+            <td>{{ TOURdata.FINAL_ADVANCE_AMOUNT }}</td>
+            <td>TOUR Advance</td>
+          </tr>
+        </table>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p>
+            Certifies that entries have been made in respective P.B.R. folios
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p>
+            Total Amount required for payment:Rs.{{
+              TOURdata.FINAL_ADVANCE_AMOUNT
+            }}
+            /-
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -15px">
+            Rupees (in words)-<b>{{
+              ggetinwords(TOURdata.FINAL_ADVANCE_AMOUNT)
+            }}</b>
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -15px">Received Payment-DDO</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: 33px" *ngIf="POST">{{ POST }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px" *ngIf="OFFICE_NAME">{{ OFFICE_NAME }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px"></p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: 33px" *ngIf="POST1">{{ POST1 }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px" *ngIf="OFFICE_NAME1">
+            {{ OFFICE_NAME1 }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -18px"></p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <p style="text-align: center; margin-top: -18px">
+            <b>(For use in pay and accounts office)</b>
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            Passed For Payment of
+            Rs..........................................................................
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            (Rupees..........................................................................................................................)
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            Payment through
+            Cheque(S)No..................................................
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="3"></div>
+        <div nz-col nzSpan="21">
+          <p style="margin-top: -16px">
+            Date.................Pay and Accounts Officer/Cheque Drawing D.D.O.
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+    <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

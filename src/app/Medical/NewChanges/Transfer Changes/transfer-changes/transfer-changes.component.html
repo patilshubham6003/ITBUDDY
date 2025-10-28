@@ -1,0 +1,761 @@
+<nz-spin [nzSpinning]="isSpinning">
+  <div nz-row>
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <div class="formname" style="text-align: center">
+        <h6 style="font-size: 18px">
+          Application for Travelling Allowance for Transfer
+        </h6>
+      </div>
+      <p style="text-align: center; margin-bottom: 26px">
+        You can submit your new claim, check the status of your claim, and view
+        already approved claims.
+      </p>
+    </div>
+  </div>
+  <div nz-row *ngIf="dataList == 0">
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+    <div nz-col nzSpan="10" style="text-align: center">
+      <nz-card
+        style="background-color: #fafafa; text-align: center; margin-top: 100px"
+      >
+        <div class="row">
+          <div class="col-sm-12" style="padding: 0px">
+            <div class="container">
+              You can submit your new claim, check the status of your claim, and
+              view already approved claims.
+            </div>
+            <button
+              nz-button
+              nzType="primary"
+              *ngIf="dataList.length == 0"
+              (click)="createCustomButtonModal('apply')"
+              style="border-radius: 12px; margin-top: 20px"
+            >
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+  </div>
+  <div
+    *ngIf="dataList.length > 0"
+    nz-row
+    style="overflow-y: auto; height: 55vh"
+  >
+    <div
+      *ngIf="dataList.length > 0"
+      nz-col
+      nzXs="24"
+      nzSm="24"
+      nzMd="12"
+      nzLg="12"
+      nzXl="12"
+      style="
+        text-align: center;
+        font-weight: bold;
+
+        padding: 20px;
+      "
+    >
+      <div
+        style="
+          background-color: rgb(251 251 251);
+          height: 275px;
+          position: relative;
+          width: 100%;
+          font-size: 12px;
+          cursor: pointer;
+          padding: 10px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border: 1px solid #efefef;
+          border-radius: 8px;
+        "
+      >
+        <button
+          nzShape="circle"
+          nz-button
+          nxType="primary"
+          (click)="createCustomButtonModal('s')"
+          style="margin-top: 100px; height: 50px; width: 50px"
+        >
+          <i nz-icon nzType="plus" style="font-size: 30px"></i>
+        </button>
+
+        <br />
+
+        <div style="font-size: 1.1rem">Add New Claim</div>
+      </div>
+    </div>
+    <div
+      *ngFor="let data of dataList; let i = index"
+      nz-col
+      nzXs="24"
+      nzSm="24"
+      nzMd="12"
+      nzLg="12"
+      nzXl="12"
+      style="padding: 15px"
+    >
+      <div
+        nz-row
+        style="
+          background-color: rgb(251 251 251);
+          position: relative;
+          width: 100%;
+
+          cursor: pointer;
+          padding-bottom: 10px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border: 1px solid #efefef;
+          border-radius: 8px;
+        "
+      >
+        <div nz-col nzSpan="24">
+          <div>
+            <div nz-row style="padding: 10px">
+              <div
+                style="text-align: left; font-size: 14px; font-weight: 600"
+                nz-col
+                nzSpan="12"
+              >
+                Name : {{ data.NAME }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Designation : {{ data.DESIGNATION }}
+              </div>
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Mobile No : {{ data.MOBILE_NO }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Emp Code : {{ data.EMPLOYEE_CODE }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                DDO Official : {{ data.DDO_OF_THE_OFFICIAL }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Office Name : {{ data.OFFICE_NAME }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Basic Pay : {{ data.GRADE_PAY }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Grade Pay Level : {{ data.GRADE_PAY_LEVEL }}
+              </div>
+
+              <div
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                File No : {{ data.FILE_NO }}
+              </div>
+
+              <div
+                *ngIf="data.STEP_NO == 4"
+                style="
+                  text-align: left;
+                  font-size: 13px;
+                  font-weight: 500;
+                  color: #6a6a6a;
+                "
+                nz-col
+                nzSpan="12"
+              >
+                Status :
+                <span style="color: green; font-size: 13px; font-weight: 500"
+                  >Application Submitted</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          nz-col
+          nzSpan="24"
+          class="ss"
+          style="
+            align-self: center;
+            text-align: center;
+            margin-top: 10px;
+            overflow-x: auto;
+          "
+        >
+          <nz-steps
+            [nzSize]="'small'"
+            [nzCurrent]="checkstep(data.STEP_NO, data.AD_STEP_NO, data) + 1"
+            [nzLabelPlacement]="'vertical'"
+          >
+            <nz-step [nzTitle]="titile1Template"></nz-step>
+            <ng-template #titile1Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Employee Details
+                <p
+                  style="font-size: 10px"
+                  *ngIf="
+                    data.APP_INFO_DATE_TIME != undefined &&
+                    data.APP_INFO_DATE_TIME != null &&
+                    data.APP_INFO_DATE_TIME != ''
+                  "
+                >
+                  {{ data.APP_INFO_DATE_TIME | date : "dd-MM-yyyy HH:mm:ss" }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template1>
+              <span style="font-size: 10px; font-weight: bold">
+                Transfer Details
+                <p
+                  style="font-size: 10px"
+                  *ngIf="
+                    data.TRANSFER_DETAILS_SUBMITTED_DATE_TIME != undefined &&
+                    data.TRANSFER_DETAILS_SUBMITTED_DATE_TIME != null &&
+                    data.TRANSFER_DETAILS_SUBMITTED_DATE_TIME != ''
+                  "
+                >
+                  {{
+                    data.TRANSFER_DETAILS_SUBMITTED_DATE_TIME
+                      | date : "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <!-- <ng-template #titile1Templatedd>
+            <span style="font-size: 10px; font-weight: bold">
+              File Details
+            </span>
+          </ng-template> -->
+            <ng-template #titile1Template2>
+              <span style="font-size: 10px; font-weight: bold">
+                Upload Document
+                <p
+                  style="font-size: 10px"
+                  *ngIf="
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME != undefined &&
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME != null &&
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME != ''
+                  "
+                >
+                  {{
+                    data.DOCUMENTS_SUBMITTED_DATE_TIME
+                      | date : "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template3>
+              <span style="font-size: 10px; font-weight: bold">
+                Download
+                <p
+                  style="font-size: 10px"
+                  *ngIf="
+                    data.DOWNLOAD_PARTA_DATE_TIME != undefined &&
+                    data.DOWNLOAD_PARTA_DATE_TIME != '' &&
+                    data.DOWNLOAD_PARTA_DATE_TIME != null
+                  "
+                >
+                  {{
+                    data.DOWNLOAD_PARTA_DATE_TIME | date : "dd-MM-yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #titile1Template4>
+              <p style="font-size: 10px; font-weight: bold; margin-bottom: 0px">
+                Status
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'P'"
+                style="color: blue; font-size: 10px; font-weight: bold"
+              >
+                Pending
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'A'"
+                style="color: green; font-size: 10px; font-weight: bold"
+              >
+                Approved
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'AA'"
+                style="color: green; font-size: 10px; font-weight: bold"
+              >
+                Advance Approved
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'R'"
+                style="color: red; font-size: 10px; font-weight: bold"
+              >
+                Rejected
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'AR'"
+                style="color: red; font-size: 10px; font-weight: bold"
+              >
+                Advance Rejected
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'H'"
+                style="color: blue; font-size: 10px; font-weight: bold"
+              >
+                On Hold
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'AH'"
+                style="color: blue; font-size: 10px; font-weight: bold"
+              >
+                Advance On Hold
+              </p>
+              <p
+                *ngIf="data['TRANSFER_STATUS'] == 'T'"
+                style="color: blue; font-size: 10px; font-weight: bold"
+              >
+                Picked
+              </p>
+            </ng-template>
+            <nz-step
+              *ngIf="
+                (this.data.IS_APPLYING_FOR_ADVANCE &&
+                  this.data.IS_TRANSFER_ADVANCE_CREATED) ||
+                !this.data.IS_APPLYING_FOR_ADVANCE
+              "
+              [nzTitle]="titile1Template1"
+            ></nz-step>
+            <!-- <nz-step [nzTitle]="titile1Templatedd"></nz-step> -->
+            <nz-step [nzTitle]="titile1Template2"></nz-step>
+            <nz-step [nzTitle]="titile1Template3"></nz-step>
+            <nz-step [nzTitle]="titile1Template4"></nz-step>
+          </nz-steps>
+        </div>
+        <div
+          *ngIf="
+            data.TRANSFER_STATUS != 'P' &&
+              data.TRANSFER_STATUS != 'T' &&
+              data.TRANSFER_STATUS != 'H' &&
+              data.TRANSFER_STATUS != 'R' &&
+              data.TRANSFER_STATUS != 'A' &&
+              data.TRANSFER_STATUS != 'AH' &&
+              data.TRANSFER_STATUS != 'AR' &&
+              data.TRANSFER_STATUS != 'AA';
+            else elseblock
+          "
+          nz-col
+          nzSpan="24"
+          style="align-self: center; text-align: center; margin-top: 10px"
+        >
+          <button
+            nz-button
+            nzType="primary"
+            (click)="edit(data)"
+            style="border-radius: 12px"
+          >
+            Continue Claim
+          </button>
+        </div>
+        <ng-template #elseblock>
+          <div
+            *ngIf="
+              data.TRANSFER_STATUS != 'AR' &&
+                data.TRANSFER_STATUS != 'AH' &&
+                data.IS_TRANSFER_ADVANCE_CREATED &&
+                !data.IS_EMP_FILL_ADVANCE_INFO;
+              else elseblock11111
+            "
+            nz-col
+            nzSpan="24"
+            style="align-self: center; text-align: center; margin-top: 10px"
+          >
+            <button
+              nz-button
+              nzType="primary"
+              (click)="edit(data)"
+              style="border-radius: 12px"
+            >
+              Fill Advance Details
+            </button>
+          </div>
+        </ng-template>
+
+        <ng-template #elseblock11111>
+          <div *ngIf="showid != i" nz-col nzSpan="24">
+            <span>
+              <span
+                *ngIf="
+                  data.TRANSFER_STATUS == 'H' || data.TRANSFER_STATUS == 'AH'
+                "
+                style="
+                  padding: 20px;
+                  color: blue;
+                  font-size: 10px;
+                  font-weight: bold;
+                  padding-left: 20px;
+                "
+                >{{
+                  data.TRANSFER_STATUS == "AH"
+                    ? " Advance On Hold Reason :"
+                    : "On Hold Reason"
+                }}
+                : {{ data.TRANSFER_REMARK }} &nbsp;&nbsp;
+                {{
+                  data.TRANSFER_STATUS == "AH"
+                    ? " Advance On Hold Date :"
+                    : "On Hold Date"
+                }}
+                :
+                <span
+                  *ngIf="
+                    data.TRANSFER_HOLD_DATE != undefined &&
+                    data.TRANSFER_HOLD_DATE != '' &&
+                    data.TRANSFER_HOLD_DATE != null
+                  "
+                  >{{ data["TRANSFER_HOLD_DATE"] | date : "dd-MM-yyyy" }}
+                </span>
+              </span>
+            </span>
+            <span
+              *ngIf="
+                data.TRANSFER_STATUS == 'R' || data.TRANSFER_STATUS == 'AR'
+              "
+              style="
+                padding: 20px;
+                color: red;
+                font-size: 10px;
+                font-weight: bold;
+              "
+              >{{
+                data.TRANSFER_STATUS == "AH"
+                  ? " Advance Rejected Reason :"
+                  : "Rejected Reason"
+              }}
+              Rejected Reason : {{ data.TRANSFER_REMARK }}</span
+            >
+            <span
+              *ngIf="
+                data.TRANSFER_STATUS != 'H' &&
+                data.TRANSFER_STATUS != 'AH' &&
+                data.TRANSFER_STATUS != 'R' &&
+                data.TRANSFER_STATUS != 'AR'
+              "
+              style="padding: 20px"
+            ></span></div
+        ></ng-template>
+        <div
+          class="ss"
+          nz-col
+          nzSpan="24"
+          style="
+            align-self: center;
+            margin-top: 10px;
+            max-height: 87px;
+            overflow-y: auto;
+          "
+          *ngIf="data.STEP_NO == 4 && showid == i"
+        >
+          <div nz-row *ngIf="data.STEP_NO == 4 && showid == i">
+            <!-- <div nz-col nzSpan="4"></div> -->
+            <div nz-col nzSpan="24">
+              <div
+                *ngIf="data.STEP_NO == 4 && showid == i"
+                style="
+                  padding-left: 10px;
+                  padding-top: 5px;
+                  padding-bottom: 10px;
+                  padding-right: 5px;
+                "
+              >
+                <nz-timeline *ngIf="logdata.length > 0">
+                  <nz-timeline-item *ngFor="let logg of logdata" nzColor="green"
+                    ><span style="font-weight: 500">{{ logg.STAGE_NAME }}</span>
+                    <p
+                      style="
+                        margin-bottom: 0px !important;
+                        font-size: 10px !important;
+                        font-weight: 500 !important;
+                      "
+                    >
+                      {{ logg.LOG_TEXT }}
+                    </p>
+                    <p
+                      style="
+                        font-size: 10px !important;
+                        font-weight: 500 !important;
+                      "
+                    >
+                      {{ logg.CREATED_DATETIME }}
+                    </p>
+                  </nz-timeline-item>
+                </nz-timeline>
+                <span *ngIf="logdata.length == 0">No Record</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div *ngIf="data.STEP_NO == 4 && showid != i" style="text-align: center; margin: auto">
+ 
+            <button nz-button nzType="primary" (click)="showstatus(data, i)" style="border-radius: 12px">
+              Check Status
+            </button>
+          </div> -->
+        </div>
+        <div nz-col nzSpan="24" style="text-align: center">
+          <button
+            nz-tooltip
+            nzTooltipTitle="View Objections"
+            nzTooltipPlacement="button"
+            *ngIf="data.STEP_NO == 4 && showid != i"
+            nz-button
+            nzShape="circle"
+            (click)="showstatus(data, i)"
+            style="position: absolute"
+            nzJustify="end"
+          >
+            <span nz-icon nzType="down" nzTheme="outline"></span>
+          </button>
+
+          <button
+            nz-tooltip
+            nzTooltipTitle="View Objections"
+            nzTooltipPlacement="button"
+            style="position: absolute"
+            nz-button
+            (click)="showstatus1()"
+            nzShape="circle"
+            *ngIf="data.STEP_NO == 4 && showid == i"
+            nzJustify="end"
+          >
+            <span nz-icon nzType="up" nzTheme="outline"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div nz-row *ngIf="dataList.length == 0">
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+    <div nz-col nzSpan="10" style="text-align: center">
+      <nz-card style="background-color: #fafafa; text-align: center; margin-top: 63px">
+        <div class="row">
+          <div class="col-sm-12" style="padding: 10px">
+            <div class="container">
+              You have not submitted the application form ,Please click below
+              button and submit your application
+            </div>
+            <button nz-button nzType="primary" (click)="add1()" style="border-radius: 12px; margin-top: 20px">
+              Apply Now
+            </button>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+    <div nz-col nzSpan="7" style="text-align: center"></div>
+  </div> -->
+</nz-spin>
+
+<!-- 
+  <div style="float: right; margin-top: 15px; padding-left: 900px">
+    <nz-pagination
+      (nzPageIndexChange)="search2($event)"
+      (nzPageSizeChange)="search3($event)"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="totalRecords"
+      nzShowSizeChanger
+      [nzPageSize]="pageSize"
+    ></nz-pagination>
+  </div>
+  <br /> -->
+
+<div *ngIf="drawerVisible">
+  <nz-drawer
+    *ngIf="drawerVisible"
+    [nzBodyStyle]="{
+  height: 'calc(100% - 55px)',
+  
+  overflow: 'auto',
+  'padding-bottom': '0px',
+  'padding-top': '20px',
+  'padding-right': '0px',
+  'padding-left': '0px',
+  
+
+}"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="drawerWidth"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-employeetransferadd
+        [drawerClose]="closeCallback"
+        [data]="drawerData"
+        [empID]="empID"
+        [claimID]="claimID"
+        [currentStageID]="currentStageID"
+        [current]="currentStage"
+        [editrelation]="editrelation"
+        [isSpinning]="isSpin"
+        [drawerTitle11]="drawerTitle"
+        [relationdata]="relationdata"
+        [designationList]="designationList"
+        [employerecordfilled]="isdetailsfilled"
+        [isdraweropendedggg]="isdraweropended"
+        [empid]="employeedata"
+      ></app-employeetransferadd>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="transferallounce">
+  <nz-drawer
+    *ngIf="transferallounce"
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1000"
+    [nzKeyboard]="true"
+    [nzVisible]="transferallounce"
+    [nzTitle]="transferAllounceDrawerTitle"
+    (nzOnClose)="transferallowuncedrawerclose()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-traveling-allowance
+        [transferallounceorder]="transferallounceorder"
+        [journeydetails]="journeydetails"
+        [accommodation]="accommodation"
+        [tranferchnagesorder]="tranferchnagesorder"
+        [relationdataorder]="relationdataorder"
+        [railorder]="railorder"
+        [drawerClose]="closeCallbacktransferallowunce"
+      ></app-traveling-allowance>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal
+  [(nzVisible)]="showmodell"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px"
+  nzClosable="false"
+  [nzFooter]="contextofrules2"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500"
+      >What type of claim do you want to submit?</span
+    >
+    <hr style="margin: 8px 0" />
+  </ng-container>
+
+  <ng-template #contextofrules2>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      (click)="opennnadvance(show)"
+    >
+      Advance claim
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      (click)="opennnsimple(show)"
+    >
+      Final claim
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="loadingRecords"
+      class="btn btn-primary"
+      (click)="cancel11()"
+    >
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>

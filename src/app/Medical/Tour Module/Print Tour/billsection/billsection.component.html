@@ -1,0 +1,341 @@
+<div>
+  <form nz-form>
+    <div nz-row [nzGutter]="10">
+      <div nz-col nzSpan="8">
+        <div class="my-box">
+          <div
+            nz-col
+            nzXs="24"
+            nzSm="24"
+            nzMd="24"
+            nzLg="24"
+            nzXl="24"
+            nzSpan="12"
+          >
+            <nz-form-item
+              style="
+                display: inline-block;
+                margin-bottom: 5px;
+                width: -webkit-fill-available;
+                padding: 0px 10px;
+              "
+            >
+              <nz-form-label nzNoColon>Date </nz-form-label>
+
+              <nz-form-control>
+                <nz-date-picker
+                  style="width: 100%"
+                  nzFormat="dd/MM/yyyy"
+                  name="BILL_SUBMISSION_DATE"
+                  [(ngModel)]="billDrawerData.BILL_SECTION_DATE"
+                >
+                </nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzSpan="16">
+        <div class="my-box">
+          <div style="margin-top: 60px; font-size: 14px">
+            <div nz-row>
+              <div nz-col nzSpan="14"></div>
+
+              <div nz-col nzSpan="8">
+                <p style="margin-top: -16px">From:</p>
+                <p style="margin-top: -16px">
+                  {{ billDrawerData.EMPLOYEE_NAME }},
+                </p>
+                <p style="margin-top: -16px">
+                  {{ billDrawerData.DESIGNATION }},&nbsp;{{
+                    billDrawerData.HEADQUARTERS_NAME
+                  }},&nbsp;{{ billDrawerData.LOCATION }}
+                </p>
+                <p style="margin-top: -16px">
+                  Employee No. {{ billDrawerData.EMPLOYEE_CODE }}
+                </p>
+                <!-- <p style="margin-top: -16px">[Pay Bill Register Part-IV]</p> -->
+                <br />
+                <p style="margin-top: -16px">
+                  Date:<b>{{
+                    billDrawerData.BILL_SECTION_DATE | date : "dd MM yyyy"
+                  }}</b>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 60px; font-size: 14px">
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <p style="margin-top: -16px">To,</p>
+                <p style="margin-top: -16px">ITO Gaz. Pay Bill Section,</p>
+                <p style="margin-top: -16px">Mumbai.</p>
+                <p>Sir,</p>
+              </div>
+              <div nz-col nzSpan="12"></div>
+            </div>
+          </div>
+          <div>
+            <p style="text-align: center">
+              Sub: Submission of TA / DA claim in respect of journey performed
+              for
+              <span *ngFor="let data of billsectiondata; let i = index"
+                ><b>{{ data.PURPOSE_OF_JOURNEY }},</b></span
+              >
+            </p>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;Please find enclosed herewith travelling
+              allowance bill for tour (in duplicate) in respect of the journey
+              performed between
+              <span *ngFor="let data of billsectiondata; let i = index">
+                <b
+                  >{{ data.DEPARTURE_FROM }}
+                  -
+                  {{ data.ARRIVAL_TO }},&nbsp;
+                </b>
+              </span>
+              for
+              <span *ngFor="let data of billsectiondata; let i = index"
+                ><b>{{ data.PURPOSE_OF_JOURNEY }}.&nbsp;</b></span
+              >
+              Please reimburse the claim at an early date.
+            </p>
+          </div>
+          <div style="margin-top: 60px; font-size: 14px">
+            <div nz-row>
+              <div nz-col nzSpan="12"></div>
+
+              <div nz-col nzSpan="12" style="text-align: center">
+                <p>Yours faithfully,</p>
+                <br /><br />
+                <p style="margin-top: -16px">
+                  {{ billDrawerData.EMPLOYEE_NAME }}
+                </p>
+                <p style="margin-top: -16px">
+                  {{ billDrawerData.DESIGNATION }}&nbsp;{{
+                    billDrawerData.NEW_HEADQUARTERS_NAME
+                  }},&nbsp;{{ billDrawerData.LOCATION }}
+                </p>
+                <p style="margin-top: -16px">{{ billDrawerData.ADDRESS }}.</p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 100px; font-size: 14px">
+            <div nz-row>
+              <div nz-col nzSpan="16">
+                <p style="margin-top: -16px">
+                  1) TA bill alongwith requisite certificate
+                </p>
+                <p style="margin-top: -16px">
+                  2) Sanction order under S.R.61 dated
+                </p>
+                <p style="margin-top: -16px">3) Copies of tickets.</p>
+                <p style="margin-top: -16px">
+                  4) Bill dated
+                  {{ billsectiondata.DEPARTURE_DATETIME | date : "dd MM yyyy" }}
+                  of IT Guest House, <b>{{ billsectiondata.ARRIVAL_TO }}</b>
+                </p>
+                <p style="margin-top: -16px">
+                  5) Self declaration form with invoices for travel within city.
+                </p>
+                <p style="margin-top: -16px">6) Mandate Form</p>
+                <br />
+              </div>
+              <div nz-col nzSpan="8"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      (click)="openPrintOrderModal()"
+      nz-button
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Bill Section'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+              <div style="margin-top: 60px; font-size: 14px">
+                <div nz-row>
+                  <div nz-col nzSpan="14"></div>
+
+                  <div nz-col nzSpan="8">
+                    <p style="margin-top: -16px">From:</p>
+                    <p style="margin-top: -16px">
+                      {{ billDrawerData.EMPLOYEE_NAME }},
+                    </p>
+                    <p style="margin-top: -16px">
+                      {{ billDrawerData.DESIGNATION }},&nbsp;{{
+                        billDrawerData.HEADQUARTERS_NAME
+                      }},&nbsp;{{ billDrawerData.LOCATION }}
+                    </p>
+                    <p style="margin-top: -16px">
+                      Employee No. {{ billDrawerData.EMPLOYEE_CODE }}
+                    </p>
+                    <!-- <p style="margin-top: -16px">[Pay Bill Register Part-IV]</p> -->
+                    <br />
+                    <p style="margin-top: -16px">
+                      Date:<b>{{
+                        billDrawerData.BILL_SECTION_DATE | date : "dd MM yyyy"
+                      }}</b>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 60px; font-size: 14px">
+                <div nz-row>
+                  <div nz-col nzSpan="12">
+                    <p style="margin-top: -16px">To,</p>
+                    <p style="margin-top: -16px">ITO Gaz. Pay Bill Section,</p>
+                    <p style="margin-top: -16px">Mumbai.</p>
+
+                    <p>Sir,</p>
+                  </div>
+                  <div nz-col nzSpan="12"></div>
+                </div>
+              </div>
+              <div>
+                <p style="text-align: center">
+                  Sub: Submission of TA / DA claim in respect of journey
+                  performed for
+                  <span *ngFor="let data of billsectiondata; let i = index"
+                    ><b>{{ data.PURPOSE_OF_JOURNEY }},</b></span
+                  >
+                </p>
+                <p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;Please find enclosed herewith
+                  travelling allowance bill for tour (in duplicate) in respect
+                  of the journey performed between
+                  <span *ngFor="let data of billsectiondata; let i = index">
+                    <b
+                      >{{ data.DEPARTURE_FROM }}
+                      -
+                      {{ data.ARRIVAL_TO }},&nbsp;
+                    </b>
+                  </span>
+                  for
+                  <span *ngFor="let data of billsectiondata; let i = index"
+                    ><b>{{ data.PURPOSE_OF_JOURNEY }}.&nbsp;</b></span
+                  >
+                  Please reimburse the claim at an early date.
+                </p>
+              </div>
+              <div style="margin-top: 60px; font-size: 14px">
+                <div nz-row>
+                  <div nz-col nzSpan="12"></div>
+
+                  <div nz-col nzSpan="12" style="text-align: center">
+                    <p>Yours faithfully,</p>
+                    <br /><br />
+                    <p style="margin-top: -16px">
+                      {{ billDrawerData.EMPLOYEE_NAME }}
+                    </p>
+                    <p style="margin-top: -16px">
+                      {{ billDrawerData.DESIGNATION }}&nbsp;{{
+                        billDrawerData.NEW_HEADQUARTERS_NAME
+                      }},&nbsp;{{ billDrawerData.LOCATION }}
+                    </p>
+                    <p style="margin-top: -16px">
+                      {{ billDrawerData.ADDRESS }}.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 100px; font-size: 14px">
+                <div nz-row>
+                  <div nz-col nzSpan="16">
+                    <p style="margin-top: -16px">
+                      1) TA bill alongwith requisite certificate
+                    </p>
+                    <p style="margin-top: -16px">
+                      2) Sanction order under S.R.61 dated
+                    </p>
+                    <p style="margin-top: -16px">3) Copies of tickets.</p>
+                    <p style="margin-top: -16px">
+                      4) Bill dated
+                      {{
+                        billsectiondata.DEPARTURE_DATETIME | date : "dd MM yyyy"
+                      }}
+                      of IT Guest House, <b>{{ billsectiondata.ARRIVAL_TO }}</b>
+                    </p>
+                    <p style="margin-top: -16px">
+                      5) Self declaration form with invoices for travel within
+                      city.
+                    </p>
+                    <p style="margin-top: -16px">6) Mandate Form</p>
+                    <br />
+                  </div>
+                  <div nz-col nzSpan="8"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

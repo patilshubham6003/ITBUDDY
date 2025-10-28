@@ -1,0 +1,1310 @@
+<div nz-row [nzGutter]="[16, 24]" *ngIf="partbdata != undefined">
+  <!-- <div nz-col nzSpan="8">
+    <div class="my-box">
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>
+              The Expenditure is debitable to
+            </nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="The Expenditure is debitable to  is required">
+              <input style="width: 100%" name="The Expenditure is debitable to " nz-input
+                placeholder="Enter The Expenditure is debitable to" type="text"
+                [(ngModel)]="partbdata.EXPENDITURE_DEBITABLE_TO" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+     
+    </div>
+  </div> -->
+
+  <!-- <div nz-row > -->
+
+  <div nz-col nzSpan="8" class="gutter-row">
+    <!-- <div nz-row> -->
+    <div style="height: 75vh; overflow-y: auto" class="my-box">
+      <div nz-row>
+        <div nz-col nzSpan="20">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Signature 1</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="userid"
+                [(ngModel)]="SignaturePartB.TRANSFER_PART_B_SIGNATURE_1"
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="Choose Signature"
+                (ngModelChange)="signature($event)"
+              >
+                <nz-option
+                  *ngFor="let user of Signaturearray"
+                  [nzValue]="user.ID"
+                  [nzLabel]="user.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item style="padding: 0px !important">
+            <nz-form-label nzNoColon></nz-form-label>
+            <nz-form-control>
+              <button nz-button nzType="primary" (click)="opensignature()">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="20">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Signature 2</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="userid2"
+                [(ngModel)]="SignaturePartB.TRANSFER_PART_B_SIGNATURE_2"
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="Choose Signature"
+                (ngModelChange)="signature1($event)"
+              >
+                <nz-option
+                  *ngFor="let user of Signaturearray"
+                  [nzValue]="user.ID"
+                  [nzLabel]="user.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item style="padding: 0px !important">
+            <nz-form-label nzNoColon></nz-form-label>
+            <nz-form-control>
+              <button nz-button nzType="primary" (click)="opensignature()">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="20">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Signature 3</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="userid3"
+                [(ngModel)]="SignaturePartB.TRANSFER_PART_B_SIGNATURE_3"
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="Choose Signature"
+                (ngModelChange)="signature2($event)"
+              >
+                <nz-option
+                  *ngFor="let user of Signaturearray"
+                  [nzValue]="user.ID"
+                  [nzLabel]="user.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item style="padding: 0px !important">
+            <nz-form-label nzNoColon></nz-form-label>
+            <nz-form-control>
+              <button nz-button nzType="primary" (click)="opensignature()">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <div nz-col nzSpan="16" class="gutter-row">
+    <!-- <div nz-row> -->
+    <!-- <div nz-col nzSpan="24"> -->
+    <div class="my-box" style="height: 75vh; overflow-y: auto">
+      <form nz-form>
+        <nz-spin [nzSpinning]="loadingRecords">
+          <div style="padding-left: 7%; margin-right: 2%">
+            <h2 style="text-align: center">PART-B</h2>
+            <p style="text-align: center">To be filed in the Bill section]</p>
+            <div>Name of the Official/Officer : {{ partbdata.NAME }}</div>
+            The net entitlement on account of TA works out to Rs.{{
+              gettotall()
+            }}
+            as detailed below : <br />
+            <div style="text-align: right">
+              <b style="padding: 3%">(Amount in Rs.)</b>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="a">(a)</td>
+                  <td style="padding: 5px">
+                    <!-- Transfer Grant: {{ partbdata.TRANSFER_GRANT }} -->
+                    CTG <br />
+                    <span
+                      *ngIf="
+                        partbdata.CTG_REMARK != undefined &&
+                        partbdata.CTG_REMARK != null &&
+                        partbdata.CTG_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.CTG_REMARK"
+                    ></span>
+                  </td>
+                  <td class="b">
+                    <!-- {{ partbdata.CTG_ADMISIBLE_AMOUNT }} -->
+                    {{ partbdata.CTG_TOTAL }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a">(b)</td>
+                  <td style="padding: 5px">
+                    Road mileage for
+                    <span style="text-decoration: underline"
+                      >{{ partbdata.ROAD_MILEAGE }} </span
+                    >kms @
+                    <span style="text-decoration: underline">
+                      {{ partbdata.PER_KM }}
+                    </span>
+                    per km. <br />
+                    <span
+                      *ngIf="
+                        partbdata.ROAD_MILEAGE_REMARK != undefined &&
+                        partbdata.ROAD_MILEAGE_REMARK != null &&
+                        partbdata.ROAD_MILEAGE_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.ROAD_MILEAGE_REMARK"
+                    ></span>
+                  </td>
+                  <td class="b">
+                    {{ partbdata.ROAD_MILEAGE_TOTAL }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <!-- <td nzAlign="center">
+                          <span
+                            *ngIf="
+                              (drawerClaimData.ROAD_MILEAGE != undefined ||
+                                drawerClaimData.ROAD_MILEAGE != null) &&
+                              (drawerClaimData.PER_KM != undefined ||
+                                drawerClaimData.PER_KM != null)
+                            "
+                          >
+                            3.</span
+                          >
+                          <span
+                            *ngIf="
+                              drawerClaimData.ROAD_MILEAGE == undefined ||
+                              drawerClaimData.ROAD_MILEAGE == null ||
+                              drawerClaimData.PER_KM == undefined ||
+                              drawerClaimData.PER_KM == null
+                            "
+                          >
+                            2.</span
+                          >
+                        </td> -->
+                  <td class="a">(c)</td>
+                  <td style="padding: 5px">
+                    <span *ngIf="showPrivate == 1 || showPrivate == 0">
+                      <span *ngFor="let data of TravelModeNames; let k = index">
+                        <span>{{ data }}</span>
+
+                        <span *ngIf="TravelModeNames.length > 1">
+                          <span
+                            *ngIf="
+                              TravelModeNames.length - 2 != k &&
+                              TravelModeNames.length != k + 1
+                            "
+                          >
+                            ,
+                          </span>
+                          <span *ngIf="TravelModeNames.length - 2 == k">
+                            &
+                          </span>
+                        </span>
+                      </span>
+                      <br />
+                      <span
+                        *ngIf="
+                          partbdata.JOURNEY_REMARK != undefined &&
+                          partbdata.JOURNEY_REMARK != null &&
+                          partbdata.JOURNEY_REMARK != ''
+                        "
+                        [innerHtml]="partbdata.JOURNEY_REMARK"
+                      ></span>
+                    </span>
+                    <!-- <span *ngIf="showPrivate == 1">{{
+                            drawerClaimData.TRAVEL_MODE_NAME
+                          }}</span> -->
+                    <span *ngIf="showPrivate == 2"
+                      >Private Vehicle<br />
+                      <span
+                        *ngIf="
+                          partbdata.JOURNEY_REMARK != undefined &&
+                          partbdata.JOURNEY_REMARK != null &&
+                          partbdata.JOURNEY_REMARK != ''
+                        "
+                        [innerHtml]="partbdata.JOURNEY_REMARK"
+                      ></span>
+                    </span>
+                  </td>
+                  <!-- <td nzAlign="center">
+                          <span *ngIf="journeydetails != undefined">
+                            <span *ngIf="showPrivate == 1"
+                              >{{ journeyfairfaird }}/-</span
+                            > -->
+                  <!-- <span *ngIf="showPrivate == 1">{{
+                              grosspaymentvalue
+                            }}</span> -->
+                  <!-- <span *ngIf="showPrivate == 2">0</span>
+                          </span>
+                        </td> -->
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                          Personal Effects
+                        </td>
+                        <td nzAlign="center">{{ amount }}/-</td> -->
+                  <td nzAlign="center">
+                    {{ partbdata.JOURNEY_TOTAL }}
+                  </td>
+                  <!-- <td nzAlign="center">as</td> -->
+                  <!-- <td nzAlign="center">
+                          <div>
+                            <b>{{ drawerClaimData.JOURNEY_REMARK }}</b>
+                          </div>
+                        </td> -->
+                </tr>
+
+                <!-- <tr>
+                        <td class="a">(c)</td>
+                        <td style="padding: 5px">
+                          <span *ngIf="showPrivate == 0"></span>
+                          <span *ngIf="showPrivate == 1">{{
+                            partbdata.TRAVEL_MODE_NAME
+                          }}</span>
+                          <span *ngIf="showPrivate == 2">Private Vehicle</span>
+                        </td>
+                        <td class="b">
+                          <span *ngIf="journeyDetailsData != undefined">
+                            <span *ngIf="showPrivate == 0"></span>
+                            <span *ngIf="showPrivate == 1">{{
+                              partbdata.JOURNEY_ADMISIBLE_AMOUNT
+                            }}</span>
+                            <span *ngIf="showPrivate == 2">0</span>
+                          </span>
+                        </td>
+                      </tr>
+                       -->
+                <!-- <tr>
+                      <td class="a">(d)</td>
+                      <td style="padding: 5px">
+                        Transfer Incidentals <br />(D.A. for &nbsp;<b
+                          style="text-decoration: underline"
+                          >{{ partbdata.D_A }}</b
+                        >&nbsp; day(s) @ Rs.
+                        <b style="text-decoration: underline">{{
+                          partbdata.RUPEES_PER_DAY
+                        }}</b>
+                        per day )
+                      </td>
+                      <td class="b" style="text-align: center">
+                        {{ incidentalsAmonut }}
+                      </td>
+                    </tr> -->
+                <!-- <tr>
+                        <td class="a">(d)</td>
+                        <td style="padding: 5px">
+                          Transportation of personal effects
+                        </td>
+                        <td class="b"></td>
+                      </tr> -->
+                <tr>
+                  <td class="a">(d)</td>
+                  <td style="padding: 5px">
+                    Transportation of personal effects<br />
+                    <!-- Calculation:<br />
+                          <span
+                            >{{ weightrate }} * {{ distance }} * {{ amountt }} /
+                            6000</span
+                          >
+      
+                          <br />(Weight for &nbsp;<span
+                            style="text-decoration: underline"
+                            >{{ tranferchnagesorder.WEIGHT_IN_KG }}</span
+                          >&nbsp; day(s) Rs.
+                          <span style="text-decoration: underline">{{
+                            tranferchnagesorder.RATE
+                          }}</span>
+                          per day )
+                          <br /> -->
+                    <span
+                      *ngIf="
+                        partbdata.PERSONAL_REMARK != undefined &&
+                        partbdata.PERSONAL_REMARK != null &&
+                        partbdata.PERSONAL_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.PERSONAL_REMARK"
+                    ></span>
+                  </td>
+
+                  <td class="b">
+                    {{ personalEffectsAddmissible }}
+                    <!-- {{ partbdata.PERSONAL_EFFECT_TOTAL }} -->
+                    <!-- {{ totalofweight }} -->
+                  </td>
+                </tr>
+                <!-- <tr>
+                        <td class="a">(e)</td>
+                        <td style="padding: 5px">
+                          Transportation of private conveyance
+                        </td>
+                        <td class="b"></td>
+                      </tr> -->
+                <tr>
+                  <td class="a">(e)</td>
+                  <td style="padding: 5px">
+                    Transportation of private conveyance<br />
+                    <!-- Calculation:<br />
+                          <div
+                            *ngIf="partbdata.VEHICLE_BROUGHT_SELF_PROPULATION == 0"
+                          >
+                            <span
+                              *ngIf="grosspaymentvalue == partbdata.TRUCK_SHIP_CHARGE"
+                            >
+                              <p>Truck/Ship Charge</p>
+                              <span> {{ partbdata.TRUCK_SHIP_CHARGE }}</span>
+                            </span>
+      
+                            <span
+                              *ngIf="
+                                grosspaymentvalue ==
+                                partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO
+                              "
+                            >
+                              <p>
+                                Train Brought KiloMeter :-
+                                <span>{{ partbdata.TRAIN_BROUGHT_FOR_KMS_NO }}</span
+                                ><br />
+                              </p>
+                              <p>
+                                Train Brought Charge :-
+                                <span>{{
+                                  partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO
+                                }}</span
+                                ><br />
+                              </p>
+                              <br />
+                            </span>
+      
+                            <span
+                              *ngIf="
+                                grosspaymentvalue != partbdata.TRUCK_SHIP_CHARGE &&
+                                grosspaymentvalue !=
+                                  partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                                privateVehicleMinFair > 0
+                              "
+                            >
+                              <p>
+                                Private Vehicle Brought Charges
+                                <br />
+                              </p>
+                            </span>
+                            <span
+                              *ngIf="
+                                grosspaymentvalue != partbdata.TRUCK_SHIP_CHARGE &&
+                                grosspaymentvalue !=
+                                  partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                                privateVehicleMinFair <= 0
+                              "
+                            >
+                            </span>
+      
+                            <br />
+                          </div>
+      
+                          <div
+                            *ngIf="partbdata.VEHICLE_BROUGHT_SELF_PROPULATION == 1"
+                          >
+                            <span
+                              *ngIf="
+                                grosspaymentvalue == partbdata.VEHICLE_BROUGHT_TOTAL
+                              "
+                            >
+                              <p>
+                                Road Milage :-
+                                {{ partbdata.VEHICLE_BROUGHT_ROAD_MILEAGE }}
+                              </p>
+                              <p>
+                                KiloMeter :-
+      
+                                {{ partbdata.VEHICLE_BROUGHT_ROAD_MILEAGE_KMS }}
+                              </p>
+      
+                              <p>Total:- {{ partbdata.VEHICLE_BROUGHT_TOTAL }}</p>
+                            </span>
+      
+                            <span
+                              *ngIf="
+                                grosspaymentvalue == partbdata.TRAIN_BROUGHT_CHARGE
+                              "
+                            >
+                              <p>
+                                Train Brought KiloMeter :-
+                                {{ partbdata.TRAIN_BROUGHT_KMS }}
+                                <br />
+                              </p>
+                              <p>
+                                Train Brought Charge :-
+                                {{ partbdata.TRAIN_BROUGHT_CHARGE }}
+                                <br />
+                              </p>
+                              <br />
+                            </span>
+                            <span
+                              *ngIf="
+                                grosspaymentvalue != partbdata.TRAIN_BROUGHT_CHARGE &&
+                                grosspaymentvalue !=
+                                  partbdata.VEHICLE_BROUGHT_TOTAL &&
+                                privateVehicleMinFair > 0
+                              "
+                            >
+                              <p>
+                                Private Vehicle Brought Charges
+                                <br />
+                              </p>
+                            </span>
+                            <span
+                              *ngIf="
+                                grosspaymentvalue != partbdata.TRAIN_BROUGHT_CHARGE &&
+                                grosspaymentvalue !=
+                                  partbdata.VEHICLE_BROUGHT_TOTAL &&
+                                privateVehicleMinFair <= 0
+                              "
+                            >
+                            </span>
+      
+                            <br />
+                          </div>
+                          <br /> -->
+                    <span
+                      *ngIf="
+                        partbdata.PRIVATE_CONVEYANCE_REMARK != undefined &&
+                        partbdata.PRIVATE_CONVEYANCE_REMARK != null &&
+                        partbdata.PRIVATE_CONVEYANCE_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.PRIVATE_CONVEYANCE_REMARK"
+                    ></span>
+                    <br />
+                  </td>
+                  <td class="b">
+                    {{ partbdata.PRIVATE_CONVEYANCE_TOTAL }}
+                    <!-- {{ grosspaymentofpartb }} -->
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a"></td>
+                  <td style="text-align: right; padding-right: 3px">
+                    <b>Gross Amount</b>
+                  </td>
+                  <td class="b">
+                    <b>{{ gettotal() }}</b>
+                    <!-- <b>{{ totacountofbill }}</b> -->
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a">(f)</td>
+                  <td style="padding: 5px">
+                    Less amount of advance, if any drawn vide Voucher
+                    No.&nbsp;<b>{{ partbdata.VOUCHER_NO }}&nbsp;</b>
+                    Dated
+                    <b>{{
+                      partbdata.ADVANCE_TAKEN_DATE | date : "dd-MM-yyyy"
+                    }}</b>
+                  </td>
+                  <td class="b">
+                    <b>{{ partbdata.ADVANCED_AMOUNT }}</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a"></td>
+                  <td style="text-align: right; padding-right: 3px">
+                    <b>Net Amount</b>
+                  </td>
+                  <td class="b">
+                    <b>
+                      <b>{{ gettotall() }}</b>
+                      <!-- <b>{{netpaymentofpartb}}</b> -->
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <span
+              >The Expenditure is debitable to
+              <span style="text-decoration: underline"
+                >&nbsp;&nbsp; DTE &nbsp;&nbsp;</span
+              >
+              {{ partbdata.EXPENDITURE_DEBITABLE_TO }}</span
+            >
+            <br />
+            <div nz-row style="margin-top: 90px">
+              <div nz-col nzSpan="10">
+                <span>
+                  Bill Clerk <br />
+                  (Initials)
+                </span>
+              </div>
+              <!-- <div nz-col nzSpan="14"> -->
+              <!-- <span>
+                        &nbsp;&nbsp;
+                        <u>Signature of Drawing & Disbursing officer </u></span
+                      > -->
+              <div
+                nz-col
+                nzSpan="14"
+                style="text-align: center; font-size: 12px !important"
+              >
+                <div>(Signature of Drawing & Disbursing Officer)</div>
+                <div style="font-weight: bold" *ngIf="NAME_HN">
+                  ({{ NAME_HN }})
+                </div>
+                <div style="font-weight: bold" *ngIf="SIGNNAME">
+                  ({{ SIGNNAME }})
+                </div>
+                <div>
+                  <span *ngIf="POST_HIN">
+                    {{ POST_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME_HIN"> , {{ OFFICE_NAME_HIN }} </span>
+                </div>
+                <div>
+                  <b>
+                    <span *ngIf="POST">
+                      {{ POST }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME"> , {{ OFFICE_NAME }} </span>
+                  </b>
+                </div>
+                <div>COUNTERSIGNED</div>
+              </div>
+              <!-- </div> -->
+            </div>
+
+            <div nz-row style="margin-top: 90px; text-align: center">
+              <div nz-col nzSpan="10">
+                <!-- <b> Passed for payment of Rs.__________only.</b> -->
+
+                <span> <u>Countersigned</u></span>
+                <div *ngIf="NAME_HN1" style="font-weight: bold">
+                  ({{ NAME_HN1 }})
+                </div>
+                <div *ngIf="SIGNNAME1">
+                  <b>({{ SIGNNAME1 }})</b>
+                </div>
+                <div>
+                  <span *ngIf="POST1_HIN">
+                    {{ POST1_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME1_HIN">
+                    , {{ OFFICE_NAME1_HIN }}
+                  </span>
+                </div>
+                <div>
+                  <b>
+                    <span *ngIf="POST1">
+                      {{ POST1 }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME1"> , {{ OFFICE_NAME1 }} </span>
+                  </b>
+                </div>
+              </div>
+              <div nz-col nzSpan="1"></div>
+              <div nz-col nzSpan="13">
+                <span> <u> Signature of the controlling officer</u></span>
+                <div style="font-weight: bold" *ngIf="NAME_HN2">
+                  ({{ NAME_HN2 }})
+                </div>
+                <div style="font-weight: bold" *ngIf="SIGNNAME2">
+                  ({{ SIGNNAME2 }})
+                </div>
+                <div>
+                  <span *ngIf="POST2_HIN">
+                    {{ POST2_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME2_HIN">
+                    , {{ OFFICE_NAME2_HIN }}
+                  </span>
+                </div>
+                <div>
+                  <b>
+                    <span *ngIf="POST2">
+                      {{ POST2 }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME2"> , {{ OFFICE_NAME2 }} </span>
+                  </b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-spin>
+      </form>
+
+      <!-- <div class="footer">
+              <button
+                type="button"
+                nz-button
+                (click)="close()"
+                class="ant-btn"
+                style="margin-right: 8px"
+              >
+                <span>Cancel</span>
+              </button>
+              <button
+                type="button"
+                class="ant-btn ant-btn-primary"
+                nz-button
+                (click)="showmodal()"
+              >
+                <span>Download or Print</span>
+              </button>
+            </div> -->
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+  <!-- </div> -->
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+      [nzLoading]="loadingRecords"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Part-B'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-size: 14px;
+              font-family: Arial, Helvetica, sans-serif;
+            "
+          >
+            <h2 style="text-align: center">PART-B</h2>
+
+            <p style="text-align: center">To be filed in the Bill section]</p>
+            <div>Name of the Official/Officer : {{ partbdata.NAME }}</div>
+            The net entitlement on account of TA works out to Rs.{{
+              gettotall()
+            }}
+            as detailed below : <br />
+            <div style="text-align: right">
+              <b style="padding: 3%">(Amount in Rs.)</b>
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="a">(a)</td>
+                  <td style="padding: 5px">
+                    <!-- Transfer Grant: {{ partbdata.TRANSFER_GRANT }} -->
+                    CTG <br />
+                    <span
+                      *ngIf="
+                        partbdata.CTG_REMARK != undefined &&
+                        partbdata.CTG_REMARK != null &&
+                        partbdata.CTG_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.CTG_REMARK"
+                    ></span>
+                  </td>
+                  <td class="b">
+                    <!-- {{ partbdata.CTG_ADMISIBLE_AMOUNT }} -->
+                    {{ partbdata.CTG_TOTAL }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a">(b)</td>
+                  <td style="padding: 5px">
+                    Road mileage for
+                    <span style="text-decoration: underline"
+                      >{{ partbdata.ROAD_MILEAGE }} </span
+                    >kms @
+                    <span style="text-decoration: underline">
+                      {{ partbdata.PER_KM }}
+                    </span>
+                    per km. <br />
+                    <span
+                      *ngIf="
+                        partbdata.ROAD_MILEAGE_REMARK != undefined &&
+                        partbdata.ROAD_MILEAGE_REMARK != null &&
+                        partbdata.ROAD_MILEAGE_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.ROAD_MILEAGE_REMARK"
+                    ></span>
+                  </td>
+                  <td class="b">
+                    {{ partbdata.ROAD_MILEAGE_TOTAL }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <!-- <td nzAlign="center">
+                    <span
+                      *ngIf="
+                        (drawerClaimData.ROAD_MILEAGE != undefined ||
+                          drawerClaimData.ROAD_MILEAGE != null) &&
+                        (drawerClaimData.PER_KM != undefined ||
+                          drawerClaimData.PER_KM != null)
+                      "
+                    >
+                      3.</span
+                    >
+                    <span
+                      *ngIf="
+                        drawerClaimData.ROAD_MILEAGE == undefined ||
+                        drawerClaimData.ROAD_MILEAGE == null ||
+                        drawerClaimData.PER_KM == undefined ||
+                        drawerClaimData.PER_KM == null
+                      "
+                    >
+                      2.</span
+                    >
+                  </td> -->
+                  <td class="a">(c)</td>
+                  <td style="padding: 5px">
+                    <span *ngIf="showPrivate == 1 || showPrivate == 0">
+                      <span *ngFor="let data of TravelModeNames; let k = index">
+                        <span>{{ data }}</span>
+
+                        <span *ngIf="TravelModeNames.length > 1">
+                          <span
+                            *ngIf="
+                              TravelModeNames.length - 2 != k &&
+                              TravelModeNames.length != k + 1
+                            "
+                          >
+                            ,
+                          </span>
+                          <span *ngIf="TravelModeNames.length - 2 == k">
+                            &
+                          </span>
+                        </span>
+                      </span>
+                      <br />
+                      <span
+                        *ngIf="
+                          partbdata.JOURNEY_REMARK != undefined &&
+                          partbdata.JOURNEY_REMARK != null &&
+                          partbdata.JOURNEY_REMARK != ''
+                        "
+                        [innerHtml]="partbdata.JOURNEY_REMARK"
+                      ></span>
+                    </span>
+                    <!-- <span *ngIf="showPrivate == 1">{{
+                      drawerClaimData.TRAVEL_MODE_NAME
+                    }}</span> -->
+                    <span *ngIf="showPrivate == 2"
+                      >Private Vehicle <br />
+                      <span
+                        *ngIf="
+                          partbdata.JOURNEY_REMARK != undefined &&
+                          partbdata.JOURNEY_REMARK != null &&
+                          partbdata.JOURNEY_REMARK != ''
+                        "
+                        [innerHtml]="partbdata.JOURNEY_REMARK"
+                      ></span>
+                    </span>
+                  </td>
+                  <!-- <td nzAlign="center">
+                    <span *ngIf="journeydetails != undefined">
+                      <span *ngIf="showPrivate == 1"
+                        >{{ journeyfairfaird }}/-</span
+                      > -->
+                  <!-- <span *ngIf="showPrivate == 1">{{
+                        grosspaymentvalue
+                      }}</span> -->
+                  <!-- <span *ngIf="showPrivate == 2">0</span>
+                    </span>
+                  </td> -->
+                  <!-- <td nzAlign="left" style="padding-left: 1%">
+                    Personal Effects
+                  </td>
+                  <td nzAlign="center">{{ amount }}/-</td> -->
+                  <td nzAlign="center">
+                    {{ partbdata.JOURNEY_TOTAL }}
+                  </td>
+                  <!-- <td nzAlign="center">as</td> -->
+                  <!-- <td nzAlign="center">
+                    <div>
+                      <b>{{ drawerClaimData.JOURNEY_REMARK }}</b>
+                    </div>
+                  </td> -->
+                </tr>
+
+                <!-- <tr>
+                  <td class="a">(c)</td>
+                  <td style="padding: 5px">
+                    <span *ngIf="showPrivate == 0"></span>
+                    <span *ngIf="showPrivate == 1">{{
+                      partbdata.TRAVEL_MODE_NAME
+                    }}</span>
+                    <span *ngIf="showPrivate == 2">Private Vehicle</span>
+                  </td>
+                  <td class="b">
+                    <span *ngIf="journeyDetailsData != undefined">
+                      <span *ngIf="showPrivate == 0"></span>
+                      <span *ngIf="showPrivate == 1">{{
+                        partbdata.JOURNEY_ADMISIBLE_AMOUNT
+                      }}</span>
+                      <span *ngIf="showPrivate == 2">0</span>
+                    </span>
+                  </td>
+                </tr>
+                 -->
+                <!-- <tr>
+                <td class="a">(d)</td>
+                <td style="padding: 5px">
+                  Transfer Incidentals <br />(D.A. for &nbsp;<b
+                    style="text-decoration: underline"
+                    >{{ partbdata.D_A }}</b
+                  >&nbsp; day(s) @ Rs.
+                  <b style="text-decoration: underline">{{
+                    partbdata.RUPEES_PER_DAY
+                  }}</b>
+                  per day )
+                </td>
+                <td class="b" style="text-align: center">
+                  {{ incidentalsAmonut }}
+                </td>
+              </tr> -->
+                <!-- <tr>
+                  <td class="a">(d)</td>
+                  <td style="padding: 5px">
+                    Transportation of personal effects
+                  </td>
+                  <td class="b"></td>
+                </tr> -->
+                <tr>
+                  <td class="a">(d)</td>
+                  <td style="padding: 5px">
+                    Transportation of personal effects<br />
+                    <!-- Calculation:<br />
+                    <span
+                      >{{ weightrate }} * {{ distance }} * {{ amountt }} /
+                      6000</span
+                    >
+
+                    <br />(Weight for &nbsp;<span
+                      style="text-decoration: underline"
+                      >{{ tranferchnagesorder.WEIGHT_IN_KG }}</span
+                    >&nbsp; day(s) Rs.
+                    <span style="text-decoration: underline">{{
+                      tranferchnagesorder.RATE
+                    }}</span>
+                    per day ) <br /> -->
+                    <span
+                      *ngIf="
+                        partbdata.PERSONAL_REMARK != undefined &&
+                        partbdata.PERSONAL_REMARK != null &&
+                        partbdata.PERSONAL_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.PERSONAL_REMARK"
+                    ></span>
+                  </td>
+
+                  <td class="b">
+                    {{ personalEffectsAddmissible }}
+                    <!-- {{ partbdata.PERSONAL_EFFECT_TOTAL }} -->
+                    <!-- {{ totalofweight }} -->
+                  </td>
+                </tr>
+                <!-- <tr>
+                  <td class="a">(e)</td>
+                  <td style="padding: 5px">
+                    Transportation of private conveyance
+                  </td>
+                  <td class="b"></td>
+                </tr> -->
+                <tr>
+                  <td class="a">(e)</td>
+                  <td style="padding: 5px">
+                    Transportation of private conveyance<br />
+                    <!-- Calculation:<br />
+                    <div
+                      *ngIf="partbdata.VEHICLE_BROUGHT_SELF_PROPULATION == 0"
+                    >
+                      <span
+                        *ngIf="grosspaymentvalue == partbdata.TRUCK_SHIP_CHARGE"
+                      >
+                        <p>Truck/Ship Charge</p>
+                        <span> {{ partbdata.TRUCK_SHIP_CHARGE }}</span>
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue ==
+                          partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO
+                        "
+                      >
+                        <p>
+                          Train Brought KiloMeter :-
+                          <span>{{ partbdata.TRAIN_BROUGHT_FOR_KMS_NO }}</span
+                          ><br />
+                        </p>
+                        <p>
+                          Train Brought Charge :-
+                          <span>{{
+                            partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO
+                          }}</span
+                          ><br />
+                        </p>
+                        <br />
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue != partbdata.TRUCK_SHIP_CHARGE &&
+                          grosspaymentvalue !=
+                            partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                          privateVehicleMinFair > 0
+                        "
+                      >
+                        <p>
+                          Private Vehicle Brought Charges
+                          <br />
+                        </p>
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue != partbdata.TRUCK_SHIP_CHARGE &&
+                          grosspaymentvalue !=
+                            partbdata.TRAIN_BROUGHT_FOR_CHARGE_NO &&
+                          privateVehicleMinFair <= 0
+                        "
+                      >
+                      </span>
+
+                      <br />
+                    </div>
+
+                    <div
+                      *ngIf="partbdata.VEHICLE_BROUGHT_SELF_PROPULATION == 1"
+                    >
+                      <span
+                        *ngIf="
+                          grosspaymentvalue == partbdata.VEHICLE_BROUGHT_TOTAL
+                        "
+                      >
+                        <p>
+                          Road Milage :-
+                          {{ partbdata.VEHICLE_BROUGHT_ROAD_MILEAGE }}
+                        </p>
+                        <p>
+                          KiloMeter :-
+
+                          {{ partbdata.VEHICLE_BROUGHT_ROAD_MILEAGE_KMS }}
+                        </p>
+
+                        <p>Total:- {{ partbdata.VEHICLE_BROUGHT_TOTAL }}</p>
+                      </span>
+
+                      <span
+                        *ngIf="
+                          grosspaymentvalue == partbdata.TRAIN_BROUGHT_CHARGE
+                        "
+                      >
+                        <p>
+                          Train Brought KiloMeter :-
+                          {{ partbdata.TRAIN_BROUGHT_KMS }}
+                          <br />
+                        </p>
+                        <p>
+                          Train Brought Charge :-
+                          {{ partbdata.TRAIN_BROUGHT_CHARGE }}
+                          <br />
+                        </p>
+                        <br />
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue != partbdata.TRAIN_BROUGHT_CHARGE &&
+                          grosspaymentvalue !=
+                            partbdata.VEHICLE_BROUGHT_TOTAL &&
+                          privateVehicleMinFair > 0
+                        "
+                      >
+                        <p>
+                          Private Vehicle Brought Charges
+                          <br />
+                        </p>
+                      </span>
+                      <span
+                        *ngIf="
+                          grosspaymentvalue != partbdata.TRAIN_BROUGHT_CHARGE &&
+                          grosspaymentvalue !=
+                            partbdata.VEHICLE_BROUGHT_TOTAL &&
+                          privateVehicleMinFair <= 0
+                        "
+                      >
+                      </span>
+
+                      <br />
+                    </div>
+                    <br /> -->
+                    <span
+                      *ngIf="
+                        partbdata.PRIVATE_CONVEYANCE_REMARK != undefined &&
+                        partbdata.PRIVATE_CONVEYANCE_REMARK != null &&
+                        partbdata.PRIVATE_CONVEYANCE_REMARK != ''
+                      "
+                      [innerHtml]="partbdata.PRIVATE_CONVEYANCE_REMARK"
+                    ></span>
+                    <br />
+                  </td>
+                  <td class="b">
+                    {{ partbdata.PRIVATE_CONVEYANCE_TOTAL }}
+                    <!-- {{ grosspaymentofpartb }} -->
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a"></td>
+                  <td style="text-align: right; padding-right: 3px">
+                    <b>Gross Amount</b>
+                  </td>
+                  <td class="b">
+                    <b>{{ gettotal() }}</b>
+                    <!-- <b>{{ totacountofbill }}</b> -->
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a">(f)</td>
+                  <td style="padding: 5px">
+                    Less amount of advance, if any drawn vide Voucher
+                    No.&nbsp;<b>{{ partbdata.VOUCHER_NO }}&nbsp;</b>
+                    Dated
+                    <b>{{
+                      partbdata.ADVANCE_TAKEN_DATE | date : "dd-MM-yyyy"
+                    }}</b>
+                  </td>
+                  <td class="b">
+                    <b>{{ partbdata.ADVANCED_AMOUNT }}</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="a"></td>
+                  <td style="text-align: right; padding-right: 3px">
+                    <b>Net Amount</b>
+                  </td>
+                  <td class="b">
+                    <b>
+                      <b>{{ gettotall() }}</b>
+                      <!-- <b>{{netpaymentofpartb}}</b> -->
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <span
+              >The Expenditure is debitable to
+              <span style="text-decoration: underline"
+                >&nbsp;&nbsp; DTE &nbsp;&nbsp;</span
+              >
+              {{ partbdata.EXPENDITURE_DEBITABLE_TO }}</span
+            >
+            <br />
+            <div nz-row style="margin-top: 90px">
+              <div nz-col nzSpan="10">
+                <span>
+                  Bill Clerk <br />
+                  (Initials)
+                </span>
+              </div>
+              <!-- <div nz-col nzSpan="12"> -->
+              <!-- <span>
+                  &nbsp;&nbsp;
+                  <u>Signature of Drawing & Disbursing officer </u></span
+                > -->
+              <div
+                nz-col
+                nzSpan="14"
+                style="text-align: center; font-size: 12px !important"
+              >
+                <div>(Signature of Drawing & Disbursing Officer)</div>
+                <div style="font-weight: bold" *ngIf="NAME_HN">
+                  ({{ NAME_HN }})
+                </div>
+                <div style="font-weight: bold" *ngIf="SIGNNAME">
+                  ({{ SIGNNAME }})
+                </div>
+                <div>
+                  <span *ngIf="POST_HIN">
+                    {{ POST_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME_HIN"> , {{ OFFICE_NAME_HIN }} </span>
+                </div>
+                <div>
+                  <b>
+                    <span *ngIf="POST">
+                      {{ POST }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME"> , {{ OFFICE_NAME }} </span>
+                  </b>
+                </div>
+                <div>COUNTERSIGNED</div>
+              </div>
+              <!-- </div> -->
+            </div>
+
+            <div nz-row style="margin-top: 90px; text-align: center">
+              <div nz-col nzSpan="9" style="margin-left: -10px">
+                <!-- <b> Passed for payment of Rs.__________only.</b> -->
+
+                <span> <u>Countersigned</u></span>
+                <div *ngIf="NAME_HN1" style="font-weight: bold">
+                  ({{ NAME_HN1 }})
+                </div>
+                <div *ngIf="SIGNNAME1">
+                  <b>({{ SIGNNAME1 }})</b>
+                </div>
+                <div>
+                  <span *ngIf="POST1_HIN">
+                    {{ POST1_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME1_HIN">
+                    , {{ OFFICE_NAME1_HIN }}
+                  </span>
+                </div>
+                <div>
+                  <b>
+                    <span *ngIf="POST1">
+                      {{ POST1 }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME1"> , {{ OFFICE_NAME1 }} </span>
+                  </b>
+                </div>
+              </div>
+              <div nz-col nzSpan="2"></div>
+              <div nz-col nzSpan="13">
+                <span> <u> Signature of the controlling officer</u></span>
+                <div style="font-weight: bold" *ngIf="NAME_HN2">
+                  ({{ NAME_HN2 }})
+                </div>
+                <div style="font-weight: bold" *ngIf="SIGNNAME2">
+                  ({{ SIGNNAME2 }})
+                </div>
+                <div>
+                  <span *ngIf="POST2_HIN">
+                    {{ POST2_HIN }}
+                  </span>
+                  <span *ngIf="OFFICE_NAME2_HIN">
+                    , {{ OFFICE_NAME2_HIN }}
+                  </span>
+                </div>
+                <div>
+                  <b>
+                    <span *ngIf="POST2">
+                      {{ POST2 }}
+                    </span>
+                    <span *ngIf="OFFICE_NAME2"> , {{ OFFICE_NAME2 }} </span>
+                  </b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

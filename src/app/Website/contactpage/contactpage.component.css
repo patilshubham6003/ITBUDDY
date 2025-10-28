@@ -1,0 +1,78 @@
+.breadcrumbs ol {
+  display: inline-flex;
+  margin: 0px 0;
+}
+
+.breadcrumbs ol li+li::before {
+  color: #f5f7f2;
+}
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+.card {
+  box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+table,
+td,
+th,
+.card-header {
+  border: 1px solid #0000002d;
+}
+
+.table-nowrap .table td,
+.table-nowrap .table th {
+  white-space: nowrap;
+}
+
+.table>:not(caption)>*>* {
+  padding: 0.75rem 1.25rem;
+  border-bottom-width: 1px;
+}
+
+table th {
+  font-weight: 500;
+  background-color: #eeecfd !important;
+}
+
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(173, 172, 172);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #006699;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006699;
+}
+
+::-webkit-input-placeholder {
+  font-size: 13px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border: 0.5px solid #40a9ff;
+  box-shadow: none;
+}
+
+.fscroll {
+  height: 100%;
+  max-height: 500px;
+  overflow: auto;
+  overflow-y: auto;
+}
+
+div,a,footer,li,ui,p,h4,h1,h2,h3,h5,section,span,main{
+  font-family: 'Hanken Grotesk', sans-serif !important;
+  
+}

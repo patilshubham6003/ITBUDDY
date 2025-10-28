@@ -1,0 +1,1030 @@
+<div nz-row style="padding: 5px; font-size: 14px" *ngIf="dataisavailable" id="printpage">
+  <div nz-col nzSpan="24" style="text-align: center; font-size: 16px !important">
+    <b>FORM FOR APPLICATION FOR OFFICERS OF INCOME-TAX DEPARTMENT FOR </b>
+  </div>
+  <div nz-col nzSpan="24" style="text-align: center; font-size: 16px !important">
+    <b>ALLOTMENT OF RESIDENCE FROM THE DEPARTMENTAL POOL </b>
+  </div>
+  <div nz-col nzSpan="24" style="text-align: center; font-size: 16px !important; margin-bottom: 20px">
+    <b>FOR THE ALLOTMENT YEAR:{{thisyear}} <span>-</span> {{nextyear}} </b>
+  </div>
+
+  <div nz-col nzSpan="24">
+    <table>
+      <tbody>
+        <tr>
+          <td rowspan="4" colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            1 <br /><br /><br /><br /><br />
+          </td>
+          <td colspan="6" class="pading" style="width: 94%">
+            Full Name (In Block Letters)
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="pading" style="text-align: right; width: 13%">
+            Name
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 1">
+            {{ employeefullname[0] }}
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 2">
+            {{ employeefullname[0] }}
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 3">
+            {{ employeefullname[0] }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="pading" style="text-align: right; width: 13%">
+            Father's Name / Middle Name
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 1">
+            {{ Father1name }}
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 2">
+            {{ Father1name }}
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 3">
+            {{ employeefullname[1] }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="pading" style="text-align: right; width: 13%">
+            Surname
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 1"></td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 2">
+            {{ this.employeefullname[1] }}
+          </td>
+          <td colspan="2" style="width: 50%" *ngIf="employeefullname.length == 3">
+            {{ this.employeefullname[2] }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%"></td>
+          <td colspan="3" class="pading" style="text-align: right">
+            Date of Birth
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ data1.DOB | date : "dd/MM/yyyy" }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%"></td>
+          <td colspan="3" class="pading" style="text-align: right">
+            Date of Superannuation
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ data1.SUPERANNUATION_DATE | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            2 <br /><br /><br />
+          </td>
+          <td colspan="3" style="height: 100px">
+            Present Residential Address <br /><br />
+            <br />
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            : <br /><br />
+            <br />
+          </td>
+          <td colspan="2">
+            {{ data1.PRESENT_RESENDENTIAL_ADDRESS }}<br /><br />
+            <br />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            3<br /><br />
+            <br />
+          </td>
+          <td colspan="3" style="height: 100px">
+            Present Office Address <br /><br />
+            <br />
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ data1.PRESENT_OFFICE_ADDRESS }}<br /><br />
+            <br />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            4 <br /><br />
+          </td>
+          <td colspan="3" class="pading">
+            Designation & Particulars of Permanent / Quasi Permanent Post Held
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ data1.DESIGNATION }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            5
+          </td>
+          <td colspan="3" class="pading">
+            Whether the Officer Belongs to SC / ST
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ data1.OFFICER_CAST }}</td>
+        </tr>
+
+
+        <tr>
+          <td colspan="1" rowspan="2" nzAlign="center" class="pading" style="width: 6%">
+            6 <br /><br /><br /><br />
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (A)
+          </td>
+          <td colspan="2" class="pading">Date Of joining in Central Govt. Service</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ data1.DATE_JOINING | date:'dd/MM/yyyy'}}</td>
+        </tr>
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (B) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            If the Officer has joined on transfer in the Allotment Year, give
+            details of joining at Mumbai
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" rowspan="2" nzAlign="center" class="pading" style="width: 6%">
+            7 <br /><br /><br /><br />
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (A)
+          </td>
+          <td colspan="2" class="pading">Present Basic Pay & Grade Pay</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ data1.GRADE_PAY }}</td>
+        </tr>
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (B) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            Date from which such Grade Pay drawn
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ data1.GRADE_PAY_DRAWN_DATE | date : "dd/MM/yyyy" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            8<br /><br /><br />
+          </td>
+          <td colspan="3" class="pading">
+            Indicate the sources from which the emoluments are drawn, if not,
+            from the Consolidated Funds of Govt. of India
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ data1.IS_EMOLUMENTS_DRAWN ? data1.EMOLUMENTS_DRAWN : "NA" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            9 <br /><br /><br />
+          </td>
+          <td colspan="3" class="pading">
+            Type of accommodation to which entitled with seniority date (vide
+            S.R. 317-P-4)
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            data1.ACCOMMODATION_SENIORITY_DATE ? (data1.ACCOMMODATION_SENIORITY_DATE | date:'dd/MM/yyyy') : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="1" colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            10
+          </td>
+          <td colspan="6" class="pading">
+            <b>PLEASE TICK THE TYPES OF ACCOMMODATION FOR WHICH YOU ARE APPLYING
+              :</b>
+          </td>
+        </tr>
+
+        <tr>
+          <td nzAlign="center" colspan="3" class="pading" style="width: 13%">
+            Type of accommodation
+          </td>
+          <td nzAlign="center" colspan="1" class="pading" style="width: 26%">
+            Pay Range <br /><br />
+          </td>
+          <td nzAlign="center" colspan="2" rowspan="2" class="pading" style="width: 14%">
+            Date of Joining <br /><br /><br /><br /><br />
+          </td>
+          <td nzAlign="center" colspan="1" rowspan="2" class="pading" style="width: 26%">
+            Date from which the minimum pay Govt. Service prescribed (for the
+            type of accommodation is drawn)
+          </td>
+        </tr>
+        <tr>
+          <td nzAlign="center" colspan="3" class="pading" style="height: 100px">
+            Type of Residence <br /><br /><br /><br />
+          </td>
+          <td nzAlign="center" colspan="1" class="pading" style="height: 100px">
+            Grade Pay (Pre-revised) <br /><br /><br /><br />
+          </td>
+        </tr>
+
+        <tr *ngFor="let restype of flatarrlist; let i = index">
+          <td nzAlign="center" colspan="3" class="pading">
+            {{ restype.RESIDENCE_TYPE_NAME }} <br /><br />
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 1" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 1,300, Rs. 1,400 Rs. 1,600, Rs. 1,650 and Rs. 1,800
+          </td>
+
+          <td nzAlign="center" colspan="1" *ngIf="restype.RESIDENCE_TYPE == 2" class="pading" style="font-size: 12px">
+            Rs. 1,900, Rs. 2,000, Rs. 2,400 and Rs. 2800
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 3" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 4,200, Rs. 4,600 and Rs. 4,800
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 4" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 5,400, Rs. 6,600
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 5" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 6,600
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 6" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 7,600 and Rs.8,000
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 7" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 8,700 and Rs. 8,900
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 8" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 10,000
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 9" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 67,000 to Rs. 74,999
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 10" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 75,000 to Rs. 79,999
+          </td>
+
+          <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 11" colspan="1" class="pading" style="font-size: 12px">
+            Rs. 80,000 and above
+          </td>
+
+          <td nzAlign="center" colspan="2" class="pading">{{ restype.JOINING_DATE | date:'dd/MM/yyyy' }}</td>
+
+          <td nzAlign="center" colspan="1" class="pading"></td>
+        </tr>
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">II <br><br></td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 1,900, Rs. 2,000,
+                        Rs. 2,400 and Rs. 2800
+
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">III <br><br></td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 4,200, Rs. 4,600 and
+                        Rs. 4,800
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">IV</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 5,400, Rs. 6,600
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">IV
+                        (Special)</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 6,600
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">V-A
+                        (D-II)</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 7,600 and Rs.8,000
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">V-B
+                        (D-I)</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 8,700 and Rs. 8,900
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">VI-A
+                        (C-II)</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 10,000
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">VI-B
+                        (C-I)</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 67,000 to Rs. 74,999
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">VII</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 75,000 to Rs. 79,999
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td>
+                </tr> -->
+        <!-- <tr>
+                    <td nzAlign="center" colspan="3" class="pading">VIII</td>
+                    <td nzAlign="center" colspan="1" class="pading" style="font-size: 12px;">Rs. 80,000 and above
+                    </td>
+                    <td nzAlign="center" colspan="2" class="pading"></td>
+                    <td nzAlign="center" colspan="1" class="pading">
+
+                    </td> 
+                </tr> -->
+
+        <tr>
+          <td rowspan="3" colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            11 <br /><br /><br /><br />
+            <br /><br /><br />
+          </td>
+          <td colspan="6" class="pading">
+            <b>Particulars of the Govt. Residence, if any, allotted either to
+              the applicant or of his / her family members:- :</b>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (i)
+          </td>
+          <td colspan="2" class="pading">By the Head of Department</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.ALLOCATED_BY == "Head Department"
+            ? checklistdata.ALLOCATED_BY_DEPARTMENT
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (ii) <br /><br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            By other Government Department (Give name of the Department)
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.ALLOCATED_BY == "By Other Govt. Department"
+            ? checklistdata.ALLOCATED_BY_DEPARTMENT
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" rowspan="2" nzAlign="center" class="pading" style="width: 6%">
+            12 <br /><br /><br /><br />
+            <br /><br /><br /><br />
+            <br />
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (i) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            Office of family members, if employed, in Central / State Government
+            / Public / Semi-Govt. Undertaking / Municipality/ Port Trust / LIC /
+            Nationalised Services
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.IS_EMPLOYEED_FAMILY_MEMBER
+            ? checklistdata.OFFICE_NAME_OF_FAMILY_MEM
+            : "NA"
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (ii) <br /><br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            State whether the family member referred in Col. No. 12(i) stays
+            with you
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ checklistdata.STAYS_WITH_YOU ? "Yes" : "No" }}</td>
+        </tr>
+
+        <tr>
+          <td rowspan="5" colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            13 <br /><br /><br /><br />
+            <br /><br /><br /><br />
+            <br /><br /><br /><br />
+          </td>
+          <td colspan="6" class="pading">
+            <b>Does the applicant stay presently:-</b>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (i)
+          </td>
+          <td colspan="2" class="pading">in his / her ownership Quarter</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4dvb">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.TYPE_RESIDENCE == "His/Her Ownership Flat"
+            ? "Yes"
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (ii) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            in quarters from General Pool or any Other Pool
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.TYPE_RESIDENCE ==
+            "In quarter from general pool/Any Other pool"
+            ? "Yes"
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (iii) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            with some other relatives / friends
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.TYPE_RESIDENCE == "With Other relatives/friends"
+            ? "Yes"
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (iV) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            in a rented premises in his / her own name.
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.TYPE_RESIDENCE == "In Rented Primeses"
+            ? "Yes"
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" rowspan="3" nzAlign="center" class="pading" style="width: 6%">
+            14 <br /><br /><br /><br />
+            <br /><br /><br /><br />
+            <br />
+          </td>
+          <td colspan="1" rowspan="2" nzAlign="center" class="pading" style="width: 6%">
+            (a) <br /><br /><br /><br />
+            <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            (i) Does the applicant stand debarred from allotment of Govt.
+            Accommodation or
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ checklistdata.DEBARRED_ALLOTMENT ? "Yes" : "NA" }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="pading">
+            (ii) Has he / she surrendered / cancelled any earlier allotment .
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ checklistdata.CANCELLED_ALLOTMENT ? "Yes" : "NA" }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (b) <br /><br />
+          </td>
+          <td colspan="2" class="pading">
+            If reply to (i) & (ii) is affirmative, indicate the details thereof.
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ checklistdata.AFFIRMATIVE_INDICATE }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            15 <br /><br /><br />
+          </td>
+          <td colspan="3" style="height: 100px">
+            Is the officer entitled to rent-free accommodation
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{ checklistdata.RENT_FREE_ACCOMMODATION ? "Yes" : "NA" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            16 <br /><br /><br />
+          </td>
+          <td colspan="3" style="height: 100px">
+            Does the applicant / spouse or dependent child own a house at the
+            station of duty. If yes, give details.
+          </td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">
+            {{
+            checklistdata.APPLICANT_FAMILY
+            ? checklistdata.STATION_DUTY_FAR_FAMILY
+            : "NA"
+            }}
+          </td>
+        </tr>
+
+        <tr>
+          <td rowspan="4" colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            17 <br /><br /><br /><br />
+            <br /><br /><br /><br />
+          </td>
+          <td colspan="6" class="pading">
+            <b>Particulars of surety in case of officer not holding a Permanent
+              / Quasi Permanent post under Central Government.
+            </b>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (1)
+          </td>
+          <td colspan="2" class="pading">Permanent Post held</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ checklistdata.PERMENANT_POST_HELD }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (2)
+          </td>
+          <td colspan="2" class="pading">Office to which attached</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ checklistdata.OFFICE_ATTACHED }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            (3)
+          </td>
+          <td colspan="2" class="pading">Does the surety subsist</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ checklistdata.SURETY_SUBSIST ? "Yes" : "NA" }}</td>
+        </tr>
+
+        <tr>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 6%">
+            18
+          </td>
+          <td colspan="3" class="pading">Civil List No.</td>
+          <td colspan="1" nzAlign="center" class="pading" style="width: 4%">
+            :
+          </td>
+          <td colspan="2">{{ checklistdata.CIVIL_LIST }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div nz-row style="display: flex; margin: 20px 0 10px 0; text-align: justify">
+    <div nz-col nzSpan="4" style="text-align: center">
+      <b><i>NOTE : </i></b>
+    </div>
+    <div nz-col nzSpan="20" style="margin-bottom: 20px">
+      <i>The date of seniority in respect of Type-I, II, III quarters shall be
+        the date from which the applicant has been continuously in service in
+        Central Government. The date of seniority in respect of Type-IV, Type-IV
+        (Special) onwards shall be the date of reaching Grade Pay of Rs. 5,400/-
+        and Rs. 6,600/- respectively.
+      </i>
+    </div>
+  </div>
+  Present Office Address
+
+  <div nz-col nzSpan="24" style="margin-bottom: 40px; text-align: justify">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Certified that I have read all rules governing the allotment of residence
+    and declare that the above particulars given by me are correct and that the
+    allotment to be made to me or already made shall be subject to these rules
+    and subsequent amendments, if any, thereto.
+  </div>
+
+  <div nz-col nzSpan="24">
+    <div nz-row style="display: flex">
+      <div nz-col nzSpan="5">Date :</div>
+      <div nz-col nzSpan="3" style="margin-bottom: 10px; text-align: right">
+        Signature :&nbsp;&nbsp;
+      </div>
+      <div nz-col nzSpan="16"></div>
+    </div>
+  </div>
+  <div nz-col nzSpan="5"></div>
+  <div nz-col nzSpan="3" style="margin-bottom: 10px; text-align: right">
+    Name :&nbsp;&nbsp;
+  </div>
+  <div nz-col nzSpan="16">{{ data1.EMPLOYEE_NAME }}</div>
+  <div nz-col nzSpan="5"></div>
+  <div nz-col nzSpan="3" style="text-align: right">Designation :&nbsp;&nbsp; </div>
+  <div nz-col nzSpan="16">{{ data1.DESIGNATION }}</div>
+
+  <div nz-col nzSpan="24" style="display: flex; margin-top: 20px">
+    <div><b>Phone No. </b></div>
+    <div style="margin-left: 150px"><b> Extn. No. </b></div>
+    <div style="margin-left: 150px"><b> Mob. No. </b></div>
+  </div>
+
+  <div nz-col nzSpan="24" style="margin: 20px 0 20px 0">
+    <b>Office to which attached:
+      <span style="text-decoration: underline">{{
+        checklistdata.OFFICE_ATTACHED
+        }}</span></b>
+  </div>
+  <hr style="border: 0.5px solid black; width: 100%" />
+
+  <div nz-col nzSpan="24" style="margin-bottom: 20px">
+    <b>CERTIFIED THAT</b> particulars given above by the applicant are correct.
+  </div>
+
+  <div nz-col nzSpan="24" style="text-align: right; margin-bottom: 10px">
+    (Head of the Department / Range)
+  </div>
+
+  <div nz-col nzSpan="24">
+    <b>CERTIFIED THAT:-</b>
+  </div>
+
+  <div nz-col nzSpan="24" style="margin: 0 0 10px 40px">
+    Applicant's seniority date for allotment of Quarters is _________
+    <p style="font-size: 12px">(Please see Note above)</p>
+
+    Present Basic Pay & Grade Pay :
+    <span style="text-decoration: underline">{{ data1.GRADE_PAY }}</span>
+
+    Date from which such Grade Pay is drawn :<span style="text-decoration: underline">{{ data1.GRADE_PAY_DRAWN_DATE |
+      date : "dd/MM/yyyy" }}</span>
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 10px">
+    <b><u>Documents requires along with application : </u></b>
+    <p style="margin-left: 30px">
+      1.&nbsp;&nbsp;&nbsp;&nbsp; Latest Salary/Pay slip
+    </p>
+    <p style="margin-left: 30px">
+      2.&nbsp;&nbsp;&nbsp;&nbsp; Latest Pay Fixation order
+    </p>
+    <p style="margin-left: 30px">
+      3.&nbsp;&nbsp;&nbsp;&nbsp; Joining report in Central Govt. Service
+      (applicable for Type-IV quarter)
+    </p>
+    <p style="margin-left: 30px">
+      4 .&nbsp;&nbsp;&nbsp;&nbsp; Joining /Assumption of Charge in Mumbai Region
+    </p>
+  </div>
+
+  <div nz-col nzSpan="24" style="text-align: right; margin: 0 0 40px -25px">
+    (Signature of A.O. of respective D.D.O., Office, Mumbai)
+  </div>
+
+  <!-- <div nz-col nzSpan="24" style="text-align: center; margin-bottom: 40px">
+    <b><u>SURETY BOND</u></b>
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 20px; text-align: justify">
+    I, Shri
+    <span style="text-decoration: underline">{{ data1.EMPLOYEE_NAME }}</span>
+    son of Shri <span style="text-decoration: underline">{{ Fathername }}</span
+    >, at present employed as
+    <span style="text-decoration: underline">{{ data1.DESIGNATION }}</span> in
+    the office of ________________________________
+    _______________________________________________ hereby stand surety (which
+    expression shall include my heirs, executors and administrators) to the
+    President of India (hereinafter called 'the Government' which expression
+    includes his successors and assignees) for payment by Shri
+    ___________________________________________________ of licence fee and other
+    dues in respect of the residence now allotted to him by Government as also
+    for any residence, additional accommodation, extra servant quarters or
+    garages that may be allotted to him from time to time by the Government.
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 20px; text-align: justify">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    I, the surety, shall indemnify the Government against all loss and damages
+    until delivery of vacant possession of the same is made to the Government.
+    I, the surety, hereby undertake to pay to the Government forthwith on demand
+    by the Government and without demur all such sums as may be due to the
+    Government as aforesaid and I hereby agree that the Government shall be at
+    liberty (and be hereby irrevocably authorised to do so) to recover the said
+    sums from the salary payable to me and the decision of the Government as to
+    the amount so to be recovered shall be final.
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 20px; text-align: justify">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+    obligations undertaken by me shall not be discharged or in any way affected
+    by an extension of time or any other indulgence granted by the Government to
+    the said
+    <span style="text-decoration: underline">{{ data1.EMPLOYEE_NAME }}</span>
+    (name of the allottee) or by any other matter or thing whatsoever which
+    under the law relating to sureties would but for this provision have the
+    effect of so releasing me from such liability.
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 20px; text-align: justify">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    The guarantee shall not be discharged by my death nor shall it be revocable
+    by me at any time, except with the consent in writing of Government until
+    the delivery of vacant possession of any such residence, servant quarteror
+    garage, which is in occupation of the allottee of Government.
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 20px; text-align: justify">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Provided however that this guarantee shall ipso facto terminate from the
+    date Shri
+    <span style="text-decoration: underline">{{ data1.EMPLOYEE_NAME }}</span>
+    declared permanent or quasi-permanent in any service in the Government of
+    India.
+  </div>
+
+  <div nz-col nzSpan="24" style="margin-bottom: 40px">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    The Government has agreed to bear the stamp duty, if any, for this document.
+  </div>
+
+  <div nz-col nzSpan="24">Signed and delivered by the said</div>
+  <div nz-col nzSpan="24">_________________________________ at</div>
+  <div nz-col nzSpan="24">Mumbai, the date</div>
+
+  <div nz-col nzSpan="24" style="text-align: right; margin-left: -25px">
+    (Signature of the Surety)
+  </div>
+
+  
+    <div nz-col nzSpan="10">
+    </div>
+    <div nz-col nzSpan="6" >
+      Name : &nbsp;&nbsp; 
+    </div>
+    <div nz-col nzSpan="8"><span>{{ data1.EMPLOYEE_NAME }}</span></div>
+    <div nz-col nzSpan="10"></div>
+    <div nz-col nzSpan="6">
+      Designation : &nbsp;&nbsp; 
+    </div>
+    <div nz-col nzSpan-="8"><span>{{ data1.DESIGNATION }}</span></div>
+    <div nz-col nzSpan="10"></div>
+    <div nz-col nzSpan="6">
+      Office to which attached : &nbsp;&nbsp;
+    </div>
+    <div nz-col nzSpan="8"> {{ checklistdata.OFFICE_ATTACHED }}</div>
+ 
+
+  <div nz-col nzSpan="24" style="margin-bottom: 40px; text-align: justify">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <b>CERTIFIED THAT </b>the above surety is a permanent Government Servant. He
+    is _____________ years of age and his pay is ____________________ per month.
+  </div>
+
+  <div nz-col nzSpan="24">
+    <p style="margin-left: 44% ; text-align: right;">
+      Signature of the Head of the Department of the
+    </p>
+    <p style="margin-left: 51%">Office in which the surety is employed.</p>
+    <p style="margin-left: 45%">Seal :</p>
+    <p style="margin-left: 45%">Date :</p>
+  </div> -->
+</div>
+
+<div class="footer">
+  <button nz-button nzType="default" style="margin-right: 8px" (click)="close()">
+    <span>Close</span>
+  </button>
+  <button nz-button nzType="primary" printSectionId="printpage" ngxPrint [useExistingCss]="true"
+    style="margin-right: 8px">
+    <span>Print</span>
+  </button>
+
+  <button nz-button nzType="primary" style="margin-right: 8px" (click)="openuploadmodal()" *ngIf="showbutton">
+    <span>Upload for Verification</span>
+  </button>
+</div>
+
+<div class="header">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>
+
+<nz-modal [(nzVisible)]="RejectRemark" nzTitle="Application Form Upload" nzCentered="true"
+  nzOkText="Send For Verification" nzCancelText="Close" [nzBodyStyle]="{ padding: '5px', 'font-family': 'Poppins' }"
+  nzWidth="600px" (nzOnCancel)="CancleRemark()" (nzOnOk)="sendforverification()" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="SpinningRejection">
+      <div nz-row class="my-box" style="padding: 5px">
+        <div>
+          <span style="font-size: 12px; color: red">WARNING Once the application is sent for Verification You wont be
+            able to edit your details.</span>
+        </div>
+        <div nz-col nzSpan="10">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon style="display: block">Upload Application Form PDF</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required" *ngIf="applnform">
+              <button nz-button style="padding: 0px 10px; font-size: 12px" (click)="Applicationform.click()">
+                Select File
+                <input #Applicationform name="APPLICATION_FORM" [(ngModel)]="data.APPLICATION_FORM" type="file"
+                  (change)="onFileApplicationform($event)" style="display: none" required />
+              </button>
+            </nz-form-control>
+
+            <div *ngIf="data.APPLICATION_FORM != null" style="
+                overflow: hidden;
+                font-size: 13px;
+                display: block;
+                width: 100%;
+                color: #1890ff;
+              ">
+              {{ data.APPLICATION_FORM }} &nbsp;&nbsp;&nbsp;
+              <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+                style="cursor: pointer; color: #1890ff"
+                (click)="applnformshow(data.APPLICATION_FORM)"></span>&nbsp;&nbsp;&nbsp;
+              <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                nz-tooltip style="cursor: pointer; color: red" (click)="clearapplnform()"></span>
+            </div>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'PDFview'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div *ngIf="view == 1" style="height: 600px; overflow: auto">
+      <iframe [src]="getS(data.APPLICATION_FORM)" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>

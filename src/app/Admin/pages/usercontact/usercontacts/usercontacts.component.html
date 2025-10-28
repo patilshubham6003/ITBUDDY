@@ -1,0 +1,226 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-row nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6">
+    <b>
+      <div class="formname">{{ formTitle }}</div></b
+    >
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="18"
+    nzLg="18"
+    nzXl="18"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <button
+          nz-button
+          [nzType]="isFilterApplied ? 'primary' : 'default'"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="searchText1"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            id="searchBtn"
+            nzType="primary"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item style="margin-top: 1px; width: 113%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="date"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 45px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '1000px', y: '360px' }"
+      style="white-space: inherit"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th
+            nzWidth="350px"
+            [nzColumnKey]="'EMPLOYEE_NAME'"
+            [nzSortFn]="true"
+            nzAlign="center"
+          >
+            <b>Employee Name</b>
+          </th>
+          <th
+            nzWidth="310px"
+            [nzColumnKey]="'EMAIL_ID'"
+            [nzSortFn]="true"
+            nzAlign="center"
+          >
+            <b>Email Id</b>
+          </th>
+          <th
+            nzWidth="150px"
+            [nzColumnKey]="'MOBILE_NO'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Mobile No.</b>
+          </th>
+          <th
+            nzWidth="150px"
+            [nzColumnKey]="'CREATED_MODIFIED_DATE'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Date</b>
+          </th>
+          <th
+            nzWidth="300px"
+            [nzColumnKey]="'SUBJECT'"
+            [nzSortFn]="true"
+            nzAlign="center"
+          >
+            <b>Subject</b>
+          </th>
+          <th
+            nzWidth="350px"
+            [nzColumnKey]="'MESSAGE'"
+            [nzSortFn]="true"
+            nzAlign="center"
+          >
+            <b>Message</b>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td>{{ data.EMPLOYEE_NAME }}</td>
+          <td>{{ data.EMAIL_ID }}</td>
+          <td nzAlign="center">{{ data.MOBILE_NO }}</td>
+          <td nzAlign="center">
+            {{ data.CREATED_MODIFIED_DATE | date : "dd MMM yyyy" }}
+          </td>
+
+          <td>
+            <span
+              *ngIf="data.SUBJECT.length >= 35"
+              nz-popover
+              nzPopoverTitle="Subject"
+              [nzPopoverContent]="data.SUBJECT"
+              nzPopoverPlacement="topLeft"
+            >
+              {{ data.SUBJECT | slice : 0 : 35
+              }}{{ data.SUBJECT.length > 35 ? "..." : "" }}</span
+            >
+
+            <span *ngIf="data.SUBJECT.length < 35">
+              {{ data.SUBJECT }}
+            </span>
+          </td>
+          <td>
+            <span
+              *ngIf="data.MESSAGE.length >= 40"
+              nz-popover
+              nzPopoverTitle="Message"
+              [nzPopoverContent]="data.MESSAGE"
+              nzPopoverPlacement="topLeft"
+            >
+              {{ data.MESSAGE | slice : 0 : 40
+              }}{{ data.MESSAGE.length > 40 ? "..." : "" }}</span
+            >
+            <span *ngIf="data.MESSAGE.length < 40">
+              {{ data.MESSAGE }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

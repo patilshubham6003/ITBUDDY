@@ -1,0 +1,1418 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24"
+    style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <div nz-row>
+        <div nzSpan="12">
+          <nz-form-item style="margin-right: 0px">
+            <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+              (click)="showFilter()">
+              <i nz-icon nzType="filter"></i>
+            </button>
+          </nz-form-item>
+        </div>
+        <div nzSpan="12">
+          <nz-form-item style="margin-right: 0px;padding-right: 0px;">
+            <button nz-button nzType="primary" (click)="AddnewList()" nzJustify="end">
+              + Initiate Monthly Process
+            </button>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<nz-spin [nzSpinning]="isSpinningTrue">
+  <div nz-row>
+    <div nz-col nzSpan="24">
+      <div class="filter {{ filterClass }}">
+        <div class="filter-box">
+          <form nz-form>
+            <div nz-row>
+              <div nz-col nzSpan="7">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+                  <nz-form-control nzErrorTip="Please Select Month">
+                    <nz-range-picker name="month" nzMode="month" [(ngModel)]="Monthrange"
+                      nzPlaceholder="Please select Month" nzFormat="MMM/yyyy"
+                      (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="9">
+                <nz-form-item class="chsaaa">
+                  <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                  <nz-form-control>
+                    <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2"
+                      nzPlaceHolder="Please Select Residence Type " name="Residence Type" nzMode="multiple"
+                      [(ngModel)]="RESIDENCE_TYPE_IDD">
+                      <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="7" style="display: flex; gap: 10px; margin-top: 31px">
+                <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons" (click)="applyFilter()">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="default" class="flexicons" (click)="clearFilter()">
+                  <i nz-icon nzType="close"></i>Clear filter
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div *ngFor="let data of dataList; let n = index" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+      style="margin-bottom: 10px; padding: 10px 0px;">
+      <div nz-row style="
+          background-color: #fafafa7a;
+          position: relative;
+          width: 100%;
+          cursor: pointer;
+          padding: 10px;
+          border: 1px solid #efefef;
+          border-radius: 10px;
+        ">
+        <div nz-col nzSpan="24">
+          <div nz-row style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            ">
+            <div class="mainnam">
+              MONTHLY PROCESS FOR {{ data.RESIDENCE_TYPE_NAME }}
+            </div>
+            <div class="subnamm" style="display: flex; justify-content: flex-end; font-weight: 600">
+              <span *ngIf="data.MONTH == 1" style="text-transform: uppercase">January</span>
+              <span *ngIf="data.MONTH == 2" style="text-transform: uppercase">February</span>
+              <span *ngIf="data.MONTH == 3" style="text-transform: uppercase">March</span>
+              <span *ngIf="data.MONTH == 4" style="text-transform: uppercase">April</span>
+              <span *ngIf="data.MONTH == 5" style="text-transform: uppercase">May</span>
+              <span *ngIf="data.MONTH == 6" style="text-transform: uppercase">June</span>
+              <span *ngIf="data.MONTH == 7" style="text-transform: uppercase">July</span>
+              <span *ngIf="data.MONTH == 8" style="text-transform: uppercase">August</span>
+              <span *ngIf="data.MONTH == 9" style="text-transform: uppercase">September</span>
+              <span *ngIf="data.MONTH == 10" style="text-transform: uppercase">October</span>
+              <span *ngIf="data.MONTH == 11" style="text-transform: uppercase">November</span>
+              <span *ngIf="data.MONTH == 12" style="text-transform: uppercase">December</span>
+              &nbsp;
+              {{ data.YEAR }}
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="24" style="padding: 10px 0px 0px 0px;text-align: center">
+          <div nz-row>
+            <div class="my-box11" *ngIf="data.NEW_STEP_NO == 0" nz-col nzSpan="24" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                gap: 10px;
+              ">
+              <div style="text-align: center" style="font-weight: 600">
+                Applications Summary
+              </div>
+
+              <div nz-row style="justify-content: center">
+                <div nz-col nzSpan="4" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['APPLICATIONS']['TOTAL'] == 0"
+                      role="button" (click)="appClickData(data,'ALL')">Received <span *ngIf="
+                        data['APPLICATIONS'] != undefined &&
+                        data['APPLICATIONS']['TOTAL'] != undefined &&
+                        data['APPLICATIONS']['TOTAL'] != null
+                      ">{{ data["APPLICATIONS"]["TOTAL"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="4" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['PENDING'] == 0"
+                      (click)="appClickData(data,'P')">Pending <span *ngIf="
+                        data['APPLICATIONS'] != undefined &&
+                        data['APPLICATIONS']['PENDING'] != undefined &&
+                        data['APPLICATIONS']['PENDING'] != null
+                      ">{{ data["APPLICATIONS"]["PENDING"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="4" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['APPROVED'] == 0"
+                      (click)="appClickData(data,'P')">Approved <span *ngIf="
+                        data['APPLICATIONS'] != undefined &&
+                        data['APPLICATIONS']['APPROVED'] != undefined &&
+                        data['APPLICATIONS']['APPROVED'] != null
+                      ">{{ data["APPLICATIONS"]["APPROVED"] }}</span></button>
+                  </div>
+                </div>
+                <div nz-col nzSpan="4" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['REJECTED'] == 0"
+                      (click)="appClickData(data,'R')">Rejected <span *ngIf="
+                        data['APPLICATIONS'] != undefined &&
+                        data['APPLICATIONS']['REJECTED'] != undefined &&
+                        data['APPLICATIONS']['REJECTED'] != null
+                      ">{{ data["APPLICATIONS"]["REJECTED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-box11" *ngIf="data.NEW_STEP_NO == 1" nz-col nzSpan="24" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+              ">
+              <div style="font-weight: 600">Quarters Summary</div>
+
+              <div nz-row style="justify-content: center">
+                <div nz-col nzSpan="5" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['FLATCOUNT']['TOTAL_COUNT'] == 0"
+                      (click)="FlatClickData(data,'ALL')">Total Quarters <span *ngIf="
+                      data['FLATCOUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_COUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_COUNT'] != null
+                    ">{{ data["FLATCOUNT"]["TOTAL_COUNT"] }}</span></button>
+                  </div>
+                </div>
+                <div nz-col nzSpan="5" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['FLATCOUNT']['TOTAL_AVAILABLE'] == 0"
+                      (click)="FlatClickData(data,'A')">Vacant Quarters <span *ngIf="
+                      data['FLATCOUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_AVAILABLE'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_AVAILABLE'] != null
+                    ">{{ data["FLATCOUNT"]["TOTAL_AVAILABLE"] }}</span></button>
+                  </div>
+                </div>
+                <div nz-col nzSpan="5" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['FLATCOUNT']['TOTAL_BOOKED'] == 0"
+                      (click)="FlatClickData(data,'B')">Occupied Quarters <span *ngIf="
+                      data['FLATCOUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_BOOKED'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_BOOKED'] != null
+                    ">{{ data["FLATCOUNT"]["TOTAL_BOOKED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-box11" *ngIf="data.NEW_STEP_NO == 2" nz-col nzSpan="23" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                gap: 10px;
+              ">
+              <div style="text-align: center" style="font-weight: 600">
+                Objection's on Draft Seniority Order
+              </div>
+
+              <div nz-row style="justify-content: center">
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button"
+                      [disabled]="dataList!=undefined && data['OBJECTION']['TOTAL'] == 0"
+                      (click)="objectionshow(data, 'ALL')">Received <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['TOTAL'] != undefined &&
+                      data['OBJECTION']['TOTAL'] != null">{{ data["OBJECTION"]["TOTAL"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28 " [disabled]="dataList!=undefined && data['OBJECTION']['PENDING'] == 0"
+                      (click)="objectionshow(data, 'P')" role="button">Pending <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['PENDING'] != undefined &&
+                      data['OBJECTION']['PENDING'] != null">{{ data["OBJECTION"]["PENDING"] }}</span></button>
+
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['OBJECTION']['APPROVED'] == 0"
+                      (click)="objectionshow(data, 'A')" role="button">Approved <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['APPROVED'] != undefined &&
+                      data['OBJECTION']['APPROVED'] != null">{{ data["OBJECTION"]["APPROVED"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['OBJECTION']['REJECTED'] == 0"
+                      (click)="objectionshow(data, 'R')" role="button">Rejected <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['REJECTED'] != undefined &&
+                      data['OBJECTION']['REJECTED'] != null">{{ data["OBJECTION"]["REJECTED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="my-box11" *ngIf="data.NEW_STEP_NO == 4" nz-col nzSpan="24" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 10px;
+                gap: 10px;">
+              <div style="text-align: center" style="font-weight: 600">
+                Objection's On Draft Allotment Order
+              </div>
+
+              <div nz-row style="justify-content: center">
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['ALLOTMENT']['TOTAL'] == 0"
+                      (click)="objectionshowForAllotement(data, 'ALL', n)" role="button">Received <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['TOTAL'] != undefined &&
+                      data['ALLOTMENT']['TOTAL'] != null">{{ data["ALLOTMENT"]["TOTAL"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['ALLOTMENT']['PENDING'] == 0"
+                      (click)="objectionshowForAllotement(data, 'P', n)" role="button">Pending
+                      <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['PENDING'] != undefined &&
+                      data['ALLOTMENT']['PENDING'] != null">{{ data["ALLOTMENT"]["PENDING"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['ALLOTMENT']['APPROVED'] == 0"
+                      (click)="objectionshowForAllotement(data, 'A', n)" role="button">Approved
+                      <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['APPROVED'] != undefined &&
+                      data['ALLOTMENT']['APPROVED'] != null">{{ data["ALLOTMENT"]["APPROVED"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" [disabled]="dataList!=undefined && data['ALLOTMENT']['REJECTED'] == 0"
+                      (click)="objectionshowForAllotement(data, 'R', n)" role="button">Rejected
+                      <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['REJECTED'] != undefined &&
+                      data['ALLOTMENT']['REJECTED'] != null">{{ data["ALLOTMENT"]["REJECTED"] }}
+                      </span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="my-box11" nz-col nzSpan="24" *ngIf="data.NEW_STEP_NO == 5" style="
+              border: 1px solid #efefef;
+              justify-content: center;
+              align-items: center;
+              padding: 10px;
+              gap: 10px;
+            ">
+              <div style="text-align: center" style="font-weight: 600">
+                MIS Summary
+              </div>
+
+              <div nz-row>
+                <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="padding: 10px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="Openmis(data,'TA')"
+                      [disabled]="dataList!=undefined && data['MISCOUNT']['ALLOTED'] == 0">
+                      Total Allocation
+                      <span *ngIf="
+                        data['MISCOUNT'] != undefined &&
+                        data['MISCOUNT']['ALLOTED'] != undefined &&
+                        data['MISCOUNT']['ALLOTED'] != null
+                      ">
+                        {{ data["MISCOUNT"]["ALLOTED"] }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="padding: 10px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="Openmis(data,'TRA')"
+                      [disabled]="dataList!=undefined && data['MISCOUNT']['PENDING_ACCEPTANCE'] == 0">
+                      Pending Acceptance
+                      <span *ngIf="
+                        data['MISCOUNT'] != undefined &&
+                        data['MISCOUNT']['PENDING_ACCEPTANCE'] != undefined &&
+                        data['MISCOUNT']['PENDING_ACCEPTANCE'] != null
+                      ">
+                        {{ data["MISCOUNT"]["PENDING_ACCEPTANCE"] }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="padding: 10px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="Openmis(data,'MAIN_TPEA')"
+                      [disabled]="dataList!=undefined && data['MISCOUNT']['RECIVED_ACCEPTANCE'] == 0">
+                      Received Acceptance
+                      <span *ngIf="
+                        data['MISCOUNT'] != undefined &&
+                        data['MISCOUNT']['RECIVED_ACCEPTANCE'] !=
+                          undefined &&
+                        data['MISCOUNT']['RECIVED_ACCEPTANCE'] != null
+                      ">
+                        {{ data["MISCOUNT"]["RECIVED_ACCEPTANCE"] }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="padding: 10px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="Openmis(data,'APR')"
+                      [disabled]="dataList!=undefined && data['MISCOUNT']['REJECTED_ACCEPTANCE'] == 0">
+                      Non-Acceptance
+                      <span *ngIf="
+                        data['MISCOUNT'] != undefined &&
+                        data['MISCOUNT']['REJECTED_ACCEPTANCE'] !=
+                          undefined &&
+                        data['MISCOUNT']['REJECTED_ACCEPTANCE'] != null
+                      ">
+                        {{ data["MISCOUNT"]["REJECTED_ACCEPTANCE"] }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="padding: 10px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="Openmis(data,'APA')"
+                      [disabled]="dataList!=undefined && data['MISCOUNT']['BARD_COUNT'] == 0">
+                      Barred
+                      <span *ngIf="
+                        data['MISCOUNT'] != undefined &&
+                        data['MISCOUNT']['BARD_COUNT'] != undefined &&
+                        data['MISCOUNT']['BARD_COUNT'] != null
+                      ">
+                        {{ data["MISCOUNT"]["BARD_COUNT"] }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="padding: 10px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="Openmis(data,'TREPHYA')"
+                      [disabled]="dataList!=undefined && data['MISCOUNT']['RENOVATION'] == 0">
+                      Renovation Request
+                      <span *ngIf="
+                        data['MISCOUNT'] != undefined &&
+                        data['MISCOUNT']['RENOVATION'] != undefined &&
+                        data['MISCOUNT']['RENOVATION'] != null
+                      ">
+                        {{ data["MISCOUNT"]["RENOVATION"] }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+          style="align-self: center; text-align: center; margin-top: 20px">
+          <nz-steps nzSize="small" [nzCurrent]="data.NEW_STEP_NO" [nzLabelPlacement]="'vertical'">
+            <nz-step [nzTitle]="titile1Template"> </nz-step>
+            <nz-step [nzTitle]="titile2Template"></nz-step>
+            <nz-step [nzTitle]="titile3Template"></nz-step>
+            <nz-step [nzTitle]="titile4Template"></nz-step>
+            <nz-step [nzTitle]="titile5Template"></nz-step>
+            <nz-step [nzTitle]="titile6Template"></nz-step>
+            <ng-template #titile1Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Draft Seniority
+              </span>
+              <p style="font-size: 8px" *ngIf="data.PUBLISH_DATE_TIME != undefined">
+                {{
+                data.PUBLISH_DATE_TIME | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </ng-template>
+
+            <ng-template #titile2Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Vacancy Notice
+              </span>
+              <p style="font-size: 9px" *ngIf="data.VACANCY_DATE_TIME != undefined">
+                {{
+                data["VACANCY_DATE_TIME"] | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </ng-template>
+
+            <ng-template #titile3Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Final Seniority
+              </span>
+              <span>
+                <p style="font-size: 9px" *ngIf="data.FINAL_SEN_PUBLISH_DATE_TIME != undefined">
+                  {{
+                  data["FINAL_SEN_PUBLISH_DATE_TIME"] | date : "dd/MM/yyyy HH:mm"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+
+            <ng-template #titile4Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Draft Allotment
+              </span>
+              <p style="font-size: 9px" *ngIf="data.DRAFT_ALLOTMENT_PUBLISH_DATE != undefined">
+                {{
+                data["DRAFT_ALLOTMENT_PUBLISH_DATE"] | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </ng-template>
+
+            <ng-template #titile5Template>
+              <span style="font-size: 10px; font-weight: bold">
+                Final Allotment
+              </span>
+              <p style="font-size: 9px" *ngIf="data.FINAL_ALLOTMENT_PUBLISH_DATE != undefined">
+                {{
+                data["FINAL_ALLOTMENT_PUBLISH_DATE"] | date : "dd/MM/yyyy HH:mm"
+                }}
+              </p>
+            </ng-template>
+
+            <ng-template #titile6Template>
+              <span style="font-size: 10px; font-weight: bold"> MIS </span>
+            </ng-template>
+          </nz-steps>
+        </div>
+
+        <div nz-col nzSpan="24" style="align-self: center; margin-top: 0px">
+          <button nz-button nzType="primary" (click)="Continuestatusdraft(data)"
+            *ngIf="data.TEMP_STEP_NO == 0 && data.NEW_STEP_NO == 0" style="
+              color: white !important;
+              font-size: 12px;
+              margin-top: 6px;
+              margin-right: 10px;
+            " [disabled]="data['APPLICATIONS']['PENDING'] > 0">
+            Generate Draft Seniority Order
+          </button>
+          <button nz-button nzType="primary" (click)="Continuestatusdraft(data)" *ngIf="
+          (data.TEMP_STEP_NO == 1 || data.TEMP_STEP_NO == 2) &&
+          data.NEW_STEP_NO == 0 &&
+          data.OBJ_END_DATE_TIME == null &&
+          data.OBJ_START_DATE_TIME == null
+        " style="
+          color: white !important;
+          font-size: 12px;
+          margin-top: 6px;
+          margin-right: 10px;
+        ">
+            Continue Draft Seniority Order
+          </button>
+          <button nz-button nzType="default" (click)="showmobfile1(data.DRAFT_FILE_URL)" *ngIf="
+              data.TEMP_STEP_NO >= 2 &&
+              data.NEW_STEP_NO > 0 &&
+              data.DRAFT_FILE_URL != null &&
+              data.DRAFT_FILE_URL != undefined &&
+              data.DRAFT_FILE_URL != ''
+            " style="font-size: 12px; margin-top: 6px; margin-right: 10px">
+            <span nz-icon nzType="eye" nzTheme="outline"></span> Draft Seniority
+            Order
+          </button>
+          <button nz-button nzType="primary" *ngIf="data.NEW_STEP_NO == 1" (click)="viewVacantFlatsList(data)" style="
+          color: white !important;
+          font-size: 12px;
+          margin-top: 6px;
+          margin-right: 10px;
+        ">
+            Generate Vacancy Notice
+          </button>
+          <button nz-button nzType="default" (click)="OpenVacantNotice(data)" *ngIf="data.NEW_STEP_NO > 1"
+            style="font-size: 12px; margin-top: 6px; margin-right: 10px">
+            <span nz-icon nzType="eye" nzTheme="outline"></span> Vacancy Notice
+          </button>
+          <button nz-button nzType="primary" (click)="Continuestatusfinal(data)" *ngIf="
+              data.TEMP_STEP_NO >= 4 &&
+              data.TEMP_STEP_NO <= 8 &&
+              data.NEW_STEP_NO == 2 &&
+              data.OBJ_END_DATE_TIME != null &&
+              data.OBJ_START_DATE_TIME != null
+            " style="
+              color: white !important;
+              font-size: 12px;
+              margin-top: 6px;
+              margin-right: 10px;
+            " [disabled]="
+              Timmerendloop[n] > 0 ||
+              Timmerendloop[n] != '' ||
+              data['OBJECTION']['PENDING'] > 0
+            ">
+            <span *ngIf="Timmerendloop[n] <= 0">Continue Final Seniority Order</span>
+            <span style="font-size: 12px; width: 306px" *ngIf="
+                Timmerstartloop[n] <= 0 &&
+                (Timmerendloop[n] > 0 || Timmerendloop[n] != '')
+              ">Objections Ends In:&nbsp;{{ Timmerendloop[n] }}</span>
+          </button>
+
+          <button nz-button nzType="primary" (click)="
+              Continuestatus1(data, Timmerendloop[n], Timmerstartloop[n])
+            " *ngIf="data.TEMP_STEP_NO == 3 && data.NEW_STEP_NO == 2" style="
+              color: white !important;
+              font-size: 12px;
+              margin-top: 6px;
+              margin-right: 10px;
+            ">
+            <span style="color: white !important"
+              *ngIf="Timmerendloop[n] == 0 && data['OBJECTION']['PENDING'] == 0">Generate Final Seniority Order</span>
+            <span style="color: white !important"
+              *ngIf="Timmerendloop[n] == 0 && data['OBJECTION']['PENDING'] > 0">Generate Final Seniority Order</span>
+            <span style="font-size: 12px; color: white !important; width: 306px" *ngIf="
+                Timmerstartloop[n] <= 0 &&
+                (Timmerendloop[n] > 0 || Timmerendloop[n] != '')
+              ">Objections Ends In:&nbsp;{{ Timmerendloop[n] }}</span>
+            <span style="font-size: 12px; color: white !important; width: 306px" *ngIf="
+                (Timmerstartloop[n] > 0 || Timmerstartloop[n] != '') &&
+                (Timmerendloop[n] > 0 || Timmerendloop[n] != '')
+              ">Objections Starts In:&nbsp;{{ Timmerstartloop[n] }}</span>
+          </button>
+
+          <button nz-button nzType="default" (click)="openFinalList(data)"
+            *ngIf="data.TEMP_STEP_NO == 8 && data.NEW_STEP_NO > 2"
+            style="font-size: 12px; margin-top: 6px; margin-right: 10px">
+            <span nz-icon nzType="eye" nzTheme="outline"></span> Final Seniority
+            Order
+          </button>
+
+          <button nz-button nzType="primary" style="
+              color: white !important;
+              font-size: 12px;
+              margin-top: 6px;
+              margin-right: 10px;
+            " (click)="viewPreference(data)" [nzLoading]="isSpinning" *ngIf="data.NEW_STEP_NO == 3" [disabled]="
+              TimmerstartloopForPreference[n] > 0 ||
+              (TimmerstartloopForPreference[n] != '' && data.NEW_STEP_NO < 4)
+            ">
+            <span style="font-size: 12px" *ngIf="TimmerstartloopForPreference[n] <= 0">
+              Generate Draft Allotment
+              Order</span>
+            <span style="font-size: 12px; width: 306px" *ngIf="
+                TimmerstartloopForPreference[n] > 0 ||
+                TimmerstartloopForPreference[n] != ''
+              ">
+              Perferences Ends In :
+              {{ TimmerstartloopForPreference[n] }}</span>
+          </button>
+
+          <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+            (click)="viewDraftAllotment(data.PREFERENCE_MASTER_ID)" *ngIf="data.NEW_STEP_NO > 3">
+            <span nz-icon nzType="eye" nzTheme="outline"></span> Draft Allotment
+            Order
+          </button>
+
+          <!-- Final Allotment -->
+          <button nz-button nzType="primary" style="color: white !important; font-size: 12px; margin-right: 10px"
+            (click)="ContinueSteps(data)" [disabled]="
+              TimmerendloopForFinal[n] > 0 || TimmerendloopForFinal[n] != ''
+            " style="color: white !important; font-size: 12px; margin-top: 6px" *ngIf="
+              TimmerstartloopForFinal[n] <= 0 &&
+              data.NEW_STEP_NO == 4 &&
+              data.ALL_START_DATETIME != null &&
+              data.ALL_END_DATETIME != null
+            ">
+            <span *ngIf="TimmerendloopForFinal[n] <= 0">Generate Final Allotment Order</span>
+            <span style="font-size: 12px; width: 306px" *ngIf="
+                TimmerstartloopForFinal[n] <= 0 &&
+                (TimmerendloopForFinal[n] > 0 ||
+                  TimmerendloopForFinal[n] != '') &&
+                data.NEW_STEP_NO == 4
+              ">
+              Objection Ends In: {{ TimmerendloopForFinal[n] }}</span>
+          </button>
+          <button nz-button nzType="default" style="font-size: 12px; margin-top: 6px; margin-right: 10px" *ngIf="
+              data.NEW_STEP_NO > 4 &&
+              data.ALL_START_DATETIME != null &&
+              data.ALL_END_DATETIME != null
+            " (click)="viewFinalFile(data.DRAFT_ALLOTMENT_ID)">
+            <span nz-icon nzType="eye" nzTheme="outline"></span> Final Allotment
+            Order
+          </button>
+
+          <button nz-button nzType="primary" style="font-size: 12px; margin-top: 6px; margin-right: 10px"
+            *ngIf="data.NEW_STEP_NO == 5" (click)="Openmis(data,'TA')">
+            View MIS
+          </button>
+        </div>
+
+        <div nz-col nzSpan="24" *ngIf="uptrue[n]" style="margin-top: 20px">
+          <div nz-row style="text-align: center">
+            <div nz-col nzSpan="8" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 0px;
+                gap: 10px;
+              ">
+              <div style="text-align: center" style="font-weight: 600">
+                Applications Summary
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="appClickData(data,'ALL')"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['TOTAL'] == 0">Received <span *ngIf="
+                      data['APPLICATIONS'] != undefined &&
+                      data['APPLICATIONS']['TOTAL'] != undefined &&
+                      data['APPLICATIONS']['TOTAL'] != null
+                    ">{{ data["APPLICATIONS"]["TOTAL"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="appClickData(data,'P')"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['PENDING'] == 0">Pending <span *ngIf="
+                      data['APPLICATIONS'] != undefined &&
+                      data['APPLICATIONS']['PENDING'] != undefined &&
+                      data['APPLICATIONS']['PENDING'] != null
+                    ">{{ data["APPLICATIONS"]["PENDING"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="appClickData(data,'A')"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['APPROVED'] == 0">Approved <span *ngIf="
+                      data['APPLICATIONS'] != undefined &&
+                      data['APPLICATIONS']['APPROVED'] != undefined &&
+                      data['APPLICATIONS']['APPROVED'] != null
+                    ">{{ data["APPLICATIONS"]["APPROVED"] }}</span></button>
+                  </div>
+                </div>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="appClickData(data,'R')"
+                      [disabled]="dataList!=undefined && data['APPLICATIONS']['REJECTED'] == 0">Rejected <span *ngIf="
+                      data['APPLICATIONS'] != undefined &&
+                      data['APPLICATIONS']['REJECTED'] != undefined &&
+                      data['APPLICATIONS']['REJECTED'] != null
+                    ">{{ data["APPLICATIONS"]["REJECTED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div nz-col nzSpan="8" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 0px;
+              ">
+              <div style="font-weight: 600">Quarters Summary</div>
+              <div nz-row>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="FlatClickData(data,'ALL')"
+                      [disabled]="dataList!=undefined && data['FLATCOUNT']['TOTAL_COUNT'] == 0">Total Quarters <span
+                        *ngIf="
+                      data['FLATCOUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_COUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_COUNT'] != null
+                    ">{{ data["FLATCOUNT"]["TOTAL_COUNT"] }}</span></button>
+                  </div>
+                </div>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="FlatClickData(data,'A')"
+                      [disabled]="dataList!=undefined && data['FLATCOUNT']['TOTAL_AVAILABLE'] == 0">Vacant Quarters
+                      <span *ngIf="
+                      data['FLATCOUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_AVAILABLE'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_AVAILABLE'] != null
+                    ">{{ data["FLATCOUNT"]["TOTAL_AVAILABLE"] }}</span></button>
+                  </div>
+                </div>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="FlatClickData(data,'B')"
+                      [disabled]="dataList!=undefined && data['FLATCOUNT']['TOTAL_BOOKED'] == 0">Occupied Quarters <span
+                        *ngIf="
+                      data['FLATCOUNT'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_BOOKED'] != undefined &&
+                      data['FLATCOUNT']['TOTAL_BOOKED'] != null
+                    ">{{ data["FLATCOUNT"]["TOTAL_BOOKED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div nz-col nzSpan="8" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 0px;
+                gap: 10px;
+              ">
+              <div style="text-align: center" style="font-weight: 600">
+                Objection's on Draft Seniority Order
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" role="button" (click)="objectionshow(data, 'ALL')"
+                      [disabled]="dataList!=undefined && data['OBJECTION']['TOTAL'] == 0">Received <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['TOTAL'] != undefined &&
+                      data['OBJECTION']['TOTAL'] != null
+                    ">{{ data["OBJECTION"]["TOTAL"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshow(data, 'P')" role="button"
+                      [disabled]="dataList!=undefined && data['OBJECTION']['PENDING'] == 0">Pending <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['PENDING'] != undefined &&
+                      data['OBJECTION']['PENDING'] != null
+                    ">{{ data["OBJECTION"]["PENDING"] }}</span></button>
+
+                  </div>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshow(data, 'A')" role="button"
+                      [disabled]="dataList!=undefined && data['OBJECTION']['APPROVED'] == 0">Approved <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['APPROVED'] != undefined &&
+                      data['OBJECTION']['APPROVED'] != null
+                    ">{{ data["OBJECTION"]["APPROVED"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="12" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshow(data, 'R')" role="button"
+                      [disabled]="dataList!=undefined && data['OBJECTION']['REJECTED'] == 0">Rejected <span *ngIf="
+                      data['OBJECTION'] != undefined &&
+                      data['OBJECTION']['REJECTED'] != undefined &&
+                      data['OBJECTION']['REJECTED'] != null
+                    ">{{ data["OBJECTION"]["REJECTED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div nz-col nzSpan="24" style="
+                border: 1px solid #efefef;
+                justify-content: center;
+                align-items: center;
+                padding: 0px;
+                gap: 10px;
+              ">
+              <div style="text-align: center" style="font-weight: 600">
+                Objection's On Draft Allotment Order
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshowForAllotement(data, 'ALL', n)" role="button"
+                      [disabled]="dataList!=undefined && data['ALLOTMENT']['TOTAL'] == 0">Received <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['TOTAL'] != undefined &&
+                      data['ALLOTMENT']['TOTAL'] != null
+                    ">{{ data["ALLOTMENT"]["TOTAL"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshowForAllotement(data, 'P', n)" role="button"
+                      [disabled]="dataList!=undefined && data['ALLOTMENT']['PENDING'] == 0">Pending
+                      <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['PENDING'] != undefined &&
+                      data['ALLOTMENT']['PENDING'] != null
+                    ">{{ data["ALLOTMENT"]["PENDING"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshowForAllotement(data, 'A', n)" role="button"
+                      [disabled]="dataList!=undefined && data['ALLOTMENT']['APPROVED'] == 0">Approved
+                      <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['APPROVED'] != undefined &&
+                      data['ALLOTMENT']['APPROVED'] != null
+                    ">{{ data["ALLOTMENT"]["APPROVED"] }}</span></button>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="6" style="padding: 5px">
+                  <div style="text-align: center">
+                    <button class="button-28" (click)="objectionshowForAllotement(data, 'R', n)" role="button"
+                      [disabled]="dataList!=undefined && data['ALLOTMENT']['REJECTED'] == 0">Rejected
+                      <span *ngIf="
+                      data['ALLOTMENT'] != undefined &&
+                      data['ALLOTMENT']['REJECTED'] != undefined &&
+                      data['ALLOTMENT']['REJECTED'] != null
+                    ">{{ data["ALLOTMENT"]["REJECTED"] }}</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="24" style="text-align: center; align-self: center; z-index: 1000;height: 5px;">
+          <button nz-button nzType="default" nzShape="circle" (click)="updown(n)" *ngIf="!uptrue[n]" style="
+              top: 5px;
+              height: 21px !important;
+              min-width: 23px !important;
+              width: 23px;
+              padding: 0px 4px !important;
+            ">
+            <span nz-icon nzType="down"></span>
+          </button>
+          <button nz-button nzType="default" nzShape="circle" (click)="updown1(n)" *ngIf="uptrue[n]" style="
+              top: 5px;
+              height: 21px !important;
+              min-width: 23px !important;
+              width: 23px;
+              padding: 0px 4px !important;
+            ">
+            <span nz-icon nzType="up"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="!isSpinning && dataList.length <= 0">
+      <div class="col-3"></div>
+
+      <div class="col-18" style="margin-top: 100px">
+        <div class="card" style="width: 100%">
+          <div class="card-body" style="padding: 25px">
+            <div class="row">
+              <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                <p class="card-text subnamm" style="font-size: 26px">
+                  Data Not Found
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3"></div>
+    </div>
+  </div>
+</nz-spin>
+
+<nz-modal [(nzVisible)]="isVisible" [nzWidth]="380" nzMaskClosable="false" nzClosable="true"
+  nzTitle="Create New Monthly Process" (nzOnCancel)="handleCancel()" [nzFooter]="contextofrules1"
+  [nzBodyStyle]="{'padding': '10px' }">
+  <ng-container *nzModalContent>
+    <form>
+      <nz-spin [nzSpinning]="isSpinning">
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker nzMode="month" nzFormat="MMM" [(ngModel)]="modaldata.MONTH"
+                  name="month"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Select Year</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker style="width: 100%;" nzMode="year" nzFormat="yyyy" [(ngModel)]="modaldata.YEAR"
+                  name="year"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Residence Type</nz-form-label>
+              <nz-form-control>
+                <nz-select [nzMaxTagCount]="3" nzShowSearch nzAllowClear nzPlaceHolder="Select Residence Type"
+                  name="Residence Type" [(ngModel)]="modaldata.RESIDENCE_TYPE_ID" required>
+                  <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-spin>
+    </form>
+  </ng-container>
+
+  <ng-template #contextofrules1>
+    <button nz-button nzType="default" [nzLoading]="isSpinning11" class="btn btn-secondary" (click)="handleCancel()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning11" class="btn btn-primary"
+      style="background-color: #006699" (click)="addNewList()">
+      Create
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="AddSenioritydrawer">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px','padding-top': '0px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'90%'" [nzVisible]="AddSenioritydrawer"
+    [nzTitle]="AddSeniorityTitle" (nzOnClose)="AddSeniorityClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-seniorityaddsmasters [drawerClose]="closeCallAddSeniority" [drawerVisible]="AddSenioritydrawer"
+        [data]="Senioritydataobj" [isdraft]="isdraft" [currentStage]="currentstage"
+        [tempdataid]="tempdataid"></app-seniorityaddsmasters>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="Objectionsdrawervisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100"
+    [nzVisible]="Objectionsdrawervisible" [nzTitle]="Objectiondrawertitle" (nzOnClose)="ObjectiondrawerClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-objectionsmasterresolve [drawerClose]="closeCallObjectionsdrawer" [drawerVisible]="Objectionsdrawervisible"
+        [data]="Objectionsdrawerdata" [stringdata]="StringObjectionfilter"></app-objectionsmasterresolve>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="ShowDrawerVisible" [nzWidth]="400" [nzFooter]="Contextofcast" nzCentered="true"
+  nzMaskClosable="false" nzTitle="View Cast Category" (nzOnCancel)="ShowDrawerVisibleCancel()" nzClosable="true">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24" style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+        ">
+        <button nz-button nzType="primary" [nzLoading]="isSpinning112" class="btn btn-primary"
+          style="background-color: #006699" (click)="ShowDraftDrawer()">
+          Draft Order
+        </button>
+        <button nz-button nzType="primary" [nzLoading]="isSpinning12" *ngIf="showfinalbutton" class="btn btn-primary"
+          style="background-color: #006699" (click)="ShowFinalDrawer()">
+          Final Order
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #Contextofcast> </ng-template>
+</nz-modal>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100" [nzVisible]="SeniorityVisibleShow"
+  [nzTitle]="SeniorityTitleShow" (nzOnClose)="CloseDrawer()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <div nz-row *ngIf="ShowTable">
+      <div nz-col nzSpan="24">
+        <div nz-row style="display: flex; justify-content: flex-end">
+          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+            <div>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-radio-group [(ngModel)]="CastCategory" name="General" (ngModelChange)="changecastGeneral($event)">
+                    <label nz-radio nzValue="GN">All</label>
+                    <label nz-radio nzValue="SC">SC</label>
+                    <label nz-radio nzValue="ST">ST</label>
+                  </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12"
+            style="display: flex; justify-content: flex-end">
+            <form nz-form [nzLayout]="'inline'">
+              <nz-form-item *ngIf="CastCategory == 'GN'">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                  <input type="text" (keyup)="searchrecords()" name="search2" nz-input placeholder="Search Records"
+                    [(ngModel)]="searchfilteredrecords" />
+                </nz-input-group>
+
+                <ng-template #suffixIconButton>
+                  <button nz-button nzType="primary" (click)="searchrecords()" nzSearch>
+                    <i nz-icon nzType="search"></i>
+                  </button>
+                </ng-template>
+              </nz-form-item>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable122 nzShowSizeChanger
+          [nzLoading]="loadingRecords" [nzFrontPagination]="false" [nzData]="showgeneratedlist" [nzSize]="'small'"
+          [nzScroll]="{ x: '1800px', y: '60vh' }">
+          <thead>
+            <tr>
+              <th nzLeft style="text-align: center; font-weight: 500; width: 160px">
+                Employee Name
+              </th>
+              <th nzLeft style="text-align: center; font-weight: 500; width: 160px">
+                New Seniority No.
+              </th>
+              <th nzLeft style="text-align: center; font-weight: 500; width: 160px">
+                Old Seniority No.
+              </th>
+
+              <th style="text-align: center; font-weight: 500; width: 150px">
+                Designation
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Mobile Number
+              </th>
+              <th *ngIf="showcolums" style="text-align: center; font-weight: 500; width: 110px">
+                Priority Date
+              </th>
+              <th *ngIf="showcolums" style="text-align: center; font-weight: 500; width: 110px">
+                Grade Pay Level
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Joining Date
+              </th>
+              <th *ngIf="showcolums" style="text-align: center; font-weight: 500; width: 110px">
+                Retirement Date
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Date Of Birth
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Cast
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 240px">
+                Remark
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of ResidenceMasterTable122.data; let i = index">
+              <td nzLeft style="white-space: pre-line; text-align: center">
+                {{ data["EMPLOYEE_NAME"] }}
+              </td>
+              <td nzLeft style="white-space: pre-line; text-align: center">
+                {{ data["CURRENT_SEQ"] }}
+              </td>
+              <td nzLeft style="white-space: pre-line; text-align: center">
+                {{ data["OLD_SEQ"] }}
+              </td>
+
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["EMPLOYEE_DESIGNATION"] }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["MOBILE_NO"] }}
+              </td>
+              <td *ngIf="showcolums" style="white-space: pre-line; text-align: center">
+                {{ data["JOINING_DATE"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td *ngIf="showcolums" style="white-space: pre-line; text-align: center">
+                {{ data["GRADE_PAY_LEVEL"] }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["DATE_OF_JOINING"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td *ngIf="showcolums" style="white-space: pre-line; text-align: center">
+                {{ data["RETIREMENT_DATE"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["DOB"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["CAST"] }}
+              </td>
+              <td style="white-space: pre-line; text-align: left">
+                {{ data["REMARK"] }}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+
+    <div nz-row *ngIf="!ShowTable">
+      <div nz-col nzSpan="24">
+        <div nz-row style="display: flex; justify-content: flex-end">
+          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12">
+            <div>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-radio-group [(ngModel)]="CastCategory" name="General" (ngModelChange)="changecastGeneral($event)">
+                    <label nz-radio nzValue="GN">All</label>
+                    <label nz-radio nzValue="SC">SC</label>
+                    <label nz-radio nzValue="ST">ST</label>
+                  </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="12"
+            style="display: flex; justify-content: flex-end">
+            <form nz-form [nzLayout]="'inline'">
+              <nz-form-item *ngIf="CastCategory == 'GN'">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                  <input type="text" (keyup)="searchrecords()" name="search2" nz-input placeholder="Search Records"
+                    [(ngModel)]="searchfilteredrecords" />
+                </nz-input-group>
+
+                <ng-template #suffixIconButton>
+                  <button nz-button nzType="primary" (click)="searchrecords()" nzSearch>
+                    <i nz-icon nzType="search"></i>
+                  </button>
+                </ng-template>
+              </nz-form-item>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable11 nzShowSizeChanger
+          [nzLoading]="loadingRecords" [nzFrontPagination]="false" [nzData]="showgeneratedlist" [nzSize]="'small'"
+          [nzScroll]="{ x: '1800px', y: '60vh' }">
+          <thead>
+            <tr>
+              <th nzLeft style="text-align: center; font-weight: 500; width: 160px">
+                Employee Name
+              </th>
+              <th nzLeft style="text-align: center; font-weight: 500; width: 160px">
+                New Seniority No.
+              </th>
+              <th nzLeft style="text-align: center; font-weight: 500; width: 160px">
+                Draft Seniority No.
+              </th>
+
+              <th style="text-align: center; font-weight: 500; width: 150px">
+                Designation
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 150px">
+                Mobile Number
+              </th>
+              <th *ngIf="showcolums" style="text-align: center; font-weight: 500; width: 110px">
+                Priority Date
+              </th>
+              <th *ngIf="showcolums" style="text-align: center; font-weight: 500; width: 110px">
+                Grade Pay Level
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Joining Date
+              </th>
+              <th *ngIf="showcolums" style="text-align: center; font-weight: 500; width: 110px">
+                Retirement Date
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Date Of Birth
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 110px">
+                Cast
+              </th>
+              <th style="text-align: center; font-weight: 500; width: 240px">
+                Remark
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of ResidenceMasterTable11.data; let i = index">
+              <td nzLeft style="white-space: pre-line; text-align: center">
+                {{ data["EMPLOYEE_NAME"] }}
+              </td>
+              <td nzLeft style="white-space: pre-line; text-align: center">
+                {{ data["CURRENT_SEQ_NO"] }}
+              </td>
+              <td nzLeft style="white-space: pre-line; text-align: center">
+                {{ data["OLD_SEQ_NO"] }}
+              </td>
+
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["DESIGNATION"] }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["MOBILE_NO"] }}
+              </td>
+              <td *ngIf="showcolums" style="white-space: pre-line; text-align: center">
+                {{ data["DATE_OF_PRIORITY"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td *ngIf="showcolums" style="white-space: pre-line; text-align: center">
+                {{ data["GRADE_PAY_LEVEL"] }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["JOINING_DATE"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td *ngIf="showcolums" style="white-space: pre-line; text-align: center">
+                {{ data["RETIREMENT_DATE"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["DOB"] | date : "dd/MM/yyyy" }}
+              </td>
+              <td style="white-space: pre-line; text-align: center">
+                {{ data["CAST"] }}
+              </td>
+              <td style="white-space: pre-line; text-align: left">
+                {{ data["REMARK"] }}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<div *ngIf="viewVacantFlatsVisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '13px','padding-right': '15px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100"
+    [nzVisible]="viewVacantFlatsVisible" [nzTitle]="VacantFlatsdrawertitle" (nzOnClose)="VacantFlatsdrawerClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-view-vacant-flat-list-new-flow [drawerClose]="closeCallVacantFlatssdrawer"
+        [drawerVisible]="viewVacantFlatsVisible" [data]="VacantFlatsdrawerdata"></app-view-vacant-flat-list-new-flow>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerVisibleForPreference">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1200"
+    [nzVisible]="drawerVisibleForPreference" [nzTitle]="drafttitleaforallotment"
+    (nzOnClose)="drawerCloseForPreference()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-showinspectorflatpref [drawerClose]="closeCallbackForPreference" [drawerVisible]="drawerVisibleForPreference"
+        [flatPreferenceDataList]="flatPreferenceDataList" [employeefilterid]="employeefilterid"
+        [data]="drawerDataForPreference" [pageSize]="flatPreferancepageSize" [pageIndex]="flatPreferancepageIndex"
+        [flatPreferenceList]="flatPreferenceList" [isPrevious]="isPrevious"
+        [VacantFlatScenarityId]="VacantFlatScenarityId"></app-showinspectorflatpref>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="DrawerVisiblechek">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1200" [nzVisible]="DrawerVisiblechek"
+    [nzTitle]="finalallotmenttitle" (nzOnClose)="DrawerVisibleClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-finalallotmentaddedmaster [drawerClose]="closeCallDrawerVisible" [scenioritycardId]="scenioritycardId"
+        [drawerVisible]="DrawerVisiblechek" [data]="DrawerVisibleData"></app-finalallotmentaddedmaster>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="ObjectionsdrawervisibleAllot">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100"
+    [nzVisible]="ObjectionsdrawervisibleAllot" [nzTitle]="ObjectiondrawertitleAllot"
+    (nzOnClose)="ObjectiondrawerCloseAllot()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-finalallotmentobjectionlist [drawerClose]="closeCallObjectionsdrawerAllot"
+        [drawerVisible]="ObjectionsdrawervisibleAllot" [data]="ObjectionsdrawerdataAllot"
+        [stringdata]="StringObjectionfilterAllot"></app-finalallotmentobjectionlist>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="openmissshow">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px',
+      'padding-top': '10px',
+      'padding-left': '10px',
+      'padding-right': '10px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="'100%'" [nzVisible]="openmissshow"
+    [nzTitle]="mistitle" (nzOnClose)="closemisdrawer()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-mistotaldrawer [drawerClose]="closeCallObjectionsdrawerAllot" [searchdataMAIN]="searchdataMAIN"
+        [searchdata]="searchdata" [misdata]="misdata" [mislistdata]="mislistdata"></app-mistotaldrawer>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="Appdrawervisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100" [nzVisible]="Appdrawervisible"
+    [nzTitle]="Appdrawertitle" (nzOnClose)="AplicationdrawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-applicationcountclick [drawerClose]="closeCallApplicationdrawer" [drawerVisible]="Appdrawervisible"
+        [data]="Appdrawerdata" [RecApp]="RecApp" [MonthApp]="MonthApp" [APPROVAL_STATUS]="StringAppfilter"
+        [yearApp]="yearApp"></app-applicationcountclick>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="Flatdrawervisible">
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100" [nzVisible]="Flatdrawervisible"
+    [nzTitle]="Flatdrawertitle" (nzOnClose)="FlatdrawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-flatcountclick [drawerClose]="closeCallFlatdrawer" [drawerVisible]="Flatdrawervisible" [RecApp]="RecFlat"
+        [MonthApp]="MonthFlat" [APPROVAL_STATUS]="StringFlatfilter" [yearApp]="yearFlat"></app-flatcountclick>
+    </ng-container>
+  </nz-drawer>
+</div>

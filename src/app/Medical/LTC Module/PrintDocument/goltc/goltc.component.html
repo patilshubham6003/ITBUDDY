@@ -1,0 +1,565 @@
+<!-- <button nz-button nzType="primary" (click)="open()">Open</button> -->
+
+<!-- <nz-drawer [nzClosable]="true" nzTitle="Go Ltc Final" [nzVisible]="visible" nzPlacement="right" [nzWidth]="1000"
+    (nzOnClose)="close()">
+    <ng-container *nzDrawerContent style="padding-right: 0;"> -->
+
+<!-- <div style="text-align: right; margin-bottom: 5px">
+            <button nz-button nzType="default" [useExistingCss]="true" printSectionId="GoLtcFinal"
+                ngxPrint>Print</button>
+
+            <button nz-button nzType="primary" [nzLoading]="pdfDownload" (click)="openpdf()" style="margin-left: 20px">
+                Download </button>
+        </div> -->
+        <div *ngIf="LTC4data != undefined">
+          <form>
+            <nz-spin [nzSpinning]="loadingRecords">
+              <div nz-row [nzGutter]="10">
+                <div nz-col nzSpan="8">
+                  <div class="my-box">
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>File Number</nz-form-label>
+                        <nz-form-control nzHasFeedback>
+                          <nz-select
+                            nzShowSearch
+                            name="filenumber"
+                            [(ngModel)]="LTC4data.FILE_ID"
+                            nzPlaceHolder="Select File Number"
+                          >
+                            <nz-option
+                              *ngFor="let option of fileList"
+                              [nzLabel]="option.FILE_NUMBER"
+                              [nzValue]="option.ID"
+                            >
+                            </nz-option>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+        
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Remark</nz-form-label>
+        
+                        <nz-input-group>
+                          <input
+                            type="text"
+                            autocomplete="off"
+                            name="Remark"
+                            nz-input
+                            placeholder="Enter Remark"
+                            [(ngModel)]="LTC4data.CALCULATION_REMARK"
+                          />
+                        </nz-input-group>
+                      </nz-form-item>
+                    </div>
+                  </div>
+                </div>
+        
+                <div nz-col nzSpan="16">
+                  <div class="my-box">
+                    <div
+                      *ngIf="LTC4data != undefined"
+                      id="GoLtcFinal"
+                      style="padding-left: 7%; margin-right: 2%; font-size: 13px"
+                    >
+                      <!-- <div style="display: flex">
+                  <div>
+                    <p><b>Date : 21/10/2020</b></p>
+                  </div>
+                  <div style="margin-left: 400px">
+                    <p>
+                      <b>GO/LTC/FINAL/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/2020</b>
+                    </p>
+                  </div>
+                </div> -->
+                      <div nz-row [nzGutter]="10">
+                        <div nz-col nzSpan="12">
+                          <p><b>Date : </b></p>
+                        </div>
+                        <div style="text-align: right" nz-col nzSpan="12">
+                          <p>
+                            <b>{{ LTC4data.FILE_NUMBER }}</b>
+                          </p>
+                        </div>
+                      </div>
+                      <p>
+                        <b
+                          >Mr/Ms. {{ LTC4data.EMPLOYEE_NAME }},
+                          {{ LTC4data.DESIGNATION }}&nbsp;</b
+                        >
+                        had submitted leave travel concession bill for the block year
+                        <b>{{ LTC4data.BLOCK_YEAR }}</b> extended for journey to
+                        <span *ngFor="let data of formdata7; let k = index"
+                          >{{ data.ARRIVAL_TO }}
+                          <span *ngIf="formdata7.length > 1">,</span> </span
+                        >. The date of commencement of onward journey i.e. from
+                        <span *ngFor="let data of formdata7; let k = index">
+                          {{ data.DEPARTURE_FROM }}
+                          <span *ngIf="formdata7.length > 1">,</span></span
+                        >
+                        is
+                        <span *ngFor="let data of formdata7; let k = index"
+                          >{{ data.FROM_DATETIME | date : "dd-MM-yyyy" }}
+                          <span *ngIf="formdata7.length > 1">,</span></span
+                        >. He has claimed the LTC for
+                        <span *ngFor="let data of relationdata1; let k = index">
+                          {{ data.RELATIONSHIP }} ({{ data.AGE }} year) </span
+                        >. Further as per the certificate given by the officer; her
+                        spouse is not employed in government service.
+                      </p>
+        
+                      <p>
+                        Officer is allowed to travel by train AC tier-II. The amount of
+                        LTC claimed by the officer and allowable as per LTC rules is
+                        calculated as per the below table.
+                      </p>
+        
+                      <table style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th style="width: 200px">From</th>
+                            <th style="width: 200px">To</th>
+                            <th style="width: 200px">Mode</th>
+                            <th>No of Fare</th>
+                            <th style="width: 200px">Claimed amount with taxes in</th>
+                            <th>LTC 80 fare allowed</th>
+                            <th>Taxes allowed in Rs</th>
+                            <th style="width: 200px">
+                              Amount Granted with taxes in Rs
+                            </th>
+                            <th style="width: 200px">Remarks</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of formdata7; let k = index">
+                            <td style="text-align: center">
+                              {{ data.DEPARTURE_FROM }}
+                            </td>
+                            <td style="text-align: center">{{ data.ARRIVAL_TO }}</td>
+                            <td style="text-align: center">
+                              {{ data.TRAVEL_MODE_NAME }}
+                            </td>
+                            <td style="text-align: center">{{ data.NO_OF_FAIRS }}</td>
+                            <td style="text-align: center">{{ data.FAIR_PAID }}</td>
+                            <td></td>
+        
+                            <td></td>
+                            <td style="text-align: center">{{ data.FAIR_PAID }}</td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 1"
+                              rowspan="4"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 2"
+                              rowspan="5"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 3"
+                              rowspan="6"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 4"
+                              rowspan="7"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 5"
+                              rowspan="8"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 6"
+                              rowspan="9"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                          </tr>
+        
+                          <tr>
+                            <td colspan="7" style="text-align: right">Total</td>
+                            <td style="text-align: center">{{ amount }}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="7" style="text-align: right">
+                              Advance LTC Claimed
+                            </td>
+                            <td style="text-align: center">
+                              {{ LTC4data.AMOUNT_OF_ADVANCE }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="7" style="text-align: right">Net Amount</td>
+                            <td style="text-align: center">{{ namount }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br />
+                      <p>
+                        The officer has submitted the tickets and boarding passes which
+                        are found to be in order. The necessary procedural requirements
+                        as per LTC rules have been fulfilled by the offficer. Hence the
+                        net bill amount which is to be issued comes to ₹
+                        {{ namount }} /-
+                      </p>
+                      <p>
+                        As per the service book record, block year
+                        <b>{{ LTC4data.BLOCK_YEAR }}</b> extended is available for the
+                        officer. The detail of previous LTC claimed by official as
+                        under.
+                      </p>
+        
+                      <table style="width: 80%; margin-left: 67px">
+                        <tbody>
+                          <tr>
+                            <td style="width: 50%">Declared Hometown</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 50%">Previous LTC Claimed</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 50%">Date of Journey</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 50%">Destination</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br />
+                      <p style="line-height: 0">
+                        Necessary entries have been made in the service book.
+                      </p>
+                      <div style="display: flex">
+                        <div>
+                          <p>Entry made by :</p>
+                        </div>
+                        <div style="margin-left: 36%">Checked by :</div>
+                      </div>
+                      <p style="margin-bottom: 5%">
+                        A file is put up for kind perusal and signature please.
+                      </p>
+                      <p style="line-height: 0.5">Income Tax Officer</p>
+                      <p style="line-height: 0.5">Gazetted Pay Bill-II</p>
+                      <p style="margin-bottom: 4%; line-height: 0.5">Mumbai</p>
+                      <br />
+        
+                      <p style="line-height: 0.5">Addl. Commissioner of Income Tax</p>
+                      <p style="line-height: 0.5">HQ Personnel</p>
+                      <p style="margin-bottom: 4%; line-height: 0.5">Mumbai</p>
+                      <br />
+        
+                      <p style="line-height: 0.5">Commissioner of Income Tax</p>
+                      <p style="line-height: 0.5">Admin and TPS</p>
+                      <p style="line-height: 0">Mumbai</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-spin>
+          </form>
+        </div>
+        <div class="footer">
+          <button
+            type="button"
+            nz-button
+            (click)="close()"
+            class="ant-btn"
+            style="margin-right: 8px"
+          >
+            <span>Cancel</span>
+          </button>
+          <button
+            type="button"
+            class="ant-btn ant-btn-primary"
+            nz-button
+            (click)="save()"
+            [nzLoading]="loadingRecords"
+          >
+            <span>Download or Print</span>
+          </button>
+        </div>
+        <!-- </ng-container> -->
+        
+        <!-- </nz-drawer> -->
+        
+        <nz-modal
+          [nzWidth]="getwidth()"
+          [(nzVisible)]="printOrderModalVisible"
+          nzMaskClosable="false"
+          nzClosable="false"
+          [nzContent]="printOrderModalContent"
+          [nzTitle]="'Sanction Order'"
+          (nzOnCancel)="printOrderModalCancel()"
+          [nzFooter]="printOrderModalFooter"
+        >
+          <ng-template #printOrderModalContent>
+            <nz-spin [nzSpinning]="loadingRecords">
+              <div style="height: 450px; overflow: auto">
+                <div id="GoLtcFinal">
+                  <div
+                    style="
+                      width: 800px;
+                      padding: 3px;
+                      margin-left: 50px;
+                      font-family: Arial, Helvetica, sans-serif;
+                    "
+                  >
+                    <div *ngIf="LTC4data != undefined">
+                      <!-- <div style="display: flex">
+                        <div>
+                          <p><b>Date : 21/10/2020</b></p>
+                        </div>
+                        <div style="margin-left: 400px">
+                          <p>
+                            <b>GO/LTC/FINAL/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/2020</b>
+                          </p>
+                        </div>
+                      </div> -->
+        
+                      <div nz-row [nzGutter]="10">
+                        <div nz-col nzSpan="12">
+                          <p><b>Date : </b></p>
+                        </div>
+                        <div style="text-align: right" nz-col nzSpan="12">
+                          <p>
+                            <b>{{ LTC4data.FILE_NUMBER }}</b>
+                          </p>
+                        </div>
+                      </div>
+                      <p>
+                        <b
+                          >Mr/Ms. {{ LTC4data.EMPLOYEE_NAME }},
+                          {{ LTC4data.DESIGNATION }}&nbsp;</b
+                        >
+                        had submitted leave travel concession bill for the block year
+                        <b>{{ LTC4data.BLOCK_YEAR }}</b> extended for journey to
+                        <span *ngFor="let data of formdata7; let k = index"
+                          >{{ data.ARRIVAL_TO }}
+                          <span *ngIf="formdata7.length > 1">,</span> </span
+                        >. The date of commencement of onward journey i.e. from
+                        <span *ngFor="let data of formdata7; let k = index"
+                          >{{ data.DEPARTURE_FROM }}
+                          <span *ngIf="formdata7.length > 1">,</span></span
+                        >
+                        is
+                        <span *ngFor="let data of formdata7; let k = index"
+                          >{{ data.FROM_DATETIME | date : "dd-MM-yyyy" }} </span
+                        >. He has claimed the LTC for
+                        <span *ngFor="let data of relationdata1; let k = index">
+                          {{ data.RELATIONSHIP }} ({{ data.AGE }} year)
+                          <span *ngIf="formdata7.length > 1">,</span></span
+                        >. Further as per the certificate given by the officer; her
+                        spouse is not employed in government service.
+                      </p>
+        
+                      <p>
+                        Officer is allowed to travel by train AC tier-II. The amount of
+                        LTC claimed by the officer and allowable as per LTC rules is
+                        calculated as per the below table.
+                      </p>
+        
+                      <table style="width: 100%">
+                        <thead>
+                          <tr>
+                            <th style="width: 200px">From</th>
+                            <th style="width: 200px">To</th>
+                            <th style="width: 200px">Mode</th>
+                            <th>No of Fare</th>
+                            <th style="width: 200px">Claimed amount with taxes in</th>
+                            <th>LTC 80 fare allowed</th>
+                            <th>Taxes allowed in Rs</th>
+                            <th style="width: 200px">
+                              Amount Granted with taxes in Rs
+                            </th>
+                            <th style="width: 200px">Remarks</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of formdata7; let k = index">
+                            <td style="text-align: center">
+                              {{ data.DEPARTURE_FROM }}
+                            </td>
+                            <td style="text-align: center">{{ data.ARRIVAL_TO }}</td>
+                            <td style="text-align: center">
+                              {{ data.TRAVEL_MODE_NAME }}
+                            </td>
+                            <td style="text-align: center">{{ data.NO_OF_FAIRS }}</td>
+                            <td style="text-align: center">{{ data.FAIR_PAID }}</td>
+                            <td></td>
+        
+                            <td></td>
+                            <td style="text-align: center">{{ data.FAIR_PAID }}</td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 1"
+                              rowspan="4"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 2"
+                              rowspan="5"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 3"
+                              rowspan="6"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 4"
+                              rowspan="7"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 5"
+                              rowspan="8"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                            <td
+                              style="text-align: center; word-break: break-all"
+                              *ngIf="k == 0 && formdata7.length == 6"
+                              rowspan="9"
+                            >
+                              {{ LTC4data.CALCULATION_REMARK }}
+                            </td>
+                          </tr>
+        
+                          <tr>
+                            <td colspan="7" style="text-align: right">Total</td>
+                            <td style="text-align: center">{{ amount }}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="7" style="text-align: right">
+                              Advance LTC Claimed
+                            </td>
+                            <td style="text-align: center">
+                              {{ LTC4data.AMOUNT_OF_ADVANCE }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="7" style="text-align: right">Net Amount</td>
+                            <td style="text-align: center">{{ namount }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br />
+                      <p>
+                        The officer has submitted the tickets and boarding passes which
+                        are found to be in order. The necessary procedural requirements
+                        as per LTC rules have been fulfilled by the offficer. Hence the
+                        net bill amount which is to be issued comes to ₹
+                        {{ namount }} /-
+                      </p>
+                      <p>
+                        As per the service book record, block year
+                        <b>{{ LTC4data.BLOCK_YEAR }}</b> extended is available for the
+                        officer. The detail of previous LTC claimed by official as
+                        under.
+                      </p>
+        
+                      <table style="width: 80%; margin-left: 67px">
+                        <tbody>
+                          <tr>
+                            <td style="width: 50%">Declared Hometown</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 50%">Previous LTC Claimed</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 50%">Date of Journey</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                          <tr>
+                            <td style="width: 50%">Destination</td>
+                            <td style="width: 50%"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <br />
+                      <p style="line-height: 0">
+                        Necessary entries have been made in the service book.
+                      </p>
+                      <div style="display: flex">
+                        <div>
+                          <p>Entry made by :</p>
+                        </div>
+                        <div style="margin-left: 36%">Checked by :</div>
+                      </div>
+                      <p style="margin-bottom: 5%">
+                        A file is put up for kind perusal and signature please.
+                      </p>
+                      <p style="line-height: 0.5">Income Tax Officer</p>
+                      <p style="line-height: 0.5">Gazetted Pay Bill-II</p>
+                      <p style="margin-bottom: 4%; line-height: 0.5">Mumbai</p>
+                      <br />
+        
+                      <p style="line-height: 0.5">Addl. Commissioner of Income Tax</p>
+                      <p style="line-height: 0.5">HQ Personnel</p>
+                      <p style="margin-bottom: 4%; line-height: 0.5">Mumbai</p>
+                      <br />
+        
+                      <p style="line-height: 0.5">Commissioner of Income Tax</p>
+                      <p style="line-height: 0.5">Admin and TPS</p>
+                      <p style="line-height: 0">Mumbai</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nz-spin>
+          </ng-template>
+          <ng-template #printOrderModalFooter>
+            <button nz-button nzType="default" (click)="printOrderModalCancel()">
+              Close
+            </button>
+        
+            <button
+              nz-button
+              nzType="default"
+              [useExistingCss]="true"
+              printSectionId="GoLtcFinal"
+              ngxPrint
+            >
+              Print
+            </button>
+        
+            <button
+              nz-button
+              nzType="primary"
+              [nzLoading]="pdfDownload"
+              (click)="openpdf()"
+            >
+              Download
+            </button>
+          </ng-template>
+        </nz-modal>
+        

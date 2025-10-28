@@ -1,0 +1,222 @@
+<div class="my-boxxxxxxx">
+  <form nz-form>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="15">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Name</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Name" type="text" [(ngModel)]="data.NAME" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="9">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Employee Code</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Employee Code" type="text" (keypress)="omit($event)"
+                [(ngModel)]="data.EMPLOYEE_CODE" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="15">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Email ID</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Nameee" type="text" [(ngModel)]="data.EMAIL_ID" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="9">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Mobile Number</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Mobile Number" type="number" [(ngModel)]="data.MOBILE_NO" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="15">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Designation</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Designation" type="text" [(ngModel)]="data.DESIGNATION" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="9">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Grade pay</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Grade pay" type="number" [(ngModel)]="data.GRASS_GRADE_PAY" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+      </div>
+
+
+      <div nz-row>
+        <div nz-col nzSpan="15">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Grade Pay Level</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="Pan Card" type="text" [(ngModel)]="data.GRADE_PAY_LEVEL" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="9">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Basic Pay</nz-form-label>
+            <nz-form-control>
+              <input nz-input name="gradepay" type="text" [(ngModel)]="data.GRADE_PAY" [disabled]="true" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>ID Proof</nz-form-label>
+            <nz-form-control>
+              <img *ngIf="fileExt=='png' || fileExt=='jpeg' ||fileExt=='jpg'" nz-image width="200px" height="200px"
+                nzSrc="{{ imgurl }}idProof/{{ data.ID_PROOF }}" alt="" />
+              <button *ngIf="fileExt=='pdf'" nz-button [nzType]="'primary'" (click)="showmobfile()"><span>View ID
+                  Proof</span></button>
+
+            </nz-form-control>
+          </nz-form-item>
+          <nz-modal nzWidth="1000px" [(nzVisible)]="isVisible" nzTitle="View ID Proof" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()">
+            <ng-container *nzModalContent>
+              <!-- <iframe [src]="sanitizedLink" style="width: 1150px; height: 600px"
+                frameborder="0">
+
+                </iframe> -->
+              <object [data]="sanitizedLink" type="application/pdf" width="100%" height="592px;"> </object>
+            </ng-container>
+          </nz-modal>
+        </div>
+      </div>
+
+      <!-- <div nz-row style="padding-top: 10px;" *ngIf="data['APPROVAL_STATUS']=='P' && getseionedit=='T'">
+         
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-radio-group name="type" [(ngModel)]="data.APPROVAL_STATUS">
+                    <label nz-radio nzValue="A" (click)="editTfalse()">Approve</label>
+                    <label nz-radio nzValue="R" (click)="editTfalse()">Reject</label>
+                  </nz-radio-group>
+                
+                </nz-form-control
+            ></nz-form-item>
+          </div>
+          </div> -->
+      <div nz-row style="padding-top: 10px;"
+        *ngIf="data['APPROVAL_STATUS']=='P' && getseionedit=='T'|| getseionedit=='F'">
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-radio-group name="type" [(ngModel)]="data.APPROVAL_STATUS">
+                <label nz-radio nzValue="A" (click)="editTfalse()">Approve</label>
+                <label nz-radio nzValue="R" (click)="editTfalse()">Reject</label>
+              </nz-radio-group>
+
+            </nz-form-control></nz-form-item>
+        </div>
+      </div>
+      <!-- <div nz-row style="padding-top: 10px;" *ngIf="getseionedit=='F'">
+         
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-radio-group name="type" [(ngModel)]="data.APPROVAL_STATUS">
+                      <label nz-radio nzValue="A" (click)="editTfalse()">Approve</label>
+                      <label nz-radio nzValue="R" (click)="editTfalse()">Reject</label>
+                    </nz-radio-group>
+                  
+                  </nz-form-control
+              ></nz-form-item>
+            </div>
+            </div> -->
+      <div nz-row style="padding-top: 10px;"
+        *ngIf=" (data['APPROVAL_STATUS']=='A' || data['APPROVAL_STATUS']=='R') && getseionedit=='T'">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-radio-group name="type" [(ngModel)]="data.APPROVAL_STATUS">
+                <label nz-radio nzDisabled nzValue="A">Approve</label>
+                <label nz-radio nzDisabled nzValue="R">Reject</label>
+              </nz-radio-group>
+
+            </nz-form-control></nz-form-item>
+        </div>
+      </div>
+      <div nz-row *ngIf="data.APPROVAL_STATUS=='R' && getseionedit=='T'">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rejection Remark">
+              <nz-form-label nzRequired nzNoColon>Rejection Remark</nz-form-label>
+              <textarea nz-input name="rejectstatus" disabled type="text" [(ngModel)]="data.REJECT_REMARK"
+                placeholder="Enter Rejection Remark...">
+                </textarea>
+            </nz-form-control></nz-form-item>
+        </div>
+
+        <!-- <div nz-col nzSpan="11">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-form-label nzRequired nzNoColon>Date</nz-form-label>
+           
+                    <nz-date-picker style="width: 100%;" disabled name="dateremark" [(ngModel)]="data.ACTION_DATETIME"></nz-date-picker>
+    
+                </nz-form-control
+            ></nz-form-item>
+          </div> -->
+      </div>
+      <div nz-row *ngIf="data.APPROVAL_STATUS=='R' && getseionedit=='F'">
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rejection Remark">
+              <nz-form-label nzRequired nzNoColon>Rejection Remark</nz-form-label>
+              <textarea nz-input name="rejectstatus" type="text" [(ngModel)]="data.REJECT_REMARK"
+                placeholder="Enter Rejection Remark...">
+                </textarea>
+            </nz-form-control></nz-form-item>
+        </div>
+      </div>
+
+    </nz-spin>
+  </form>
+</div>
+<div class="footer">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+    (click)="save(false)">
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+        <a (click)="save(true)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning"
+    *ngIf="data.APPROVAL_STATUS=='R' && getseionedit!='T'" (click)="save(false)">
+    <span>Reject & close</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning"
+    *ngIf="data.APPROVAL_STATUS=='A' && getseionedit!='T'" (click)="save(false)">
+    <span>Approve & close</span>
+  </button>
+</div>

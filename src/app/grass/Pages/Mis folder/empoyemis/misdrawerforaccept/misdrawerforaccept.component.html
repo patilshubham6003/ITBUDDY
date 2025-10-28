@@ -1,0 +1,3657 @@
+<div class="header">
+  <button nz-button (click)="close()">
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+  </button>
+</div>
+<div nz-row nzSpan="24" style="padding: 0px">
+  <div nz-col nzSpan="4">
+    <nz-steps [nzCurrent]="stage" nzDirection="vertical" nzSize="small">
+      <nz-step [nzTitle]="Applicat" [nzDescription]="desctemp"> </nz-step>
+      <ng-template #desctemp>
+        <p style="font-size: 10px; margin-top: 8px" *ngIf="data != undefined">
+          {{ data.ACCEPTANCE_LETTER_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss" }}
+        </p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </ng-template>
+      <ng-template #Applicat>
+        <span style="font-size: 11px; font-weight: 600">Fill Acceptance Form</span>
+      </ng-template>
+      <nz-step [nzTitle]="Application" [nzDescription]="desctapplication">
+      </nz-step>
+      <ng-template #desctapplication>
+        <p style="font-size: 10px; margin-top: 8px" *ngIf="data != undefined">
+          {{ data.UPLOAD_SUBMITE_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss" }}
+        </p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </ng-template>
+      <ng-template #Application>
+        <span style="font-size: 11px; font-weight: 600">Preview & Submit</span>
+      </ng-template>
+    </nz-steps>
+  </div>
+
+  <div nz-col nzSpan="20" style="max-height: 80vh; overflow-y: auto; overflow-x: hidden">
+    <nz-card>
+      <form nz-form *ngIf="stage == 0">
+        <h6 style="text-align: center; font-size: 15px; margin-bottom: 2px">
+          Fill Acceptance Form
+        </h6>
+        <p style="text-align: center; margin-bottom: 0px; font-size: 13px">
+          Please provide your personal and official particulars and attach all
+          essential documents in PDF format to successfully complete the initial
+          stage of your application.
+        </p>
+
+        <div nz-row class="my-box" style="margin-top: 8px">
+          <div nz-col nzSpan="24">
+            <h6 style="font-size: 12px; font-weight: 500; margin-bottom: 3px">
+              Family Details
+            </h6>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Full Name</nz-form-label>
+              <nz-form-control>
+                <input nz-input name="demo1name" class="inputsize" maxlength="128" placeHolder="Enter Full Name"
+                  (keypress)="alphaOnly($event)" [(ngModel)]="familydata.NAME" maxlength="128" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Relationship</nz-form-label>
+              <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzSize="small" class="optiongroup"
+                  nzPlaceHolder="Please Select Relationship" name="Relationship" [(ngModel)]="familydata.RELATION">
+                  <nz-option nzValue="Mother" nzLabel="Mother" class="inputsize"></nz-option>
+                  <nz-option nzValue="Father" nzLabel="Father" class="inputsize"></nz-option>
+                  <nz-option nzValue="Brother" nzLabel="Brother" class="inputsize"></nz-option>
+                  <nz-option nzValue="Sister" nzLabel="Sister" class="inputsize"></nz-option>
+                  <nz-option nzValue="Grand-Father" nzLabel="Grand-Father" class="inputsize"></nz-option>
+                  <nz-option nzValue="Grand-Mother" nzLabel="Grand-Mother" class="inputsize"></nz-option>
+                  <nz-option nzValue="Wife" nzLabel="Wife" class="inputsize"></nz-option>
+                  <nz-option nzValue="Husband" nzLabel="Husband" class="inputsize"></nz-option>
+                  <nz-option nzValue="Daughter" nzLabel="Daughter" class="inputsize"></nz-option>
+                  <nz-option nzValue="Son" nzLabel="Son" class="inputsize"></nz-option>
+                  <nz-option nzValue="Father-In-Law" nzLabel="Father-In-Law" class="inputsize"></nz-option>
+                  <nz-option nzValue="Mother-In-Law" nzLabel="Mother-In-Law" class="inputsize"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Gender</nz-form-label>
+              <nz-form-control>
+                <nz-radio-group class="inputsize" nzSize="small" [(ngModel)]="familydata.GENDER" name="gender">
+                  <label nz-radio nzValue="Male" class="inputsize">Male</label>
+                  <label nz-radio nzValue="Female" class="inputsize">Female</label>
+                  <label nz-radio nzValue="Other" class="inputsize">Other</label>
+                </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-form-item style="padding-right: 10px">
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Date of Birth</nz-form-label>
+              <nz-date-picker [nzDefaultPickerValue]="date" name="DOB" [nzDisabledDate]="disabledDate"
+                [(ngModel)]="familydata.DOB" class="datesize" (ngModelChange)="calculateAgeemp()" nzFormat="dd/MM/yyyy"
+                style="width: 100%"></nz-date-picker>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Age</nz-form-label>
+              <nz-form-control>
+                <input nz-input name="agess" class="inputsize" required placeHolder="Enter Your Age" disabled
+                  (keypress)="omit($event)" [(ngModel)]="familydata.AGE" maxlength="3" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" style="margin-top: 3px">
+            <div class="row gx-3" style="margin-bottom: 10px">
+              <div style="text-align: right; align-self: center" *ngIf="!isotpSpinning">
+                <button *ngIf="familydata.ID != null" class="neww" nz-button (click)="savefamily()" type="button" style="
+                    font-size: 11px;
+                    padding: 0px 9px !important;
+                    border: none;
+                    height: 26px;
+                  " [nzLoading]="savfamload">
+                  Update Member
+                </button>
+                <button *ngIf="familydata.ID == null" class="neww" (click)="savefamily()" nz-button type="button" style="
+                    font-size: 11px;
+                    padding: 0px 9px !important;
+                    border: none;
+                    height: 26px;
+                  " [nzLoading]="savfamload">
+                  +&nbsp; Add Member
+                </button>
+              </div>
+              <div *ngIf="isotpSpinning" style="text-align: right; align-self: center">
+                <div>
+                  <div class="spinner-border spinner-border-sm text-success" role="status">
+                    <span class="visually-hidden">Loading</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12" style="margin-bottom: 5px">
+                <div class="overflow-hidden card table-nowrap table-card" style="border: none !important">
+                  <div class="table-responsive">
+                    <nz-table class="my-scroll no-wrap1" nzBordered #table [nzScroll]="{ y: '360px' }"
+                      [nzSize]="'small'" [nzData]="familydata1" [nzFrontPagination]="false"
+                      style="white-space: inherit; padding-top: 0px !important">
+                      <thead>
+                        <tr>
+                          <th nzWidth="70px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Action</b>
+                          </th>
+                          <th nzWidth="150px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Name</b>
+                          </th>
+                          <th nzWidth="80px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Gender</b>
+                          </th>
+                          <th nzWidth="90px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Relationship</b>
+                          </th>
+                          <th nzWidth="60px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Age</b>
+                          </th>
+                          <th nzWidth="80px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Birth Date</b>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of table.data; let i = index">
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                            ">
+                            <span nz-icon nzType="edit" (click)="edit(data)" nzTheme="twotone"></span>
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.NAME }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.GENDER }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.RELATION }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.AGE }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.DOB | date : "dd/MM/yyyy" }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </nz-table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-row class="my-box">
+          <div nz-col nzSpan="24">
+            <h6 style="font-size: 13px; font-weight: 500; margin-bottom: 0px">
+              Particulars of Surety
+            </h6>
+          </div>
+          <div nz-col nzSpan="8" *ngIf="data.SERVICE_TYPE == 'Temporary'">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Name of Surety
+              </nz-form-label>
+              <nz-form-control>
+                <input nz-input name="mosrity" class="inputsize" placeHolder="Enter Name of Surety "
+                  [(ngModel)]="suritydata.NAME_OF_SURETY" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="8" *ngIf="data.SERVICE_TYPE == 'Temporary'">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Designation</nz-form-label>
+              <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear nzSize="small" class="optiongroup"
+                  nzPlaceHolder="Please Select Designation" name="DESIGNATION"
+                  [(ngModel)]="suritydata.SURETY_DESIGNATION_ID" required
+                  (ngModelChange)="selectd(suritydata.SURETY_DESIGNATION)">
+                  <nz-option *ngFor="let desg of Designationtypes" [nzValue]="desg.ID" [nzLabel]="desg.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8" *ngIf="
+              suritydata.SURETY_DESIGNATION_ID == 56 &&
+              data.SERVICE_TYPE == 'Temporary'
+            ">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Designation
+              </nz-form-label>
+              <nz-form-control>
+                <input nz-input name="Designation" class="inputsize" placeHolder="Enter Designation "
+                  [(ngModel)]="suritydata.SURETY_DESIGNATION_OTHER" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8" *ngIf="data.SERVICE_TYPE == 'Temporary'">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Office Where Employed
+              </nz-form-label>
+              <nz-form-control>
+                <input nz-input name="ofwhemployed" class="inputsize" placeHolder="Enter Office where employed"
+                  [(ngModel)]="suritydata.OFFICE_WHERE_EMPLOYEED" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzNoColon>Special Pay</nz-form-label>
+              <nz-form-control>
+                <nz-input-group nzAddOnBefore="₹">
+                  <input nz-input maxlength="8" autocomplete="off" class="inputsize"
+                    [(ngModel)]="suritydata.SPECIAL_PAY" name="WATER_nbhCHARGES" (keypress)="onlynumdot($event)"
+                    type="text" placeHolder="Enter Special Pay" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzNoColon>C.C.A. Pay</nz-form-label>
+              <nz-form-control>
+                <nz-input-group nzAddOnBefore="₹">
+                  <input nz-input maxlength="8" autocomplete="off" class="inputsize" [(ngModel)]="suritydata.CCA"
+                    name="cccf" (keypress)="onlynumdot($event)" type="text" placeHolder="Enter C.C.A. Pay" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzNoColon>Deputation pay</nz-form-label>
+              <nz-form-control>
+                <nz-input-group nzAddOnBefore="₹">
+                  <input nz-input maxlength="8" autocomplete="off" class="inputsize"
+                    [(ngModel)]="suritydata.DEPUTATION_PAY" name="Deputationpay" (keypress)="onlynumdot($event)"
+                    type="text" placeHolder="Enter Deputation pay" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzNoColon>Other receipts defined in FR-C as emoluments
+              </nz-form-label>
+              <nz-form-control>
+                <nz-input-group nzAddOnBefore="₹">
+                  <input nz-input maxlength="8" autocomplete="off" class="inputsize"
+                    [(ngModel)]="suritydata.OTHER_RECEIPTS_EMOLUMENTS" name="otherelumunates"
+                    (keypress)="onlynumdot($event)" type="text" placeHolder="Enter Other receipts" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="22" style="margin-top: 0px">
+            <span class="inputsize">Is this allotment for appropriate type? (applicable only to Type
+              D & E)
+            </span>
+          </div>
+          <div nz-col nzSpan="2" style="margin-top: 0px">
+            <nz-switch nzCheckedChildren="Yes" nzUnCheckedChildren="No" nzSize="small" name="allotment"
+              [(ngModel)]="suritydata.IS_APPROPRIATE_TYPE"></nz-switch>
+          </div>
+
+          <div nz-col nzSpan="22" style="margin-top: 0px">
+            <span class="inputsize">In case of allotment under Next Below Rule, indicate if also
+              applied for appropriate Type
+            </span>
+          </div>
+          <div nz-col nzSpan="2" style="margin-top: 0px">
+            <nz-switch nzCheckedChildren="Yes" nzUnCheckedChildren="No" nzSize="small" name="appropriate"
+              [(ngModel)]="suritydata.IS_APPLIED_FOR_ANOTHER_TYPE"></nz-switch>
+          </div>
+        </div>
+      </form>
+      <form nz-form *ngIf="stage == 0" #houseddd="ngForm">
+        <div nz-row class="my-box">
+          <div nz-col nzSpan="24">
+            <h6 style="font-size: 13px; font-weight: 500; margin-bottom: 2px">
+              House Details
+            </h6>
+          </div>
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Locality</nz-form-label>
+              <nz-form-control>
+                <input nz-input name="localitry" class="inputsize" placeHolder="Enter Locality"
+                  [(ngModel)]="housedatass.LOCALITY" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>House No.</nz-form-label>
+              <nz-form-control>
+                <input nz-input name="hnoo" class="inputsize" placeHolder="Enter House No."
+                  [(ngModel)]="housedatass.HOUSE_NO" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize">Owned By</nz-form-label>
+              <nz-form-control>
+                <input nz-input name="owned" class="inputsize" placeHolder="Enter Owned By"
+                  (keypress)="alphaOnly($event)" [(ngModel)]="housedatass.OWNED_BY" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Monthly Rental Income</nz-form-label>
+              <nz-form-control>
+                <input nz-input name="mrincome" class="inputsize" required placeHolder="Enter Monthly Rental Income"
+                  maxlength="6" (keypress)="omit($event)" [(ngModel)]="housedatass.MONTHLY_RENTAL_INCOME" required />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="8">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Monthly Rental Income Proof</nz-form-label>
+              <nz-form-control *ngIf="Payslipshow">
+                <button nz-button style="font-size: 11px" [nzLoading]="insomeuploadcert" nzSize="small"
+                  (click)="Payslipdisplay.click()">
+                  Select File
+                  <input #Payslipdisplay class="inputsize" name="MONTHLY_RENTAL_INCOME_PROOF" type="file" accept=".pdf"
+                    (change)="onFileSelectedPayslip($event)" style="display: none" required />
+                </button>
+              </nz-form-control>
+
+              <div *ngIf="
+                  housedatass != undefined &&
+                  housedatass.MONTHLY_RENTAL_INCOME_PROOF != null
+                " style="
+                  overflow: hidden;
+                  font-size: 11px;
+                  display: block;
+                  width: 100%;
+                  color: #1890ff;
+                  padding-left: 10px;
+                ">
+                {{ housedatass.MONTHLY_RENTAL_INCOME_PROOF }} &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="viewpayslip(housedatass.MONTHLY_RENTAL_INCOME_PROOF)"></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red" (click)="
+                    clearpayslip(
+                      housedatass.MONTHLY_RENTAL_INCOME_PROOF,
+                      'monthlyRentalIncomeProof'
+                    )
+                  "></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar3">
+              <nz-progress [nzPercent]="percent3"></nz-progress>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" style="margin-top: 2px">
+            <div class="row gx-3" style="margin-bottom: 8px">
+              <div style="text-align: right; align-self: center" *ngIf="!isotpSpinning1">
+                <button *ngIf="housedatass.ID != null" class="neww" (click)="addData(true, houseddd)" type="button"
+                  style="
+                    font-size: 11px;
+                    padding: 0px 9px !important;
+                    border: none;
+                    height: 26px;
+                  ">
+                  Update
+                </button>
+                <button *ngIf="housedatass.ID == null" class="neww" (click)="addData(true, houseddd)" type="button"
+                  style="
+                    font-size: 11px;
+                    padding: 0px 9px !important;
+                    border: none;
+                    height: 26px;
+                  ">
+                  +&nbsp; Add
+                </button>
+              </div>
+              <div *ngIf="isotpSpinning1" style="text-align: right; align-self: center">
+                <div>
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12" style="margin-bottom: 5px">
+                <div class="overflow-hidden card table-nowrap table-card" style="border: none !important">
+                  <div class="table-responsive">
+                    <nz-table class="my-scroll no-wrap1" [nzFrontPagination]="false" nzBordered #htable
+                      [nzScroll]="{ y: '360px' }" [nzSize]="'small'" [nzData]="relationdata"
+                      style="white-space: inherit; padding-top: 0px !important">
+                      <thead>
+                        <tr>
+                          <th nzWidth="50px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Action</b>
+                          </th>
+                          <th nzWidth="130px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Locality</b>
+                          </th>
+                          <th nzWidth="70px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">House No.</b>
+                          </th>
+                          <th nzWidth="80px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Monthly Rental Income</b>
+                          </th>
+                          <th nzWidth="90px" nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 5px 10px;
+                              font-size: 12px;
+                            ">
+                            <b style="font-weight: 500">Owned By</b>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of htable.data; let n = index">
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                            ">
+                            <span nz-icon (click)="edit11(data, n)" nzType="edit" nzTheme="twotone"></span>
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.LOCALITY }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.HOUSE_NO }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.MONTHLY_RENTAL_INCOME }}
+                          </td>
+                          <td nzAlign="center" style="
+                              border: 1px solid #d2d2d2 !important;
+                              padding: 2px 10px;
+                              font-size: 12px;
+                            ">
+                            {{ data.OWNED_BY }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </nz-table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form *ngIf="stage == 1 || stage == 2" style="padding-bottom: 150px !important">
+        <h4 style="text-align: center; font-size: 15px">
+          Print Application Form
+        </h4>
+        <p style="text-align: center; margin-bottom: 10px; font-size: 13px">
+          Please review all the information displayed below for accuracy. Once
+          verified, you can proceed to print out the application form for the
+          next steps in the process.
+        </p>
+        <div nz-row style="
+            padding: 5px;
+            margin-left: 10px;
+            letter-spacing: 0.8;
+            line-height: 1.6;
+          " id="Prntmodal">
+          <div style="margin-left: 20px">
+            <div style="margin-left: 10px; font-size: 13px">
+              <div style="text-align: center; font-size: 16px">
+                <b>ACCEPTANCE OF GOVERNMENT ACCOMMODATION ALLOTTED BY INCOME TAX
+                  DEPARTMENT</b>
+              </div>
+              <br />
+              <div>To,</div>
+              <div>The Pr. Chief Commissioner of Income Tax,</div>
+              <div>Aayakar Bhavan, Mumbai.</div>
+              <br />
+              <div>Sir,</div>
+              <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I accept the accommodation
+                / quarter allotted to me and give the required particulars
+                below:-
+              </div>
+            </div>
+            <div nz-col nzSpan="24" style="padding: 10px">
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      text-align: center;
+                      border: 1px solid black;
+                      font-size: 13px;
+                    ">
+                    1
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      width: 35%;
+                      border: 1px solid black;
+                      font-size: 13px;
+                    ">
+                    Name (Use Block Letters)
+                  </td>
+                  <td style="
+                      width: 50px;
+                      text-align: center;
+                      font-size: 13px;
+                      border: 1px solid black;
+                      padding: 5px;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.EMPLOYEE_NAME | uppercase }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    " rowspan="3">
+                    2
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Designation
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.DESIGNATION }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Range / Ward / Circle / Office
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.OFFICE_NAME }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    D.D.O. to which attached
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.DDO_OF_THE_OFFICIAL }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    " rowspan="4">
+                    3
+                  </td>
+                  <td colspan="6" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Residence allotted:-
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Type
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.RESIDENCE_TYPE_NAME }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Building No. / Quarter No.
+                  </td>
+                  <td style="
+                      width: 50px;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined"> {{ data.FLAT_NAME }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Locality
+                  </td>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      width: 50px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.AREA_NAME }}, {{ data.CITY_NAME }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    4
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Number and date of issue of allotment letter
+                  </td>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      width: 50px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.SEQUENCE_NO }},
+                      {{ data.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy" }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    5
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Date of receipt of allotment letter
+                  </td>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      width: 50px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy" }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    " rowspan="2">
+                    6
+                  </td>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    (a)
+                  </td>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Date from which continuously employed under Income Tax
+                    Department
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.JOINING_DATE | date : "dd/MM/yyyy" }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    (b)
+                  </td>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    In case of allotment for Type “D” and “E” expected date of
+                    reaching Pay + Special Pay (if any) of Rs. 2,000/- to be
+                    indicated
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    -
+                  </td>
+                </tr>
+                <tr>
+                  <td style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    " rowspan="2">
+                    7
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Scale of pay of post held
+                  </td>
+                  <td style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    "></td>
+                </tr>
+
+                <tr>
+                  <td colspan="6" style="
+                      padding: 0;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <table style="
+                        width: 100%;
+                        border-collapse: collapse;
+                        border: 1px solid black;
+                      ">
+                      <tr>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                            border: 1px solid black;
+                          ">
+                          Pay (Rs.)
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                            border: 1px solid black;
+                          ">
+                          Special Pay (Rs.)
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                            border: 1px solid black;
+                          ">
+                          Deputation pay, if any (Rs.)
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                            border: 1px solid black;
+                          ">
+                          C.C.A. (Rs.)
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                            border: 1px solid black;
+                          ">
+                          Other receipts defined in FR-C as emoluments (Rs.)
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                            border: 1px solid black;
+                          ">
+                          Total (Rs.)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                          ">
+                          <span *ngIf="acceptancedatalist3 != undefined">
+                            {{ acceptancedatalist3.BASIC_PAY }}</span>
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            border: 1px solid black;
+                          ">
+                          <span *ngIf="suritydata != undefined">
+                            {{ suritydata.SPECIAL_PAY }}</span>
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            border: 1px solid black;
+                          ">
+                          <span *ngIf="suritydata != undefined">
+                            {{ suritydata.DEPUTATION_PAY }}</span>
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            border: 1px solid black;
+                          ">
+                          <span *ngIf="suritydata != undefined">
+                            {{ suritydata.CCA }}</span>
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            border: 1px solid black;
+                          ">
+                          <span *ngIf="suritydata != undefined">
+                            {{ suritydata.OTHER_RECEIPTS_EMOLUMENTS }}</span>
+                        </td>
+                        <td style="
+                            padding: 5px;
+                            font-size: 13px;
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                          ">
+                          <span *ngIf="
+                              acceptancedatalist3 != undefined &&
+                              suritydata != undefined
+                            ">
+                            {{
+                            acceptancedatalist3.BASIC_PAY +
+                            suritydata.SPECIAL_PAY +
+                            suritydata.DEPUTATION_PAY +
+                            suritydata.CCA +
+                            suritydata.OTHER_RECEIPTS_EMOLUMENTS
+                            }}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="1" rowspan="4" style="
+                      width: 6%;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      vertical-align: top;
+                      border: 1px solid black;
+                    ">
+                    8 <br /><br /><br /><br />
+                  </td>
+                  <td colspan="1" style="
+                      width: 1%;
+                      text-align: center;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    (a)
+                  </td>
+                  <td colspan="1" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Whether Permanent / Quasi Permanent / Temporary
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="data != undefined">
+                      {{ data.SERVICE_TYPE }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="1" rowspan="3" style="
+                      width: 1%;
+                      text-align: center;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    (b)
+                  </td>
+                  <td colspan="5" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    If Temporary, indicate particulars of surety:-
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      width: 1%;
+                      text-align: center;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Name of Surety
+                  </td>
+                  <td colspan="2" style="
+                      border: 1px solid black;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Designation
+                  </td>
+                  <td colspan="2" style="
+                      border: 1px solid black;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Office where employed
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                    ">
+                    <span *ngIf="suritydata != undefined">{{
+                      suritydata.NAME_OF_SURETY
+                      ? suritydata.NAME_OF_SURETY
+                      : "-"
+                      }}</span>
+                  </td>
+                  <td colspan="2" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                    ">
+                    <span *ngIf="suritydata != undefined">
+                      {{
+                      suritydata.SURETY_DESIGNATION_ID == 56
+                      ? suritydata.SURETY_DESIGNATION_OTHER
+                      : suritydata.SURETY_DESIGNATION_NAME
+                      }}</span>
+                  </td>
+                  <td colspan="2" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                    ">
+                    <span *ngIf="suritydata != undefined">
+                      {{
+                      suritydata.OFFICE_WHERE_EMPLOYEED
+                      ? suritydata.OFFICE_WHERE_EMPLOYEED
+                      : "-"
+                      }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="1" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    9
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Date of Superannuation
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="acceptancedatalist2 != undefined">
+                      {{
+                      acceptancedatalist2.SUPERANNUATION_DATE
+                      | date : "dd/MM/yyyy"
+                      }}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="1" rowspan="3" style="
+                      width: 6%;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      vertical-align: top;
+                      border: 1px solid black;
+                    ">
+                    10 <br /><br /><br /><br />
+                  </td>
+                  <td colspan="1" style="
+                      width: 1%;
+                      text-align: center;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    (a)
+                  </td>
+                  <td colspan="1" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Whether allottee belongs to Scheduled Caste?
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    " *ngIf="acceptancedatalist3 != undefined">
+                    {{ acceptancedatalist3.CAST == "SC" ? "Yes" : "No" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="1" style="
+                      width: 1%;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    (b)
+                  </td>
+                  <td colspan="1" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Whether allottee belongs to Scheduled Tribe?
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="acceptancedatalist3 != undefined">
+                      {{
+                      acceptancedatalist3.CAST == "ST" ? "Yes" : "No"
+                      }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="1" style="
+                      width: 1%;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    (c)
+                  </td>
+                  <td colspan="1" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Is this allotment from reserved quota?
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    -
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="1" rowspan="2" style="
+                      width: 6%;
+                      text-align: center;
+                      vertical-align: top;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    11 <br /><br /><br /><br />
+                  </td>
+                  <td colspan="1" style="
+                      width: 1%;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    (a)
+                  </td>
+                  <td colspan="1" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    Is this allotment for appropriate type? <br />(applicable
+                    only to Type D & E)
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    " *ngIf="suritydata != undefined">
+                    {{ suritydata.IS_APPROPRIATE_TYPE ? "Yes" : "No" }}
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="1" style="
+                      width: 1%;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    (b)
+                  </td>
+                  <td colspan="1" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    In case of allotment under Next Below Rule, indicate if also
+                    applied for appropriate Type
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="suritydata != undefined">
+                      {{
+                      suritydata.IS_APPLIED_FOR_ANOTHER_TYPE ? "Yes" : "No"
+                      }}</span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="1" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      text-align: center;
+                      border: 1px solid black;
+                    " nzAlign="center">
+                    12
+                  </td>
+                  <td colspan="2" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Office of family members, if employed in Central State
+                    Govt., Public / Semi Govt., Port Trust, LIC, Nationalised
+                    Banks
+                  </td>
+                  <td colspan="1" style="
+                      width: 50px;
+                      text-align: center;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    :
+                  </td>
+                  <td colspan="3" style="
+                      width: 435px;
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <span *ngIf="acceptancedatalist1 != undefined">
+                      {{
+                      acceptancedatalist1.IS_EMPLOYEED_FAMILY_MEMBER
+                      ? acceptancedatalist1.OFFICE_NAME_OF_FAMILY_MEM
+                      : "NA"
+                      }}
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="1" rowspan="3" style="
+                      width: 6%;
+                      text-align: center;
+                      vertical-align: top;
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    13<br /><br /><br /><br />
+                  </td>
+                  <td colspan="6" style="
+                      padding: 5px;
+                      font-size: 13px;
+                      border: 1px solid black;
+                    ">
+                    Details of house, located within the local or adjoining
+                    municipality, owned by the allottee his / wife / her husband
+                    and children:-
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="6" nzAlign="center" style="width: 1%; border: 1px solid black">
+                    <table style="
+                        width: 100%;
+                        border-collapse: collapse !important;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <tr>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          LOCALITY
+                        </td>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          HOUSE NO.
+                        </td>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          MONTHLY RENTAL INCOME
+                        </td>
+                      </tr>
+                      <tr *ngFor="let i of relationdata">
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          <span *ngIf="relationdata != undefined">{{
+                            i.LOCALITY ? i.LOCALITY : "_"
+                            }}</span>
+                        </td>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          <span *ngIf="relationdata != undefined">{{
+                            i.HOUSE_NO ? i.HOUSE_NO : "_"
+                            }}</span>
+                        </td>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          <span *ngIf="relationdata != undefined">{{
+                            i.MONTHLY_RENTAL_INCOME
+                            ? i.MONTHLY_RENTAL_INCOME
+                            : "_"
+                            }}</span>
+                        </td>
+                      </tr>
+                      <tr *ngIf="
+                          relationdata != undefined && relationdata.length == 0
+                        ">
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          -
+                        </td>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          -
+                        </td>
+                        <td style="
+                            border: 1px solid black;
+                            padding: 5px;
+                            font-size: 13px;
+                            text-align: center;
+                          ">
+                          -
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="6" nzAlign="center" style="
+                      border: 1px solid black;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <i>
+                      [Compulsory proof showing the monthly rental from the
+                      house(s) mentioned above is enclosed herewith. NOTE:
+                      Copies of lease agreement or relevant documents regarding
+                      assessment of house(s) by the municipal authority are
+                      required to be furnished]</i>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <br />
+            <div style="margin-left: 0px; font-size: 13px; padding: 10px">
+              <span style="
+                  display: block;
+                  text-align: center;
+                  margin-top: 0px;
+                  font-size: 13px;
+                ">D E C L A R A T I O N</span>
+              <br />
+              <p>I, declare as under:-</p>
+              <div>
+                <div style="display: inline-block; width: 6%">(a)</div>
+                <div style="display: inline-block; width: 92%">
+                  I do not stand debarred for Government Accommodation
+                </div>
+                <div style="display: inline-block; width: 6%">(b)</div>
+                <div style="display: inline-block; width: 92%">
+                  I or my wife / husband or my minor children do not own any
+                  house(s) in the limits of local or adjoining municipality.
+                </div>
+                <div style="text-align: center; font-weight: bold; margin: 10px">
+                  OR
+                </div>
+                <div style="display: inline-block; width: 6%"></div>
+                <div style="display: inline-block; width: 92%">
+                  I, my wife / husband or any minor children own house(s) within
+                  the limits of local or adjoining municipality. The rental
+                  income delivered by me, my wife / husband and my minor
+                  children is Rs.<span>{{
+                    acceptancedatalist2.GRADE_PAY
+                    }}</span>
+                  per month. I shall inform the Allotting Authority whenever
+                  there is an increase in the rent received from the private
+                  house(s). No other Govt. Accommodation is allotted to me or my
+                  wife / husband on date either by the Estate Manager, Mumbai or
+                  by any other Government Department / Semi-Govt. Organisation
+                  or Local Body.
+                </div>
+                <div style="margin-top: 0px">
+                  <div style="display: inline-block; width: 6%">(c)</div>
+                  <div style="display: inline-block; width: 92%">
+                    My family consist of the following members who would be
+                    residing with me in the Quarter allotted to me:-
+                  </div>
+                </div>
+              </div>
+              <br />
+
+              <div style="padding: 0px; padding-bottom: 13px">
+                <table style="
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-left: 0px;
+                    padding: 5px;
+                    font-size: 13px;
+                  ">
+                  <tr>
+                    <th style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                        background-color: white;
+                      ">
+                      Sr.No.
+                    </th>
+                    <th style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                        background-color: white;
+                      ">
+                      Name
+                    </th>
+                    <th style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                        background-color: white;
+                      ">
+                      Age
+                    </th>
+                    <th style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                        background-color: white;
+                      ">
+                      Relationship
+                    </th>
+                  </tr>
+                  <tr *ngFor="let fdata of familydata1; let z = index">
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 30px;
+                      ">
+                      <span *ngIf="familydata1 != undefined">{{ z + 1 }}</span>
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 435px;
+                      ">
+                      <span *ngIf="familydata1 != undefined">{{
+                        fdata.NAME ? fdata.NAME : "_"
+                        }}</span>
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 435px;
+                      ">
+                      <span *ngIf="familydata1 != undefined">{{
+                        fdata.AGE ? fdata.AGE : "_"
+                        }}</span>
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 435px;
+                      ">
+                      <span *ngIf="familydata1 != undefined">{{
+                        fdata.RELATION ? fdata.RELATION : "_"
+                        }}</span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="familydata1 != undefined && familydata1.length == 0">
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 30px;
+                      ">
+                      -
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 435px;
+                      ">
+                      -
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 435px;
+                      ">
+                      -
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                        width: 435px;
+                      ">
+                      -
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div>
+                <div style="display: inline-block; width: 8%">Note:-</div>
+                <div style="display: inline-block; width: 96%">
+                  1) If space is insufficient, attach separate sheet.
+                </div>
+                <div style="display: inline-block; width: 2%"></div>
+                <div style="display: inline-block; width: 96%">
+                  2)
+                  <b style="font-size: 13px">INCOMPLETE ACCEPTANCE LETTER</b>
+                  will not be accepted.
+                </div>
+              </div>
+              <div>
+                <div style="display: inline-block; width: 0%"></div>
+                <div style="
+                    display: inline-block;
+                    width: 50%;
+                    text-align: left;
+                    margin-top: 20px;
+                  ">
+                  Date:
+                  <span *ngIf="printdate != undefined">{{
+                    printdate | date : "dd/MM/yyyy"
+                    }}</span>
+                </div>
+                <div style="
+                    display: inline-block;
+                    width: 25%;
+                    text-align: right;
+                    margin-top: 20px;
+                  ">
+                  <!-- Designation : -->
+                </div>
+                <div style="display: inline-block; width: 25%; margin-top: 20px"></div>
+                <div style="
+                    border: 1px dashed black;
+                    width: 100%;
+                    margin-top: 20px;
+                  "></div>
+              </div>
+              <br />
+              <div style="
+                  text-align: center;
+                  font-weight: bold;
+                  text-decoration: underline;
+                  margin-bottom: 10px;
+                ">
+                SUBMITTED THROUGH THE HEAD OF THE OFFICE OF THE ALLOTTEE
+              </div>
+              <div style="text-align: right"><i>(Forwarding Memo)</i></div>
+              <div>
+                <div style="display: inline-block; width: 70%"></div>
+                <div style="
+                    display: inline-block;
+                    width: 30%;
+                    text-align: left;
+                    margin-top: 20px;
+                  ">
+                  Office of the:
+                </div>
+                <div style="display: inline-block; width: 70%"></div>
+                <div style="
+                    display: inline-block;
+                    width: 30%;
+                    text-align: left;
+                    margin-top: 10px;
+                  ">
+                  Dated:
+                </div>
+              </div>
+              <br />
+              <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Forwarded with compliments to the
+                Pr. Chief Commissioner of Income-tax, Mumbai.
+              </div>
+              <div>
+                2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The facts mentioned in item No.
+                6 to 12 of the Acceptance Letter and declarations contained
+                therein have been verified and found correct.
+              </div>
+              <div>
+                3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It is confirmed that Shri /
+                Smt._____________________________________________ is a permanent
+                employee / quasi-permanent employee / or is a temporary
+                Government Servant and a Surety Bond on the prescribed form duly
+                completed is enclosed.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- for backend pdf generation -->
+        <div style="display: none">
+          <div nz-row style="
+              padding: 5px;
+              margin-left: 10px;
+              letter-spacing: 0.8;
+              line-height: 1.3;
+            " id="Prntmodalforbackend">
+            <div style="margin-left: 20px">
+              <div style="margin-left: 10px; font-size: 13px">
+                <div style="text-align: center; font-size: 16px">
+                  <b>ACCEPTANCE OF GOVERNMENT ACCOMMODATION ALLOTTED BY INCOME
+                    TAX DEPARTMENT</b>
+                </div>
+                <br />
+                <div>To,</div>
+                <div>The Pr. Chief Commissioner of Income Tax,</div>
+                <div>Aayakar Bhavan, Mumbai.</div>
+                <br />
+                <div>Sir,</div>
+                <div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I accept the
+                  accommodation / quarter allotted to me and give the required
+                  particulars below:-
+                </div>
+              </div>
+              <div nz-col nzSpan="24" style="padding: 10px">
+                <table style="
+                    width: 100%;
+                    border-collapse: collapse;
+                    font-size: 13px;
+                  ">
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        text-align: center;
+                        border: 1px solid black;
+                        font-size: 13px;
+                      ">
+                      1
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        width: 35%;
+                        border: 1px solid black;
+                        font-size: 13px;
+                      ">
+                      Name (Use Block Letters)
+                    </td>
+                    <td style="
+                        width: 50px;
+                        text-align: center;
+                        font-size: 13px;
+                        border: 1px solid black;
+                        padding: 5px;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.EMPLOYEE_NAME | uppercase }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      " rowspan="3">
+                      2
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Designation
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.DESIGNATION }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Range / Ward / Circle / Office
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.OFFICE_NAME }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      D.D.O. to which attached
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.DDO_OF_THE_OFFICIAL }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      " rowspan="4">
+                      3
+                    </td>
+                    <td colspan="6" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Residence allotted:-
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Type
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.RESIDENCE_TYPE_NAME }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Building No. / Quarter No.
+                    </td>
+                    <td style="
+                        width: 50px;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.FLAT_NAME }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Locality
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        width: 50px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.AREA_NAME }}{{ data.CITY_NAME
+                        }}{{ data.BUILDING_NAME }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      4
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Number and date of issue of allotment letter
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        width: 50px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.SEQUENCE_NO }},
+                        {{
+                        data.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy"
+                        }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      5
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Date of receipt of allotment letter
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        width: 50px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      "></td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      " rowspan="2">
+                      6
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      (a)
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Date from which continuously employed under Income Tax
+                      Department
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.JOINING_DATE | date : "dd/MM/yyyy" }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      (b)
+                    </td>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      In case of allotment for Type “D” and “E” expected date of
+                      reaching Pay + Special Pay (if any) of Rs. 2,000/- to be
+                      indicated
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      -
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      " rowspan="2">
+                      7
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Scale of pay of post held
+                    </td>
+                    <td style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      "></td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="6" style="
+                        padding: 0;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <table style="
+                          width: 100%;
+                          border-collapse: collapse;
+                          border: 1px solid black;
+                        ">
+                        <tr>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                              border: 1px solid black;
+                            ">
+                            Pay (Rs.)
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                              border: 1px solid black;
+                            ">
+                            Special Pay (Rs.)
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                              border: 1px solid black;
+                            ">
+                            Deputation pay, if any (Rs.)
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                              border: 1px solid black;
+                            ">
+                            C.C.A. (Rs.)
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                              border: 1px solid black;
+                            ">
+                            Other receipts defined in FR-C as emoluments (Rs.)
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                              border: 1px solid black;
+                            ">
+                            Total (Rs.)
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                            ">
+                            <span *ngIf="acceptancedatalist2 != undefined">
+                              {{ acceptancedatalist2.GRADE_PAY }}</span>
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              border: 1px solid black;
+                            ">
+                            <span *ngIf="suritydata != undefined">
+                              {{ suritydata.SPECIAL_PAY }}</span>
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              border: 1px solid black;
+                            ">
+                            <span *ngIf="suritydata != undefined">
+                              {{ suritydata.DEPUTATION_PAY }}</span>
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              border: 1px solid black;
+                            ">
+                            <span *ngIf="suritydata != undefined">
+                              {{ suritydata.CCA }}</span>
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              border: 1px solid black;
+                            ">
+                            <span *ngIf="suritydata != undefined">
+                              {{ suritydata.OTHER_RECEIPTS_EMOLUMENTS }}</span>
+                          </td>
+                          <td style="
+                              padding: 5px;
+                              font-size: 13px;
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                            ">
+                            <span *ngIf="acceptancedatalist2 != undefined">
+                              {{ acceptancedatalist2.GRADE_PAY }}</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" rowspan="4" style="
+                        width: 6%;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        vertical-align: top;
+                        border: 1px solid black;
+                      ">
+                      8 <br /><br /><br /><br />
+                    </td>
+                    <td colspan="1" style="
+                        width: 1%;
+                        text-align: center;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      (a)
+                    </td>
+                    <td colspan="1" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Whether Permanent / Quasi Permanent / Temporary
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="data != undefined">
+                        {{ data.SERVICE_TYPE }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" rowspan="3" style="
+                        width: 1%;
+                        text-align: center;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      (b)
+                    </td>
+                    <td colspan="5" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      If Temporary, indicate particulars of surety:-
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        width: 1%;
+                        text-align: center;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Name of Surety
+                    </td>
+                    <td colspan="2" style="
+                        border: 1px solid black;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Designation
+                    </td>
+                    <td colspan="2" style="
+                        border: 1px solid black;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Office where employed
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                      ">
+                      <span *ngIf="suritydata != undefined">{{
+                        suritydata.NAME_OF_SURETY
+                        ? suritydata.NAME_OF_SURETY
+                        : "-"
+                        }}</span>
+                    </td>
+                    <td colspan="2" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                      ">
+                      <span *ngIf="suritydata != undefined">
+                        {{
+                        suritydata.SURETY_DESIGNATION_ID == 56
+                        ? suritydata.SURETY_DESIGNATION_OTHER
+                        : suritydata.SURETY_DESIGNATION_NAME
+                        }}</span>
+                    </td>
+                    <td colspan="2" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                      ">
+                      <span *ngIf="suritydata != undefined">
+                        {{
+                        suritydata.OFFICE_WHERE_EMPLOYEED
+                        ? suritydata.OFFICE_WHERE_EMPLOYEED
+                        : "-"
+                        }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      9
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Date of Superannuation
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="acceptancedatalist2 != undefined">
+                        {{
+                        acceptancedatalist2.SUPERANNUATION_DATE
+                        | date : "dd/MM/yyyy"
+                        }}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="1" rowspan="3" style="
+                        width: 6%;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        vertical-align: top;
+                        border: 1px solid black;
+                      ">
+                      10 <br /><br /><br /><br />
+                    </td>
+                    <td colspan="1" style="
+                        width: 1%;
+                        text-align: center;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      (a)
+                    </td>
+                    <td colspan="1" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Whether allottee belongs to Scheduled Caste?
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      " *ngIf="acceptancedatalist3 != undefined">
+                      {{ acceptancedatalist3.CAST == "SC" ? "Yes" : "No" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" style="
+                        width: 1%;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      (b)
+                    </td>
+                    <td colspan="1" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Whether allottee belongs to Scheduled Tribe?
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="acceptancedatalist3 != undefined">
+                        {{
+                        acceptancedatalist3.CAST == "ST" ? "Yes" : "No"
+                        }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" style="
+                        width: 1%;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      (c)
+                    </td>
+                    <td colspan="1" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Is this allotment from reserved quota?
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      -
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="1" rowspan="2" style="
+                        width: 6%;
+                        text-align: center;
+                        vertical-align: top;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      11 <br /><br /><br /><br />
+                    </td>
+                    <td colspan="1" style="
+                        width: 1%;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      (a)
+                    </td>
+                    <td colspan="1" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      Is this allotment for appropriate type? <br />(applicable
+                      only to Type D & E)
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      " *ngIf="suritydata != undefined">
+                      {{ suritydata.IS_APPROPRIATE_TYPE ? "Yes" : "No" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" style="
+                        width: 1%;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      (b)
+                    </td>
+                    <td colspan="1" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      In case of allotment under Next Below Rule, indicate if
+                      also applied for appropriate Type
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="suritydata != undefined">
+                        {{
+                        suritydata.IS_APPLIED_FOR_ANOTHER_TYPE ? "Yes" : "No"
+                        }}</span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="1" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        text-align: center;
+                        border: 1px solid black;
+                      " nzAlign="center">
+                      12
+                    </td>
+                    <td colspan="2" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Office of family members, if employed in Central State
+                      Govt., Public / Semi Govt., Port Trust, LIC, Nationalised
+                      Banks
+                    </td>
+                    <td colspan="1" style="
+                        width: 50px;
+                        text-align: center;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      :
+                    </td>
+                    <td colspan="3" style="
+                        width: 435px;
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <span *ngIf="acceptancedatalist1 != undefined">
+                        {{
+                        acceptancedatalist1.IS_EMPLOYEED_FAMILY_MEMBER
+                        ? acceptancedatalist1.OFFICE_NAME_OF_FAMILY_MEM
+                        : "NA"
+                        }}
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="1" rowspan="3" style="
+                        width: 6%;
+                        text-align: center;
+                        vertical-align: top;
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      13<br /><br /><br /><br />
+                    </td>
+                    <td colspan="6" style="
+                        padding: 5px;
+                        font-size: 13px;
+                        border: 1px solid black;
+                      ">
+                      Details of house, located within the local or adjoining
+                      municipality, owned by the allottee his / wife / her
+                      husband and children:-
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="6" nzAlign="center" style="width: 1%; border: 1px solid black">
+                      <table style="
+                          width: 100%;
+                          border-collapse: collapse !important;
+                          padding: 5px;
+                          font-size: 13px;
+                        ">
+                        <tr>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            LOCALITY
+                          </td>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            HOUSE NO.
+                          </td>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            MONTHLY RENTAL INCOME
+                          </td>
+                        </tr>
+                        <tr *ngFor="let i of relationdata">
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            <span *ngIf="relationdata != undefined">{{
+                              i.LOCALITY ? i.LOCALITY : "_"
+                              }}</span>
+                          </td>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            <span *ngIf="relationdata != undefined">{{
+                              i.HOUSE_NO ? i.HOUSE_NO : "_"
+                              }}</span>
+                          </td>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            <span *ngIf="relationdata != undefined">{{
+                              i.MONTHLY_RENTAL_INCOME
+                              ? i.MONTHLY_RENTAL_INCOME
+                              : "_"
+                              }}</span>
+                          </td>
+                        </tr>
+                        <tr *ngIf="
+                            relationdata != undefined &&
+                            relationdata.length == 0
+                          ">
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            -
+                          </td>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            -
+                          </td>
+                          <td style="
+                              border: 1px solid black;
+                              padding: 5px;
+                              font-size: 13px;
+                              text-align: center;
+                            ">
+                            -
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="6" nzAlign="center" style="
+                        border: 1px solid black;
+                        padding: 5px;
+                        font-size: 13px;
+                      ">
+                      <i>
+                        [Compulsory proof showing the monthly rental from the
+                        house(s) mentioned above is enclosed herewith. NOTE:
+                        Copies of lease agreement or relevant documents
+                        regarding assessment of house(s) by the municipal
+                        authority are required to be furnished]</i>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <br />
+              <div style="margin-left: 0px; font-size: 13px; padding: 10px">
+                <span style="
+                    display: block;
+                    text-align: center;
+                    margin-top: 0px;
+                    font-size: 13px;
+                  ">D E C L A R A T I O N</span>
+                <br />
+                <p>I, declare as under:-</p>
+                <div>
+                  <div style="display: inline-block; width: 6%">(a)</div>
+                  <div style="display: inline-block; width: 92%">
+                    I do not stand debarred for Government Accommodation
+                  </div>
+                  <div style="display: inline-block; width: 6%">(b)</div>
+                  <div style="display: inline-block; width: 92%">
+                    I or my wife / husband or my minor children do not own any
+                    house(s) in the limits of local or adjoining municipality.
+                  </div>
+                  <div style="text-align: center; font-weight: bold; margin: 10px">
+                    OR
+                  </div>
+                  <div style="display: inline-block; width: 6%"></div>
+                  <div style="display: inline-block; width: 92%">
+                    I, my wife / husband or any minor children own house(s)
+                    within the limits of local or adjoining municipality. The
+                    rental income delivered by me, my wife / husband and my
+                    minor children is Rs.<span>{{
+                      acceptancedatalist2.GRADE_PAY
+                      }}</span>
+                    per month. I shall inform the Allotting Authority whenever
+                    there is an increase in the rent received from the private
+                    house(s). No other Govt. Accommodation is allotted to me or
+                    my wife / husband on date either by the Estate Manager,
+                    Mumbai or by any other Government Department / Semi-Govt.
+                    Organisation or Local Body.
+                  </div>
+                  <div style="margin-top: 0px">
+                    <div style="display: inline-block; width: 6%">(c)</div>
+                    <div style="display: inline-block; width: 92%">
+                      My family consist of the following members who would be
+                      residing with me in the Quarter allotted to me:-
+                    </div>
+                  </div>
+                </div>
+                <br />
+
+                <div style="padding: 0px; padding-bottom: 13px">
+                  <table style="
+                      width: 100%;
+                      border-collapse: collapse;
+                      margin-left: 0px;
+                      padding: 5px;
+                      font-size: 13px;
+                    ">
+                    <tr>
+                      <th style="
+                          padding: 5px;
+                          font-size: 13px;
+                          border: 1px solid black;
+                          background-color: white;
+                        ">
+                        Sr.No.
+                      </th>
+                      <th style="
+                          padding: 5px;
+                          font-size: 13px;
+                          border: 1px solid black;
+                          background-color: white;
+                        ">
+                        Name
+                      </th>
+                      <th style="
+                          padding: 5px;
+                          font-size: 13px;
+                          border: 1px solid black;
+                          background-color: white;
+                        ">
+                        Age
+                      </th>
+                      <th style="
+                          padding: 5px;
+                          font-size: 13px;
+                          border: 1px solid black;
+                          background-color: white;
+                        ">
+                        Relationship
+                      </th>
+                    </tr>
+                    <tr *ngFor="let fdata of familydata1; let z = index">
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 30px;
+                        ">
+                        <span *ngIf="familydata1 != undefined">{{
+                          z + 1
+                          }}</span>
+                      </td>
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 435px;
+                        ">
+                        <span *ngIf="familydata1 != undefined">{{
+                          fdata.NAME ? fdata.NAME : "_"
+                          }}</span>
+                      </td>
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 435px;
+                        ">
+                        <span *ngIf="familydata1 != undefined">{{
+                          fdata.AGE ? fdata.AGE : "_"
+                          }}</span>
+                      </td>
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 435px;
+                        ">
+                        <span *ngIf="familydata1 != undefined">{{
+                          fdata.RELATION ? fdata.RELATION : "_"
+                          }}</span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="
+                        familydata1 != undefined && familydata1.length == 0
+                      ">
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 30px;
+                        ">
+                        -
+                      </td>
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 435px;
+                        ">
+                        -
+                      </td>
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 435px;
+                        ">
+                        -
+                      </td>
+                      <td style="
+                          padding: 5px;
+                          font-size: 13px;
+                          text-align: center;
+                          border: 1px solid black;
+                          width: 435px;
+                        ">
+                        -
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                  <div style="display: inline-block; width: 8%">Note:-</div>
+                  <div style="display: inline-block; width: 96%">
+                    1) If space is insufficient, attach separate sheet.
+                  </div>
+                  <div style="display: inline-block; width: 2%"></div>
+                  <div style="display: inline-block; width: 96%">
+                    2)
+                    <b style="font-size: 13px">INCOMPLETE ACCEPTANCE LETTER</b>
+                    will not be accepted.
+                  </div>
+                </div>
+                <div>
+                  <div style="display: inline-block; width: 0%"></div>
+                  <div style="
+                      display: inline-block;
+                      width: 50%;
+                      text-align: left;
+                      margin-top: 20px;
+                    ">
+                    Date:
+                    <span *ngIf="printdate != undefined">{{
+                      printdate | date : "dd/MM/yyyy"
+                      }}</span>
+                  </div>
+                  <div style="
+                      display: inline-block;
+                      width: 25%;
+                      text-align: right;
+                      margin-top: 20px;
+                    ">
+                    <!-- Designation : -->
+                  </div>
+                  <div style="display: inline-block; width: 25%; margin-top: 20px"></div>
+                  <div style="
+                      border: 1px dashed black;
+                      width: 100%;
+                      margin-top: 20px;
+                    "></div>
+                </div>
+                <br />
+                <div style="
+                    text-align: center;
+                    font-weight: bold;
+                    text-decoration: underline;
+                    margin-bottom: 10px;
+                  ">
+                  SUBMITTED THROUGH THE HEAD OF THE OFFICE OF THE ALLOTTEE
+                </div>
+                <div style="text-align: right"><i>(Forwarding Memo)</i></div>
+                <div>
+                  <div style="display: inline-block; width: 70%"></div>
+                  <div style="
+                      display: inline-block;
+                      width: 30%;
+                      text-align: left;
+                      margin-top: 20px;
+                    ">
+                    Office of the:
+                  </div>
+                  <div style="display: inline-block; width: 70%"></div>
+                  <div style="
+                      display: inline-block;
+                      width: 30%;
+                      text-align: left;
+                      margin-top: 10px;
+                    ">
+                    Dated:
+                  </div>
+                </div>
+                <br />
+                <div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Forwarded with compliments to
+                  the Pr. Chief Commissioner of Income-tax, Mumbai.
+                </div>
+                <div>
+                  2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The facts mentioned in item
+                  No. 6 to 12 of the Acceptance Letter and declarations
+                  contained therein have been verified and found correct.
+                </div>
+                <div>
+                  3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It is confirmed that Shri /
+                  Smt._____________________________________________ is a
+                  permanent employee / quasi-permanent employee / or is a
+                  temporary Government Servant and a Surety Bond on the
+                  prescribed form duly completed is enclosed.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div nz-row style="padding: 5px;margin-left: 10px ; letter-spacing: 0.8; line-height: 1.6;">
+          <div nz-col nzSpan="6" style="margin-top: 40px"></div>
+          <div nz-col nzSpan="12" style="text-align: center; margin-top: 10px">
+            <nz-form-item>
+              <nz-form-label class="labelsizeupload" nzRequired nzNoColon>Upload
+                Acceptance Form&nbsp;<span nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+                  nzTooltipTitle="Please upload signed copy of the acceptance form."></span></nz-form-label>
+              <nz-form-control
+                *ngIf="data.ACCEPTANCE_LETTER == null || data.ACCEPTANCE_LETTER == '' || data.ACCEPTANCE_LETTER == undefined">
+                <button nz-button style="font-size: 11px;" nzSize="small" [nzLoading]="formuploadaa"
+                  (click)="Applicationform.click()">
+                  Select File
+                  <input #Applicationform name="ACCEPTANCE_LETTER" type="file" accept="application/pdf"
+                    (change)="onFileApplicationform($event)" style="display: none" required />
+                </button>
+              </nz-form-control>
+
+              <div
+                *ngIf="data.ACCEPTANCE_LETTER != null && data.ACCEPTANCE_LETTER != '' && data.ACCEPTANCE_LETTER != undefined"
+                style="
+                  overflow: hidden;
+                  font-size: 11px;
+                  display: block;
+                  width: 100%;
+                  color: #1890ff;
+                ">
+                {{ data.ACCEPTANCE_LETTER }} &nbsp;&nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="applnformshow(data.ACCEPTANCE_LETTER)"></span>&nbsp;&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red"
+                  (click)="clearapplnform(data.ACCEPTANCE_LETTER,'acceptanceLetter')"></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar">
+              <nz-progress [style.width]="percent + '%'" [nzPercent]="percent">{{ percent }}%</nz-progress>
+            </div>
+          </div>
+          <div nz-col nzSpan="6" style="margin-top: 40px"></div>
+
+        </div> -->
+      </form>
+      <form *ngIf="stage == 2">
+        <h4 style="text-align: center; font-size: 15px">
+          Upload the Signed Copy of Form
+        </h4>
+        <p style="text-align: center; margin-bottom: 10px; font-size: 13px">
+          Kindly upload the signed copy of the form that was printed in the last
+          stage and submit your application for verification. We will notify you
+          via email/SMS regarding the approval or rejection of your application.
+        </p>
+        <div nz-row style="display: flex; justify-content: center; align-items: center">
+          <div nz-col nzSpan="6" style="margin-top: 40px"></div>
+          <div nz-col nzSpan="12" style="text-align: center; margin-top: 10px">
+            <nz-form-item>
+              <nz-form-label class="labelsize" nzRequired nzNoColon>Upload Acceptance Form</nz-form-label>
+              <nz-form-control *ngIf="
+                  data.ACCEPTANCE_LETTER == null ||
+                  data.ACCEPTANCE_LETTER == '' ||
+                  data.ACCEPTANCE_LETTER == undefined
+                ">
+                <button nz-button style="font-size: 11px" nzSize="small" [nzLoading]="formuploadaa"
+                  (click)="Applicationform.click()">
+                  Select File
+                  <input #Applicationform name="ACCEPTANCE_LETTER" type="file" accept="application/pdf"
+                    (change)="onFileApplicationform($event)" style="display: none" required />
+                </button>
+              </nz-form-control>
+
+              <div *ngIf="
+                  data.ACCEPTANCE_LETTER != null &&
+                  data.ACCEPTANCE_LETTER != '' &&
+                  data.ACCEPTANCE_LETTER != undefined
+                " style="
+                  overflow: hidden;
+                  font-size: 11px;
+                  display: block;
+                  width: 100%;
+                  color: #1890ff;
+                ">
+                {{ data.ACCEPTANCE_LETTER }} &nbsp;&nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="applnformshow(data.ACCEPTANCE_LETTER)"></span>&nbsp;&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red" (click)="
+                    clearapplnform(data.ACCEPTANCE_LETTER, 'acceptanceLetter')
+                  "></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar">
+              <nz-progress [style.width]="percent + '%'" [nzPercent]="percent">{{ percent }}%</nz-progress>
+            </div>
+          </div>
+          <div nz-col nzSpan="6" style="margin-top: 40px"></div>
+
+          <div nz-col nzSpan="24" style="margin-top: 40px" class="inputsize">
+            <input id="agrrrr" type="checkbox" class="form-check-input" name="agrrrr" (click)="agrreconfirmation1()"
+              style="cursor: pointer; border: 2px solid #415be2" />&nbsp; By clicking Submit Acceptance Form, I agree to
+            the
+            <a style="color: #006699" data-bs-dismiss="modal">Terms & Conditions</a>
+          </div>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+
+  <div class="footer">
+    <div nz-row>
+      <div nz-col nzSpan="4" *ngIf="stage == 1"></div>
+      <div nz-col nzSpan="5" *ngIf="stage == 1"></div>
+      <div nz-col nzSpan="10" *ngIf="stage == 1">
+        <nz-form-item style="text-align: center">
+          <nz-form-label class="labelsizeupload" nzRequired nzNoColon>Upload Signed Copy of Acceptance Form&nbsp;<span
+              nz-icon nzType="info-circle" nzTheme="twotone" nz-tooltip
+              nzTooltipTitle="Please upload signed copy of the acceptance form."></span></nz-form-label>
+          <nz-form-control *ngIf="
+              data.ACCEPTANCE_LETTER == null ||
+              data.ACCEPTANCE_LETTER == '' ||
+              data.ACCEPTANCE_LETTER == undefined
+            ">
+            <button nz-button style="font-size: 11px" nzSize="small" [nzLoading]="formuploadaa"
+              (click)="Applicationform.click()">
+              Select File
+              <input #Applicationform name="ACCEPTANCE_LETTER" type="file" accept="application/pdf"
+                (change)="onFileApplicationform($event)" style="display: none" required />
+            </button>
+          </nz-form-control>
+
+          <div *ngIf="
+              data.ACCEPTANCE_LETTER != null &&
+              data.ACCEPTANCE_LETTER != '' &&
+              data.ACCEPTANCE_LETTER != undefined
+            " style="
+              overflow: hidden;
+              font-size: 11px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+            ">
+            {{ data.ACCEPTANCE_LETTER }} &nbsp;&nbsp;&nbsp;
+            <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="applnformshow(data.ACCEPTANCE_LETTER)"></span>&nbsp;&nbsp;&nbsp;
+            <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top" nz-tooltip
+              style="cursor: pointer; color: red" (click)="
+                clearapplnform(data.ACCEPTANCE_LETTER, 'acceptanceLetter')
+              "></span>
+          </div>
+        </nz-form-item>
+        <div *ngIf="progressBar">
+          <nz-progress [style.width]="percent + '%'" [nzPercent]="percent">{{ percent }}%</nz-progress>
+        </div>
+      </div>
+      <div nz-col nzSpan="5" *ngIf="stage == 1"></div>
+
+      <div nz-col nzSpan="4" *ngIf="stage == 1"></div>
+      <div nz-col nzSpan="20" *ngIf="stage == 1">
+        <hr *ngIf="stage == 1" style="width: 100%" />
+      </div>
+
+      <div nz-col nzSpan="4"></div>
+
+      <div nz-col nzSpan="10" *ngIf="stage == 1" style="
+          margin-top: 5px;
+          font-size: 13px;
+          font-weight: 600;
+          text-align: left !important;
+        ">
+        <input id="agrrrr" type="checkbox" class="form-check-input inputsize" name="agrrrr"
+          (click)="agrreconfirmation1()" style="cursor: pointer; border: 2px solid #415be2" />&nbsp; By clicking Submit
+        Acceptance Form, I agree to the
+        <a style="color: #006699" (click)="termsmodal()">Terms & Conditions</a>
+      </div>
+      <div nz-col nzSpan="10" *ngIf="stage != 1"></div>
+      <div nz-col nzSpan="10">
+        <button type="button" nz-button class="ant-btn" [disabled]="disableprevious"
+          style="margin-right: 8px; font-size: 13px" (click)="previouslast()" *ngIf="stage != 0 && stage != 1">
+          <span>Previous</span>
+        </button>
+        <button type="button" nz-button class="ant-btn" [disabled]="disableprevious"
+          style="margin-right: 8px; font-size: 13px" (click)="previous2()" *ngIf="stage != 0 && stage == 1"
+          [nzLoading]="loaddingprintfgc">
+          <span>Previous</span>
+        </button>
+        <button type="button" nz-button class="ant-btn" style="margin-right: 8px; font-size: 13px" (click)="close()">
+          <span>Cancel</span>
+        </button>
+        <button *ngIf="stage == 4" type="button" class="ant-btn ant-btn-primary" [disabled]="disablenext" nz-button
+          (click)="displayc()" style="font-size: 13px">
+          <span>Save & Next</span>
+        </button>
+        <button type="button" *ngIf="stage == 0" class="ant-btn ant-btn-primary" [disabled]="disablenext" nz-button
+          (click)="empSave()" [nzLoading]="loaddisaplyac" style="font-size: 13px">
+          <span>Save & Preview</span>
+        </button>
+        <button nz-button nzType="primary" *ngIf="stage == 1" printSectionId="Prntmodal" ngxPrint
+          [useExistingCss]="true" style="margin-right: 8px; font-size: 13px" [nzLoading]="loaddingprintfgc">
+          <span>Print Form</span>
+        </button>
+        <button type="button" *ngIf="stage == 1" class="ant-btn ant-btn-primary" [disabled]="disablenext" nz-button
+          (click)="handleOkform()" [nzLoading]="loaddingprintfgc" style="font-size: 13px">
+          <span>Submit Acceptance Form</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'PDFview'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div *ngIf="view == 1" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 2" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 3" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 4" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 5" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 6" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" nzSize="small" style="font-size: 11px" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 15px">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 13px; margin-bottom: 10px">
+      Are you sure want to submit your acceptance form?
+    </p>
+    <p style="font-size: 11px; margin-bottom: 0px">
+      By clicking <b>Submit Acceptance Form</b> , you acknowledge that the
+      information provided in your acceptance form is accurate and complete.
+      Once submitted, you may not be able to make further changes until the
+      verification process gets completed.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules>
+    <button nz-button nzType="default" [nzLoading]="submitload" nzSize="small" class="btn btn-primary"
+      style="font-size: 11px" (click)="cancelappliactionform()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" class="btn btn-primary" style="background-color: #006699; font-size: 11px"
+      (click)="Submitapplication()" [nzLoading]="submitload" nzSize="small">
+      Submit Acceptance Form
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Rulesandapplyterms" nzCentered="true" [nzBodyStyle]="{
+    overflow: 'auto',
+    'padding-left': '20px',
+    'padding-right': '10px',
+    'padding-bottom': '10px',
+    'padding-top': '0px'
+  }" nzWidth="620px" nzClosable="true" nzTitle="Terms & Conditions For Acceptance Form" (nzOnCancel)="handleOkterms()"
+  [nzFooter]="contextofrulesterms" nzMaskClosable="false" [nzContent]="contentterms">
+  <ng-template #contentterms>
+    <p style="margin-bottom: 1px">
+      1. Provide accurate and complete information. Keep it up to date.
+    </p>
+    <p style="margin-bottom: 1px">
+      2. You're eligible for filling form till Acceptance End Datetime.
+    </p>
+    <p style="margin-bottom: 1px">
+      3. If you do not fill out Acceptance / Non-Acceptance, you will be
+      automatically barred for the next 3 months.
+    </p>
+    <p style="margin-bottom: 1px">
+      4. Once the data is submitted, you can't update them.
+    </p>
+    <p style="margin-bottom: 1px">
+      5. We may update these Terms at any time. Review them regularly.
+    </p>
+    <p style="margin-bottom: 1px">
+      6. These Terms are governed by the laws of CBDT Rule.
+    </p>
+    <p style="margin-bottom: 1px">
+      7. By filling out this form, you agree to these Terms and Conditions.
+    </p>
+    <p style="margin-bottom: 1px">
+      8. For questions, please contact us at
+      <a href="mailto:mumbai.ito.tps1@incometax.gov.in" style="color: #f68831">mumbai.ito.tps1@incometax.gov.in</a>.
+    </p>
+  </ng-template>
+
+  <ng-template #contextofrulesterms>
+    <button nz-button nzType="primary" class="btn btn-primary" style="background-color: #f68831; border: none"
+      (click)="handleOkterms()">
+      close
+    </button>
+  </ng-template>
+</nz-modal>

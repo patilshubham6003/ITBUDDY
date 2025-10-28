@@ -1,0 +1,253 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-col nzXs="20" nzSm="20" nzMd="16" nzLg="16" nzXl="8">
+    <b>
+      <div class="formname">{{ formTitle }}</div>
+    </b>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="8"
+    nzLg="8"
+    nzXl="16"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <!-- <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+            (keydown.enter)="search(true)"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="search()"
+            nzSearch
+            id="searchBtn"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+        
+      </nz-form-item> -->
+      <nz-form-item>
+        <button nz-button nzType="primary" [nzLoading]="loadingRecords" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Backup File
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ y: '70vh'}"
+      [nzSize]="'small'"
+      style="white-space: inherit; padding-top: 20px"
+    >
+      <thead>
+        <tr>
+         
+          <th
+            nzWidth="150px"
+            [nzColumnKey]="'UPLOAD_COMPLETE_DATETIME'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>File Uploaded Date</b>
+          </th>
+          <th
+            nzWidth="150px"
+            [nzColumnKey]="'SYNC_BEGIN_DATETIME'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Sync started Date</b>
+          </th>
+          <th
+            nzWidth="150px"
+            [nzColumnKey]="'SYNC_COMPLETE_DATETIME'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Sync completed Date</b>
+          </th>
+
+          <th nzWidth="80px" nzAlign="center">
+            <b>MDB File</b>
+          </th>
+          <!-- <th nzWidth="80px" nzAlign="center">
+            <b>Status</b>
+          </th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          
+
+          <td style="white-space: pre-line;text-align:center">
+            {{ data.UPLOAD_COMPLETE_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+          </td>
+          <td style="white-space: pre-line;text-align:center">
+            {{ data.SYNC_BEGIN_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+          </td>
+          <td style="white-space: pre-line;text-align:center">
+            {{ data.SYNC_COMPLETE_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+          </td>
+
+          <td nzAlign="center">
+            <span
+              *ngIf="
+                data.ITHR_DB_FILE != null &&
+                data.ITHR_DB_FILE != '' &&
+                data.ITHR_DB_FILE != undefined
+              "
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="viewidproof(data.ITHR_DB_FILE)"
+            ></span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal
+  [(nzVisible)]="openmodell"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="500px"
+  nzClosable="false"
+  [nzFooter]="contextofrulesss"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Upload new MDB File</span>
+
+    <!-- <span *ngIf="verifystatus == 'A'" style="font-size: 15px; font-weight: 500"
+          >Are you sure you want to Approve ?</span
+        > -->
+    <hr style="margin: 8px 0" />
+
+    <div style="margin-top: 10px">
+      <nz-form-item>
+        <nz-form-label nzRequired nzNoColon>Upload Backup File</nz-form-label>
+        <nz-form-control
+          nzHasFeedback
+          nzErrorTip="File is required"
+          *ngIf="PROOF == null || PROOF == undefined || PROOF == ''"
+        >
+          <button
+            [nzLoading]="isSpinning"
+            nz-button
+            style="padding: 0px 10px; font-size: 12px"
+            (click)="Gradepaydrawnletter.click()"
+          >
+            Select File
+            <input
+              #Gradepaydrawnletter
+              name="PROOF"
+              type="file"
+              (change)="onFileSelectedTransfer222($event)"
+              style="display: none"
+              required
+            />
+          </button>
+        </nz-form-control>
+
+        <div
+          *ngIf="PROOF != null"
+          style="
+            overflow: hidden;
+            font-size: 13px;
+            display: block;
+            width: 100%;
+            color: #1890ff;
+            padding-left: 10px;
+          "
+        >
+          {{ PROOF }} &nbsp;&nbsp;
+          <span
+            nz-icon
+            nzTooltipTitle="Preview"
+            nzTooltipPlacement="top"
+            nz-tooltip
+            nzType="eye"
+            nzTheme="outline"
+            style="cursor: pointer; color: #1890ff"
+            (click)="viewidproof(PROOF)"
+          ></span
+          >&nbsp;&nbsp;
+          <span
+            nz-icon
+            nzType="delete"
+            nzTheme="outline"
+            nzTooltipTitle="Remove"
+            nzTooltipPlacement="top"
+            nz-tooltip
+            style="cursor: pointer; color: red"
+            (click)="clearGradepayletter()"
+          ></span>
+        </div>
+      </nz-form-item>
+    </div>
+  </ng-container>
+  <ng-template #contextofrulesss>
+    <button
+      nzSize="small"
+      [nzLoading]="isSpinning"
+      nz-button
+      nzType="primary"
+      class="btn btn-primary"
+      style="background-color: #006699; border-radius: 12px; font-size: 11px"
+      (click)="save()"
+    >
+      Save
+    </button>
+
+    <button
+      nzSize="small"
+      nz-button
+      nzType="primary"
+      [nzLoading]="isSpinning"
+      class="btn btn-primary"
+      style="
+        background-color: white !important;
+        border-radius: 12px;
+        color: #006699;
+        font-size: 11px;
+        font-weight: 500;
+      "
+      (click)="cancel()"
+    >
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>

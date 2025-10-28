@@ -1,0 +1,56 @@
+<footer id="footer" style="padding-bottom: 15px">
+  <div class="footer-top">
+    <div class="container" style="max-width: 1340px !important">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 footer-info">
+          <a href="https://www.incometaxmumbai.gov.in/staging/">
+            <img src="assets/img/logo.png" alt="logos" style="
+                height: 130px;
+                width: 100%;
+                margin-bottom: 10px;
+                border-radius: 10px;
+                background-color: white;
+                padding: 10px;
+              " />
+          </a>
+        </div>
+
+        <div class="col-lg-2 col-md-6 footer-links">
+          <h4>INFORMATION</h4>
+          <ul>
+            <li><a routerLink="/">Home</a></li>
+            <li><a routerLink="/service">Services</a></li>
+            <!-- <li><a routerLink="/feedback-form">Fee</a></li> -->
+            <li><a routerLink="/contact-us">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-6 col-md-6 footer-contact">
+          <h4>CONTACT US</h4>
+          <p style="text-align: justify" *ngIf="contactMaster != undefined">
+            {{ contactMaster.ADDRESS }}<br />
+            <strong href="(022) 22075399" style="font-weight: 500">Phone:</strong>
+            {{ contactMaster.CONTACT_NO }}<br />
+            <strong href="mailto:mumbai.ito.tps1@incometax.gov.in" style="font-weight: 500">Email:</strong>
+            {{ contactMaster.EMAIL_ID }}
+            <br />
+          </p>
+          <div class="social-links">
+            <a *ngIf="contactMaster != undefined" href="{{ contactMaster.TWITTER_LINK }}" target="_blank"
+              class="twitter"><i class="bi bi-twitter"></i></a>
+            <a *ngIf="contactMaster != undefined" href="{{ contactMaster.FACEBOOK_LINK }}" target="_blank"
+              class="facebook"><i class="bi bi-facebook"></i></a>
+            <a *ngIf="contactMaster != undefined" href="{{ contactMaster.INSTA_LINK }}" target="_blank"
+              class="instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="copyright" style="margin-bottom: 13px">
+      &copy; Copyright {{ year }} Income Tax Department , Mumbai. All Rights
+      Reserved.
+    </div>
+    <div class="credits"></div>
+  </div>
+</footer>

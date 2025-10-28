@@ -1,0 +1,32 @@
+export class EmployeeData {
+  ID: any = 0;
+  NAME: any = '';
+  EMPLOYEE_CODE: any = 0;
+  GRADE_PAY: any;
+  OFFICE_NAME: any = '';
+  DESIGNATION_ID: any = '';
+  LOCATION: any = '';
+  DDO_OF_THE_OFFICIAL: any = '';
+  DDO_OF_THE_OFFICIAL_ID: any = '';
+  EMAIL_ID: any;
+  MOBILE_NO: any;
+  PASSWORD: any = 12345678;
+  ADDRESS: any;
+  CLAIM_ID: any = 0;
+  STATUS: any = true;
+  CAST: any;
+  SERVICE_TYPE: any = '';
+  JOINING_DATE: any;
+  DOB: any;
+  GRASS_GRADE_PAY: any;
+  AGE: any;
+  GENDER: any = '';
+  CAST_CERTIFICATE: any;
+  PROFILE_PHOTO: any;
+  GRADE_PAY_LEVEL: any;
+  BENEFICIARY_TYPE: any;
+  CGHS_CARD_VALIDITY: any;
+  CGHS_CARD_NO: any;
+  ROLE_ID: any;
+  SALUTATION: any;
+}

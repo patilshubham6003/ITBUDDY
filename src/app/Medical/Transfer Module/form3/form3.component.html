@@ -1,0 +1,212 @@
+<div>
+  <form nz-form #AddNewRecord="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Date</nz-form-label>
+            <nz-form-control nzErrorTip="Please Select Date">
+              <nz-form-control nzHasFeedback nzErrorTip="Please Select Date">
+                <nz-date-picker
+                  name="date"
+                  [(ngModel)]="data.DATE"
+                  style="width: 100%"
+                  nzFormat="dd/MM/yyyy"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Mode</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Mode">
+              <nz-select
+                nzAllowClear
+                name="room"
+                [(ngModel)]="data.TRANSPORT_MODE_ID"
+                style="width: 100%"
+                nzPlaceHolder="Select Mode"
+              >
+                <nz-option
+                  *ngFor="let role of modedata"
+                  [nzValue]="role.ID"
+                  [nzLabel]="role.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Station From</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Station From">
+              <input
+                nz-input
+                name="fromstation"
+                placeHolder="Enter Station From"
+                autocomplete="off"
+                [(ngModel)]="data.FROM_STATION"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Station To</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Station To">
+              <input
+                nz-input
+                name="tostation"
+                placeHolder="Enter Station To"
+                autocomplete="off"
+                [(ngModel)]="data.TO_STATION"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Weight</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Weight">
+              <nz-input-group style="width: 100%" nzAddOnAfter="Kgs.">
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.WEIGHT_IN_KG"
+                  name="weight"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Weight"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Rate</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Rate">
+              <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.RATE"
+                  name="rate"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Rate"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Amount</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Amount">
+              <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.AMOUNT"
+                  name="amount"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Amount"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Remark</nz-form-label>
+            <nz-form-control>
+              <textarea
+                nz-input
+                [nzAutosize]="{ minRows: 3, maxRows: 6 }"
+                name="remark"
+                placeHolder="Enter Remark"
+                [(ngModel)]="data.REMARKS"
+                maxlength="500"
+              ></textarea>
+            </nz-form-control>
+
+            <!-- <span style="font-size: 10px; color: red" *ngIf="data.REMARK!=undefined">{{ REMARK.length }}/
+                            500</span> -->
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nzType="primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, AddNewRecord)"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff"
+        >
+          <a style="color: white" (click)="save(true, AddNewRecord)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="save(false, AddNewRecord)"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

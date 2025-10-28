@@ -1,0 +1,144 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="postsearch" (keydown.enter)="onKeypressEvent($event)" [(ngModel)]="searchText"
+            nz-input placeholder="Search Record" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" class="flexicons" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" class="flexicons">
+          <i nz-icon nzType="plus"></i>Add New Employee
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px;">
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '1800px', y: '390px' }"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+      <thead>
+        <tr>
+          <th nzWidth="30px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th *ngIf="userId == 1" nzWidth="30px" style="font-weight: bold; text-align: center">
+            Delete
+          </th>
+          <th nzWidth="90px" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true" style="font-weight: bold; text-align: center">
+            Employee Name
+          </th>
+          <th nzWidth="50px" nzColumnKey="{{ 'MOBILE_NO' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Mobile No
+          </th>
+          <th nzWidth="90px" nzColumnKey="{{ 'EMAIL_ID' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Email ID
+          </th>
+          <th nzWidth="80px" nzColumnKey="{{ 'EMPLOYEE_CODE' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Employee Code
+          </th>
+          <th nzWidth="70px" nzColumnKey="{{ 'DESIGNATION' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Designation
+          </th>
+          <th nzWidth="50px" nzColumnKey="{{ 'GRADE_PAY' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Grade Pay
+          </th>
+          <th nzWidth="90px" nzColumnKey="{{ 'OFFICE_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Office Name
+          </th>
+          <th nzWidth="100px" nzColumnKey="{{ 'LOCATION' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Office Location
+          </th>
+          <th nzWidth="90px" nzColumnKey="{{ 'DDO_OF_THE_OFFICIAL' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            DDO Official
+          </th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of datatable.data" style="text-align: center">
+          <td style="text-align: center">
+            <a (click)="edit(data)" style="color: #1890ff;">Edit</a>
+          </td>
+          <td *ngIf="userId == 1" style="text-align: center">
+            <span style="cursor: pointer" nz-popconfirm nzPopconfirmTitle="Are you sure want delete?"
+              nzPopconfirmPlacement="top" (nzOnConfirm)="deleteConfirm(data)" (nzOnCancel)="deleteCancel()">
+              <span nz-icon nzType="delete" nzTheme="twotone" nz-tooltip nzTooltipTitle="Delete">
+              </span>
+            </span>
+            <!-- </a> -->
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["MOBILE_NO"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["EMAIL_ID"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["EMPLOYEE_CODE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DESIGNATION"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["GRADE_PAY"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["OFFICE_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["LOCATION"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DDO_OF_THE_OFFICIAL"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <!-- <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+        [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="450" [nzVisible]="drawerVisible"
+        [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+        <ng-container *nzDrawerContent>
+            <app-city-drawer [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+                [data]="drawerData"></app-city-drawer>
+        </ng-container>
+    </nz-drawer> -->
+
+  <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="730" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+      <app-employeeadd [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData"
+        [claimID]="claimID"></app-employeeadd>
+    </ng-container>
+  </nz-drawer>
+</div>

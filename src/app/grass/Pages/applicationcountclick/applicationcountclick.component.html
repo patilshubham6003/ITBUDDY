@@ -1,0 +1,133 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+            <nz-form-item style="margin-right: 0px;">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" (keyup)="search(true)" name="search" nz-input placeholder="Search Records"
+                        [(ngModel)]="searchText" />
+                </nz-input-group>
+
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" (click)="search(true)" nzSearch>
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="4"></div>
+
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'ALL'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('ALL')">Received
+                <span *ngIf="registercounts != undefined && registercounts != null">{{
+                    registercounts
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'P'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('P')">Pending
+                <span *ngIf="pendingscounts != undefined && pendingscounts != null">{{
+                    pendingscounts
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'A'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('A')">Approved
+                <span *ngIf="approvedcounts != undefined && approvedcounts != null">{{
+                    approvedcounts
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="4" style="padding: 5px; cursor: pointer">
+        <div style="text-align: center">
+            <button [ngClass]="APPROVAL_STATUS == 'R'? 'button-29': 'button-28'" role="button"
+                (click)="clickevent('R')">Rejected
+                <span *ngIf="rejectscounts != undefined && registercounts != null">{{
+                    rejectscounts
+                    }}</span></button>
+        </div>
+    </div>
+    <div nz-col nzSpan="4"></div>
+
+</div>
+
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '1500px', y: '390px' }"
+            [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)"
+            style="white-space: pre-line;">
+            <thead>
+                <tr>
+                    <th nzWidth="150px" style="font-weight: bold; text-align: center;">Application Date</th>
+                    <th nzWidth="150px" nzColumnKey="{{ 'EMPLOYEE_CODE' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Employee Code
+                    </th>
+                    <th nzWidth="250px" nzColumnKey="{{ 'EMPLOYEE_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Employee Name
+                    </th>
+                    <th nzWidth="200px" nzColumnKey="{{ 'DESIGNATION' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Designation
+                    </th>
+                    <th nzWidth="200px" nzColumnKey="{{ 'PRESENT_OFFICE_ADDRESS' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Office Address
+                    </th>
+                    <th nzWidth="150px" nzColumnKey="{{ 'GENDER' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Gender
+                    </th>
+                    <th nzWidth="150px" nzColumnKey="{{ 'MOBILE_NO' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Mobile No.
+                    </th>
+
+                    <th nzWidth="200px" nzColumnKey="{{ 'EMAIL_ID' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Email ID
+                    </th>
+                </tr>
+            </thead>
+            <tbody style="text-align: center">
+                <tr *ngFor="let data of datatable.data" style="text-align: center">
+                    <td style="text-align: center; white-space: pre-line">{{data['APPLICATION_DATETIME'] |
+                        date:'dd/MM/yyyy'}}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["EMPLOYEE_CODE"]? data["EMPLOYEE_CODE"] : '-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["EMPLOYEE_NAME"]? data["EMPLOYEE_NAME"] : '-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["DESIGNATION_SHORT_CODE"] ? data["DESIGNATION_SHORT_CODE"] : '-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["PRESENT_OFFICE_ADDRESS"]? data["PRESENT_OFFICE_ADDRESS"] : '-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["GENDER"] }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["MOBILE_NO"]? data["MOBILE_NO"] : '-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["EMAIL_ID"] }}
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

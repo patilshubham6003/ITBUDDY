@@ -1,0 +1,213 @@
+<div nz-row nzType="flex">
+    <div nz-col nz-col nz-row nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6">
+        <div class="formname">
+            <b>Surrender Quarter</b>
+        </div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18" style="display: flex; justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+            <nz-form-item>
+                <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+                    (click)="showFilter()">
+                    <i nz-icon nzType="filter"></i>
+                </button>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="postsearch" (keyup)="search(true)" [(ngModel)]="searchText" nz-input
+                        placeholder="Search Record" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" id="button" (click)="search(true)" nzSearch>
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+            </nz-form-item>
+
+        </form>
+    </div>
+
+    <div nz-col nzSpan="24">
+        <div nz-row>
+            <div nz-col nzSpan="24">
+                <div class="filter {{ filterClass }}">
+                    <div class="filter-box">
+                        <form nz-form>
+                            <div nz-row>
+
+                                <div nz-col nzSpan="8">
+                                    <nz-form-item class="changemadeg">
+                                        <nz-form-label nzRequired nzNoColon>Select
+                                            Month</nz-form-label>
+                                        <nz-form-control nzErrorTip="Please Select Month">
+                                            <nz-range-picker name="month" nzMode="month" [(ngModel)]="Monthrange"
+                                                nzPlaceholder="Please select Month" nzFormat="MMM/yyyy"
+                                                (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                                <!-- <div nz-col nzSpan="7">
+                                    <nz-form-item class="chsaaa">
+                                        <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                                        <nz-form-control>
+                                            <nz-select
+                                                [nzMaxTagCount]="2"
+                                                nzShowSearch
+                                                nzAllowClear
+                                                nzPlaceHolder="Please Select Residence Type "
+                                                name="Residence Type"
+                                                nzMode="multiple"
+                                                [(ngModel)]="RESIDENCE_TYPE_ID">
+                                                <nz-option
+                                                    *ngFor="let type of ResidenceTypelist"
+                                                    [nzValue]="type.ID"
+                                                    [nzLabel]="type.TYPE">
+                                                </nz-option>
+                                            </nz-select>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div> -->
+
+                                <div nz-col nzSpan="8" style="display: flex;gap: 10px;margin-top: 31px;">
+                                    <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons"
+                                        (click)="applyFilter()">
+                                        <i nz-icon nzType="filter"></i>Apply
+                                        Filter
+                                    </button>
+                                    <button nz-button nzType="primary" class="flexicons" (click)="clearFilter()">
+                                        <i nz-icon nzType="close"></i>Clear
+                                        filter
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #DownLoadstable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '1800px', y: '360px' }"
+            [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)"
+            style="white-space: inherit">
+            <thead>
+                <tr>
+                    <th nzAlign="center" style="font-weight: bold;">View Form</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzWidth="200px">Action</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+                        [nzSortFn]="true">Employee Name</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzColumnKey="{{ 'CITY_NAME' }}" [nzSortFn]="true">
+                        City</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzColumnKey="{{ 'AREA_NAME' }}" [nzSortFn]="true">
+                        Area</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzColumnKey="{{ 'BUILDING_NAME' }}"
+                        [nzSortFn]="true">Building</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzColumnKey="{{ 'FLAT_NAME' }}" [nzSortFn]="true">
+                        Quarter</th>
+                    <th nzAlign="center" style="font-weight: bold;" nzWidth="300px">Remark</th>
+                    <th nzAlign="center" style="font-weight: bold;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of DownLoadstable.data">
+                    <td nzAlign="center">
+                        <span *ngIf="
+                data.SURRENDER_FORM != null &&
+                data.SURRENDER_FORM != ''
+              " nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+                            style="cursor: pointer; color: #1890ff"
+                            (click)="viewsurrederform(data.SURRENDER_FORM)"></span>
+                    </td>
+                    <td nzAlign="center">
+                        <a *ngIf="data.SURRENDER_CARETAKER_STATUS == 'P'" (click)="AcceptCaretaker(data)">Accept</a>
+                        <a *ngIf="data.SURRENDER_CARETAKER_STATUS == 'P'" (click)="Rejectcaretaker(data)">
+                            &nbsp;&nbsp;&nbsp;
+                            Reject</a>
+
+                        <!-- <a
+                            *ngIf="data.SURRENDER_CARETAKER_STATUS == 'A'">Send
+                            To Inspector</a> -->
+                        <span *ngIf="data.SURRENDER_CARETAKER_STATUS == 'R'" style="color:Red">Rejected</span>
+                        <span *ngIf="data.SURRENDER_CARETAKER_STATUS == 'A' && data.SURRENDER_SEND_TO_INSPECTOR == 1"
+                            style="color:Green">Sent To Inspector</span>
+                    </td>
+                    <td nzAlign="center">{{data.EMPLOYEE_NAME}}</td>
+                    <td nzAlign="center">{{data.CITY_NAME}}</td>
+                    <td nzAlign="center">{{data.AREA_NAME}}</td>
+                    <td nzAlign="center">{{data.BUILDING_NAME}}</td>
+                    <td nzAlign="center">{{data.FLAT_NAME}}</td>
+                    <td nzAlign="center">{{data.SURRENDER_CARETAKER_REMARK}}</td>
+                    <td nzAlign="center">
+                        <!-- {{data.SURRENDER_CARETAKER_STATUS}} -->
+                        <span *ngIf="data.SURRENDER_CARETAKER_STATUS == 'R'" style="color:black">Rejected</span>
+                        <span *ngIf="data.SURRENDER_CARETAKER_STATUS == 'A'" style="color:black">Approved</span>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="Acceptmodal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+    nzClosable="false" [nzFooter]="contextofrules1" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <span style="font-size: 18px; font-weight: 500">Are you sure want to
+            Accept Quarter Surrender</span>
+        <hr style="margin: 8px 0" />
+
+        <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+            *Please note that changes cannot be made after Accepting and This
+            Surrender Form Will be Sent to Inspector for further Process.
+        </p>
+
+        <!-- <p style="font-size: 13px;margin-bottom: 0px;">By clicking <b>Send for Verification</b> , you acknowledge that the information provided in your application is accurate and complete. Once submitted, you may not be able to make further changes until the verification process is complete.</p> -->
+    </ng-container>
+
+    <ng-template #contextofrules1>
+        <button nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+            style="background-color: #006699" (click)="acceptmodalcheck()">
+            Yes
+        </button>
+        <button nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+            style="background-color: #006699" (click)="cancelmodal()">
+            No
+        </button>
+    </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="RejectModalCaretaker" nzCentered="true" nzTitle="Reject Remark"
+    [nzBodyStyle]="{ padding: '0px 20px' }" nzWidth="480px" nzClosable="true" (nzOnCancel)="Cancelsurrendermodal()"
+    [nzFooter]="contextofrules2" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <div nz-row>
+            <div nz-col nzSpan="24" style="padding: 5px">
+                <nz-form-label style="padding:0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+                <nz-form-item>
+                    <nz-form-control nzRequired nzErrorTip>
+                        <textarea required maxlength="512" placeHolder="Enter The Remark"
+                            style="width: 100%; height: 100%" [(ngModel)]="CARETAKER_REMARK" name="REASON"
+                            [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #contextofrules2>
+        <button nz-button nzType="default" class="btn btn-primary" (click)="Cancelsurrendermodal()">
+            Cancel
+        </button>
+        <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="loadingRecords"
+            style="background-color: red" (click)="RejectSurrender()">
+            Reject
+        </button>
+    </ng-template>
+</nz-modal>

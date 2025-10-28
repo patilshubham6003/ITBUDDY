@@ -1,0 +1,71 @@
+<div nz-row nzType="flex" style="justify-content: space-between;">
+  <div nz-col style="margin: 0 10px 0 0;">
+    <div class="formname"> {{formTitle}}</div>
+    <!-- <h2>{{formTitle}}</h2> -->
+  </div>
+
+  <div nz-col style="display: flex;justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" nz-input placeholder="Search Records" (keyup)="keyup($event)"
+            [(ngModel)]="searchText" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" class="flexicons" (click)="search()" nzSearch><i nz-icon nzType="search"></i></button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" class="flexicons">
+          <i nz-icon nzType="plus"></i>Add New User
+        </button>
+      </nz-form-item>
+
+    </form>
+  </div>
+</div>
+<div nz-row style="margin-top: 10px;">
+  <div nz-col nzSpan="24">
+    <nz-table [nzSize]="'small'" class="my-scroll no-wrap1" nzBordered #userTable nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" (nzQueryParams)="sort($event)" [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()" [nzScroll]="{ y: '395px' }" (nzPageSizeChange)="search(true)">
+
+      <thead>
+        <tr>
+          <th nzWidth="80px" style="text-align: center;font-weight: bold;">Action</th>
+          <th nzWidth="200px" *ngFor="let column of columns" style="text-align: center;font-weight: bold;" [nzSortFn]="true" nzShowSort
+            nzColumnKey={{column[0]}}>{{column[1]}}</th>
+          <th nzColumnKey="{{'IS_ACTIVE'}}" [nzSortFn]="true" nzWidth="80px"
+            style="text-align: center;font-weight: bold;"> Status </th>
+          <!-- <th *ngFor="let column of columns" nzShowSort nzColumnKey={{column[0]}}>{{column[1]}}</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of userTable.data; let i = index;">
+          <td style="text-align: center;">
+            <a (click)="edit(data)" style="color: #1890ff;">Edit</a>
+          </td>
+          <td style="text-align: center;" *ngFor="let column of columns">{{data[column[0]]}}</td>
+          <td style="text-align: center;">
+            <i nz-icon *ngIf="data['IS_ACTIVE']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data['IS_ACTIVE']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+              <!-- <nz-switch name="Status{{i}}" nzCheckedChildren="On" nzUnCheckedChildren="Off"
+                (ngModelChange)="statusChange(data,$event)" [(ngModel)]="data.IS_ACTIVE">
+              </nz-switch> -->
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="360" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+  <ng-container *nzDrawerContent>
+    <app-user [drawerClose]="closeCallback" [drawerVisible]="drawerVisible" [data]="drawerData"></app-user>
+  </ng-container>
+</nz-drawer>

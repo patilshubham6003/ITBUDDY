@@ -1,0 +1,1235 @@
+<div>
+  <nz-steps [nzCurrent]="current" style="margin: 0px 50px">
+    <nz-step nzTitle="Applicant Information"></nz-step>
+    <nz-step nzTitle="Claim Information"></nz-step>
+  </nz-steps>
+
+  <div class="steps-content">
+    <!-- Applicant Info -->
+    <div *ngIf="current == 0">
+      <div>
+        <form nz-form #applicantMasterPages="ngForm">
+          <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Employee Name</nz-form-label
+                  >
+
+                  <nz-form-control nzErrorTip="Please Select Employee Name">
+                    <nz-select
+                      [nzOptionHeightPx]="60"
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Select Employee"
+                      (ngModelChange)="filterEmpData($event)"
+                      name="empID"
+                      [(ngModel)]="data.EMP_ID"
+                      [nzLoading]="empLoader"
+                      (keyup)="employeeSearch($event)"
+                      required
+                    >
+                      <nz-option
+                        *ngFor="let role of employee"
+                        [nzValue]="role.ID"
+                        nzLabel="{{ role.NAME }} - {{ role.EMPLOYEE_CODE }}"
+                        nzCustomContent
+                      >
+                        <div style="background-color: #fffcfc; padding: 5px">
+                          <div nz-row>
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="width: 100%; color: black; font-size: 14px"
+                            >
+                              <b
+                                >{{ role.NAME }}
+                                <small style="position: absolute; right: 0px">{{
+                                  role.EMPLOYEE_CODE
+                                }}</small></b
+                              >
+                            </div>
+
+                            <div nz-col nzSpan="24" style="font-size: 11px">
+                              <div nz-row>
+                                <div
+                                  style="
+                                    color: #b30062;
+                                    font-weight: bold;
+                                    white-space: pre-line;
+                                  "
+                                  nz-col
+                                  nzSpan="12"
+                                >
+                                  {{ role.OFFICE_NAME }}
+                                </div>
+
+                                <div nz-col nzSpan="1"></div>
+
+                                <div
+                                  style="
+                                    color: #2f08c0;
+                                    font-weight: bold;
+                                    white-space: pre-line;
+                                  "
+                                  nz-col
+                                  nzSpan="11"
+                                >
+                                  {{ role.DESIGNATION }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div
+                              nz-col
+                              nzSpan="24"
+                              style="
+                                font-size: 14px;
+                                font-weight: 500;
+                                white-space: pre-line;
+                              "
+                            >
+                              {{ role.DDO_OF_THE_OFFICIAL }}
+                            </div>
+                          </div>
+                        </div>
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="1" *ngIf="!data.EMP_ID">
+                <nz-form-item>
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button nz-button nzType="primary" (click)="add()">
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="1" *ngIf="data.EMP_ID">
+                <nz-form-item>
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button nz-button nzType="primary" (click)="edit(data)">
+                      <i nz-icon nzType="edit"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="11">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Designation</nz-form-label
+                  >
+                  <nz-form-control nzErrorTip="Enter Designation">
+                    <!-- <input
+                      nz-input
+                      maxlength="256"
+                      autocomplete="off"
+                      name="Designation"
+                      type="text"
+                      [(ngModel)]="data.DESIGNATION"
+                      placeHolder="Enter The Designation"
+                      required
+                    /> -->
+                    <nz-select
+                      nzShowSearch
+                      name="DESIGNATION_ID"
+                      [(ngModel)]="data.DESIGNATION_ID"
+                      placeHolder="Select The Designation"
+                    >
+                      <nz-option
+                        *ngFor="let designation of designationList"
+                        [nzLabel]="designation.NAME"
+                        [nzValue]="designation.ID"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="9">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Office Name</nz-form-label>
+                  <nz-form-control nzErrorTip="Enter Correct Office Name">
+                    <input
+                      nz-input
+                      autocomplete="off"
+                      maxlength="256"
+                      name="Office Name"
+                      type="text"
+                      [(ngModel)]="data.OFFICE_NAME"
+                      placeHolder="Enter The Office Name"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="9">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >DDO Of The Official</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Enter Correct DDO Of The Official"
+                  >
+                    <input
+                      nz-input
+                      maxlength="256"
+                      autocomplete="off"
+                      name="DDOOfficial"
+                      type="text"
+                      [(ngModel)]="data.DDO_OF_THE_OFFICIAL"
+                      placeHolder="Enter The DDO Of The Official"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Employee Code</nz-form-label
+                  >
+
+                  <nz-form-control nzErrorTip="Enter Correct Employee Code">
+                    <input
+                      nz-input
+                      maxlength="16"
+                      autocomplete="off"
+                      name="EmployeeCode"
+                      [(ngModel)]="data.EMPLOYEE_CODE"
+                      type="text"
+                      placeHolder="Enter Employee Code"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Basic Pay</nz-form-label>
+
+                  <nz-form-control nzErrorTip="Enter Correct Basic Pay">
+                    <nz-input-group style="width: 100%" nzAddOnBefore="₹">
+                      <input
+                        nz-input
+                        maxlength="8"
+                        autocomplete="off"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.GRADE_PAY"
+                        name="gradePay"
+                        type="text"
+                        placeHolder="Enter Employee Basic Pay"
+                        required
+                      />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Email ID </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Email ID"
+                  >
+                    <input
+                      nz-input
+                      name="commiteeemail"
+                      maxlength="256"
+                      [pattern]="emailpattern"
+                      [(ngModel)]="data.EMAIL_ID"
+                      placeHolder="Enter Email ID"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>
+                    Mobile Number
+                  </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Mobile Number"
+                  >
+                    <input
+                      nz-input
+                      name="commiteemobileno"
+                      [pattern]="mobpattern"
+                      [(ngModel)]="data.MOBILE_NO"
+                      maxlength="10"
+                      minlength="10"
+                      (keypress)="omit($event)"
+                      placeHolder="Enter Mobile Number"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Beneficiary Type
+                  </nz-form-label>
+                  <nz-form-control>
+                    <nz-radio-group
+                      name="yesno"
+                      [(ngModel)]="data.BENEFICIARY_TYPE"
+                      required
+                      (ngModelChange)="pressCS($event)"
+                    >
+                      <label nz-radio nzValue="CG">CGHS </label>
+                      <label nz-radio nzValue="CS">CS(MA)</label>
+                    </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="18">
+                <div nz-row>
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>
+                        Detailed Address Of Employee
+                      </nz-form-label>
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Please Enter Valid Address"
+                      >
+                        <textarea
+                          nz-input
+                          style="width: 100%"
+                          maxlength="256"
+                          rows="4"
+                          name="contactaddress"
+                          [(ngModel)]="data.ADDRESS"
+                          required
+                        ></textarea>
+                        <h6
+                          style="
+                            color: red;
+                            font-size: 0.67rem;
+                            font-weight: 400;
+                          "
+                          *ngIf="data.ADDRESS != undefined"
+                        >
+                          {{ data.ADDRESS.length }}/256
+                        </h6>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <div nz-row>
+                  <div nz-col nzSpan="24" *ngIf="data.BENEFICIARY_TYPE == 'CG'">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >CGHS Card Number</nz-form-label
+                      >
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Enter Correct CGHS Card Number"
+                      >
+                        <input
+                          nz-input
+                          name="CGHScardnumber"
+                          maxlength="16"
+                          [(ngModel)]="data.CGHS_CARD_NO"
+                          placeHolder="Enter CGHS Card Number"
+                          required
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="24" *ngIf="data.BENEFICIARY_TYPE == 'CG'">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon
+                        >CGHS Card Validity</nz-form-label
+                      >
+                      <nz-form-control
+                        nzErrorTip="Select Correct CGHS Card Validity"
+                      >
+                        <nz-date-picker
+                          style="width: 100%"
+                          nzFormat="dd/MM/yyyy"
+                          name="CGHScardvalidity"
+                          [(ngModel)]="data.CGHS_CARD_VALIDITY"
+                          required
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nz-spin>
+        </form>
+      </div>
+    </div>
+    <!-- Applicant Info -->
+
+    <!-- Claim Info -->
+    <div *ngIf="current == 1">
+      <form nz-form #claimMasterPage="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Relationship with Applicant</nz-form-label
+                >
+                <nz-form-control
+                  nzErrorTip="Please Select Correct Relationship with Applicant"
+                >
+                  <!-- <input nz-input autocomplete="off" name="Relation" type="text"
+                      [(ngModel)]="data.RELATION_WITH_PATIENT" placeHolder="Enter Relation" required /> -->
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    nzPlaceHolder="Select Relationship with Applicant"
+                    [(ngModel)]="data.RELATION_WITH_PATIENT"
+                    name="relation"
+                    (ngModelChange)="relationshipFilter($event)"
+                    required
+                  >
+                    <!-- <nz-option *ngFor="let relatives of relativeArray;" [nzValue]="relatives"
+                      [nzLabel]="relatives"></nz-option> -->
+                    <nz-option nzLabel="Self" nzValue="Self"></nz-option>
+                    <nz-option nzLabel="Mother" nzValue="Mother"></nz-option>
+                    <nz-option nzLabel="Father" nzValue="Father"></nz-option>
+                    <nz-option nzLabel="Brother" nzValue="Brother"></nz-option>
+                    <nz-option nzLabel="Sister" nzValue="Sister"></nz-option>
+                    <nz-option
+                      nzLabel="Daughter"
+                      nzValue="Daughter"
+                    ></nz-option>
+                    <nz-option nzLabel="Son" nzValue="Son"></nz-option>
+                    <nz-option nzLabel="Wife" nzValue="Wife"></nz-option>
+                    <nz-option nzLabel="Husband" nzValue="Husband"></nz-option>
+                    <!-- <nz-option nzLabel="Grand-Mother" nzValue="Grand-Mother" ></nz-option>
+                          <nz-option nzLabel="Grand-Father" nzValue="Grand-Father"></nz-option> -->
+                    <nz-option
+                      nzLabel="Father-In-Law"
+                      nzValue="Father-In-Law"
+                    ></nz-option>
+                    <nz-option
+                      nzLabel="Mother-In-Law"
+                      nzValue="Mother-In-Law"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="10">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Patient Name</nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter Correct Patient Name">
+                  <input
+                    nz-input
+                    autocomplete="off"
+                    maxlength="128"
+                    name="PatientName"
+                    type="text"
+                    [(ngModel)]="data.PATIENT_NAME"
+                    placeHolder="Enter Patient Name"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>
+                  Patient CGHS Beneficiary Number</nz-form-label
+                >
+
+                <nz-form-control
+                  nzErrorTip="Please Enter Correct Patient CGHS Beneficiary Number"
+                >
+                  <!-- <nz-input-group style="width: 100%" nzAddOnBefore="₹"> -->
+                  <input
+                    nz-input
+                    autocomplete="off"
+                    maxlength="16"
+                    [(ngModel)]="data.PATIENT_CGHS_BENEFICIERY_NO"
+                    name="cghsnumber"
+                    type="text"
+                    placeHolder="Enter Patient CGHS Beneficiary Number"
+                    required
+                  />
+                  <!-- </nz-input-group> -->
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="16">
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Nature Of Treatment/Test</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Enter Correct Nature Of Treatment/Test"
+                    >
+                      <textarea
+                        nz-input
+                        [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+                        name="NatureOfTreatment"
+                        placeHolder="Enter a Nature Of Treatment/Test"
+                        [(ngModel)]="data.NATURE_OF_TREATMENT"
+                        maxlength="512"
+                        required
+                      ></textarea>
+                      <h6
+                        style="color: red; font-size: 0.67rem; font-weight: 400"
+                        *ngIf="data.NATURE_OF_TREATMENT != undefined"
+                      >
+                        {{ data.NATURE_OF_TREATMENT.length }}/512
+                      </h6>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Treatment Start Date</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Select Treatment Start Date"
+                    >
+                      <nz-date-picker
+                        style="width: 100%"
+                        nzFormat="dd/MM/yyyy"
+                        (ngModelChange)="disableBillDate()"
+                        [(ngModel)]="data.TREATMENT_START_DATE"
+                        name="TreatmentStartDate"
+                        (ngModelChange)="treatEndDate()"
+                        required
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Treatment End Date</nz-form-label
+                    >
+                    <nz-form-control
+                      nzErrorTip="Please Select Treatment End Date"
+                    >
+                      <nz-date-picker
+                        style="width: 100%"
+                        [nzDisabledDate]="disabledDate2"
+                        [(ngModel)]="data.TREATMENT_END_DATE"
+                        nzFormat="dd/MM/yyyy"
+                        name="TreatmentEndDate"
+                        required
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>
+                  Bill Filling Date
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Please Select Bill Filling Date">
+                  <nz-date-picker
+                    style="width: 100%"
+                    nzFormat="dd/MM/yyyy"
+                    name="billfilldate"
+                    [(ngModel)]="data.BILL_FILIING_DATE"
+                    [nzDisabledDate]="disabledDate"
+                    required
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Is Advance Taken?</nz-form-label>
+                <nz-form-control>
+                  <nz-switch
+                    [(ngModel)]="data.IS_ADVANCE_TAKEN"
+                    name="AdvanceTaken"
+                    nzCheckedChildren="Yes"
+                    nzUnCheckedChildren="No"
+                    (ngModelChange)="isAdvanceTaken($event)"
+                  >
+                  </nz-switch>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_TAKEN == true">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Advance Amount</nz-form-label
+                >
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Advance Amount"
+                >
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      nz-input
+                      name="AdvanceAmount"
+                      maxlength="8"
+                      type="number"
+                      [(ngModel)]="data.ADVANCE_AMOUNT"
+                      placeHolder="Enter Advance Amount"
+                      required
+                    />
+                  </nz-input-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6" *ngIf="data.IS_ADVANCE_TAKEN == true">
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Date Of Advance Taken</nz-form-label
+                >
+                <nz-form-control
+                  nzErrorTip="Please Select Date Of Advance Taken"
+                >
+                  <nz-date-picker
+                    style="width: 100%"
+                    nzFormat="dd/MM/yyyy"
+                    name="dateCGHSAMASreferences"
+                    [(ngModel)]="data.ADVANCE_TAKEN_DATE"
+                    required
+                  ></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <form nz-form #hospitalFormReset="ngForm">
+            <div nz-row class="my-box">
+              <!-- <nz-spin [nzSpinning]="isSpinning"> -->
+              <!-- <div nz-col nzSpan="16" *ngIf="data.IS_ADVANCE_TAKEN == false "  ></div> -->
+
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Hospital Type</nz-form-label
+                  >
+
+                  <!-- <nz-select name="role_name" style="width: 100%;" [(ngModel)]="data.id" nzShowSearch
+                            nzPlaceHolder="Select City">
+                            <nz-option *ngFor="let role of CITY_MASTER " [nzValue]="role.ID"
+                                nzLabel="{{role.NAME}}">
+                            </nz-option>
+                        </nz-select> -->
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Hospital Type"
+                  >
+                    <nz-select
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Please Select Hospital Type "
+                      name="hospitaltype"
+                      [(ngModel)]="hospitalData.TYPE"
+                      (ngModelChange)="hospitalType($event)"
+                      required
+                    >
+                      <nz-option nzValue="E" nzLabel="Empanelled"></nz-option>
+                      <nz-option
+                        nzValue="NE"
+                        nzLabel="Non Empanelled"
+                      ></nz-option>
+                      <nz-option nzValue="G" nzLabel="Government"></nz-option>
+                      <!-- <nz-option *ngFor="let role of hospitaltype " [nzValue]="role.ID" [nzLabel]="role.NAME">
+                        </nz-option> -->
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                nzSpan="16"
+                *ngIf="
+                  hospitalData.TYPE == undefined ||
+                  hospitalData.TYPE == null ||
+                  hospitalData.TYPE == ''
+                "
+              ></div>
+
+              <div nz-col nzSpan="18" *ngIf="hospitalData.TYPE == 'E'">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Hospital Name</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Correct Hospital Name"
+                  >
+                    <nz-select
+                      name="role_name"
+                      style="width: 100%"
+                      [(ngModel)]="hospitalData.HOSPITAL_ID"
+                      nzShowSearch
+                      nzPlaceHolder="Select Hospital Name"
+                      (ngModelChange)="hospitalAddress($event)"
+                    >
+                      <nz-option
+                        *ngFor="let role of hospitalList"
+                        [nzValue]="role.ID"
+                        nzLabel="{{ role.NAME }}"
+                        required
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="18"
+                *ngIf="hospitalData.TYPE == 'NE' || hospitalData.TYPE == 'G'"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Hospital Name</nz-form-label
+                  >
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Correct Hospital Name"
+                  >
+                    <input
+                      nz-input
+                      name="hospitalname"
+                      maxlength="256"
+                      [(ngModel)]="hospitalData.NAME"
+                      placeHolder="Enter Hospital Name"
+                      required
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="16">
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzSpan="24"
+                    *ngIf="
+                      hospitalData.TYPE == undefined || hospitalData.TYPE == ''
+                    "
+                  ></div>
+                  <div
+                    nz-col
+                    nzSpan="24"
+                    *ngIf="
+                      hospitalData.TYPE == 'E' ||
+                      hospitalData.TYPE == 'NE' ||
+                      hospitalData.TYPE == 'G'
+                    "
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon>
+                        Hospital Address
+                      </nz-form-label>
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Please Enter Valid Hospital Address"
+                      >
+                        <textarea
+                          maxlength="256"
+                          nz-input
+                          style="width: 100%"
+                          rows="2"
+                          name="contactaddress"
+                          [(ngModel)]="hospitalData.ADDRESS"
+                          required
+                        ></textarea>
+                        <h6
+                          style="
+                            color: red;
+                            font-size: 0.67rem;
+                            font-weight: 400;
+                          "
+                          *ngIf="hospitalData.ADDRESS != undefined"
+                        >
+                          {{ hospitalData.ADDRESS.length }}/256
+                        </h6>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="7">
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzSpan="24"
+                    *ngIf="
+                      hospitalData.TYPE == 'NE' || hospitalData.TYPE == 'G'
+                    "
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Accreditation</nz-form-label
+                      >
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Please Select Accreditation"
+                      >
+                        <!-- <input nz-input autocomplete="off" name="accreditation" type="text"
+                                  placeHolder="Enter The Accreditation" [(ngModel)]="data.ACCREDITATION" required />
+                               -->
+                        <nz-select
+                          name="accreditation"
+                          [(ngModel)]="hospitalData.ACCREDATION"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Accreditation"
+                          required
+                        >
+                          <nz-option nzValue="N" nzLabel="NABH"></nz-option>
+                          <nz-option
+                            nzValue="NN"
+                            nzLabel="Non NABH"
+                          ></nz-option>
+                          <nz-option
+                            nzValue="SP"
+                            nzLabel="Super Speciality"
+                          ></nz-option>
+                          <!-- <nz-option *ngFor="let option of accreditation" [nzLabel]="option" [nzValue]="option"></nz-option> -->
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="24" *ngIf="hospitalData.TYPE == 'E'">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Accreditation</nz-form-label
+                    >
+                    <nz-form-control
+                      nzHasFeedback
+                      nzErrorTip="Please Select Accreditation"
+                    >
+                      <!-- <input nz-input autocomplete="off" name="accreditation" type="text"
+                              placeHolder="Enter The Accreditation" [(ngModel)]="data.ACCREDITATION" required />
+                           -->
+                      <nz-select
+                        disabled="true"
+                        name="accreditation2"
+                        [(ngModel)]="hospitalData.ACCREDATION"
+                        nzShowSearch
+                        nzAllowClear
+                        nzPlaceHolder="Select Accreditation"
+                        required
+                      >
+                        <nz-option nzValue="N" nzLabel="NABH"></nz-option>
+                        <nz-option nzValue="NN" nzLabel="Non NABH"></nz-option>
+                        <nz-option
+                          nzValue="SP"
+                          nzLabel="Super Speciality"
+                        ></nz-option>
+                        <!-- <nz-option *ngFor="let option of accreditation" [nzLabel]="option" [nzValue]="option"></nz-option> -->
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div
+                nz-col
+                nzSpan="1"
+                *ngIf="
+                  hospitalData.TYPE == 'NE' ||
+                  hospitalData.TYPE == 'G' ||
+                  hospitalData.TYPE == 'E'
+                "
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon> </nz-form-label>
+                  <nz-form-control>
+                    <button
+                      *ngIf="!hospitalData.ID"
+                      nz-button
+                      nzType="primary"
+                      (click)="addHospital(false, hospitalFormReset)"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                    <button
+                      *ngIf="hospitalData.ID"
+                      nz-button
+                      nzType="primary"
+                      (click)="addHospital(false, hospitalFormReset)"
+                    >
+                      <i nz-icon nzType="edit"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- </nz-spin> -->
+            </div>
+          </form>
+
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="24">
+              <nz-table
+                class="my-scroll no-wrap1"
+                nzBordered
+                [nzData]="hospitalMapList"
+                #hospitaltabledata
+                nzFrontPagination="false"
+                [nzScroll]="{ x: '1400px', y: '250px' }"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      nzColumnKey=""
+                      nzWidth="20px"
+                      nzAlign="center"
+                      style="font-weight: bold"
+                    >
+                      Action
+                    </th>
+
+                    <th
+                      nzWidth="60px"
+                      nzAlign="center"
+                      style="font-weight: bold"
+                    >
+                      Hospital Type
+                    </th>
+
+                    <th nzColumnKey="" nzWidth="150px" nzAlign="center">
+                      <p style="font-weight: bold">Hospital Name</p>
+                    </th>
+
+                    <th nzColumnKey="" nzWidth="150px" nzAlign="center">
+                      <p style="font-weight: bold">Hospital Address</p>
+                    </th>
+
+                    <th nzColumnKey="" nzWidth="45px" nzAlign="center">
+                      <p style="font-weight: bold">Accreditation</p>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody style="text-align: center">
+                  <tr
+                    *ngFor="let data of hospitaltabledata.data; let i = index"
+                    style="white-space: pre-line"
+                  >
+                    <td>
+                      <span
+                        style="cursor: pointer"
+                        nz-popconfirm
+                        nzPopconfirmTitle="Are you sure want delete?"
+                        nzPopconfirmPlacement="top"
+                        (nzOnConfirm)="confirmDeleteHospital(data)"
+                        (nzOnCancel)="cancel()"
+                      >
+                        <span
+                          nz-icon
+                          nzType="delete"
+                          nzTheme="twotone"
+                          nz-tooltip
+                          nzTooltipTitle="Delete"
+                        >
+                        </span>
+                      </span>
+                      &nbsp;
+                      <span
+                        nz-icon
+                        nzType="edit"
+                        nzTheme="twotone"
+                        nz-tooltip
+                        (click)="editHospital(data)"
+                        nzTooltipTitle="Edit"
+                      >
+                      </span>
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                      <span nz-icon *ngIf="data['TYPE'] == 'E'"
+                        >Empanelled</span
+                      >
+                      <span nz-icon *ngIf="data['TYPE'] == 'NE'"
+                        >Non Empanelled</span
+                      >
+                      <span nz-icon *ngIf="data['TYPE'] == 'G'"
+                        >Government</span
+                      >
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                      {{ data["NAME"] }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                      {{ data["ADDRESS"] }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                      <span nz-icon *ngIf="data['ACCREDATION'] == 'N'"
+                        >NAHB</span
+                      >
+                      <span nz-icon *ngIf="data['ACCREDATION'] == 'NN'"
+                        >Non NAHB</span
+                      >
+                      <span nz-icon *ngIf="data['ACCREDATION'] == 'SP'"
+                        >Super Speciality</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Name Of The Bank</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid Name Of The Bank"
+                >
+                  <input
+                    nz-input
+                    name="bankname"
+                    maxlength="256"
+                    [(ngModel)]="data.BANK_NAME"
+                    placeHolder="Enter Name Of The Bank"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon> SB Account Number</nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid SB Account Number"
+                >
+                  <input
+                    nz-input
+                    name="accnumber"
+                    maxlength="128"
+                    [(ngModel)]="data.BANK_ACCOUNT_NO"
+                    placeHolder="Enter SB Account Number"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Branch IFSC Code </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid Branch IFSC Code"
+                >
+                  <input
+                    nz-input
+                    name="branchcode"
+                    maxlength="32"
+                    [(ngModel)]="data.IFSC_CODE"
+                    placeHolder="Enter SB Account Number"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Branch MICR Code </nz-form-label>
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Please Enter Valid Branch MICR Code"
+                >
+                  <input
+                    nz-input
+                    name="micrcode"
+                    maxlength="32"
+                    [(ngModel)]="data.MICR_CODE"
+                    placeHolder="Enter Branch MICR Code"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Ward Entitlement </nz-form-label>
+                <nz-form-control>
+                  <nz-radio-group
+                    name="wardentitlement"
+                    [(ngModel)]="data.WARD_TYPE"
+                  >
+                    <label nz-radio nzValue="P">Pvt. </label>
+                    <label nz-radio nzValue="S">Semi Pvt.</label>
+                    <label nz-radio nzValue="G">General</label>
+                  </nz-radio-group>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label nzNoColon> Treatment Type </nz-form-label>
+                <nz-form-control>
+                  <nz-checkbox-wrapper style="width: 100%">
+                    <div nz-row>
+                      <div nz-col nzSpan="24">
+                        <label
+                          nz-checkbox
+                          (nzCheckedChange)="onItemChecked($event)"
+                          name="treattype2"
+                          [(ngModel)]="TREATEMENT_TYPE1"
+                          >OPD Treatment / Test Entitled</label
+                        >
+                      </div>
+                      <div nz-col nzSpan="24">
+                        <label
+                          nz-checkbox
+                          (nzCheckedChange)="onItemChecked2($event)"
+                          name="treattype3"
+                          [(ngModel)]="TREATEMENT_TYPE2"
+                          >Indoor Treatment</label
+                        >
+                      </div>
+                    </div>
+                  </nz-checkbox-wrapper>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-spin>
+      </form>
+    </div>
+    <!-- Claim Info -->
+
+    <div class="footer">
+      <button
+        [nzLoading]="isSpinning"
+        nz-button
+        nzType="default"
+        (click)="pre()"
+        *ngIf="current > 0"
+        style="margin-right: 8px"
+      >
+        <span>Previous</span>
+      </button>
+
+      <button
+        [nzLoading]="isSpinning"
+        *ngIf="current < 3 && data.ID"
+        type="button"
+        class="ant-btn ant-btn-primary"
+        nz-button
+        (click)="next()"
+      >
+        <span> Next </span>
+      </button>
+
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current == 0"
+          nzType="primary"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          (click)="HODempSave(false)"
+        >
+          <span>Save Applicant Info. & Next </span>
+        </button>
+      </span>
+      <!-- <span *ngIf="data.ID">
+            <button [nzLoading]="isSpinning"  type="button" class="ant-btn ant-btn-primary" nz-button
+            (click)="next()">
+            <span>Next </span>
+          </button>
+        </span> -->
+      <!-- <button nz-button nzType="default" (click)="pre()" *ngIf="current > 1"  style="margin-right: 8px">
+                  <span>Previous</span>
+                </button> -->
+      <span>
+        <button
+          [nzLoading]="isSpinning"
+          *ngIf="current == 1"
+          nzType="primary"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          (click)="claimSave(false)"
+        >
+          <span>Save & Finish </span>
+        </button>
+      </span>
+      <!-- <button nz-button nzType="default" (click)="pre()" *ngIf="current > 2"  style="margin-right: 8px">
+                  <span>Previous</span>
+                </button> -->
+
+      <button
+        type="button"
+        nz-button
+        (click)="close()"
+        class="ant-btn"
+        style="margin-right: 8px"
+      >
+        <span>Cancel</span>
+      </button>
+    </div>
+  </div>
+  <!-- <div class="header">
+          <button type="button" nz-button (click)="close(applicantMasterPages,claimMasterPage,queMasterPage,checkListMasterPage)" class="ant-btn"
+          style="margin-right: 8px;"><i nz-icon nzType="close" nzTheme="outline"></i></button>        
+        </div> -->
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

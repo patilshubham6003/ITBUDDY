@@ -1,0 +1,924 @@
+<div *ngIf="transferallounceorder != undefined">
+  <!-- <form nz-form> -->
+  <div
+    style="padding-left: 7%; margin-right: 2%; height: 75vh; overflow-y: auto"
+  >
+    <div style="display: flex">
+      <div>
+        <p>Sub Bill No..............</p>
+      </div>
+      <div style="margin-left: 400px">
+        <p>T.R.25B (GAR-14B)</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 20px; text-align: center">
+      TRAVELLING ALLOWANCE BILL FOR TRANSFER
+    </h2>
+
+    <p>
+      <b
+        ><i><u>NOTE:-</u></i></b
+      >
+      This bill should be prepared in duplicate-one for payment and the other as
+      office copy.
+    </p>
+    <p style="font-size: 11px; text-align: left">To,</p>
+    <p
+      *ngIf="DDO_Master_Data.length > 0"
+      style="font-size: 11px; text-align: left"
+    >
+      {{ DDO_Master_Data?.[0]['DESCRIPTION'] }}
+    </p>
+    <p
+      *ngIf="DDO_Master_Data.length > 0"
+      style="font-size: 11px; text-align: left"
+    >
+      {{ DDO_Master_Data?.[0]['LOCATION'] }}
+    </p>
+    <p style="text-align: center">
+      <u> <b> PART-A-( To be filled by the government servant) </b></u>
+    </p>
+
+    <div nz-row>
+      <div nz-col nzSpan="12" style="white-space: pre-line">
+        <p>
+          1. Name of Govt. Servant:&nbsp;<b>{{ transferallounceorder.NAME }}</b>
+        </p>
+      </div>
+      <div nz-col nzSpan="1"></div>
+      <div nz-col nzSpan="11" style="white-space: pre-line">
+        <p>
+          2. Designation:&nbsp;<b>{{ transferallounceorder.DESIGNATION }}</b>
+        </p>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="12" style="white-space: pre-line">
+        <!-- <p> -->
+        3. Pay at the time of transfer:&nbsp;
+        <div
+          style="width: 70px; border-bottom: 1px solid; display: inline-block"
+        >
+          {{ transferallounceorder.GRADE_PAY }}
+        </div>
+        <b>(Basic)</b><br />
+        <div
+          style="
+            margin-left: 206px;
+            width: 70px;
+            border-bottom: 1px solid;
+            display: inline-block;
+          "
+        >
+          {{ transferallounceorder.GRADE_PAY_LEVEL }}
+        </div>
+        <b>(Grade pay)</b>
+        <!-- </p> -->
+      </div>
+      <div nz-col nzSpan="1"></div>
+      <div nz-col nzSpan="11" style="white-space: pre-line">
+        <p>
+          4. Headquarter:
+          <b>Old:&nbsp;{{ transferallounceorder.HEADQUARTERS_NAME }}</b
+          ><br /><b style="margin-left: 112px"
+            >New:&nbsp;{{ transferallounceorder.NEW_HEADQUARTERS_NAME }}</b
+          >
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <p>
+        5. Residential address:
+        <b>OLD:-&nbsp;{{ transferallounceorder.ADDRESS }} </b> <br /><b
+          style="margin-left: 157px"
+          >NEW:-&nbsp;{{ transferallounceorder.NEW_ADDRESS }}</b
+        >
+      </p>
+    </div>
+    <div>
+      <p>
+        6. Particulars of the members of the family as on the date of transfer
+        [vide S.R.2(8)]:
+      </p>
+    </div>
+
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th style="text-align: center">Sr.NO.</th>
+          <th style="text-align: center; width: 325px">Name</th>
+          <th style="text-align: center; width: 90px">Age</th>
+          <th style="text-align: center">Relationship with Govt. servant</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of relationdataorder; let i = index">
+          <td style="text-align: center">
+            <b>{{ i + 1 }}</b>
+          </td>
+          <td style="text-align: center">{{ data.NAME_OF_FAMILY_MEMBER }}</td>
+          <td style="text-align: center">{{ data.AGE }}</td>
+          <td style="text-align: center">{{ data.RELATIONSHIP }}</td>
+        </tr>
+        <tr *ngIf="relationdataorder.length == 0">
+          <td style="text-align: center" colspan="4">NA</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 10px; margin-bottom: 10px">
+      <p>
+        7. Details of journey(s) performed by the Govt. servant as well as
+        member of his family:
+      </p>
+    </div>
+
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th class="c" colspan="2">Departure</th>
+          <th class="c" colspan="2">Arrival</th>
+          <th class="c" rowspan="2" style="width: 110px">
+            Mode of travel and class of accommodation used
+          </th>
+          <th class="c" rowspan="2">No. of fares</th>
+          <th class="c" rowspan="2" style="width: 90px">Fare paid</th>
+          <th class="c" rowspan="2" style="width: 110px">
+            Distance in Kms. By road
+          </th>
+        </tr>
+        <tr>
+          <th class="c">Date & time</th>
+          <th class="c" style="width: 90px">From</th>
+          <th class="c" style="width: 90px">Date & Time</th>
+          <th class="c" style="width: 90px">To</th>
+        </tr>
+
+        <tr>
+          <th class="c">1</th>
+          <th class="c">2</th>
+          <th class="c">3</th>
+          <th class="c">4</th>
+          <th class="c">5</th>
+          <th class="c">6</th>
+          <th class="c">7</th>
+          <th class="c">8</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          style="height: 35px; text-align: center"
+          *ngFor="let data of journeydetails; let i = index"
+        >
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FROM_DATETIME"] | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DEPARTURE_FROM"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TO_DATETIME"] | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["ARRIVAL_TO"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TRAVEL_MODE_NAME"] }}
+          </td>
+          <!-- <td style="text-align: center;white-space: pre-line; ">{{data['TRAVEL_CLASS_NAME']}}</td> -->
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NO_OF_FAIRS"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FAIR_PAID"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DISTANCE_BY_ROAD"] }}
+          </td>
+        </tr>
+        <tr *ngIf="journeydetails.length == 0">
+          <td style="text-align: center" colspan="8">NA</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+
+    <!-- <div style="text-align: center;"> <b> :: page 2 ::</b></div>  -->
+    <p>
+      8. Transportation charges of personal effects (Money receipts to be
+      attached):
+    </p>
+
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th rowspan="2" style="text-align: center">Date</th>
+          <th rowspan="2" style="text-align: center">Mode</th>
+          <th colspan="2" style="text-align: center">Station</th>
+          <th rowspan="2" style="text-align: center">Weight in Kgs.</th>
+          <th colspan="1" style="text-align: center">Rate</th>
+          <th colspan="1" style="text-align: center">Amount</th>
+          <th rowspan="2" style="text-align: center">Remarks</th>
+        </tr>
+        <tr>
+          <th style="width: 90px" style="text-align: center">From</th>
+          <th style="width: 90px" style="text-align: center">To</th>
+          <th style="width: 90px" style="text-align: center">Rs.</th>
+          <th style="width: 90px" style="text-align: center">Rs.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of tranferchnagesorder; let i = index">
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DATE"] | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TRANSPORTATION_MODE_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FROM_STATION"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TO_STATION"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["WEIGHT_IN_KG"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["RATE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["AMOUNT"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["REMARKS"] }}
+          </td>
+        </tr>
+        <tr *ngIf="tranferchnagesorder.length == 0">
+          <td style="text-align: center" colspan="8">NA</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <div>
+      <p>
+        9. Transportation charges of personal conveyance(money-receipts to be
+        attached):<br />
+        &nbsp; &nbsp;(a) Mode of transport and station to which transported :
+        <b>{{ transferallounceorder.TRAVEL_MODE_NAME }}</b> <br />
+        &nbsp; &nbsp;(b) Amount :<b>{{ transferallounceorder.AMOUNT }}</b>
+      </p>
+    </div>
+    <div>
+      <p>
+        10. Amount of advance, if any, drawn : Rs.
+        <u
+          ><b>{{ transferallounceorder.ADVANCED_AMOUNT }}</b></u
+        >
+      </p>
+    </div>
+    <div>
+      <p>
+        11. Particulars of journey(s) for which higher class of accommodation
+        that the one to which the Govt. servant is entitled was used.
+      </p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2" style="width: 90px" style="text-align: center">
+            Date
+          </th>
+          <th colspan="2" style="width: 300px" style="text-align: center">
+            Name of places
+          </th>
+          <th rowspan="2" style="text-align: center">
+            Mode of conveyance used
+          </th>
+          <th rowspan="2" style="text-align: center">
+            Class to which entitled
+          </th>
+          <th rowspan="2" style="text-align: center">
+            Class by which travelled
+          </th>
+          <th rowspan="2" style="text-align: center">Fare of entitled class</th>
+        </tr>
+        <tr>
+          <th style="text-align: center">From</th>
+          <th style="width: 100px" style="text-align: center">To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of accommodation; let i = index">
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DATE"] | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FROM_PLACE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TO_PLACE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TRAVEL_MODE_NAME"] }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["ENTITLED_CLASS_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TRAVELLED_CLASS_NAME"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FARE_OF_ENTITLED_CLASS"] }}
+          </td>
+        </tr>
+        <tr *ngIf="accommodation.length == 0">
+          <td style="text-align: center" colspan="7">NA</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <div>
+      If the journey by higher class of accommodation has been performed with
+      the apporval of the competent authority, No. & date of the sanction may be
+      quoted. <br />
+    </div>
+    <br />
+    <div>
+      <p>
+        12. Details of journey(s) performed by road between places connected by
+        rail :
+      </p>
+    </div>
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th rowspan="2" style="text-align: center; width: 18%">Date</th>
+          <th colspan="2" style="text-align: center">Name of places</th>
+          <th rowspan="2" style="text-align: center; width: 20%">
+            Fare paid Rs.
+          </th>
+        </tr>
+        <tr>
+          <th style="text-align: center">From</th>
+          <th style="text-align: center">To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of railorder; let i = index">
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DATE"] | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FROM_PLACE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["TO_PLACE"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FARE_PAID"] }}
+          </td>
+        </tr>
+        <tr *ngIf="railorder.length == 0">
+          <td style="text-align: center" colspan="4">NA</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <div>
+      <p style="margin-left: 70px">
+        Certified that the information as given above, is true to the best of my
+        knowledge and belief.
+      </p>
+    </div>
+    <br />
+
+    <div>
+      <p>Date :</p>
+    </div>
+    <div style="margin-left: 490px">
+      <p>
+        <b
+          >{{ transferallounceorder.NAME }} ,
+          {{ transferallounceorder.DESIGNATION }}</b
+        >
+      </p>
+      <p>Name, Designation</p>
+    </div>
+  </div>
+  <!-- </form> -->
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Travelling Allowance Bill For Transfer'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table2">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-size: 14px;
+              font-family: Arial, Helvetica, sans-serif;
+            "
+          >
+            <div style="display: flex">
+              <div>
+                <p>Sub Bill No..............</p>
+              </div>
+              <div style="margin-left: 400px">
+                <p>T.R.25B (GAR-14B)</p>
+              </div>
+            </div>
+
+            <h2 style="margin-top: 20px; text-align: center">
+              TRAVELLING ALLOWANCE BILL FOR TRANSFER
+            </h2>
+
+            <p>
+              <b
+                ><i><u>NOTE:-</u></i></b
+              >
+              This bill should be prepared in duplicate-one for payment and the
+              other as office copy.
+            </p>
+            <p style="font-size: 11px; text-align: left">To,</p>
+            <p
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 11px; text-align: left"
+            >
+              {{ DDO_Master_Data?.[0]['DESCRIPTION'] }}
+            </p>
+            <p
+              *ngIf="DDO_Master_Data.length > 0"
+              style="font-size: 11px; text-align: left"
+            >
+              {{ DDO_Master_Data?.[0]['LOCATION'] }}
+            </p>
+            <p style="text-align: center">
+              <u> <b> PART-A-( To be filled by the government servant) </b></u>
+            </p>
+
+            <div nz-row>
+              <div nz-col nzSpan="12" style="white-space: pre-line">
+                <p>
+                  1. Name of Govt. Servant:&nbsp;<b>{{
+                    transferallounceorder.NAME
+                  }}</b>
+                </p>
+              </div>
+              <div nz-col nzSpan="1"></div>
+              <div nz-col nzSpan="11" style="white-space: pre-line">
+                <p>
+                  2. Designation:&nbsp;<b>{{
+                    transferallounceorder.DESIGNATION
+                  }}</b>
+                </p>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="12" style="white-space: pre-line">
+                <!-- <p> -->
+                3. Pay at the time of transfer:&nbsp;
+                <div
+                  style="
+                    width: 70px;
+                    border-bottom: 1px solid;
+                    display: inline-block;
+                  "
+                >
+                  {{ transferallounceorder.GRADE_PAY }}
+                </div>
+                <b>(Basic)</b><br />
+                <div
+                  style="
+                    margin-left: 188px;
+                    width: 70px;
+                    border-bottom: 1px solid;
+                    display: inline-block;
+                  "
+                >
+                  {{ transferallounceorder.GRADE_PAY_LEVEL }}
+                </div>
+                <b>(Grade pay)</b>
+                <!-- </p> -->
+              </div>
+              <div nz-col nzSpan="1"></div>
+              <div nz-col nzSpan="11" style="white-space: pre-line">
+                <p>
+                  4. Headquarter:
+                  <b>Old:&nbsp;{{ transferallounceorder.HEADQUARTERS_NAME }}</b
+                  ><br /><b style="margin-left: 102px"
+                    >New:&nbsp;{{
+                      transferallounceorder.NEW_HEADQUARTERS_NAME
+                    }}</b
+                  >
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <p>
+                5. Residential address:
+                <b>OLD:-&nbsp;{{ transferallounceorder.ADDRESS }} </b> <br /><b
+                  style="margin-left: 157px"
+                  >NEW:-&nbsp;{{ transferallounceorder.NEW_ADDRESS }}</b
+                >
+              </p>
+            </div>
+            <div>
+              <p>
+                6. Particulars of the members of the family as on the date of
+                transfer [vide S.R.2(8)]:
+              </p>
+            </div>
+
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th style="text-align: center">Sr.NO.</th>
+                  <th style="text-align: center; width: 325px">Name</th>
+                  <th style="text-align: center; width: 90px">Age</th>
+                  <th style="text-align: center">
+                    Relationship with Govt. servant
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let data of relationdataorder; let i = index">
+                  <td style="text-align: center">
+                    <b>{{ i + 1 }}</b>
+                  </td>
+                  <td style="text-align: center">
+                    {{ data.NAME_OF_FAMILY_MEMBER }}
+                  </td>
+                  <td style="text-align: center">{{ data.AGE }}</td>
+                  <td style="text-align: center">{{ data.RELATIONSHIP }}</td>
+                </tr>
+                <tr *ngIf="relationdataorder.length == 0">
+                  <td style="text-align: center" colspan="4">NA</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top: 10px; margin-bottom: 10px">
+              <p>
+                7. Details of journey(s) performed by the Govt. servant as well
+                as member of his family:
+              </p>
+            </div>
+
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th class="c" colspan="2">Departure</th>
+                  <th class="c" colspan="2">Arrival</th>
+                  <th class="c" rowspan="2" style="width: 110px">
+                    Mode of travel and class of accommodation used
+                  </th>
+                  <th class="c" rowspan="2">No. of fares</th>
+                  <th class="c" rowspan="2" style="width: 90px">Fare paid</th>
+                  <th class="c" rowspan="2" style="width: 110px">
+                    Distance in Kms. By road
+                  </th>
+                </tr>
+                <tr>
+                  <th class="c">Date & time</th>
+                  <th class="c" style="width: 90px">From</th>
+                  <th class="c" style="width: 90px">Date & Time</th>
+                  <th class="c" style="width: 90px">To</th>
+                </tr>
+
+                <tr>
+                  <th class="c">1</th>
+                  <th class="c">2</th>
+                  <th class="c">3</th>
+                  <th class="c">4</th>
+                  <th class="c">5</th>
+                  <th class="c">6</th>
+                  <th class="c">7</th>
+                  <th class="c">8</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  style="height: 35px; text-align: center"
+                  *ngFor="let data of journeydetails; let i = index"
+                >
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_DATETIME"] | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DEPARTURE_FROM"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_DATETIME"] | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["ARRIVAL_TO"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVEL_MODE_NAME"] }}
+                  </td>
+                  <!-- <td style="text-align: center;white-space: pre-line; ">{{data['TRAVEL_CLASS_NAME']}}</td> -->
+
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["NO_OF_FAIRS"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FAIR_PAID"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DISTANCE_BY_ROAD"] }}
+                  </td>
+                </tr>
+                <tr *ngIf="journeydetails.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+
+            <!-- <div style="text-align: center;"> <b> :: page 2 ::</b></div>  -->
+            <p>
+              8. Transportation charges of personal effects (Money receipts to
+              be attached):
+            </p>
+
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th rowspan="2" style="text-align: center">Date</th>
+                  <th rowspan="2" style="text-align: center">Mode</th>
+                  <th colspan="2" style="text-align: center">Station</th>
+                  <th rowspan="2" style="text-align: center">Weight in Kgs.</th>
+                  <th colspan="1" style="text-align: center">Rate</th>
+                  <th colspan="1" style="text-align: center">Amount</th>
+                  <th rowspan="2" style="text-align: center">Remarks</th>
+                </tr>
+                <tr>
+                  <th style="width: 90px" style="text-align: center">From</th>
+                  <th style="width: 90px" style="text-align: center">To</th>
+                  <th style="width: 90px" style="text-align: center">Rs.</th>
+                  <th style="width: 90px" style="text-align: center">Rs.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of tranferchnagesorder; let i = index">
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DATE"] | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRANSPORTATION_MODE_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_STATION"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_STATION"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["WEIGHT_IN_KG"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["RATE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["AMOUNT"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["REMARKS"] }}
+                  </td>
+                </tr>
+                <tr *ngIf="tranferchnagesorder.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <div>
+              <p>
+                9. Transportation charges of personal conveyance(money-receipts
+                to be attached):<br />
+                &nbsp; &nbsp;(a) Mode of transport and station to which
+                transported :
+                <b>{{ transferallounceorder.TRAVEL_MODE_NAME }}</b> <br />
+                &nbsp; &nbsp;(b) Amount :<b>{{
+                  transferallounceorder.AMOUNT
+                }}</b>
+              </p>
+            </div>
+            <div>
+              <p>
+                10. Amount of advance, if any, drawn : Rs.
+                <u
+                  ><b>{{ transferallounceorder.ADVANCED_AMOUNT }}</b></u
+                >
+              </p>
+            </div>
+            <div>
+              <p>
+                11. Particulars of journey(s) for which higher class of
+                accommodation that the one to which the Govt. servant is
+                entitled was used.
+              </p>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th
+                    rowspan="2"
+                    style="width: 90px"
+                    style="text-align: center"
+                  >
+                    Date
+                  </th>
+                  <th
+                    colspan="2"
+                    style="width: 300px"
+                    style="text-align: center"
+                  >
+                    Name of places
+                  </th>
+                  <th rowspan="2" style="text-align: center">
+                    Mode of conveyance used
+                  </th>
+                  <th rowspan="2" style="text-align: center">
+                    Class to which entitled
+                  </th>
+                  <th rowspan="2" style="text-align: center">
+                    Class by which travelled
+                  </th>
+                  <th rowspan="2" style="text-align: center">
+                    Fare of entitled class
+                  </th>
+                </tr>
+                <tr>
+                  <th style="text-align: center">From</th>
+                  <th style="width: 100px" style="text-align: center">To</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of accommodation; let i = index">
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DATE"] | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVEL_MODE_NAME"] }}
+                  </td>
+
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["ENTITLED_CLASS_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TRAVELLED_CLASS_NAME"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FARE_OF_ENTITLED_CLASS"] }}
+                  </td>
+                </tr>
+                <tr *ngIf="accommodation.length == 0">
+                  <td style="text-align: center" colspan="7">NA</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <div>
+              If the journey by higher class of accommodation has been performed
+              with the apporval of the competent authority, No. & date of the
+              sanction may be quoted. <br />
+            </div>
+            <br />
+            <div>
+              <p>
+                12. Details of journey(s) performed by road between places
+                connected by rail :
+              </p>
+            </div>
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th rowspan="2" style="text-align: center">Date</th>
+                  <th colspan="2" style="text-align: center">Name of places</th>
+                  <th rowspan="2" style="text-align: center">Fare paid Rs.</th>
+                </tr>
+                <tr>
+                  <th style="text-align: center">From</th>
+                  <th style="text-align: center">To</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of railorder; let i = index">
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["DATE"] | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FROM_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["TO_PLACE"] }}
+                  </td>
+                  <td style="text-align: center; white-space: pre-line">
+                    {{ data["FARE_PAID"] }}
+                  </td>
+                </tr>
+                <tr *ngIf="railorder.length == 0">
+                  <td style="text-align: center" colspan="4">NA</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <div>
+              <p style="margin-left: 70px">
+                Certified that the information as given above, is true to the
+                best of my knowledge and belief.
+              </p>
+            </div>
+            <br />
+
+            <div>
+              <p>Date :</p>
+            </div>
+            <div style="margin-left: 490px">
+              <p>
+                <b
+                  >{{ transferallounceorder.NAME }} ,
+                  {{ transferallounceorder.DESIGNATION }}</b
+                >
+              </p>
+              <p>Name, Designation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      printSectionId="excel-table2"
+      [useExistingCss]="true"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

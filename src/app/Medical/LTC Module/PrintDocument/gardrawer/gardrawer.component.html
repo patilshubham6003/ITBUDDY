@@ -1,0 +1,697 @@
+<div class="form1">
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <!-- <div class="my-box" style="height: 75vh; overflow-y: auto">
+        <div nz-row [nzGutter]="10"> -->
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nzSpan="7">
+          <div class="my-box" style="height: 75vh; overflow-y: auto">
+            <div nz-row>
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid"
+                      [(ngModel)]="ltcAdvanceGarMap.ADV_LTC_GAR_SIGNATURE_1"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 2</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid2"
+                      [(ngModel)]="ltcAdvanceGarMap.ADV_LTC_GAR_SIGNATURE_2"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature1($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Advance Bill Number</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="ADVANCE_BILL_NO"
+                      nz-input
+                      placeholder="Enter Bill Number"
+                      [(ngModel)]="LTCGARdata.ADVANCE_BILL_NO"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          nz-col
+          nzXs="17"
+          nzSm="17"
+          nzMd="17"
+          nzLg="17"
+          nzXl="17"
+          nzSpan="17"
+          style="height: 75vh; overflow-y: auto"
+          class="my-box"
+        >
+          <div nz-row>
+            <div nz-col nzSpan="4"></div>
+            <div nz-col nzSpan="20">
+              <p style="text-align: center; font-weight: bold">G.A.R 37</p>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="4"></div>
+            <div nz-col nzSpan="20">
+              <p style="text-align: center">
+                BILL FOR SHORT TERM ADVANCES OF THE MINISTRY/DEPARTMENT/OFFICE
+                OF
+              </p>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="4"></div>
+            <div nz-col nzSpan="20">
+              <p style="margin-top: -13px; text-align: center" class="v2">
+                FOR THE MONTH OF {{ getcurrentmonthyear() }}
+              </p>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="12"></div>
+            <div nz-col nzSpan="12">
+              <p style="margin-top: -13px; text-align: end">
+                Bill No: {{ LTCGARdata.ADVANCE_BILL_NO }}
+              </p>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="18"></div>
+            <div nz-col nzSpan="6">
+              <p style="margin-top: -13px; text-align: end">
+                Type of advance: LTC
+              </p>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="5">Grant No.-NA</div>
+            <div nz-col nzSpan="5">Major Head-NA</div>
+            <div nz-col nzSpan="5">Minor Head-NA</div>
+            <div nz-col nzSpan="5">Sub Head:NA</div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              <table style="border: 1px solid black">
+                <tr>
+                  <th>SI No.</th>
+                  <th>
+                    Section of establishment and name of incumbent width PBR
+                    folio number
+                  </th>
+                  <th>whether permanent. quasi-permanent or temporary</th>
+                  <th>Pay</th>
+                  <th>Whether surety taken</th>
+                  <th>Amount of advance in ₹</th>
+                  <th>Remarks</th>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td>6</td>
+                  <td>7</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>
+                    <b>{{ LTCGARdata.EMPLOYEE_NAME }}</b>
+                  </td>
+                  <td>{{ LTCGARdata.SERVICE_TYPE }}</td>
+                  <td>{{ LTCGARdata.GRADE_PAY_LEVEL }}</td>
+                  <td>NA</td>
+                  <td>{{ LTCGARdata.FINAL_ADVANCE_AMOUNT }}</td>
+                  <td>LTC Advance</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              <p>
+                Certifies that entries have been made in respective P.B.R.
+                folios
+              </p>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              Total Amount required for payment:₹&nbsp;{{
+                LTCGARdata.FINAL_ADVANCE_AMOUNT
+              }}
+              /-
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              Rupees (in words)-<b>{{ totalAmountInEng }}</b>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">Received Payment-DDO</div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="16"></div>
+            <div
+              style="text-align: center; font-weight: bold"
+              nz-col
+              nzSpan="8"
+            >
+              <!-- (जितेंद्र रा. चांदेकर) -->
+              <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="16"></div>
+            <div
+              style="text-align: center; font-weight: bold"
+              nz-col
+              nzSpan="8"
+            >
+              <!-- (Jitendra R Chandekar) -->
+              <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="16"></div>
+            <div style="text-align: center" nz-col nzSpan="8">
+              <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="16"></div>
+            <div
+              style="text-align: center; font-weight: bold"
+              nz-col
+              nzSpan="8"
+            >
+              <span *ngIf="POST"> {{ POST }}</span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="16"></div>
+            <div style="text-align: center" nz-col nzSpan="8">
+              <!-- राजपत्रित वेतन बिल कक्ष - २, मुंबई -->
+              <span *ngIf="OFFICE_NAME_HIN"> {{ OFFICE_NAME_HIN }}</span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="16"></div>
+            <div
+              style="text-align: center; font-weight: bold"
+              nz-col
+              nzSpan="8"
+            >
+              <!-- Gazettd Pay Bill-II, Mumbai -->
+              <span *ngIf="OFFICE_NAME"> {{ OFFICE_NAME }}</span>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div
+              nz-col
+              nzSpan="8"
+              style="text-align: center; font-weight: bold"
+            >
+              <span *ngIf="NAME_HN1"> ({{ NAME_HN1 }})</span>
+            </div>
+            <div nz-col nzSpan="13"></div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div
+              nz-col
+              nzSpan="8"
+              style="text-align: center; font-weight: bold"
+            >
+              <!-- (MUDIT SRIVASTAVA, I.R.S.) -->
+              <span *ngIf="SIGNNAME1"> ({{ SIGNNAME1 }})</span>
+            </div>
+            <div nz-col nzSpan="13"></div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div
+              nz-col
+              nzSpan="9"
+              style="text-align: center; font-weight: bold"
+            >
+              <!-- अपर आयकर आयुक्त (मुख्या.) कार्मिक, मुंबई -->
+              <span *ngIf="POST1_HIN"> {{ POST1_HIN }}</span>
+              <span *ngIf="OFFICE_NAME1_HIN"> , {{ OFFICE_NAME1_HIN }}</span>
+            </div>
+            <div nz-col nzSpan="12"></div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="9" style="text-align: center">
+              <!-- ADDl.Commissionar of Income tax (HQ) <br />(Personnel), Mumbai -->
+
+              <span *ngIf="POST1"> {{ POST1 }}</span> <br />
+              <span *ngIf="OFFICE_NAME1"> {{ OFFICE_NAME1 }}</span>
+            </div>
+            <div nz-col nzSpan="12"></div>
+          </div>
+
+          <br />
+          <div nz-row style="text-align: center; font-weight: bold">
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">(For use in pay and accounts office)</div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              Passed For Payment of
+              Rs..........................................................................
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              (Rupees...............................................................................................................................................................)
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Payment
+              through Cheque(S)
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="17"></div>
+            <div nz-col nzSpan="7">
+              No..................................................
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21">Date...............................</div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="3"></div>
+            <div nz-col nzSpan="21" style="text-align: center">
+              Pay and Accounts Officer/Cheque Drawing D.D.O.
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      *ngIf="isAdmin"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="printModel()"
+    >
+      <span>Download or Print</span>
+    </button>
+    <button
+      *ngIf="!isAdmin"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Save & Preview</span>
+    </button>
+  </div>
+
+  <nz-modal
+    [nzWidth]="getwidth()"
+    [(nzVisible)]="printOrderModalVisible"
+    nzMaskClosable="false"
+    nzClosable="false"
+    [nzContent]="printOrderModalContent"
+    [nzTitle]="'Advance GAR 37'"
+    (nzOnCancel)="printOrderModalCancel()"
+    [nzFooter]="printOrderModalFooter"
+  >
+    <ng-template #printOrderModalContent>
+      <div id="excel-table" class="form1" style="height: 450px; overflow: auto">
+        <div nz-row>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="20">
+            <p style="text-align: center; font-weight: bold">G.A.R 37</p>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="20">
+            <p style="text-align: center">
+              BILL FOR SHORT TERM ADVANCES OF THE MINISTRY/DEPARTMENT/OFFICE OF
+            </p>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="20">
+            <p style="margin-top: -13px; text-align: center" class="v2">
+              FOR THE MONTH OF {{ getcurrentmonthyear() }}
+            </p>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="12"></div>
+          <div nz-col nzSpan="12">
+            <p style="margin-top: -13px; text-align: end">
+              Bill No: {{ LTCGARdata.ADVANCE_BILL_NO }}
+            </p>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="18"></div>
+          <div nz-col nzSpan="6">
+            <p style="margin-top: -13px; text-align: end">
+              Type of advance: LTC
+            </p>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="5">Grant No.-NA</div>
+          <div nz-col nzSpan="5">Major Head-NA</div>
+          <div nz-col nzSpan="5">Minor Head-NA</div>
+          <div nz-col nzSpan="5">Sub Head:NA</div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            <table style="border: 1px solid black">
+              <tr>
+                <th>SI No.</th>
+                <th>
+                  Section of establishment and name of incumbent width PBR folio
+                  number
+                </th>
+                <th>whether permanent. quasi-permanent or temporary</th>
+                <th>Pay</th>
+                <th>Whether surety taken</th>
+                <th>Amount of advance in ₹</th>
+                <th>Remarks</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>
+                  <b>{{ LTCGARdata.EMPLOYEE_NAME }}</b>
+                </td>
+                <td>{{ LTCGARdata.SERVICE_TYPE }}</td>
+                <td>{{ LTCGARdata.GRADE_PAY_LEVEL }}</td>
+                <td>NA</td>
+                <td>{{ LTCGARdata.FINAL_ADVANCE_AMOUNT }}</td>
+                <td>LTC Advance</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            <p>
+              Certifies that entries have been made in respective P.B.R. folios
+            </p>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            Total Amount required for payment:₹&nbsp;{{
+              LTCGARdata.FINAL_ADVANCE_AMOUNT
+            }}
+            /-
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            Rupees (in words)-<b>{{ totalAmountInEng }}</b>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">Received Payment-DDO</div>
+        </div>
+
+        <div nz-row>
+          <div nz-col nzSpan="16"></div>
+          <div style="text-align: center; font-weight: bold" nz-col nzSpan="8">
+            <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="16"></div>
+          <div style="text-align: center; font-weight: bold" nz-col nzSpan="8">
+            <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="16"></div>
+          <div style="text-align: center" nz-col nzSpan="8">
+            <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="16"></div>
+          <div style="text-align: center; font-weight: bold" nz-col nzSpan="8">
+            <span *ngIf="POST"> {{ POST }}</span>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="16"></div>
+          <div style="text-align: center" nz-col nzSpan="8">
+            <span *ngIf="OFFICE_NAME_HIN"> {{ OFFICE_NAME_HIN }}</span>
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="16"></div>
+          <div style="text-align: center; font-weight: bold" nz-col nzSpan="8">
+            <span *ngIf="OFFICE_NAME"> {{ OFFICE_NAME }}</span>
+          </div>
+        </div>
+
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="8" style="text-align: center; font-weight: bold">
+            <span *ngIf="NAME_HN1"> ({{ NAME_HN1 }})</span>
+          </div>
+          <div nz-col nzSpan="13"></div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="8" style="text-align: center; font-weight: bold">
+            <span *ngIf="SIGNNAME1"> ({{ SIGNNAME1 }})</span>
+          </div>
+          <div nz-col nzSpan="13"></div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="9" style="text-align: center; font-weight: bold">
+            <span *ngIf="POST1_HIN"> {{ POST1_HIN }}</span>
+            <span *ngIf="OFFICE_NAME1_HIN"> , {{ OFFICE_NAME1_HIN }}</span>
+          </div>
+          <div nz-col nzSpan="12"></div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="9" style="text-align: center">
+            <span *ngIf="POST1"> {{ POST1 }}</span> <br />
+            <span *ngIf="OFFICE_NAME1"> {{ OFFICE_NAME1 }}</span>
+          </div>
+          <div nz-col nzSpan="12"></div>
+        </div>
+
+        <br />
+        <div nz-row style="text-align: center; font-weight: bold">
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">(For use in pay and accounts office)</div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            Passed For Payment of
+            Rs..........................................................................
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            (Rupees...............................................................................................................................................................)
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Payment
+            through Cheque(S)
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="17"></div>
+          <div nz-col nzSpan="7">
+            No..................................................
+          </div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21">Date...............................</div>
+        </div>
+        <div nz-row>
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="21" style="text-align: center">
+            Pay and Accounts Officer/Cheque Drawing D.D.O.
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #printOrderModalFooter>
+      <button nz-button nzType="default" (click)="printOrderModalCancel()">
+        Close
+      </button>
+      <button
+        nz-button
+        nzType="default"
+        [useExistingCss]="true"
+        printSectionId="excel-table"
+        ngxPrint
+      >
+        Print
+      </button>
+      <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+    </ng-template>
+  </nz-modal>
+</div>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

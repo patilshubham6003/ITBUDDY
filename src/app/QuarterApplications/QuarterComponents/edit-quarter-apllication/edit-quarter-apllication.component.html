@@ -1,0 +1,259 @@
+<div>
+  <form style="margin-top: -10px">
+    <div class="my-box">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h6 style="font-size: 13px; font-weight: 500; margin-bottom: 2px">
+            Personal Information
+          </h6>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">
+              Name</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Name">
+              <input nz-input name="demo1name" class="inputsize" [disabled]="checkItsView" required maxlength="128"
+                placeHolder="Enter Name" (keypress)="alphaOnly($event)" [(ngModel)]="data.EMPLOYEE_NAME" maxlength="128"
+                required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Email ID</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Valid Email">
+              <input nz-input autocomplete="off" class="inputsize" [disabled]="checkItsView" name="Emailid" type="text"
+                [(ngModel)]="data.EMAIL_ID" placeHolder="Enter Email ID" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Designation</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Designation">
+              <nz-select nzShowSearch nzAllowClear class="inputsize" [disabled]="checkItsView"
+                [nzLoading]="loadDesignation" nzPlaceHolder="Select Designation" name="DESIGNATION"
+                [(ngModel)]="data.DESIGNATION_ID" required>
+                <nz-option *ngFor="let desg of Designationtypes" [nzValue]="desg.ID" [nzLabel]="desg.NAME">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Mobile No.</nz-form-label>
+            <nz-form-control nzErrorTip="Enter Mobile No">
+              <input nz-input autocomplete="off" class="inputsize" [disabled]="checkItsView" name="MobileNo"
+                (keypress)="omit($event)" type="text" maxlength="10" [(ngModel)]="data.MOBILE_NO"
+                placeHolder="Enter Mobile No." required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Date of Birth</nz-form-label>
+            <nz-date-picker [nzDefaultPickerValue]="date" class="datesize" [disabled]="checkItsView" name="DOB"
+              [nzDisabledDate]="disabledDate" [(ngModel)]="data.DOB" style="width: 100%"></nz-date-picker>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Employee Code</nz-form-label>
+            <nz-form-control nzErrorTip="Enter Employee Code ">
+              <input nz-input autocomplete="off" maxlength="16" [disabled]="checkItsView" name="EmployeeCode"
+                [(ngModel)]="data.EMPLOYEE_CODE" class="inputsize" type="text" placeHolder="Employee Code" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Caste</nz-form-label>
+            <nz-form-control>
+              <nz-select name="CAST" [(ngModel)]="data.CAST" [disabled]="checkItsView" class="inputsize" nzAllowClear
+                nzShowSearch nzPlaceHolder="Select Caste">
+                <nz-option [nzValue]="'SC'" [nzLabel]="'Scheduled Caste'"></nz-option>
+                <nz-option [nzValue]="'ST'" [nzLabel]="'Scheduled Tribes'"></nz-option>
+                <nz-option [nzValue]="'GN'" [nzLabel]="'General'"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Gender</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group [(ngModel)]="data.GENDER" [disabled]="checkItsView" name="gender" nzSize="small">
+                <label nz-radio nzValue="Male" class="inputsize">Male</label>
+                <label nz-radio nzValue="Female" class="inputsize">Female</label>
+                <label nz-radio nzValue="Other" class="inputsize">Other</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+    <div class="my-box">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h6 style="font-size: 13px; font-weight: 500; margin-bottom: 2px">
+            Other Information
+          </h6>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Grade Pay Level</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Select Grade Pay Level">
+              <nz-select nzShowSearch nzAllowClear [disabled]="checkItsView" class="inputsize"
+                nzPlaceHolder="Select Grade Pay Level" name="GRASS_GRADE_PAY" [(ngModel)]="data.GRAD_PAY_LEVEL_ID"
+                required>
+                <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Basic Pay</nz-form-label>
+            <nz-form-control nzErrorTip="Enter Basic Pay">
+              <input nz-input autocomplete="off" [disabled]="checkItsView" class="inputsize" name="BASIC_PAY"
+                (keypress)="omit($event)" type="text" maxlength="12" [(ngModel)]="data.BASIC_PAY"
+                placeHolder="Enter Basic Pay" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Joining Date</nz-form-label>
+            <nz-date-picker name="JOINING_DATE" [disabled]="checkItsView" class="datesize" placeholder="Joining Date"
+              [nzDisabledDate]="disabledDate2222" [(ngModel)]="data.JOINING_DATE" style="width: 100%"></nz-date-picker>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Floor Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Floor Name">
+              <input nz-input class="inputsize" [disabled]="checkItsView" placeHolder="Enter Floor Name" name="FLOOR_ID"
+                [(ngModel)]="data.FLOOR_ID" [(ngModel)]="data.FLOOR_ID" maxlength="128" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Quarter Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Enter Quarter Name">
+              <input nz-input class="inputsize" [disabled]="checkItsView" placeHolder="Enter Quarter Name"
+                name="FLAT_ID" [(ngModel)]="data.FLAT_ID" [(ngModel)]="data.FLAT_ID" maxlength="128" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Civil List No.</nz-form-label>
+            <nz-form-control nzErrorTip="Enter Civil List No.">
+              <input nz-input autocomplete="off" [disabled]="checkItsView" maxlength="50" name="CIVIL_LIST"
+                [(ngModel)]="data.CIVIL_LIST" class="inputsize" type="text" placeHolder="Enter Civil List No."
+                required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Applied Residence Type</nz-form-label>
+            <nz-form-control>
+              <nz-select name="AppliedRank" nzShowSearch class="inputsize" nzAllowClear style="width: 100%"
+                nzPlaceHolder="Select Residence Type" [disabled]="checkItsView" nzSize="small"
+                [(ngModel)]="data.APPLIED_RESIDENCE_TYPE_ID" [nzMaxTagCount]="2" nzMode="multiple">
+                <nz-option *ngFor="let rank of ResidenceType111" [nzValue]="rank.ID" [nzLabel]="rank.TYPE">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Residence Type</nz-form-label>
+            <nz-form-control>
+              <nz-select name="ResidsidenceType111" nzShowSearch class="inputsize" nzAllowClear style="width: 100%"
+                nzPlaceHolder="Select Residence Type" [disabled]="checkItsView" nzSize="small"
+                [(ngModel)]="data.RESIDENCE_TYPE_ID">
+                <nz-option *ngFor="let rank of ResidenceType111" [nzValue]="rank.ID" [nzLabel]="rank.TYPE">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding"
+          *ngIf="data.RESIDENCE_TYPE_ID!=undefined && data.RESIDENCE_TYPE_ID && data.APPLIED_RESIDENCE_TYPE_ID!=undefined && (data.RESIDENCE_TYPE_ID!=1 && data.RESIDENCE_TYPE_ID!=2 && data.RESIDENCE_TYPE_ID!=3 && data.RESIDENCE_TYPE_ID!=4) || (data.APPLIED_RESIDENCE_TYPE_ID!=1 && data.APPLIED_RESIDENCE_TYPE_ID!=2 && data.APPLIED_RESIDENCE_TYPE_ID!=3 && data.APPLIED_RESIDENCE_TYPE_ID!=4)">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Present Pay Level Date</nz-form-label>
+            <nz-date-picker name="PRESENT_PAY_LEVEL_DATE" class="datesize" [nzDisabledDate]="disabledDate2222"
+              placeholder="Present Pay Level Date" [disabled]="checkItsView" [(ngModel)]="data.PRESENT_PAY_LEVEL_DATE"
+              style="width: 100%"></nz-date-picker>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding"
+          *ngIf="data.RESIDENCE_TYPE_ID!=undefined && data.RESIDENCE_TYPE_ID && data.APPLIED_RESIDENCE_TYPE_ID!=undefined && (data.RESIDENCE_TYPE_ID!=1 && data.RESIDENCE_TYPE_ID!=2 && data.RESIDENCE_TYPE_ID!=3 && data.RESIDENCE_TYPE_ID!=4) || (data.APPLIED_RESIDENCE_TYPE_ID!=1 && data.APPLIED_RESIDENCE_TYPE_ID!=2 && data.APPLIED_RESIDENCE_TYPE_ID!=3 && data.APPLIED_RESIDENCE_TYPE_ID!=4)">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Allotment Date</nz-form-label>
+            <nz-date-picker name="ALLOTMENT_DATE_TIME" placeholder="Allotment Date" class="datesize"
+              [(ngModel)]="data.ALLOTMENT_DATE_TIME" [disabled]="checkItsView" style="width: 100%"></nz-date-picker>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding"
+          *ngIf="data.RESIDENCE_TYPE_ID!=undefined && data.RESIDENCE_TYPE_ID && data.APPLIED_RESIDENCE_TYPE_ID!=undefined && (data.RESIDENCE_TYPE_ID!=1 && data.RESIDENCE_TYPE_ID!=2 && data.RESIDENCE_TYPE_ID!=3 && data.RESIDENCE_TYPE_ID!=4) || (data.APPLIED_RESIDENCE_TYPE_ID!=1 && data.APPLIED_RESIDENCE_TYPE_ID!=2 && data.APPLIED_RESIDENCE_TYPE_ID!=3 && data.APPLIED_RESIDENCE_TYPE_ID!=4)">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Date Of Priority</nz-form-label>
+            <nz-date-picker name="DATE_OF_PRIORITY" placeholder="Date Of
+                              Priority" [disabled]="checkItsView" class="datesize" [(ngModel)]="data.DATE_OF_PRIORITY"
+              style="width: 100%"></nz-date-picker>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding"
+          *ngIf="data.RESIDENCE_TYPE_ID!=undefined && data.RESIDENCE_TYPE_ID && data.APPLIED_RESIDENCE_TYPE_ID!=undefined && (data.RESIDENCE_TYPE_ID!=1 && data.RESIDENCE_TYPE_ID!=2 && data.RESIDENCE_TYPE_ID!=3 && data.RESIDENCE_TYPE_ID!=4) || (data.APPLIED_RESIDENCE_TYPE_ID!=1 && data.APPLIED_RESIDENCE_TYPE_ID!=2 && data.APPLIED_RESIDENCE_TYPE_ID!=3 && data.APPLIED_RESIDENCE_TYPE_ID!=4)">
+          <nz-form-item style="padding-right: 10px">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Retirement Date</nz-form-label>
+            <nz-date-picker name="RETIREMENT_DATE" class="datesize" placeholder="Retirement Date"
+              [nzDisabledDate]="disabledDate2222" [disabled]="checkItsView" [(ngModel)]="data.RETIREMENT_DATE"
+              style="width: 100%"></nz-date-picker>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Occupancy Type</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group [(ngModel)]="data.OCCUPANCY_TYPE" [disabled]="checkItsView" name="OCCUPANCY_TYPE"
+                nzSize="small">
+                <label nz-radio nzValue="P" class="inputsize">Physical</label>
+                <label nz-radio nzValue="T" class="inputsize">Technical</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon class="labelsize">Allotment Time</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group [(ngModel)]="data.CHECK_CONDITION" [disabled]="checkItsView" name="CHECK_CONDITION"
+                nzSize="small">
+                <label nz-radio nzValue="1" class="inputsize">First</label>
+                <label nz-radio nzValue="2" class="inputsize">Second</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="footer">
+  <button type="button" nz-button [nzLoading]="loadForms" (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="loadForms"
+    *ngIf="data.ID && !checkItsView" (click)="save(false)">
+    <span>Approve</span>
+  </button>
+</div>

@@ -1,0 +1,110 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<main id="main" *ngIf="!isSpinning">
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="breadcrumb-hero" style="padding: 10px 0;">
+      <div class="container">
+        <div class="breadcrumb-hero">
+          <h2 style="font-weight: 500;color: white;">About Us</h2>
+          <ol>
+            <li><a routerLink="/" style="text-decoration: None;color: white!important;">Home</a></li>
+            <li>About Us</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="work-process" class="work-process" style="padding-top: 25px;padding-bottom: 40px;">
+    <div class="container">
+      <div *ngFor="let abt of about;let i = index;">
+        <div class="row content" *ngIf="i%2 == 1" style="margin-top: 25px;">
+          <div class="col-md-5 col-xl-5 col-lg-5 col-12 col-sm-12" data-aos="fade-right" style="align-self: center;">
+            <img *ngIf="about!=undefined" src="{{img_url1}}{{abt.IMG_URL}}" alt="about" class="abimghei">
+          </div>
+          <div class="col-md-7 col-xl-7 col-lg-7 col-12 col-sm-12 pt-4" data-aos="fade-left"
+            style="align-self: center !important;">
+            <h3 *ngIf="about!=undefined" [innerHTML]="abt.TITLE" style="font-weight: 500;"></h3>
+            <p *ngIf="about!=undefined" [innerHTML]="abt.DESCRIPTION" style="text-align: justify;">
+            </p>
+          </div>
+        </div>
+        <div class="row content" *ngIf="i%2 == 0" style="margin-top: 25px;">
+          <div class="col-md-5 col-xl-5 col-lg-5 col-12 col-sm-12 order-1 order-md-2" data-aos="fade-left"
+            style="align-self: center;">
+            <img *ngIf="about!=undefined" src="{{img_url1}}{{abt.IMG_URL}}" alt="about1" class="abimghei">
+          </div>
+          <div class="col-md-7 col-xl-7 col-lg-7 col-12 col-sm-12 pt-5 order-2 order-md-1" data-aos="fade-right"
+            style="align-self: center !important;">
+            <h3 *ngIf="about!=undefined" [innerHTML]="abt.TITLE" style="font-weight: 500;"></h3>
+            <p *ngIf="about!=undefined" [innerHTML]="abt.DESCRIPTION" style="text-align: justify;">
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="skills" class="skills section-bg" style="padding-top: 37px;padding-bottom: 0px;"
+    *ngIf="vision!='' && vision!=undefined">
+    <div class="container">
+      <div class="stitle" data-aos="fade-up" style="padding-bottom: 0px;">
+        <h2>Our Vision</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-12 col-sm-12 col-lg-12 col-xl-12 pt-4 pt-lg-0 content" data-aos="fade-left">
+          <blockquote>
+            <p *ngIf="vision!=undefined" style="text-align: justify; font-weight: 400;" [innerHTML]="vision">
+            </p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="skills" class="skills section-bg" style="padding-top: 0px;padding-bottom: 25px;"
+    *ngIf="mission!='' && mission!=undefined">
+    <div class="container">
+      <div class="stitle" data-aos="fade-up">
+        <h2 style="margin-top: 15px;">Our Mission</h2>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-12 col-sm-12 col-lg-12 col-xl-12 pt-4 pt-lg-0 content" data-aos="fade-left">
+          <blockquote>
+            <p *ngIf="mission!=undefined" style="text-align: justify; font-weight: 400;" [innerHTML]="mission">
+            </p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <section id="about" class="about" style="padding-top: 20px;padding-bottom: 0px;" *ngIf="homestat!=undefined" >
+    <div class="container" style="padding-top: 15px;box-shadow: none;">
+      <div class="row" style="padding-top: 10px; padding-bottom: 10px;justify-content: center;">
+        <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
+        <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2" style="margin-bottom: 20px;justify-content: center;"
+          *ngFor="let dd of homestat">
+          <div class="mgt">
+            <img *ngIf="homestat!=undefined"  src="{{retrieveimgUrl}}countImg/{{dd.COUNT_URL}}" height="48" width="48" alt="stat">
+          </div>
+          <div class="mggg counterup" *ngIf="homestat!=undefined"  #counterElements>
+            {{dd.TOTAL_COUNT}}
+          </div>
+          <div class="sttext" *ngIf="homestat!=undefined" >
+            {{dd.TITLE}}
+          </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1"></div>
+      </div>
+    </div>
+  </section> -->
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>

@@ -1,0 +1,629 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-col nz-row nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6">
+    <div class="formname">
+      <b>Quarter Allotment</b>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="postsearch" (keyup)="search(true)" [(ngModel)]="searchText" nz-input
+            placeholder="Search Record" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <!-- <nz-form-item>
+          <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+            <i nz-icon nzType="plus"></i>Add New Downloads
+          </button>
+        </nz-form-item> -->
+    </form>
+  </div>
+</div>
+<br />
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="chsaaa bb">
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2" nzPlaceHolder="Please Select Residence Type "
+                    name="ResidenceType1" nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_IDD">
+                    <nz-option *ngFor="let type of ResidenceType111" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>City Name</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="cityid" [(ngModel)]="CITY_ID" nzAllowClear [nzMaxTagCount]="2" nzShowSearch
+                    nzMode="multiple" nzPlaceHolder="Choose city" (ngModelChange)="changecity($event)">
+                    <nz-option *ngFor="let city of cityList" [nzValue]="city.ID" [nzLabel]="city.NAME">{{ city.NAME }}
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Area Name</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="AREA_ID" [(ngModel)]="AREA_ID" nzAllowClear [nzMaxTagCount]="2" nzShowSearch
+                    nzMode="multiple" nzPlaceHolder="Choose Area" (ngModelChange)="changearea($event)">
+                    <nz-option *ngFor="let area of areaList" [nzValue]="area.ID" [nzLabel]="area.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Building Name</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2" nzMode="multiple"
+                    nzPlaceHolder="Please Select Building Name " name="Building Name" [(ngModel)]="BUILDING_ID">
+                    <nz-option *ngFor="let data of BuildingList" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="8">
+              <nz-form-item class="bb">
+                <nz-form-label nzRequired nzNoColon>Select
+                  Month</nz-form-label>
+                <nz-form-control>
+                  <nz-range-picker name="month" nzMode="month" [(ngModel)]="Monthrange"
+                    nzPlaceholder="Please select Month" nzFormat="MMM/yyyy"
+                    (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6" style="display: flex; gap: 10px; margin-top: 31px">
+              <button nz-button [nzLoading]="loadingRecords" nzType="primary" class="flexicons" (click)="applyFilter()">
+                <span class="flexicons">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </span>
+              </button>
+              <button nz-button nzType="default" class="flexicons" (click)="clearFilter()">
+                <span class="flexicons">
+                  <i nz-icon nzType="close"></i>Clear filter
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #DownLoadstable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="caretakerdata" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '2000px', y: '360px' }"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" style="white-space: inherit">
+      <thead>
+        <tr>
+          <th nzAlign="center" nzLeft>
+            <b>Action</b>
+          </th>
+          <th nzLeft nzColumnKey="{{ 'EMPLOYEE_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Employee Name</b>
+          </th>
+          <th nzAlign="center" style="width: 250px">
+            <b>Authrization Occupation Letter</b>
+          </th>
+          <th nzAlign="center">
+            <b>Allotment Final Letter</b>
+          </th>
+
+          <th nzColumnKey="{{ 'RESIDENCE_TYPE_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Residence Type</b>
+          </th>
+          <th nzColumnKey="{{ 'CITY_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>City</b>
+          </th>
+          <th nzColumnKey="{{ 'AREA_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Area</b>
+          </th>
+          <th nzColumnKey="{{ 'BUILDING_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Building</b>
+          </th>
+          <th nzColumnKey="{{ 'FLAT_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Quarter</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of DownLoadstable.data">
+          <td nzAlign="center" nzLeft>
+            <!-- <a
+              *ngIf="data.IS_APPROVED_BY_CARETAKER==null || data.IS_APPROVED_BY_CARETAKER=='' || data.IS_APPROVED_BY_CARETAKER==undefined || data.IS_APPROVED_BY_CARETAKER==0"
+              nz-button nzType="link" (click)="approveeee(data)">Approve</a> -->
+            <a *ngIf="data.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1;else elseblock"
+              style="color: green;    display: contents;">Approved</a>
+
+            <ng-template #elseblock><a *ngIf="data.INSPECTOR_TECHNICAL_STATUS=='R';else elseblock1"
+                style="    display: contents;" nz-button nzType="link" (click)="editform(data)">
+                Select Occupancy
+                <span style="color: red;">Occupancy is Rejected</span>
+
+              </a></ng-template>
+            <ng-template #elseblock1><a nz-button nzType="link" (click)="editform(data)">Select
+                Occupancy</a></ng-template>
+
+          </td>
+          <td nzAlign="center" nzLeft>
+            {{ data["EMPLOYEE_NAME"] }}
+          </td>
+          <td nzAlign="center">
+            <!-- {{ data["AUTHORISATION_OCCUPATION_LETTER"] }} -->
+            <span *ngIf="
+                data.AUTHORISATION_OCCUPATION_LETTER != null &&
+                data.AUTHORISATION_OCCUPATION_LETTER != ''
+              " nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+              style="cursor: pointer; color: #1890ff" (click)="view(data.AUTHORISATION_OCCUPATION_LETTER)"></span>
+          </td>
+          <td nzAlign="center">
+            <!-- {{ data["ALLOTMENT_FINAL_LETTER"] }} -->
+            <span *ngIf="
+                data.ALLOTMENT_FINAL_LETTER != null &&
+                data.ALLOTMENT_FINAL_LETTER != ''
+              " nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+              style="cursor: pointer; color: #1890ff" (click)="view2(data.ALLOTMENT_FINAL_LETTER)"></span>
+          </td>
+
+          <td nzAlign="center">
+            {{ data["RESIDENCE_TYPE_NAME"] }}
+          </td>
+          <td nzAlign="center">
+            {{ data["CITY_NAME"] }}
+          </td>
+          <td nzAlign="center">
+            {{ data["AREA_NAME"] }}
+          </td>
+          <td nzAlign="center">
+            {{ data["BUILDING_NAME"] }}
+          </td>
+          <td nzAlign="center">
+            {{ data["FLAT_NAME"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="accpt" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px" nzClosable="false"
+  [nzFooter]="contextofrules1" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">Are you sure want to submit</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Employee Name :</b> {{ drawerData.EMPLOYEE_NAME }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>City Name :</b> {{ drawerData.CITY_NAME }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Area Name :</b> {{ drawerData.AREA_NAME }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Bulding Name :</b> {{ drawerData.BUILDING_NAME }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Quarter Name :</b> {{ drawerData.FLAT_NAME }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Occupancy Type:</b> <span *ngIf="drawerData.OCCUPANCY_TYPE=='T'">Technical</span>
+      <span *ngIf="drawerData.OCCUPANCY_TYPE=='P'">Physical</span>
+    </p>
+
+    <p style="font-size: 14px; margin-bottom: 10px" *ngIf="drawerData.OCCUPANCY_TYPE == 'P'">
+      <b>Is physical reminder letter is signed :</b> <span
+        *ngIf="drawerData.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==0">No</span>
+      <span *ngIf="drawerData.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1">Yes</span>
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px" *ngIf="drawerData.OCCUPANCY_TYPE == 'P'">
+      <b>Deduction Remark :</b> {{ drawerData.DEDUCTION_REMARK }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px" *ngIf="drawerData.OCCUPANCY_TYPE == 'T'">
+      <b>Technical Date :</b> {{ drawerData.TECHNICAL_TAKEN_DATE_TIME | date:
+      'dd-MM-yyyy' }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px" *ngIf="drawerData.OCCUPANCY_TYPE == 'T'">
+      <b>Technical Remark :</b> {{ drawerData.TECHNICAL_REMARK }}
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px"
+      *ngIf="drawerData.OCCUPANCY_TYPE == 'P' && drawerData.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1 && drawerData.PHYSICAL_OCCUPANCY_LETTER != null && drawerData.PHYSICAL_OCCUPANCY_LETTER != '' && drawerData.PHYSICAL_OCCUPANCY_LETTER != undefined">
+      <b>physical reminder letter :</b>{{ drawerData.PHYSICAL_OCCUPANCY_LETTER
+      }} &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff" (click)="viewFinalFileUrl(drawerData.PHYSICAL_OCCUPANCY_LETTER)"></span>
+    </p>
+
+    <p *ngIf="drawerData.OCCUPANCY_TYPE == 'P' && drawerData.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1"
+      style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Accepting.
+    </p>
+
+    <!-- <p style="font-size: 13px;margin-bottom: 0px;">By clicking <b>Send for Verification</b> , you acknowledge that the information provided in your application is accurate and complete. Once submitted, you may not be able to make further changes until the verification process is complete.</p> -->
+  </ng-container>
+
+  <ng-template #contextofrules1>
+    <button nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+      style="background-color: #006699" (click)="approveupdate(drawerData)">
+      Yes
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+      style="background-color: #006699" (click)="cancel()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="400" [nzVisible]="drawerVisible"
+  [nzTitle]="'Select Occupancy'" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <div *ngIf="drawerData != undefined">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="margin-bottom: 11px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon>Select Occupancy</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group [(ngModel)]="drawerData.OCCUPANCY_TYPE" [disabled]="condition" name="OCCUPANCY_TYPE"
+                (ngModelChange)="onOccupancyTypeChange($event)">
+                <label nz-radio nzValue="P">Physical</label>
+                <label nz-radio nzValue="T">Technical</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24" *ngIf="drawerData.OCCUPANCY_TYPE == 'T'" style="margin-bottom: 11px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon>Technical Remark</nz-form-label>
+            <nz-form-control>
+              <textarea nz-input [disabled]="condition" placeholder="Enter Technical Remark"
+                [(ngModel)]="drawerData.TECHNICAL_REMARK" name="TECHNICAL_REMARK"
+                [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="drawerData.OCCUPANCY_TYPE == 'T'" style="margin-bottom: 11px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon>Select Technical Date</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker [disabled]="condition" nzFormat="dd/MM/yyyy"
+                [(ngModel)]="drawerData.TECHNICAL_TAKEN_DATE_TIME" name="TECHNICAL_TAKEN_DATE_TIME"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="drawerData.OCCUPANCY_TYPE == 'T' && drawerData.INSPECTOR_TECHNICAL_STATUS== 'A'"
+          style="margin-bottom: 11px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzNoColon>Is physically Quarter available?</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="status11111" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="drawerData.IS_PHYSICALLY_FLAT_AVAILABLE"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="drawerData.OCCUPANCY_TYPE == 'P' || drawerData.IS_PHYSICALLY_FLAT_AVAILABLE==1"
+          style="margin-bottom: 11px;">
+          <button nz-button nzType="primary" (click)="opencaretakervacationmodal()">
+            Genrate Physical Reminder Letter
+          </button>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="drawerData.OCCUPANCY_TYPE == 'P' || drawerData.IS_PHYSICALLY_FLAT_AVAILABLE==1"
+          style="margin-bottom: 11px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzNoColon>Is physical reminder letter is signed?</nz-form-label>
+            <nz-form-control>
+              <nz-switch name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="drawerData.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24"
+          *ngIf="(drawerData.OCCUPANCY_TYPE == 'P' || drawerData.IS_PHYSICALLY_FLAT_AVAILABLE==1) && drawerData.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==true"
+          style="margin-bottom: 11px;">
+          <div nz-col nzSpan="24" style="margin: 0 5px">
+            <nz-form-item class="ddd">
+              <nz-form-label nzRequired nzNoColon>Upload Signed Copy</nz-form-label>
+              <nz-form-control
+                *ngIf="drawerData.PHYSICAL_OCCUPANCY_LETTER==null || drawerData.PHYSICAL_OCCUPANCY_LETTER=='' || drawerData.PHYSICAL_OCCUPANCY_LETTER==undefined">
+
+                <input #FinalFileUrl name="FINAL_FILE_URL" type="file" (change)="FinalFileUrlUpload($event,drawerData)"
+                  required />
+
+              </nz-form-control>
+
+              <div
+                *ngIf="drawerData.PHYSICAL_OCCUPANCY_LETTER!=null && drawerData.PHYSICAL_OCCUPANCY_LETTER!='' && drawerData.PHYSICAL_OCCUPANCY_LETTER!=undefined"
+                style="
+                  overflow: hidden;
+                  font-size: 13px;
+               
+                  margin: auto;
+                  width: 100%;
+                  color: #1890ff;
+                  padding-left: 10px;
+                ">
+                {{ drawerData.PHYSICAL_OCCUPANCY_LETTER }} &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="viewFinalFileUrl(drawerData.PHYSICAL_OCCUPANCY_LETTER)"></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red"
+                  (click)="clearFinalFileUrl(drawerData.PHYSICAL_OCCUPANCY_LETTER,'physicalOccupancyLetter',drawerData)"></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar1">
+              <nz-progress [nzPercent]="percent1"></nz-progress>
+            </div>
+          </div>
+
+        </div>
+        <div nz-col nzSpan="24" *ngIf="drawerData.OCCUPANCY_TYPE == 'P' || drawerData.IS_PHYSICALLY_FLAT_AVAILABLE==1"
+          style="margin-bottom: 11px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon>Deduction Remark</nz-form-label>
+            <nz-form-control>
+              <textarea nz-input placeholder="Enter deduction Remark" [(ngModel)]="drawerData.DEDUCTION_REMARK"
+                name="DEDUCTION_REMARK" [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+      </div>
+      <div class="footerrrr">
+        <button type="button" [nzLoading]="loadingRecords" nz-button (click)="drawerClose()" class="ant-btn"
+          style="margin-right: 8px">
+          <span>Cancel</span>
+        </button>
+        <button type="button" [nzLoading]="loadingRecords" (click)="approveeee(drawerData)"
+          class="ant-btn ant-btn-primary" nz-button>
+          <span>Save & Close</span>
+        </button>
+
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [(nzVisible)]="caretakervacationmodal" [nzWidth]="1000"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '20px' }" nzMaskClosable="false" nzClosable="true"
+  nzTitle="View physical reminder letter" [nzFooter]="FooterClosee" (nzOnCancel)="cancelcaretakervacationmodal()"
+  nzOkText="View PDF">
+  <ng-container *nzModalContent>
+    <div nz-row class="my-box">
+      <div nz-col nzSpan="24">
+        <div id="printpageform1" *ngIf="drawerData!=undefined">
+
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <div
+                style="text-align:center;line-height: 10px;font-size:13px;font-family: 'Times New Roman', Times, serif !important;font-weight: bold;">
+                <div>
+                  <p>Government of India</p>
+                </div>
+                <div>
+                  <p>Ministry of Housing and Urban Affairs</p>
+                </div>
+                <div>
+                  <p>Central Public Works Department</p>
+                </div>
+                <div>
+                  <p>CPWDSewa</p>
+                </div>
+                <div>
+                  <p style="font-size:13px;">Physical Occupation
+                    Report</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="24"
+              style="margin:5px 0px;font-size:13px;font-family: 'Times New Roman', Times, serif !important;">
+              <div style="text-align:center;line-height: 10px;font-weight: bold;">
+                <div>
+                  <p style="font-size:13px;">Quarter Details</p>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzSpan="24" style="padding:5px 15px">
+              <table
+                style="width:100%;margin-bottom:20px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;"
+                class="tableborders">
+                <tr>
+                  <th style="text-align: center;">Qtr No</th>
+                  <th style="text-align: center;">Type</th>
+                  <th style="text-align: center;">Sector</th>
+                  <th style="text-align: center;">Block</th>
+                  <th style="text-align: center;">Floor</th>
+                  <th style="text-align: center;">Pool</th>
+                  <th style="text-align: center;">Locality</th>
+                  <th style="text-align: center;">DOEHID</th>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">{{drawerData.FLAT_NAME}}</td>
+                  <td style="text-align: center;">{{drawerData.RESIDENCE_TYPE_NAME}}</td>
+                  <td style="text-align: center;">-</td>
+                  <td style="text-align: center;">-</td>
+                  <td style="text-align: center;">{{drawerData.FLOOR_NAME}}</td>
+                  <td style="text-align: center;">Income Tax Pool</td>
+                  <td style="text-align: center;">{{drawerData.AREA_NAME}}</td>
+                  <td style="text-align: center;">999999</td>
+                </tr>
+              </table>
+
+              <table
+                style="width:100%;margin-bottom:20px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;"
+                class="tableborders">
+                <tr>
+                  <th style="text-align: center;width: 35px;" class="rotate" rowSpan="6"> <span>Allottee Details</span>
+                  </th>
+                  <th style="text-align: left;">Name</th>
+                  <td style="text-align: left;">{{drawerData.EMPLOYEE_NAME}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Designation</th>
+                  <td style="text-align: left;">{{drawerData.DESIGNATION}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">ID Card No.</th>
+                  <td style="text-align: left;">{{drawerData.EMPLOYEE_CODE}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Mobile</th>
+                  <td style="text-align: left;">{{drawerData.MOBILE_NO}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Email</th>
+                  <td style="text-align: left;">{{drawerData.EMAIL_ID}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Department</th>
+                  <td style="text-align: left;">{{drawerData.DDO_OF_THE_OFFICIAL}}</td>
+                </tr>
+              </table>
+
+              <table
+                style="width:100%;margin-bottom:20px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;"
+                class="tableborders">
+                <tr>
+                  <th style="text-align: center;width: 35px;" class="rotate" rowSpan="7"><span>Allotment Details</span>
+                  </th>
+                  <th style="text-align: left;">Allotment ID</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Allotment</th>
+                  <td style="text-align: left;">{{drawerData.ALLOTMENT_DATE_TIME
+                    | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Authority Slip No.</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Slip Issued Date</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Technical Occupation</th>
+                  <td style="text-align: left;">
+                    <span
+                      *ngIf="drawerData.TECHNICAL_REMARK != undefined && drawerData.TECHNICAL_REMARK != '' && drawerData.TECHNICAL_REMARK != null">{{drawerData.TECHNICAL_TAKEN_DATE_TIME
+                      | date: 'dd/MM/yyyy'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Habitable</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Physical Occupation</th>
+                  <td style="text-align: left;">{{drawerData.PHYSICAL_TAKEN_DATE_TIME
+                    | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="24" style="padding:15px 0px">
+              <div
+                style="text-align:center;line-height: 10px;font-size:12px;;font-family: 'Times New Roman', Times, serif !important;">
+                <div>
+                  <p style="font-weight: bold;">Physical Condition of the
+                    House</p>
+                </div>
+                <div>
+                  <p>Forenoon/Afternoon : Afternoon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div nz-row
+            style="margin: 40px 0px;page-break-inside: avoid;font-weight: bold;font-size:12px;;font-family: 'Times New Roman', Times, serif !important;">
+            <div nz-col nzSpan="8" style="padding: 2px 10px;">Date:{{cureeentdate
+              | date: 'dd/MM/yyyy'}} </div>
+            <div nz-col nzSpan="8"></div>
+            <div nz-col nzSpan="8" style="text-align: left;">Signature of
+              Allottee/Representative</div>
+          </div>
+
+          <!-- <div nz-row
+            style="margin: 40px 0px;page-break-inside: avoid;font-weight: bold;font-size:12px;;font-family: 'Times New Roman', Times, serif !important;">
+            <div nz-col nzSpan="8" style="padding: 2px 10px;">Date:{{cureeentdate
+              | date: 'dd/MM/yyyy'}} </div>
+            <div nz-col nzSpan="8"></div>
+            <div nz-col nzSpan="8" style="text-align: left;">
+              <div>
+                ({{username}})
+              </div>
+              <div>
+                Signature of Caretaker
+              </div>
+
+              <div>
+                Phone:{{usernumber}}
+              </div>
+              <div>
+                Email:{{useremail}}
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #FooterClosee>
+    <button nz-button nzType="default" (click)="cancelcaretakervacationmodal()"
+      style="margin-right: 8px;">Close</button>
+
+    <button nz-button nzType="primary" [nzLoading]="pdfDownloaddraft" (click)="downloadPdfdraft()">
+      Download
+    </button>
+
+    <button nz-button nzType="primary" printSectionId="printpageform1" ngxPrint [useExistingCss]="true"
+      style="margin-right: 8px; color: white !important">
+      Print
+    </button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,1025 @@
+<div nz-row nzType="flex" style="justify-content: space-between">
+  <div nz-col style="margin: 0 10px 0 0">
+    <div class="formname">
+      Quarters Database
+    </div>
+  </div>
+
+  <div nz-col style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item style="margin-right: 9px;">
+        <button nz-button nzTooltipTitle="Download Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+          (click)="convertInExcel()" style="margin-right: 6px;" [nzLoading]="loadexcel">
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button> &nbsp;
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item style="margin-right: 9px;">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="postsearch" (keyup)="search(true)" [(ngModel)]="searchText" nz-input
+            placeholder="Search Record" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" class="flexicons" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item *ngIf="roleid == 14" style="margin-right: 9px;">
+        <button nz-button nzType="primary" *ngIf="roleid != 1" (click)="flatvacantlistaddbulk()" class="flexicons">
+          Quarters vacant list
+        </button>
+      </nz-form-item>
+      <nz-form-item *ngIf="roleid != 14" style="margin-right: 0px;">
+        <button nz-button nzType="primary" (click)="add()" class="flexicons">
+          <i nz-icon nzType="plus"></i>Add New Quarter
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="chsaaa bb">
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="1" nzPlaceHolder="Select Residence Type "
+                    name="ResidenceType1" nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_IDD">
+                    <nz-option *ngFor="let type of ResidenceType111" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>City</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="cityid" [(ngModel)]="CITY_ID" nzAllowClear [nzMaxTagCount]="2" nzShowSearch
+                    nzMode="multiple" nzPlaceHolder="Select city" (ngModelChange)="changecity($event)">
+                    <nz-option *ngFor="let city of cityList" [nzValue]="city.ID" [nzLabel]="city.NAME">{{ city.NAME }}
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Area</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="AREA_ID" [(ngModel)]="AREA_ID" nzAllowClear [nzMaxTagCount]="2" nzShowSearch
+                    nzMode="multiple" nzPlaceHolder="Select Area" (ngModelChange)="changearea($event)">
+                    <nz-option *ngFor="let area of areaList" [nzValue]="area.ID" [nzLabel]="area.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Building</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2" nzMode="multiple"
+                    nzPlaceHolder="Select Building " name="Building Name" [(ngModel)]="BUILDING_ID"
+                    (ngModelChange)="buildingchange($event)">
+                    <nz-option *ngFor="let data of BuildingList" [nzValue]="data.ID" [nzLabel]="data.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Floor</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2" nzMode="multiple"
+                    nzPlaceHolder="Select Floor" name="Floodfrjhg" [(ngModel)]="FLOOR_ID">
+                    <nz-option *ngFor="let floor of FloorNo" [nzValue]="floor.ID" [nzLabel]="floor.NAME">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <!-- <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Room Type</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="Room Type" nzMode="multiple" nzShowSearch nzAllowClear style="width: 100%"
+                    nzPlaceHolder="Select Room Type" [(ngModel)]="ROOM_TYPE">
+                    <nz-option [nzValue]="'1 BHK'" [nzLabel]="'1 BHK'">
+                    </nz-option>
+                    <nz-option [nzValue]="'2 BHK'" [nzLabel]="'2 BHK'">
+                    </nz-option>
+                    <nz-option [nzValue]="'3 BHK'" [nzLabel]="'3 BHK'">
+                    </nz-option>
+                    <nz-option [nzValue]="'1 RK'" [nzLabel]="'1 RK'">
+                    </nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div> -->
+
+            <div nz-col nzSpan="6">
+              <nz-form-item class="bb">
+                <nz-form-label nzNoColon>Available Status</nz-form-label>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Available Status " name="Available Status"
+                    [(ngModel)]="AVAILABLE_STATUS">
+                    <nz-option nzValue="B" nzLabel="Booked"></nz-option>
+                    <nz-option nzValue="A" nzLabel="Available"></nz-option>
+                    <nz-option nzValue="U" nzLabel="Under Maintainance"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6" style="display: flex; gap: 10px; margin-top: 31px">
+              <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons" (click)="applyFilter()">
+                <span style="padding-top: inherit" class="flexicons">
+                  <i nz-icon nzType="filter"></i> Apply Filter
+                </span>
+              </button>
+              <button nz-button nzType="default" [nzLoading]="isSpinning" class="flexicons" (click)="clearFilter()">
+                <span style="padding-top: inherit" class="flexicons">
+                  <i nz-icon nzType="close"></i> Clear filter
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '2200px', y: '60vh' }"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" style="white-space: pre-line;">
+      <thead>
+        <tr>
+          <th nzWidth="80px" style="font-weight: bold; text-align: center">
+            Action
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center">
+            Vacant Quarter
+          </th>
+          <th nzWidth="150px" nzColumnKey="{{ 'AVAILABLE_STATUS' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Available Status
+          </th>
+          <th nzWidth="180px" nzColumnKey="{{ 'CITY_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            City Name
+          </th>
+          <th nzWidth="200px" nzColumnKey="{{ 'AREA_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Area Name
+          </th>
+          <th nzWidth="180px" nzColumnKey="{{ 'BUILDING_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Building Name
+          </th>
+          <th nzWidth="140px" nzColumnKey="{{ 'FLOOR_NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Floor
+          </th>
+          <th nzWidth="160px" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Quarter Name
+          </th>
+
+          <!-- <th nzWidth="120px" nzColumnKey="{{ 'ROOM_TYPE' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Room Type
+          </th> -->
+          <th nzWidth="150px" nzColumnKey="{{ 'RESIDENCE_TYPE_ID' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Residence Type
+          </th>
+          <th nzWidth="210px" style="font-weight: bold; text-align: center">
+            Employee Name
+          </th>
+          <th nzWidth="140px" style="font-weight: bold; text-align: center">
+            Employee Code
+          </th>
+          <th nzWidth="200px" style="font-weight: bold; text-align: center">
+            Designation
+          </th>
+          <th nzWidth="80px" nzColumnKey="{{ 'STATUS' }}" [nzSortFn]="true"
+            style="font-weight: bold; text-align: center">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of datatable.data" style="text-align: center">
+          <td style="
+              text-align: center;
+              
+              justify-content: center;
+            ">
+            <a (click)="edit(data)" style="color: #1890ff">Edit</a>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span nz-icon><nz-tag [nzColor]="'blue'"
+                *ngIf="data['TEMP_STATUS'] != 'A' && data['AVAILABLE_STATUS'] != 'A'"
+                style="cursor: pointer;font-size: 12px !important;" (click)="vacantflatlist(data)">Vacant
+                Quarter</nz-tag></span>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'B'">Booked</span>
+            <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'A'">Available</span>
+            <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'U'">Under
+              Maintenance</span>
+            <span nz-icon *ngIf="data['AVAILABLE_STATUS'] == 'NA'">Not
+              Available</span>
+
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["CITY_NAME"]? data["CITY_NAME"] : '_' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["AREA_NAME"] ? data["AREA_NAME"] : '_' }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["BUILDING_NAME"]? data["BUILDING_NAME"] : '_' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["FLOOR_NAME"]? data["FLOOR_NAME"] : '_' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["NAME"]? data["NAME"] : '_' }}
+          </td>
+          <!-- <td style="text-align: center; white-space: pre-line">
+            {{ data["ROOM_TYPE"] ? data["ROOM_TYPE"] : '_' }}
+          </td> -->
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["RESIDENCE_TYPE_NAME"]? data["RESIDENCE_TYPE_NAME"] : '_' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["EMPLOYEE_NAME"]? data["EMPLOYEE_NAME"] :'-' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["EMPLOYEE_CODE"]? data["EMPLOYEE_CODE"]:'-' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["DESIGNATION"]? data["DESIGNATION"]:'-' }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px','padding-top':'10px'
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="700" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-quarter-drawer [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+      [data]="drawerData"></app-quarter-drawer>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="800" [nzVisible]="vacancyvisible"
+  [nzTitle]="'Generate Order'" (nzOnClose)="vacancyvisibleclose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-vacancy [drawerClose]="vacancyclose111" [drawerVisible]="vacancyvisible" [data]="values"
+      [ResidenceType]="ResidenceType"></app-vacancy>
+  </ng-container>
+</nz-drawer>
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="800" [nzVisible]="drawerOrderVisible"
+  [nzTitle]="'Generate Notice'" (nzOnClose)="drawerOrderClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row class="my-box">
+        <div nz-col nzSpan="12">
+          <nz-form-item class="nzFormItem">
+            <nz-form-label nzNoColon>Residence Type</nz-form-label>
+            <nz-form-control>
+              <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Residence Type " name="Residence Type"
+                [(ngModel)]="RESIDENCE_TYPE_ID" style="width: 100%" (ngModelChange)="listOfFlat($event)">
+                <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item class="nzFormItem">
+            <nz-form-label nzNoColon>Selct Month And Year</nz-form-label>
+            <nz-form-control nzHasFeedback>
+              <nz-date-picker name="SELECTMONTH" nzMode="month" [(ngModel)]="SELECTMONTH"
+                nzPlaceholder="Select Month & Year" nzFormat="MMM/yyyy"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-table class="my-scroll no-wrap1" nzBordered #flatTable [nzFrontPagination]="false" [nzData]="flatList"
+            [nzLoading]="loadingRecords" [nzSize]="'small'">
+            <thead>
+              <tr>
+                <th style="font-weight: bold; text-align: center">Sr.No.</th>
+                <th style="font-weight: bold; text-align: center">
+                  Building No.
+                </th>
+                <th style="font-weight: bold; text-align: center">
+                  Quarter No.
+                </th>
+                <th style="font-weight: bold; text-align: center">Floor</th>
+                <th style="font-weight: bold; text-align: center">Location</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center">
+              <tr *ngFor="let data of flatTable.data; index as i" style="text-align: center">
+                <td style="text-align: center; white-space: pre-line">
+                  {{ i + 1 }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.BUILDING_NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.FLOOR_NAME }}
+                </td>
+                <td style="text-align: center; white-space: pre-line">
+                  {{ data.AREA_NAME }},{{ data.CITY_NAME }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-spin>
+
+    <div class="footer">
+      <button type="button" nz-button (click)="drawerOrderClose()" class="ant-btn" style="margin-right: 8px">
+        <span>Cancel</span>
+      </button>
+      <button type="button" class="ant-btn ant-btn-primary" nz-button (click)="generateOrder()"
+        [nzLoading]="isSpinning">
+        <span>Generate Notice</span>
+      </button>
+    </div>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [nzWidth]="getwidth()" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'Quarter Available Order'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="flatOrder">
+          <div style="
+              width: 700px;
+              padding: 3px;
+              font-family: Arial, Helvetica, sans-serif;
+              margin-left: 50px;
+            ">
+            <div nz-col nzSpan="24">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <img width="100px" height="170px" src="assets/govtOfIndia.png" alt=" failde to show " class="image" />
+                </div>
+                <div nz-col nzSpan="20" style="
+                    text-align: center;
+                    height: 170px;
+                    font-size: 13px;
+                    font-family: 'Times New Roman', Times, serif !important;
+                  ">
+                  <div>भारतसरकार</div>
+                  <div>Government Of India</div>
+                  <div>कार्यालय, प्रधानमुख्यआयकरआयुक्त, मुंबई</div>
+                  <div>OFFICE OF THE</div>
+                  <div><b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX</b></div>
+                  <div>
+                    3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20
+                  </div>
+                  <div>
+                    (022) 22012522(DIRECT), (022)2203 9131(FAX), EXTN.2331
+                  </div>
+                  <div>
+                    e-mail :
+                    <a href="mumbai.ito.hq.admin2@incometax.gov.in">
+                      mumbai.ito.hq.admin2@incometax.gov.in</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div nz-col nzSpan="24">
+              <table style="
+                  width: 100%;
+                  font-size: 13px;
+                  font-family: 'Times New Roman', Times, serif !important;
+                ">
+                <tr>
+                  <td class="forTDTH1" style="text-align: left">
+                    No.MUM/Pr.CCIT/Admn.II/{{
+                    RESIDENCE_TYPE_NAME != undefined
+                    ? RESIDENCE_TYPE_NAME
+                    : ""
+                    }}/Allotment/2023-24
+                  </td>
+                  <td class="forTDTH1">
+                    Date :- {{ currentDate | date : "dd/MM/yyyy" }}.
+                  </td>
+                </tr>
+              </table>
+              <br />
+            </div>
+
+            <div nz-col nzSpan="24" style="
+                text-align: center;
+                font-size: 13px;
+                margin: 0 20px 10px 20px;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+              <u><b>NOTICE FOR ALLOTMENT OF
+                  {{
+                  RESIDENCE_TYPE_NAME != undefined ? RESIDENCE_TYPE_NAME : ""
+                  }}
+                  QUARTERS</b></u>
+              <br />
+            </div>
+
+            <div nz-col nzSpan="24" style="
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              It is hereby brought to the notice of all eligible officials who
+              have applied for
+              {{ RESIDENCE_TYPE_NAME != undefined ? RESIDENCE_TYPE_NAME : "" }}
+              quarters that, the following quarters are available for allotment:
+            </div>
+
+            <div nz-col nzSpan="24" style="margin: 10px 20px 10px 20px">
+              <table *ngIf="flatList.length > 0" style="
+                  width: 100%;
+                  font-size: 12px;
+                  font-family: 'Times New Roman', Times, serif !important;
+                ">
+                <thead>
+                  <tr class="forTDTH">
+                    <td class="forTDTH"><b> Sr. No. </b></td>
+                    <td class="forTDTH"><b> Bldg. No. </b></td>
+                    <td class="forTDTH"><b> Qtr. No. </b></td>
+                    <td class="forTDTH"><b> Floor </b></td>
+                    <td class="forTDTH"><b> Location </b></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of flatList; let i = index" class="forTDTH">
+                    <td class="forTDTH">{{ i + 1 }}</td>
+                    <td class="forTDTH" style="white-space: pre-line">
+                      {{ data.BUILDING_NAME }}
+                    </td>
+                    <td class="forTDTH" style="white-space: pre-line">
+                      {{ data.NAME }}
+                    </td>
+                    <td class="forTDTH" style="white-space: pre-line">
+                      {{ data.FLOOR_NAME }}
+                    </td>
+                    <td class="forTDTH" style="white-space: pre-line">
+                      {{ data.AREA_NAME }},{{ data.CITY_NAME }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div nz-col nzSpan="24" style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+              2.&nbsp;&nbsp;&nbsp; The officials who have filed application for
+              fresh allotment of quarters/change of quarters need to file their
+              “specific preferences (i.e. Quarter no./Building/Location wise, as
+              mentioned above)” within 7 working days /on or before
+              {{ currentDate | date : "dd/MM/yyyy" }} from the date of notice of
+              allotment issued (i.e., beginning from the day falling next to the
+              date of notice) by this office, in order to be considered for
+              allotment of quarters either in physical form in the tapal of the
+              O/o. ITO(HQ)Admn. II, Mumbai, or vide mail at
+              <u><a href="mumbai.ito.hq.admin2@incometax.gov.in.">
+                  mumbai.ito.hq.admin2@incometax.gov.in.</a></u>.In case they fail to file their specific preferences,
+              they will
+              not be considered for allotment of the above quarters. The updated
+              list of applicants eligible for allotment of
+              {{ RESIDENCE_TYPE_NAME != undefined ? RESIDENCE_TYPE_NAME : "" }}
+              Quarters is enclosed. The waiting-cum-seniority list is updated by
+              deleting the names of the officials who have not opted for any
+              accommodation during the past one year. The list is updated
+              following the provision of Rule 8 of the Notification dated
+              {{ currentDate | date : "dd/MM/yyyy" }}. issued by the Central
+              Board of Direct Taxes(Department of Revenue) Ministry of Finance,
+              New Delhi.
+            </div>
+
+            <div nz-col nzSpan="24" style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+              3.&nbsp;&nbsp;&nbsp; The officials are requested to file their
+              objection, if any, regarding the said seniority list and the
+              vacancy status of above stated quarter. Any omission and
+              discrepancy in date of joining may be brought to the notice of the
+              undersigned
+              <b>within 7 working days /on or before
+                {{ currentDate | date : "dd/MM/yyyy" }}.</b>
+              from the date of notice of allotment issued by this office
+              directly and only in the O/o. the ITO (HQ) Admn. II, Mumbai, so
+              that the same can be taken into consideration.
+            </div>
+            <div nz-col nzSpan="24" style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+              4.&nbsp;&nbsp;&nbsp; The entitlement for
+              {{ RESIDENCE_TYPE_NAME != undefined ? RESIDENCE_TYPE_NAME : "" }}
+              Quarters as per Rule 4 of the Notification dated
+              {{ currentDate | date : "dd/MM/yyyy" }} issued by the Central
+              Board of Direct Taxes(Department of Revenue) Ministry of Finance,
+              New Delhi and the eligibility and priority date of allotment of
+              {{ RESIDENCE_TYPE_NAME != undefined ? RESIDENCE_TYPE_NAME : "" }}
+              quarters are as under :-
+
+              <div style="margin: 10px">
+                <b> (a) <u> Eligibility : </u></b>
+                <table style="
+                    width: 100%;
+                    font-size: 12px;
+                    font-family: 'Times New Roman', Times, serif !important;
+                  ">
+                  <thead>
+                    <tr>
+                      <td class="forTDTH1"><b> Type- of Residence </b></td>
+                      <td class="forTDTH1">
+                        <b>Grade pay (Pre-revised scale)</b>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="forTDTH1">
+                        {{
+                        RESIDENCE_TYPE_NAME != undefined
+                        ? RESIDENCE_TYPE_NAME
+                        : ""
+                        }}
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 1" class="forTDTH1">
+                        Rs. 1,300/-, Rs. 1,400/- Rs. 1,600/-, Rs. 1,650/- and
+                        Rs. 1,800/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 2" class="forTDTH1">
+                        Rs. 1,900/-, Rs. 2,000/-, Rs. 2,400/- and Rs. 2800/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 3" class="forTDTH1">
+                        Rs. 4,200/-, Rs. 4,600/- and Rs. 4,800/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 4" class="forTDTH1">
+                        Rs. 5,400/-, Rs. 6,600/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 5" class="forTDTH1">
+                        Rs. 6,600/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 6" class="forTDTH1">
+                        Rs. 7,600/- and Rs.8,000/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 7" class="forTDTH1">
+                        Rs. 8,700/- and Rs. 8,900/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 8" class="forTDTH1">
+                        Rs. 10,000/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 9" class="forTDTH1">
+                        Rs. 67,000/- to Rs. 74,999/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 10" class="forTDTH1">
+                        Rs. 75,000/- to Rs. 79,999/-
+                      </td>
+
+                      <td *ngIf="RESIDENCE_TYPE_ID == 11" class="forTDTH1">
+                        Rs. 80,000/- and above
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <b> (b)<u> Priority date : </u></b>
+                <br />
+                For
+                {{
+                RESIDENCE_TYPE_NAME != undefined ? RESIDENCE_TYPE_NAME : ""
+                }}
+                category of allotment, date of priority shall be the date of
+                joining the Government service.
+              </div>
+            </div>
+
+            <div style="
+                margin: 3px 20px 5px 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+                text-align: justify;
+              ">
+              5.&nbsp;&nbsp;&nbsp;As per CBDT Residential Accommodation
+              Allotment Rules notified on
+              {{ currentDate | date : "dd/MM/yyyy" }} vide F.No.
+              DIT(Infra)/U-I/Allotment Rules/2018-19, change of accommodation on
+              medical grounds can be considered on the following conditions :-
+
+              <div style="margin-left: 50px; margin-top: 5px">
+                A) Change on medical grounds shall be given only if the allottee
+                concerned has already availed of one change in the same type of
+                accommodation admissible under these rules.
+
+                <div style="margin-left: 50px; margin-top: 5px; margin-bottom: 5px">
+                  i) Provided that if the allottee has not already availed one
+                  change, the application for change on medical grounds shall be
+                  referred to the Committee constituted by the concerned Estate
+                  Officer for the purpose.
+                </div>
+
+                B) Requests for change on medical grounds may be entertained
+                only in such cases where the allottee or a member of his/her
+                family on dependent-in-laws living with him/her, after the
+                allotment of the accommodation in change has developed such
+                diseases as may be specified by the Committee constituted for
+                the purpose by the concerned Estate Officer :-
+                <div style="margin-left: 50px; margin-top: 5px; margin-bottom: 5px">
+                  i) Provided that a medical certificate from a Head of
+                  Department of the Specialty or concerned disease of Government
+                  Hospital indicating the nature and extent of physical handicap
+                  or disease and recommending such a change is furnished.
+                </div>
+
+                C. Change from one floor to another in the same colony or from
+                one colony to another colony may be allowed, if the request is
+                supported by medical certificate from a board constituted for
+                the purpose from Safdarjung Hospital or Dr. Ram Manohar
+                Lohia(RML) Hospital in Delhi and from a board constituted for
+                the purpose from a Government hospital in places other than
+                Delhi and the change of accommodation shall be given by the
+                Estate Officer by issuing a well-reasoned speaking order.
+              </div>
+
+              Officers/officials wishing to apply for change of accommodation on
+              medical grounds may submit their applications with attested
+              medical certificates in support of their medical grounds on or
+              before
+              <b><u>{{ currentDate | date : "dd/MM/yyyy" }}.</u></b>
+            </div>
+
+            <div style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+              ">
+              6.&nbsp;&nbsp;&nbsp; It may be noted that, once this allotment
+              process is completed there will be no carry forward of
+              preferences. For subsequent allotment, fresh application with
+              specific preferences would be required to be filed by the
+              applicant.
+            </div>
+
+            <div style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+                text-align: justify;
+              ">
+              <b>7.&nbsp;&nbsp;&nbsp; Further it may be noted that, if any
+                allottee fails to accept the allotment of a residential
+                accommodation within eight days from the date of allotment of
+                the said accommodation, or fails to take possession of that
+                accommodation within five working days from the date of notice
+                of allotment issued by this office from the date of receipt of
+                the letter of authorization, he/she shall be debarred to apply
+                for accommodation for a period of 3 months from the date of
+                non-acceptance of allotment subject to payment of one month’s
+                normal licence fee for that type of accommodation [Rule 13 of
+                the Notification dated
+                {{ currentDate | date : "dd/MM/yyyy" }} issued by the Central
+                Board of Direct Taxes(Department of Revenue) Ministry of
+                Finance, New Delhi]. It may also be noted that, only one change
+                is permissible in a particular type of accommodation.</b>
+            </div>
+
+            <div style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+                text-align: justify;
+              ">
+              8.&nbsp;&nbsp;&nbsp; It may be noted that, any misrepresentation
+              of facts in the application would render in cancellation of
+              allotment of quarter and would also be liable for action under the
+              CCS (Conduct) Rules.
+            </div>
+
+            <div style="
+                margin: 3px 20px 0 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+                text-align: justify;
+              ">
+              9.&nbsp;&nbsp;&nbsp; The applicants are requested to submit their
+              preferences in the proforma attached alongwith this Notice.
+            </div>
+
+            <div style="
+                margin: 3px 20px 50px 20px;
+                font-size: 12px;
+                font-family: 'Times New Roman', Times, serif !important;
+                text-align: justify;
+              ">
+              10.&nbsp;&nbsp;&nbsp; This Notice and Seniority List is uploaded
+              on the portal “incometaxmumbai.gov.in” and
+              “incometaxindia.gov.in”.
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button nz-button nzType="default" [useExistingCss]="true" printSectionId="flatOrder" ngxPrint>
+      Print
+    </button>
+
+    <button nz-button nzType="primary" [nzLoading]="pdfDownload" (click)="openpdf()">
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="950" [nzVisible]="flatvacantbulk"
+  [nzTitle]="flatvacantbulktitle" (nzOnClose)="flatvacantdrawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-bulkflatvacantcaretaker [drawerClose]="callbackflatvacant"
+      [drawerVisible]="flatvacantbulk"></app-bulkflatvacantcaretaker>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="950"
+  [nzVisible]="flatvacantbulkshowinspector" [nzTitle]="flatvacantbulktitleinspector"
+  (nzOnClose)="flatvacantinspectordrawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-bulkflatvacantinspector [drawerClose]="callbackflatvacantinspector"
+      [drawerVisible]="flatvacantbulkshowinspector"></app-bulkflatvacantinspector>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="540px"
+  nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 16px;"> Are you sure want to vacant Quarter?</h5>
+    <hr style="margin: 8px 0" />
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item style="display: inline-block;
+        margin-bottom: 5px;
+        width: -webkit-fill-available;
+        padding: 0px 10px;">
+          <nz-form-label nzNoColon nzRequired>Remark</nz-form-label>
+          <nz-form-control>
+            <textarea nz-input autocomplete="off" rows="2" name="description"
+              [(ngModel)]="drawerData.REMARK"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item style="display: inline-block;
+        margin-bottom: 5px;
+        width: -webkit-fill-available;
+        padding: 0px 10px;">
+          <nz-form-label nzNoColon>Attachment</nz-form-label>
+          <nz-form-control nzHasFeedback *ngIf="Icardshow">
+            <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;" (click)="Icardupload.click()">
+              Select File
+              <input #Icardupload class="inputsize" name="REMARK_FILE" type="file" accept=".pdf"
+                (change)="onFileSelectedIcard($event)" style="display: none" required />
+            </button>
+          </nz-form-control>
+
+          <div *ngIf="drawerData.REMARK_FILE != null" style="
+              overflow: hidden;
+              font-size: 11px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 10px;
+            ">
+            {{ drawerData.REMARK_FILE }} &nbsp;&nbsp;
+            <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+              style="cursor: pointer; color: #1890ff" (click)="viewIcard(drawerData.REMARK_FILE)"></span>&nbsp;&nbsp;
+            <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top" nz-tooltip
+              style="cursor: pointer; color: red" (click)="clearIcard(drawerData.REMARK_FILE, 'flatRemarkFile')"></span>
+          </div>
+        </nz-form-item>
+        <div *ngIf="progressBar4">
+          <nz-progress [nzPercent]="percent4"></nz-progress>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #contextofrules>
+    <button nz-button nzType="default" class="btn btn-primary" [nzLoading]="loadvac" style="font-size: 12px;
+    height: 29px;" (click)="cancelappliactionform()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="loadvac" class="btn btn-primary" style="background-color: #006699;font-size: 12px;
+    height: 29px;" (click)="Submitapplication(storedata)">
+      Vacant Quarter
+    </button>
+
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="viewocuu" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="650px"
+  nzClosable="false" [nzFooter]="contextofrules1" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 600">Occupation Details </span>
+    <hr style="margin: 8px 0" />
+    <div style="padding:5px;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+      <div nz-row *ngIf="occupancydata!=null && occupancydata!=undefined && occupancydata!='';else nodata">
+        <div nz-col nzSpan="6">
+          Application No.
+
+        </div>
+        <div nz-col nzSpan="18">
+          <b>: {{occupancydata.FLAT_APPLICATION_NO}}</b>
+        </div>
+
+        <div nz-col nzSpan="6">
+          Employee Name
+
+        </div>
+        <div nz-col nzSpan="18">
+          <b>: {{occupancydata.EMPLOYEE_NAME}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Designation
+
+        </div>
+        <div nz-col nzSpan="18">
+          <b>: {{occupancydata.DESIGNATION}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Employee code
+
+        </div>
+        <div nz-col nzSpan="18">
+          <b>: {{occupancydata.EMPLOYEE_CODE!=null?occupancydata.EMPLOYEE_CODE:"-"}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Residence type
+
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{occupancydata.RESIDENCE_TYPE_NAME}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Month/Year
+        </div>
+        <div nz-col nzSpan="6">
+          <b>:
+            {{occupancydata.MONTH ==1?'January':''}}
+            {{occupancydata.MONTH ==2?'February':''}}
+            {{occupancydata.MONTH ==3?'March':''}}
+            {{occupancydata.MONTH ==4?'April':''}}
+            {{occupancydata.MONTH ==5?'May':''}}
+            {{occupancydata.MONTH ==6?'June':''}}
+            {{occupancydata.MONTH ==7?'July':''}}
+            {{occupancydata.MONTH ==8?'August':''}}
+            {{occupancydata.MONTH ==9?'September':''}}
+            {{occupancydata.MONTH ==10?'October':''}}
+            {{occupancydata.MONTH ==11?'November':''}}
+            {{occupancydata.MONTH ==12?'December':''}}
+
+
+            / {{occupancydata.YEAR}}</b>
+        </div>
+
+        <div nz-col nzSpan="6">
+          Occupancy Date
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{occupancydata.PHYSICAL_TAKEN_DATE_TIME | date: 'dd/MM/yyyy'}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          <!-- Occupancy Type -->
+        </div>
+        <div nz-col nzSpan="6">
+          <!-- <b>: {{occupancydata.OCCUPANCY_TYPE=='P'?'Physical':'-'}}</b> -->
+        </div>
+
+        <div nz-col nzSpan="24" style="text-align: center; padding: 5px;font-size: 16px;">
+          <b>Quarter Details</b>
+        </div>
+        <div nz-col nzSpan="6">
+          City Name
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{flatdataocuupancy.CITY_NAME!=null?flatdataocuupancy.CITY_NAME:"-"}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Area Name
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{flatdataocuupancy.AREA_NAME!=null?flatdataocuupancy.AREA_NAME:"-"}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Building Name
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{flatdataocuupancy.BUILDING_NAME!=null?flatdataocuupancy.BUILDING_NAME:"-"}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Quarter Name
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{flatdataocuupancy.NAME!=null?flatdataocuupancy.NAME:"-"}}</b>
+        </div>
+        <div nz-col nzSpan="6">
+          Room Type
+        </div>
+        <div nz-col nzSpan="6">
+          <b>: {{flatdataocuupancy.ROOM_TYPE!=null?flatdataocuupancy.ROOM_TYPE:"-"}}</b>
+        </div>
+      </div>
+      <ng-template #nodata>
+        <nz-empty></nz-empty>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-template #contextofrules1>
+    <button nz-button nzType="primary" [nzLoading]="isSpinning" class="btn btn-primary"
+      style="background-color: #006699" (click)="cancel()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>

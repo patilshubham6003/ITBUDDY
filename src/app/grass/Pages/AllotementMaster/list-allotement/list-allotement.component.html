@@ -1,0 +1,263 @@
+<div nz-row nzType="flex">
+    <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+        <div class="formname"> {{formTitle}}</div>
+    </div>
+
+    <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex;justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+
+            <nz-form-item>
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="postsearch" (keydown.enter)="onKeypressEvent($event)"
+                        [(ngModel)]="searchText" nz-input placeholder="Search Record" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" id="button" class="flexicons" (click)="search(true)" nzSearch><i
+                            nz-icon nzType="search"></i></button>
+                </ng-template>
+            </nz-form-item>
+            <nz-form-item>
+                <!-- <button nz-button nzType="primary" (click)="add()"  class="flexicons">
+                    <i nz-icon nzType="plus"></i>Create New Application </button> -->
+                <button nz-button nzType="primary" (click)="add()" [disabled]="showCreaterequest" class="flexicons">
+                    <i nz-icon nzType="plus"></i>Create New Application </button>
+            </nz-form-item>
+
+        </form>
+    </div>
+</div>
+
+<div nz-row style="margin-top: 10px;">
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '2400px', y: '390px' }"
+            [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+            <thead>
+                <tr>
+                    <th nzWidth="510px" style="font-weight: bold; text-align: center;">Action</th>
+                    <th nzWidth="160px" nzColumnKey="{{ 'EMPLOYEE_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Employee Name</th>
+                    <th nzWidth="110px" nzColumnKey="{{ 'DESIGNATION' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Designation</th>
+                    <th nzWidth="180px" nzColumnKey="{{ 'PRESENT_RESENDENTIAL_ADDRESS' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Resendential Address</th>
+                    <th nzWidth="180px" nzColumnKey="{{ 'PRESENT_OFFICE_ADDRESS' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Office Address</th>
+                    <th nzWidth="110px" nzColumnKey="{{ 'APPLICATION_DATETIME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Application Date</th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'GRADE_PAY' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Grade Pay</th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'OFFICER_CAST' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Officer's Cast</th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'DATE_JOINING' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Joining Date</th>
+                    <th nzWidth="150px" nzColumnKey="{{ 'SUPERANNUATION_DATE' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Super Annuation Date</th>
+                    <th nzWidth="150px" nzColumnKey="{{ 'REMARK' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center;">Remark</th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align: center">
+                <tr *ngFor="let data of datatable.data; let i = index" style="text-align: center;">
+                    <td style="text-align: center;">
+
+                        <a (click)="edit(data)" style="color: #1890ff;" *ngIf="data.STATUS == '' ">Edit</a> &nbsp;&nbsp;
+
+                        <span nz-icon nzType="eye" (click)="onlyviewappln(data)" nzTooltipTitle="Preview"
+                            nzTooltipPlacement="top" nz-tooltip style="color: #1890ff;cursor: pointer;"
+                            *ngIf="data.STATUS != '' " nzTheme="outline"></span> &nbsp;&nbsp;
+
+                        <nz-tag [nzColor]="'green'" style="border-radius: 3px;cursor: pointer;"
+                            (click)="viewapplicationform(data)" *ngIf="showapplictaionform(data)">View and Send For
+                            Approval</nz-tag>
+
+                        <nz-tag [nzColor]="'gold'" style="border-radius: 3px;cursor: pointer;"
+                            (click)="viewSenioritylist(data)"
+                            *ngIf="Showsenioritylistform(data,i) && data.STATUS == 'A'">Seniority Order</nz-tag>
+                        <!-- <nz-tag [nzColor]="'gold'" style="border-radius: 3px;cursor: pointer;"
+                            (click)="viewSenioritylist(data)" *ngIf="data.STATUS == 'A' && Publishedmonth">Seniority Order</nz-tag> -->
+
+                        <nz-tag [nzColor]="'gold'" style="border-radius: 3px;cursor: pointer;"
+                            *ngIf="data.STATUS == 'A' && ShowFlatpreflistform(data,i)"
+                            (click)="FlatPreferencelist(data)">Quarter Preference's Order</nz-tag>
+                        <!-- <nz-tag [nzColor]="'gold'" style="border-radius: 3px;cursor: pointer;" *ngIf="data.STATUS == 'A' && waitingmonth"
+                            (click)="FlatPreferencelist(data)">Quarter Preference's Order</nz-tag> -->
+
+                        <nz-tag [nzColor]="'gold'" style="border-radius: 3px;cursor: pointer;"
+                            *ngIf="data.STATUS == 'A' && ShowAllotmentlistform(data,i)"
+                            (click)="Allotmentlistview(data)">Allotment Order</nz-tag>
+                        <!-- <nz-tag [nzColor]="'gold'" style="border-radius: 3px;cursor: pointer;" *ngIf="data.STATUS == 'A' && Allotmmm"
+                            (click)="Allotmentlistview(data)">Allotment Order</nz-tag> -->
+                    </td>
+
+                    <td style="text-align: center;white-space: pre-line; ">{{data['EMPLOYEE_NAME']}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['DESIGNATION']}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['PRESENT_RESENDENTIAL_ADDRESS']}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['PRESENT_OFFICE_ADDRESS']}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['APPLICATION_DATETIME'] |
+                        date:'dd/MM/yyyy'}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['GRADE_PAY']}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['OFFICER_CAST']}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['DATE_JOINING'] | date:'dd/MM/yyyy'}}
+                    </td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['SUPERANNUATION_DATE'] |
+                        date:'dd/MM/yyyy'}}</td>
+                    <td style="text-align: center;white-space: pre-line; ">{{data['REMARK']}}</td>
+
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+
+    <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+        [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100" [nzVisible]="drawerVisible"
+        [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+        <ng-container *nzDrawerContent>
+            <app-add-allotement [current]="currentStage" [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+                [data]="drawerData" [data2]="Checklistdata" [empid]="employeedata"
+                [employerecordfilled]="isdetailsfilled"></app-add-allotement>
+        </ng-container>
+    </nz-drawer>
+</div>
+
+<!-- Show Rules and How to apply Application Modal. Starts Here-->
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true"
+    [nzBodyStyle]="{'height': '400px', 'overflow':'auto', 'padding':'25px'}" nzWidth="1000px" nzClosable="false"
+    [nzFooter]="contextofrules" nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <h5>Rules:</h5>
+        <ul style="list-style: decimal;" class="ruleslist">
+            <li> "Accommodation" or "CBDT pool accommodation" or "departmental pool accommodation" means the residential
+                buildings made available to CBDT including residential accommodation hired by the CBDT for occupation by
+                officers and other staff employed in the offices under the administrative control of CBDT.
+            </li>
+            <li>"Allotment" means the grant of licence to occupy a residence in accordance with the provisions of these
+                Rules,</li>
+            <li>"Allotment of garage" means the grant of a licence to occupy a garage in accordance with the provisions
+                of these rules;</li>
+            <li>"Board" means the Central Board of Direct Tax constituted under the Central Boards of Revenue Act, 1963;
+            </li>
+            <li>"Class in relation to a residence" means the class of that residence as is for the time being specified
+                in Rule 4 Table 1;</li>
+            <li>"Damages" means a compensation to be levied in multiples of licence fee in the event of unauthorized
+                occupation or subletting or misuse of whole or anypart of accommodation or garages by the occupant of
+                the accommodation or garages;</li>
+            <li>"Department" means CBDT and its subordinate offices.</li>
+            <li> "Directorate of Estates" means Office of the Directorate of Estates and Estates Offices under the
+                Central Public Works Department, which discharge the functions of the Directorate of Estates in respect
+                of accommodation;</li>
+            <li> "Duty" does not include any other leave except casual leave;</li>
+            <li>"Eligible office" means an office to which these rules apply.
+            </li>
+            <li>"Eligible type of accommodation" in relation to an employee means the type of accommodation to which he
+                is eligible under these rules;</li>
+            <li>"Employee" means an employee appointed by Government of India for working in CBDT and its subordinate
+                offices whose salary is drawn from the Consolidated fund of India;</li>
+            <li>the Pr. CCIT of the region "Estate officer" means concerned/Pr.DGIT(Training) or the officer nominated
+                by the Pr.CCIT to exercise the powers of the Estate Officer for the specified stations;</li>
+            <li> "Family" means the wife or husband of allottee, as the case may be, and children, step children,
+                legally adopted children, parents, brothers or sisters as ordinarily reside with and are dependent on
+                the allottee;</li>
+            <li>"Government" means the Central Government unless the context otherwise requires;</li>
+            <li>"Guest" means a casual visitor staying temporarily with the allottee.</li>
+            <li>"Immediate relations" mean relationship such as Grandfather, Grandmother, Grandsons, Granddaughters,
+                Father-in-law, Mother-in-law, Son-in-law, Daughter-in-law and include relationship established by legal
+                adoption;</li>
+            <li> "Licence fee" means a fee payable monthly in respect of the accommodation allotted under these rules;
+            </li>
+            <li>"Municipality" includes a municipal corporation, a municipal committee, board or municipal council, a
+                town area committee, a notified area committee, a Cantonment Board;</li>
+            <li>"Municipal limit" means city or town limit as declared by the concerned State or Union territory
+                Government;</li>
+            <li>"Misuse", in relation to an allotment, means an accommodation or a servant quarter or a garage being
+                used by allottee himself or by his family members or immediate relations staying with him for the
+                purpose other than the purposes provided under these rules;
+            </li>
+            <li>"Non family station" includes :-
+                <ul>
+                    <li>
+                        North Eastern Region, Sikkim, Andaman & Nicobar Islands and Lakshadweep, State of Jammu &
+                        Kashmir
+                    </li>
+                    <li>
+                        Left Wing Extremist (LWE) areas, as declared by Ministry of Home Affairs from time to time.
+                    </li>
+                </ul>
+            </li>
+            <li>"Own house" means a building or part thereof meant for residential purposes and owned by the allottee or
+                by any member of his family;</li>
+            <li>"Residential accommodation" means a covered structure or part thereof whether permanent or
+                semi-permanent or temporary, which has at least a living room and a lavatory with or without kitchen;
+            </li>
+            <li>"Special licence fee" means a licence fee charged from allottees for short period or temporary allotment
+                of accommodation or charged from other ineligible offices or organization for allotment of accommodation
+                on special purposes;</li>
+            <li>"Subletting" means letting out of a residential accommodation for employees under CBDT, partly or wholly
+                by an allottee to any person outside allottee's family and immediate relations;</li>
+            <li>"Surrender of accommodation" means vacation of accommodation after physical occupation of the
+                accommodationsmy the allottee on his own volition during the allotment period;</li>
+            <li>"Temporary transfer" means a transfer of allottee to another place, which involves an absence for a
+                period not exceeding four months from the place where the accommodation is allotted;</li>
+            <li>"Transfer" means a transfer from the present working place where the accommodation is allotted to any
+                other working place and includes a transfer to service under a State Government or a Union territory
+                administration and includes deputation to a post in an office or organization.</li>
+        </ul>
+    </ng-container>
+
+    <ng-template #contextofrules>
+        <button nz-button nzType="primary" (click)="handleOk()">I Understood</button>
+    </ng-template>
+</nz-modal>
+
+<!-- Show Rules and How to apply Application Modal. Ends Here-->
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="Senioritylistview"
+    [nzTitle]="listviewTitle" (nzOnClose)="listclosedrawer()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-senioritylistusers [drawerClose]="closeCallbackviewlist" [drawerVisible]="Senioritylistview"
+            [data]="senioritydata"></app-senioritylistusers>
+    </ng-container>
+</nz-drawer>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="870" [nzVisible]="Allotmentformshow"
+    [nzTitle]="Allotmentformtitle" (nzOnClose)="AllotmentformClose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-application-form-allotment [drawerClose]="closeCallallotmentform" [drawerVisible]="Allotmentformshow"
+            [data]="empdata"></app-application-form-allotment>
+    </ng-container>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1100" [nzVisible]="onlyview"
+    [nzTitle]="onlyviewTitle" (nzOnClose)="onlyviewClose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-empapplicationview [current]="currentStage" [drawerClose]="closeonlyviewCall" [drawerVisible]="onlyview"
+            [data]="drawerdetails" [data2]="Checklistdetails" [empid]="empdetail"></app-empapplicationview>
+    </ng-container>
+</nz-drawer>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="flatprefview"
+    [nzTitle]="flatprefTitle" (nzOnClose)="flatprefclosedrawer()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-showflatpreftoemp [drawerClose]="closeCallflatpref" [drawerVisible]="flatprefview"
+            [data]="flatprefData"></app-showflatpreftoemp>
+    </ng-container>
+</nz-drawer>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="Allotmentlivisible"
+    [nzTitle]="allotmentliTitle" (nzOnClose)="allotmentclosedrawer()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-flatallotmentuserlist [drawerClose]="ClosecallAllotmentli" [drawerVisible]="Allotmentlivisible"
+            [data]="Allotmentlidata"></app-flatallotmentuserlist>
+    </ng-container>
+</nz-drawer>

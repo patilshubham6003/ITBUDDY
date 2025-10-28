@@ -1,0 +1,177 @@
+<div class="my-boxxxxxxx">
+  <form nz-form #accountMasterPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Parent Name</nz-form-label>
+
+            <nz-input-group>
+              <nz-form-control nzErrorTip="Please Select Correct Option ">
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  name="parent_id"
+                  style="width: 100%"
+                  nzPlaceHolder="Select Parent Name"
+                  [(ngModel)]="data.PARENT_ID"
+                >
+                  <nz-option [nzValue]="0" [nzLabel]="'None'"></nz-option>
+                  <nz-option
+                    *ngFor="let val of faqHeads"
+                    [nzValue]="val.ID"
+                    [nzLabel]="val.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-input-group>
+          </nz-form-item>
+        </div>
+        
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>FAQ Head Name</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Valid Name">
+              <input
+                placeholder="Enter FAQ Head Name"
+                maxlength="128"
+                nz-input
+                name="FAQname"
+                type="text"
+                [(ngModel)]="data.NAME"
+                required
+              />
+              <small
+                style="color: red; margin-bottom: 0px"
+                *ngIf="data.NAME != undefined"
+              >
+                {{ data.NAME.length }}/128
+              </small>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- </div> -->
+        <!-- <div nz-row> -->
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Description</nz-form-label>
+
+            <nz-form-control>
+              <textarea
+                placeholder="Enter Description"
+                maxlength="512"
+                rows="3"
+                nz-input
+                [(ngModel)]="data.DESCRIPTION"
+                name="descript"
+              ></textarea>
+              <small
+                style="color: red; margin-bottom: 0px"
+                *ngIf="data.DESCRIPTION != undefined"
+              >
+                {{ data.DESCRIPTION.length }}/512
+              </small>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- </div> -->
+        <div nz-row>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No.</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Valid Sequence Number">
+              <nz-input-number
+                (keypress)="omit($event)"
+                maxlength="6"
+                style="width: 100%"
+                name="seqno"
+                [(ngModel)]="data.SEQUENCE_NO"
+                [nzMin]="1"
+                [nzStep]="1"
+                required
+              ></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="5" style="margin-left: 70px">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Is Parent?</nz-form-label>
+
+            <nz-form-control>
+              <nz-switch
+                name="isparent"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_PARENT"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6" style="margin-left: 70px">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+
+            <nz-form-control>
+              <nz-switch name="status" nzCheckedChildren="Yes"
+              nzUnCheckedChildren="No" [(ngModel)]="data.STATUS"></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+    </div>
+                <!-- <div nz-row> -->
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(accountMasterPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      (click)="save(false, accountMasterPage)"
+    >
+      <span>Save & Close</span>
+    </button>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff"
+        >
+          <a (click)="save(true, accountMasterPage)">Save & New</a>
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="save(false, accountMasterPage)"
+    >
+      <span>Update & close</span>
+    </button>
+  </div>
+</div>

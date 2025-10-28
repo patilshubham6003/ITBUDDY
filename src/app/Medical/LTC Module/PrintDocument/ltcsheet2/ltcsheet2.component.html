@@ -1,0 +1,1450 @@
+<div *ngIf="LTC2data != undefined">
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+          <div
+            class="my-box"
+            style="padding: 10px; height: 75vh; overflow-y: auto"
+          >
+            <div nz-row>
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid"
+                      [(ngModel)]="MapSignaturePartB.LTC_PART_B_SIGNATURE_1"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 2</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid2"
+                      [(ngModel)]="MapSignaturePartB.LTC_PART_B_SIGNATURE_2"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature1($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 3</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid3"
+                      [(ngModel)]="MapSignaturePartB.LTC_PART_B_SIGNATURE_3"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature2($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 4</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="userid34"
+                      [(ngModel)]="MapSignaturePartB.LTC_PART_B_SIGNATURE_4"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature3($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 5</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="asdfg"
+                      [(ngModel)]="MapSignaturePartB.LTC_PART_B_SIGNATURE_5"
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature4($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Destination</nz-form-label>
+
+                <nz-input-group>
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    name="Destination"
+                    nz-input
+                    placeholder="Enter Destination"
+                    [(ngModel)]="LTC2data.DESTINATION"
+                  />
+                </nz-input-group>
+              </nz-form-item>
+            </div> -->
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Amount Details</nz-form-label>
+                  <textarea
+                    type="text"
+                    autocomplete="off"
+                    name="Amount Details"
+                    nz-input
+                    maxlength="240"
+                    placeholder="Enter Amount Details"
+                    [(ngModel)]="LTC2data.AMOUNT_DETAILS"
+                  ></textarea>
+                  <h6
+                    style="color: red; font-size: 0.67rem; font-weight: 400"
+                    *ngIf="LTC2data.AMOUNT_DETAILS != undefined"
+                  >
+                    {{ LTC2data.AMOUNT_DETAILS.length }}/240
+                  </h6>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Amount</nz-form-label>
+
+                  <nz-input-group nzAddOnBefore="₹">
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="Amount"
+                      nz-input
+                      (ngModelChange)="changeamountt($event)"
+                      (keypress)="omit($event)"
+                      placeholder="Enter Amount"
+                      [(ngModel)]="LTC2data.AMOUNT"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Family</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="Family"
+                      nz-input
+                      placeholder="Enter Family"
+                      [(ngModel)]="LTC2data.FAMILY"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Entry Made By</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="Entry Made By"
+                      nz-input
+                      placeholder="Enter Entry Made By"
+                      [(ngModel)]="LTC2data.ENTRY_MADE_BY"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Checked by:</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="CHECKED_BY"
+                      nz-input
+                      placeholder="Enter Checked by:"
+                      [(ngModel)]="MapSignaturePartB.CHECKED_BY"
+                      maxlength="32"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon
+                    >Is Destination Editable ?</nz-form-label
+                  >
+                  <nz-form-control>
+                    <nz-switch
+                      name="IS_DESTINATION_EDIT"
+                      nzCheckedChildren="Yes"
+                      nzUnCheckedChildren="No"
+                      [(ngModel)]="LTC2data.IS_DESTINATION_EDIT"
+                      (ngModelChange)="clearDesignation($event)"
+                    ></nz-switch>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="24" *ngIf="LTC2data.IS_DESTINATION_EDIT == 1">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Destination</nz-form-label>
+
+                  <nz-input-group>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      name="DestinationDestination"
+                      nz-input
+                      placeholder="Enter Destination"
+                      [(ngModel)]="LTC2data.DESTIONATION_REMARK"
+                    />
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Enter Year Type</nz-form-label>
+                  <!-- 
+                <nz-input-group>
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    name="PART_B_YEAR"
+                    nz-input
+                    placeholder="Enter Year Type"
+                    [(ngModel)]="LTC2data.PART_B_YEAR"
+                    maxlength="64"
+                  />
+                </nz-input-group> -->
+                  <nz-form-control>
+                    <nz-select
+                      name="PART_B_YEAR"
+                      [(ngModel)]="LTC2data.PART_B_YEAR"
+                      nzAllowClear
+                      nzPlaceHolder="Choose Year Type"
+                    >
+                      <nz-option
+                        nzValue="Calendar Year"
+                        nzLabel="Calendar Year"
+                      >
+                      </nz-option>
+                      <nz-option nzValue="Block Year" nzLabel="Block Year">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16">
+          <div
+            class="my-box"
+            style="padding: 10px; height: 75vh; overflow-y: auto"
+          >
+            <div>
+              <div
+                style="font-family: 'Times New Roman', Times, serif !important"
+              >
+                <div
+                  style="
+                    text-align: center;
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    font-size: 13px;
+                  "
+                ></div>
+                <div style="font-size: 13px !important">
+                  <div style="text-align: center; font-weight: 1000">
+                    <div style="font-weight: 1000; font-size: 16px !important">
+                      पार्ट बी
+                    </div>
+                    <div style="font-weight: 1000; font-size: 16px !important">
+                      PART- B
+                    </div>
+                  </div>
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 15px; margin-bottom: 28px"
+                  >
+                    <div nz-col nzSpan="20">
+                      <table style="border: none !important; width: 100%">
+                        <tr colspan="3" style="border: none !important">
+                          <td style="text-align: left; border: none !important">
+                            The net entitlement on account of leave travel
+                            concession works out to
+                          </td>
+                        </tr>
+                        <tr style="border: none !important">
+                          <td style="border: none !important">
+                            A)&nbsp;&nbsp;&nbsp;&nbsp; Railway/Air/Bus/Steamer
+                            Fare /SCPLTC
+                          </td>
+                          <td style="border: none !important; width: 50px">
+                            ₹
+                          </td>
+                          <td
+                            style="border: none !important; text-align: center"
+                          >
+                            <b> {{ amount }}/- </b>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align: left; border: none !important">
+                            B)&nbsp;&nbsp;&nbsp;&nbsp; Less: Amount of advance
+                            drawn
+                          </td>
+                          <td style="border: none !important; width: 50px">
+                            ₹
+                          </td>
+                          <td
+                            style="border: none !important; text-align: center"
+                          >
+                            <b> {{ LTC2data.AMOUNT_OF_ADVANCE }}/- </b>
+                          </td>
+                        </tr>
+                        <tr
+                          style="border: none !important"
+                          *ngIf="
+                            LTC2data.AMOUNT_DETAILS != undefined &&
+                            LTC2data.AMOUNT_DETAILS != ''
+                          "
+                        >
+                          <td style="text-align: left; border: none !important">
+                            C)&nbsp;&nbsp;&nbsp;&nbsp;
+                            {{ LTC2data.AMOUNT_DETAILS }}
+                          </td>
+                          <td style="border: none !important; width: 50px">
+                            ₹
+                          </td>
+                          <td
+                            style="border: none !important; text-align: center"
+                          >
+                            <b> {{ LTC2data.AMOUNT }} </b>
+                          </td>
+                        </tr>
+                        <tr style="border: none !important">
+                          <td style="text-align: left; border: none !important">
+                            NET PAY AMOUNT
+                          </td>
+                          <td>₹</td>
+                          <td
+                            style="border: none !important; text-align: center"
+                          >
+                            <span *ngIf="nnamount == 0"
+                              ><b>{{ namount }}/- </b></span
+                            >
+                            <span *ngIf="nnamount != 0"
+                              ><b>{{ nnamount }}/- </b></span
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            colspan="3"
+                            style="text-align: left; border: none !important"
+                          >
+                            The expenditure is debitable to LTC Head
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div nz-col nzSpan="4"></div>
+                  </div>
+                  <!-- <p>The expenditure is debitable to LTC Head</p> -->
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 15px; margin-bottom: 20px"
+                  >
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: left"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    >
+                      <span style="text-align: center">
+                        <div *ngIf="NAME_HN11">
+                          <b>({{ NAME_HN11 }})</b>
+                        </div>
+                        <div *ngIf="SIGNNAME">
+                          <b style="text-transform: uppercase">
+                            ({{ SIGNNAME }})
+                          </b>
+                        </div>
+                        <div *ngIf="POST_HIN">{{ POST_HIN }}</div>
+                        <div *ngIf="POST11">
+                          <b>{{ POST11 }}</b>
+                        </div>
+                        <div *ngIf="OFFICE_NAME_HIN">{{ OFFICE_NAME_HIN }}</div>
+                        <div *ngIf="OFFICE_NAME11">
+                          <b>{{ OFFICE_NAME11 }}</b>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 15px; margin-bottom: 20px"
+                  >
+                    <div
+                      nz-col
+                      nzXs="10"
+                      nzSm="10"
+                      nzMd="10"
+                      nzLg="10"
+                      nzXl="10"
+                      nzSpan="10"
+                      style="text-align: center"
+                    >
+                      <span style="text-align: center">
+                        <div *ngIf="NAME_HN1">
+                          <b>({{ NAME_HN1 }})</b>
+                        </div>
+                        <div *ngIf="SIGNNAME1">
+                          <b style="text-transform: uppercase">
+                            ({{ SIGNNAME1 }})
+                          </b>
+                        </div>
+                        <div *ngIf="POST1_HIN">{{ POST1_HIN }}</div>
+                        <div *ngIf="POST1">
+                          <b>{{ POST1 }}</b>
+                        </div>
+                        <div *ngIf="OFFICE_NAME1_HIN">
+                          {{ OFFICE_NAME1_HIN }}
+                        </div>
+                        <div *ngIf="OFFICE_NAME1">
+                          <b>{{ OFFICE_NAME1 }}</b>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      nz-col
+                      nzXs="2"
+                      nzSm="2"
+                      nzMd="2"
+                      nzLg="2"
+                      nzXl="2"
+                      nzSpan="2"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    ></div>
+                  </div>
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 15px; margin-bottom: 20px"
+                  >
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    >
+                      <span style="text-align: center">
+                        <div *ngIf="NAME_HN2">
+                          <b>({{ NAME_HN2 }})</b>
+                        </div>
+                        <div *ngIf="SIGNNAME2">
+                          <b style="text-transform: uppercase">
+                            ({{ SIGNNAME2 }})
+                          </b>
+                        </div>
+                        <div *ngIf="POST2_HIN">{{ POST2_HIN }}</div>
+                        <div *ngIf="POST2">
+                          <b>{{ POST2 }}</b>
+                        </div>
+                        <div *ngIf="OFFICE_NAME2_HIN">
+                          {{ OFFICE_NAME2_HIN }}
+                        </div>
+                        <div *ngIf="OFFICE_NAME2">
+                          <b>{{ OFFICE_NAME2 }}</b>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <p>
+                    Certified that necessary entries have been made in the
+                    service book of
+                    <span
+                      >{{ LTC2data.SALUTATION }} {{ LTC2data.EMPLOYEE_NAME }},
+                      {{ LTC2data.DESIGNATION }} Pay level=
+                      {{ getlevel(LTC2data.GRADE_PAY_LEVEL) }}</span
+                    >, for the {{ LTC2data.PART_B_YEAR }}
+                    <b>{{ LTC2data.BLOCK_YEAR }}</b>
+                  </p>
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 20px; margin-bottom: 20px"
+                  >
+                    <div
+                      nz-col
+                      nzXs="24"
+                      nzSm="24"
+                      nzMd="24"
+                      nzLg="24"
+                      nzXl="24"
+                      nzSpan="24"
+                      style="text-align: left"
+                    >
+                      <div nz-row [nzGutter]="10">
+                        <div
+                          nz-col
+                          nzXs="6"
+                          nzSm="6"
+                          nzMd="6"
+                          nzLg="6"
+                          nzXl="6"
+                          nzSpan="6"
+                        >
+                          <p>Destination</p>
+                          <p>Family</p>
+                          <p>Entry Made By :{{ LTC2data.ENTRY_MADE_BY }}</p>
+                          <p>Checked by : {{ MapSignaturePartB.CHECKED_BY }}</p>
+                        </div>
+                        <div
+                          nz-col
+                          nzXs="18"
+                          nzSm="18"
+                          nzMd="18"
+                          nzLg="18"
+                          nzXl="18"
+                          nzSpan="18"
+                        >
+                          <p *ngIf="LTC2data.IS_DESTINATION_EDIT == 1">
+                            {{ LTC2data.DESTIONATION_REMARK }}
+                          </p>
+                          <p
+                            *ngIf="
+                              destinationList.length > 0 &&
+                              LTC2data.IS_DESTINATION_EDIT == 0
+                            "
+                          >
+                            <span *ngIf="destinationList.length > 0">
+                              <ng-container
+                                *ngFor="
+                                  let item of destinationList;
+                                  let last = last;
+                                  let i = index
+                                "
+                              >
+                                {{ item }}
+                                <ng-container
+                                  *ngIf="destinationList.length > 1 && !last"
+                                >
+                                  <ng-container
+                                    *ngIf="
+                                      destinationList.length === 2 && i === 0
+                                    "
+                                  >
+                                    and
+                                  </ng-container>
+                                  <ng-container
+                                    *ngIf="
+                                      destinationList.length > 2 &&
+                                      i < destinationList.length - 2
+                                    "
+                                    >,
+                                  </ng-container>
+                                  <ng-container
+                                    *ngIf="
+                                      destinationList.length > 2 &&
+                                      i === destinationList.length - 2
+                                    "
+                                  >
+                                    and
+                                  </ng-container>
+                                </ng-container>
+                              </ng-container>
+                            </span>
+                            <!-- <span
+                              *ngFor="
+                                let data of destinationList;
+                                let k = index
+                              "
+                            >
+                              <span>{{ data }}</span>
+
+                              <span *ngIf="destinationList.length > 1">
+                                <span *ngIf="destinationList.length - 2 == k">
+                                  ,
+                                </span>
+                              </span>
+                            </span> -->
+                            only
+                          </p>
+                          <p *ngIf="destinationList.length <= 0"></p>
+                          <p>{{ LTC2data.FAMILY }}</p>
+                          <!-- <p>{{ LTC2data.FAMILY }}</p> -->
+                          <p>
+                            {{ LTC2data.ENTRY_MADE_BY }}
+                            <!-- <span *ngIf="FamilyList.length > 0">Yes</span>
+                            <span *ngIf="FamilyList.length <= 0">No</span> -->
+                          </p>
+                          <!-- <p>{{ LTC2data.ENTRY_MADE_BY }}</p> -->
+                          <p></p>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div
+                      nz-col
+                      nzXs="14"
+                      nzSm="14"
+                      nzMd="14"
+                      nzLg="14"
+                      nzXl="14"
+                      nzSpan="14"
+                      style="text-align: right"
+                    ></div> -->
+                  </div>
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 20px; margin-bottom: 20px"
+                  >
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    >
+                      <span style="text-align: center">
+                        <div *ngIf="POST3_HIN">{{ POST3_HIN }}</div>
+                        <div *ngIf="POST3">
+                          <b>{{ POST3 }}</b>
+                        </div>
+                        <div *ngIf="OFFICE_NAME3_HIN">
+                          {{ OFFICE_NAME3_HIN }}
+                        </div>
+                        <div *ngIf="OFFICE_NAME3">
+                          <b>{{ OFFICE_NAME3 }}</b>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+
+                  <p>
+                    <b>CERTIFICATE TO BE GIVEN BY THE CONTROLLING OFFICER</b>
+                  </p>
+                  <p>Certified-</p>
+                  <p style="padding-left: 50px">
+                    <b>A)</b> That of
+                    <b
+                      >{{ LTC2data.SALUTATION }} {{ LTC2data.EMPLOYEE_NAME }},
+                      {{ LTC2data.DESIGNATION }},</b
+                    >
+                    as rendered continuous service for one year or more on the
+                    date of commencing the outward journey.<br />
+                    B) That necessary entry as required under para 3 of the
+                    ministry of home affairs O.M. No. 43/1/55-Ests. (A) Part II,
+                    dated 11th October, 1956 have been made in the service book
+                    of
+                    <b
+                      >{{ LTC2data.SALUTATION }} {{ LTC2data.EMPLOYEE_NAME }},
+                      {{ LTC2data.DESIGNATION }}.</b
+                    >
+                  </p>
+                  <div
+                    nz-row
+                    [nzGutter]="10"
+                    style="margin-top: 50px; margin-bottom: 20px"
+                  >
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    ></div>
+                    <div
+                      nz-col
+                      nzXs="12"
+                      nzSm="12"
+                      nzMd="12"
+                      nzLg="12"
+                      nzXl="12"
+                      nzSpan="12"
+                      style="text-align: center"
+                    >
+                      <span style="text-align: center">
+                        <b *ngIf="NAME_HN4"> ({{ NAME_HN4 }}) </b><br />
+                        <b *ngIf="SIGNNAME4"> ({{ SIGNNAME4 }})</b><br />
+                        <span *ngIf="POST4_HIN || OFFICE_NAME4_HIN">
+                          <span *ngIf="POST4_HIN">{{ POST4_HIN }}</span>
+                          <span *ngIf="OFFICE_NAME4_HIN"
+                            >, {{ OFFICE_NAME4_HIN }}</span
+                          >
+                        </span>
+                        <br />
+                        <b *ngIf="POST4">{{ POST4 }}</b
+                        ><br />
+                        <b *ngIf="OFFICE_NAME4">{{ OFFICE_NAME4 }}</b>
+                      </span>
+
+                      <!-- <b style="text-align: center">(MAHESH S SHINGATE)<br />
+                        Joint/Addl Commissioner of Income Tax<br />
+                        HQ Personnel Mumbai
+                      </b> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      class="ant-btn"
+      style="margin-right: 8px"
+      (click)="close()"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      *ngIf="!isAdmin"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="Save()"
+      [nzLoading]="loadingRecords"
+    >
+      <span>Save & Preview</span>
+    </button>
+    <button
+      *ngIf="isAdmin"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="openPrintOrderModal()"
+      [nzLoading]="loadingRecords"
+    >
+      <span>Preview</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'PART B'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 445px; overflow: auto">
+        <div id="printOrderModal1">
+          <div style="font-family: 'Times New Roman', Times, serif !important">
+            <div
+              style="
+                text-align: center;
+                margin-top: 2px;
+                margin-bottom: 2px;
+                font-size: 13px;
+              "
+            ></div>
+            <div style="font-size: 13px !important">
+              <div style="text-align: center; font-weight: 1000">
+                <div style="font-weight: 1000; font-size: 15px !important">
+                  पार्ट बी
+                </div>
+                <div style="font-weight: 1000; font-size: 15px !important">
+                  PART- B
+                </div>
+              </div>
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="margin-top: 5px; margin-bottom: 10px"
+              >
+                <div nz-col nzSpan="20">
+                  <table style="border: none !important; width: 100%">
+                    <tr colspan="3" style="border: none !important">
+                      <td style="text-align: left; border: none !important">
+                        The net entitlement on account of leave travel
+                        concession works out to
+                      </td>
+                    </tr>
+                    <tr style="border: none !important">
+                      <td style="border: none !important">
+                        A)&nbsp;&nbsp;&nbsp;&nbsp; Railway/Air/Bus/Steamer Fare
+                        /SCPLTC
+                      </td>
+                      <td style="border: none !important; width: 50px">₹</td>
+                      <td style="border: none !important; text-align: center">
+                        <b> {{ amount }}/- </b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="text-align: left; border: none !important">
+                        B)&nbsp;&nbsp;&nbsp;&nbsp; Less: Amount of advance drawn
+                      </td>
+                      <td style="border: none !important; width: 50px">₹</td>
+                      <td style="border: none !important; text-align: center">
+                        <b> {{ LTC2data.AMOUNT_OF_ADVANCE }}/- </b>
+                      </td>
+                    </tr>
+                    <tr
+                      style="border: none !important"
+                      *ngIf="
+                        LTC2data.AMOUNT_DETAILS != undefined &&
+                        LTC2data.AMOUNT_DETAILS != ''
+                      "
+                    >
+                      <td style="text-align: left; border: none !important">
+                        C)&nbsp;&nbsp;&nbsp;&nbsp; {{ LTC2data.AMOUNT_DETAILS }}
+                      </td>
+                      <td style="border: none !important; width: 50px">₹</td>
+                      <td style="border: none !important; text-align: center">
+                        <b> {{ LTC2data.AMOUNT }} </b>
+                      </td>
+                    </tr>
+                    <tr style="border: none !important">
+                      <td style="text-align: left; border: none !important">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NET PAY
+                        AMOUNT
+                      </td>
+                      <td>₹</td>
+                      <td style="border: none !important; text-align: center">
+                        <span *ngIf="nnamount == 0"
+                          ><b>{{ namount }}/- </b></span
+                        >
+                        <span *ngIf="nnamount != 0"
+                          ><b>{{ nnamount }}/- </b></span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        colspan="3"
+                        style="text-align: left; border: none !important"
+                      >
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The
+                        expenditure is debitable to LTC Head
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div nz-col nzSpan="4"></div>
+              </div>
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="margin-top: 30px; margin-bottom: 0px"
+              >
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: left"
+                ></div>
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                >
+                  <span style="text-align: center">
+                    <div>
+                      <B *ngIf="NAME_HN11">({{ NAME_HN11 }})</B>
+                    </div>
+                    <div *ngIf="SIGNNAME">
+                      <b> ({{ SIGNNAME }}) </b>
+                    </div>
+                    <div *ngIf="POST_HIN">{{ POST_HIN }}</div>
+                    <div *ngIf="POST11">
+                      <b>{{ POST11 }}</b>
+                    </div>
+                    <div *ngIf="OFFICE_NAME_HIN">{{ OFFICE_NAME_HIN }}</div>
+                    <div *ngIf="OFFICE_NAME11">
+                      <b>{{ OFFICE_NAME11 }}</b>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="margin-top: 0px; margin-bottom: 0px"
+              >
+                <div
+                  nz-col
+                  nzXs="10"
+                  nzSm="10"
+                  nzMd="10"
+                  nzLg="10"
+                  nzXl="10"
+                  nzSpan="10"
+                  style="text-align: center"
+                >
+                  <span style="text-align: center">
+                    <b *ngIf="NAME_HN1">({{ NAME_HN1 }}) </b><br />
+                    <b *ngIf="SIGNNAME1">({{ SIGNNAME1 }})</b><br />
+                    <span *ngIf="POST1_HIN || OFFICE_NAME1_HIN">
+                      <span *ngIf="POST1_HIN">{{ POST1_HIN }}</span>
+                      <span *ngIf="OFFICE_NAME1_HIN"
+                        >, {{ OFFICE_NAME1_HIN }}</span
+                      >
+                    </span>
+                    <br />
+                    <b *ngIf="POST1">{{ POST1 }}</b
+                    ><br />
+                    <b *ngIf="OFFICE_NAME1">{{ OFFICE_NAME1 }}</b>
+                  </span>
+                </div>
+                <div
+                  nz-col
+                  nzXs="2"
+                  nzSm="2"
+                  nzMd="2"
+                  nzLg="2"
+                  nzXl="2"
+                  nzSpan="2"
+                ></div>
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                ></div>
+              </div>
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="margin-top: 0px; margin-bottom: 5px"
+              >
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                ></div>
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                >
+                  <span style="text-align: center">
+                    <B *ngIf="NAME_HN2">({{ NAME_HN2 }})</B><br />
+                    <b *ngIf="SIGNNAME2"> ({{ SIGNNAME2 }})</b><br />
+                    <span *ngIf="POST2_HIN || OFFICE_NAME2_HIN">
+                      <span *ngIf="POST2_HIN">{{ POST2_HIN }}</span>
+                      <span *ngIf="OFFICE_NAME2_HIN"
+                        >, {{ OFFICE_NAME2_HIN }}</span
+                      >
+                    </span>
+                    <br />
+                    <b *ngIf="POST2">{{ POST2 }}</b
+                    ><br />
+                    <b *ngIf="OFFICE_NAME2">{{ OFFICE_NAME2 }}</b>
+                  </span>
+                </div>
+              </div>
+              <p style="margin-bottom: 0px !important">
+                Certified that necessary entries have been made in the service
+                book of
+                <span
+                  >{{ LTC2data.SALUTATION }} {{ LTC2data.EMPLOYEE_NAME }},
+                  {{ LTC2data.DESIGNATION }} Pay level=
+                  {{ getlevel(LTC2data.GRADE_PAY_LEVEL) }}</span
+                >, for the {{ LTC2data.PART_B_YEAR }}
+                <b>{{ LTC2data.BLOCK_YEAR }}</b>
+              </p>
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="margin-top: 5px; margin-bottom: 5px"
+              >
+                <div
+                  nz-col
+                  nzXs="24"
+                  nzSm="24"
+                  nzMd="24"
+                  nzLg="24"
+                  nzXl="24"
+                  nzSpan="24"
+                  style="text-align: left"
+                >
+                  <div nz-row [nzGutter]="10">
+                    <div
+                      nz-col
+                      nzXs="6"
+                      nzSm="6"
+                      nzMd="6"
+                      nzLg="6"
+                      nzXl="6"
+                      nzSpan="6"
+                    >
+                      <p style="margin-bottom: 0px !important">Destination</p>
+                      <p style="margin-bottom: 0px !important">Family</p>
+                      <p style="margin-bottom: 0px !important">
+                        Entry Made By :{{ LTC2data.ENTRY_MADE_BY }}
+                      </p>
+                      <p style="margin-bottom: 0px !important">
+                        Checked by : {{ MapSignaturePartB.CHECKED_BY }}
+                      </p>
+                    </div>
+                    <div
+                      nz-col
+                      nzXs="18"
+                      nzSm="18"
+                      nzMd="18"
+                      nzLg="18"
+                      nzXl="18"
+                      nzSpan="18"
+                    >
+                      <p
+                        style="margin-bottom: 0px !important"
+                        *ngIf="LTC2data.IS_DESTINATION_EDIT == 1"
+                      >
+                        {{ LTC2data.DESTIONATION_REMARK }}
+                      </p>
+                      <p
+                        style="margin-bottom: 0px !important"
+                        *ngIf="
+                          destinationList.length > 0 &&
+                          LTC2data.IS_DESTINATION_EDIT == 0
+                        "
+                      >
+                        <span *ngIf="destinationList.length > 0">
+                          <ng-container
+                            *ngFor="
+                              let item of destinationList;
+                              let last = last;
+                              let i = index
+                            "
+                          >
+                            {{ item }}
+                            <ng-container
+                              *ngIf="destinationList.length > 1 && !last"
+                            >
+                              <ng-container
+                                *ngIf="destinationList.length === 2 && i === 0"
+                              >
+                                and
+                              </ng-container>
+                              <ng-container
+                                *ngIf="
+                                  destinationList.length > 2 &&
+                                  i < destinationList.length - 2
+                                "
+                                >,
+                              </ng-container>
+                              <ng-container
+                                *ngIf="
+                                  destinationList.length > 2 &&
+                                  i === destinationList.length - 2
+                                "
+                              >
+                                and
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                        </span>
+                        <!-- <span
+                          *ngFor="let data of destinationList; let k = index"
+                        >
+                          <span>{{ data }}</span>
+                          <span *ngIf="destinationList.length > 1">
+                            <span *ngIf="destinationList.length - 2 == k">
+                              ,
+                            </span>
+                          </span>
+                        </span> -->
+                        only
+                      </p>
+                      <p style="margin-bottom: 0px !important">
+                        {{ LTC2data.FAMILY }}
+                      </p>
+                      <p style="margin-bottom: 0px !important">
+                        {{ LTC2data.ENTRY_MADE_BY }}
+                        <!-- <span *ngIf="FamilyList.length > 0">Yes</span>
+                        <span *ngIf="FamilyList.length <= 0">No</span> -->
+                      </p>
+                      <p></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="margin-top: 5px; margin-bottom: 2px"
+              >
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                ></div>
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                >
+                  <!-- <span style="text-align: center">
+                    सहायक आयकर आयुक्त <br />
+                    <b>Asst. Commissioner of Income Tax  </b><br />
+                    राजपत्रित सेवा पुस्तिका कक्ष, मुंबई <br />
+                    <b>Gaz Service Book Cell, Mumbai </b><br />
+                  </span> -->
+                  <span style="text-align: center">
+                    <!-- <div *ngIf="NAME_HN"><b>({{ NAME_HN }})</b></div>  -->
+                    <!-- <div *ngIf="SIGNNAME">
+                        <b style="text-transform: uppercase">
+                            ({{ SIGNNAME }})
+                        </b>
+                    </div>  -->
+                    <div *ngIf="POST3_HIN">{{ POST3_HIN }}</div>
+                    <div *ngIf="POST3">{{ POST3 }}</div>
+                    <div *ngIf="OFFICE_NAME3_HIN">
+                      <b>{{ OFFICE_NAME3_HIN }}</b>
+                    </div>
+                    <div *ngIf="OFFICE_NAME3">
+                      <b>{{ OFFICE_NAME3 }}</b>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <p style="margin-bottom: 0px !important">
+                <b>CERTIFICATE TO BE GIVEN BY THE CONTROLLING OFFICER</b>
+              </p>
+              <p style="margin-bottom: 0px !important">Certified-</p>
+              <p style="padding-left: 50px">
+                <b>A)</b> That of
+                <b
+                  >{{ LTC2data.SALUTATION }} {{ LTC2data.EMPLOYEE_NAME }},
+                  {{ LTC2data.DESIGNATION }},</b
+                >
+                as rendered continuous service for one year or more on the date
+                of commencing the outward journey.<br />
+                B) That necessary entry as required under para 3 of the ministry
+                of home affairs O.M. No. 43/1/55-Ests. (A) Part II, dated 11th
+                October, 1956 have been made in the service book of
+                <b
+                  >{{ LTC2data.SALUTATION }} {{ LTC2data.EMPLOYEE_NAME }},
+                  {{ LTC2data.DESIGNATION }}.</b
+                >
+              </p>
+              <div nz-row [nzGutter]="10" style="margin-top: 36px">
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                ></div>
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                  style="text-align: center"
+                >
+                  <span style="text-align: center">
+                    <b *ngIf="NAME_HN4"> ({{ NAME_HN4 }}) </b><br />
+                    <b *ngIf="SIGNNAME4"> ({{ SIGNNAME4 }})</b><br />
+                    <span *ngIf="POST4_HIN || OFFICE_NAME4_HIN">
+                      <span *ngIf="POST4_HIN">{{ POST4_HIN }}</span>
+                      <span *ngIf="OFFICE_NAME4_HIN"
+                        >, {{ OFFICE_NAME4_HIN }}</span
+                      >
+                    </span>
+                    <br />
+                    <b *ngIf="POST4">{{ POST4 }}</b
+                    ><br />
+                    <b *ngIf="OFFICE_NAME4">{{ OFFICE_NAME4 }}</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="printOrderModal1"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="generatePDF()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

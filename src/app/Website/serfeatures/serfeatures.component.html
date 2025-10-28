@@ -1,0 +1,89 @@
+<section *ngIf="fcount==1 && feature!=''" id="services" class="about1" style="background-color: #f4f4f454 !important;padding-top: 35px;
+    padding-bottom: 35px;">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="section-title" data-aos="fade-up" style="padding-bottom: 25px;">
+      <h2 style="margin-bottom: 0px;color: black;font-weight: 500;">Features</h2>
+    </div>
+    <div class="row align-items-xl-center">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-sm-12">
+        <div class="row gy-4 icon-boxes1">
+          <div class="col-md-4 col-xl-4 col-lg-4 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+            *ngFor="let ser of feature">
+            <div class="icon-box1" style="cursor: pointer;">
+              <div class="row">
+                <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" *ngIf="feature!=undefined">
+                  <img src="{{retrieveimgUrl}}feature/{{ser.IMG_URL}}" alt="feature">
+                </div>
+                <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="padding: 0px 25px 25px 25px;">
+                  <h3 *ngIf="feature!=undefined" class="limit1">{{ser.NAME}}</h3>
+                  <p *ngIf="feature!=undefined" class="limit" style="text-align: justify;">{{ser.DESCRIPTION}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="fcount==2 && feature!=''" id="services" class="about1" style="background-color: #f4f4f454 !important;padding-top: 35px;
+    padding-bottom: 35px;">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="section-title" data-aos="fade-up" style="padding-bottom: 25px;">
+      <h2 style="margin-bottom: 0px;color: black;">Features</h2>
+    </div>
+    <div class="row align-items-xl-center">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-sm-12">
+        <div class="row gy-4 icon-boxes1">
+          <div class="col-md-4 col-xl-4 col-lg-4 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+            *ngFor="let ser of feature">
+            <div class="icon-box1" style="cursor: pointer;">
+              <div class="row">
+                <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" *ngIf="feature!=undefined">
+                  <img src="{{retrieveimgUrl}}feature/{{ser.IMG_URL}}" alt="feature">
+                </div>
+                <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="padding: 0px 25px 25px 25px;">
+                  <h3 *ngIf="feature!=undefined" class="limit1">{{ser.NAME}}</h3>
+                  <p *ngIf="feature!=undefined" class="limit" style="text-align: justify;">{{ser.DESCRIPTION}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="fcount>=3 && feature!=''" id="services" class="about1" style="background-color: #f4f4f454 !important;padding-top: 35px;
+      padding-bottom: 15px;">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="section-title" data-aos="fade-up" style="padding-bottom: 25px;">
+      <h2 style="margin-bottom: 0px; color: black;">Features</h2>
+    </div>
+    <div class="row align-items-xl-center">
+      <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-sm-12">
+        <div class="row gy-4 icon-boxes1">
+          <ngx-slick-carousel *ngIf="feature.length>0" #slickModal="slick-carousel" [config]="featuresettings"
+            class="banner-slider" id="bannerSlider">
+            <div *ngFor="let ser of feature" ngxSlickItem class="single-banner"
+              class="col-lg-4 col-xl-4 col-md-4 col-12 col-sm-12">
+              <div class="container">
+                <div class="icon-box1" style="cursor: pointer;">
+                  <div class="row">
+                    <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" *ngIf="feature!=undefined">
+                      <img src="{{retrieveimgUrl}}feature/{{ser.IMG_URL}}" alt="service">
+                    </div>
+                    <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="padding: 0px 25px 25px 25px;">
+                      <h3 *ngIf="feature!=undefined" class="limit1">{{ser.NAME}}</h3>
+                      <p *ngIf="feature!=undefined" class="limit" style="text-align: justify;">{{ser.DESCRIPTION}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ngx-slick-carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

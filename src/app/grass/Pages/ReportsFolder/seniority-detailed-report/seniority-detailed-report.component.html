@@ -1,0 +1,262 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+          (click)="importInExcel()" [nzLoading]="exportLoading">
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+          (click)="showFilter()">
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" [(ngModel)]="searchText" (keydown.enter)="onKeypressEvent($event)"
+            (keyup)="keyup($event)" nz-input placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Employee Name</nz-form-label>
+                <nz-select name="EmployeeName" nzShowSearch nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Employee Name" [(ngModel)]="EMPLOYEE">
+                  <nz-option *ngFor="let emp of EmployeeName" [nzValue]="emp.NAME" [nzLabel]="emp.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                <nz-select name="ResidenceType" nzShowSearch nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Residence Type" [(ngModel)]="ResidenceType">
+                  <nz-option *ngFor="let res of ResidenceTypeData" [nzValue]="res.TYPE" [nzLabel]="res.TYPE">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon> Date Of Birth</nz-form-label>
+                <nz-range-picker name="DateOfBirth" nzFormat="dd MMM yyyy" [(ngModel)]="DOBDate"
+                  (ngModelChange)="changeDate($event)">
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Cast</nz-form-label>
+                <nz-form-control>
+                  <nz-select name="CAST" [(ngModel)]="Cast" nzAllowClear nzShowSearch nzPlaceHolder="Choose Cast"
+                    (ngModelChange)="changecast($event)">
+                    <nz-option [nzValue]="'SC'" [nzLabel]="'Scheduled Caste'"></nz-option>
+                    <nz-option [nzValue]="'ST'" [nzLabel]="'Scheduled Tribes'"></nz-option>
+                    <!-- <nz-option [nzValue]="'General'" [nzLabel]="'General'"></nz-option> -->
+                    <nz-option [nzValue]="'Other'" [nzLabel]="'Other'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon> Date Of Priority</nz-form-label>
+                <nz-range-picker name="  DateOfPriority" nzFormat="dd MMM yyyy" [(ngModel)]="DateOfPriority"
+                  (ngModelChange)="changeDateOfPriority($event)">
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Grade Pay Level</nz-form-label>
+                <nz-select name="GradePayLevel" nzShowSearch nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Grade Pay Level" [(ngModel)]="GradePayLevel">
+                  <nz-option *ngFor="let grd of GradePayLevelData" [nzValue]="grd.GRADE_PAY_LEVEL"
+                    [nzLabel]="grd.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon> Date of Retirement</nz-form-label>
+                <nz-range-picker name="DateofRetirement" nzFormat="dd MMM yyyy" [(ngModel)]="DateofRetirement"
+                  (ngModelChange)="changeDateofRetirement($event)">
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="6">
+              <nz-form-label nzNoColon>Month </nz-form-label>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a month" name="month" [(ngModel)]="MONTH">
+                    <nz-option [nzValue]="01" [nzLabel]="'January'"></nz-option>
+                    <nz-option [nzValue]="02" [nzLabel]="'February'"></nz-option>
+                    <nz-option [nzValue]="03" [nzLabel]="'March'"></nz-option>
+                    <nz-option [nzValue]="04" [nzLabel]="'April'"></nz-option>
+                    <nz-option [nzValue]="05" [nzLabel]="'May'"></nz-option>
+                    <nz-option [nzValue]="06" [nzLabel]="'June'"></nz-option>
+                    <nz-option [nzValue]="07" [nzLabel]="'July'"></nz-option>
+                    <nz-option [nzValue]="08" [nzLabel]="'August'"></nz-option>
+                    <nz-option [nzValue]="09" [nzLabel]="'September'"></nz-option>
+                    <nz-option [nzValue]="10" [nzLabel]="'October'"></nz-option>
+                    <nz-option [nzValue]="11" [nzLabel]="'November'"></nz-option>
+                    <nz-option [nzValue]="12" [nzLabel]="'December'"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-label nzNoColon>Year </nz-form-label>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-date-picker name="date1" nzMode="year" [(ngModel)]="YEAR1" style="width: 100%"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="display: flex">
+                <button style="margin-right: 10px" nz-button [nzLoading]="isSpinning" nzType="primary"
+                  (click)="applyFilter()">
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <i nz-icon nzType="filter"></i>Clear filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table id="excel-table" class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      [nzScroll]="{ x: '2200px', y: '55vh' }" (nzPageSizeChange)="search()" (nzQueryParams)="sort($event)">
+      <thead nzSingleSort>
+        <tr>
+          <th nzWidth="270px" style="font-weight: bold; text-align: center" nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true">
+            Name
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="RESIDENCE_TYPE"
+            [nzSortFn]="true">
+            Residence Type
+          </th>
+          <th nzWidth="180px" nzColumnKey="DOB" [nzSortFn]="true" style="font-weight: bold; text-align: center">
+            Date Of Birth
+          </th>
+
+          <th nzWidth="180px" nzColumnKey="CAST" [nzSortFn]="true" style="font-weight: bold; text-align: center">
+            Caste
+          </th>
+          <th nzWidth="170px" style="font-weight: bold; text-align: center" nzColumnKey="DATE_OF_PRIORITY"
+            [nzSortFn]="true">
+            Date Of Priority
+          </th>
+
+          <th nzWidth="200px" style="font-weight: bold; text-align: center" nzColumnKey="GRADE_PAY_LEVEL"
+            [nzSortFn]="true">
+            Grade Pay Level
+          </th>
+          <th nzWidth="180px" style="font-weight: bold; text-align: center" nzColumnKey="RETIREMENT_DATE"
+            [nzSortFn]="true">
+            Date of Retirement
+          </th>
+          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="MONTH" [nzSortFn]="true">
+            Month
+          </th>
+
+          <th nzWidth="150px" style="font-weight: bold; text-align: center" nzColumnKey="YEAR" [nzSortFn]="true">
+            Year
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.RESIDENCE_TYPE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DOB }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.CAST == 'SC'">Scheduled Caste</span>
+            <span *ngIf="data.CAST == 'ST'">Scheduled Tribes</span>
+            <span *ngIf="data.CAST == 'Other'">Other</span>
+            <span *ngIf="data.CAST == 'GN'">General</span>
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DATE_OF_PRIORITY | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.GRADE_PAY_LEVEL }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["RETIREMENT_DATE"] | date : "dd-MM-yyyy" }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data.MONTH == 1">January</span>
+            <span *ngIf="data.MONTH == 2">February</span>
+            <span *ngIf="data.MONTH == 3">March</span>
+            <span *ngIf="data.MONTH == 4">April</span>
+            <span *ngIf="data.MONTH == 5">May</span>
+            <span *ngIf="data.MONTH == 6">June</span>
+            <span *ngIf="data.MONTH == 7">July</span>
+            <span *ngIf="data.MONTH == 8">August</span>
+            <span *ngIf="data.MONTH == 9">September</span>
+            <span *ngIf="data.MONTH == 10">October</span>
+            <span *ngIf="data.MONTH == 11">November</span>
+            <span *ngIf="data.MONTH == 12">December</span>
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["YEAR"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

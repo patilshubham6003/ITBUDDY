@@ -1,0 +1,354 @@
+
+  <div nz-row nzType="flex">
+    <div nz-col nzXs="24" nzSm="24" nzMd="9" nzLg="9" nzXl="9" style="display: flex;">
+  
+      <div class="formname" style="padding-top: 3px;">{{ formTitle }}</div>
+    </div>
+  
+    <div nz-col nzXs="24" nzSm="24" nzMd="15" nzLg="15" nzXl="15" style="display: flex; justify-content: flex-end">
+      <form nz-form [nzLayout]="'inline'">
+        <nz-form-item style="margin-right: 10px;">
+          <button nz-button nzTooltipTitle="Download Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+            (click)="importInExcel()" [nzLoading]="exportLoading">
+            <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+          </button>
+        </nz-form-item>
+  
+        <!-- <nz-form-item style="margin-right: 0px;">
+          <button nz-button nzTooltipTitle="View Filters" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+            (click)="showFilter()">
+            <i nz-icon nzType="filter"></i>
+          </button>
+        </nz-form-item> -->
+        <nz-form-item style="margin-right: 0px;">
+          <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+            <input type="text" name="search" [(ngModel)]="searchText" (keydown.enter)="onKeypressEvent($event)"
+              (keyup)="keyup($event)" nz-input placeholder="Search" />
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" id="button" (click)="search(true)" nzSearch>
+              <i nz-icon nzType="search"></i>
+            </button>
+          </ng-template>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="24">
+      <div class="filter {{filterClass}}">
+        <div class="filter-box">
+          <form nz-form>
+            <div nz-row>
+              <!-- <div nz-col nzSpan="3">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Group</nz-form-label>
+                  <nz-form-control>
+                    <nz-select nzShowSearch nzSize="small" nzAllowClear nzMode="multiple" nzPlaceHolder="Select Group"
+                      style="width: 100%" [nzMaxTagCount]="2" name="class" [(ngModel)]="Class">
+                      <nz-option *ngFor="let list of Classlist" [nzValue]="list.ID" [nzLabel]="list.NAME"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label class="labelsize" nzNoColon>Date</nz-form-label>
+                  <nz-form-control>
+                    <nz-range-picker   class="datesize"
+                    nzSize="small" [(ngModel)]="JoinigDate1" name="JoinigDate1" [nzRanges]="ranges"
+                      style="width: 100%;padding-bottom: 3px;padding-top: 3px;" [nzFormat]="commonFunction.dateFormatMMM"
+                      [nzDisabledDate]="disableFutureDates1">
+                    </nz-range-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> 
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label class="labelsize" nzNoColon>Office Name</nz-form-label>
+                  <nz-form-control>
+                    <nz-select   class="inputsize"
+                    nzSize="small" name="Office" nzShowSearch nzAllowClear style="width: 100%"
+                      [nzMaxTagCount]="3" nzPlaceHolder="Select Office Name" [(ngModel)]="Office" nzMode="multiple">
+                      <nz-option *ngFor="let office of OfficeDatalist"  [nzValue]="office.ITHR_OFFICE_ID"
+                      [nzLabel]="office.ITHR_OFFICE_NAME">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label class="labelsize" nzNoColon>Cadre</nz-form-label>
+                  <nz-form-control>
+                    <nz-select             class="inputsize"
+                    nzSize="small" name="Rank" nzShowSearch nzAllowClear style="width: 100%"
+                      nzPlaceHolder="Select Cadre" [(ngModel)]="Rank" [nzMaxTagCount]="3" nzMode="multiple">
+                      <nz-option *ngFor="let rank of Ranklist" [nzValue]="rank.MDB_ID" [nzLabel]="rank.NAME">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label class="labelsize" nzNoColon>Category 1</nz-form-label>
+                  <nz-form-control>
+                    <nz-select             class="inputsize"
+                    nzSize="small" name="cat" nzShowSearch nzAllowClear style="width: 100%"
+                      nzPlaceHolder="Select Category 1" [(ngModel)]="category">
+                      <nz-option *ngFor="let cat of categoryData" [nzValue]="cat.ID" [nzLabel]="cat.NAME">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzSpan="6">
+                <nz-form-item>
+                  <nz-form-label class="labelsize" nzNoColon>Category 2</nz-form-label>
+                  <nz-form-control>
+                    <nz-select             class="inputsize"
+                    nzSize="small" name="SUB_CATEGORY_ID" nzShowSearch nzAllowClear style="width: 100%"
+                      nzPlaceHolder="Select Category 2" [(ngModel)]="SUB_CATEGORY_ID">
+                      <nz-option *ngFor="let sub of SubCatList" [nzValue]="sub.ID" [nzLabel]="sub.NAME">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <!-- <div nz-col nzSpan="4">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Date Of Birth</nz-form-label>
+                  <nz-form-control>
+                    <nz-range-picker [(ngModel)]="DOB" name="DOB"
+                      style="width: 100%;padding-bottom: 3px;padding-top: 3px;" [nzFormat]="commonFunction.dateFormatMMM"
+                      [nzDisabledDate]="disableFutureDates">
+                    </nz-range-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+              <!-- <div nz-col nzSpan="4">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Joining Date at Present Post</nz-form-label>
+                  <nz-form-control>
+                    <nz-range-picker [(ngModel)]="JoinigDate" name="JoinigDate" [nzRanges]="ranges"
+                      style="width: 100%;padding-bottom: 3px;padding-top: 3px;" [nzFormat]="commonFunction.dateFormatMMM"
+                      [nzDisabledDate]="disableFutureDates">
+                    </nz-range-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>-->
+            
+              <!-- <div nz-col nzSpan="4">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Retirement Date</nz-form-label>
+                  <nz-form-control>
+                    <nz-range-picker [(ngModel)]="RetirementDate" name="RetirementDate" [nzRanges]="ranges"
+                      style="width: 100%;padding-bottom: 3px;padding-top: 3px;" [nzFormat]="commonFunction.dateFormatMMM">
+                    </nz-range-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div> -->
+              <div nz-col nzSpan="8" style="align-self: end;">
+                <nz-form-item >
+                  <button style="margin-right: 10px;font-size: 10px !important;" nz-button nzType="primary" (click)="applyFilter()" nzJustify="end">
+                    <i nz-icon nzType="filter"></i>Apply filter
+                  </button>
+                  <button style=" font-size: 10px !important;"  nz-button nzType="default" (click)="clearFilter()">
+                    <i nz-icon nzType="delete"></i>Clear Filter
+                  </button>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-row>
+    <div nzSpan="24">
+      <span *ngIf="dataList!=undefined " style="font-size: 11px;margin-bottom: 0px;color: blue;font-weight: 600;">
+        Total Records: &nbsp; {{totalRecords}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <!-- <span *ngIf="showddetails && dataList!=undefined "
+        style="font-size: 11px;margin-bottom: 0px;color: blue;font-weight: 600;">
+        Matching Records: &nbsp; {{totalRecords}}</span> -->
+    </div>
+  </div>
+  <div nz-row>
+    <div nz-col nzSpan="24">
+      <nz-table id="excel-table" class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger [nzPageSizeOptions]="[10,20,30,40,100,200,300,400,500]"
+        [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+        [(nzPageIndex)]="pageIndex" [nzSize]="'small'" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+        [nzScroll]="{ x: '1500px', y: '55vh' }" (nzPageSizeChange)="search()" (nzQueryParams)="sort($event)"
+        style="white-space: inherit;">
+        <thead nzSingleSort>
+          <tr>
+            <th nzLeft nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true">
+              <b> Name</b>
+            </th>
+            <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{'EMPLOYEE_CODE'}}" [nzSortFn]="true">
+              <b>Employee Code</b>
+            </th>
+            <!-- <th nzWidth="100px" nzShowSort align="center" nzColumnKey="{{ 'CIVIL_CODE' }}" [nzSortFn]="true">
+              <b>Civil Code</b>
+            </th> -->
+            <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{'MOBILE_NO'}}" [nzSortFn]="true">
+              <b>Mobile No.</b>
+            </th>
+            <!-- <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{'EMAIL_ID'}}" [nzSortFn]="true">
+              <b>Email</b>
+            </th>
+            <th nzWidth="90px" nzShowSort align="center" nzColumnKey="{{ 'CLASS_NAME' }}" [nzSortFn]="true">
+              <b>Group</b>
+            </th> -->
+            <th nzWidth="200px" nzShowSort align="center" nzColumnKey="{{ 'ITHR_OFFICE_NAME' }}" [nzSortFn]="true">
+              <b>Office</b>
+            </th>
+            <th nzWidth="250px" nzShowSort align="center" nzColumnKey="{{ 'ITHR_DESIGNATION_NAME' }}" [nzSortFn]="true">
+              <b>Cadre</b>
+            </th>
+            <th nzWidth="120px" nzShowSort align="center" nzColumnKey="{{ 'JOINING_DATE' }}" [nzSortFn]="true">
+              <b>Joining Date</b>
+            </th>
+            <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'DOB' }}" [nzSortFn]="true">
+              <b>Date Of Birth</b>
+            </th>
+            <!-- <th nzWidth="120px" nzShowSort align="center" nzColumnKey="{{ 'DOJ_PRESENT_POST' }}" [nzSortFn]="true">
+              <b>DOJ at<br>Present Post</b>
+            </th>
+            <th nzWidth="120px" nzShowSort align="center" nzColumnKey="{{ 'DOJ_PRESENT_RANK' }}" [nzSortFn]="true">
+              <b>DOJ at<br>Present Rank</b>
+            </th> -->
+            <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'RETIREMENT_DATE' }}" [nzSortFn]="true">
+              <b>Retirement Date</b>
+            </th>
+            <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'CATEGORY_NAME' }}" [nzSortFn]="true">
+              <b>Category 1</b>
+            </th>
+            <th nzWidth="150px" nzShowSort align="center" nzColumnKey="{{ 'SUB_CATEGORY_NAME' }}" [nzSortFn]="true">
+              <b>Category 2</b>
+            </th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data;">
+            <td nzLeft style="text-align: left; white-space: pre-line;">
+              <span *ngIf="data.NAME!=null">
+                <span *ngIf="data.NAME.length >= 25" nz-popover [nzPopoverContent]="data.NAME"
+                  nzPopoverPlacement="topLeft">
+                  {{ data["NAME"] == null ? "-" : (data.NAME | slice : 0 : 25)
+                  }}{{ (data.NAME.length > 25) ? "..." : "" }}
+                </span>
+                <span *ngIf="data.NAME.length < 25"> {{ data["NAME"] == null ? "-" : (data.NAME |
+                  slice : 0 : 25)
+                  }}{{ (data.NAME.length > 25) ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data.NAME==null">-</span>
+            </td>
+            <td align="center">
+              {{ (data["EMPLOYEE_CODE"] == null) ? "-" : data["EMPLOYEE_CODE"] }}
+            </td>
+            <!-- <td align="center">{{ (data["CIVIL_CODE"] == null) ? "-" : data["CIVIL_CODE"] }}</td> -->
+  
+            <td align="center">
+              {{ (data["MOBILE_NO"] == null) ? "-" : data["MOBILE_NO"] }}
+            </td>
+            <!-- <td><span *ngIf="data.EMAIL_ID!=null">
+                <span *ngIf="data.EMAIL_ID.length >= 15" nz-popover [nzPopoverContent]="data.EMAIL_ID"
+                  nzPopoverPlacement="topLeft">
+                  {{ data["EMAIL_ID"] == null ? "-" : (data.EMAIL_ID | slice : 0 : 15)
+                  }}{{ (data.EMAIL_ID.length > 15) ? "..." : "" }}
+                </span>
+                <span *ngIf="data.EMAIL_ID.length < 15"> {{ data["EMAIL_ID"] == null ? "-" : (data.EMAIL_ID |
+                  slice : 0 : 15)
+                  }}{{ (data.EMAIL_ID.length > 15) ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data.EMAIL_ID==null">-</span>
+            </td> -->
+            <!-- <td align="center">
+              {{ (data["CLASS_NAME"] == null) ? "-" : data["CLASS_NAME"] }}
+            </td> -->
+            <td>
+              <span *ngIf="data.ITHR_OFFICE_NAME!=null">
+                <span *ngIf="data.ITHR_OFFICE_NAME.length >= 20" nz-popover [nzPopoverContent]="data.ITHR_OFFICE_NAME"
+                  nzPopoverPlacement="topLeft">
+                  {{ data["ITHR_OFFICE_NAME"] == null ? "-" : (data.ITHR_OFFICE_NAME | slice : 0 : 20)
+                  }}{{ (data.ITHR_OFFICE_NAME.length > 20) ? "..." : "" }}
+                </span>
+                <span *ngIf="data.ITHR_OFFICE_NAME.length < 20"> {{ data["ITHR_OFFICE_NAME"] == null ? "-" : (data.ITHR_OFFICE_NAME |
+                  slice : 0 : 20)
+                  }}{{ (data.ITHR_OFFICE_NAME.length > 20) ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data.ITHR_OFFICE_NAME==null">-</span>
+            </td>
+            <td>
+              <span *ngIf="data.ITHR_DESIGNATION_NAME!=null">
+                <span *ngIf="data.ITHR_DESIGNATION_NAME.length >= 18" nz-popover [nzPopoverContent]="data.ITHR_DESIGNATION_NAME"
+                  nzPopoverPlacement="topLeft">
+                  {{ data["ITHR_DESIGNATION_NAME"] == null ? "-" : (data.ITHR_DESIGNATION_NAME | slice : 0 : 18)
+                  }}{{ (data.ITHR_DESIGNATION_NAME.length > 18) ? "..." : "" }}
+                </span>
+                <span *ngIf="data.ITHR_DESIGNATION_NAME.length < 18"> {{ data["ITHR_DESIGNATION_NAME"] == null ? "-" : (data.ITHR_DESIGNATION_NAME |
+                  slice : 0 : 18)
+                  }}{{ (data.ITHR_DESIGNATION_NAME.length > 18) ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data.ITHR_DESIGNATION_NAME==null">-</span>
+            </td>
+            <td align="center">
+              {{ (data["JOINING_DATE"] == null) ? "-" : data["JOINING_DATE"] | date:'dd/MMM/yyyy' }}
+            </td>
+            <td align="center">
+              {{ (data["DOB"] == null) ? "-" : data["DOB"] | date:'dd/MMM/yyyy' }}
+            </td>
+            <!-- <td align="center">
+              {{ (data["DOJ_PRESENT_POST"] == null) ? "-" : data["DOJ_PRESENT_POST"] | date:'dd/MMM/yyyy' }}
+            </td>
+            <td align="center">
+              {{ (data["DOJ_PRESENT_RANK"] == null) ? "-" : data["DOJ_PRESENT_RANK"] | date:'dd/MMM/yyyy' }}
+            </td> -->
+            <td align="center">
+              {{ (data["RETIREMENT_DATE"] == null) ? "-" : data["RETIREMENT_DATE"] | date:'dd/MMM/yyyy' }}
+            </td>
+            <td>
+              <span *ngIf="data.CATEGORY_NAME!=null">
+                <span *ngIf="data.CATEGORY_NAME.length >= 18" nz-popover [nzPopoverContent]="data.CATEGORY_NAME"
+                  nzPopoverPlacement="topLeft">
+                  {{ data["CATEGORY_NAME"] == null ? "-" : (data.CATEGORY_NAME | slice : 0 : 18)
+                  }}{{ (data.CATEGORY_NAME.length > 18) ? "..." : "" }}
+                </span>
+                <span *ngIf="data.CATEGORY_NAME.length < 18"> {{ data["CATEGORY_NAME"] == null ? "-" : (data.CATEGORY_NAME
+                  |
+                  slice : 0 : 18)
+                  }}{{ (data.CATEGORY_NAME.length > 18) ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data.CATEGORY_NAME==null">-</span>
+            </td>
+            <td>
+              <span *ngIf="data.SUB_CATEGORY_NAME!=null">
+                <span *ngIf="data.SUB_CATEGORY_NAME.length >= 18" nz-popover [nzPopoverContent]="data.SUB_CATEGORY_NAME"
+                  nzPopoverPlacement="topLeft">
+                  {{ data["SUB_CATEGORY_NAME"] == null ? "-" : (data.SUB_CATEGORY_NAME | slice : 0 : 18)
+                  }}{{ (data.SUB_CATEGORY_NAME.length > 18) ? "..." : "" }}
+                </span>
+                <span *ngIf="data.SUB_CATEGORY_NAME.length < 18"> {{ data["SUB_CATEGORY_NAME"] == null ? "-" :
+                  (data.SUB_CATEGORY_NAME
+                  |
+                  slice : 0 : 18)
+                  }}{{ (data.SUB_CATEGORY_NAME.length > 18) ? "..." : "" }}
+                </span>
+              </span>
+              <span *ngIf="data.SUB_CATEGORY_NAME==null">-</span>
+            </td>
+           
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+  

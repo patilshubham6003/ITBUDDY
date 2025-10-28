@@ -1,0 +1,125 @@
+<br />
+
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">
+      <b> {{ formTitle }} </b>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="postsearch" (keydown.enter)="onKeypressEvent($event)" [(ngModel)]="searchText"
+            nz-input placeholder="Search Record" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Directory
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #ContactDirectorytable nzShowSizeChanger [nzFrontPagination]="false"
+      [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '1000px',y: '360px'}"
+      [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" style="white-space: inherit;">
+      <thead>
+        <tr>
+          <th nzWidth="80px" nzAlign="center">
+            <b>Action</b>
+          </th>
+          <th nzWidth="130px" nzColumnKey="{{ 'SEQUENCE_NO' }}" nzAlign="center" [nzSortFn]="true">
+            <b>Sequence No</b>
+          </th>
+          <th nzWidth="350px" nzColumnKey="{{ 'NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Name</b>
+          </th>
+          <th nzWidth="200px" nzColumnKey="{{ 'DESIGNATION' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Designation</b>
+          </th>
+          <th nzWidth="300px" nzColumnKey="{{ 'EMAIL_ID' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Email</b>
+          </th>
+
+          <th nzWidth="150px" nzColumnKey="{{ 'MOBILE_NO' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Mobile No</b>
+          </th>
+
+          <th nzWidth="350px" nzColumnKey="{{ 'OFFICE_NAME' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Office Name</b>
+          </th>
+
+          <th nzWidth="450px" nzColumnKey="{{ 'SERVICE_TITLE' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Service Name</b>
+          </th>
+
+          <th nzWidth="80px" nzColumnKey="{{ 'STATUS' }}" [nzSortFn]="true" nzAlign="center">
+            <b>Status</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of ContactDirectorytable.data">
+          <td nzAlign="center">
+            <a nz-button nzType="link" (click)="edit(data)">
+              <span nz-icon nzType="edit" nzTheme="outline"></span>
+            </a>
+          </td>
+          <td nzAlign="center">
+            {{ data["SEQUENCE_NO"] }}
+          </td>
+          <td>
+            {{ data["NAME"] }}
+          </td>
+          <td>
+            {{ data["DESIGNATION"] }}
+          </td>
+          <td>
+            {{ data["EMAIL_ID"] }}
+          </td>
+          <td nzAlign="center">
+            {{ data["MOBILE_NO"] }}
+          </td>
+          <td>
+            {{ data["OFFICE_NAME"] }}
+          </td>
+          <td>
+            {{ data["SERVICE_TITLE"] }}
+          </td>
+
+          <td nzAlign="center">
+            <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+            <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="600" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-contact-directory-master [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+      [data]="drawerData"></app-contact-directory-master>
+  </ng-container>
+</nz-drawer>

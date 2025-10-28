@@ -1,0 +1,473 @@
+<div nz-row style="padding: 10px">
+  <div nz-col nzSpan="1"></div>
+  <div nz-col nzSpan="22">
+    <div nz-row style="padding: 10px; font-size: 14px">
+      <div nz-col nzSpan="24">
+        <p
+          style="
+            text-align: center;
+            text-decoration: underline;
+            margin-top: 30px;
+            font-size: 18px !important;
+          "
+        >
+          <b>APPLICATION FOR ADVANCE O T.A ON TOUR</b>
+        </p>
+      </div>
+      <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+        To,
+      </div>
+      <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+        <span *ngIf="DDO_Master_Data.DESCRIPTION">
+          {{ DDO_Master_Data.DESCRIPTION }}
+        </span>
+      </div>
+      <div
+        nz-col
+        nzSpan="24"
+        style="font-size: 14px; margin-bottom: 8px; text-align: left"
+      >
+        <span *ngIf="DDO_Master_Data.LOCATION">
+          {{ DDO_Master_Data.LOCATION }}
+        </span>
+      </div>
+      <div nz-col nzSpan="1">1</div>
+
+      <div nz-col nzSpan="12">
+        <P>NAME </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.EMPLOYEE_NAME }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">2</div>
+      <div nz-col nzSpan="12">
+        <P>Designation </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.DESIGNATION }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">3</div>
+      <div nz-col nzSpan="12">
+        <P>Whether Permanent/Temporary </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: </span>
+      </div>
+
+      <div nz-col nzSpan="1">4</div>
+      <div nz-col nzSpan="12">
+        <P>Office/Section in which working </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>:</span>
+      </div>
+
+      <div nz-col nzSpan="1">5</div>
+      <div nz-col nzSpan="12">
+        <P>Pay + Grade Pay </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span
+          >: {{ applicationdrawerdata.BASIC_PAY }} +
+          {{ applicationdrawerdata.GRADE_PAY }}</span
+        >
+      </div>
+
+      <div nz-col nzSpan="1">6</div>
+      <div nz-col nzSpan="12">
+        <P>Place to be visited and period of halt at each station</P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.VISITED_PLACE_AND_PERIOD }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">7</div>
+      <div nz-col nzSpan="12">
+        <P>Purpose of tour </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.PURPOSE_OF_TOUR }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">8</div>
+      <div nz-col nzSpan="12">
+        <P>Has the tour programme been approved by competent authrity</P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span
+          >:
+          <span
+            *ngIf="
+              applicationdrawerdata.IS_APPROVED_BY_TOUR_PROGRAMME_AUTHORITY
+            "
+            >Yes
+            {{ applicationdrawerdata.TOUR_PROGRAMME_AUTHORITY_REMARK }}</span
+          >
+          <span
+            *ngIf="
+              !applicationdrawerdata.IS_APPROVED_BY_TOUR_PROGRAMME_AUTHORITY
+            "
+            >No</span
+          >
+        </span>
+      </div>
+
+      <div nz-col nzSpan="1">9</div>
+      <div nz-col nzSpan="12">
+        <P>Duration of journey (in days) </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span
+          >: {{ applicationdrawerdata.DURATION_START_DATE }} To
+          {{ applicationdrawerdata.DURATION_END_DATE }}</span
+        >
+      </div>
+
+      <div nz-col nzSpan="1">10</div>
+      <div nz-col nzSpan="12">
+        <P
+          >Rail/Road fare by the entitled class/classes which the Government
+          servant proposes to travel for both outward and inward journey</P
+        >
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.TRAVEL_FARE }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">11</div>
+      <div nz-col nzSpan="12">
+        <P
+          >Daily allowances entitled
+          <br />
+          (a) For Journey Period<br />
+          (b) For the holts</P
+        >
+      </div>
+      <div nz-col nzSpan="11">
+        <span
+          ><br />
+          :Rs. {{ applicationdrawerdata.JOURNEY_PERIOD_ALLOWANCE }}<br />
+          :Rs {{ applicationdrawerdata.HALT_ALLOWANCE }}
+          <br />
+          &nbsp;TOTAL : {{ applicationdrawerdata.TOTAL_ALLOWANCE }}
+        </span>
+      </div>
+
+      <div nz-col nzSpan="1">12</div>
+      <div nz-col nzSpan="12">
+        <P>Total R.A. + D.A.(10 + 11) </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.TOTAL_RA_DA }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">13</div>
+      <div nz-col nzSpan="12">
+        <P>Amount of advanced required </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span>: {{ applicationdrawerdata.REQUIRED_ADVANCE_AMOUNT }}</span>
+      </div>
+
+      <div nz-col nzSpan="1">14</div>
+      <div nz-col nzSpan="12">
+        <P
+          >Whether any eariler advance is outstanding If so, the date on which
+          TA bill was submitted
+        </P>
+      </div>
+      <div nz-col nzSpan="11">
+        <span
+          >:
+          {{
+            applicationdrawerdata.IS_ADVANCE_OUTSTANDING == true ? "Yes" : "No"
+          }}
+          <span *ngIf="applicationdrawerdata.IS_ADVANCE_OUTSTANDING == true"
+            >{{ applicationdrawerdata.TA_BILL_SUBMITTED_DATE }}></span
+          >
+        </span>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <P style="text-align: center"
+          >I declare that the particulars furnished above are correct.</P
+        >
+      </div>
+
+      <div nz-col nzSpan="12">
+        <P>Station</P>
+      </div>
+      <div nz-col nzSpan="12" style="text-align: right">
+        <p>Signature of the Government Servant</p>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <P>Date</P>
+      </div>
+      <div nz-col nzSpan="12"></div>
+    </div>
+  </div>
+  <div nz-col nzSpan="1"></div>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="printModel()"
+  >
+    <span>Download or Print</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Application'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <div id="excel-table" style="height: 450px; overflow: auto">
+      <div nz-row style="padding: 10px; font-size: 14px">
+        <div nz-col nzSpan="24">
+          <p
+            style="
+              text-align: center;
+              text-decoration: underline;
+              margin-top: 30px;
+              font-size: 18px !important;
+            "
+          >
+            <b>APPLICATION FOR ADVANCE O T.A ON TOUR</b>
+          </p>
+        </div>
+        <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+          To,
+        </div>
+        <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+          <span *ngIf="DDO_Master_Data.DESCRIPTION">
+            {{ DDO_Master_Data.DESCRIPTION }}
+          </span>
+        </div>
+        <div
+          nz-col
+          nzSpan="24"
+          style="font-size: 14px; margin-bottom: 8px; text-align: left"
+        >
+          <span *ngIf="DDO_Master_Data.LOCATION">
+            {{ DDO_Master_Data.LOCATION }}
+          </span>
+        </div>
+        <div nz-col nzSpan="1">1</div>
+
+        <div nz-col nzSpan="12">
+          <P>NAME </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.EMPLOYEE_NAME }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">2</div>
+        <div nz-col nzSpan="12">
+          <P>Designation </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.DESIGNATION }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">3</div>
+        <div nz-col nzSpan="12">
+          <P>Whether Permanent/Temporary </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: </span>
+        </div>
+
+        <div nz-col nzSpan="1">4</div>
+        <div nz-col nzSpan="12">
+          <P>Office/Section in which working </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>:</span>
+        </div>
+
+        <div nz-col nzSpan="1">5</div>
+        <div nz-col nzSpan="12">
+          <P>Pay + Grade Pay </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span
+            >: {{ applicationdrawerdata.BASIC_PAY }} +
+            {{ applicationdrawerdata.GRADE_PAY_LEVEL }}</span
+          >
+        </div>
+
+        <div nz-col nzSpan="1">6</div>
+        <div nz-col nzSpan="12">
+          <P>Place to be visited and period of halt at each station</P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.VISITED_PLACE_AND_PERIOD }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">7</div>
+        <div nz-col nzSpan="12">
+          <P>Purpose of tour </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.PURPOSE_OF_TOUR }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">8</div>
+        <div nz-col nzSpan="12">
+          <P>Has the tour programme been approved by competent authrity</P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span
+            >:
+            <span
+              *ngIf="
+                applicationdrawerdata.IS_APPROVED_BY_TOUR_PROGRAMME_AUTHORITY
+              "
+              >Yes
+              {{ applicationdrawerdata.TOUR_PROGRAMME_AUTHORITY_REMARK }}</span
+            >
+            <span
+              *ngIf="
+                !applicationdrawerdata.IS_APPROVED_BY_TOUR_PROGRAMME_AUTHORITY
+              "
+              >No</span
+            >
+          </span>
+        </div>
+
+        <div nz-col nzSpan="1">9</div>
+        <div nz-col nzSpan="12">
+          <P>Duration of journey (in days) </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span
+            >: {{ applicationdrawerdata.DURATION_START_DATE }} To
+            {{ applicationdrawerdata.DURATION_END_DATE }}</span
+          >
+        </div>
+
+        <div nz-col nzSpan="1">10</div>
+        <div nz-col nzSpan="12">
+          <P
+            >Rail/Road fare by the entitled class/classes which the Government
+            servant proposes to travel for both outward and inward journey</P
+          >
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.TRAVEL_FARE }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">11</div>
+        <div nz-col nzSpan="12">
+          <P
+            >Daily allowances entitled
+            <br />
+            (a) For Journey Period<br />
+            (b) For the holts</P
+          >
+        </div>
+        <div nz-col nzSpan="11">
+          <span
+            ><br />
+            : Rs. {{ applicationdrawerdata.JOURNEY_PERIOD_ALLOWANCE }}<br />
+            : Rs {{ applicationdrawerdata.HALT_ALLOWANCE }}
+            <br />
+            &nbsp;TOTAL : {{ applicationdrawerdata.TOTAL_ALLOWANCE }}
+          </span>
+        </div>
+
+        <div nz-col nzSpan="1">12</div>
+        <div nz-col nzSpan="12">
+          <P>Total R.A. + D.A.(10 + 11) </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.TOTAL_RA_DA }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">13</div>
+        <div nz-col nzSpan="12">
+          <P>Amount of advanced required </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span>: {{ applicationdrawerdata.REQUIRED_ADVANCE_AMOUNT }}</span>
+        </div>
+
+        <div nz-col nzSpan="1">14</div>
+        <div nz-col nzSpan="12">
+          <P
+            >Whether any eariler advance is outstanding If so, the date on which
+            TA bill was submitted
+          </P>
+        </div>
+        <div nz-col nzSpan="11">
+          <span
+            >:
+            {{
+              applicationdrawerdata.IS_ADVANCE_OUTSTANDING == true
+                ? "Yes"
+                : "No"
+            }}
+            <span *ngIf="applicationdrawerdata.IS_ADVANCE_OUTSTANDING == true"
+              >{{ applicationdrawerdata.TA_BILL_SUBMITTED_DATE }}></span
+            >
+          </span>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <P style="text-align: center"
+            >I declare that the particulars furnished above are correct.</P
+          >
+        </div>
+
+        <div nz-col nzSpan="12">
+          <P>Station</P>
+        </div>
+        <div nz-col nzSpan="12" style="text-align: right">
+          <p>Signature of the Government Servant</p>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <P>Date</P>
+        </div>
+        <div nz-col nzSpan="12"></div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+    <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+  </ng-template>
+</nz-modal>

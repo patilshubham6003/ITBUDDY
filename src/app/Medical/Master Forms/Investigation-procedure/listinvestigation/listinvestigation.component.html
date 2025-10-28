@@ -1,0 +1,248 @@
+<div nz-row nzType="flex">
+  <div nz-col nzSpan="7">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div nz-col nzSpan="17" style="display: flex; justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            autocomplete="off"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+            placeholder="Search Records"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzType="primary"
+          style="margin-right: 17px"
+          (click)="add2()"
+          nzJustify="end"
+        >
+          <i nz-icon nzType="plus"></i>Import Data
+        </button>
+        <button nz-button nzType="primary" (click)="add()">
+          <i nz-icon nzType="plus"></i>
+          New Investigation/ Procedure
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzSize]="'small'"
+      [nzData]="dataList"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      [nzScroll]="{ x: '2000px', y: '55vh' }"
+      (nzQueryParams)="sort($event)"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="55px" style="text-align: center">Action</th>
+          <th
+            nzWidth="70px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'CITY_NAME' }}"
+            [nzSortFn]="true"
+          >
+            City Name
+          </th>
+          <th
+            nzWidth="70px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'SCHEDULE_NO' }}"
+            [nzSortFn]="true"
+          >
+            Schedule No
+          </th>
+          <th
+            nzWidth="120px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'INVESTIGATION_CATEGORY_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Category Name
+          </th>
+          <th
+            nzWidth="80px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'SHORT_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Short Code
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NAME' }}"
+            [nzSortFn]="true"
+          >
+            Investigation/ Procedure Name
+          </th>
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NABH_AMOUNT' }}"
+            [nzSortFn]="true"
+          >
+            Rate for NABH
+          </th>
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NON_NABH_AMOUNT' }}"
+            [nzSortFn]="true"
+          >
+            Rate for Non NABH
+          </th>
+          <th
+            nzWidth="115px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'SUPER_SPECIALITY_AMOUNT' }}"
+            [nzSortFn]="true"
+          >
+            Rate for Super Speciality
+          </th>
+          <th
+            nzWidth="140px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'NOTIFICATION_MEMORAMDUM_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Notification/Memorandum Name
+          </th>
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'PRICELIST_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Pricelist Name
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center">
+            <a nz-button nzType="link" (click)="edit(data)"
+              ><i nz-icon nzType="edit" nzTheme="outline"></i
+            ></a>
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["CITY_NAME"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["SCHEDULE_NO"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["INVESTIGATION_CATEGORY_NAME"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["SHORT_CODE"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["NAME"] }}
+          </td>
+
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["NABH_AMOUNT"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["NON_NABH_AMOUNT"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["SUPER_SPECIALITY_AMOUNT"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["NOTIFICATION_MEMORAMDUM_NAME"] }}
+          </td>
+          <td style="text-align: left; white-space: pre-line">
+            {{ data["PRICELIST_NAME"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="720"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-addtinvestigation
+      [drawerClose]="callBackDrawerClose"
+      [data]="clientDrawerData"
+    ></app-addtinvestigation>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzVisible]="drawerVisible2"
+  [nzTitle]="drawerTitle2"
+  (nzOnClose)="drawerClose2()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-import-excel-investigation-rate
+      [drawerClose]="closeCallback"
+      [drawerVisible]="drawerVisible2"
+      [data]="drawerData2"
+      [index]="index"
+      [resetdrawaerusingboolean]="reset"
+    ></app-import-excel-investigation-rate>
+  </ng-container>
+</nz-drawer>

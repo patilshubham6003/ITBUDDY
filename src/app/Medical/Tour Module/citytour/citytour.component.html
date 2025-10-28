@@ -1,0 +1,204 @@
+<div>
+  <form nz-form #AddNewRecord="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Date</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Select Date">
+              <nz-form-control nzHasFeedback nzErrorTip="Please Select Date">
+                <nz-date-picker
+                  [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                  nzFormat="dd/MM/yyyy HH:mm"
+                  [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                  name="date"
+                  [(ngModel)]="data.DATE"
+                  style="width: 100%"
+                  [ngClass]="isShowCSS ? 'datesize' : ''"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12"></div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Fare Paid By The Officer</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Fare Paid By The Officer">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.FARE_PAID_BY_OFFICER"
+                  name="FARE_PAID_BY_OFFICER"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Fare Paid By The Officer"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="roleId != 2">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Fare Paid</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Fare Paid">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.FARE_PAID"
+                  name="FARE_PAID"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Fare Paid"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >From Place Name</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter From Place Name">
+              <input
+                nz-input
+                name="fromname"
+                required
+                placeHolder="Enter From Place Name"
+                maxlength="256"
+                autocomplete="off"
+                [pattern]="namepatt"
+                [(ngModel)]="data.FROM_PLACE"
+                required
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >To Place Name</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter To Place Name">
+              <input
+                nz-input
+                name="TO_PLACE"
+                required
+                placeHolder="Enter To Place Name"
+                autocomplete="off"
+                maxlength="256"
+                [pattern]="namepatt"
+                [(ngModel)]="data.TO_PLACE"
+                required
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- </div> -->
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nzType="primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, AddNewRecord)"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff; font-size: 11px"
+        >
+          <a style="color: white" (click)="save(true, AddNewRecord)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID && !isAdmin"
+      (click)="save(false, AddNewRecord)"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

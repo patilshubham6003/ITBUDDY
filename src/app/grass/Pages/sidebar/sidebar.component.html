@@ -1,0 +1,87 @@
+<div nz-row nzJustify="center" style="
+background: var(--White, #fff);
+box-shadow: 0px 0px 2px 3px rgb(175 181 213 / 16%) inset;
+padding: 9px 20px 4px 20px;height: 102%;overflow: hidden;
+">
+  <div nz-col nzSpan="24" *ngIf="currentstage != undefined">
+    <nz-steps style="height: 95%" nzDirection="vertical" [nzCurrent]="currentstage['STEP_NO']"
+      (nzIndexChange)="onIndexChange($event)" nzSize="small">
+      <nz-step class="divvv" nzTitle="Application" routerLink="/grass/accomodation_allotment_process"
+        (click)="updatestep()" [nzIcon]="applicationTemplate" nzStatus="finish"></nz-step>
+      <ng-template #applicationTemplate>
+        <span *ngIf="currentstage['STEP_NO'] != 0" nz-icon nzType="check-circle" nzTheme="outline"
+          style="font-size: 22px"></span>
+
+        <span *ngIf="currentstage['STEP_NO'] == 0" nz-icon nzType="check-circle" nzTheme="fill"
+          style="font-size: 22px"></span>
+      </ng-template>
+
+      <nz-step class="divvv" *ngIf="falatavailabilityList" nzTitle="Quarter Availability" [nzIcon]="progressTemplate"
+        nzStatus="finish"></nz-step>
+      <nz-step class="divvv" *ngIf="!falatavailabilityList" disabled="true" nzTitle="Quarter Availability"
+        [nzIcon]="progressTemplate" nzStatus="In Progress"></nz-step>
+      <!-- <nz-step class="divvv" nzTitle="Quarter Availability" [nzIcon]="progressTemplate" nzStatus="finish"></nz-step> -->
+      <ng-template #progressTemplate>
+        <span *ngIf="currentstage['STEP_NO'] != 1" nz-icon nzType="check-circle" nzTheme="outline"
+          style="font-size: 22px"></span>
+
+        <span *ngIf="currentstage['STEP_NO'] == 1" nz-icon nzType="check-circle" nzTheme="fill"
+          style="font-size: 22px"></span>
+      </ng-template>
+
+
+      <!-- routerLink="/grass/Senioritylistcomp" -->
+      <nz-step class="divvv" *ngIf="SeniorityList" nzTitle="Seniority Order" [nzIcon]="SeniorityTemplate"
+        nzStatus="finish"></nz-step>
+      <nz-step class="divvv" *ngIf="!SeniorityList" disabled="true" nzTitle="Seniority Order"
+        [nzIcon]="SeniorityTemplate" nzStatus="In Progress"></nz-step>
+      <!-- <nz-step nzTitle="Seniority Order" [nzIcon]="SeniorityTemplate" nzStatus="finish" ></nz-step> -->
+      <ng-template #SeniorityTemplate>
+        <span *ngIf="currentstage['STEP_NO'] != 2" nz-icon nzType="check-circle" nzTheme="outline"
+          style="font-size: 22px"></span>
+
+        <span *ngIf="currentstage['STEP_NO'] == 2" nz-icon nzType="check-circle" nzTheme="fill"
+          style="font-size: 22px"></span>
+      </ng-template>
+      <!-- <nz-step nzTitle="Seniority Order" > 
+  
+</nz-step> -->
+      <!-- <nz-step  nzTitle="Preferences" routerLink="/grass/pf"></nz-step> -->
+      <nz-step class="divvv" *ngIf="Preferences" nzTitle="Preferences" [nzIcon]="PreferencesTemplate"
+        nzStatus="finish"></nz-step>
+      <nz-step class="divvv" *ngIf="!Preferences" nzTitle="Preferences" [nzIcon]="PreferencesTemplate"
+        nzStatus="In Progress"></nz-step>
+      <ng-template #PreferencesTemplate>
+        <span *ngIf="currentstage['STEP_NO'] != 3" nz-icon nzType="check-circle" nzTheme="outline"
+          style="font-size: 22px"></span>
+
+        <span *ngIf="currentstage['STEP_NO'] == 3" nz-icon nzType="check-circle" nzTheme="fill"
+          style="font-size: 22px"></span>
+      </ng-template>
+      <!-- <nz-step nzTitle="Allotment" routerLink="/grass/allotment"></nz-step> -->
+      <nz-step class="divvv" *ngIf="tabAllotment" nzTitle="Allotment" [nzIcon]="AllotmentTemplate"
+        nzStatus="finish"></nz-step>
+      <nz-step class="divvv" *ngIf="!tabAllotment" nzTitle="Allotment" [nzIcon]="AllotmentTemplate"
+        nzStatus="In Progress"></nz-step>
+      <ng-template #AllotmentTemplate>
+        <span *ngIf="currentstage['STEP_NO'] != 4" nz-icon nzType="check-circle" nzTheme="outline"
+          style="font-size: 22px"></span>
+
+        <span *ngIf="currentstage['STEP_NO'] == 4" nz-icon nzType="check-circle" nzTheme="fill"
+          style="font-size: 22px"></span>
+      </ng-template>
+      <!-- <nz-step  nzTitle="MIS"></nz-step> -->
+      <nz-step class="divvv" *ngIf="tabMIS" nzTitle="MIS" [nzIcon]="MISTemplate" nzStatus="finish"
+        (click)="movemis()"></nz-step>
+      <nz-step class="divvv" *ngIf="!tabMIS" disabled="true" nzTitle="MIS" [nzIcon]="MISTemplate"
+        nzStatus="In Progress"></nz-step>
+      <ng-template #MISTemplate>
+        <span *ngIf="currentstage['STEP_NO'] != 5" nz-icon nzType="check-circle" nzTheme="outline"
+          style="font-size: 22px"></span>
+
+        <span *ngIf="currentstage['STEP_NO'] == 5" nz-icon nzType="check-circle" nzTheme="fill"
+          style="font-size: 22px"></span>
+      </ng-template>
+    </nz-steps>
+  </div>
+</div>

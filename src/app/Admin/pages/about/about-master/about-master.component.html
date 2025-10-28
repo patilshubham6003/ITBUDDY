@@ -1,0 +1,91 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <b>
+      <div class="formname">{{ formTitle }}</div>
+    </b>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex;justify-content: flex-end">
+    <form nz-form [nzLayout]="'inline'">
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" name="search" [(ngModel)]="searchText" (keydown.enter)="onKeypressEvent($event)"
+          (keydown.enter)="search(true)" nz-input placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" id="button" (click)="search(true)" nzSearch>
+            <i nz-icon nzType="search" nzTheme="outline"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New About
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+<br />
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1" nzBordered #table [nzScroll]="{ x: '1000px',y: '360px' }" [nzSize]="'small'" nzShowSizeChanger
+      [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)" style="white-space: inherit;" >
+      <thead>
+        <tr>
+          <th nzWidth="80px" nzAlign="center"><b>Action</b></th>
+          <th nzWidth="130px" [nzColumnKey]="'SEQUENCE_NO'" [nzSortFn]="true" nzAlign="center"><b>Sequence No</b></th>
+          <th nzWidth="450px" [nzColumnKey]="'TITLE'" [nzSortFn]="true" nzAlign="center"><b>Title</b></th>
+          <th nzWidth="400px" [nzColumnKey]="'DESCRIPTION'" [nzSortFn]="true" nzAlign="center"><b>Description</b></th>
+          <th nzWidth="400px" [nzColumnKey]="'VISION'" [nzSortFn]="true" nzAlign="center"><b>Vision</b></th>
+          <th nzWidth="400px" [nzColumnKey]="'MISSION'" [nzSortFn]="true" nzAlign="center"><b>Mission</b></th>
+          <th nzWidth="80px" nzAlign="center" [nzColumnKey]="'STATUS'" [nzSortFn]="true" nzAlign="center"><b>Status</b></th>
+          <th nzWidth="120px" nzAlign="center" [nzColumnKey]="'IS_ON_HOME'" [nzSortFn]="true" nzAlign="center"><b>Is On Home</b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzAlign="center">
+            <a nz-button nzType="link" (click)="edit(data)"><span nz-icon nzType="edit" nzTheme="outline" ></span></a>
+          </td>
+          <td nzAlign="center">{{data.SEQUENCE_NO}}</td>
+          <td nz-popover nzPopoverTitle="Title" [nzPopoverContent]="data.TITLE" nzPopoverPlacement="topLeft">{{
+            data.TITLE | slice:0:40 }}{{ data.TITLE.length > 40 ? "..." : "" }}</td>
+          <td nz-popover nzPopoverTitle="Description" [nzPopoverContent]="data.DESCRIPTION" nzPopoverPlacement="topLeft">{{
+            data.DESCRIPTION | slice:0:40 }}{{ data.DESCRIPTION.length > 40 ? "..." : "" }}</td>
+          <td nz-popover nzPopoverTitle="Vision" [nzPopoverContent]="data.VISION" nzPopoverPlacement="topLeft">{{
+              data.VISION | slice:0:40 }}{{ data.VISION.length > 40 ? "..." : "" }}<p *ngIf="data.VISION==''" style="text-align: center;">--</p></td>
+          <td nz-popover nzPopoverTitle="Mision" [nzPopoverContent]="data.MISSION" nzPopoverPlacement="topLeft">{{
+                data.MISSION | slice:0:40 }}{{ data.MISSION.length > 40 ? "..." : "" }}<p *ngIf="data.MISSION==''" style="text-align: center;">--</p></td>
+
+                <td nzAlign="center">
+                  <i nz-icon *ngIf="data['STATUS']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="'#52c41a'"></i>
+      
+                  <i nz-icon *ngIf="!data['STATUS']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="'#f50'"></i>
+                </td>
+          <td nzAlign="center">
+            <i nz-icon *ngIf="data['IS_ON_HOME']" [nzType]="'check-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"></i>
+
+            <i nz-icon *ngIf="!data['IS_ON_HOME']" [nzType]="'close-circle'" [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"></i>
+          </td>
+
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="800" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <app-about-form *nzDrawerContent [drawerClose]="closeCallback" [data]="drawerData"></app-about-form>
+</nz-drawer>

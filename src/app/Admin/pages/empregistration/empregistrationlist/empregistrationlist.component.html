@@ -1,0 +1,165 @@
+<div nz-row nzType="flex">
+  <div nz-col nz-col nzXs="20" nzSm="20" nzMd="16" nzLg="16" nzXl="8">
+    <b>
+      <div class="formname">{{ formTitle }}</div>
+    </b>
+  </div>
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="8"
+    nzLg="8"
+    nzXl="16"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+            (keydown.enter)="search(true)"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="search()"
+            nzSearch
+            id="searchBtn"
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item style="margin-right: 0px">
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Employee
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ y: '70vh' }"
+      [nzSize]="'small'"
+      style="white-space: inherit; padding-top: 20px"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="40px" nzAlign="center" nzLeft><b>Action</b></th>
+          <th
+            nzWidth="200px"
+            nzColumnKey="NAME"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Name</b>
+          </th>
+          <th
+            nzWidth="80px"
+            [nzColumnKey]="'EMPLOYEE_CODE'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Employee Code</b>
+          </th>
+          <th
+            nzWidth="200px"
+            [nzColumnKey]="'EMAIL_ID'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Email</b>
+          </th>
+          <th
+            nzWidth="80px"
+            [nzColumnKey]="'MOBILE_NO'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Mobile Number</b>
+          </th>
+          <th
+            nzWidth="130px"
+            [nzColumnKey]="'ITHR_DESIGNATION_NAME'"
+            nzAlign="center"
+            [nzSortFn]="true"
+          >
+            <b>Cadre</b>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td nzWidth="40px" nzLeft nzAlign="center">
+            <a nz-button nzType="link" (click)="edit(data)"
+              ><span nz-icon nzType="edit" nzTheme="outline"></span
+            ></a>
+          </td>
+          <td nzWidth="200px" style="white-space: pre-line">
+            {{ data.NAME ? data.NAME : "-" }}
+          </td>
+          <td nzWidth="80px" nzAlign="center">
+            {{ data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : "-" }}
+          </td>
+          <td nzWidth="200px" style="white-space: pre-line">
+            {{ data.EMAIL_ID ? data.EMAIL_ID : "-" }}
+          </td>
+          <td nzWidth="80px" nzAlign="center">
+            {{ data.MOBILE_NO ? data.MOBILE_NO : "-" }}
+          </td>
+          <td nzWidth="130px" nzAlign="center">
+            {{ data.ITHR_DESIGNATION_NAME ? data.ITHR_DESIGNATION_NAME : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px',
+    'padding-top': '12px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="450"
+  [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <app-empregistrationdrawer
+    *nzDrawerContent
+    [drawerClose]="closeCallback"
+    [isdrawerVisible]="drawerVisible"
+    [isEmailVisible]="isEmailVisible"
+    [isEmpCodevisible]="isEmpCodevisible"
+    [data]="drawerData"
+    [showEmployeeSearch]="showEmployeeSearch"
+  ></app-empregistrationdrawer>
+</nz-drawer>

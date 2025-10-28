@@ -1,0 +1,248 @@
+<div>
+  <form nz-form #form1="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="24" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Education Type</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Middle Name">
+              <nz-select
+                nzSize="small"
+                class="inputsize"
+                nzAllowClear
+                name="EDUCATION_TYPE_ID"
+                nzShowSearch
+                style="width: 100%"
+                nzPlaceHolder="Select Education Type"
+                [(ngModel)]="data.EDUCATION_TYPE_ID"
+              >
+                <nz-option
+                  class="inputsize"
+                  [nzValue]="1"
+                  nzLabel="Technical"
+                ></nz-option>
+                <nz-option
+                  class="inputsize"
+                  [nzValue]="2"
+                  nzLabel="Non-Technical"
+                ></nz-option>
+                <nz-option
+                  class="inputsize"
+                  [nzValue]="3"
+                  nzLabel="None"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Name of Course /Degree
+            </nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Name of Course /Degree not valid"
+            >
+              <input
+                class="inputsize"
+                nz-input
+                name="COURSE_DEGREE_NAME"
+                [(ngModel)]="data.COURSE_DEGREE_NAME"
+                maxlength="64"
+                placeHolder="Enter Name of Course /Degree"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="24" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Name Of College/ University
+            </nz-form-label>
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Name Of College/ University not valid"
+            >
+              <input
+                class="inputsize"
+                nz-input
+                name="COLLEGE_UNIVERSITY_NAME"
+                [(ngModel)]="data.COLLEGE_UNIVERSITY_NAME"
+                maxlength="32"
+                placeHolder="Enter Name Of College/ University"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Marks/Percentage</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Marks/Percentage">
+              <input
+                class="inputsize"
+                nz-input
+                name="MARKS"
+                [(ngModel)]="data.MARKS"
+                (keypress)="onlynumdot($event)"
+                maxlength="4"
+                placeHolder="Marks/Percentage"
+              />
+            </nz-form-control>
+            <!-- (ngModelChange)="onMarksChange($event)" -->
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="8" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Month/Year Of Passing</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Select Form Date">
+              <nz-date-picker
+                class="datesize"
+                style="width: 100%"
+                name="MONTH_YEAR"
+                nzMode="month"
+                nzFormat="MMM yyyy"
+                [(ngModel)]="data.MONTH_YEAR"
+              >
+              </nz-date-picker>
+              <!-- <input nz-input name="MONTH_YEAR" placeHolder="MM/yyyy" autocomplete="off" autofill="off"
+                  pattern="\d{2}/\d{4}" (input)="onDOB($event, 'TD')" (keypress)="_commonFunctionService.omit($event)"
+                  [(ngModel)]="data.MONTH_YEAR" maxlength="7" />
+                <span *ngIf="data.MONTH_YEAR">
+                  <small style="color: red; font-weight: normal" *ngIf="showInvalidDateError(data.MONTH_YEAR)">
+                    Invalid Date
+                  </small>
+                </span> -->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="10" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Specialization</nz-form-label
+            >
+            <nz-form-control nzHasFeedback>
+              <input
+                class="inputsize"
+                nz-input
+                name="MAIN_SUBJECT"
+                maxlength="32"
+                placeHolder="Enter Specialization."
+                maxlength="32"
+                [(ngModel)]="data.MAIN_SUBJECT"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- <div nz-col nzSpan="12">
+            <nz-form-item class="ddd">
+              <nz-form-label nzNoColon>Is Computer Konwledge</nz-form-label>
+              <nz-form-control>
+                <nz-switch name="IS_COMPUTER_KNOWLEDGE" nzCheckedChildren="Y" nzUnCheckedChildren="N"
+                  [(ngModel)]="data.IS_COMPUTER_KNOWLEDGE"></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>-->
+        <div nz-col nzSpan="12" class="colsspadding">
+          <nz-form-item class="ddd">
+            <nz-form-label class="labelsize" nzNoColon
+              >Whether it is Highest Qualification?
+            </nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+              <nz-switch
+                class="inputsize"
+                name="IS_HIGHEST"
+                nzCheckedChildren="Y"
+                nzUnCheckedChildren="N"
+                [(ngModel)]="data.IS_HIGHEST"
+                (ngModelChange)="showConfirm($event)"
+              >
+              </nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-row>
+        <!-- <div nz-col nzSpan="24" *ngIf="data.IS_COMPUTER_KNOWLEDGE == true">
+            <nz-form-item class="ddd">
+              <nz-form-label nzNoColon>Computer Knowledge </nz-form-label>
+              <nz-form-control>
+                <textarea nz-input name="KNOWLEDGE_DETAILS" rows="2" [(ngModel)]="data.KNOWLEDGE_DETAILS"
+                  placeHolder="Enter Computer Knowledge" maxlength="250"></textarea>
+              </nz-form-control>
+              <span *ngIf="
+                  data.KNOWLEDGE_DETAILS != undefined &&
+                  data.KNOWLEDGE_DETAILS != null &&
+                  data.KNOWLEDGE_DETAILS != ''
+                " style="
+                  font-size: 11px;
+                  color: red;
+                  text-align: right;
+                  position: absolute;
+                  right: 15px;
+                  top: 0;
+                ">{{ data.KNOWLEDGE_DETAILS.length }}/250</span>
+            </nz-form-item>
+          </div> -->
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <button
+          type="button"
+          nz-button
+          (click)="close()"
+          class="ant-btn"
+          style="margin-right: 8px"
+        >
+          <span>Cancel</span>
+        </button>
+        <button
+          type="button"
+          class="ant-btn ant-btn-primary"
+          *ngIf="!data.ID"
+          nz-button
+          nz-dropdown
+          [nzDropdownMenu]="menu"
+          (click)="save(false, form1)"
+        >
+          <span>Save & Close</span>
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu>
+            <li
+              nz-menu-item
+              class="menuc"
+              style="border-radius: 4px; background-color: #40a9ff"
+            >
+              <a style="color: white" (click)="save(true, form1)">Save & New</a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+        <button
+          type="button"
+          class="ant-btn ant-btn-primary"
+          nz-button
+          [nzLoading]="isSpinning"
+          *ngIf="data.ID"
+          (click)="save(false, form1)"
+        >
+          <span>Update & close</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

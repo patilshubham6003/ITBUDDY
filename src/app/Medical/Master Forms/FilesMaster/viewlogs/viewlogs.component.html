@@ -1,0 +1,507 @@
+<div class="header">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>
+
+<P style="text-align: center"
+  ><b>{{ filename }}</b></P
+>
+<nz-switch
+  [(ngModel)]="FILE_OR_CLAIM"
+  (ngModelChange)="startDateChange($event)"
+  name="AdvanceTaken"
+  nzCheckedChildren="File"
+  nzUnCheckedChildren="Claim"
+>
+</nz-switch>
+
+<!--<divid="scroll-container">
+<divid="scroll-text">*{{filename}}</div>
+</div>-->
+<div *ngIf="LOGS2.length > 0" class="example">
+  <div style="margin-top: 20px">
+    <nz-timeline nzMode="alternate">
+      <nz-timeline-item *ngFor="let item of LOGS2">
+        <div
+          style="
+            min-height: 60px;
+            width: 350px;
+            border: 1px solid rgb(127, 184, 231);
+            border-radius: 4px;
+            text-align: left;
+            margin-left: 10px;
+          "
+        >
+          <div nz-row *ngIf="item.ACTION_STATUS == 'M'">
+            <div
+              nz-col
+              nzSpan="18"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.CREATOR_NAME }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Created
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.CREATOR_ROLE }}
+            </div>
+
+            <div nz-row>
+              <div
+                nz-row
+                nz-col
+                nzSpan="24"
+                style="padding-left: 10px; padding-top: 4px"
+              >
+                <div>
+                  <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+                </div>
+              </div>
+
+              <div nz-col nzSpan="14"></div>
+
+              <div
+                nz-col
+                nzSpan="10"
+                style="
+                  background-color: rgb(202, 221, 236);
+                  border-top: 1px solid rgb (127, 184, 231);
+                  border-left: 1px solid rgb (127, 184, 231);
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  font-size: 12px;
+                "
+              >
+                {{ item.FILE_CREATED_DATE_TIME }}
+              </div>
+            </div>
+          </div>
+          <div nz-row *ngIf="item.ACTION_STATUS == 'P'">
+            <div
+              nz-col
+              nzSpan="18"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.RICIVER_NAME }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Pending
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.RECEVER_ROLE }}
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; padding-top: 4px"
+            >
+              <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+            </div>
+
+            <div nz-col nzSpan="14"></div>
+
+            <div
+              nz-col
+              nzSpan="10"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-top: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 12px;
+              "
+            >
+              {{ item.TRANSFER_DATETIME }}
+            </div>
+          </div>
+          <div nz-row *ngIf="item.ACTION_STATUS == 'A'">
+            <div
+              nz-col
+              nzSpan="18"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.RICIVER_NAME }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Accepted
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.RECEVER_ROLE }}
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; padding-top: 4px"
+            >
+              <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+            </div>
+
+            <div nz-col nzSpan="14"></div>
+
+            <div
+              nz-col
+              nzSpan="10"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-top: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 12px;
+              "
+            >
+              {{ item.CREATED_MODIFIED_DATE }}
+            </div>
+          </div>
+          <div nz-row *ngIf="item.ACTION_STATUS == 'B'">
+            <div
+              nz-col
+              nzSpan="16"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.SENDER_NAME }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="8"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Pull backed
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.SENDER_ROLE }}
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; padding-top: 4px"
+            >
+              <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+            </div>
+
+            <div nz-col nzSpan="14"></div>
+
+            <div
+              nz-col
+              nzSpan="10"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-top: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 12px;
+              "
+            >
+              {{ item.CREATED_MODIFIED_DATE }}
+            </div>
+          </div>
+          <div nz-row *ngIf="item.ACTION_STATUS == 'R'">
+            <div
+              nz-col
+              nzSpan="18"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.RICIVER_NAME }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Rejected
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.RECEVER_ROLE }}
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; padding-top: 4px"
+            >
+              <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+            </div>
+
+            <div nz-col nzSpan="14"></div>
+
+            <div
+              nz-col
+              nzSpan="10"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-top: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 12px;
+              "
+            >
+              {{ item.CREATED_MODIFIED_DATE }}
+            </div>
+          </div>
+          <div nz-row *ngIf="item.IS_ADVANCE == 'F'">
+            <div
+              nz-col
+              nzSpan="18"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.CREATOR_NAME }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Final
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.CREATOR_ROLE }}
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; padding-top: 4px"
+            >
+              <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+            </div>
+
+            <div nz-col nzSpan="14"></div>
+
+            <div
+              nz-col
+              nzSpan="10"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-top: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 12px;
+              "
+            >
+              {{ item.CREATED_MODIFIED_DATE }}
+            </div>
+          </div>
+          <div nz-row *ngIf="item.ACTION_STATUS == 'C'">
+            <div
+              nz-col
+              nzSpan="18"
+              style="padding-left: 10px; padding-top: 4px; font-size: 14px"
+            >
+              <b>{{ item.FILE_CLOSE_BY }}</b>
+            </div>
+
+            <div
+              nz-col
+              nzSpan="6"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-bottom: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 14px;
+              "
+            >
+              Closed
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; align-content: start; font-size: 12px"
+            >
+              {{ item.FILE_CLOSE_BY_ROLE }}
+            </div>
+
+            <div
+              nz-col
+              nzSpan="24"
+              style="padding-left: 10px; padding-top: 4px"
+            >
+              <div>{{ item.REMARK ? item.REMARK : " " }}</div>
+            </div>
+
+            <div nz-col nzSpan="14"></div>
+
+            <div
+              nz-col
+              nzSpan="10"
+              style="
+                background-color: rgb(202, 221, 236);
+                border-top: 1px solid rgb (127, 184, 231);
+                border-left: 1px solid rgb (127, 184, 231);
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 12px;
+              "
+            >
+              {{ item.CREATED_MODIFIED_DATE }}
+            </div>
+          </div>
+        </div>
+      </nz-timeline-item>
+      <!--<nz-timeline-item*ngIf="FILE_STATUS=='C'">
+<divstyle="min-height:80px;width:350px;border:1pxsolidrgb(127,184,231);border-radius:4px;text-align:left;">
+<divnz-row>
+<divnz-colnzSpan="17"style="font-size:14px;padding-left:10px;padding-top:4px;align-content:start;">
+<b>{{RICIVER_NAME}}</b>
+</div>
+<divnz-colnzSpan="7"style="align-content:start;background-color:rgb(202,221,236);border-bottom:1pxsolidrgb(127,184,231);border-left:1pxsolidrgb(127,184,231);padding-left:14px;">
+Closed
+</div>
+<divnz-colnzSpan="24"style="padding-left:10px;align-content:start;font-size:12px">
+{{RECEVER_ROLE}}
+</div>
+</div>
+<divnz-row>
+<divnz-rownz-colnzSpan="24"style="padding-left:10px;padding-top:4px;">
+<div>
+<div>{{REMARK1}}</div>
+</div>
+</div>
+<divnz-colnzSpan="14"></div>
+<divnz-colnzSpan="10"style="background-color:rgb(202,221,236);
+border-top:1pxsolidrgb(127,184,231);border-left:1pxsolidrgb(127,184,231);
+padding-left:8px;padding-right:8px;font-size:12px;">
+{{FILE_CLOSED_DATETIME}}
+</div>
+</div>
+</div>
+</nz-timeline-item>-->
+    </nz-timeline>
+  </div>
+</div>
+<div *ngIf="LOGS1.length > 0" class="example">
+  <div style="margin-top: 20px">
+    <nz-timeline nzMode="alternate">
+      <nz-timeline-item *ngFor="let item1 of LOGS1">
+        <div
+          style="
+            min-height: 40px;
+            width: 350px;
+            border: 1px solid rgb(127, 184, 231);
+            border-radius: 4px;
+            text-align: left;
+            padding-left: 10px;
+            padding-top: 7px;
+          "
+        >
+          <div nz-row>
+            <div nz-col nzSpan="18">
+              <b>{{ item1.LOG_TEXT }}</b>
+            </div>
+            <div nz-col nzSpan="18" style="font-size: small">
+              {{ item1.CREATED_DATETIME }}
+            </div>
+          </div>
+        </div>
+      </nz-timeline-item>
+    </nz-timeline>
+  </div>
+</div>
+
+<nz-footer class="footer">
+  <div nz-row nzType="flex" nzJustify="end">
+    <div nz-col nzSpan="10">
+      <button
+        type="button"
+        nz-button
+        (click)="close()"
+        class="ant-btn"
+        style="margin-right: 88px"
+      >
+        <span>Cancel</span>
+      </button>
+    </div>
+  </div>
+</nz-footer>
+<!-- <div *ngIf="LOGS2.length==0">
+  No Logs Found
+</div>
+<div *ngIf="LOGS1.length==0">
+  No Logs Found
+</div> -->

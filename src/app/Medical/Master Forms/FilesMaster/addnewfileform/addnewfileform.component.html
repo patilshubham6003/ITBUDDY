@@ -1,0 +1,170 @@
+<!-- <div class="header">
+    <button type="button" nz-button (click)="close(httpForm)" class="ant-btn" style="margin-right: 8px;"><i nz-icon
+            nzType="close" nzTheme="outline"></i></button>
+</div> -->
+
+
+<form nz-form class="ant-advanced-search-form" #httpForm="ngForm">
+ <div nz-row>
+        <div nz-col nzSpan="24">
+            <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>Select Hierarchy
+                </nz-form-label>
+                <nz-input-group>
+                    <nz-select name="Hierarchy" [(ngModel)]="data.HIRARCHY_ID" (ngModelChange)="hierarchychange($event)"
+                        style="width: 100%" nzShowSearch nzPlaceHolder="Select Hierarchy">
+                        <nz-option *ngFor="let data of Hierarchy" [nzValue]="data.ID"
+                            [nzLabel]="data.HIRARCHY_NAME"></nz-option>
+                    </nz-select>
+                </nz-input-group>
+            </nz-form-item>
+        </div>
+      
+       
+
+   
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> File Number</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter File Number">
+                <input  required nz-input name="FILENUM" placeholder="File Number"
+                    [(ngModel)]="FILENUM" maxlength="9" (ngModelChange)="filenumberchange($event)" >
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+        <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Year </nz-form-label>
+            <nz-input-group>
+                <nz-select name="YEAR" style="width: 100%" nzShowSearch nzPlaceHolder="Select Year"
+                    [(ngModel)]="data.YEAR" (ngModelChange)="hierarchychange($event)">
+                    <!-- <nz-option nzValue="2001-02" nzLabel="2001-02"></nz-option>
+                    <nz-option nzValue="2002-03" nzLabel="2002-03"></nz-option>
+                    <nz-option nzValue="2003-04" nzLabel="2003-04"></nz-option>
+                    <nz-option nzValue="2004-05" nzLabel="2004-05"></nz-option>
+                    <nz-option nzValue="2005-06" nzLabel="2005-06"></nz-option>
+                    <nz-option nzValue="2006-07" nzLabel="2006-07"></nz-option>
+                    <nz-option nzValue="2007-08" nzLabel="2007-08"></nz-option>
+                    <nz-option nzValue="2008-09" nzLabel="2008-09"></nz-option>
+                    <nz-option nzValue="2009-10" nzLabel="2009-10"></nz-option>
+                    <nz-option nzValue="2010-11" nzLabel="2010-11"></nz-option>
+                    <nz-option nzValue="2011-12" nzLabel="2011-12"></nz-option>
+                    <nz-option nzValue="2012-13" nzLabel="2012-13"></nz-option>
+                    <nz-option nzValue="2013-14" nzLabel="2013-14"></nz-option>
+                    <nz-option nzValue="2014-15" nzLabel="2014-15"></nz-option>
+                    <nz-option nzValue="2015-16" nzLabel="2015-16"></nz-option>
+                    <nz-option nzValue="2016-17" nzLabel="2016-17"></nz-option>
+                    <nz-option nzValue="2017-18" nzLabel="2017-18"></nz-option>
+                    <nz-option nzValue="2018-19" nzLabel="2018-19"></nz-option>
+                    <nz-option nzValue="2019-20" nzLabel="2019-20"></nz-option>
+                    <nz-option nzValue="2020-21" nzLabel="2020-21"></nz-option> -->
+                    <nz-option nzValue="2021-22" nzLabel="2021-22"></nz-option>
+                    <nz-option nzValue="2022-23" nzLabel="2022-23"></nz-option>
+                    <nz-option nzValue="2023-24" nzLabel="2023-24"></nz-option>
+                    <!-- <nz-option nzValue="2024-25" nzLabel="2024-25"></nz-option> -->
+
+                </nz-select>
+            </nz-input-group>
+        </nz-form-item>
+    </div>
+</div>
+    <div nz-col nzSpan="24">
+        <nz-form-item>
+            <nz-form-label nzRequired nzNoColon> File Number</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter File Number">
+                <input disabled required nz-input name="code" placeholder="File Number"
+                    [(ngModel)]="data.FILE_NUMBER" >
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-col nzSpan="24">
+        <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>File Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please File Enter Name">
+                <input required nz-input name="nme" [(ngModel)]="data.FILE_NAME" placeholder="Enter File Name"
+                    maxlength="128">
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <!-- <div nz-col nzSpan="24">
+          <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>File Name</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Please File Enter Name">
+                  <input required nz-input name="nme" [(ngModel)]="data.FILE_NAME"
+                      pattern="^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$" placeholder="Enter File Name" maxlength="20">
+              </nz-form-control>
+          </nz-form-item>
+      </div> -->
+
+    <div nz-col nzSpan="24">
+        <nz-form-item>
+            <nz-form-label  nzNoColon>Description</nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Description is Required">
+                <textarea nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }" name="taskSubtaskDescription"
+                    placeHolder="Enter Description" [(ngModel)]="data.DISCRIPTION" ></textarea>
+            </nz-form-control>
+        </nz-form-item>
+    </div>
+    <div nz-row>
+       
+
+        <div nz-col nzSpan="12">
+            <nz-form-item>
+                <nz-form-label nzRequired nzNoColon>File Status</nz-form-label>
+
+                <nz-form-control>
+                    <nz-radio-group name="FILE_STATUS" [(ngModel)]="data.FILE_STATUS" nzButtonStyle="solid">
+                        <label nz-radio nzValue="A">Active</label>
+                        <label nz-radio nzValue="C">Close</label>
+
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="10">
+            <nz-form-item>
+                <nz-form-label nzNoColon>Visibility Status</nz-form-label>
+                <nz-form-control>
+                    <nz-switch name="status" [(ngModel)]="data.STATUS" nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+
+
+    </div>
+</form>
+
+
+<nz-footer class="footer">
+    <div nz-row nzType="flex" nzJustify="end">
+        <div nz-col nzSpan="10">
+            <button type="button" nz-button (click)="close(httpForm)" class="ant-btn" style="margin-right: 88px;">
+                <span>Cancel</span></button>
+        </div>
+        <div nz-col nzSpan="3" style="float:right;">
+            <button type="button" class="ant-btn ant-btn-primary" [nzLoading]="isSpinning" nz-button nz-dropdown
+                [nzDropdownMenu]="menu" style="margin-left: -76px;" *ngIf="!data.ID"
+                (click)="onSubmit(false,httpForm)"><span>Save & Close</span></button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item class="menuc" style="border-radius: 4px;background-color: #40a9ff">
+                        <a style="color:white" (click)="onSubmit(true,httpForm)">Save & New</a>
+                    </li>
+                </ul>
+            </nz-dropdown-menu>
+            <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+                style="margin-left: -67px;" (click)="onSubmit(false,httpForm)"><span>Update & close</span></button>
+        </div>
+
+    </div>
+</nz-footer>
+
+<div class="header">
+    <button type="button" nz-button (click)="close(httpForm)" class="ant-btn" style="margin-right: 8px">
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+</div>

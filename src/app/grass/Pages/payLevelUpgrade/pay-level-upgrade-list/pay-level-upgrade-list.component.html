@@ -1,0 +1,213 @@
+<div nz-row nzType="flex" style="justify-content: space-between">
+    <div nz-col style="margin: 0 10px 0 0">
+        <div class="formname">
+            Manage Employee Upgrade Details
+        </div>
+    </div>
+
+    <div nz-col style="display: flex; justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+            <nz-form-item style="margin-right: 9px;">
+                <button nz-button nzTooltipTitle="Download Excel" nzTooltipPlacement="top" nz-tooltip nzType="primary"
+                    (click)="convertInExcel()" style="margin-right: 6px;" [nzLoading]="loadexcel">
+                    <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+                </button> &nbsp;
+                <button nz-button nzTooltipTitle="Filter" nzTooltipPlacement="top" nz-tooltip [nzType]="isFilterApplied"
+                    (click)="showFilter()">
+                    <i nz-icon nzType="filter"></i>
+                </button>
+            </nz-form-item>
+            <nz-form-item style="margin-right: 9px;">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="postsearch" (keyup)="search(true)" [(ngModel)]="searchText" nz-input
+                        placeholder="Search Record" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" id="button" class="flexicons" (click)="search(true)" nzSearch>
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+            </nz-form-item>
+            <nz-form-item *ngIf="roleid != 14" style="margin-right: 0px;">
+                <button nz-button nzType="primary" (click)="add()" class="flexicons">
+                    <i nz-icon nzType="plus"></i> Upgrade Employee Details
+                </button>
+            </nz-form-item>
+        </form>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+            <div class="filter-box">
+                <form nz-form>
+                    <div nz-row>
+                        <div nz-col nzSpan="8">
+                            <nz-form-item class="chsaaa bb">
+                                <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select nzShowSearch nzAllowClear [nzMaxTagCount]="2"
+                                        nzPlaceHolder="Select Residence Type " name="ResidenceType1" nzMode="multiple"
+                                        [(ngModel)]="RESIDENCE_TYPE_IDD">
+                                        <nz-option *ngFor="let type of ResidenceType111" [nzValue]="type.ID"
+                                            [nzLabel]="type.TYPE">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="6">
+                            <nz-form-item class="bb">
+                                <nz-form-label nzNoColon>Grade Pay Level</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select name="paylevel" [(ngModel)]="BUILDING_ID" nzAllowClear
+                                        [nzMaxTagCount]="1" nzShowSearch nzMode="multiple"
+                                        nzPlaceHolder="Select Grade Pay Level">
+                                        <nz-option *ngFor="let city of BuildingList" [nzValue]="city.ID"
+                                            [nzLabel]="city.GRADE_PAY_LEVEL">{{ city.GRADE_PAY_LEVEL }}
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="10">
+                            <nz-form-item class="bb">
+                                <nz-form-label nzNoColon>Designation</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select name="cityid" [(ngModel)]="CITY_ID" nzAllowClear [nzMaxTagCount]="1"
+                                        nzShowSearch nzMode="multiple" nzPlaceHolder="Select Designation">
+                                        <nz-option *ngFor="let city of cityList" [nzValue]="city.ID"
+                                            [nzLabel]="city.NAME">{{ city.NAME }}
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="10" style="display: flex; gap: 10px; margin-top: 15px">
+                            <nz-form-item class="bb" style="display: flex;gap: 12px;">
+                                <button nz-button nzType="primary" class="flexicons" (click)="applyFilter()">
+                                    <span style="padding-top: inherit" class="flexicons">
+                                        <i nz-icon nzType="filter"></i>&nbsp; Apply Filter
+                                    </span>
+                                </button>
+                                <button nz-button nzType="default" class="flexicons" (click)="clearFilter()">
+                                    <span style="padding-top: inherit" class="flexicons">
+                                        <i nz-icon nzType="close"></i> &nbsp; Clear filter
+                                    </span>
+                                </button>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #datatable nzShowSizeChanger [nzFrontPagination]="false"
+            [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'" [nzScroll]="{ x: '2200px', y: '60vh' }"
+            [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)"
+            style="white-space: pre-line;">
+            <thead>
+                <tr>
+                    <!-- <th nzWidth="80px" style="font-weight: bold; text-align: center">
+                        Action
+                    </th> -->
+                    <th nzWidth="200px" nzLeft style="font-weight: bold; text-align: center"
+                        nzColumnKey="{{ 'EMPLOYEE_NAME' }}" [nzSortFn]="true">
+                        Employee Name
+                    </th>
+                    <th nzWidth="100px" style="font-weight: bold; text-align: center"
+                        nzColumnKey="{{ 'EMPLOYEE_CODE' }}" [nzSortFn]="true">
+                        Employee Code
+                    </th>
+                    <th nzWidth="120px" nzColumnKey="{{ 'RESIDENCE_TYPE_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Residence Type
+                    </th>
+
+                    <th nzWidth="200px" nzColumnKey="{{ 'NEW_DESIGNATION_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        New Designation
+                    </th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'NEW_GRADE_PAY_LEVEL' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        New Grade Pay Level
+                    </th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'NEW_PRESENT_PAY_LEVEL_DATE' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        New Present Pay Level Date
+                    </th>
+                    <th nzWidth="200px" nzColumnKey="{{ 'OLD_DESIGNATION_NAME' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Old Designation
+                    </th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'OLD_GRADE_PAY_LEVEL' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Old Grade Pay Level
+                    </th>
+                    <th nzWidth="100px" nzColumnKey="{{ 'OLD_PRESENT_PAY_LEVEL_DATE' }}" [nzSortFn]="true"
+                        style="font-weight: bold; text-align: center">
+                        Old Present Pay Level Date
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align: center">
+                <tr *ngFor="let data of datatable.data" style="text-align: center">
+                    <!-- <td style="text-align: center;justify-content: center;">
+                        <a (click)="edit(data)" style="color: #1890ff">Edit</a>
+                    </td> -->
+                    <td nzLeft style="text-align: left; white-space: pre-line">
+                        {{ data["EMPLOYEE_NAME"] ? data["EMPLOYEE_NAME"] : '_' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : '_' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["RESIDENCE_TYPE_NAME"]? data["RESIDENCE_TYPE_NAME"] : '_' }}
+                    </td>
+
+                    <td style="text-align: left; white-space: pre-line">
+                        {{ data["NEW_DESIGNATION_NAME"]? data["NEW_DESIGNATION_NAME"] : '_' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["NEW_GRADE_PAY_LEVEL"]? data["NEW_GRADE_PAY_LEVEL"] :'-' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["NEW_PRESENT_PAY_LEVEL_DATE"]?
+                        (data["NEW_PRESENT_PAY_LEVEL_DATE"]|date:'dd-MMM-yyyy'):'-' }}
+                    </td>
+                    <td style="text-align: left; white-space: pre-line">
+                        {{ data["OLD_DESIGNATION_NAME"]? data["OLD_DESIGNATION_NAME"] : '_' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["OLD_GRADE_PAY_LEVEL"]? data["OLD_GRADE_PAY_LEVEL"] : '_' }}
+                    </td>
+                    <td style="text-align: center; white-space: pre-line">
+                        {{ data["OLD_PRESENT_PAY_LEVEL_DATE"]? (data["OLD_PRESENT_PAY_LEVEL_DATE"]|date:'dd-MMM-yyyy') :
+                        '_' }}
+                    </td>
+
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+<div *ngIf="drawerVisible">
+    <nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px','padding-top':'10px'
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="700" [nzVisible]="drawerVisible"
+        [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+        <ng-container *nzDrawerContent>
+            <app-pay-level-upgrade-form [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+                [data]="drawerData"></app-pay-level-upgrade-form>
+        </ng-container>
+    </nz-drawer>
+</div>

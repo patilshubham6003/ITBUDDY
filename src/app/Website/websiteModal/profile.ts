@@ -1,0 +1,28 @@
+export class profile {
+  ID:any
+  NAME:any
+  EMPLOYEE_CODE:any
+  GRADE_PAY:any
+  OFFICE_NAME:any
+  DESIGNATION:any
+  LOCATION:any
+  DDO_OF_THE_OFFICIAL:any
+  CREATED_MODIFIED_DATE:any
+  READ_ONLY:any
+  ARCHIVE_FLAG:any
+  CLIENT_ID:any
+  EMAIL_ID:any
+  MOBILE_NO:any
+  ADDRESS:any
+  GRADE_PAY_LEVEL:any
+  DOB:any
+  PAN_CARD:any
+  POSTED_CITY_ID:any
+  JOINING_DATE:any
+  RETIREMENT_DATE:any
+  SERVICE_TYPE:any
+  CAST:any
+  JOINING_LETTER:any
+  MARRITAL_STATUS:any
+  PROFILE_PHOTO:any
+}

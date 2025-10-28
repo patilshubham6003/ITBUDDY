@@ -1,0 +1,85 @@
+<div nz-row nzType="flex" style="justify-content: space-between;">
+    <div nz-col style="margin: 0 10px 0 0;">
+        <div class="formname"> {{formTitle}} </div>
+    </div>
+
+    <div nz-col style="display: flex;justify-content: flex-end">
+        <form nz-form [nzLayout]="'inline'">
+            <nz-form-item>
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" name="postsearch" (keyup)="keyup($event)" [(ngModel)]="searchText" nz-input
+                        placeholder="Search Record" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="primary" id="button" class="flexicons" (click)="search(true)" nzSearch><i
+                            nz-icon nzType="search"></i></button>
+                </ng-template>
+            </nz-form-item>
+            <nz-form-item>
+                <button nz-button nzType="primary" (click)="add()" class="flexicons">
+                    <i nz-icon nzType="plus"></i>Create New Seniority Order</button>
+            </nz-form-item>
+
+        </form>
+    </div>
+</div>
+
+<div nz-row style="margin-top: 10px;">
+    <div nz-col nzSpan="24">
+        <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable nzShowSizeChanger
+            [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzSize]="'small'"
+            [nzScroll]="{  y: '390px' }" [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+            (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" (nzQueryParams)="sort($event)">
+
+            <thead>
+                <tr>
+                    <!-- <th nzWidth="60px" style="text-align: center;font-weight: 500;"><b>Action</b></th> -->
+                    <th nzWidth="60px" style="text-align: center;font-weight: 500;"><b>Objections</b></th>
+
+                    <th nzColumnKey="{{ 'RESIDENCE_TYPE_NAME' }}" [nzSortFn]="true" nzWidth="100px"
+                        style="text-align: center;font-weight: 500;">
+                        <b>Residence Type</b>
+                    </th>
+                    <th nzColumnKey="{{ 'MONTH' }}" [nzSortFn]="true" nzWidth="100px" style="text-align: center;font-weight: 500;">
+                        <b>Month</b>
+                    </th>
+                    <th nzColumnKey="{{ 'YEAR' }}" [nzSortFn]="true" nzWidth="100px" style="text-align: center;font-weight: 500;">
+                        <b>Year</b> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of ResidenceMasterTable.data">
+                    <!-- <td style="text-align: center;">
+                        <a (click)="edit(data)" style="color: #1890ff;"> Edit </a>
+                    </td> -->
+                    <td style="text-align: center;">
+                        <a (click)="OpenObjectionsTable(data)" style="color: #1890ff;"> Objections </a>
+                    </td>
+                    <td style="white-space: pre-line;text-align: center;">{{data['RESIDENCE_TYPE_NAME']}}</td>
+                    <td style="white-space: pre-line;text-align: center;">{{data['MONTH']}}</td>
+                    <td style="white-space: pre-line;text-align: center;">{{data['YEAR']}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="900" [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-generatesenioritylist [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+            [data]="drawerData"></app-generatesenioritylist>
+    </ng-container>
+</nz-drawer>
+
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1000" [nzVisible]="objectiondrawer"
+    [nzTitle]="ObjectDrawerTitle" (nzOnClose)="objdrawerClose()" (nzKeyboard)="true">
+    <ng-container *nzDrawerContent>
+        <app-objection-list-type-wise [drawerClose]="closeCallbackobjection" [drawerVisible]="objectiondrawer"
+            [data]="Senioritydataobj"></app-objection-list-type-wise>
+    </ng-container>
+</nz-drawer>

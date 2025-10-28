@@ -1,0 +1,480 @@
+<div id="printgpb">
+  <div nz-row style="font-size: 14px !important">
+    <div nz-col nzSpan="24" style="text-align: center">
+      <h5>Application For Grant Of Transfer Advance</h5>
+    </div>
+    <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">To,</div>
+    <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+      {{ DDO_Master_Data[0]["DESCRIPTION"] }}
+    </div>
+    <div
+      nz-col
+      nzSpan="24"
+      style="font-size: 14px; margin-bottom: 25px; text-align: left"
+    >
+      {{ DDO_Master_Data[0]["LOCATION"] }}
+    </div>
+    <br />
+    <div nz-col nzSpan="12">
+      <p>1. Name of the Government Servent</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.NAME }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>2. Designation</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.DESIGNATION }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>3. Present pay & Pay level</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>Rs {{ data.GRADE_PAY }}/- Pay {{ data.GRADE_PAY_LEVEL }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>4. Office/Unit working at present</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.OFFICE_NAME }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>5. Date of joining at present Station</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.DOJ_PRESENT_STATION | date : "dd/MM/yyyy" }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>6. Date of joining at present Post</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.DOJ_PRESENT_POST | date : "dd/MM/yyyy" }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>7. Details of Transfer/Posting Order</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.DETAILS_OF_TRANSFER_POSTING_ORDER }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>
+        8. Place/ Office of posting on Transfer (Please Enclose Transfer Order)
+      </p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.PLACE_OFFICE_OF_POSTING }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>9. Whether the transfer is in Public Interest</p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.IS_TRANSFER_IN_PUBLIC_INTEREST ? "Yes" : "No" }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>
+        10. In case change of residence is involved,the new/ proposed address
+      </p>
+    </div>
+    <div nz-col nzSpan="1"><p>:</p></div>
+    <div nz-col nzSpan="11">
+      <p>{{ data.NEW_PROPOSED_ADDRESS }}</p>
+    </div>
+
+    <div nz-col nzSpan="24">
+      <p>
+        11. Details of family members in respect of whom transfer TA is proposed
+        to be claimed
+      </p>
+    </div>
+    <div nz-col nzSpan="24">
+      <table style="width: 99%">
+        <thead>
+          <tr style="border: 1px solid black; text-align: center">
+            <th>Sr. No.</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Relationship with Government Servent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            style="border: 1px solid black; text-align: center"
+            *ngFor="let relationdata of relationdataorder; let i = index"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ relationdata.NAME_OF_FAMILY_MEMBER }}</td>
+            <td>{{ relationdata.AGE }}</td>
+            <td>{{ relationdata.RELATIONSHIP }}</td>
+          </tr>
+          <tr *ngIf="relationdataorder.length == 0">
+            <td colspan="4" style="text-align: center">NA</td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+    </div>
+    <div nz-col nzSpan="24">
+      <p>12. Transfer Entilements Claimed:</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 30px">
+        (a) Travelling allowance Fare Rs. <b>{{ data.TRA_ALLO_FARE_RS }}</b> x
+        <b
+          style="text-decoration-line: underline; text-decoration-style: dotted"
+          >{{ relationdataorder.length }}</b
+        >
+        (No Of tickets)
+      </p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>= Rs {{ data.TRAVELLING_ALLOW_TOTAL }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 30px">
+        (b) Travel DA : <b>{{ data.TRAVEL_DA_DAYS }}</b> days @ Rs
+        {{ data.TRAVEL_RS_PERDAY }} per day
+      </p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>= Rs {{ data.TRAVAL_DA_TOTAL }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 30px">
+        (c) Transportation charges for personal effects
+      </p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>= Rs {{ data.CHARGES_FOR_PERSONAL_EFFECTS_AMOUNT }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 30px">
+        (d) Transportation charges for private conveyance
+      </p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>= Rs {{ data.CHARGES_FOR_PRIVATE_CON_AMOUNT }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 30px">
+        (e) Composite transfer grant @ one basic pay (80%)
+      </p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>= Rs {{ data.TRANSFER_GRANT_BASIC_PAY_TOTAL }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 30px">Total Entitlements</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p style="margin-left: 28px">Rs {{ data.TOTAL_ENT_AMOUNT }}</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>13. Amount of advance required</p>
+    </div>
+    <div nz-col nzSpan="12">
+      <p>: Rs {{ data.ADVANCE_AMOUNT_REQ }}</p>
+    </div>
+  </div>
+
+  <br />
+  <div nz-col nzSpan="24" class="page-break">
+    <p style="margin-left: 25px">
+      I declare that the particulars furnished above are true and correct as
+      best of my knowledge.
+    </p>
+    <br />
+    <p style="margin-left: 25px">Station : Mumbai</p>
+    <p style="margin-left: 25px">Date : 22.08.2023</p>
+  </div>
+  <div nz-col nzSpan="24" style="text-align: right; margin-right: 4%">
+    <p>Signature</p>
+    <br />
+    <br />
+  </div>
+</div>
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="drawerClose()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="showmodal()"
+  >
+    <span>Save & Preview</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Order'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="printgpb">
+          <div nz-row style="font-size: 14px !important">
+            <div nz-col nzSpan="24" style="text-align: center">
+              <h5>Application For Grant Of Transfer Advance</h5>
+            </div>
+            <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+              To,
+            </div>
+            <div nz-col nzSpan="24" style="font-size: 14px; text-align: left">
+              {{ DDO_Master_Data[0]["DESCRIPTION"] }}
+            </div>
+            <div
+              nz-col
+              nzSpan="24"
+              style="font-size: 14px; margin-bottom: 25px; text-align: left"
+            >
+              {{ DDO_Master_Data[0]["LOCATION"] }}
+            </div>
+            <br />
+            <div nz-col nzSpan="12">
+              <p>1. Name of the Government Servent</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.NAME }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>2. Designation</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.DESIGNATION }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>3. Present pay & Pay level</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>Rs {{ data.GRADE_PAY }}/- Pay {{ data.GRADE_PAY_LEVEL }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>4. Office/Unit working at present</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.OFFICE_NAME }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>5. Date of joining at present Station</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.DOJ_PRESENT_STATION | date : "dd/MM/yyyy" }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>6. Date of joining at present Post</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.DOJ_PRESENT_POST | date : "dd/MM/yyyy" }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>7. Details of Transfer/Posting Order</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.DETAILS_OF_TRANSFER_POSTING_ORDER }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>
+                8. Place/ Office of posting on Transfer (Please Enclose Transfer
+                Order)
+              </p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.PLACE_OFFICE_OF_POSTING }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>9. Whether the transfer is in Public Interest</p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.IS_TRANSFER_IN_PUBLIC_INTEREST ? "Yes" : "No" }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>
+                10. In case change of residence is involved,the new/ proposed
+                address
+              </p>
+            </div>
+            <div nz-col nzSpan="1"><p>:</p></div>
+            <div nz-col nzSpan="11">
+              <p>{{ data.NEW_PROPOSED_ADDRESS }}</p>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <p>
+                11. Details of family members in respect of whom transfer TA is
+                proposed to be claimed
+              </p>
+            </div>
+            <div nz-col nzSpan="24">
+              <table style="width: 99%">
+                <thead>
+                  <tr style="border: 1px solid black; text-align: center">
+                    <th>Sr. No.</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Relationship with Government Servent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    style="border: 1px solid black; text-align: center"
+                    *ngFor="
+                      let relationdata of relationdataorder;
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ relationdata.NAME_OF_FAMILY_MEMBER }}</td>
+                    <td>{{ relationdata.AGE }}</td>
+                    <td>{{ relationdata.RELATIONSHIP }}</td>
+                  </tr>
+                  <tr *ngIf="relationdataorder.length == 0">
+                    <td colspan="4" style="text-align: center">NA</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+            </div>
+            <div nz-col nzSpan="24">
+              <p>12. Transfer Entilements Claimed:</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 30px">
+                (a) Travelling allowance Fare Rs.
+                <b>{{ data.TRA_ALLO_FARE_RS }}</b> x
+                <b
+                  style="
+                    text-decoration-line: underline;
+                    text-decoration-style: dotted;
+                  "
+                  >{{ relationdataorder.length }}</b
+                >
+                (No Of tickets)
+              </p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>= Rs {{ data.TRAVELLING_ALLOW_TOTAL }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 30px">
+                (b) Travel DA : <b>{{ data.TRAVEL_DA_DAYS }}</b> days @ Rs
+                {{ data.TRAVEL_RS_PERDAY }} per day
+              </p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>= Rs {{ data.TRAVAL_DA_TOTAL }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 30px">
+                (c) Transportation charges for personal effects
+              </p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>= Rs {{ data.CHARGES_FOR_PERSONAL_EFFECTS_AMOUNT }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 30px">
+                (d) Transportation charges for private conveyance
+              </p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>= Rs {{ data.CHARGES_FOR_PRIVATE_CON_AMOUNT }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 30px">
+                (e) Composite transfer grant @ one basic pay (80%)
+              </p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>= Rs {{ data.TRANSFER_GRANT_BASIC_PAY_TOTAL }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 30px">Total Entitlements</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p style="margin-left: 28px">Rs {{ data.TOTAL_ENT_AMOUNT }}</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>13. Amount of advance required</p>
+            </div>
+            <div nz-col nzSpan="12">
+              <p>: Rs {{ data.ADVANCE_AMOUNT_REQ }}</p>
+            </div>
+          </div>
+
+          <br />
+          <div nz-col nzSpan="24" class="page-break">
+            <p style="margin-left: 25px">
+              I declare that the particulars furnished above are true and
+              correct as best of my knowledge.
+            </p>
+            <br />
+            <p style="margin-left: 25px">Station : Mumbai</p>
+            <p style="margin-left: 25px">Date : 22.08.2023</p>
+          </div>
+          <div nz-col nzSpan="24" style="text-align: right; margin-right: 4%">
+            <p>Signature</p>
+            <br />
+            <br />
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="printgpb"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

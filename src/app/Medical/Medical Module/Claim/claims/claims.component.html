@@ -1,0 +1,267 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="4"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" (click)="search()" nzSearch>
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Claim
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+    <div style="text-align: center">
+      <span>
+        <button nz-button nzType="default" style="border: 1px solid blue">
+          15 : New Claim
+        </button>
+      </span>
+
+      <span>
+        <button nz-button nzType="default" style="border: 1px solid blue">
+          28 : Forwarded
+        </button>
+      </span>
+
+      <span>
+        <button nz-button nzType="default" style="border: 1px solid blue">
+          22 : Approved
+        </button>
+      </span>
+
+      <span>
+        <button nz-button nzType="default" style="border: 1px solid blue">
+          25 : Rejected
+        </button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="EMPLOYEE_MASTER"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzSize]="'small'"
+      (nzPageSizeChange)="search(true)"
+      nzBordered
+    >
+      <thead (nzSortChange)="sort($event)" nzSingleSort>
+        <tr>
+          <th>Edit</th>
+          <th>Action</th>
+          <th>Log</th>
+          <th nzShowSort nzSortKey="NAME">Name</th>
+          <th nzShowSort nzSortKey="DATE">Designation & Office</th>
+          <th nzShowSort nzSortKey="DATE">DDO Of the Official</th>
+          <th nzShowSort nzSortKey="DATE">EMP Code NO.</th>
+          <th nzShowSort nzSortKey="DATE">Patient's Relationship</th>
+          <th nzShowSort nzSortKey="DATE">CGHS/CS (MA) Beneficiary</th>
+          <th nzShowSort nzSortKey="DATE">Emergency Treatment is avalled</th>
+          <th nzShowSort nzSortKey="DATE">Date of CGHS/AMA's Reference</th>
+          <th nzShowSort nzSortKey="DATE">Date Of Bill</th>
+          <th nzShowSort nzSortKey="DATE">Bill is Filed in time</th>
+          <th nzShowSort nzSortKey="DATE">Name Of Hospital</th>
+          <th nzShowSort nzSortKey="DATE">Nature Of Treatment</th>
+          <th nzShowSort nzSortKey="DATE">Period Of Treatment</th>
+          <th nzShowSort nzSortKey="DATE">Amount of reimbursement claimed</th>
+          <th nzShowSort nzSortKey="DATE">
+            Amount of reimbursement Admissible
+          </th>
+          <th nzShowSort nzSortKey="DATE">Advance taken</th>
+          <th nzShowSort nzSortKey="DATE">Net amount Payable/recoverable</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td align="center">
+            <a nz-button nzType="link" (click)="edit()"
+              ><i nz-icon nzType="edit"></i
+            ></a>
+          </td>
+
+          <td>
+            <div style="padding: 3px">
+              <span style="cursor: pointer" (click)="openInvestigationDrawer()">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px magenta solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'magenta'"
+                >
+                  Annexure
+                </nz-tag>
+              </span>
+
+              &nbsp;
+
+              <span style="cursor: pointer" (click)="openOrderDrawer()">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px green solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'green'"
+                >
+                  Order
+                </nz-tag>
+              </span>
+
+              &nbsp;
+
+              <span style="cursor: pointer" (click)="showModal()">
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px purple solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'purple'"
+                >
+                  Forward
+                </nz-tag>
+              </span>
+            </div>
+          </td>
+
+          <td align="center">
+            <a (click)="openLogDrawer()">
+              <span nz-icon nzType="eye" nzTheme="outline"></span>
+            </a>
+          </td>
+
+          <td>{{ data.NAME_OF_APPLICATION }}</td>
+          <td>{{ data.DESIGNATION_OFFICE }}</td>
+          <td>{{ data.DDO_OFFICIAL }}</td>
+          <td>{{ data.EMP_CODE_NO }}</td>
+          <td>{{ data.PATIENTS_RELATION }}</td>
+          <td>{{ data.CGHS_OR_CS }}</td>
+          <td>{{ data.IS_EMERGENCY_TREATMENT }}</td>
+          <td>{{ data.DATE_OF_CGHS }}</td>
+          <td>{{ data.DATE_OF_BILL }}</td>
+          <td>{{ data.IS_BILLFIELD }}</td>
+          <td>{{ data.NAME_OF_HOSPITAL }}</td>
+          <td>{{ data.TREATMENT_NATURE }}</td>
+          <td>{{ data.TREATMENT_PERIOD }}</td>
+          <td>{{ data.REIMBURSMENT_CLAIMED }}</td>
+          <td>{{ data.REIMBURSMENT_ADMISSIBLE }}</td>
+          <td>{{ data.ADVANCE_TACKEN }}</td>
+          <td>{{ data.NET_AMOUNT_PAYABLE }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1200"
+  [nzVisible]="orderDrawerVisible"
+  [nzTitle]="orderDrawerTitle"
+  (nzOnClose)="orderDrawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-claim-application-drawer [drawerClose]="orderDrawerCloseCallback">
+    </app-claim-application-drawer>
+  </ng-container>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="true"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzVisible]="drawerLogVisible"
+  [nzTitle]="drawerLogTitle"
+  (nzOnClose)="drawerLogClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-claim-log-drawer
+      [drawerClose]="closeLogCallback"
+      [data]="drawerLogData"
+    ></app-claim-log-drawer>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="handleCancel()">
+  <div *nzModalContent>
+    <nz-form-item>
+      <nz-form-label nzRequired nzNoColon>Forward Claim To</nz-form-label>
+
+      <nz-input-group>
+        <nz-select
+          name="ForwardTo"
+          style="width: 100%"
+          nzShowSearch
+          nzPlaceHolder="Select Hospital Type"
+        >
+          <nz-option [nzValue]="'STO'" [nzLabel]="'STO'"> </nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-item>
+  </div>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">Send</button>
+  </div>
+</nz-modal>

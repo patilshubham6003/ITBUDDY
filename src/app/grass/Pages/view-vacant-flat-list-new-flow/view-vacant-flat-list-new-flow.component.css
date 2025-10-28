@@ -1,0 +1,18 @@
+.forTDTH {
+  border: 1px solid black;
+  text-align: center;
+  padding: 8px;
+}
+
+.forTDTH1 {
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px;
+}
+
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}

@@ -1,0 +1,677 @@
+<div>
+  <form nz-form>
+    <div nz-row [nzGutter]="10">
+      <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+        <div class="my-box">
+          <!-- <div nz-row>
+                        <div nz-col nzSpan="24">
+                            <nz-form-item>
+                                <nz-form-label nzRequired nzNoColon>Signature</nz-form-label>
+                                <nz-form-control>
+                                    <nz-select name="userid"
+                                        [(ngModel)]="toursanctionorder.SIGNATURE_ID"
+                                        nzAllowClear
+                                         nzShowSearch
+                                        nzPlaceHolder="Choose Signature"
+                                        (ngModelChange)="signature($event)">
+                                        <nz-option
+                                            *ngFor="let user of Signaturearray"
+                                            [nzValue]="user.ID"
+                                            [nzLabel]="user.NAME">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div> -->
+          <div nz-row>
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="24"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired nzNoColon
+                  >Sanction Number</nz-form-label
+                >
+
+                <nz-form-control
+                  nzHasFeedback
+                  nzErrorTip="Order no. is required"
+                >
+                  <input
+                    style="width: 100%"
+                    name="OrderNumber"
+                    nz-input
+                    placeholder="Enter Sanction Number"
+                    type="text"
+                    [(ngModel)]="toursanctionorder.SANCTION_NO"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="16" nzXl="16">
+        <div style="padding: 10px">
+          <div>
+            <div
+              style="font-family: Arial, Helvetica, sans-serif !important"
+              class="my-box"
+            >
+              <div nz-row>
+                <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                  <div style="text-align: right">
+                    <img
+                      src="assets/govtOfIndia.png"
+                      alt
+                      height="140%"
+                      width="140%"
+                    />
+                  </div>
+                </div>
+
+                <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                  <div
+                    style="width: 100%; text-align: center; font-weight: bold"
+                  >
+                    <div>GOVERNMENT OF INDIA</div>
+                    <div style="text-transform: uppercase">
+                      ADDITIONAL DIRECTOR GENERAL (VIGILANCE),WEST
+                    </div>
+                    <div>CENTRAL BOARD OF DIRECT TAXES, MUMBAI</div>
+                    <div style="text-transform: uppercase">
+                      ROOM NO 407, AAYAKAR BHAVAN, M.K.ROAD, MUMBAI 400 020
+                    </div>
+                    <div>
+                      TELEFAX: 22084664 (DIR) /22007638-EXTN.2401 (EPABX)
+                    </div>
+
+                    <div>Email:-<u>mumbai.ddit.vig.ho@incometax.gov.in</u></div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  width: 100%;
+                  border: 1px solid black;
+                  padding: 10px;
+                  margin-top: 10px;
+                  font-size: 15px;
+                "
+              >
+                <div nz-row>
+                  <div nz-col nzSpan="16">
+                    <b>{{ toursanctionorder.SANCTION_NO }}</b>
+                  </div>
+                  <div nz-col nzSpan="8" style="text-align: right">
+                    <b> Date : </b>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                </div>
+              </div>
+              <p style="text-align: center; font-size: large">
+                <b>
+                  <br />
+                  <u>Tour sanction Order (SR 61)</u></b
+                >
+              </p>
+              <p style="word-break: break-all">
+                Sanction under SR-61 is hear by accorded to
+                <b>
+                  {{ toursanctionorder.EMPLOYEE_NAME }} ,
+                  {{ toursanctionorder.DESIGNATION }} ,
+                  {{ toursanctionorder.ADDRESS }}
+                </b>
+                <span *ngFor="let data of tousanctionorder; let k = index">
+                  from <b> {{ data.DEPARTURE_FROM }} </b>
+                  <b> {{ data.DEPARTURE_DATETIME | date : "dd-MM-yyyy" }}</b> to
+                  <b> {{ data.ARRIVAL_DATETIME | date : "dd-MM-yyyy" }}</b>
+                  <span *ngIf="tousanctionorder.length > 1"> , </span> </span
+                >to assist the Jt.DIT(Vig) Unit-5, Mumbai for verification and
+                collection of records in the matter of CON-879 from Office as
+                per the following tour programme:
+              </p>
+              <br />
+
+              <table style="width: 100%">
+                <thead>
+                  <tr>
+                    <th nzAlign="center">Mode of Travel</th>
+                    <th nzAlign="center">From</th>
+                    <th nzAlign="center">Departure <br />Date/Time</th>
+                    <th nzAlign="center">To</th>
+                    <th nzAlign="center">Arrival <br />Date/Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of tousanctionorder; let k = index">
+                    <ng-container *ngIf="data.IS_RETURNED === 0">
+                      <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+                      <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+                      <td nzAlign="center">
+                        {{ data.DEPARTURE_DATETIME | date : "dd-MM-yyyy" }}
+                        <br />
+                      </td>
+                      <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+                      <td nzAlign="center">
+                        {{ data.ARRIVAL_DATETIME | date : "dd-MM-yyyy" }} <br />
+                      </td>
+                    </ng-container>
+                  </tr>
+                  <tr *ngIf="tousanctionorder.length == 0">
+                    <td style="text-align: center" colspan="8">NA</td>
+                  </tr>
+
+                  <!-- <tr
+                                        *ngFor="let data of tousanctionorder;let k = index">
+                                        <ng-container
+                                            *ngIf="data.IS_RETURNED === 1">
+                                            <td colspan="5" class="pading">Stay
+                                                Night Halt at
+                                                from <span
+                                                    *ngFor="let data of tousanctionorder; let k = index">
+                                                    <b> {{data.ARRIVAL_TO}}</b>
+                                                </span>
+                                                to <span
+                                                    *ngFor="let data of tousanctionorder; let k = index">
+                                                    <b>
+                                                        {{data.DEPARTURE_DATETIME
+                                                        | date :
+                                                        "dd-MM-yyyy"}}</b>
+                                                </span>
+
+                                                <span
+                                                    *ngFor="let data of tousanctionorder; let k = index">
+                                                    <b>
+                                                        {{data.ARRIVAL_DATETIME
+                                                        | date :
+                                                        "dd-MM-yyyy"}}</b>
+                                                </span>
+
+                                            </td>
+                                        </ng-container>
+                                    </tr> -->
+
+                  <!-- <tr
+                                        *ngFor="let data of tousanctionorder;let k = index">
+                                        <ng-container
+                                            *ngIf="data.IS_RETURNED === 0">
+                                            <td colspan="5" class="pading">Stay
+                                                Night Halt at
+                                                from <span
+                                                    *ngFor="let data of tousanctionorder; let k = index">
+                                                    <b> {{data.ARRIVAL_TO}}</b>
+                                                </span>
+                                                to <span
+                                                    *ngFor="let data of tousanctionorder; let k = index">
+                                                    <b>
+                                                        {{data.DEPARTURE_DATETIME
+                                                        | date :
+                                                        "dd-MM-yyyy"}}</b>
+                                                </span>
+
+                                                <span
+                                                    *ngFor="let data of tousanctionorder; let k = index">
+                                                    <b>
+                                                        {{data.ARRIVAL_DATETIME
+                                                        | date :
+                                                        "dd-MM-yyyy"}}</b>
+                                                </span>
+
+                                            </td>
+                                        </ng-container>
+                                    </tr> -->
+
+                  <tr *ngFor="let data of tousanctionorder; let k = index">
+                    <ng-container *ngIf="data.IS_RETURNED === 1">
+                      <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+                      <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+                      <td nzAlign="center">
+                        {{ data.ARRIVAL_DATETIME | date : "dd-MM-yyyy" }} <br />
+                      </td>
+                      <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+                      <td nzAlign="center">
+                        {{ data.DEPARTURE_DATETIME | date : "dd-MM-yyyy" }}
+                        <br />
+                      </td>
+                    </ng-container>
+                  </tr>
+
+                  <tr *ngIf="tousanctionorder.length == 0">
+                    <td style="text-align: center" colspan="8">NA</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+
+              <div nz-row style="word-break: break-all">
+                <div nz-col nzSpan="1">
+                  <p>1</p>
+                </div>
+                <div nz-col nzSpan="23">
+                  <p>
+                    Certified that the journey to be performed by
+                    <b
+                      >{{ toursanctionorder.EMPLOYEE_NAME }},
+                      {{ toursanctionorder.DESIGNATION }},
+                      {{ toursanctionorder.ADDRESS }} </b
+                    >is for official work and in public interest.
+                  </p>
+                </div>
+              </div>
+              <div nz-row style="word-break: break-all">
+                <div nz-col nzSpan="1">
+                  <p>2</p>
+                </div>
+                <div nz-col nzSpan="23">
+                  <p>
+                    This issues with the approval of the
+                    ADG(Vigliance)(West),CBDT,Mumbai
+                  </p>
+                </div>
+              </div>
+              <br />
+              <br />
+              <!-- <div style="margin-top: 100px; font-size: 13px">
+                                <div nz-row>
+                                    <div nz-col nzSpan="15"></div>
+
+                                    <div nz-col nzSpan="9"
+                                        style="text-align: center">
+                                        <div style="font-weight: bold">({{
+                                            NAME_HN }})</div>
+                                        <div>{{ POST_HN }}</div>
+                                        <div>{{ OFFICE_NAME_HN }}</div>
+                                        <div style="font-weight: bold">
+                                            ({{ SIGNNAME }})
+                                        </div>
+                                        <div>{{ POST }}</div>
+                                        <div>{{ OFFICE_NAME }}</div>
+
+                                    </div>
+                                </div>
+                            </div> -->
+
+              <div style="margin-top: 50px; font-size: 13px">
+                <div nz-row>
+                  <div nz-col nzSpan="15"></div>
+
+                  <div nz-col nzSpan="9" style="text-align: center">
+                    <div style="font-weight: bold">(Rajeev S. Kadam )</div>
+                    <div>Jt.CIT(OSD insitu) hoilding charge of</div>
+                    <div>Director of Income tax (Vig)(HQ)</div>
+                    <div>to AddL.DG(Vig.)(West), CBDT,MUmbai</div>
+                  </div>
+                </div>
+              </div>
+
+              <p>Copy to :</p>
+              <p>1. Gazetted Pay bill section.(2 copies)</p>
+              <p>2. The officer concerned</p>
+              <br />
+              <!-- <div style="margin-top: 100px; font-size: 13px">
+                                <div nz-row>
+                                    <div nz-col nzSpan="15"></div>
+
+                                    <div nz-col nzSpan="9"
+                                        style="text-align: center">
+                                        <div style="font-weight: bold">({{
+                                            NAME_HN }})</div>
+                                        <div>{{ POST_HN }}</div>
+                                        <div>{{ OFFICE_NAME_HN }}</div>
+                                        <div style="font-weight: bold">
+                                            ({{ SIGNNAME }})
+                                        </div>
+                                        <div>{{ POST }}</div>
+                                        <div>{{ OFFICE_NAME }}</div>
+
+                                    </div>
+                                </div>
+                            </div> -->
+
+              <div style="margin-top: 50px; font-size: 13px">
+                <div nz-row>
+                  <div nz-col nzSpan="15"></div>
+
+                  <div nz-col nzSpan="9" style="text-align: center">
+                    <div style="font-weight: bold">(Rajeev S. Kadam )</div>
+                    <div>Jt.CIT(OSD insitu) hoilding charge of</div>
+                    <div>Director of Income tax (Vig)(HQ)</div>
+                    <div>to AddL.DG(Vig.)(West), CBDT,MUmbai</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="showmodal()"
+  >
+    <span>Download or Print</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Tour Sanction Order'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding-right: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <div nz-row>
+              <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                <div style="text-align: right">
+                  <img
+                    src="assets/govtOfIndia.png"
+                    alt
+                    height="140%"
+                    width="140%"
+                  />
+                </div>
+              </div>
+
+              <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                <div style="width: 100%; text-align: center; font-weight: bold">
+                  <div>GOVERNMENT OF INDIA</div>
+                  <div style="text-transform: uppercase">
+                    ADDITIONAL DIRECTOR GENERAL (VIGILANCE),WEST
+                  </div>
+                  <div>CENTRAL BOARD OF DIRECT TAXES, MUMBAI</div>
+                  <div style="text-transform: uppercase">
+                    ROOM NO 407, AAYAKAR BHAVAN, M.K.ROAD, MUMBAI 400 020
+                  </div>
+                  <div>TELEFAX: 22084664 (DIR) /22007638-EXTN.2401 (EPABX)</div>
+                  <div>Email:-<u>mumbai.ddit.vig.ho@incometax.gov.in</u></div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div
+              style="
+                width: 100%;
+                border: 1px solid black;
+                padding: 10px;
+                margin-top: 10px;
+                font-size: 15px;
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="16">
+                  <b>{{ toursanctionorder.SANCTION_NO }}</b>
+                </div>
+                <div nz-col nzSpan="8" style="text-align: right">
+                  <b> Date : </b>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
+            </div>
+            <br />
+            <p style="text-align: center; font-size: large">
+              <b> <u>Tour sanction Order (SR 61)</u></b>
+            </p>
+            <p style="word-break: break-all">
+              Sanction under SR-61 is hearby accorded to
+              <b>
+                {{ toursanctionorder.EMPLOYEE_NAME }},
+                {{ toursanctionorder.DESIGNATION }},{{
+                  toursanctionorder.ADDRESS
+                }}</b
+              >
+              <span *ngFor="let data of tousanctionorder; let k = index">
+                from <b> {{ data.DEPARTURE_FROM }} </b>
+                <b> {{ data.DEPARTURE_DATETIME | date : "dd-MM-yyyy" }}</b> to
+                <b> {{ data.ARRIVAL_DATETIME | date : "dd-MM-yyyy" }}</b>
+                <span *ngIf="tousanctionorder.length > 1">,</span></span
+              >to assist the Jt.DIT(Vig) Unit-5, Mumbai for verification and
+              collection of records in the matter of CON-879 from Office as per
+              the following tour programme:
+            </p>
+            <br />
+
+            <table style="width: 100%">
+              <thead>
+                <tr>
+                  <th nzAlign="center">Mode of Travel</th>
+                  <th nzAlign="center">From</th>
+                  <th nzAlign="center">Departure <br />Date/Time</th>
+                  <th nzAlign="center">To</th>
+                  <th nzAlign="center">Arrival <br />Date/Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of tousanctionorder; let k = index">
+                  <td nzAlign="center">{{ data.TRAVEL_MODE_NAME }}</td>
+                  <td nzAlign="center">{{ data.DEPARTURE_FROM }}</td>
+                  <td nzAlign="center">
+                    {{ data.DEPARTURE_DATETIME | date : "dd-MM-yyyy" }} <br />
+                  </td>
+                  <td nzAlign="center">{{ data.ARRIVAL_TO }}</td>
+                  <td nzAlign="center">
+                    {{ data.ARRIVAL_DATETIME | date : "dd-MM-yyyy" }} <br />
+                  </td>
+                </tr>
+                <tr *ngIf="tousanctionorder.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+                <!-- <tr
+                                    *ngFor="let data of tousanctionorder;let k = index">
+                                    <ng-container
+                                        *ngIf="data.IS_RETURNED === 1">
+                                        <td colspan="5" class="pading">Stay
+                                            Night Halt at
+                                            from <span
+                                                *ngFor="let data of tousanctionorder; let k = index">
+                                                <b> {{data.ARRIVAL_TO}}</b>
+                                            </span>
+                                            to <span
+                                                *ngFor="let data of tousanctionorder; let k = index">
+                                                <b>
+                                                    {{data.DEPARTURE_DATETIME
+                                                    | date : "dd-MM-yyyy"}}</b>
+                                            </span>
+
+                                            <span
+                                                *ngFor="let data of tousanctionorder; let k = index">
+                                                <b> {{data.ARRIVAL_DATETIME
+                                                    | date : "dd-MM-yyyy"}}</b>
+                                            </span>
+
+                                        </td>
+                                    </ng-container>
+                                </tr> -->
+
+                <!-- <tr
+                                    *ngFor="let data of tousanctionorder; let k = index">
+                                    <ng-container
+                                        *ngIf="data.IS_RETURNED === 1">
+                                        <td nzAlign="center">{{data.TRAVEL_MODE_NAME}}</td>
+                                        <td nzAlign="center">{{data.ARRIVAL_TO}}</td>
+                                        <td nzAlign="center">{{data.ARRIVAL_DATETIME
+                                            | date : "dd-MM-yyyy"}} <br></td>
+                                        <td nzAlign="center">{{data.DEPARTURE_FROM}}</td>
+                                        <td nzAlign="center">{{data.DEPARTURE_DATETIME
+                                            | date : "dd-MM-yyyy"}} <br></td>
+                                    </ng-container>
+                                </tr> -->
+
+                <tr *ngIf="tousanctionorder.length == 0">
+                  <td style="text-align: center" colspan="8">NA</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+
+            <div nz-row style="word-break: break-all">
+              <div nz-col nzSpan="1">
+                <p>1</p>
+              </div>
+              <div nz-col nzSpan="23">
+                <p>
+                  Certified that the journey to be performed by
+                  <b
+                    >{{ toursanctionorder.EMPLOYEE_NAME }},
+                    {{ toursanctionorder.DESIGNATION }},
+                    {{ toursanctionorder.ADDRESS }} </b
+                  >is for official work and in public interest.
+                </p>
+              </div>
+            </div>
+            <div nz-row style="word-break: break-all">
+              <div nz-col nzSpan="1">
+                <p>2</p>
+              </div>
+              <div nz-col nzSpan="23">
+                <p>
+                  This issues with the approval of the
+                  ADG(Vigliance)(West),CBDT,Mumbai
+                </p>
+              </div>
+            </div>
+            <br />
+            <br />
+
+            <!-- <div style="margin-top: 100px; font-size: 13px">
+                            <div nz-row>
+                                <div nz-col nzSpan="15"></div>
+
+                                <div nz-col nzSpan="9"
+                                    style="text-align: center">
+                                    <div style="font-weight: bold">({{
+                                        NAME_HN
+                                        }})</div>
+                                    <div>{{ POST_HN }}</div>
+                                    <div>{{ OFFICE_NAME_HN }}</div>
+                                    <div style="font-weight: bold">
+                                        ({{ SIGNNAME }})
+                                    </div>
+                                    <div>{{ POST }}</div>
+                                    <div>{{ OFFICE_NAME }}</div>
+
+                                </div>
+                            </div>
+                        </div> -->
+
+            <div style="margin-top: 50px; font-size: 13px">
+              <div nz-row>
+                <div nz-col nzSpan="15"></div>
+
+                <div nz-col nzSpan="9" style="text-align: center">
+                  <div style="font-weight: bold">(Rajeev S. Kadam )</div>
+                  <div>Jt.CIT(OSD insitu) hoilding charge of</div>
+                  <div>Director of Income tax (Vig)(HQ)</div>
+                  <div>to AddL.DG(Vig.)(West), CBDT,MUmbai</div>
+                </div>
+              </div>
+            </div>
+
+            <p style="line-height: 0.5">Copy to :</p>
+            <p style="line-height: 0.5">
+              1. Gazetted Pay bill section.(2 copies)
+            </p>
+            <p style="line-height: 0.5">2. The officer concerned</p>
+            <br />
+
+            <!-- <div style="margin-top: 100px; font-size: 13px">
+                            <div nz-row>
+                                <div nz-col nzSpan="15"></div>
+
+                                <div nz-col nzSpan="9"
+                                    style="text-align: center">
+                                    <div style="font-weight: bold">({{
+                                        NAME_HN
+                                        }})</div>
+                                    <div>{{ POST_HN }}</div>
+                                    <div>{{ OFFICE_NAME_HN }}</div>
+                                    <div style="font-weight: bold">
+                                        ({{ SIGNNAME }})
+                                    </div>
+                                    <div>{{ POST }}</div>
+                                    <div>{{ OFFICE_NAME }}</div>
+
+                                </div>
+                            </div>
+                        </div> -->
+
+            <div style="margin-top: 50px; font-size: 13px">
+              <div nz-row>
+                <div nz-col nzSpan="15"></div>
+
+                <div nz-col nzSpan="9" style="text-align: center">
+                  <div style="font-weight: bold">(Rajeev S. Kadam )</div>
+                  <div>Jt.CIT(OSD insitu) hoilding charge of</div>
+                  <div>Director of Income tax (Vig)(HQ)</div>
+                  <div>to AddL.DG(Vig.)(West), CBDT,MUmbai</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

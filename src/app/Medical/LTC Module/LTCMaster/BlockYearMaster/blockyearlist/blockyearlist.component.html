@@ -1,0 +1,150 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname"><b> Manage Block Year </b></div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="postsearch"
+            (keydown.enter)="onKeypressEvent($event)"
+            [(ngModel)]="searchText"
+            nz-input
+            placeholder="Search Record"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+      <nz-form-item>
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Year
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      nzBordered
+      #datatable
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzSize]="'small'"
+      [nzScroll]="{ y: '55vh' }"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead>
+        <tr>
+          <th style="font-weight: bold; text-align: center">Action</th>
+          <th
+            nzColumnKey="{{ 'YEAR' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Year Name
+          </th>
+          <th
+            nzColumnKey="{{ 'SPECIFICATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Specification
+          </th>
+          <th
+            nzColumnKey="{{ 'STATUS' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody style="text-align: center">
+        <tr *ngFor="let data of datatable.data" style="text-align: center">
+          <td style="text-align: center">
+            <a (click)="edit(data)"
+              ><i nz-icon nzType="edit" nzTheme="outline"></i
+            ></a>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["YEAR"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data["SPECIFICATION"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <i
+              nz-icon
+              *ngIf="data['STATUS']"
+              [nzType]="'check-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#52c41a'"
+            ></i>
+            <i
+              nz-icon
+              *ngIf="!data['STATUS']"
+              [nzType]="'close-circle'"
+              [nzTheme]="'twotone'"
+              [nzTwotoneColor]="'#f50'"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="400"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addblockyear
+        [drawerClose]="closeCallback"
+        [drawerVisible]="drawerVisible"
+        [data]="drawerData"
+      ></app-addblockyear>
+    </ng-container>
+  </nz-drawer>
+</div>

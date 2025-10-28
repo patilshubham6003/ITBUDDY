@@ -1,0 +1,829 @@
+<div>
+  <form nz-form #AddNewRecord="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="11" class="my-box">
+          <div nz-row>
+            <!-- <nz-divider style="font-weight: bold; padding-top: 5px" nzText="Departure"></nz-divider> -->
+
+            <!-- <h3 style="text-align: center; margin-top: 14px">
+              <b>Departure</b>
+            </h3> -->
+            <div
+              nz-col
+              nzSpan="24"
+              style="text-align: center; margin-top: 14px"
+            >
+              <h5 style="font-size: 12px">Departure</h5>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label
+                  [ngClass]="isShowCSS ? 'labelsize' : ''"
+                  nzRequired
+                  nzNoColon
+                  >From Date</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Please Select Date">
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Date"
+                  >
+                    <nz-date-picker
+                      [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                      name="date"
+                      nzFormat="dd/MM/yyyy HH:mm"
+                      [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                      [(ngModel)]="data.DEPARTURE_DATETIME"
+                      style="width: 100%"
+                      [ngClass]="isShowCSS ? 'datesize' : ''"
+                      (ngModelChange)="dateDifference($event)"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label
+                  [ngClass]="isShowCSS ? 'labelsize' : ''"
+                  nzRequired
+                  nzNoColon
+                  >Departure From
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter Departure From">
+                  <input
+                    nz-input
+                    autocomplete="off"
+                    [(ngModel)]="data.DEPARTURE_FROM"
+                    name="fairPaid"
+                    type="text"
+                    maxlength="255"
+                    [ngClass]="isShowCSS ? 'inputsize' : ''"
+                    placeHolder="Enter Departure From"
+                    required
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzSpan="1"></div>
+        <div nz-col nzSpan="12" class="my-box">
+          <div nz-row>
+            <div
+              nz-col
+              nzSpan="24"
+              style="text-align: center; margin-top: 14px"
+            >
+              <h5 style="font-size: 12px">Arrival</h5>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label
+                  [ngClass]="isShowCSS ? 'labelsize' : ''"
+                  nzRequired
+                  nzNoColon
+                  >To Date</nz-form-label
+                >
+                <nz-form-control nzErrorTip="Please Select Arival to Date">
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Select Arival to Date"
+                  >
+                    <nz-date-picker
+                      [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                      nzFormat="dd/MM/yyyy HH:mm"
+                      [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                      name="ddddddddate"
+                      [(ngModel)]="data.ARRIVAL_DATETIME"
+                      style="width: 100%"
+                      (ngModelChange)="dateDifference1($event)"
+                      [ngClass]="isShowCSS ? 'datesize' : ''"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="24">
+              <nz-form-item>
+                <nz-form-label
+                  [ngClass]="isShowCSS ? 'labelsize' : ''"
+                  nzRequired
+                  nzNoColon
+                  >Arrival To
+                </nz-form-label>
+                <nz-form-control nzErrorTip="Please Enter Arrival to.">
+                  <input
+                    nz-input
+                    autocomplete="off"
+                    [(ngModel)]="data.ARRIVAL_TO"
+                    name="faidfdfgrPaid"
+                    type="text"
+                    maxlength="255"
+                    placeHolder="Enter Arrival to."
+                    required
+                    [ngClass]="isShowCSS ? 'inputsize' : ''"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <span
+            style="color: red; padding-left: 10px; font-size: 11px"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 5 &&
+              (gradpaylevel == 'Level 1' ||
+                gradpaylevel == 'Level 2' ||
+                gradpaylevel == 'Level 3' ||
+                gradpaylevel == 'Level 4' ||
+                gradpaylevel == 'Level 5')
+            "
+            >Note: Applicant Eligible For First Class of Mode.
+          </span>
+          <span
+            style="color: red; padding-left: 10px; font-size: 11px"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 5 &&
+              (gradpaylevel == 'Level 6' ||
+                gradpaylevel == 'Level 7' ||
+                gradpaylevel == 'Level 8' ||
+                gradpaylevel == 'Level 9' ||
+                gradpaylevel == 'Level 10' ||
+                gradpaylevel == 'Level 11' ||
+                gradpaylevel == 'Level 12' ||
+                gradpaylevel == 'Level 13')
+            "
+            >Note: Applicant Eligible For Economy Class of Mode.
+          </span>
+          <span
+            style="color: red; padding-left: 10px; font-size: 11px"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 5 &&
+              (gradpaylevel == 'Level 14' ||
+                gradpaylevel == 'Level 15' ||
+                gradpaylevel == 'Level 16' ||
+                gradpaylevel == 'Level 17')
+            "
+            >Note: Applicant Eligible For Business, Club Class of Mode.
+          </span>
+          <span
+            style="color: red; padding-left: 10px; font-size: 11px"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 4 &&
+              (gradpaylevel == 'Level 1' ||
+                gradpaylevel == 'Level 2' ||
+                gradpaylevel == 'Level 3' ||
+                gradpaylevel == 'Level 4' ||
+                gradpaylevel == 'Level 5')
+            "
+            >Note: Applicant Eligible For AC II, AC Chair Class of Mode.
+          </span>
+          <span
+            style="color: red; padding-left: 10px; font-size: 11px"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 4 &&
+              (gradpaylevel == 'Level 6' ||
+                gradpaylevel == 'Level 7' ||
+                gradpaylevel == 'Level 8' ||
+                gradpaylevel == 'Level 9' ||
+                gradpaylevel == 'Level 10')
+            "
+            >Note: Applicant Eligible For AC II Class of Mode.
+          </span>
+          <span
+            style="color: red; padding-left: 10px; font-size: 11px"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 4 &&
+              (gradpaylevel == 'Level 12' ||
+                gradpaylevel == 'Level 13' ||
+                gradpaylevel == 'Level 14' ||
+                gradpaylevel == 'Level 15' ||
+                gradpaylevel == 'Level 16' ||
+                gradpaylevel == 'Level 17')
+            "
+            >Note: Applicant Eligible For AC I Class of Mode.
+          </span>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Travel Mode</nz-form-label
+            >
+            <nz-form-control nzHasFeedback nzErrorTip="Select Mode">
+              <nz-select
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+                nzAllowClear
+                name="room"
+                [(ngModel)]="data.TRAVEL_MODE_ID"
+                style="width: 100%"
+                nzPlaceHolder="Select Travel Mode"
+                (ngModelChange)="getclassmode($event)"
+              >
+                <nz-option
+                  *ngFor="let role of modedata"
+                  [nzValue]="role.ID"
+                  [nzLabel]="role.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Class of Mode</nz-form-label
+            >
+            <nz-form-control nzHasFeedback nzErrorTip="Select Class Mode">
+              <nz-select
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+                nzAllowClear
+                name="rsdfsdoom"
+                [nzLoading]="classLoader"
+                [(ngModel)]="data.TRAVEL_CLASS_ID"
+                style="width: 100%"
+                nzPlaceHolder="Select Class of Mode"
+              >
+                <nz-option
+                  *ngFor="let role of classdata"
+                  [nzValue]="role.ID"
+                  [nzLabel]="role.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Purpose of Journey</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Purpose of Journey">
+              <input
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                nz-input
+                autocomplete="off"
+                [(ngModel)]="data.PURPOSE_OF_JOURNEY"
+                name="faidfdsdfsffgrPaid"
+                type="text"
+                maxlength="256"
+                placeHolder="Enter Purpose of Journey"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Days of halt</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Days of halt">
+              <input
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                nz-input
+                autocomplete="off"
+                (keypress)="omit($event)"
+                [(ngModel)]="data.DAYS_OF_HALT"
+                name="daysofhalt"
+                type="text"
+                maxlength="8"
+                placeHolder="Enter Days of halt"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Hours of halt</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Hours of halt">
+              <input
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                nz-input
+                autocomplete="off"
+                (keypress)="omit($event)"
+                [(ngModel)]="data.HOURS_OF_HALT"
+                name="amsdfsdsddount"
+                type="text"
+                maxlength="8"
+                placeHolder="Enter Hours of halt"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Distance of Road</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Distance of Road">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnAfter="Kms"
+              >
+                <input
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.DISTANCE_IN_KM_FOR_ROAD"
+                  name="rafdsgte"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Distance of Road"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Rate Per KM</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Rate Per KM">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnAfter="Kms"
+              >
+                <input
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  (ngModelChange)="changefairpaid($event)"
+                  [(ngModel)]="data.RATE_PER_KM"
+                  name="Rate Per KM"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Rate Per KM"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="roleId != 2">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Admissible Amount</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Admissible Amount">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.FARE_PAID"
+                  name="rate"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Admissible Amount"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Fare Paid By The Officer</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter Fare Paid By The Officer">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                  nz-input
+                  autocomplete="off"
+                  (keypress)="omit($event)"
+                  [(ngModel)]="data.CLAIMED_FARE_PAID"
+                  name="claimedfairpaid"
+                  type="text"
+                  maxlength="8"
+                  placeHolder="Enter Fare Paid By The Officer"
+                  required
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="data.TRAVEL_MODE_ID == 5">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Air Ticket</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 12px"
+                (click)="fileInput1.click()"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+              >
+                Select File
+                <input
+                  #fileInput1
+                  name="TOUR_AIR_TICKET"
+                  type="file"
+                  (change)="onAirTicketFileSelected($event)"
+                  style="display: none"
+                  required
+                />
+              </button>
+            </nz-form-control>
+            <span *ngIf="progressBartourAirTicket">
+              <nz-progress
+                [style.width]="percenttourAirTicket + '%'"
+                [nzPercent]="percenttourAirTicket"
+                >{{ percenttourAirTicket }}%</nz-progress
+              >
+            </span>
+          </nz-form-item>
+          <div
+            nz-col
+            nzSpan="23"
+            *ngIf="data.TRAVEL_MODE_ID == 5 && data.TOUR_AIR_TICKET != null"
+            style="overflow: hidden; padding-left: 11px; font-size: 11px"
+          >
+            {{ data.TOUR_AIR_TICKET }} <br /><br />
+            <div *ngIf="data.TOUR_AIR_TICKET != null">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="airTickets(data.TOUR_AIR_TICKET)"
+              >
+                Open Air Ticket PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="data.TRAVEL_MODE_ID == 5">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Bording Pass</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="fileInput2.click()"
+              >
+                Select File
+                <input
+                  nzSize="small"
+                  #fileInput2
+                  name="TOUR_BOARDING_PASS"
+                  type="file"
+                  (change)="onBordingPassFileSelected($event)"
+                  style="display: none"
+                  required
+                />
+              </button>
+            </nz-form-control>
+            <span *ngIf="progressBartourBoardingPass">
+              <nz-progress
+                [style.width]="percenttourBoardingPass + '%'"
+                [nzPercent]="percenttourBoardingPass"
+                >{{ percenttourBoardingPass }}%</nz-progress
+              >
+            </span>
+          </nz-form-item>
+          <div
+            nz-col
+            nzSpan="23"
+            *ngIf="data.TRAVEL_MODE_ID == 5 && data.TOUR_BOARDING_PASS != null"
+            style="overflow: hidden; padding-left: 11px; font-size: 11px"
+          >
+            {{ data.TOUR_BOARDING_PASS }} <br /><br />
+            <div *ngIf="data.TOUR_BOARDING_PASS != null">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="boardingPass(data.TOUR_BOARDING_PASS)"
+              >
+                Open Ticket Boarding Pass PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="data.TRAVEL_MODE_ID == 4">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Rail Ticket</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="fileInput3.click()"
+              >
+                Select File
+                <input
+                  nzSize="small"
+                  #fileInput3
+                  name="TOUR_IRCTC_ROAD_TICKETS"
+                  type="file"
+                  (change)="onRailTicketFileSelected($event)"
+                  style="display: none"
+                  required
+                />
+              </button>
+            </nz-form-control>
+            <span *ngIf="progressBartourIrctcRoadTicket">
+              <nz-progress
+                [style.width]="percenttourIrctcRoadTicket + '%'"
+                [nzPercent]="percenttourIrctcRoadTicket"
+                >{{ percenttourIrctcRoadTicket }}%</nz-progress
+              >
+            </span>
+          </nz-form-item>
+          <div
+            nz-col
+            nzSpan="23"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 4 && data.TOUR_IRCTC_ROAD_TICKETS != null
+            "
+            style="overflow: hidden; padding-left: 11px; font-size: 11px"
+          >
+            {{ data.TOUR_IRCTC_ROAD_TICKETS }} <br /><br />
+            <div *ngIf="data.TOUR_IRCTC_ROAD_TICKETS != null">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="irctcTickets(data.TOUR_IRCTC_ROAD_TICKETS)"
+              >
+                Open IRCTC Ticket PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="data.TRAVEL_MODE_ID == 6">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Boat/Ship Ticket</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="fileInput4.click()"
+              >
+                Select File
+                <input
+                  nzSize="small"
+                  #fileInput4
+                  name="TOUR_BOATSHIP_TICKET"
+                  type="file"
+                  (change)="onBoatShipFileSelected($event)"
+                  style="display: none"
+                  required
+                />
+              </button>
+            </nz-form-control>
+            <span *ngIf="progressBartourBoatShipTicket">
+              <nz-progress
+                [style.width]="percenttourBoatShipTicket + '%'"
+                [nzPercent]="percenttourBoatShipTicket"
+                >{{ percenttourBoatShipTicket }}%</nz-progress
+              >
+            </span>
+          </nz-form-item>
+          <div
+            nz-col
+            nzSpan="23"
+            *ngIf="
+              data.TRAVEL_MODE_ID == 6 && data.TOUR_BOATSHIP_TICKET != null
+            "
+            style="overflow: hidden; padding-left: 11px; font-size: 11px"
+          >
+            {{ data.TOUR_BOATSHIP_TICKET }} <br /><br />
+            <div *ngIf="data.TOUR_BOATSHIP_TICKET != null">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="boatShipTickets(data.TOUR_BOATSHIP_TICKET)"
+              >
+                Open Boat Ship Ticket PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="12" *ngIf="data.TRAVEL_MODE_ID == 3">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Ticket</nz-form-label
+            >
+
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="fileInput4.click()"
+              >
+                Select File
+                <input
+                  nzSize="small"
+                  #fileInput4
+                  name="TOUR_ROAD_TICKETS"
+                  type="file"
+                  (change)="onTicketFileSelected($event)"
+                  style="display: none"
+                  required
+                />
+              </button>
+            </nz-form-control>
+            <span *ngIf="progressBartourRoadTickets">
+              <nz-progress
+                [style.width]="percenttourRoadTickets + '%'"
+                [nzPercent]="percenttourRoadTickets"
+                >{{ percenttourRoadTickets }}%</nz-progress
+              >
+            </span>
+          </nz-form-item>
+          <div
+            nz-col
+            nzSpan="23"
+            *ngIf="data.TRAVEL_MODE_ID == 3 && data.TOUR_ROAD_TICKETS != null"
+            style="overflow: hidden; padding-left: 11px; font-size: 11px"
+          >
+            {{ data.TOUR_ROAD_TICKETS }} <br /><br />
+            <div *ngIf="data.TOUR_ROAD_TICKETS != null">
+              <button
+                nz-button
+                style="height: 22px; padding: 0px 7px; font-size: 11px"
+                (click)="roadTickets(data.TOUR_ROAD_TICKETS)"
+              >
+                Open Road Ticket PDF File
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Is Returned Journey</nz-form-label>
+
+            <nz-form-control nzErrorTip="Status is required">
+              <nz-switch
+                name="status"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_RETURNED"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div> -->
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Is Ticket From IRCTC,Ashoka Tour & Travels and Balmer & Lawrie
+            </nz-form-label>
+
+            <nz-form-control
+              nzErrorTip=" Please Check Is Ticket From IRCTC, Ashoka Tour & Travels and Balmer & Lawrie"
+            >
+              <nz-switch
+                name="status11"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.TICKET_FROM"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="data.TICKET_FROM == false">
+          <nz-form-item>
+            <nz-form-label [ngClass]="isShowCSS ? 'labelsize' : ''" nzNoColon
+              >Is Relaxation Provided
+            </nz-form-label>
+
+            <nz-form-control nzErrorTip="Status is required">
+              <nz-switch
+                nzSize="small"
+                name="status22"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+                [(ngModel)]="data.RELAXATION_PROVIDED"
+              ></nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close(AddNewRecord)"
+    class="ant-btn"
+    style="margin-right: 8px"
+    [ngClass]="isShowCSS ? 'inputsize' : ''"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nzType="primary"
+    *ngIf="!data.ID"
+    nz-button
+    nz-dropdown
+    [nzDropdownMenu]="menu"
+    [nzLoading]="isSpinning"
+    (click)="save(false, AddNewRecord)"
+    style="font-size: 11px !important"
+    [ngClass]="isShowCSS ? 'inputsize' : ''"
+  >
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li
+        nz-menu-item
+        class="menuc"
+        style="border-radius: 4px; background-color: #40a9ff; font-size: 11px"
+      >
+        <a style="color: white" (click)="save(true, AddNewRecord)"
+          >Save & New</a
+        >
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    [nzLoading]="isSpinning"
+    *ngIf="data.ID && !isAdmin"
+    (click)="save(false, AddNewRecord)"
+    [ngClass]="isShowCSS ? 'inputsize' : ''"
+  >
+    <span>Update & Close</span>
+  </button>
+</div>
+<div class="header">
+  <button
+    type="button"
+    nz-button
+    (click)="close(AddNewRecord)"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>

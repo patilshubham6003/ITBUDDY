@@ -1,0 +1,191 @@
+<app-headermenu
+  *ngIf="!isSpinning"
+  (getAllFilter)="AllFilters()"
+></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<main *ngIf="!isSpinning" id="main">
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="breadcrumb-hero" style="padding: 10px 0">
+      <div class="container">
+        <div class="breadcrumb-hero">
+          <h2 style="font-weight: 500; color: white">Feedback Form</h2>
+          <ol>
+            <li>
+              <a routerLink="/" style="text-decoration: None; color: white"
+                >Home</a
+              >
+            </li>
+            <li>Feedback Form</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    id="contact"
+    class="contact"
+    style="padding-top: 20px; padding-bottom: 45px"
+  >
+    <div class="container" style="max-width: 90vw !important">
+      <div class="row mt-5">
+        <div class="col-lg-3 mt-5 mt-lg-0"></div>
+        <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left">
+          <div class="section-title" style="padding-bottom: 0px">
+            <h4 style="font-size: 20px; font-weight: 400">
+              Anonymous Employee Feedback Form
+            </h4>
+            <p>We value your honest feedback, and rest assured, all responses are completely anonymous. Your name or any personal identifiers will not be shared.</p>
+          </div>
+          .
+          <form #addContact="ngForm" class="php-email-form">
+            <div class="row">
+              <div class="col-md-6 col-xl-6 col-lg-6 col-6 col-sm-6 form-group">
+                <!-- <label class="small mb-1 bb" for="gens"
+                  >Feedback Type <span style="color: red">*</span></label
+                > -->
+                <div
+                  style="display: flex; padding-top: 13px; padding-bottom: 10px"
+                >
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      [(ngModel)]="feedback.TYPE"
+                      id="Complinett"
+                      name="Complinet"
+                      value="Complinet"
+                      checked
+                      style="    height: 15px !important;
+                      border-radius: 15px !important;
+                  "
+                    />
+                    Complinet
+                    <label class="form-check-label" for="Complinet"></label>
+                  </div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      [(ngModel)]="feedback.TYPE"
+                      id="Suggestionn"
+                      name="Suggestion"
+                      value="Suggestion"
+                      checked
+                      style="    height: 15px !important;
+                      border-radius: 15px !important;
+                  "
+                    />
+                    Suggestion
+                    <label class="form-check-label" for="Suggestion"></label>
+                  </div>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+              </div>
+
+              <div class="col-md-6 col-xl-6 col-lg-6 col-6 col-sm-6 form-group">
+                <!-- <label class="small mb-1 bb" for="official">Subject</label> -->
+                <input
+                  class="form-control"
+                  [(ngModel)]="feedback.SUBJECT"
+                  id="official"
+                  name="official"
+                  type="text"
+                  list="officialoo"
+                  placeholder="Select Subject"
+                />
+                <datalist id="officialoo">
+                  <option value="General Department Functioning">
+                    General Department Functioning
+                  </option>
+                  <option value="Work Environment">Work Environment</option>
+                  <option value="Policies and Procedures">
+                    Policies and Procedures
+                  </option>
+                  <option value="Suggestions for Improvement">
+                    Suggestions for Improvement
+                  </option>
+                  <option value="Technical Issues">Technical Issues</option>
+                </datalist>
+              </div>
+
+              <div
+                class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12 form-group mt-3 mt-md-0"
+              >
+                <!-- <label class="small mb-1 bb" for="official">Description</label> -->
+                <textarea
+                  class="form-control"
+                  cols="30"
+                  name="Message"
+                  placeholder="Please Enter Description"
+                  [(ngModel)]="feedback.DESCRIPTION"
+                  rows="3"
+                  required
+                  (keypress)="alphaonly($event)"
+                  required
+                ></textarea>
+              </div>
+              <div  class="col-md-6 col-xl-6 col-lg-6 col-6 col-sm-6 form-group mt-3 mt-md-0">
+                <!-- <label class="small mb-1 bb" for="Joining Letter">Joining Letter</label> -->
+                <div class="input-group">
+                  <input *ngIf="feedback.ATTACHMENT == null" style="padding: 11px 10px" type="file"
+                    class="form-control" #fileInput (change)="checkImage2($event)" accept="application/pdf" />
+                </div>
+
+                <div>
+                  <ul class="list-group">
+                    <li class="list-group-item" *ngIf="feedback.ATTACHMENT != null" style="padding: 6px 10px">
+                      {{ feedback.ATTACHMENT }}
+                      &nbsp;&nbsp;
+                      <div class="float-end">
+                        <a target="_blank" href="{{ imgurl }}feedbackAttchment/{{
+                            feedback.ATTACHMENT
+                          }}" style="color: black">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#006699"
+                            class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                            <path
+                              d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                          </svg></a>
+                        &nbsp;&nbsp;
+                        <button (click)="
+                            clear(feedback.ATTACHMENT, 'feedbackAttchment')
+                          " style="border: none; background: none; color: red">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="progressBar">
+                  <nz-progress [style.width]="percent + '%'" [nzPercent]="percent">{{ percent }}%</nz-progress>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button *ngIf="!loaded" type="submit" (click)="onsubmit(addContact)">Submit Feedback</button>
+              
+              <div *ngIf="loaded">
+                <div class="spinner-border text-success" role="status">
+                  <span class="visually-hidden">Loading</span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-3 mt-5 mt-lg-0"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>

@@ -1,0 +1,18 @@
+<nz-spin [nzSpinning]="loadingpieRecords">
+    <div class="formname" *ngIf="menus.length!=0">Reports List</div>
+    <div nz-row>
+        <div class="zoom" *ngFor="let menu of menus; let f = index" nz-col nzSpan="11" style="
+       width: 70%;
+       height: 45px;
+       border-radius: 10px;
+       margin-top: 10px;
+       margin-left: 15px;
+       box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+         padding: 0px 10px 0px 10px;cursor: pointer;display: flex;align-items: center;
+     " [routerLink]="[menu.link]">
+            <a style="color: rgba(0, 0, 0, 0.85);display: flex;align-items: center;" [routerLink]="[menu.link]">
+                <span nz-icon nzType="file" nzTheme="outline"></span>&nbsp;{{ menu.title }}
+            </a>
+        </div>
+    </div>
+</nz-spin>

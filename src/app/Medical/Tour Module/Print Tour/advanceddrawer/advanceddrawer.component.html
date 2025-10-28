@@ -1,0 +1,878 @@
+<div nz-row [nzGutter]="10">
+  <div nz-col nzSpan="8">
+    <div
+      nz-row
+      class="my-box"
+      style="height: 75vh; overflow-y: auto; padding: 10px; margin: 13px"
+    >
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Prepared By </nz-form-label>
+          <nz-form-control
+            nzHasFeedback
+            nzErrorTip="Please Enter Valid Prepared By"
+          >
+            <input
+              nz-input
+              name="PREPARED_BY_TOUR"
+              maxlength="256"
+              [(ngModel)]="advancedata.PREPARED_BY"
+              placeHolder="Enter Prepared By"
+              required
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="20">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Signature 1</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="userid"
+              [(ngModel)]="AdvanceBillView.ADV_TOUR_ADV_BILL_SIGNATURE_1"
+              nzAllowClear
+              nzShowSearch
+              nzPlaceHolder="Choose Signature"
+              (ngModelChange)="signature($event)"
+            >
+              <nz-option
+                *ngFor="let user of Signaturearray"
+                [nzValue]="user.ID"
+                [nzLabel]="user.NAME"
+              >
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="4">
+        <nz-form-item style="padding: 0px !important">
+          <nz-form-label nzNoColon></nz-form-label>
+          <nz-form-control>
+            <button nz-button nzType="primary" (click)="opensignature()">
+              <i nz-icon nzType="plus"></i>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="20">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Signature 2</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              name="userid2"
+              [(ngModel)]="AdvanceBillView.ADV_TOUR_ADV_BILL_SIGNATURE_2"
+              nzAllowClear
+              nzShowSearch
+              nzPlaceHolder="Choose Signature"
+              (ngModelChange)="signature1($event)"
+            >
+              <nz-option
+                *ngFor="let user of Signaturearray"
+                [nzValue]="user.ID"
+                [nzLabel]="user.NAME"
+              >
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="4">
+        <nz-form-item style="padding: 0px !important">
+          <nz-form-label nzNoColon></nz-form-label>
+          <nz-form-control>
+            <button nz-button nzType="primary" (click)="opensignature()">
+              <i nz-icon nzType="plus"></i>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon> Bill No</nz-form-label>
+          <nz-form-control nzErrorTip="Please Enter Bill No.">
+            <input
+              nz-input
+              maxlength="32"
+              autocomplete="off"
+              name="ADVANCE_BILL_NO"
+              type="text"
+              [(ngModel)]="advancedata.ADVANCE_BILL_NO"
+              placeHolder="Enter Bill No."
+              required
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon> Purpose of Tour</nz-form-label>
+          <nz-form-control nzErrorTip="Please Enter Purpose of Tour.">
+            <textarea
+              nz-input
+              maxlength="128"
+              autocomplete="off"
+              name="PURPOSE_OF_TOUR"
+              type="text"
+              [(ngModel)]="advancedata.PURPOSE_OF_TOUR"
+              placeHolder="Enter Purpose of Tour."
+              required
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Vide Order Date</nz-form-label>
+          <nz-form-control nzErrorTip="Please Select Vide Order Date">
+            <nz-date-picker
+              style="width: 100%"
+              nzFormat="dd/MM/yyyy"
+              [(ngModel)]="advancedata.VIDE_ORDER_DATE"
+              name="VIDE_ORDER_DATE"
+              required
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="16">
+    <div class="my-box" style="padding: 10px; height: 75vh; overflow-y: auto">
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="font-weight: bold; font-family: sans-serif; margin-top: 27px"
+          >
+            TA TOUR ADVANCE BILL
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p style="font-family: sans-serif">
+            Bill No.{{ advancedata.ADVANCE_BILL_NO }}<b></b>
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p style="font-family: sans-serif; margin-bottom: 0px !important">
+            Placed alongside tour advance bill of
+            <b> {{ advancedata.EMPLOYEE_NAME }},</b> received in this office,for
+            tour to {{ advancedata.VISITED_PLACE_AND_PERIOD }}.
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-bottom: 0px !important;
+            "
+          >
+            {{ advancedata.PURPOSE_OF_TOUR }} from
+            {{ advancedata.DURATION_START_DATE | date : "dd/MM/yyyy" }} to
+            {{ advancedata.DURATION_END_DATE | date : "dd/MM/yyyy" }},vide order
+            dt.{{ advancedata.VIDE_ORDER_DATE | date : "dd/MM/yyyy" }}.The total
+            amount admisible to the official is worked out as under.
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+            "
+          >
+            The Projected approximate expenditure for the tour programme is as
+            follows:
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="6"></div>
+        <div nz-col nzSpan="4">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+            "
+          >
+            Total
+          </p>
+        </div>
+        <div nz-col nzSpan="6">
+          <span style="font-weight: bold"
+            >= &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rs.{{
+              advancedata.TOTAL_ALLOWANCE
+            }}/-</span
+          >
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="6"></div>
+        <div nz-col nzSpan="4">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+            "
+          >
+            <span style="text-decoration: underline">Advance Granted</span>
+          </p>
+        </div>
+        <div nz-col nzSpan="6">
+          <span style="font-weight: bold"
+            >= &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rs.{{
+              gettotal(advancedata.TOTAL_ALLOWANCE)
+            }}/-</span
+          >
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: 13px;
+            "
+          >
+            It is found that the advance for tour bill is correct and admisible.
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: -17px;
+            "
+          >
+            Hence,the advance for tour bill is put up for kind perusal and
+            signature please.
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p style="font-family: sans-serif; text-align: justify">
+            Prepared by: {{ advancedata.PREPARED_BY }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: -17px;
+            "
+          >
+            Designation:
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: 28px;
+            "
+          >
+            <!-- जितेंद्र रा. चांदेकर, आयकर अधिकारी -->
+            <span *ngIf="NAME_HN">
+              {{ NAME_HN }}
+            </span>
+            <span *ngIf="POST_HIN"> , {{ POST_HIN }} </span>
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -11px;
+            "
+            *ngIf="SIGNNAME"
+          >
+            ({{ SIGNNAME }})
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -15px;
+            "
+            *ngIf="POST"
+          >
+            {{ POST }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -12px;
+            "
+            *ngIf="OFFICE_NAME_HIN"
+          >
+            {{ OFFICE_NAME_HIN }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -13px;
+            "
+            *ngIf="OFFICE_NAME"
+          >
+            {{ OFFICE_NAME }}
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: 28px;
+            "
+            *ngIf="NAME_HN1"
+          >
+            ({{ NAME_HN1 }})
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -11px;
+            "
+            *ngIf="SIGNNAME1"
+          >
+            ({{ SIGNNAME1 }})
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -15px;
+            "
+          >
+            <span *ngIf="POST1_HIN">
+              {{ POST1_HIN }}
+            </span>
+            <span *ngIf="OFFICE_NAME1_HIN">
+              ,
+              {{ OFFICE_NAME1_HIN }}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -12px;
+            "
+            *ngIf="POST1"
+          >
+            {{ POST1 }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -13px;
+            "
+            *ngIf="OFFICE_NAME1"
+          >
+            {{ OFFICE_NAME1 }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="showmodal()"
+  >
+    <span>Approve & Preview</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Application'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <div id="excel-table" style="height: 450px; overflow: auto">
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="font-weight: bold; font-family: sans-serif; margin-top: 27px"
+          >
+            TA TOUR ADVANCE BILL
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p style="font-family: sans-serif">
+            Bill No.{{ advancedata.ADVANCE_BILL_NO }}<b></b>
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p style="font-family: sans-serif; margin-bottom: 0 px !important">
+            Placed alongside tour advance bill of
+            <b> {{ advancedata.EMPLOYEE_NAME }},</b> received in this office,for
+            tour to {{ advancedata.VISITED_PLACE_AND_PERIOD }}.
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-bottom: 0 px !important;
+            "
+          >
+            {{ advancedata.PURPOSE_OF_TOUR }} from
+            {{ advancedata.DURATION_START_DATE | date : "dd/MM/yyyy" }} to
+            {{ advancedata.DURATION_END_DATE | date : "dd/MM/yyyy" }},vide order
+            dt.{{ advancedata.VIDE_ORDER_DATE | date : "dd/MM/yyyy" }}.The total
+            amount admisible to the official is worked out as under.
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+            "
+          >
+            The Projected approximate expenditure for the tour programme is as
+            follows:
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="6"></div>
+        <div nz-col nzSpan="4">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+            "
+          >
+            Total
+          </p>
+        </div>
+        <div nz-col nzSpan="6">
+          <span style="font-weight: bold"
+            >= &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rs.{{
+              advancedata.TOTAL_ALLOWANCE
+            }}/-</span
+          >
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="6"></div>
+        <div nz-col nzSpan="4">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+            "
+          >
+            <span style="text-decoration: underline">Advance Granted</span>
+          </p>
+        </div>
+        <div nz-col nzSpan="6">
+          <span style="font-weight: bold"
+            >= &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rs.{{
+              this.advancedata.FINAL_ADVANCE_AMOUNT
+            }}/-</span
+          >
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: 13px;
+            "
+          >
+            It is found that the advance for tour bill is correct and admisible.
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: -17px;
+            "
+          >
+            Hence,the advance for tour bill is put up for kind perusal and
+            signature please.
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p style="font-family: sans-serif; text-align: justify">
+            Prepared by: {{ advancedata.PREPARED_BY }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: -17px;
+            "
+          >
+            Designation:
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: 28px;
+            "
+          >
+            <!-- जितेंद्र रा. चांदेकर, आयकर अधिकारी -->
+            <span *ngIf="NAME_HN">
+              {{ NAME_HN }}
+            </span>
+            <span *ngIf="POST_HIN"> , {{ POST_HIN }} </span>
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -11px;
+            "
+            *ngIf="SIGNNAME"
+          >
+            ({{ SIGNNAME }})
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -15px;
+            "
+            *ngIf="POST"
+          >
+            {{ POST }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -12px;
+            "
+            *ngIf="OFFICE_NAME_HIN"
+          >
+            {{ OFFICE_NAME_HIN }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -13px;
+            "
+            *ngIf="OFFICE_NAME"
+          >
+            {{ OFFICE_NAME }}
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              margin-top: 28px;
+            "
+            *ngIf="NAME_HN1"
+          >
+            ({{ NAME_HN1 }})
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -11px;
+            "
+            *ngIf="SIGNNAME1"
+          >
+            ({{ SIGNNAME1 }})
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -15px;
+            "
+          >
+            <span *ngIf="POST1_HIN">
+              {{ POST1_HIN }}
+            </span>
+            <span *ngIf="OFFICE_NAME1_HIN">
+              ,
+              {{ OFFICE_NAME1_HIN }}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -12px;
+            "
+            *ngIf="POST1"
+          >
+            {{ POST1 }}
+          </p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col nzSpan="2"></div>
+        <div nz-col nzSpan="22">
+          <p
+            style="
+              font-family: sans-serif;
+              text-align: justify;
+              font-weight: bold;
+              margin-top: -13px;
+            "
+            *ngIf="OFFICE_NAME1"
+          >
+            {{ OFFICE_NAME1 }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+    <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

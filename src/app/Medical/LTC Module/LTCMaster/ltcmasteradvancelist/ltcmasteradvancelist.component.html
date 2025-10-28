@@ -1,0 +1,1234 @@
+<div nz-row nzType="flex" style="margin-bottom: 5px">
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="20"
+    nzLg="20"
+    nzXl="10"
+    style="padding-left: 30px"
+  >
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="4"
+    nzXl="14"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          *ngIf="isAdmin"
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            autocomplete="off"
+            name="search"
+            nz-input
+            (keydown.enter)="onKeypressEvent($event)"
+            placeholder="Search Records"
+            [(ngModel)]="searchText"
+          />
+        </nz-input-group>
+
+        <ng-template #suffixIconButton>
+          <button
+            id="button"
+            nz-button
+            nzType="primary"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+
+      <nz-form-item *ngIf="!isAdmin">
+        <button nz-button nzType="primary" (click)="add()" nzJustify="end">
+          <i nz-icon nzType="plus"></i>Add New Advance LTC Application
+        </button>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box" style="margin-bottom: 5px">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="5">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Inspector Name</nz-form-label>
+                <nz-select
+                  name="inspectorName"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  [(ngModel)]="INSPECTOR_ID"
+                  nzPlaceHolder="Select Inspector Name"
+                >
+                  <nz-option
+                    *ngFor="let role of users"
+                    [nzValue]="role.ID"
+                    [nzLabel]="role.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="7">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="margin-left: 45px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i> -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"></div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      class="my-scroll no-wrap1"
+      #basicTable
+      nzShowSizeChanger
+      [nzData]="dataList"
+      [(nzPageIndex)]="pageIndex"
+      [nzFrontPagination]="false"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageSize)]="pageSize"
+      [nzSize]="'small'"
+      (nzPageIndexChange)="search()"
+      (nzPageSizeChange)="search(true)"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ x: '4300px', y: '55vh' }"
+      nzBordered
+    >
+      <thead>
+        <tr>
+          <th
+            nzLeft
+            nzWidth="140px"
+            style="font-weight: bold; text-align: center"
+          >
+            Action
+          </th>
+          <th
+            *ngIf="!isAdmin"
+            nzLeft
+            nzWidth="50px"
+            style="font-weight: bold; text-align: center"
+          >
+            Delete
+          </th>
+          <th
+            nzLeft
+            nzWidth="140px"
+            style="font-weight: bold; text-align: center"
+          >
+            Advance Claim Status
+          </th>
+          <th
+            nzLeft
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="EMPLOYEE_NAME"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+
+          <th nzWidth="480px" style="font-weight: bold; text-align: center">
+            Advance Document
+          </th>
+          <th nzWidth="360px" style="font-weight: bold; text-align: center">
+            Document
+          </th>
+
+          <!-- <th nzWidth="70px" style="font-weight: bold; text-align: center">
+              Delete
+            </th> -->
+          <!-- <th nzWidth="72px" style="font-weight: bold; text-align: center">
+              View Part A
+  </th> -->
+
+          <th
+            nzWidth="110px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="MOBILE_NO"
+            [nzSortFn]="true"
+          >
+            Mobile No.
+          </th>
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="EMPLOYEE_CODE"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="270px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DESIGNATION"
+            [nzSortFn]="true"
+          >
+            Employee Designation
+          </th>
+
+          <th
+            nzWidth="170px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DDO_OF_THE_OFFICIAL"
+            [nzSortFn]="true"
+          >
+            DDO official
+          </th>
+          <th
+            nzWidth="220px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="OFFICE_NAME"
+            [nzSortFn]="true"
+          >
+            Office Name
+          </th>
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="GRADE_PAY"
+            [nzSortFn]="true"
+          >
+            Basic Pay
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="GRADE_PAY_LEVEL"
+            [nzSortFn]="true"
+          >
+            Grade Pay Level
+          </th>
+
+          <th
+            nzWidth="180px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="REQUIRED_ADVANCE_AMOUNT"
+            [nzSortFn]="true"
+          >
+            Amount of Advance Required
+          </th>
+
+          <th
+            *ngIf="parentUserId != undefined && parentUserId == 0"
+            nzColumnKey="INSPECTOR_NAME"
+            [nzSortFn]="true"
+            nzWidth="200px"
+            style="font-weight: bold; text-align: center"
+          >
+            Inspector Name
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td nzLeft align="center" nzWidth="140px">
+            <span style="cursor: pointer" (click)="edit(data)">
+              <nz-tag
+                *ngIf="!isAdmin && data.LTC_STATUS != 'R'"
+                style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+                [nzColor]="'blue'"
+              >
+                <i nz-icon nzType="edit"></i> Verify Advance Claim
+              </nz-tag>
+
+              <nz-tag
+                *ngIf="isAdmin"
+                style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+                [nzColor]="'blue'"
+              >
+                <i nz-icon nzType="eye"></i> View
+              </nz-tag>
+            </span>
+            <!-- <a (click)="edit(data)">
+                <span
+                  nz-icon
+                  nzType="edit"
+                  nzTheme="twotone"
+                  nz-tooltip
+                  nzTooltipTitle="Edit"
+                >
+                </span
+              ></a> -->
+          </td>
+          <td nzLeft style="text-align: center" nzWidth="50px" *ngIf="!isAdmin">
+            <span
+              style="cursor: pointer; text-align: center"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure want delete?"
+              nzPopconfirmPlacement="top"
+              (nzOnConfirm)="deleteConfirm(data)"
+              (nzOnCancel)="deleteCancel()"
+            >
+              <span
+                nz-icon
+                nzType="delete"
+                nzTheme="twotone"
+                nz-tooltip
+                nzTooltipTitle="Delete"
+              >
+              </span>
+            </span>
+          </td>
+          <td nzLeft nzWidth="140px" style="text-align: center">
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'A'"
+              style="
+                padding: 3px;
+                border: 1px rgb(3, 146, 3) solid;
+                border-radius: 5px;
+              "
+              [nzColor]="'green'"
+            >
+              Final Claim Accept
+            </nz-tag>
+
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'R'"
+              style="
+                padding: 3px;
+                border: 1px rgb(206, 11, 11) solid;
+                border-radius: 5px;
+              "
+              [nzColor]="'red'"
+            >
+              Final Claim Reject
+            </nz-tag>
+
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'H'"
+              style="
+                padding: 3px;
+                border: 1px rgb(10, 38, 177) solid;
+                border-radius: 5px;
+              "
+              [nzColor]="'blue'"
+            >
+              Final Claim On Hold
+            </nz-tag>
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'AA'"
+              style="
+                padding: 3px;
+                border: 1px rgb(3, 146, 3) solid;
+                border-radius: 5px;
+              "
+              [nzColor]="'green'"
+            >
+              Advance Claim Accept
+            </nz-tag>
+
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'AR'"
+              style="
+                padding: 3px;
+                border: 1px rgb(206, 11, 11) solid;
+                border-radius: 5px;
+              "
+              [nzColor]="'red'"
+            >
+              Advance Claim Reject
+            </nz-tag>
+
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'AH'"
+              style="
+                padding: 3px;
+                border: 1px rgb(10, 38, 177) solid;
+                border-radius: 5px;
+              "
+              [nzColor]="'blue'"
+            >
+              Advance Claim On Hold
+            </nz-tag>
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'T' && !isAdmin"
+              style="padding: 3px; border: 1px pink solid; border-radius: 5px"
+              [nzColor]="'pink'"
+            >
+              Pending
+            </nz-tag>
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'T' && isAdmin"
+              style="padding: 3px; border: 1px blue solid; border-radius: 5px"
+              [nzColor]="'blue'"
+            >
+              Taken
+            </nz-tag>
+            <nz-tag
+              *ngIf="data.LTC_STATUS == 'P' && isAdmin"
+              style="padding: 3px; border: 1px pink solid; border-radius: 5px"
+              [nzColor]="'pink'"
+            >
+              Pending
+            </nz-tag>
+          </td>
+
+          <td
+            nzLeft
+            style="text-align: center; white-space: pre-line"
+            nzWidth="150px"
+          >
+            {{ data.EMPLOYEE_NAME }}
+          </td>
+
+          <!-- <td align="center" nzWidth="70px">
+              <span
+                style="cursor: pointer"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure want delete?"
+                nzPopconfirmPlacement="top"
+                (nzOnConfirm)="deleteConfirm(data)"
+                (nzOnCancel)="deleteCancel()"
+              >
+                <span
+                  nz-icon
+                  nzType="delete"
+                  nzTheme="twotone"
+                  nz-tooltip
+                  nzTooltipTitle="Delete"
+                >
+                </span>
+              </span>
+            </td> -->
+          <!-- <td style="text-align: center; white-space: pre-line">
+              <a
+                *ngIf="
+                  data.LTC_PART_A != null &&
+                  data.LTC_PART_A != undefined &&
+                  data.LTC_PART_A != ''
+                "
+                nz-icon
+                nzType="eye"
+                nzTheme="twotone"
+                nz-tooltip
+                nzTooltipTitle="View Part A"
+                (click)="AnyWindow(data)"
+              ></a>
+  </td> -->
+          <td style="text-align: center" nzWidth="480px">
+            &nbsp;
+            <span
+              style="cursor: pointer"
+              (click)="advLTCApplication(data)"
+              *ngIf="data.LTC_STATUS == 'A' || data.LTC_STATUS == 'AA'"
+            >
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(4, 0, 255) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                Advance Application
+              </nz-tag>
+            </span>
+
+            &nbsp;
+            <span
+              style="cursor: pointer"
+              (click)="advCalculationSheet(data)"
+              *ngIf="
+                data.IS_ADVANCE_CLAIM == true &&
+                data.IS_ADVANCE_LTC_CREATED == true
+              "
+            >
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(0, 6, 37) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                Calculation
+              </nz-tag>
+            </span>
+
+            &nbsp;
+            <span
+              style="cursor: pointer"
+              (click)="advGAR37(data)"
+              *ngIf="
+                data.IS_ADVANCE_CLAIM == true &&
+                data.IS_ADVANCE_LTC_CREATED == true
+              "
+            >
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(0, 6, 37) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                G.A.R. 37
+              </nz-tag>
+            </span>
+
+            &nbsp;
+            <span
+              style="cursor: pointer"
+              (click)="advManjuriAdhesh(data)"
+              *ngIf="
+                data.IS_ADVANCE_CLAIM == true &&
+                data.IS_ADVANCE_LTC_CREATED == true
+              "
+            >
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(0, 6, 37) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                Manjuri Adhesh
+              </nz-tag>
+            </span>
+
+            &nbsp;
+            <span
+              style="cursor: pointer"
+              (click)="advOrder(data)"
+              *ngIf="
+                data.IS_ADVANCE_CLAIM == true &&
+                data.IS_ADVANCE_LTC_CREATED == true
+              "
+            >
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(0, 6, 37) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                Advance Order
+              </nz-tag>
+            </span>
+          </td>
+
+          <td nzWidth="360px">
+            <span
+              *ngIf="
+                (!data.IS_ADMIN_LTC &&
+                  data.IS_ADVANCE_CLAIM &&
+                  data.IS_ADVANCE_LTC_CREATED &&
+                  data.IS_EMP_FILL_ADVANCE_INFO == 1) ||
+                (data.IS_ADMIN_LTC &&
+                  data.LTC_STATUS == 'A' &&
+                  data.IS_ADVANCE_CLAIM &&
+                  data.IS_ADVANCE_LTC_CREATED)
+              "
+            >
+              &nbsp;
+              <span
+                style="cursor: pointer"
+                (click)="partA(data)"
+                *ngIf="data.LTC_STATUS != 'R'"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Part A
+                </nz-tag>
+              </span>
+
+              &nbsp;
+              <span
+                style="cursor: pointer"
+                (click)="calculation(data)"
+                *ngIf="data.LTC_STATUS != 'R'"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(4, 0, 255) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Calculation
+                </nz-tag>
+              </span>
+
+              &nbsp;
+              <span
+                style="cursor: pointer"
+                (click)="Order(data)"
+                *ngIf="data.LTC_STATUS != 'R'"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(56, 52, 107) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Order
+                </nz-tag>
+              </span>
+
+              &nbsp;
+
+              <span
+                style="cursor: pointer"
+                (click)="partB(data)"
+                *ngIf="data.LTC_STATUS != 'R'"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(255, 174, 0) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Part B
+                </nz-tag>
+              </span>
+
+              &nbsp;
+              <span
+                style="cursor: pointer"
+                (click)="calculationSheet(data)"
+                *ngIf="data.LTC_STATUS != 'R'"
+              >
+                <nz-tag
+                  style="
+                    padding: 3px;
+                    border: 1px rgb(0, 6, 37) solid;
+                    border-radius: 5px;
+                  "
+                  [nzColor]="'default'"
+                >
+                  Calculation Sheet
+                </nz-tag>
+              </span>
+
+              <!-- &nbsp;
+            <span style="cursor: pointer" (click)="finalOrder(data)">
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(255, 0, 170) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                Final Order
+              </nz-tag>
+            </span> -->
+
+              <!-- &nbsp;
+            <span style="cursor: pointer" (click)="manjuriAdhesh(data)">
+              <nz-tag
+                style="
+                  padding: 3px;
+                  border: 1px rgb(255, 0, 0) solid;
+                  border-radius: 5px;
+                "
+                [nzColor]="'default'"
+              >
+                मंजूरी आदेश
+              </nz-tag>
+            </span> -->
+
+              &nbsp;
+              <!-- <nz-tag
+            
+                   (click)="partA(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">Part-A</nz-tag>
+            
+                  &nbsp;
+            
+                  <nz-tag
+            
+                   (click)="partB(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">Part B</nz-tag>&nbsp;
+            
+                  <nz-tag
+            
+                   (click)="calculationSheet(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">Calculation Sheet</nz-tag>
+            
+                  &nbsp;
+            
+                  <nz-tag
+            
+                   (click)="calculation(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">Calculation</nz-tag>
+            
+                  &nbsp;
+            
+                  <nz-tag
+            
+                   (click)="Order(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">Order</nz-tag>
+            
+                  &nbsp;
+            
+                  <nz-tag
+            
+                   (click)="finalOrder(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">Final Order</nz-tag>
+            
+                  &nbsp;
+            
+                  <nz-tag
+            
+                   (click)="manjuriAdhesh(data)"
+            
+                   style="padding: 3px; border: 1px blue solid; border-radius: 0px"
+            
+                   [nzColor]="'blue'">मंजूरी आदेश</nz-tag>
+            
+                  &nbsp; -->
+            </span>
+          </td>
+
+          <td style="text-align: center; white-space: pre-line" nzWidth="110px">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="150px">
+            {{ data.EMPLOYEE_CODE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="270px">
+            {{ data.DESIGNATION }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line" nzWidth="170px">
+            {{ data.DDO_OF_THE_OFFICIAL }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="220px">
+            {{ data.OFFICE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="190px">
+            {{ data.GRADE_PAY }}
+          </td>
+          <td style="text-align: center; white-space: pre-line" nzWidth="190px">
+            {{ data.GRADE_PAY_LEVEL }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line" nzWidth="190px">
+            {{ data.REQUIRED_ADVANCE_AMOUNT }}
+          </td>
+          <td
+            *ngIf="parentUserId != undefined && parentUserId == 0"
+            style="text-align: center; white-space: pre-line"
+            nzWidth="110px"
+          >
+            {{ data.INSPECTOR_NAME }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div *ngIf="ltcorderVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="ltcorderVisible"
+    [nzTitle]="ltcorderVisibleTitle"
+    (nzOnClose)="ltcorderVisibleClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-ltcsanstionorder
+        [namount]="namount"
+        [LTCdata]="manjuriAdheshData"
+        [formdata7]="formdata7"
+        [drawerClose]="ltcorderCloseCallback"
+      >
+      </app-ltcsanstionorder>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<!-- jsdu -->
+<div *ngIf="drawerVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1200"
+    [nzVisible]="drawerVisible"
+    [nzTitle]="drawerTitle"
+    (nzOnClose)="drawerClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addltcmaster
+        [drawerClose]="closeCallback"
+        [data]="drawerData"
+        [empID]="empID"
+        [ltcID]="ltcID"
+        [current]="currentStage"
+        [isSpinning]="isSpin"
+        [relationdata]="relationdata"
+        [journeyData]="journeyData"
+      ></app-addltcmaster>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="drawerLogVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="drawerLogVisible"
+    [nzTitle]="drawerLogTitle"
+    (nzOnClose)="drawerLogClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-claim-log-drawer
+        [drawerClose]="closeLogCallback"
+        [data]="drawerLogData"
+      ></app-claim-log-drawer>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="visible4">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1000"
+    [nzVisible]="visible4"
+    [nzTitle]="GoLtcFinal"
+    (nzOnClose)="close4()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-goltc
+        [relationdata1]="relationdata1"
+        [amount]="amount"
+        [namount]="namount"
+        [LTC4data]="finalOrderData"
+        [formdata7]="formdata7"
+        [drawerClose]="close4rCloseCallback"
+      ></app-goltc>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="advIsVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="advIsVisible"
+    [nzTitle]="'Calculation Sheet'"
+    (nzOnClose)="advCalculationClose()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-calculation-drawer
+        [advDestinationList]="advDestinationList"
+        [drawerClose]="closeAdvCalculationCloseCallback"
+        [LTC5data]="advCalculationSheetData"
+        [advformdata7]="advformdata7"
+        [eligibleAmount]="eligibleAmount"
+        [advanceAllowable]="advanceAllowable"
+      ></app-calculation-drawer>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="advApplication">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="advApplication"
+    [nzTitle]="'Advance LTC Application'"
+    (nzOnClose)="advApplicationClose()"
+  >
+    <ng-container *nzDrawerContent>
+      <ls-application-drawer
+        [drawerClose]="closeAdvApplicationCloseCallback"
+        [data]="advApplicationData"
+        [relationdata1]="advFamilyRelation"
+        [numberOfSingleFare]="numberOfSingleFare"
+        [amountOfSingleFare]="amountOfSingleFare"
+        [journeyModes]="journeyModes"
+        [journeyClassModes]="journeyClassModes"
+        [advJourneyData]="advJourneyData"
+        [singleFareTotal]="singleFareTotal"
+      ></ls-application-drawer>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="advIsVisibleGAR37">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1150"
+    [nzVisible]="advIsVisibleGAR37"
+    [nzTitle]="'Advance GAR 37'"
+    (nzOnClose)="advGAR37Close()"
+  >
+    <ng-container *nzDrawerContent>
+      <ls-gardrawer
+        [drawerClose]="closeAdvGAR37CloseCloseCallback"
+        [LTCGARdata]="advGAR37Data"
+        [GAR37AdvanceAmount]="GAR37AdvanceAmount"
+        [totalAmountInEng]="totalAmountInEng"
+        [ltcAdvanceGarMap]="ltcAdvanceGarMap"
+      ></ls-gardrawer>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="advIsVisibleManjuri">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1050"
+    [nzVisible]="advIsVisibleManjuri"
+    [nzTitle]="'Advance Manjuri Adhesh'"
+    (nzOnClose)="advManjuriAdheshClose()"
+  >
+    <ng-container *nzDrawerContent>
+      <ls-manjuriaadeshlts-drwaer
+        [drawerClose]="closeAdvManjuriAdheshCloseCloseCallback"
+        [LTCAdvManjuriData]="advManjuriAdheshData"
+        [ManjuriAdeshSignMap]="ManjuriAdeshSignMap"
+      ></ls-manjuriaadeshlts-drwaer>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="handleCancel()">
+  <div *nzModalContent>
+    <nz-form-item>
+      <nz-form-label nzRequired nzNoColon
+        >Forward Advance Claim To</nz-form-label
+      >
+
+      <nz-input-group>
+        <nz-select
+          name="ForwardTo"
+          style="width: 100%"
+          nzShowSearch
+          nzPlaceHolder="Select Hospital Type"
+        >
+          <nz-option [nzValue]="'STO'" [nzLabel]="'STO'"> </nz-option>
+        </nz-select>
+      </nz-input-group>
+    </nz-form-item>
+  </div>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">Send</button>
+  </div>
+</nz-modal>
+
+<div *ngIf="partAVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1255"
+    [nzVisible]="partAVisible"
+    [nzTitle]="concession"
+    (nzOnClose)="closePartA()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-leave-travel-concession-bill
+        [LTC6data]="partAData"
+        [relationdata1]="relationdata1"
+        [drawerClose]="partACloseCallback"
+        [formdata7]="formdata7"
+        [formdata1]="formdata1"
+        [formdata3]="formdata3"
+        [aamount]="aamount"
+        [checkListltc]="checkListltc"
+        [childrenList]="childrenList"
+        [wifeList]="wifeList"
+        [selfList]="selfList"
+      >
+      </app-leave-travel-concession-bill>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="calculationVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="calculationVisible"
+    [nzTitle]="calculationTitle"
+    (nzOnClose)="closeCalculation()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-nature
+        [formdata7]="formdata7"
+        [passenger]="passenger"
+        [LTC7data]="calculationData"
+        [drawerClose]="calculationCloseCallback"
+      >
+      </app-nature>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="ltcsheet1Visible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="ltcsheet1Visible"
+    [nzTitle]="ltcsheet1VisibleTitle"
+    (nzOnClose)="ltcsheet1VisibleClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-ltcsheet1
+        [amount]="amount"
+        [relationdata1]="relationdata1"
+        [namount]="namount"
+        [LTC1data]="OrderData"
+        [formdata7]="formdata7"
+        [drawerClose]="ltcsheet1CloseCallback"
+        [MapSignatureOrder]="MapSignatureOrder"
+      >
+      </app-ltcsheet1>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="ltcsheet2Visible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="ltcsheet2Visible"
+    [nzTitle]="ltcsheet2VisibleTitle"
+    (nzOnClose)="ltcsheet2VisibleClose()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-ltcsheet2
+        [amount]="amount"
+        [namount]="namount"
+        [LTC2data]="partBData"
+        [drawerClose]="ltcsheet2CloseCallback"
+        [destinationList]="destinationList"
+        [FamilyList]="FamilyList"
+        [MapSignaturePartB]="MapSignaturePartB"
+      >
+      </app-ltcsheet2>
+    </ng-container>
+  </nz-drawer>
+</div>
+
+<div *ngIf="calculationSheetVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="calculationSheetVisible"
+    [nzTitle]="'Calculation Sheet'"
+    (nzOnClose)="closeCalculationSheet()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-calculation
+        [destinationList]="destinationList"
+        [namount]="namount"
+        [drawerClose]="calculationSheetCloseCallback"
+        [LTC5data]="calculationSheetData"
+        [amount]="amount"
+        [formdata7]="formdata7"
+      ></app-calculation>
+    </ng-container>
+  </nz-drawer>
+</div>
+<div *ngIf="advOrderIsVisible">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="true"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="1100"
+    [nzVisible]="advOrderIsVisible"
+    [nzTitle]="'Advance Order'"
+    (nzOnClose)="advOrderClose()"
+  >
+    <ng-container *nzDrawerContent>
+      <app-gpb-iiltc-advdrawer
+        [drawerClose]="closeAdvOrderCloseCloseCallback"
+        [LTCAdvOrderData]="advOrderData"
+        [advOrderRelations]="advOrderRelations"
+        [ordereligibleAmount]="ordereligibleAmount"
+        [allowedAmountInEng]="allowedAmountInEng"
+        [advOrderJourneyData]="advOrderJourneyData"
+        [AdvanceOrderSignMap]="AdvanceOrderSignMap"
+      ></app-gpb-iiltc-advdrawer>
+    </ng-container>
+  </nz-drawer>
+</div>

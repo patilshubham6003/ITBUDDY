@@ -1,0 +1,93 @@
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  left: 0px;
+  background: #fff;
+}
+.my-box {
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  padding: 8px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background-color: #fafafa;
+}
+
+.header {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  right: 0px;
+}
+.ant-btn {
+  line-height: 0;
+}
+
+.btn {
+  margin-left: 127px;
+  background-color: #1c2a60;
+  color: white;
+  text-align: center;
+  /* text-align: center; */
+  margin-top: 18px;
+}
+.btn1 {
+  margin-left: 69px;
+  background-color: #1c2a60;
+  color: white;
+  text-align: center;
+  margin-top: 18px;
+}
+.ant-modal-footer {
+  padding: 10px 16px;
+  text-align: center;
+  background: 0 0;
+  border-radius: 0 0 2px 2px;
+}
+
+.bb {
+  display: none;
+}
+
+.nzfooter {
+  display: none;
+}
+
+/* nz-form-item nz-select nz-option nz-option-item{
+  font-size: 11px !important;
+
+}
+
+nz-form-item nz-select,input,textarea,nz-date-picker {
+  font-size: 11px !important;
+}
+
+nz-radio-group label {
+  font-size: 11px !important;
+
+}
+
+
+button{
+  font-size: 11px !important;
+
+} */
+
+.my-scroll td,
+th {
+  font-size: 11px !important;
+}

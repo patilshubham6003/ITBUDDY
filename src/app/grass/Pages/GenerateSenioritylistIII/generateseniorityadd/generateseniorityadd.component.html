@@ -1,0 +1,175 @@
+<div>
+    <form nz-form #websitebannerPage="ngForm">
+        <nz-spin [nzSpinning]="isSpinning">
+
+            <div nz-row class="my-box">
+
+                <div nz-col nzSpan="9">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Residence Type</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Please Select Residence Type">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please Select Residence Type "
+                                name="Residence Type" [(ngModel)]="data.RESIDENCE_TYPE" required>
+                                <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="5">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+                        <nz-date-picker nzMode="month" nzFormat="MMM-yyyy" name="Floor" [(ngModel)]="Datenew" required [nzDisabledDate]="disabledDate11"
+                            nzPlaceHolder="Select Month"></nz-date-picker>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Objection End Date</nz-form-label>
+                        <nz-date-picker  nzFormat="dd/MM/yyyy" name="Objectiondate" [(ngModel)]="dateobj" required [nzDisabledDate]="disabledDate12"
+                            nzPlaceHolder="Select Date"></nz-date-picker>
+                    </nz-form-item>
+                </div>
+
+                <!-- <div nz-col nzSpan="6">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Please Enter Sequence No">
+                            <input nz-input autocomplete="off" name="sequenceNo" (keypress)="omit($event)" type="text"
+                                maxlength="11" [(ngModel)]="data.SEQUENCE_NO" placeHolder="Enter Sequence No"
+                                required />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div> -->
+
+                <div nz-col nzSpan="3" style="margin-top: 31px;">
+                    <button nz-button (click)="generatelist()" [nzLoading]="ListSpinning" nzType="primary">Generate Order</button>
+                </div>
+
+                <div nz-col nzSpan="24" style="margin: 0 5px;" *ngIf="Isclicked">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon>Upload Generated PDF  &nbsp;<span style="color: red;font-size: 12px;">Note: After Order is generated. Create it's PDF and Upload it here</span>
+                        </nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="PDF File is required" *ngIf="generatePDF">
+                            <button nz-button style="padding: 0px 10px; font-size: 12px"
+                                (click)="GeneratePdfFile.click()">
+                                Select File
+                                <input #GeneratePdfFile name="FILE_URL" [(ngModel)]="data.FILE_URL" type="file"
+                                    (change)="onFileSelectedTransfer2($event)" style="display: none" required />
+                            </button>
+                        </nz-form-control>
+
+                        <div *ngIf="data.FILE_URL != null"
+                            style="overflow: hidden; font-size: 13px;display: block;width: 100%;color: #1890ff;padding-left: 10px;">
+                            {{ data.FILE_URL }} &nbsp;&nbsp; <span nz-icon nzTooltipTitle="Preview"
+                                nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+                                style="cursor: pointer;color: #1890ff;"
+                                (click)="viewAssumptionPDF(data.FILE_URL)"></span>&nbsp;&nbsp;
+                            <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove"
+                                nzTooltipPlacement="top" nz-tooltip style="cursor: pointer;color: red;"
+                                (click)="clearGradepayletter()"></span>
+                        </div>
+                    </nz-form-item>
+                </div>
+            </div>
+        </nz-spin>
+    </form>
+
+
+    <div nz-row style="margin-top: 10px;" *ngIf="listisgenerated">
+        <div nz-col nzSpan="24" id="pageprint">
+            <table class="tablechoice">
+            <!-- <nz-table class="my-scroll no-wrap1" nzBordered #ResidenceMasterTable nzShowSizeChanger [nzLoading]="loadingRecords"
+                [nzFrontPagination]="false" [nzData]="showgeneratedlist" [nzSize]="'small'"> -->
+
+                <thead>
+                    <tr>
+                        <th style="text-align: center;font-weight: 500;">
+                            Sr No
+                          </th>
+                        <th style="text-align: center;font-weight: 500;"> Employee Name</th>
+                        <th style="text-align: center;font-weight: 500;"> Residence Type </th>
+                        <th style="text-align: center;font-weight: 500;"> Designation </th>
+                        <th style="text-align: center;font-weight: 500;"> Date Of Birth </th>
+                        <th style="text-align: center;font-weight: 500;"> Joining Date </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of showgeneratedlist; let i = index">
+                        <td style="text-align: center;">
+
+                            <div style="display: flex;justify-content: space-evenly;flex-direction: row;gap: 5px;">
+                              <div style="display: flex;justify-content: center;align-items: center;flex-direction: row;gap: 5px;" class="buttonclassid">
+                                <span nz-icon nzType="arrow-up" style="cursor: pointer;" nzTheme="outline" (click)="moveRowUp(i)" *ngIf="i !== 0"></span>
+                                <span nz-icon nzType="arrow-down" style="cursor: pointer;" nzTheme="outline" (click)="moveRowDown(i)"
+                                  *ngIf="i !== showgeneratedlist.length - 1"></span>
+                              </div>
+                              <div style="display: flex;justify-content: center;flex-direction: row;">
+                                <span>
+                                  {{i+1}}
+                                </span>
+                              </div>
+                            </div>
+                
+                          </td>
+                        <td style="white-space: pre-line;text-align: center;">{{data['EMPLOYEE_NAME']}}</td>
+                        <td style="white-space: pre-line;text-align: center;">{{data['RESIDENCE_TYPE_NAME']}}</td>
+                        <td style="white-space: pre-line;text-align: center;">{{data['DESIGNATION']}}</td>
+                        <td style="white-space: pre-line;text-align: center;">{{data['DOB'] | date:'dd/MM/yyyy'}}</td>
+                        <td style="white-space: pre-line;text-align: center;">{{data['DATE_JOINING'] | date:'dd/MM/yyyy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- </nz-table> -->
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <button type="button" nz-button (click)="close(websitebannerPage)" class="ant-btn" style="margin-right: 8px">
+            <span>Cancel</span>
+        </button>
+
+        <button nz-button nzType="primary" printSectionId="pageprint" (click)="openuploadbtn()" ngxPrint [useExistingCss]="true" style="margin-right: 8px" *ngIf="data.FILE_URL == null && showgeneratedlist.length > 0">Generate PDF</button>
+
+        <button type="button" class="ant-btn ant-btn-primary" *ngIf="data.FILE_URL != null" nz-button nz-dropdown
+             [nzLoading]="isSpinning" (click)="save(false, websitebannerPage)">
+            <span>Publish</span>
+        </button>
+        <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+                    <a style="color: white" (click)="save(true, websitebannerPage)">Save & New</a>
+                </li>
+            </ul>
+        </nz-dropdown-menu> -->
+        <!-- <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+            (click)="save(false, websitebannerPage)">
+            <span>Update & Close</span>
+        </button> -->
+    </div>
+
+    <div class="header">
+        <button type="button" nz-button (click)="close(websitebannerPage)" class="ant-btn" style="margin-right: 8px">
+            <i nz-icon nzType="close" nzTheme="outline"></i>
+        </button>
+    </div>
+</div>
+
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+    [nzContent]="printOrderModalContent" [nzTitle]="'Seniority Order PDFView'" (nzOnCancel)="printOrderModalCancel()"
+    [nzFooter]="printOrderModalFooter">
+    <ng-template #printOrderModalContent>
+        <div *ngIf="view==1" style="height: 600px; overflow: auto">
+            <iframe [src]="SenioritylistPDF" style="width:1150px; height:600px;" frameborder="0"></iframe>
+        </div>
+    </ng-template>
+    <ng-template #printOrderModalFooter>
+        <button nz-button nzType="default" (click)="printOrderModalCancel()">
+            Close
+        </button>
+    </ng-template>
+</nz-modal>

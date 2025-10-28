@@ -1,0 +1,58 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<main id="main" *ngIf="!isSpinning">
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="breadcrumb-hero" style="padding:10px;">
+      <div class="container">
+        <div class="breadcrumb-hero">
+          <h2 style="font-weight: 500;color: white;">Services</h2>
+          <ol>
+            <li><a routerLink="/" style="text-decoration: None;color: white;">Home</a></li>
+            <li>Services </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="services" class="about1"
+    style="background-color: #f4f4f454 !important;padding-top: 35px;padding-bottom: 40px;">
+    <div class="container" data-aos="fade-up" data-aos-delay="100" style="max-width: 90vw !important;">
+      <div class="row align-items-xl-center">
+        <div class="col-xl-12 col-md-12 col-lg-12 col-12 col-sm-12">
+          <div class="row gy-4 icon-boxes1">
+            <!-- (click)="servclick(ser.ID,ser.TITLE)"  -->
+            <div class="col-md-4 col-xl-4 col-lg-4 col-12 col-sm-12" data-aos="fade-up" data-aos-delay="200"
+              *ngFor="let ser of servises">
+              <div class="icon-box1" style="cursor: pointer;">
+                <div class="row">
+                  <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" *ngIf="servises!=undefined">
+                    <img src="{{retrieveimgUrl}}serviceImg/{{ser.SERVICE_IMG}}" alt="service"
+                     >
+                  </div>
+                  <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12" style="padding: 0px 25px 5px 25px;">
+                    <h3 *ngIf="servises!=undefined" class="limit1" style="height: 40px;"
+                    >{{ser.TITLE}}</h3>
+                    <!-- <p *ngIf="servises!=undefined" class="limit" style="text-align: justify;">{{ser.DESCRIPTION}}</p>
+                    <a class="read-more" (click)="servclick(ser.ID,ser.TITLE)"><span>Read
+                        More</span><i class="bi bi-arrow-right"></i></a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>

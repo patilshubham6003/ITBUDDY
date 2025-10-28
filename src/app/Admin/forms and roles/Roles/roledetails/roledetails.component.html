@@ -1,0 +1,67 @@
+<div nz-row>
+  <div nz-col nzSpan="18"></div>
+
+  <div nz-col nzSpan="6">
+    <nz-form-item>
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" autocomplete="off" name="search" 
+        (keydown.enter)="search(true)"nz-input placeholder="Search Records" [(ngModel)]="searchText" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" (click)="search()" 
+        nzSearch><i nz-icon nzType="search"></i></button>
+      </ng-template>
+    </nz-form-item>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table class="my-scroll no-wrap1"  [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+     [(nzPageIndex)]="pageIndex" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [(nzPageSize)]="pageSize" (nzQueryParams)="sort($event)" nzSize="small"
+     [nzScroll]="{  x: '1200px', y: '70vh' }"
+      (nzQueryParams)="sort($event)"nzBordered #table 
+      [nzData]="roleDetailsData | searchFilter: searchText : columns1">
+
+      <thead>
+        <tr>
+          <th nzLeft style="width: 80px; text-align: center;">Allow Y/N</th>
+          <th nzColumnKey="'PARENT_NAME'" [nzSortFn]="true" >Parent Name</th>
+          <th nzColumnKey="'NAME'" [nzSortFn]="true" >Form Name</th>
+          <th nzColumnKey="'LINK'" [nzSortFn]="true" >Link</th>
+          <th nzColumnKey="'DESCRIPTION'" [nzSortFn]="true" >Date</th>
+
+          <th nzRight  style="width: 80px; text-align: center;">Show in Menu Y/N</th>
+          <th nzRight >Seq. No.</th>
+        </tr>
+      </thead>
+
+      <tbody>
+<tr *ngFor="let data of table.data ">
+          <td nzLeft style="text-align: center;">
+            <nz-switch name="is_allowed" nzCheckedChildren="Y" nzUnCheckedChildren="N" [(ngModel)]="data.IS_ALLOWED">
+            </nz-switch>
+          </td>
+          <td style="white-space: pre-line;">{{data.PARENT_NAME}}</td>
+          <td style="white-space: pre-line;">{{data.NAME}}</td>
+          <td style="white-space: pre-line;">{{data.LINK}}</td>
+          <td style="white-space: pre-line;">{{data.CREATED_MODIFIED_DATE}}</td>
+
+          <td nzRight style="text-align: center;">
+            <nz-switch name="is_allowed" nzCheckedChildren="Y" nzUnCheckedChildren="N" [(ngModel)]="data.SHOW_IN_MENU">
+            </nz-switch>
+          </td>
+          <td nzRight><input nz-input name="saq_no" [(ngModel)]="data.SEQ_NO" /></td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div class="footer">
+  <button type="button" nz-button (click)="close()" class="ant-btn"
+    style="margin-right: 8px;"><span>Cancel</span></button>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save()"><span>Save & Close</span></button>
+</div>

@@ -1,0 +1,153 @@
+<div nz-row nzType="flex">
+   <div nz-col nz-row nzXs="24" nzSm="24" nzMd="9" nzLg="9" nzXl="9">
+      <b>
+         <div class="formname">{{ formTitle }}</div>
+      </b>
+   </div>
+
+   <div nz-col nzXs="24" nzSm="24" nzMd="15" nzLg="15" nzXl="15" style="display: flex; justify-content: flex-end">
+      <form nz-form [nzLayout]="'inline'">
+         <nz-form-item>
+            <button nz-button nzType="primary" (click)="importInExcel()" [nzLoading]="exportLoading">
+               <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+            </button>
+         </nz-form-item>
+         <nz-form-item>
+            <button nz-button [nzType]="isFilterApplied ?'primary':'default' " (click)="showFilter()">
+               <i nz-icon nzType="filter"></i>
+            </button>
+         </nz-form-item>
+         <nz-form-item style="margin-right: 0px !important;">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+               <input type="text" name="search" nz-input placeholder="Search Records" [(ngModel)]="searchText"
+                  (keydown.enter)="onKeypressEvent($event)" />
+            </nz-input-group>
+
+            <ng-template #suffixIconButton>
+               <button nz-button id="searchBtn" nzType="primary" (click)="search(true)" nzSearch>
+                  <i nz-icon nzType="search"></i>
+               </button>
+            </ng-template>
+         </nz-form-item>
+      </form>
+   </div>
+</div>
+
+<div nz-row>
+   <div nz-col nzSpan="24">
+      <div class="filter {{ filterClass }}">
+         <div class="filter-box">
+            <form nz-form>
+               <div nz-row>
+
+                  <div nz-col nzSpan="9">
+                     <nz-form-item class="filter-boxsdsd">
+                        <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                        <nz-form-control>
+                           <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Residence Type "
+                              name="Residence Type" nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE" required>
+                              <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                              </nz-option>
+                           </nz-select>
+                        </nz-form-control>
+                     </nz-form-item>
+
+                  </div>
+
+                  <div nz-col nzSpan="9">
+                     <nz-form-item class="filter-boxsdsd">
+                        <nz-form-label nzNoColon>Area</nz-form-label>
+                        <nz-form-control>
+                           <nz-select name="sdfsfsdf" [(ngModel)]="AREA_ID" nzShowSearch nzAllowClear required
+                              style="width: 100%" nzMode="multiple" nzPlaceHolder="Select Area">
+                              <nz-option [nzValue]="items.ID" *ngFor="let items of area" [nzLabel]="items.NAME">
+                              </nz-option>
+                           </nz-select>
+                        </nz-form-control>
+                     </nz-form-item>
+
+                  </div>
+
+                  <div nz-col nzSpan="6">
+                     <nz-form-item class="filter-boxsdsd">
+                        <nz-form-label nzNoColon> Building</nz-form-label>
+                        <nz-form-control>
+                           <nz-select name="parentid" nzPlaceHolder="Select Building" [(ngModel)]="BUILDING_ID"
+                              nzMode="multiple" nzShowSearch nzAllowClear>
+
+                              <nz-option *ngFor="let parentid of building" [nzValue]="parentid.BUILDING_ID"
+                                 [nzLabel]="parentid.NAME">
+                              </nz-option>
+                           </nz-select>
+                        </nz-form-control>
+                     </nz-form-item>
+
+                  </div>
+                  <div nz-col nzSpan="10">
+                     <nz-form-item class="filter-boxsdsd"
+                        style="display: flex;gap: 12px;margin-bottom: 8px;margin-top: 15px;">
+                        <button style="margin-right: 10px;display: flex;align-items: center;" nz-button
+                           [nzLoading]="isSpinning" nzType="primary" (click)="applyFilter()" nzJustify="end">
+                           <i nz-icon nzType="filter"></i>&nbsp;Apply Filter
+                        </button>
+                        <button nz-button nzType="default" style="display: flex;align-items: center;"
+                           (click)="clearFilter()">
+                           <i nz-icon nzType="close"></i>&nbsp;Clear filter
+                        </button>
+                     </nz-form-item>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div nz-row>
+   <div nz-col nzSpan="24">
+      <nz-table id="excel-table" class="my-scroll no-wrap1" nzBordered #table nzShowSizeChanger
+         [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords" [nzTotal]="totalRecords"
+         [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="search()"
+         (nzPageSizeChange)="search(true)" [nzSize]="'small'" [nzScroll]="{ x: '1550px',y: '70vh' }"
+         style="white-space: inherit;" (nzQueryParams)="sort($event)">
+         <thead>
+            <tr>
+               <th nzLeft nzWidth="200px" [nzColumnKey]="'EMPLOYEE_NAME'" [nzSortFn]="true" nzAlign="center"><b>Employee
+                     Name</b></th>
+               <th nzWidth="110px" [nzColumnKey]="'EMPLOYEE_CODE'" [nzSortFn]="true" nzAlign="center"><b>Employee
+                     Code</b></th>
+               <th nzWidth="200px" [nzColumnKey]="'DESIGNATION'" [nzSortFn]="true" nzAlign="center"><b>Designation</b>
+               </th>
+               <th nzWidth="200px" [nzColumnKey]="'EMAIL_ID'" [nzSortFn]="true" nzAlign="center"><b>Official Email
+                     Id</b></th>
+               <th nzWidth="120px" [nzColumnKey]="'MOBILE_NO'" nzAlign="center" [nzSortFn]="true"><b>Official Mobile
+                     No.</b></th>
+               <th nzWidth="150px" [nzColumnKey]="'RESIDENCE_TYPE_NAME'" [nzSortFn]="true" nzAlign="center"><b>Residence
+                     Type</b> </th>
+               <th nzWidth="200px" [nzColumnKey]="'AREA_NAME'" [nzSortFn]="true" nzAlign="center"><b>Area</b></th>
+               <th nzWidth="100px" [nzColumnKey]="'BUILDING_NAME'" [nzSortFn]="true" nzAlign="center"><b>Building</b>
+               </th>
+               <th nzWidth="150px" [nzColumnKey]="'FLAT_NAME'" nzAlign="center" [nzSortFn]="true"><b>Quarter Name</b>
+               </th>
+
+
+            </tr>
+         </thead>
+
+         <tbody>
+            <tr *ngFor="let data of table.data">
+               <td nzLeft>{{data.EMPLOYEE_NAME ? data.EMPLOYEE_NAME : '-'}}</td>
+               <td nzAlign="center">{{data.EMPLOYEE_CODE ? data.EMPLOYEE_CODE : '-'}}</td>
+               <td>{{data.DESIGNATION? data.DESIGNATION : '-'}}</td>
+               <td>{{data.EMAIL_ID? data.EMAIL_ID : '-'}}</td>
+               <td nzAlign="center">{{data.MOBILE_NO? data.MOBILE_NO : '-'}}</td>
+               <td>{{data.RESIDENCE_TYPE_NAME? data.RESIDENCE_TYPE_NAME : '-'}}</td>
+               <td>{{data.AREA_NAME? data.AREA_NAME : '-'}}</td>
+               <td>{{data.BUILDING_NAME? data.BUILDING_NAME : '-'}}</td>
+               <td>{{data.FLAT_NAME? data.FLAT_NAME : '-'}}</td>
+            </tr>
+
+         </tbody>
+      </nz-table>
+   </div>
+</div>

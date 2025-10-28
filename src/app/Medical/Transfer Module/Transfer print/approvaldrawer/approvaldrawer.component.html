@@ -1,0 +1,517 @@
+<div nz-row [nzGutter]="[16, 24]">
+  <div nz-col nzSpan="8" class="gutter-row">
+    <div class="my-box" style="height: 75vh; overflow-y: auto">
+      <div nz-row>
+        <div nz-col nzSpan="20">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Signature 1</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="userid"
+                [(ngModel)]="
+                  ManjuriAdeshSignatureMap.ADV_TRANSFER_MANJURI_ADESH_SIGNATURE_1
+                "
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="Choose Signature"
+                (ngModelChange)="signature($event)"
+              >
+                <nz-option
+                  *ngFor="let user of Signaturearray"
+                  [nzValue]="user.ID"
+                  [nzLabel]="user.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item style="padding: 0px !important">
+            <nz-form-label nzNoColon></nz-form-label>
+            <nz-form-control>
+              <button nz-button nzType="primary" (click)="opensignature()">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="20">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Signature 2</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                name="userid2"
+                [(ngModel)]="
+                  ManjuriAdeshSignatureMap.ADV_TRANSFER_MANJURI_ADESH_SIGNATURE_2
+                "
+                nzAllowClear
+                nzShowSearch
+                nzPlaceHolder="Choose Signature"
+                (ngModelChange)="signature1($event)"
+              >
+                <nz-option
+                  *ngFor="let user of Signaturearray"
+                  [nzValue]="user.ID"
+                  [nzLabel]="user.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item style="padding: 0px !important">
+            <nz-form-label nzNoColon></nz-form-label>
+            <nz-form-control>
+              <button nz-button nzType="primary" (click)="opensignature()">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Letter Date</nz-form-label>
+            <nz-form-control nzErrorTip="Please Select Letter Date">
+              <nz-date-picker
+                style="width: 100%"
+                nzFormat="dd/MM/yyyy"
+                [(ngModel)]="data.LETTER_DATE"
+                name="LETTER_DATE"
+                required
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Journey Start Date</nz-form-label>
+            <nz-form-control nzErrorTip="Please Select Journey Start Date">
+              <nz-date-picker
+                style="width: 100%"
+                nzFormat="dd/MM/yyyy"
+                [(ngModel)]="data.JOURNEY_START_DATE"
+                name="JOURNEY_START_DATE"
+                required
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon> Bill No.</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Bill No. ">
+              <input
+                nz-input
+                maxlength="64"
+                autocomplete="off"
+                name="ADVANCE_BILL_NO"
+                type="text"
+                disabled
+                [(ngModel)]="data.ADVANCE_BILL_NO"
+                placeHolder="Enter Bill No."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon> Bill No. (In Hindi)</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Bill No.  (In Hindi)">
+              <input
+                nz-input
+                maxlength="64"
+                autocomplete="off"
+                name="ADVANCE_BILL_NO_HN"
+                type="text"
+                [(ngModel)]="data.ADVANCE_BILL_NO_HN"
+                placeHolder="Enter Bill No. (In Hindi)"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Name</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Name.">
+              <input
+                nz-input
+                maxlength="62"
+                autocomplete="off"
+                name="EMPLOYEE_NAME"
+                type="text"
+                disabled
+                [(ngModel)]="data.NAME"
+                placeHolder="Enter Name ."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Name (In Hindi)</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Name (In Hindi).">
+              <input
+                nz-input
+                maxlength="62"
+                autocomplete="off"
+                name="EMPLOYEE_NAME_NH"
+                type="text"
+                [(ngModel)]="data.NAME_HN"
+                placeHolder="Enter Name (In Hindi)."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Designation</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Designation (In Hindi).">
+              <input
+                nz-input
+                maxlength="62"
+                autocomplete="off"
+                name="DESIGNATION"
+                disabled
+                type="text"
+                [(ngModel)]="data.DESIGNATION"
+                placeHolder="Enter Designation."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Designation (In Hindi)</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Designation (In Hindi).">
+              <input
+                nz-input
+                maxlength="62"
+                autocomplete="off"
+                name="DESIGNATION_HN"
+                type="text"
+                [(ngModel)]="data.DESIGNATION_HN"
+                placeHolder="Enter Designation (In Hindi)."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Place</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Name (In Hindi).">
+              <input
+                nz-input
+                maxlength="62"
+                autocomplete="off"
+                name="PLACE_OFFICE_OF_POSTING"
+                type="text"
+                [(ngModel)]="data.PLACE_OFFICE_OF_POSTING"
+                placeHolder="Enter Place."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Place (In Hindi)</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Place (In Hindi).">
+              <input
+                nz-input
+                maxlength="62"
+                autocomplete="off"
+                name="PLACE_OFFICE_OF_POSTING_HN"
+                type="text"
+                [(ngModel)]="data.PLACE_OFFICE_OF_POSTING_HN"
+                placeHolder="Enter Place (In Hindi)."
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzSpan="16" class="gutter-row">
+    <div
+      style="padding: 10px"
+      style="height: 75vh; overflow-y: auto"
+      class="my-box"
+    >
+      <div nz-row style="padding-left: 30px">
+        <div nz-col nzSpan="24" style="text-align: center">
+          <h6>अप्पर आयकर आयुक्त (मुख्या.)कार्मिक,</h6>
+          <h6>राजपत्रित छुट्टी यात्रा रियायात /यात्रा भत्ता अनुभाग,</h6>
+          <h6>क.सं.123बी., पहली मंजिल, एम.के.मार्ग,मुंबई-400020</h6>
+        </div>
+        <div nz-col nzSpan="24" style="border: 1px solid; padding: 5px">
+          <div nz-row>
+            <div
+              nz-col
+              nzSpan="18"
+              style="font-size: 13px; white-space: pre-line"
+            >
+              {{ data.ADVANCE_BILL_NO_HN }}
+            </div>
+            <div nz-col nzSpan="6" style="text-align: left; font-size: 13px">
+              दिनांक:
+            </div>
+          </div>
+        </div>
+        <br />
+        <div nz-col nzSpan="24">
+          <h6 style="text-align: center; margin-top: 10px; margin-bottom: 10px">
+            मंजुरी आदेश
+          </h6>
+          <p style="font-size: 14px; text-align: justify">
+            श्री/श्रीमति/कुमारी. {{ data.NAME_HN }},{{ data.DESIGNATION_HN }},
+            को {{ data.PLACE_OFFICE_OF_POSTING_HN }} (स्थान) में जाने के लिए
+            ट्रांसफर हेतु अग्रिम के रूप में रुपये
+            {{ data.FINAL_ADVANCE_AMOUNT }}/- केवल राशि भुगतान के सामान्य
+            वित्तीय नियम के नियम 231 के अधीन, मंजूरी दी जाती है। यह यात्रा
+            दिनांक
+            {{ data.JOURNEY_START_DATE | date : "dd/MM/yyyy" }}
+            से शुरू होगी |
+          </p>
+          <span style="font-size: 13px; margin-bottom: 0px !important">
+            EXPENDITURE OF TRANSFER ADVANCE
+          </span>
+          <p style="font-size: 13px; margin-bottom: 0px !important">
+            FOR F.Y. {{ getcurrentandnextyear() }} DEBITED
+          </p>
+          <p style="font-size: 13px; margin-bottom: 0px !important">
+            FROM THE HEAD, DTE
+          </p>
+        </div>
+
+        <div nz-col nzSpan="14" style="margin-top: 40px"></div>
+        <div nz-col nzSpan="10" style="margin-top: 40px">
+          <!-- <p>अतिरिक्त आयकर आयुक्त (मुख्या.)(कार्मिक),<br />मुंबई</p> -->
+
+          <p>
+            <span *ngIf="POST_HIN"> {{ POST_HIN }}</span
+            ><br /><span *ngIf="OFFICE_NAME_HIN"> {{ OFFICE_NAME_HIN }}</span>
+          </p>
+        </div>
+        <div nz-col nzSpan="24">
+          <div>प्रतिलिप प्रेषित</div>
+          <div style="text-align: justify">
+            1.&nbsp; &nbsp;लेखा अधिकारी,आयकर आयुक्त का फील्ड पे युनिट,मुंबई<br />
+            वित्तीय यात्रा भत्ता अग्रिम के बिल सहित|
+          </div>
+          <div style="text-align: justify">
+            2.&nbsp; &nbsp;संबंधित अधिकारी के पत्र सं.
+            <b>{{ data.ADVANCE_BILL_NO }}</b>
+            दिनांक
+            {{ data.LETTER_DATE | date : "dd.MM.yyyy" }} के संदर्भ में सूचित
+            किया जाता है कि अग्रिम राशि का समायोजन एकमुश्त किया जाएगा। दौरे का
+            यात्रा अग्रिम निकासी की तारीख या वापसी यात्रा की समापत्ति की तारीख
+            से 15 दिनों के भीतर दिया जाना चाहिए। इस क्लेम को इस कार्यालय में
+            देने से पहले, यदि यात्रा भत्ता अग्रिम की अतिरिक्त राशि है तो बैंक
+            चालान के माध्यम से भारतीय स्टेट बैंक, चर्चगेट ब्रान्च में इस राशि का
+            भुगतान कर दिया जाए। यदि यह क्लेम सक्षम प्राधिकारी द्वारा पारित दौरा
+            मंजूरी आदेश के बिना तथा/या दौरा यात्रा भत्ता .... की अतिरिक्त राशि
+            के भुगतान के लिए जाने पर दिया जाता है तो सामान्य वित्तीय नियम की
+            धारा 178/2 के अधीन ब्याज लिया जाएगा।
+          </div>
+        </div>
+        <div nz-col nzSpan="14" style="margin-top: 50px"></div>
+        <div nz-col nzSpan="10" style="margin-top: 50px">
+          <!-- <p>
+            अपर आयकर आयुक्त (मख्या.) (कार्मिक), <br />
+            मुंबई
+          </p> -->
+          <p>
+            <span *ngIf="POST1_HIN"> {{ POST1_HIN }}</span
+            ><br /><span *ngIf="OFFICE_NAME1_HIN"> {{ OFFICE_NAME1_HIN }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    [nzLoading]="loadingRecords"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    [nzLoading]="loadingRecords"
+    (click)="showmodal()"
+  >
+    <span>Save or Preview</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'मंजुरी आदेश'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <div id="excel-table" style="height: 450px; overflow: auto">
+      <div style="padding: 10px">
+        <div nz-row style="padding-left: 30px">
+          <div nz-col nzSpan="24" style="text-align: center">
+            <h6>अप्पर आयकर आयुक्त (मुख्या.)कार्मिक,</h6>
+            <h6>राजपत्रित छुट्टी यात्रा रियायात /यात्रा भत्ता अनुभाग,</h6>
+            <h6>क.सं.123बी., पहली मंजिल, एम.के.मार्ग,मुंबई-400020</h6>
+          </div>
+          <div nz-col nzSpan="24" style="border: 1px solid; padding: 5px">
+            <div nz-row>
+              <div
+                nz-col
+                nzSpan="18"
+                style="font-size: 13px; white-space: pre-line"
+              >
+                {{ data.ADVANCE_BILL_NO_HN }}
+              </div>
+              <div nz-col nzSpan="6" style="text-align: left; font-size: 13px">
+                दिनांक:
+              </div>
+            </div>
+          </div>
+          <br />
+          <div nz-col nzSpan="24">
+            <h6
+              style="text-align: center; margin-top: 10px; margin-bottom: 10px"
+            >
+              मंजुरी आदेश
+            </h6>
+            <p style="font-size: 14px; text-align: justify">
+              श्री/श्रीमति/कुमारी. {{ data.NAME_HN }},{{ data.DESIGNATION_HN }},
+              को {{ data.PLACE_OFFICE_OF_POSTING_HN }} (स्थान) में जाने के लिए
+              ट्रांसफर हेतु अग्रिम के रूप में रुपये
+              {{ data.FINAL_ADVANCE_AMOUNT }}/- केवल राशि भुगतान के सामान्य
+              वित्तीय नियम के नियम 231 के अधीन, मंजूरी दी जाती है। यह यात्रा
+              दिनांक
+              {{ data.JOURNEY_START_DATE | date : "dd/MM/yyyy" }}
+              से शुरू होगी |
+            </p>
+            <span style="font-size: 13px; margin-bottom: 0px !important">
+              EXPENDITURE OF TRANSFER ADVANCE
+            </span>
+            <p style="font-size: 13px; margin-bottom: 0px !important">
+              FOR F.Y. {{ getcurrentandnextyear() }} DEBITED
+            </p>
+            <p style="font-size: 13px; margin-bottom: 0px !important">
+              FROM THE HEAD, DTE
+            </p>
+          </div>
+
+          <div nz-col nzSpan="14" style="margin-top: 40px"></div>
+          <div nz-col nzSpan="10" style="margin-top: 40px">
+            <!-- <p>अतिरिक्त आयकर आयुक्त (मुख्या.)(कार्मिक),<br />मुंबई</p> -->
+            <p>
+              <span *ngIf="POST_HIN"> {{ POST_HIN }}</span
+              ><br /><span *ngIf="OFFICE_NAME_HIN"> {{ OFFICE_NAME_HIN }}</span>
+            </p>
+          </div>
+          <div nz-col nzSpan="24">
+            <div>प्रतिलिप प्रेषित</div>
+            <div style="text-align: justify">
+              1.&nbsp; &nbsp;लेखा अधिकारी,आयकर आयुक्त का फील्ड पे युनिट,मुंबई<br />
+              वित्तीय यात्रा भत्ता अग्रिम के बिल सहित|
+            </div>
+            <div style="text-align: justify">
+              2.&nbsp; &nbsp;संबंधित अधिकारी के पत्र सं.
+              <b>{{ data.ADVANCE_BILL_NO }}</b>
+              दिनांक
+              {{ data.LETTER_DATE | date : "dd.MM.yyyy" }} के संदर्भ में सूचित
+              किया जाता है कि अग्रिम राशि का समायोजन एकमुश्त किया जाएगा। दौरे का
+              यात्रा अग्रिम निकासी की तारीख या वापसी यात्रा की समापत्ति की तारीख
+              से 15 दिनों के भीतर दिया जाना चाहिए। इस क्लेम को इस कार्यालय में
+              देने से पहले, यदि यात्रा भत्ता अग्रिम की अतिरिक्त राशि है तो बैंक
+              चालान के माध्यम से भारतीय स्टेट बैंक, चर्चगेट ब्रान्च में इस राशि
+              का भुगतान कर दिया जाए। यदि यह क्लेम सक्षम प्राधिकारी द्वारा पारित
+              दौरा मंजूरी आदेश के बिना तथा/या दौरा यात्रा भत्ता .... की अतिरिक्त
+              राशि के भुगतान के लिए जाने पर दिया जाता है तो सामान्य वित्तीय नियम
+              की धारा 178/2 के अधीन ब्याज लिया जाएगा।
+            </div>
+          </div>
+          <div nz-col nzSpan="14" style="margin-top: 50px"></div>
+          <div nz-col nzSpan="10" style="margin-top: 50px">
+            <!-- <p>
+              अपर आयकर आयुक्त (मख्या.) (कार्मिक), <br />
+              मुंबई
+            </p> -->
+            <p>
+              <span *ngIf="POST1_HIN"> {{ POST1_HIN }}</span
+              ><br /><span *ngIf="OFFICE_NAME1_HIN">
+                {{ OFFICE_NAME1_HIN }}</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+    <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+  </ng-template>
+</nz-modal>
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

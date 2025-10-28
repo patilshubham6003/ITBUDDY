@@ -1,0 +1,38 @@
+<div id="notification" [ngStyle]="{ height: getHeigthQuotation() }" (scroll)="onScroll($event)"  style="overflow-y: scroll" >
+    <div _ngcontent-dyd-c12="" nz-row="" class="ant-row ng-star-inserted" *ngFor="let data of drawerData;let i=index;">
+        <div _ngcontent-dyd-c12="" nz-col="" nzspan="24" class="ant-col-24">
+            <div _ngcontent-dyd-c12=""
+                style="border: 2px solid rgb(173, 170, 170); border-radius: 5px; padding: 5px; margin-bottom: 5px;">
+                <div _ngcontent-dyd-c12="" nz-row="" class="ant-row">
+                    <div _ngcontent-dyd-c12="" nz-col="" nzspan="24" class="ant-col-24">
+                        <div _ngcontent-dyd-c12="" style="font-size: 10px; padding: 3px; padding-left: 0px;"><span
+                                _ngcontent-dyd-c12="" nz-icon="" nztheme="outline" nztype="clock-circle"
+                                style="color: #FF7A7A;" class="anticon anticon-clock-circle"><svg
+                                    viewBox="64 64 896 896" fill="currentColor" width="1em" height="1em"
+                                    data-icon="clock-circle" aria-hidden="true">
+                                    <path
+                                        d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z">
+                                    </path>
+                                    <path
+                                        d="M686.7 638.6L544.1 535.5V288c0-4.4-3.6-8-8-8H488c-4.4 0-8 3.6-8 8v275.4c0 2.6 1.2 5 3.3 6.5l165.4 120.6c3.6 2.6 8.6 1.8 11.2-1.7l28.6-39c2.6-3.7 1.8-8.7-1.8-11.2z">
+                                    </path>
+                                </svg></span><span _ngcontent-dyd-c12="" style="color: gray;"> {{data.CREATED_MODIFIED_DATE |date:'dd-MMM-yyyy'}}
+                            </span></div>
+                    </div>
+                    <div _ngcontent-dyd-c12="" nz-col="" nzspan="24" class="ant-col-24">
+                        <div _ngcontent-dyd-c12=""
+                            style="font-size: 14px; color: black; font-weight: bold; word-break: break-all; text-align: justify; padding: 3px; padding-left: 0px;">
+                            {{data.TITLE}} </div>
+                    </div>
+                    <div _ngcontent-dyd-c12="" nz-col="" nzspan="24"
+                        style="word-break: break-all; text-align: justify; font-size: 13px; max-height: 76px;overflow-y: auto;"
+                        class="ant-col-24 ng-star-inserted">{{data.DESCRIPTION}} </div>
+                    <div _ngcontent-dyd-c12="" nz-col="" nzspan="24" class="ant-col-24 ng-star-inserted">
+                        <div _ngcontent-dyd-c12="" style="font-size: 10px; font-weight: bold; margin-top: 3px;">Inspector
+                            : {{data.NOTIFY_SENDER_NAME}} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<main id="main" *ngIf="!isSpinning">
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="breadcrumb-hero" style="padding: 10px 0">
+      <div class="container">
+        <div class="breadcrumb-hero">
+          <h2 style="font-weight: 500; color: white">FAQs</h2>
+          <ol>
+            <li>
+              <a routerLink="/" style="text-decoration: None; color: white">Home</a>
+            </li>
+            <li>FAQs</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="services" class="about1" style="
+      background-color: #f2f2f2 !important;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    ">
+    <div class="container">
+      <div class="row" style="width: 100%; margin-left: 0px">
+        <div class="col-lx-12">
+          <div class="card">
+            <div class="card-body" style="padding: 22px">
+              <div class="row justify-content-center" style="margin-top: 0px"></div>
+
+              <div class="row justify-content-center" style="margin-top: 0px">
+                <div class="col-12">
+                  <div class="row" style="margin-bottom: 10px">
+                    <div class="col-3" style="
+                        font-weight: 600;
+                        font-size: 17px;
+                        font-family: 'Poppins', sans-serif !important;
+                      ">
+                      FAQ Heads
+                    </div>
+                    <div class="col-9" style="text-align: -webkit-right">
+                      <div class="input-group">
+                        <input autocomplete="off" placeholder="Search" class="form-control" name="search"
+                          (keyup)="searchfaq(searchText)" [(ngModel)]="searchText" style="border-radius: 0px" />
+
+                        <div class="input-group-append">
+                          <span *ngIf="!showx" style="
+                              padding: 10px;
+                              border-radius: 0px;
+                              cursor: pointer;
+                            " class="fa input-group-text bi bi-search" (click)="searchfaq(searchText)"></span>
+                          <span *ngIf="showx" style="
+                              padding: 10px;
+                              border-radius: 0px;
+                              cursor: pointer;
+                            " class="fa input-group-text bi bi-x" (click)="searchfaq1()"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <ul class="nav nav-tabs nav-tabs-custom faq-tab-box" id="pills-tab" role="tablist">
+                    <li style="width: 100%" class="nav-item" role="presentation" (click)="getfaq()">
+                      <button [ngClass]="
+                          showcolor1 == 1 ? 'nav-link active' : 'nav-link '
+                        " id="pills-genarel-tab" style="text-align: left" data-bs-toggle="pill"
+                        data-bs-target="#pills-genarel" type="button" role="tab" style="text-align: justify !important"
+                        aria-controls="pills-genarel" aria-selected="true">
+                        <span class="font-size-16" style="color: black">All</span>
+                      </button>
+                    </li>
+
+                    <li style="width: 100%" class="nav-item" *ngFor="let data of faqhead; let i = index; let j = index"
+                      role="presentation" (click)="getheadfaqqs(data.ID, i)">
+                      <button [ngClass]="
+                          showcolor == j ? 'nav-link active' : 'nav-link '
+                        " id="pills-genarel-tab" style="text-align: left" data-bs-toggle="pill"
+                        data-bs-target="#pills-genarel" type="button" role="tab" aria-controls="pills-genarel"
+                        aria-selected="true">
+                        <span class="font-size-16" style="
+                            color: black;
+                            font-family: 'Poppins', sans-serif !important;
+                          ">{{ data.NAME }}</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-9" style="height: 500px; overflow-y: scroll">
+                  <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade active show" id="pills-genarel" role="tabpanel"
+                      aria-labelledby="pills-genarel-tab">
+                      <div class="row" *ngIf="faqs==null">
+                        <div class="col-lg-12" style="cursor: pointer">
+                          <div style="text-align: center;margin-top: 30px;">
+                            No Faqs Found
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="faqs!=null">
+                        <div class="col-lg-12" style="cursor: pointer">
+                          <div class="accordion" *ngFor="let data of faqs; let i = index"
+                            [attr.id]="'accordionExample' + i" style="margin-bottom: 10px;">
+                            <div class="accordion-item">
+                              <h2 class="accordion-header" [attr.id]="'heading' + i">
+                                <button style="
+                                    font-size: 14px;
+                                    font-family: 'Poppins', sans-serif !important;
+                                  " class="accordion-button" type="button" [attr.data-bs-toggle]="'collapse' + i"
+                                  [attr.data-bs-target]="'#collapse' + i" [attr.aria-expanded]="
+                                    activeIndex === i ? 'true' : 'false'
+                                  " [attr.aria-controls]="'collapse' + i" (click)="toggleAccordion(i)">
+                                  <span class="accordion-text">{{ data.QUESTION }}</span>
+                                  <span class="arrow-icon"
+                                    [ngClass]="{'bi bi-chevron-up': activeIndex === i, 'bi bi-chevron-down': activeIndex !== i}"></span>
+                                </button>
+                              </h2>
+                              <div [attr.id]="'collapse' + i" class="accordion-collapse collapse"
+                                [class.show]="activeIndex === i" [attr.aria-labelledby]="'heading' + i"
+                                [attr.data-bs-parent]="'#accordionExample' + i">
+                                <div class="accordion-body" style="
+                                    font-size: 13px;
+                                    font-family: 'Poppins', sans-serif !important;
+                                  ">
+                                  {{ data.ANSWER }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>
+
+<button style="display: none" #nbjhb type="button" class="btn btn-primary" data-bs-toggle="modal"
+  data-bs-target="#faqmd">
+  Launch demo modal
+</button>
+
+<div *ngIf="faqdata != undefined">
+  <div class="modal fade" id="faqmd" tabindex="-1" aria-labelledby="faqmdlabel" aria-hidden="true"
+    style="z-index: 99999">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="faqmdlavel">
+            {{ faqdata.QUESTION }}
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ faqdata.ANSWER }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" #cldgdf class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

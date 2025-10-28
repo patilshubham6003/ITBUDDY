@@ -1,0 +1,305 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">LTC Detailed Report</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+            nz-input
+            placeholder="Search"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="DATE"
+                  style="margin-top: 1px; width: 100%"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="7">
+              <nz-form-item class="forFilterValues">
+                <nz-form-label nzNoColon>Select Inspector</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    nzShowSearch
+                    nzAllowClear
+                    name="Select Inspector"
+                    nzPlaceHolder="Select Inspector"
+                    nzMode="multiple"
+                    [(ngModel)]="inspectorid"
+                    (ngModelChange)="selectinspectorevent($event)"
+                    style="width: 100%"
+                  >
+                    <nz-option
+                      *ngFor="let name of inspectorname"
+                      [nzValue]="name.ID"
+                      [nzLabel]="name.NAME"
+                    ></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="5">
+              <nz-form-item class="forFilterValues">
+                <nz-form-label nzNoColon>Select Nature Of Leave</nz-form-label>
+                <nz-form-control>
+                  <nz-select
+                    name="natureofleave"
+                    nzShowSearch
+                    nzAllowClear
+                    nzPlaceHolder="Select Nature Of Leave"
+                    [(ngModel)]="natureofleaveid"
+                    style="width: 100%"
+                  >
+                    <nz-option
+                      nzLabel="Casual Leave"
+                      nzValue="Casual Leave"
+                    ></nz-option>
+
+                    <nz-option
+                      nzLabel="Medical Leave"
+                      nzValue="Medical Leave"
+                    ></nz-option>
+
+                    <nz-option
+                      nzLabel="Half Day"
+                      nzValue="Half Day"
+                    ></nz-option>
+
+                    <nz-option
+                      nzLabel="Study Leave"
+                      nzValue="Study Leave"
+                    ></nz-option>
+
+                    <nz-option
+                      nzLabel="Child Care Leave"
+                      nzValue="Child Care Leave"
+                    ></nz-option>
+
+                    <nz-option
+                      nzLabel="Earn Leave"
+                      nzValue="Earn Leave"
+                    ></nz-option>
+
+                    <nz-option nzLabel="Other" nzValue="Other"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item>
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '1200px', y: '55vh' }"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Employee Name
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'DESIGNATION' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'HEADQUARTERS' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Headquarters
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'INSPECTOR_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Inspector Name
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'LEAVE_START_DATE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Leave Start Date
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'LEAVE_END_DATE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Leave End Date
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'NATURE_OF_LEAVE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Nature Of Leave
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'TOTAL_LEAVE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Total Leave
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="white-space: pre-line" align="center">
+            {{ data["EMPLOYEE_NAME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["DESIGNATION"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["HEADQUARTERS"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["INSPECTOR_NAME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["LEAVE_START_DATE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["LEAVE_END_DATE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["NATURE_OF_LEAVE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["TOTAL_LEAVE"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

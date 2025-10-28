@@ -1,0 +1,443 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">Employee Wise Detailed Report</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+            (keyup)="keyup($event)"
+            nz-input
+            placeholder="Search"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search()"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item style="display: flex">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '4850px', y: '55vh' }"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="NAME"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+
+          <th
+            nzWidth="110px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="MOBILE_NO"
+            [nzSortFn]="true"
+          >
+            Mobile No
+          </th>
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="EMPLOYEE_CODE"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="270px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DESIGNATION"
+            [nzSortFn]="true"
+          >
+            Employee Designation
+          </th>
+
+          <th
+            nzWidth="170px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="DDO_OF_THE_OFFICIAL"
+            [nzSortFn]="true"
+          >
+            DDO official
+          </th>
+          <th
+            nzWidth="220px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="OFFICE_NAME"
+            [nzSortFn]="true"
+          >
+            Office Name
+          </th>
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="ADDRESS"
+            [nzSortFn]="true"
+          >
+            Old Residential Address
+          </th>
+          <th
+            nzWidth="220px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="NEW_HEADQUARTERS_NAME"
+            [nzSortFn]="true"
+          >
+            New Head Quater Name
+          </th>
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="NEW_ADDRESS"
+            [nzSortFn]="true"
+          >
+            Mode of Tranfer
+          </th>
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="STATION_NAME"
+            [nzSortFn]="true"
+          >
+            Station Name
+          </th>
+          <th
+            nzWidth="180px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="AMOUNT"
+            [nzSortFn]="true"
+          >
+            Amount (₹)
+          </th>
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="ADVANCE_TAKEN_DATE"
+            [nzSortFn]="true"
+          >
+            Date Of Advance Taken
+          </th>
+
+          <th
+            nzWidth="140px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="ADVANCED_AMOUNT"
+            [nzSortFn]="true"
+          >
+            Advance Amount(₹)
+          </th>
+          <th
+            nzWidth="190px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="VOUCHER_NO"
+            [nzSortFn]="true"
+          >
+            Voucher No.
+          </th>
+          <th
+            nzWidth="190px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="FILE_NO"
+            [nzSortFn]="true"
+          >
+            File Number
+          </th>
+          <th
+            nzWidth="190px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="ROAD_MILEAGE"
+            [nzSortFn]="true"
+          >
+            Road Mileage
+          </th>
+          <th
+            nzWidth="130px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="PER_KM"
+            [nzSortFn]="true"
+          >
+            Per KM
+          </th>
+
+          <th
+            nzWidth="150px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="TRANSFER_GRANT"
+            [nzSortFn]="true"
+          >
+            Transfer Grant
+          </th>
+          <th
+            nzWidth="210px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="TRANSFER_GRANT_AMOUNT"
+            [nzSortFn]="true"
+          >
+            Transfer Grant Amonut
+          </th>
+          <th
+            nzWidth="220px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="D_A"
+            [nzSortFn]="true"
+          >
+            Transfer Incidentals D. A.
+          </th>
+          <th
+            nzWidth="180px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="RUPEES_PER_DAY"
+            [nzSortFn]="true"
+          >
+            Rupees Per Day
+          </th>
+          <th
+            nzWidth="280px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="TRANSFER_ORDER_SERVICE_CERTIFICATE"
+            [nzSortFn]="true"
+          >
+            Transfer Order Service Certificate
+          </th>
+          <th
+            nzWidth="280px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="ASSUMPTION_OF_CHARGE_SUBMITTED"
+            [nzSortFn]="true"
+          >
+            Assumption of charge submitted
+          </th>
+          <th
+            nzWidth="360px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="BANK_MANDATE_CHEQUE_SUBMITTED"
+            [nzSortFn]="true"
+          >
+            Bank Mandate form/ cancelled cheque Submitted
+          </th>
+          <th
+            nzWidth="250px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="LAST_PAY_CERTIFICATE_SUBMITTED"
+            [nzSortFn]="true"
+          >
+            Last pay certificate submitted
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.NAME }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.MOBILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.EMPLOYEE_CODE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DESIGNATION }}
+          </td>
+
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.DDO_OF_THE_OFFICIAL }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.OFFICE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.ADDRESS }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.NEW_HEADQUARTERS_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.TRAVEL_MODE_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.STATION_NAME }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.ADVANCE_TAKEN_DATE | date : "dd MM yyyy" }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.ADVANCED_AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.VOUCHER_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.FILE_NO }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.ROAD_MILEAGE }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.PER_KM }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.TRANSFER_GRANT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.TRANSFER_GRANT_AMOUNT }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.D_A }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            {{ data.RUPEES_PER_DAY }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data['TRANSFER_ORDER_SERVICE_CERTIFICATE']">
+              Yes
+            </span>
+            <span *ngIf="!data['TRANSFER_ORDER_SERVICE_CERTIFICATE']">
+              No
+            </span>
+          </td>
+
+          <td style="text-align: center">
+            <span nz-icon *ngIf="data['ASSUMPTION_OF_CHARGE_SUBMITTED'] == 'Y'"
+              >Yes</span
+            >
+            <span nz-icon *ngIf="data['ASSUMPTION_OF_CHARGE_SUBMITTED'] == 'N'"
+              >No</span
+            >
+            <span nz-icon *ngIf="data['ASSUMPTION_OF_CHARGE_SUBMITTED'] == 'NA'"
+              >NA</span
+            >
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data['BANK_MANDATE_CHEQUE_SUBMITTED']"> Yes </span>
+            <span *ngIf="!data['BANK_MANDATE_CHEQUE_SUBMITTED']"> No </span>
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span *ngIf="data['LAST_PAY_CERTIFICATE_SUBMITTED']"> Yes </span>
+            <span *ngIf="!data['LAST_PAY_CERTIFICATE_SUBMITTED']"> No </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

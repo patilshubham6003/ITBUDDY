@@ -1,0 +1,343 @@
+<div>
+  <form nz-form #AddNewRecord="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <!-- <div nz-row class="my-box"> -->
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Date</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Select Date">
+              <nz-form-control nzHasFeedback nzErrorTip="Please Select Date">
+                <nz-date-picker
+                  [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                  name="date"
+                  [(ngModel)]="data.DATE"
+                  style="width: 100%"
+                  nzFormat="dd/MM/yyyy"
+                  [ngClass]="isShowCSS ? 'datesize' : ''"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!-- (ngModelChange)="getclassmode($event)" -->
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Mode Of Conveyance Used</nz-form-label
+            >
+            <nz-form-control nzHasFeedback nzErrorTip="Select Mode">
+              <nz-select
+                nzAllowClear
+                name="room"
+                [(ngModel)]="data.TRAVEL_MODE_ID"
+                style="width: 100%"
+                (ngModelChange)="getclassmode($event)"
+                nzPlaceHolder="Select Mode Of Conveyance Used"
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+              >
+                <nz-option
+                  *ngFor="let role2 of modedata"
+                  [nzValue]="role2.ID"
+                  [nzLabel]="role2.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >From Date</nz-form-label
+            >
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select to Date">
+              <nz-date-picker
+                [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                nzFormat="dd/MM/yyyy HH:mm"
+                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                name="fromstation"
+                [(ngModel)]="data.PERIOD_FROM"
+                style="width: 100%"
+                placeHolder="Select Form Date"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >To Date</nz-form-label
+            >
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select to Date">
+              <nz-date-picker
+                [nzPopupStyle]="isShowCSS ? { 'font-size': '11px' } : {}"
+                nzFormat="dd/MM/yyyy HH:mm"
+                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                name="dddddddddate"
+                placeHolder="Select To Date"
+                [(ngModel)]="data.PERIOD_TO"
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'datesize' : ''"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >From Place</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter From Place">
+              <input
+                nz-input
+                autocomplete="off"
+                [(ngModel)]="data.PLACE_FROM"
+                name="PLACE_FROM"
+                type="text"
+                maxlength="64"
+                [pattern]="namepatt"
+                placeHolder="Enter From Place"
+                required
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >To Place</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Please Enter To Place">
+              <input
+                nz-input
+                autocomplete="off"
+                [(ngModel)]="data.PLACE_TO"
+                name="PLACE_TO"
+                type="text"
+                maxlength="64"
+                [pattern]="namepatt"
+                placeHolder="Enter To Place"
+                required
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Class To Which Entitled</nz-form-label
+            >
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Select Class To Which Entitled"
+            >
+              <nz-select
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+                nzAllowClear
+                name="rofffom"
+                [nzLoading]="classLoader"
+                [(ngModel)]="data.ENTITLED_CLASS_ID"
+                style="width: 100%"
+                nzPlaceHolder="Select Class To Which Entitled"
+              >
+                <nz-option
+                  *ngFor="let role of classdata"
+                  [nzValue]="role.ID"
+                  [nzLabel]="role.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Class By Which Travelled</nz-form-label
+            >
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Select Class By Which Travelled"
+            >
+              <nz-select
+                nzAllowClear
+                [ngClass]="isShowCSS ? 'inputsize' : ''"
+                [nzSize]="isShowCSS ? 'small' : 'default'"
+                name="rooddddgfbm"
+                [nzLoading]="classLoader"
+                [(ngModel)]="data.TRAVELLED_CLASS_ID"
+                style="width: 100%"
+                nzPlaceHolder="Select Class By Which Travelled"
+              >
+                <nz-option
+                  *ngFor="let role1 of classdata1"
+                  [nzValue]="role1.ID"
+                  [nzLabel]="role1.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="12" *ngIf="roleId != 2">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Admissible Amount</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Enter Admissible Amount">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  nz-input
+                  autocomplete="off"
+                  [(ngModel)]="data.FARE_OF_ENTITLED_CLASS"
+                  name="fairPaid"
+                  type="text"
+                  (keypress)="omit($event)"
+                  maxlength="8"
+                  placeHolder="Admissible Amount"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label
+              [ngClass]="isShowCSS ? 'labelsize' : ''"
+              nzRequired
+              nzNoColon
+              >Fare Paid By The Officer</nz-form-label
+            >
+            <nz-form-control nzErrorTip="Enter Fare Paid By The Officer">
+              <nz-input-group
+                style="width: 100%"
+                [ngClass]="isShowCSS ? 'inputgroup' : ''"
+                nzAddOnBefore="₹"
+              >
+                <input
+                  nz-input
+                  autocomplete="off"
+                  [(ngModel)]="data.FARE_PAID_BY_OFFICER"
+                  name="fairPaidbyofficer"
+                  type="text"
+                  (keypress)="omit($event)"
+                  maxlength="8"
+                  placeHolder="Fare Paid By The Officer"
+                  required
+                  [ngClass]="isShowCSS ? 'inputsize' : ''"
+                />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nzType="primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, AddNewRecord)"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff; font-size: 11px"
+        >
+          <a style="color: white" (click)="save(true, AddNewRecord)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID && !isAdmin"
+      (click)="save(false, AddNewRecord)"
+      [ngClass]="isShowCSS ? 'inputsize' : ''"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(AddNewRecord)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

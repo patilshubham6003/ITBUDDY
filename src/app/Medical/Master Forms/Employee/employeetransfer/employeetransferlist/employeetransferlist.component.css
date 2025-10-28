@@ -1,0 +1,40 @@
+.table {
+    width: 100% !important;
+}
+
+.table>tr>td {
+    border: 1px solid black !important;
+    border-collapse: collapse !important;
+    padding-left: 5px;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgb(244, 244, 244);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgb(210, 210, 210);
+    border-radius: 5px;
+    border: 1px solid rgb(237, 237, 237);
+}
+
+
+@media print {
+    table {
+        border: solid #000 !important;
+        border-width: 1px 0 0 1px !important;
+    }
+
+    th,
+    td {
+        padding-left: 5px;
+        border: solid #000 !important;
+        border-width: 0 1px 1px 0 !important;
+    }
+
+}

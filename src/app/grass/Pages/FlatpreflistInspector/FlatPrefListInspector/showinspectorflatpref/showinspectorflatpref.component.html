@@ -1,0 +1,2342 @@
+<div>
+  <div nz-row>
+    <nz-steps [nzCurrent]="current" nzSize="small">
+      <nz-step nzTitle="View Preferences"></nz-step>
+      <nz-step nzTitle="Draft Allotment Order"></nz-step>
+      <nz-step nzTitle="Preview Draft Order"></nz-step>
+    </nz-steps>
+
+    <br /><br />
+  </div>
+  <div class="steps-content">
+    <div *ngIf="current == 0">
+      <div>
+        <form nz-form #applicantMasterPages="ngForm">
+          <div nz-row nzType="flex" style="justify-content: space-between">
+            <div nz-col style="margin: 0 10px 0 0"></div>
+
+            <div nz-col style="display: flex; justify-content: flex-end">
+              <form nz-form [nzLayout]="'inline'">
+                <nz-form-item style="margin-right: 0px">
+                  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input
+                      type="text"
+                      name="citysearch"
+                      (keyup)="keyup($event)"
+                      [(ngModel)]="searchText"
+                      nz-input
+                      placeholder="Search "
+                    />
+                  </nz-input-group>
+                  <ng-template #suffixIconButton>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="search(true)"
+                      class="flexicons"
+                      nzSearch
+                    >
+                      <i nz-icon nzType="search"></i>
+                    </button>
+                  </ng-template>
+                </nz-form-item>
+              </form>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <div class="filter {{ filterClass }}">
+                <div class="filter-box">
+                  <form nz-form>
+                    <div nz-row>
+                      <div nz-col nzSpan="8">
+                        <nz-form-item class="chsaaa">
+                          <nz-form-label nzRequired nzNoColon
+                            >Residence Type</nz-form-label
+                          >
+                          <nz-form-control>
+                            <nz-select
+                              nzShowSearch
+                              [nzMaxTagCount]="3"
+                              nzAllowClear
+                              nzPlaceHolder="Please Select Residence Type "
+                              name="Residence Type"
+                              [(ngModel)]="RESIDENCE_TYPE"
+                            >
+                              <nz-option
+                                *ngFor="let type of ResidenceType"
+                                [nzValue]="type.RESIDENCE_TYPE_ID"
+                                [nzLabel]="type.RESIDENCE_TYPE_NAME"
+                              >
+                              </nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+
+                      <div
+                        nz-col
+                        nzSpan="8"
+                        style="display: flex; gap: 10px; margin-top: 31px"
+                      >
+                        <button
+                          nz-button
+                          [nzLoading]="isSpinning"
+                          nzType="primary"
+                          class="flexicons"
+                          (click)="applyFilter()"
+                        >
+                          <i nz-icon nzType="filter"></i>Apply Filter
+                        </button>
+                        <button
+                          nz-button
+                          nzType="primary"
+                          class="flexicons"
+                          (click)="clearFilter()"
+                        >
+                          <i nz-icon nzType="filter"></i>Clear filter
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div nz-row style="margin-top: 5px">
+            <div nz-col nzSpan="24">
+              <nz-table
+                class="my-scroll no-wrap1"
+                nzBordered
+                #flatPreferanceTable
+                nzShowSizeChanger
+                [nzFrontPagination]="false"
+                [nzData]="flatPreferenceDataList"
+                [nzLoading]="isSpinning"
+                [nzSize]="'small'"
+                [nzTotal]="totalRecords"
+                [nzScroll]="{ x: '1800px', y: '370px' }"
+                [(nzPageIndex)]="pageIndex"
+                [(nzPageSize)]="pageSize"
+                (nzPageIndexChange)="search()"
+                (nzPageSizeChange)="search(true)"
+                style="white-space: pre-line"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      nzLeft
+                      nzWidth="180px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Preference Form
+                    </th>
+                    <!-- <th nzLeft nzWidth="180px" style="text-align: center; font-weight: bold">
+                      Enclosed Documents
+                    </th> -->
+                    <th
+                      nzLeft
+                      nzWidth="300px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Employee Name
+                    </th>
+                    <th
+                      nzWidth="250px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Designation
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      1st
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      2nd
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      3rd
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      4th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      5th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      6th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      7th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      8th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      9th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      10th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      11th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      12th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      13th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      14th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      15th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      16th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      17th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      18th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      19th
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      20th
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let data of flatPreferanceTable.data; let i = index"
+                  >
+                    <td
+                      nzLeft
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      <nz-tag
+                        [nzColor]="'green'"
+                        style="border-radius: 3px; cursor: pointer"
+                        (click)="ATTACHMENT1send(data)"
+                        >View Form</nz-tag
+                      >
+                    </td>
+                    <!-- <td nzLeft nzWidth="100px" style="white-space: pre-line; text-align: center">
+                      <nz-tag [nzColor]="'green'" style="border-radius: 3px; cursor: pointer"
+                        (click)="ViewEnclosedDocuments(data)">View Documents</nz-tag>
+                    </td> -->
+                    <td
+                      nzLeft
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data.EMPLOYEE_NAME ? data.EMPLOYEE_NAME : "-" }}
+                    </td>
+                    <td
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{
+                        data.DESIGNATION_SHORT_CODE
+                          ? data.DESIGNATION_SHORT_CODE
+                          : "-"
+                      }}
+                    </td>
+                    <td
+                      *ngFor="
+                        let pref of flatPreferenceDataList[i]['PREFERENCES']
+                      "
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      <span>{{ pref.FLAT_NAME ? pref.FLAT_NAME : "-" }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="current == 1">
+      <div nz-col nzSpan="24">
+        <div nz-row style="display: flex; justify-content: flex-end">
+          <div
+            nz-col
+            nzXs="24"
+            nzSm="24"
+            nzMd="4"
+            nzLg="6"
+            nzXl="12"
+            style="display: flex; justify-content: flex-end"
+          >
+            <form nz-form [nzLayout]="'inline'">
+              <nz-form-item style="margin-right: 0px">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                  <input
+                    type="text"
+                    (keyup)="searchrecords()"
+                    name="search"
+                    nz-input
+                    placeholder="Search Records"
+                    [(ngModel)]="searchfilteredrecords"
+                  />
+                </nz-input-group>
+
+                <ng-template #suffixIconButton>
+                  <button
+                    nz-button
+                    nzType="primary"
+                    (click)="searchrecords()"
+                    nzSearch
+                  >
+                    <i nz-icon nzType="search"></i>
+                  </button>
+                </ng-template>
+              </nz-form-item>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form nz-form #applicantMasterPages="ngForm">
+          <div nz-row style="margin-top: 10px">
+            <div nz-col nzSpan="24">
+              <nz-table
+                class="my-scroll no-wrap1"
+                nzBordered
+                #flatAllotmentTable
+                nzShowSizeChanger
+                [nzLoading]="isSpinning"
+                [nzFrontPagination]="false"
+                [nzData]="flatAllotmentDataList"
+                [nzSize]="'small'"
+                [nzScroll]="{ x: '1700px', y: '370px' }"
+                style="white-space: pre-line"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      nzWidth="80px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Sr No.
+                    </th>
+                    <th
+                      nzWidth="100px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Seniority No.
+                    </th>
+                    <th
+                      nzWidth="120px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Change Allocation
+                    </th>
+                    <th
+                      nzWidth="100px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      New Quarter Name
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Employee Name
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Designation
+                    </th>
+                    <th
+                      nzWidth="100px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      City
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Area
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Building
+                    </th>
+
+                    <th
+                      nzWidth="100px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Old Quarter Name
+                    </th>
+                    <th
+                      nzWidth="150px"
+                      style="text-align: center; font-weight: bold"
+                    >
+                      Quarter Change Reason
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let data1 of flatAllotmentTable.data; let i = index"
+                  >
+                    <td nzWidth="100px" style="text-align: center">
+                      {{ i + 1 }}
+                    </td>
+                    <td nzWidth="100px" style="text-align: center">
+                      {{
+                        data1.FINAL_SENIORITY_SEQ_NO
+                          ? data1.FINAL_SENIORITY_SEQ_NO
+                          : "_"
+                      }}
+                    </td>
+                    <td nzWidth="100px" style="text-align: center">
+                      <a (click)="changeSerial(data1)" style="color: #1890ff">
+                        Change
+                      </a>
+                    </td>
+                    <td
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.NEW_FLAT_NAME ? data1.NEW_FLAT_NAME : "_" }}
+                    </td>
+                    <td
+                      nzWidth="150px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.EMPLOYEE_NAME ? data1.EMPLOYEE_NAME : "_" }}
+                    </td>
+                    <td
+                      nzWidth="150px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{
+                        data1.DESIGNATION_SHORT_CODE
+                          ? data1.DESIGNATION_SHORT_CODE
+                          : "_"
+                      }}
+                    </td>
+                    <td
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.CITY_NAME ? data1.CITY_NAME : "_" }}
+                    </td>
+                    <td
+                      nzWidth="150px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.AREA_NAME ? data1.AREA_NAME : "_" }}
+                    </td>
+                    <td
+                      nzWidth="150px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.BUILDING_NAME ? data1.BUILDING_NAME : "_" }}
+                    </td>
+
+                    <td
+                      nzWidth="100px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.OLD_FLAT_NAME ? data1.OLD_FLAT_NAME : "_" }}
+                    </td>
+                    <td
+                      nzWidth="150px"
+                      style="white-space: pre-line; text-align: center"
+                    >
+                      {{ data1.REMARK ? data1.REMARK : "_" }}
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="current == 2">
+      <div>
+        <form nz-form #applicantMasterPages="ngForm">
+          <nz-spin [nzSpinning]="isSpinning">
+            <div nz-row nzGutter="8">
+              <div nz-col nzSpan="6" class="my-box">
+                <div nz-row>
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Signature
+                      </nz-form-label>
+                      <nz-form-control nzErrorTip="Select Signature">
+                        <nz-select
+                          name="GRAAS_SIGNATURE_ID"
+                          [(ngModel)]="dataAllotmentPublish.GRAAS_SIGNATURE_ID"
+                          nzAllowClear
+                          nzShowSearch
+                          nzPlaceHolder="Choose Signature"
+                          style="width: 100%"
+                          (ngModelChange)="signature($event)"
+                        >
+                          <nz-option
+                            *ngFor="let user of Signaturearray"
+                            [nzValue]="user.ID"
+                            [nzLabel]="user.NAME"
+                          >
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Draft Allotment Order Number</nz-form-label
+                      >
+
+                      <nz-form-control
+                        nzErrorTip="Enter Draft Allotment Order Number"
+                      >
+                        <input
+                          nz-input
+                          name="DRAFT_ALLOT_ORDER_NO"
+                          required
+                          [(ngModel)]="
+                            dataAllotmentPublish.DRAFT_ALLOT_ORDER_NO
+                          "
+                          maxlength="128"
+                          required
+                          placeHolder="Draft Allotment Order Number"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Select Letter Date</nz-form-label
+                      >
+                      <nz-form-control nzErrorTip="Select Date">
+                        <nz-date-picker
+                          nzFormat="dd/MM/yyyy"
+                          nzAllowClear="false"
+                          [(ngModel)]="todaysdateee"
+                          style="width: 100%"
+                          name="todaysdateee"
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon>
+                        Objection End Datetime</nz-form-label
+                      >
+                      <nz-form-control>
+                        <nz-date-picker
+                          nzShowTime
+                          [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                          style="width: 100%"
+                          nzFormat="dd/MM/yyyy HH:mm"
+                          name="enddate"
+                          [(ngModel)]="dataAllotmentPublish.OBJ_END_DATE_TIME"
+                          nzAllowClear="false"
+                          [nzDisabledDate]="disabledDate2"
+                          required
+                          [nzDisabledDate]="disabledDate12"
+                          nzPlaceHolder="Select Date"
+                        ></nz-date-picker>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+              <div nz-col nzSpan="18">
+                <div
+                  class="form my-box"
+                  id="Prntmodal"
+                  style="padding-left: 10px; height: 70vh; overflow-y: auto"
+                >
+                  <div>
+                    <table style="border-collapse: collapse; width: 100%">
+                      <tr>
+                        <td
+                          style="
+                            width: 40%;
+                            font-size: 14px;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                            text-align: center;
+                            border-bottom: none;
+                          "
+                        >
+                          <div>कार्यालय</div>
+                          <div>प्रधान मुख्य आयकर आयुक्त</div>
+                          <div>तिसरी मंजिल, आयकर भवन,</div>
+                          <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                        </td>
+                        <td
+                          style="
+                            width: 20%;
+                            text-align: left;
+                            padding: 5px 15px;
+                            border: 1px solid black;
+                            text-align: center;
+                            border-bottom: none;
+                          "
+                        >
+                          <img
+                            *ngIf="key === 'itbuddy'"
+                            src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                            alt="Government of India"
+                            class="image"
+                            width="70px"
+                            height="110px"
+                            style="padding: 4px 5px"
+                          />
+                          <img
+                            *ngIf="key === 'incometax'"
+                            src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                            alt="Government of India"
+                            class="image"
+                            width="70px"
+                            height="110px"
+                            style="padding: 4px 5px"
+                          />
+                        </td>
+                        <td
+                          style="
+                            width: 40%;
+                            font-size: 14px;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                            text-align: center;
+                            border-bottom: none;
+                          "
+                        >
+                          <div>Office of the</div>
+                          <div>Pr. Chief Commissioner of Income Tax</div>
+                          <div>3rd Floor, Aayakar Bhavan,</div>
+                          <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                        </td>
+                      </tr>
+                    </table>
+                    <table style="border-collapse: collapse; width: 100%">
+                      <tr style="font-size: 13px">
+                        <td
+                          style="
+                            width: 40%;
+                            text-align: left;
+                            padding: 5px 15px;
+                            border: 1px solid black;
+                            border-bottom: 0px;
+                            border-right: 0px;
+                          "
+                        >
+                          <div>फोन: 022-22017654</div>
+                        </td>
+                        <td
+                          style="
+                            width: 60%;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                            border-bottom: 0px;
+                            border-left: 0px;
+                          "
+                        >
+                          <div style="text-align: end">
+                            Email: mumbai.pccit@incometax.gov.in
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    <!-- <div nz-row style="width: 100%;">
+                      <div nz-col nzSpan="24">
+                        <div nz-row style="border: 1px solid black;border-bottom: 0px;">
+                          <div nz-col nzSpan="10" style="border: 1px solid black;text-align: center; height: 125px; font-size: 12px;    border-left: 0px;padding: 5px;
+    border-top: 0px;
+    border-bottom: 0px;">
+                            <div>कार्यालय</div>
+                            <div>प्रधान मुख्य आयकर आयुक्त</div>
+                            <div>तिसरी मंजिल, आयकर भवन,</div>
+                            <div> महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                          </div>
+                          <div nz-col nzSpan="4" style="    text-align: center;
+    align-self: center;">
+                            <img *ngIf="key === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India" class="image" width="70px" height="110px"
+                              style="padding: 4px 5px;" />
+                            <img *ngIf="key === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India" class="image" width="70px" height="110px"
+                              style="padding: 4px 5px;" />
+                          </div>
+                          <div nz-col nzSpan="10" style="border: 1px solid black;text-align: center; height: 125px; font-size: 12px;    border-right: 0px;padding: 5px;
+    border-top: 0px;
+    border-bottom: 0px;">
+                            <div>Office of the</div>
+                            <div>Pr. Chief Commissioner of Income Tax</div>
+                            <div>3rd Floor, Aayakar Bhavan,</div>
+                            <div>Maharshi Karve Road, Mumbai - 400 020</div>
+
+                          </div>
+                          <div nz-col nzSpan="12" style="border: 1px solid black;text-align: center;  font-size: 12px;    border-left: 0px;padding: 5px;
+    border-right: 0px;
+    border-bottom: 0px;
+">
+                            <div>फोन: 022-22017654</div>
+                          </div>
+                          <div nz-col nzSpan="12" style="border: 1px solid black;text-align: center;  font-size: 12px;    border-right: 0px;padding: 5px;
+    border-bottom: 0px;    border-left: 0px;">
+                            <div>Email: mumbai.pccit@incometax.gov.in</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                    <table style="border-collapse: collapse; width: 100%">
+                      <tr style="font-size: 13px">
+                        <td
+                          style="
+                            width: 75%;
+                            text-align: left;
+                            padding: 5px 15px;
+                            border: 1px solid black;
+                          "
+                        >
+                          No.Pr.CCIT/Mum/HQ/Admin/
+                          {{ dataAllotmentPublish.DRAFT_ALLOT_ORDER_NO }}
+                          <!-- DCIT/Type {{ data.RESIDENCE_TYPE_NAME }} Quarter Allotment/{{   todaysyear }} - {{ nextyear }} -->
+                        </td>
+                        <td
+                          style="
+                            width: 15%;
+                            text-align: left;
+                            padding: 5px 10px;
+                            border: 1px solid black;
+                          "
+                        >
+                          Date:{{ todaysdateee | date : "dd/MM/yyyy" }}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div nz-row>
+                    <div nz-col nzSpan="24">
+                      <p
+                        style="
+                          text-align: center;
+                          font-size: 14px;
+                          text-decoration: underline;
+                        "
+                      >
+                        <b style="font-family: 'Times New Roman', Times, serif">
+                          <br />
+                          NOTICE <br /><br />
+                          <span>
+                            {{ data.RESIDENCE_TYPE_NAME }} QUARTERS PROPOSED FOR
+                            ALLOTMENT FOR CUT-OFF PERIOD ENDING ON
+                            {{ cutoffPeriod | date : "dd/MM/yyyy" }} BASED ON
+                            THE SENIORITY & PREFERENCES RECEIVED</span
+                          >
+                        </b>
+                      </p>
+
+                      <p
+                        style="
+                          margin-left: auto;
+                          margin-top: 20px;
+                          margin-right: auto;
+                          font-size: 15px;
+                          text-align: justify !important;
+                          font-family: 'Times New Roman', Times, serif;
+                        "
+                      >
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;It is hereby brought
+                        to the notice of all the eligible officers who have
+                        applied for {{ data.RESIDENCE_TYPE_NAME }} Quarters,
+                        that based on the preferences filed by the eligible
+                        officers and seniority list, available quarters are
+                        proposed to be allotted to the following officers for
+                        the cut-off period ending on
+                        {{ cutoffPeriod | date : "dd/MM/yyyy" }}
+                      </p>
+
+                      <table
+                        style="
+                          text-align: center;
+                          border-collapse: collapse;
+                          font-size: 15px;
+                          font-family: 'Times New Roman', Times, serif;
+                          margin-left: auto;
+                          margin-right: auto;
+                        "
+                      >
+                        <thead>
+                          <tr>
+                            <th
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              Sr. no
+                            </th>
+                            <th
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              Name of the Officer & Designation
+                            </th>
+                            <th
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              Civil List No.
+                            </th>
+                            <th
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              Quarter No. & Location
+                            </th>
+                            <th
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              Preference
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            *ngFor="
+                              let mod of modalarraydatademo;
+                              let n = index
+                            "
+                          >
+                            <td
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              {{ n + 1 }}
+                            </td>
+                            <td
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              {{ mod.EMPLOYEE_NAME ? mod.EMPLOYEE_NAME : "_" }}
+                              , {{ mod.DESIGNATION_SHORT_CODE }}
+                            </td>
+                            <td
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              {{ mod.CIVIL_LIST ? mod.CIVIL_LIST : "_" }}
+                            </td>
+                            <td
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              {{ mod.NEW_FLAT_NAME }}, {{ mod.AREA_NAME }}
+                            </td>
+                            <td
+                              style="
+                                padding: 5px;
+                                border: 1px solid black;
+                                text-align: center;
+                              "
+                            >
+                              {{ mod.PREFERENCE_NO ? mod.PREFERENCE_NO : "_" }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <p
+                        style="
+                          margin-left: auto;
+                          font-size: 15px;
+                          margin-right: auto;
+                          margin-top: 20px;
+                          text-align: justify !important;
+                          font-family: 'Times New Roman', Times, serif;
+                        "
+                      >
+                        2.&nbsp;Objection, if any should be submitted on or
+                        before
+                        <b>
+                          {{
+                            dataAllotmentPublish.OBJ_END_DATE_TIME
+                              | date : "dd/MM/yyyy HH:mm"
+                          }}</b
+                        >
+                        .
+                      </p>
+                    </div>
+                  </div>
+                  <!-- <div nz-row> 
+                    <div nz-col nzSpan="24" style="
+                        margin-top: 40px;
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 14px;
+                      ">
+                      Note : This is computer generated order signature not
+                      required.
+                    </div>
+                  </div> -->
+
+                  <div
+                    nz-col
+                    nzSpan="24"
+                    style="width: 100%; font-weight: 600; padding-top: 5%"
+                  >
+                    <div
+                      style="
+                        width: max-content;
+                        margin-left: auto;
+                        text-align: center;
+                        line-height: 1.6;
+                      "
+                    >
+                      <img
+                        *ngIf="SIGNATURE_IMAGE"
+                        style="
+                          height: 50px;
+                          max-width: 100%;
+                          margin-bottom: 5px;
+                        "
+                        [src]="imgurl + 'signatureImage/' + SIGNATURE_IMAGE"
+                        alt="Signature"
+                      />
+                      <div>{{ NAME_HN ? "(" + NAME_HN + ")" : "" }}</div>
+                      <div>{{ SIGNNAME ? "(" + SIGNNAME + ")" : "" }}</div>
+                      <div *ngIf="POST_HIN">{{ POST_HIN }}</div>
+                      <div *ngIf="POST">{{ POST }}</div>
+                      <div *ngIf="OFFICE_HN">{{ OFFICE_HN }}</div>
+                      <div *ngIf="OFFICE">{{ OFFICE }}</div>
+                    </div>
+                  </div>
+
+                  <!-- <div                  
+                    style="
+                      align-self: flex-end;
+                      text-align: center;
+                      margin-top: auto;
+                      width: 100%;
+                      padding-top: 15%;
+                      font-weight: 600;
+                    "
+                  >
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                      </div>
+                    </div>
+                    <div nz-row>
+                      <div nz-col nzSpan="16"></div>
+                      <div nz-col nzSpan="8">
+                        <span *ngIf="POST"> {{ POST }}</span>
+                      </div>
+                    </div>
+                    <div nz-row> 
+                <div nz-col nzSpan="16"></div>
+                <div  nz-col nzSpan="8">
+                  <span *ngIf="OFFICE_HN"> {{ OFFICE_HN }}</span>
+                </div>
+              </div>
+              <div nz-row>
+                <div nz-col nzSpan="16"></div>
+                <div
+                  style="text-align: center;"
+                  nz-col
+                  nzSpan="8"
+                >
+                  <span *ngIf="OFFICE"> {{ OFFICE }}</span>
+                </div>
+              </div>
+                  </div> -->
+                </div>
+
+                <div style="display: none">
+                  <div class="form" id="Prntmodalforbackend">
+                    <div style="padding-left: 30px">
+                      <!-- <table style="border-collapse: collapse; width: 100%">
+                        <tr>
+                          <td style="
+                              width: 20%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            ">
+                            <img *ngIf="key === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India" class="image" height="200px" width="120px" />
+                            <img *ngIf="key === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India" class="image" height="200px" width="120px" />
+                          </td>
+                          <td style="
+                              width: 80%;
+                              font-size: 15px;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            ">
+                            <div>भारत सरकार</div>
+                            <div>GOVERNMENT OF INDIA</div>
+                            <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                            <div>OFFICE OF THE</div>
+                            <div>
+                              <b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX,
+                                MUMBAI</b>
+                            </div>
+                            <div>
+                              3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD,
+                              MUMBAI-20
+                            </div>
+                            <div>
+                              (022)2200 6385 (DIRECT), (022)2209 6738,
+                              (FAX),(022)2203 9131 EXTN.2328.
+                            </div>
+                            <div>
+                              e-mail:
+                              <a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                            </div>
+                          </td>
+                        </tr>
+                      </table> -->
+
+                      <!-- <div nz-col nzSpan="24">
+                        <div nz-row style="border: 1px solid black;border-bottom: 0px;">
+                          <div nz-col nzSpan="10" style="border: 1px solid black;text-align: center; height: 125px; font-size: 12px;    border-left: 0px;padding: 5px;
+    border-top: 0px;
+    border-bottom: 0px;">
+                            <div>कार्यालय</div>
+                            <div>प्रधान मुख्य आयकर आयुक्त</div>
+                            <div>तिसरी मंजिल, आयकर भवन,</div>
+                            <div> महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                          </div>
+                          <div nz-col nzSpan="4" style="    text-align: center;
+    align-self: center;">
+                            <img *ngIf="key === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India" class="image" width="70px" height="110px"
+                              style="padding: 4px 5px;" />
+                            <img *ngIf="key === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India" class="image" width="70px" height="110px"
+                              style="padding: 4px 5px;" />
+                          </div>
+                          <div nz-col nzSpan="10" style="border: 1px solid black;text-align: center; height: 125px; font-size: 12px;    border-right: 0px;padding: 5px;
+    border-top: 0px;
+    border-bottom: 0px;">
+                            <div>Office of the</div>
+                            <div>Pr. Chief Commissioner of Income Tax</div>
+                            <div>3rd Floor, Aayakar Bhavan,</div>
+                            <div>Maharshi Karve Road, Mumbai - 400 020</div>
+
+                          </div>
+                          <div nz-col nzSpan="12" style="border: 1px solid black;text-align: center;  font-size: 12px;    border-left: 0px;padding: 5px;
+    border-right: 0px;
+    border-bottom: 0px;
+">
+                            <div>फोन: 022-22017654</div>
+                          </div>
+                          <div nz-col nzSpan="12" style="border: 1px solid black;text-align: center;  font-size: 12px;    border-right: 0px;padding: 5px;
+    border-bottom: 0px;    border-left: 0px;">
+                            <div>Email: mumbai.pccit@incometax.gov.in</div>
+                          </div>
+                        </div>
+                      </div> -->
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 14px;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>कार्यालय</div>
+                            <div>प्रधान मुख्य आयकर आयुक्त</div>
+                            <div>तिसरी मंजिल, आयकर भवन,</div>
+                            <div>महर्षिकर्वे मार्ग, मुंबई - 400 020</div>
+                          </td>
+                          <td
+                            style="
+                              width: 20%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <img
+                              *ngIf="key === 'itbuddy'"
+                              src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                            <img
+                              *ngIf="key === 'incometax'"
+                              src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                              alt="Government of India"
+                              class="image"
+                              width="70px"
+                              height="110px"
+                              style="padding: 4px 5px"
+                            />
+                          </td>
+                          <td
+                            style="
+                              width: 40%;
+                              font-size: 14px;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              text-align: center;
+                              border-bottom: none;
+                            "
+                          >
+                            <div>Office of the</div>
+                            <div>Pr. Chief Commissioner of Income Tax</div>
+                            <div>3rd Floor, Aayakar Bhavan,</div>
+                            <div>Maharshi Karve Road, Mumbai - 400 020</div>
+                          </td>
+                        </tr>
+                      </table>
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 13px">
+                          <td
+                            style="
+                              width: 40%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-right: 0px;
+                            "
+                          >
+                            <div>फोन: 022-22017654</div>
+                          </td>
+                          <td
+                            style="
+                              width: 60%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                              border-bottom: 0px;
+                              border-left: 0px;
+                            "
+                          >
+                            <div style="text-align: end">
+                              Email: mumbai.pccit@incometax.gov.in
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <table style="border-collapse: collapse; width: 100%">
+                        <tr style="font-size: 14px">
+                          <td
+                            style="
+                              width: 75%;
+                              text-align: left;
+                              padding: 5px 15px;
+                              border: 1px solid black;
+                            "
+                          >
+                            No.Pr.CCIT/Mum/HQ/Admin/{{
+                              dataAllotmentPublish.DRAFT_ALLOT_ORDER_NO
+                            }}
+                            <!-- DCIT/Type{{ data.RESIDENCE_TYPE_NAME }} Quarter Allotment/{{  todaysyear}}- {{ nextyear }} -->
+                          </td>
+                          <td
+                            style="
+                              width: 15%;
+                              text-align: left;
+                              padding: 5px 10px;
+                              border: 1px solid black;
+                            "
+                          >
+                            Date: {{ todaysdateee | date : "dd/MM/yyyy" }}
+                          </td>
+                        </tr>
+                      </table>
+
+                      <div nz-row>
+                        <div nz-col nzSpan="24">
+                          <p
+                            style="
+                              text-align: center;
+                              font-size: 15px;
+                              text-decoration: underline;
+                            "
+                          >
+                            <b
+                              style="
+                                font-family: 'Times New Roman', Times, serif;
+                              "
+                            >
+                              NOTICE <br /><br />
+                              <span>
+                                {{ data.RESIDENCE_TYPE_NAME }} QUARTERS PROPOSED
+                                FOR ALLOTMENT FOR CUT-OFF PERIOD ENDING ON
+                                {{ cutoffPeriod | date : "dd/MM/yyyy" }} BASED
+                                ON THE SENIORITY & PREFERENCES RECEIVED</span
+                              >
+                            </b>
+                          </p>
+
+                          <p
+                            style="
+                              margin-left: auto;
+                              margin-top: 20px;
+                              margin-right: auto;
+                              font-size: 16px;
+                              text-align: justify !important;
+                              font-family: 'Times New Roman', Times, serif;
+                            "
+                          >
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;It is hereby
+                            brought to the notice of all the eligible officers
+                            who have applied for
+                            {{ data.RESIDENCE_TYPE_NAME }} Quarters, that based
+                            on the preferences filed by the eligible officers
+                            and seniority list, available quarters are proposed
+                            to be allotted to the following officers for the
+                            cut-off period ending on
+                            {{ cutoffPeriod | date : "dd/MM/yyyy" }}
+                          </p>
+
+                          <table
+                            style="
+                              text-align: center;
+                              border-collapse: collapse;
+                              font-size: 16px;
+                              font-family: 'Times New Roman', Times, serif;
+                              margin-left: auto;
+                              margin-right: auto;
+                            "
+                          >
+                            <thead>
+                              <tr>
+                                <th
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  Sr. no
+                                </th>
+                                <th
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  Name of the Officer & Designation
+                                </th>
+                                <th
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  Civil List No.
+                                </th>
+                                <th
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  Quarter No. & Location
+                                </th>
+                                <th
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  Preference
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let mod of modalarraydatademo;
+                                  let n = index
+                                "
+                              >
+                                <td
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  {{ n + 1 }}
+                                </td>
+                                <td
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  {{
+                                    mod.EMPLOYEE_NAME ? mod.EMPLOYEE_NAME : "_"
+                                  }}, {{ mod.DESIGNATION_SHORT_CODE }}
+                                </td>
+                                <td
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  {{ mod.CIVIL_LIST ? mod.CIVIL_LIST : "_" }}
+                                </td>
+                                <td
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  {{ mod.NEW_FLAT_NAME }}, {{ mod.AREA_NAME }}
+                                </td>
+                                <td
+                                  style="
+                                    padding: 5px;
+                                    border: 1px solid black;
+                                    text-align: center;
+                                  "
+                                >
+                                  {{
+                                    mod.PREFERENCE_NO ? mod.PREFERENCE_NO : "_"
+                                  }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <p
+                            style="
+                              margin-left: auto;
+                              font-size: 16px;
+                              margin-right: auto;
+                              text-align: justify !important;
+                              margin-top: 20px;
+                              font-family: 'Times New Roman', Times, serif;
+                            "
+                          >
+                            2.&nbsp;Objection, if any should be submitted on or
+                            before
+                            <b>{{
+                              dataAllotmentPublish.OBJ_END_DATE_TIME
+                                | date : "dd/MM/yyyy HH:mm"
+                            }}</b>
+                            .
+                          </p>
+                        </div>
+                      </div>
+                      <!-- <div nz-row>
+                        <div
+                          nz-col
+                          nzSpan="24"
+                          style="
+                            margin-top: 50px;
+                            text-align: center;
+                            font-weight: bold;
+                            font-size: 15px;
+                          "
+                        >
+                          Note : This is computer generated order signature not
+                          required.
+                        </div>
+                      </div> -->
+                      <div
+                        style="width: 100%; margin-top: 10px; font-weight: 600"
+                      >
+                        <div
+                          style="
+                            float: right;
+                            text-align: center;
+                            line-height: 1.5;
+                            width: max-content;
+                            margin-left: auto;
+                          "
+                        >
+                          <img
+                            *ngIf="SIGNATURE_IMAGE"
+                            style="
+                              height: 50px;
+                              max-width: 100%;
+                              margin-bottom: 5px;
+                            "
+                            [src]="imgurl + 'signatureImage/' + SIGNATURE_IMAGE"
+                            alt="Signature"
+                          />
+                          <div>{{ NAME_HN ? "(" + NAME_HN + ")" : "" }}</div>
+                          <div>{{ SIGNNAME ? "(" + SIGNNAME + ")" : "" }}</div>
+                          <div *ngIf="POST_HIN">{{ POST_HIN }}</div>
+                          <div *ngIf="POST">{{ POST }}</div>
+                          <div *ngIf="OFFICE_HN">{{ OFFICE_HN }}</div>
+                          <div *ngIf="OFFICE">{{ OFFICE }}</div>
+                        </div>
+                      </div>
+
+                      <!-- <div
+                        style="width: 100%; margin-top: 80px; font-weight: 600"
+                      >
+                        <div
+                          style="
+                            float: right;
+                            text-align: center;
+                            line-height: 1.5;
+                          "
+                        >
+                       
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="NAME_HN"> ({{ NAME_HN }})</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="SIGNNAME"> ({{ SIGNNAME }})</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="POST_HIN"> {{ POST_HIN }}</span>
+                            </div>
+                          </div>
+                          <div nz-row>
+                            <div nz-col nzSpan="16"></div>
+                            <div nz-col nzSpan="8">
+                              <span *ngIf="POST"> {{ POST }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div nz-col nzSpan="2"></div> -->
+            </div>
+          </nz-spin>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <button
+    [nzLoading]="isSpinning"
+    nz-button
+    nzType="default"
+    (click)="pre()"
+    *ngIf="current > 0"
+    style="margin-right: 8px"
+  >
+    <span>Previous</span>
+  </button>
+  <button type="button" nz-button (click)="close()" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button
+    [nzLoading]="isSpinning"
+    nz-button
+    nzType="primary"
+    printSectionId="Prntmodal"
+    ngxPrint
+    [useExistingCss]="true"
+    style="margin-right: 8px"
+    *ngIf="ResidenceType.FILE_URL == null && current == 2"
+  >
+    Preview Order
+  </button>
+  <button
+    [nzLoading]="isSpinning"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    *ngIf="dataAllotmentPublish.FILE_URL != null && current == 2"
+    (click)="PublishToUser11()"
+    style="margin-right: 8px"
+  >
+    <span>Publish Draft Allotment Order</span>
+  </button>
+  <button
+    [nzLoading]="isSpinning"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="Next()"
+    *ngIf="current == 1"
+  >
+    <span>Preview Draft Order</span>
+  </button>
+  <button
+    [nzLoading]="isSpinning"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="Next()"
+    *ngIf="current == 0"
+  >
+    <span>Generate Draft Order</span>
+  </button>
+</div>
+
+<nz-drawer
+  [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }"
+  [nzClosable]="false"
+  [nzMask]="true"
+  [nzMaskClosable]="false"
+  [nzWidth]="1100"
+  [nzVisible]="drawerVisibleAllotment"
+  [nzTitle]="drawerTitleAllotment"
+  (nzOnClose)="drawerClose()"
+  (nzKeyboard)="(true)"
+>
+  <ng-container *nzDrawerContent>
+    <app-flatallotmentadd
+      [drawerClose]="closeCallbackAllotment"
+      [drawerVisible]="drawerVisibleAllotment"
+      [RESIDENCE_TYPE]="RESIDENCE_TYPE"
+    ></app-flatallotmentadd>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal
+  [(nzVisible)]="enclosedDocumentsVisible"
+  nzTitle="Enclosed Documents"
+  nzCentered="true"
+  [nzFooter]="footerofmodal"
+  nzCancelText="Close"
+  [nzBodyStyle]="{ padding: '5px', 'font-family': 'Poppins' }"
+  nzWidth="500px"
+  (nzOnCancel)="closeEnclosedDocuments()"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div
+        nz-col
+        nzSpan="24"
+        style="
+          padding: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+        *ngIf="encloseddata.JOINING_LETTER != null"
+      >
+        <nz-form-label nzNoColon>Joining Letter</nz-form-label>
+        <nz-form-item>
+          <div
+            style="
+              overflow: hidden;
+              font-size: 13px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 5px;
+              text-align: center;
+            "
+          >
+            {{ encloseddata.JOINING_LETTER }} &nbsp;&nbsp;
+            <span
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="ATTACHMENT2send(encloseddata.JOINING_LETTER)"
+            ></span
+            >&nbsp;&nbsp;
+          </div>
+        </nz-form-item>
+      </div>
+
+      <div
+        nz-col
+        nzSpan="24"
+        style="
+          padding: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+        *ngIf="encloseddata.I_CARD != null"
+      >
+        <nz-form-label nzNoColon>ICard</nz-form-label>
+        <nz-form-item>
+          <div
+            style="
+              overflow: hidden;
+              font-size: 13px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 5px;
+              text-align: center;
+            "
+          >
+            {{ encloseddata.I_CARD }} &nbsp;&nbsp;
+            <span
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="ATTACHMENT3send(encloseddata.I_CARD)"
+            ></span
+            >&nbsp;&nbsp;
+          </div>
+        </nz-form-item>
+      </div>
+
+      <div
+        nz-col
+        nzSpan="24"
+        style="
+          padding: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        "
+        *ngIf="encloseddata.PAY_SLIP != null"
+      >
+        <nz-form-label nzNoColon>Salary Slip</nz-form-label>
+        <nz-form-item>
+          <div
+            style="
+              overflow: hidden;
+              font-size: 13px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 5px;
+              text-align: center;
+            "
+          >
+            {{ encloseddata.PAY_SLIP }} &nbsp;&nbsp;
+            <span
+              nz-icon
+              nzTooltipTitle="Preview"
+              nzTooltipPlacement="top"
+              nz-tooltip
+              nzType="eye"
+              nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="ATTACHMENT4send(encloseddata.PAY_SLIP)"
+            ></span
+            >&nbsp;&nbsp;
+          </div>
+        </nz-form-item>
+      </div>
+      <!-- <div nz-col nzSpan="24" style="
+          padding: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        " *ngIf="encloseddata.CAST_CERTIFICATE != null">
+        <nz-form-label nzNoColon>Caste Certificate</nz-form-label>
+        <nz-form-item>
+          <div style="
+              overflow: hidden;
+              font-size: 13px;
+              display: block;
+              width: 100%;
+              color: #1890ff;
+              padding-left: 5px;
+              text-align: center;
+            ">
+            {{ encloseddata.CAST_CERTIFICATE }} &nbsp;&nbsp;
+            <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+              style="cursor: pointer; color: #1890ff"
+              (click)="ATTACHMENT5send(encloseddata.CAST_CERTIFICATE)"></span>&nbsp;&nbsp;
+          </div>
+        </nz-form-item>
+      </div> -->
+    </div>
+  </ng-container>
+  <ng-template #footerofmodal>
+    <button nz-button nzType="default" (click)="closeEnclosedDocuments()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [nzWidth]="1200"
+  [(nzVisible)]="AttachedpdfsVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="Attachedpdfs"
+  [nzTitle]="'PDFview'"
+  (nzOnCancel)="AttachedpdfsCancel()"
+  nzOkText="ok"
+  (nzOnOk)="SubmitRemark()"
+  [nzFooter]="AttachedpdfsFooter"
+>
+  <ng-template #Attachedpdfs>
+    <div *ngIf="view1 == 11" style="height: 600px; overflow: auto">
+      <iframe
+        [src]="viewattachedpdf"
+        style="width: 1150px; height: 600px"
+        frameborder="0"
+      ></iframe>
+    </div>
+    <div *ngIf="view1 == 22" style="height: 600px; overflow: auto">
+      <iframe
+        [src]="viewattachedpdf"
+        style="width: 1150px; height: 600px"
+        frameborder="0"
+      ></iframe>
+    </div>
+    <div *ngIf="view1 == 33" style="height: 600px; overflow: auto">
+      <iframe
+        [src]="viewattachedpdf"
+        style="width: 1150px; height: 600px"
+        frameborder="0"
+      ></iframe>
+    </div>
+    <div *ngIf="view1 == 44" style="height: 600px; overflow: auto">
+      <iframe
+        [src]="viewattachedpdf"
+        style="width: 1150px; height: 600px"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </ng-template>
+  <ng-template #AttachedpdfsFooter>
+    <button nz-button nzType="default" (click)="AttachedpdfsCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="AllotmentPreview"
+  nzTitle="Quarter Allotment Order Preview"
+  (nzOnCancel)="closemodal()"
+  nzCentered="true"
+  nzClosable="true"
+  [nzBodyStyle]="{
+    padding: '5px',
+    'font-family': 'Poppins',
+    height: '390px',
+    overflow: 'auto'
+  }"
+  nzWidth="870px"
+  nzMaskClosable="false"
+  [nzFooter]="AllotmentPreviewFooter"
+>
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="isSpinningmodal">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-spin [nzSpinning]="isSpinning">
+            <div class="form" id="Prntmodal" style="padding-left: 40px">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <img
+                    width="100%"
+                    height="170px"
+                    src="assets/govtOfIndia.png"
+                    alt=" failde to show "
+                    class="image"
+                  />
+                </div>
+                <div
+                  nz-col
+                  nzSpan="20"
+                  style="
+                    text-align: center;
+                    height: 170px;
+                    font-size: 13px;
+                    font-family: 'Times New Roman', Times, serif;
+                  "
+                >
+                  <div>भारत सरकार</div>
+                  <div>GOVERNMENT OF INDIA</div>
+                  <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                  <div>OFFICE OF THE</div>
+                  <div>
+                    <b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX, MUMBAI</b>
+                  </div>
+                  <div>
+                    3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20
+                  </div>
+                  <div>
+                    (022)2200 6385 (DIRECT), (022)2209 6738, (FAX), (022)2203
+                    9131 EXTN.2328.
+                  </div>
+                  <div>
+                    e-mail : <a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                nz-row
+                style="
+                  margin-top: 5px;
+                  font-size: 13px;
+                  font-family: 'Times New Roman', Times, serif;
+                  margin-top: 3px;
+                "
+              >
+                <div nz-col nzSpan="24">
+                  <table class="table12" style="width: 100%">
+                    <tr>
+                      <td
+                        style="
+                          width: 70%;
+                          text-align: left;
+                          padding: 5px 15px;
+                          border: 1px solid black;
+                          text-align: center;
+                        "
+                      >
+                        No.Pr.CCIT/Mum/HQ/Admin/{{
+                          dataAllotmentPublish.DRAFT_ALLOT_ORDER_NO
+                        }}
+                        <!-- DCIT/Type{{ data.RESIDENCE_TYPE_NAME }} Quarter Allotment/{{  todaysyear}}- {{ nextyear }} -->
+                      </td>
+                      <td
+                        style="
+                          width: 30%;
+                          text-align: left;
+                          padding: 5px 10px;
+                          border: 1px solid black;
+                          text-align: center;
+                        "
+                      >
+                        Date :-
+                        {{ todaysdateee | date : "dd/MM/yyyy" }}.
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+
+              <p
+                style="
+                  text-align: center;
+                  font-size: 13px;
+                  margin: 15px 0px;
+                  text-decoration: underline;
+                "
+              >
+                <b style="font-family: 'Times New Roman', Times, serif">
+                  NOTICE <br />
+                  {{ data.RESIDENCE_TYPE_NAME }} QUARTERS PROPOSED FOR ALLOTMENT
+                  FOR CUT-OFF PERIOD ENDING ON
+                  {{ cutoffPeriod | date : "dd/MM/yyyy" }} BASED ON THE
+                  SENIORITY & PREFERENCES RECEIVED
+                </b>
+              </p>
+
+              <p
+                style="
+                  margin-left: 10px;
+                  font-size: 12px;
+                  font-family: 'Times New Roman', Times, serif;
+                "
+              >
+                2.&nbsp;It is hereby brought to the notice of all the eligible
+                officers who have applied for
+                {{ data.RESIDENCE_TYPE_NAME }} Quarters, that based on the
+                preferences filed by the eligible officers and seniority list,
+                available quarters are proposed to be allotted to the following
+                officers for the cut-off period ending on
+                {{ cutoffPeriod | date : "dd/MM/yyyy" }}
+              </p>
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <table
+                    class="table12"
+                    style="
+                      text-align: center;
+                      width: 100%;
+                      font-size: 12px;
+                      font-family: 'Times New Roman', Times, serif;
+                    "
+                  >
+                    <thead>
+                      <tr>
+                        <th
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          Sr. no
+                        </th>
+                        <th
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          Name of the Officer & Designation
+                        </th>
+                        <th
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          Civil List No.
+                        </th>
+                        <th
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          Quarter No. & Location
+                        </th>
+                        <th
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          Preference
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let mod of modalarraydatademo; let n = index">
+                        <td
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          {{ mod.SEQUENCE_NO }}
+                        </td>
+                        <td
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          {{ mod.EMPLOYEE_NAME }} ,
+                          {{ mod.DESIGNATION_SHORT_CODE }}
+                        </td>
+                        <td
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          {{ mod.CIVIL_NO }}
+                        </td>
+                        <td
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          {{ mod.NEW_FLAT_NAME }}, {{ mod.AREA_NAME }},
+                          {{ mod.BUILDING_NAME }} {{ mod.FLOOR_NAME }}
+                          {{ mod.NEW_FLAT_NAME }}
+                        </td>
+                        <td
+                          style="
+                            padding: 5px;
+                            border: 1px solid black;
+                            text-align: center;
+                          "
+                        >
+                          {{ mod.CIVIL_NO }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p
+                style="
+                  margin-left: 10px;
+                  font-size: 12px;
+                  font-family: 'Times New Roman', Times, serif;
+                "
+              >
+                2.&nbsp;Objection, if any should be submitted on or before
+                <b>{{
+                  dataAllotmentPublish.OBJ_END_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm"
+                }}</b>
+                .
+              </p>
+              <!-- <div nz-row>
+                <div nz-col nzSpan="24"
+                  style="text-align: right;font-size: 12px;font-family:'Times New Roman', Times, serif !important;margin-top: 40px;">
+                  <div style="margin-right: 35px">
+                    <b>(ANAND RAJ)</b>
+                  </div>
+                  <div style="margin-right: 7px"><b>Dy. Commissioner of Income Tax (HQ), Admin</b></div>
+                  <div> <b> For Pr. Chief Commissioner of Income-tax, Mumbai </b> </div>
+                </div>
+              </div> -->
+            </div>
+          </nz-spin>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+  <ng-template #AllotmentPreviewFooter>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="downloadPdf()"
+    >
+      Download
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      printSectionId="Prntmodal"
+      ngxPrint
+      [useExistingCss]="true"
+      style="margin-right: 8px; color: white !important"
+    >
+      Print
+    </button>
+    <button nz-button nzType="default" (click)="closemodal()">Close</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="changeSerialVisible"
+  nzTitle="Change Allocation"
+  nzCentered="true"
+  [nzFooter]="ChangeSerialfooterofmodal"
+  nzCancelText="Close"
+  [nzBodyStyle]="{ padding: '5px', 'font-family': 'Poppins' }"
+  nzWidth="500px"
+  (nzOnCancel)="closeChangeSerial()"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <form nz-form>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item class="chsaaa">
+            <nz-form-label nzNoColon>Old Employee Name</nz-form-label>
+            <nz-form-control>
+              <nz-form-control>
+                <input
+                  nz-input
+                  name="newFlatNameTemp"
+                  required
+                  maxlength="128"
+                  disabled="true"
+                  placeHolder="Select Employee Name"
+                  [(ngModel)]="oldempname"
+                  maxlength="128"
+                  required
+                />
+              </nz-form-control>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item class="chsaaa">
+            <nz-form-label nzRequired nzNoColon
+              >New Employee Name</nz-form-label
+            >
+            <nz-form-control>
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Please Select New Employee Name "
+                name="newFlat"
+                [(ngModel)]="newFlatNamePer"
+              >
+                <nz-option
+                  *ngFor="let emp of employeefilterdata"
+                  [nzValue]="emp.EMP_ID"
+                  [nzLabel]="emp.EMPLOYEE_NAME"
+                >
+                </nz-option>
+                <nz-option [nzValue]="'0'" [nzLabel]="'NA'"> </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon
+              >Employee Name Change Reason</nz-form-label
+            >
+            <nz-form-control>
+              <textarea
+                nz-input
+                name="flatchangereason"
+                required
+                maxlength="256"
+                placeHolder="Enter Employee Name Change Reason"
+                [(ngModel)]="FLAT_CHANGE_REMARK"
+                required
+              ></textarea>
+            </nz-form-control>
+            <span style="color: red; font-size: 10px" *ngIf="FLAT_CHANGE_REMARK"
+              >{{ FLAT_CHANGE_REMARK.length }}/256</span
+            >
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <ng-template #ChangeSerialfooterofmodal>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isSpinning"
+      (click)="UpdateChangeSerial()"
+    >
+      Change
+    </button>
+    <button
+      nz-button
+      nzType="default"
+      [nzLoading]="isSpinning"
+      (click)="closeChangeSerial()"
+    >
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="prefrancepublish"
+  nzCentered="true"
+  [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="610px"
+  nzClosable="false"
+  [nzFooter]="contextofrules2"
+  nzMaskClosable="false"
+>
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">
+      Are you sure want to publish the Draft Allotment Order?
+    </span>
+    <hr style="margin: 8px 0" />
+    <p
+      style="
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        color: red;
+        font-weight: 500;
+      "
+    >
+      <!-- Note : Please note that no changes can be made after the Draft Allotment Order is published. -->
+      Note : Please note that no changes can be made in Draft Allotment order
+      once published.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules2>
+    <button
+      nz-button
+      nzType="default"
+      [nzLoading]="isSpinning"
+      class="btn btn-primary"
+      (click)="PublishToUsercancel()"
+    >
+      Cancel
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="isSpinning"
+      class="btn btn-primary"
+      style="background-color: #006699"
+      (click)="PublishToUser()"
+    >
+      Publish Draft Allotment Order
+    </button>
+  </ng-template>
+</nz-modal>

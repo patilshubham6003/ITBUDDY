@@ -1,0 +1,342 @@
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+
+table.main tr,
+th,
+td {
+  border: 1px solid black;
+}
+
+table.main td {
+  border: 1px solid black;
+
+}
+
+table.main th {
+  border: 1px solid black;
+
+}
+
+table.main thead,
+tr,
+td {
+  border: 1px solid black;
+
+}
+
+table.main tbody,
+tr,
+td {
+  border: 1px solid black;
+
+}
+
+table.main thead,
+td {
+  border: 1px solid black;
+
+}
+
+table.main tbody,
+td {
+  border: 1px solid black;
+
+}
+
+
+.borderless table,
+#nz-table.table tr,
+th,
+td {
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border: none;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  left: 0px;
+  background: #fff;
+}
+
+.header {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  border-top: 1px solid rgb(232, 232, 232);
+  padding: 10px 16px;
+  text-align: right;
+  right: 0px;
+}
+
+.ant-btn {
+  line-height: 0;
+  font-size: 10px;
+}
+
+.flexicons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.ant-steps-vertical>.ant-steps-item {
+  height: 100px !important;
+}
+
+.card-container {
+  display: flex;
+}
+
+.card {
+
+  border-radius: 12px;
+  background: #FFF;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.ant-card-body {
+  padding: 4px !important;
+}
+
+.card:last-child {
+  margin-right: 0;
+}
+
+nz-option {
+  width: 100%;
+  border-radius: 12px;
+  background: var(--Color-5, #F4F4F4);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+nz-select {
+  width: 100%;
+}
+
+.mainnam {
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 2;
+}
+
+.subnamm {
+  color: #6A6A6A;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 2;
+}
+
+
+.limit1 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+}
+
+.buttonclassid span {
+  display: flex;
+}
+
+/* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.grabbable:active {
+  cursor: grabbing;
+  font-weight: 700;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.grabbable:active>td {
+  font-weight: 700;
+}
+
+::ng-deep .cdk-drag-preview {
+  display: table;
+}
+
+::ng-deep .cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.grabbable:hover .buttonclassid span {
+  display: flex;
+  font-size: 16px;
+}
+
+.grabbable {
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.grabbable:hover {
+  font-weight: 700;
+}
+
+.tableScroll {
+
+  width: 1130px;
+  max-height: 440px;
+  /* height: 280px; */
+  overflow-x: auto;
+}
+
+/* .tablestyle {
+  border: 1px solid black;
+  border-collapse: collapse;
+  color: black;   
+} */
+
+.limitssss {
+
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 1;
+
+}
+
+
+table.main tr,
+th,
+td {
+  border: 1px solid black;
+}
+
+table.main td {
+  border: 1px solid black;
+
+}
+
+table.main th {
+  border: 1px solid black;
+
+}
+
+table.main thead,
+tr,
+td {
+  border: 1px solid black;
+
+}
+
+table.main tbody,
+tr,
+td {
+  border: 1px solid black;
+
+}
+
+table.main thead,
+td {
+  border: 1px solid black;
+
+}
+
+table.main tbody,
+td {
+  border: 1px solid black;
+
+}
+
+.main {
+  width: 100%;
+}
+
+.borderless table,
+#nz-table.table tr,
+th,
+td {
+  border-top-style: none;
+  border-left-style: none;
+  border-right-style: none;
+  border-bottom-style: none;
+  border: none;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(173, 172, 172);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #006699;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #006699;
+}
+
+@media print {
+  table {
+    width: 100%;
+  }
+}
+
+
+@media print {
+  .table12 {
+    text-align: center;
+
+    width: 100%;
+
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  th,
+  td {
+    border: 1px solid #000;
+  }
+}
+
+.noborder {
+  border: none;
+}
+
+.noborder td,
+.noborder th {
+  border: 1px solid #000;
+}
+
+.sizechangebutton {
+  font-size: 10px !important;
+}

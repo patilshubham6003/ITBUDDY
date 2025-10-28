@@ -1,0 +1,297 @@
+<div>
+  <form nz-form>
+    <div style="padding-left: 7%; margin-right: 2%">
+      <h3 style="text-align: center">
+        <u> <b>CERTIFICATE (IN DUPLICATE)</b> </u>
+      </h3>
+      <br /><br />
+      <p style="text-align: center">
+        <u>(To be submitted by the Government Servant for Tour T.A.Bill)</u>
+      </p>
+      <br /><br />
+      <p>
+        I actually travelled by mail/express train by the class of account as
+        claimed in the T.A.Bill.
+      </p>
+      <p>
+        I was actually and not merely constructively camp on Sundays and
+        Holidays during the period for which daily allowance has been claimed.
+      </p>
+      <p>
+        I was not on casual leave on any day for which daily allowance has
+        charged in the bill.
+      </p>
+      <p>
+        The distance by the road by which road mileage allowance has been
+        claimed is correct to the best of knowledge and belief.
+      </p>
+      <p>
+        The halts for which full and half daily allowance have been claimed were
+        necessitated by the performance of duty at the placeofhalt.
+      </p>
+      <p>
+        The journey were performed in the interests of public service and
+        government transport was utilized journeys for which road mileage has
+        been claimed.
+      </p>
+      <p>
+        I wastreated/not treated as State Guest during my halt
+        ________________________ and was not provided with boarding and lodging/
+        lodging only at State expenses/at the expenses of Government of India or
+        any organisations.
+      </p>
+
+      <p>No return tickets (Rail) were available for this journey.</p>
+      <p>
+        Return tickets (Rail) were available but were not purchased as the
+        return journey was not expected to be performed within the time for
+        which such tickets were available.
+      </p>
+      <p>
+        I did not perform road journeys for which mileage allowance has claimed
+        at the higher rates prescribed in Rule 46 of the Supplementary Rule by
+        taking as single seat in any public conveyance (excluding steamer)which
+        applies regularly on for hire between fixed point charges fixed rates. I
+        also certify that the journey was not performed in any other vehicle
+        without payment of its hire charges incurring its running expenses.
+      </p>
+      <p>
+        I did not avail of credit facilities for booking by air passage with the
+        Indian Airlines Corporation/Air India International by requisition
+        through an exchange order.
+      </p>
+      <p>
+        I travelled by Reserved Accommodation by Rail Requisitioned Ticket for
+        me and no non-entitled person travelled with me. In the Requisitioned
+        Accommodation by purchasing the necessary _(date) to
+        <span *ngFor="let data of particularofhotelsdata1; let i = index">
+          <b> {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }}</b>
+        </span>
+        tickets, I stayed from
+        <span *ngFor="let data of particularofhotelsdata1; let i = index">
+          <b> {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }},</b>
+        </span>
+        <span *ngFor="let data of particularofhotelsdata1; let i = index"
+          ><b>{{ data.PLACE }},</b></span
+        >
+        (date) at (Name of the Hotel) at
+        <span *ngFor="let data of particularofhotelsdata1; let i = index"
+          ><b>{{ data.NAME_OF_HOTEL }},</b></span
+        >
+
+        (name of the place) which provided boarding/lodging at scheduled
+        tariffs.
+      </p>
+      <p>N.B. Certificates which are inapplicable should be struck off.</p>
+      <br /><br />
+      <div style="margin-top: 50px; font-size: 13px">
+        <div nz-row>
+          <div nz-col nzSpan="12"></div>
+
+          <div nz-col nzSpan="12">
+            <p>Signature :-______________________</p>
+            <div>
+              Name :-
+              <b
+                >{{ certificatedata.EMPLOYEE_NAME }},{{
+                  certificatedata.DESIGNATION
+                }}</b
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="showmodal()"
+    >
+      <span>Download or Print</span>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Certificate Duplicate'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto">
+        <div id="excel-table">
+          <div
+            style="
+              width: 700px;
+              padding: 3px;
+              margin-left: 50px;
+              font-family: Arial, Helvetica, sans-serif;
+              font-size: 14px;
+            "
+          >
+            <div>
+              <h3 style="text-align: center">
+                <u> <b>CERTIFICATE (IN DUPLICATE)</b> </u>
+              </h3>
+              <br /><br />
+              <p style="text-align: center">
+                <u
+                  >(To be submitted by the Government Servant for Tour
+                  T.A.Bill)</u
+                >
+              </p>
+              <br /><br />
+              <p>
+                I actually travelled by mail/express train by the class of
+                account as claimed in the T.A.Bill.
+              </p>
+              <p>
+                I was actually and not merely constructively camp on Sundays and
+                Holidays during the period for which daily allowance has been
+                claimed.
+              </p>
+              <p>
+                I was not on casual leave on any day for which daily allowance
+                has charged in the bill.
+              </p>
+              <p>
+                The distance by the road by which road mileage allowance has
+                been claimed is correct to the best of knowledge and belief.
+              </p>
+              <p>
+                The halts for which full and half daily allowance have been
+                claimed were necessitated by the performance of duty at the
+                placeofhalt.
+              </p>
+              <p>
+                The journey were performed in the interests of public service
+                and government transport was utilized journeys for which road
+                mileage has been claimed.
+              </p>
+              <p>
+                I wastreated/not treated as State Guest during my halt
+                ________________________ and was not provided with boarding and
+                lodging/ lodging only at State expenses/at the expenses of
+                Government of India or any organisations.
+              </p>
+
+              <p>No return tickets (Rail) were available for this journey.</p>
+              <p>
+                Return tickets (Rail) were available but were not purchased as
+                the return journey was not expected to be performed within the
+                time for which such tickets were available.
+              </p>
+              <p>
+                I did not perform road journeys for which mileage allowance has
+                claimed at the higher rates prescribed in Rule 46 of the
+                Supplementary Rule by taking as single seat in any public
+                conveyance (excluding steamer)which applies regularly on for
+                hire between fixed point charges fixed rates. I also certify
+                that the journey was not performed in any other vehicle without
+                payment of its hire charges incurring its running expenses.
+              </p>
+              <p>
+                I did not avail of credit facilities for booking by air passage
+                with the Indian Airlines Corporation/Air India International by
+                requisition through an exchange order.
+              </p>
+              <p>
+                I travelled by Reserved Accommodation by Rail Requisitioned
+                Ticket for me and no non-entitled person travelled with me. In
+                the Requisitioned Accommodation by purchasing the necessary
+                _(date) to
+                <span
+                  *ngFor="let data of particularofhotelsdata1; let i = index"
+                >
+                  <b> {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }},</b>
+                </span>
+                tickets, I stayed from
+                <span
+                  *ngFor="let data of particularofhotelsdata1; let i = index"
+                >
+                  <b> {{ data.PERIOD_FROM | date : "dd-MM-yyyy" }},</b>
+                </span>
+                <span
+                  *ngFor="let data of particularofhotelsdata1; let i = index"
+                  ><b>{{ data.PLACE }},</b></span
+                >
+                (date) at (Name of the Hotel) at
+                <span
+                  *ngFor="let data of particularofhotelsdata1; let i = index"
+                  ><b>{{ data.NAME_OF_HOTEL }},</b></span
+                >
+
+                (name of the place) which provided boarding/lodging at scheduled
+                tariffs.
+              </p>
+              <p>
+                N.B. Certificates which are inapplicable should be struck off.
+              </p>
+              <br /><br />
+
+              <div style="margin-top: 50px; font-size: 13px">
+                <div nz-row>
+                  <div nz-col nzSpan="12"></div>
+
+                  <div nz-col nzSpan="12">
+                    <p>Signature :-______________________</p>
+                    <div>
+                      Name :-
+                      <b
+                        >{{ certificatedata.EMPLOYEE_NAME }},{{
+                          certificatedata.DESIGNATION
+                        }}</b
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="excel-table"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>

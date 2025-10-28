@@ -1,0 +1,445 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            (keydown.enter)="onKeypressEvent($event)"
+            nz-input
+            placeholder="Search"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row>
+            <div nz-col nzSpan="6">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+            <!-- [(ngModel)]="data" -->
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Hospital Type</nz-form-label>
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  name="hospitalType"
+                  nzPlaceHolder="Select Hospital Type"
+                  [(ngModel)]="HOSPITAL_TYPE"
+                >
+                  <nz-option nzLabel="Empanelled" nzValue="E"></nz-option>
+                  <nz-option nzLabel="Non-Empanelled" nzValue="NE"></nz-option>
+                  <nz-option nzLabel="Governemnt" nzValue="G"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <!-- [(ngModel)]="STAGE_ID" -->
+            <!-- <div nz-col nzSpan="6">
+                            <nz-form-item>
+                                <nz-form-label nzNoColon>Stage Name</nz-form-label>
+                                <nz-select name="stageName" nzShowSearch nzAllowClear style="width: 100%"
+                                    nzPlaceHolder="Select Stage Name" nzMode="multiple" [(ngModel)]="CLAIM_STAGE_NAME">
+                                    <nz-option *ngFor="let stage of stages;" [nzValue]="stage.ID"
+                                        [nzLabel]="stage.NAME">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-item>
+                        </div> -->
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Inspector Name</nz-form-label>
+                <nz-select
+                  name="InspectorName"
+                  nzShowSearch
+                  nzAllowClear
+                  style="width: 100%"
+                  nzPlaceHolder="Select Inspector Name"
+                  nzMode="multiple"
+                  [(ngModel)]="INSPECTOR_NAME"
+                >
+                  <nz-option
+                    *ngFor="let iname of inspectorname"
+                    [nzValue]="iname.ID"
+                    [nzLabel]="iname.NAME"
+                  >
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+            <div nz-col nzSpan="6">
+              <nz-form-item>
+                <nz-form-label nzNoColon>Benificiary Type</nz-form-label>
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  name="Benificiarytypesds"
+                  nzPlaceHolder="Select Benificiary Type"
+                  [(ngModel)]="BENIFICIARY_TYPE"
+                >
+                  <nz-option nzLabel="CGHS" nzValue="CG"></nz-option>
+                  <nz-option nzLabel="CS(MA)" nzValue="CS"></nz-option>
+                </nz-select>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="8">
+              <nz-form-label nzNoColon></nz-form-label>
+              <nz-form-item>
+                <button
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply Filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '4600px', y: '420px' }"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sort($event)"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th
+            nzWidth="200px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_NAME' }}"
+            [nzSortFn]="true"
+          >
+            Applicant Name
+          </th>
+          <th
+            nzWidth="110px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'EMPLOYEE_CODE' }}"
+            [nzSortFn]="true"
+          >
+            Employee Code
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'BILL_FILIING_DATE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Bill Filling Date
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'HOSPITAL_TYPE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Hospital Type
+          </th>
+          <th
+            nzWidth="210px"
+            nzColumnKey="{{ 'HOSPITAL_NAME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Hospital Name
+          </th>
+          <th
+            nzWidth="110px"
+            nzColumnKey="{{ 'CLAIMED_AMOUNT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Claimed Amount
+          </th>
+          <th
+            nzWidth="120px"
+            nzColumnKey="{{ 'ADMISSIBLE_AMOUNT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Admissible Amount
+          </th>
+          <th
+            nzWidth="110px"
+            nzColumnKey="{{ 'ADVANCE_AMOUNT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Advance Amount
+          </th>
+          <th
+            nzWidth="320px"
+            nzColumnKey="{{ 'TREATEMENT_TYPE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Treatment Type
+          </th>
+          <th
+            nzWidth="170px"
+            nzColumnKey="{{ 'DESIGNATION_OFFICE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Designation & Office
+          </th>
+          <th
+            nzWidth="145px"
+            nzColumnKey="{{ 'DDO_OF_THE_OFFICIAL' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            DDO Of Official
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'RELATION_WITH_PATIENT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Patient Relation
+          </th>
+          <th
+            nzWidth="160px"
+            nzColumnKey="{{ 'BENEFICIARY_TYPE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            CGHS/CS (MA) Beneficiary
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'EMERGENCY_TREATEMENT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Emergency Treatment Availed
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'CGHS_AMA_REFERENCE_DATE' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Date Of CGHS/AMA's Reference
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'IS_BILL_FILLED_IN_TIME' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Bill Is Filled In Time
+          </th>
+          <th
+            nzWidth="180px"
+            nzColumnKey="{{ 'NATURE_OF_TREATMENT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Nature Of Treatment
+          </th>
+          <th
+            nzWidth="150px"
+            nzColumnKey="{{ 'PERIOD_OF_TREATMENT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Period Of Treatment
+          </th>
+          <th
+            nzWidth="200px"
+            nzColumnKey="{{ 'NET_PAYABLE_AMOUNT' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Net Amount Payable/Recoverable
+          </th>
+          <th
+            nzWidth="100px"
+            nzColumnKey="{{ 'CGHS_AMA_REFERENCE_NO' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            CGHS Number
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="white-space: pre-line" align="center">
+            {{ data["EMPLOYEE_NAME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["EMPLOYEE_CODE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["BILL_FILIING_DATE"] }}
+          </td>
+          <td style="text-align: center">
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'E'">Empanelled</span>
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'NE'"
+              >Non Empanelled</span
+            >
+            <span nz-icon *ngIf="data['HOSPITAL_TYPE'] == 'G'">Government</span>
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["HOSPITAL_NAME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["CLAIMED_AMOUNT"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["ADMISSIBLE_AMOUNT"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["ADVANCE_AMOUNT"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT'"
+              >OPD Treatment / Test Entitled</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'IT'"
+              >Indoor Treatment</span
+            >
+            <span nz-icon *ngIf="data['TREATEMENT_TYPE'] == 'OT,IT'"
+              >OPD Treatment / Test Entitled & Indoor Treatment</span
+            >
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["DESIGNATION_OFFICE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["DDO_OF_THE_OFFICIAL"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["RELATION_WITH_PATIENT"] }}
+          </td>
+          <td style="text-align: center; white-space: pre-line">
+            <span nz-icon *ngIf="data['BENEFICIARY_TYPE'] == 'CG'">CGHS</span>
+            <span nz-icon *ngIf="data['BENEFICIARY_TYPE'] == 'CS'">CS(MA)</span>
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["EMERGENCY_TREATEMENT"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["CGHS_AMA_REFERENCE_DATE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["IS_BILL_FILLED_IN_TIME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["NATURE_OF_TREATMENT"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["PERIOD_OF_TREATMENT"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["NET_PAYABLE_AMOUNT"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["CGHS_AMA_REFERENCE_NO"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

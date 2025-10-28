@@ -1,0 +1,422 @@
+<div>
+  <form nz-form #websitebannerPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>City Name</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select City Name">
+              <!-- <nz-select name="role_name" style="width: 100%;" [(ngModel)]="data.id" nzShowSearch
+                                nzPlaceHolder="Select City">
+                                <nz-option *ngFor="let role of CITY_MASTER " [nzValue]="role.ID"
+                                    nzLabel="{{role.NAME}}">
+                                </nz-option>
+                            </nz-select> -->
+
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzErrorTip="Please Select City"
+                nzPlaceHolder="Please Select City "
+                name="cityid"
+                [(ngModel)]="data.CITY_ID"
+                required
+              >
+                <nz-option
+                  *ngFor="let role of city"
+                  [nzValue]="role.ID"
+                  [nzLabel]="role.NAME"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Hospital Type</nz-form-label>
+
+            <!-- <nz-select name="role_name" style="width: 100%;" [(ngModel)]="data.id" nzShowSearch
+                                nzPlaceHolder="Select City">
+                                <nz-option *ngFor="let role of CITY_MASTER " [nzValue]="role.ID"
+                                    nzLabel="{{role.NAME}}">
+                                </nz-option>
+                            </nz-select> -->
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Select Hospital Type"
+            >
+              <nz-select
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Please Select Hospital Type "
+                name="hospitaltype"
+                [(ngModel)]="data.HOSPITAL_TYPE"
+                required
+              >
+                <nz-option nzValue="E" nzLabel="Empanelled"></nz-option>
+                <nz-option nzValue="NE" nzLabel="Non Empanelled"></nz-option>
+                <nz-option nzValue="G" nzLabel="Government"></nz-option>
+                <!-- <nz-option *ngFor="let role of hospitaltype " [nzValue]="role.ID" [nzLabel]="role.NAME">
+                            </nz-option> -->
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Hospital Name</nz-form-label>
+
+            <nz-form-control nzErrorTip="Please Enter Hospital Name">
+              <input
+                nz-input
+                autocomplete="off"
+                name="hospitalname"
+                type="text"
+                placeHolder="Enter The Hospital Name"
+                maxlength="256"
+                [(ngModel)]="data.NAME"
+                required
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Address</nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Address">
+              <nz-textarea-count [nzMaxCharacterCount]="512">
+                <textarea
+                  maxlength="50"
+                  required
+                  rows="2"
+                  maxlength="512"
+                  placeHolder="Enter The Address"
+                  [(ngModel)]="data.ADDRESS"
+                  name="addressline1"
+                  nz-input
+                ></textarea>
+              </nz-textarea-count>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Contact No(s)</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Contact No(s)"
+            >
+              <!-- <input nz-input autocomplete="off" name="contactno"  maxlength="2048" (keypress)="omit($event)" type="text"
+                                placeHolder="Enter Contact No" [(ngModel)]="data.CONTACT_NOS" required /> -->
+              <!-- <nz-select name="contacts" nzShowSearch nzAllowClear nzMode="tags" style="width: 100%"
+                                nzPlaceHolder="Enter Contact Number(s)" [(ngModel)]="data.contacts">
+                            </nz-select> -->
+
+              <!-- <nz-select name="CAST_NAMES" nzShowSearch nzAllowClear nzPlaceHolder="Enter Contact Number(s)"
+                            [(ngModel)]="data.contacts" nzMode="tags"   required>
+                            <nz-option *ngFor="let option of list" [nzLabel]="option" [nzValue]="option"></nz-option>
+                          </nz-select> -->
+
+              <nz-select
+                name="contacts"
+                [(ngModel)]="data.CONTACT_NOS"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Contact No(s)"
+                nzMode="tags"
+                required
+              >
+                <nz-option
+                  *ngFor="let option of list"
+                  [nzLabel]="option"
+                  [nzValue]="option"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Email(s)</nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please Enter Email(s)">
+              <!-- <input nz-input autocomplete="off" name="email"  maxlength="5016" [pattern]="emailpattern" type="text" placeHolder="Enter Email"
+                                [(ngModel)]="data.EMAILS" required /> -->
+              <!-- <nz-select name="emailid" nzShowSearch nzAllowClear nzMode="tags" style="width: 100%"
+                                nzPlaceHolder="Enter Email(s)" [(ngModel)]="data.emails">
+                            </nz-select> -->
+
+              <nz-select
+                name="emailid"
+                [(ngModel)]="data.EMAILS"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Email(s)"
+                nzMode="tags"
+                required
+              >
+                <nz-option
+                  *ngFor="let option of list1"
+                  [nzLabel]="option"
+                  [nzValue]="option"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Nodal Officer Name(s)</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Nodal Officer Name(s)"
+            >
+              <!-- <input nz-input autocomplete="off" name="nodalofficername" type="text"
+                                placeHolder="Enter EmaiNodal Officer Name"  maxlength="5016" [(ngModel)]="data.NODAL_OFFICER_NAMES"
+                                required /> -->
+              <!-- <nz-select name="nodalofficer" nzShowSearch nzAllowClear nzMode="tags" style="width: 100%"
+                                nzPlaceHolder="Enter Nodal Officer Name(s)" [(ngModel)]="data.nodalofficer">
+                            </nz-select> -->
+
+              <nz-select
+                name="nodalofficer"
+                [(ngModel)]="data.NODAL_OFFICER_NAMES"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Nodal Officer Name(s)"
+                nzMode="tags"
+                required
+              >
+                <nz-option
+                  *ngFor="let option of list2"
+                  [nzLabel]="option"
+                  [nzValue]="option"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Mobile No(s)</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Enter Mobile No(s)"
+            >
+              <!-- <input nz-input autocomplete="off" name="mobileno"  maxlength="2048" (keypress)="omit($event)" type="text"
+                                placeHolder="Enter Mobile No" [(ngModel)]="data.MOBILE_NOS" required /> -->
+              <!-- <nz-select name="mobileno" nzShowSearch nzAllowClear nzMode="tags" style="width: 100%"
+                                nzPlaceHolder="Enter Mobile Number(s)" [(ngModel)]="data.mobilenos">
+                            </nz-select> -->
+
+              <nz-select
+                name="mobileno"
+                [(ngModel)]="data.MOBILE_NOS"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Mobile No(s)"
+                nzMode="tags"
+                required
+              >
+                <nz-option
+                  *ngFor="let option of list3"
+                  [nzLabel]="option"
+                  [nzValue]="option"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Accreditation</nz-form-label>
+
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Please Select Accreditation"
+            >
+              <!-- <input nz-input autocomplete="off" name="accreditation" type="text"
+                                placeHolder="Enter The Accreditation" [(ngModel)]="data.ACCREDITATION" required />
+                             -->
+              <nz-select
+                name="accreditation"
+                [(ngModel)]="data.ACCREDITATION"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Select Accreditation"
+                required
+              >
+                <nz-option nzValue="N" nzLabel="NABH"></nz-option>
+                <nz-option nzValue="NN" nzLabel="Non NABH"></nz-option>
+                <nz-option nzValue="SP" nzLabel="Super Speciality"></nz-option>
+                <!-- <nz-option *ngFor="let option of accreditation" [nzLabel]="option" [nzValue]="option"></nz-option> -->
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Facilities</nz-form-label>
+
+            <nz-form-control nzHasFeedback nzErrorTip="Please Select Facilites">
+              <nz-select
+                name="facilities"
+                nzMode="tags"
+                nzShowSearch
+                nzAllowClear
+                style="width: 100%"
+                nzPlaceHolder="Select Facility"
+                [(ngModel)]="data.FACILITIES_ID"
+              >
+                <nz-option
+                  *ngFor="let option of facility"
+                  [nzValue]="option.ID"
+                  [nzLabel]="option.NAME"
+                >
+                </nz-option>
+              </nz-select>
+
+              <!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Known Languages"
+                            [(ngModel)]="data.FACILITIES_ID" name="language" nzMode="multiple" required [nzMaxTagCount]="8">
+                            <nz-option nzLabel="{{role.NAME}}" nzCustomContent
+                                *ngFor="let role of facility " [nzValue]="role.NAME">
+                                <span>
+                                    {{role.NAME}}
+                                </span>
+                            </nz-option>
+
+
+                        </nz-select> -->
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon
+              >Memorandum/Notification Name</nz-form-label
+            >
+
+            <nz-select
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Select Memorandum Name"
+              required
+              name="memo"
+              [(ngModel)]="data.NOTIFICATION_MEMORAMDUM_ID"
+            >
+              <nz-option
+                *ngFor="let role of memonotification"
+                [nzValue]="role.ID"
+                [nzLabel]="role.NAME"
+              >
+              </nz-option>
+            </nz-select>
+            <!-- <input nz-input autocomplete="off" name="memorandum" type="text"
+                                placeHolder="Enter Memorandum" [(ngModel)]="data.NOTIFICATION_MEMORAMDUM_ID" /> -->
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Status</nz-form-label>
+
+            <nz-form-control>
+              <nz-switch
+                name="status"
+                [(ngModel)]="data.STATUS"
+                nzCheckedChildren="Yes"
+                nzUnCheckedChildren="No"
+              >
+              </nz-switch>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close(websitebannerPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      *ngIf="!data.ID"
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzLoading]="isSpinning"
+      (click)="save(false, websitebannerPage)"
+    >
+      <span>Save & Close</span>
+    </button>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li
+          nz-menu-item
+          class="menuc"
+          style="border-radius: 4px; background-color: #40a9ff"
+        >
+          <a style="color: white" (click)="save(true, websitebannerPage)"
+            >Save & New</a
+          >
+        </li>
+      </ul>
+    </nz-dropdown-menu>
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      [nzLoading]="isSpinning"
+      *ngIf="data.ID"
+      (click)="save(false, websitebannerPage)"
+    >
+      <span>Update & Close</span>
+    </button>
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close(websitebannerPage)"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>

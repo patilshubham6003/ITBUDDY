@@ -1,0 +1,2282 @@
+<div class="header">
+  <!-- <p>{{tttt}}</p> -->
+  <button nz-button (click)="close()">
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+  </button>
+</div>
+<div nz-row nzSpan="24" style="padding: 0px 20px 20px 20px;">
+  <div nz-col nzSpan="4">
+    <nz-steps [nzCurrent]="stage" nzDirection="vertical" nzSize="small">
+      <nz-step [nzTitle]="Applicat" [nzDescription]="desctemp"> </nz-step>
+      <ng-template #desctemp>
+        <p style="font-size: 11px; margin-top: 10px" *ngIf="applicationdate != undefined">
+          {{ applicationdate | date : "dd/MM/yyyy HH:mm:ss" }}
+        </p>
+        <p></p>
+      </ng-template>
+      <ng-template #Applicat>
+        <span style="font-size: 11px; font-weight: 600">Fill Application Form</span>
+      </ng-template>
+
+      <nz-step [nzTitle]="Print" [nzDescription]="printdate"> </nz-step>
+      <ng-template #printdate>
+        <p style="font-size: 11px; margin-top: 10px" *ngIf="approveddate != undefined">
+          {{ approveddate | date : "dd/MM/yyyy HH:mm:ss" }}
+        </p>
+        <p></p>
+      </ng-template>
+      <ng-template #Print>
+        <span style="font-size: 11px; font-weight: 600">Preview & Submit</span>
+      </ng-template>
+    </nz-steps>
+  </div>
+  <div nz-col nzSpan="20" style="max-height: 80vh; overflow-y: auto; overflow-x: hidden">
+    <nz-card style="padding: 0px;">
+      <form nz-form *ngIf="stage == 0">
+        <nz-spin [nzSpinning]="isSpinning">
+          <h6 style="text-align: center; font-size: 15px;margin-bottom: 5px;">
+            Application Details
+          </h6>
+          <p style="text-align: justify; margin-bottom: 15px;font-size: 13px;">
+            Please provide your personal and official particulars and attach all
+            essential documents in PDF format to successfully complete the
+            initial stage of your application.
+          </p>
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 0px 5px 0px 5px;">
+                <div nz-col nzSpan="12">
+                  <h6 style="
+                      font-size: 14px;
+                      font-weight: 500;
+                      margin-bottom: 10px;
+                    ">
+                    Personal Information
+                  </h6>
+                </div>
+                <div nz-col nzSpan="10" style="text-align: end" class="fontsize">
+                  Employee Code :
+                  <input style="width: 139px;padding: 0px 5px;" nz-input name="empcode" [(ngModel)]="employee_code"
+                    required disabled />
+                </div>
+                <div nz-col nzSpan="2" style="text-align: end">
+                  <button [nzLoading]="showload" (click)="ShowProfile()" style="height: 25px;
+                  font-size: 11px;
+                  padding: 0px 13px;" nz-button nzTooltipTitle="Profile Edit" nzTooltipPlacement="top" nz-tooltip
+                    nzType="default">
+                    <span nz-icon nzType="edit" nzTheme="outline"> Edit </span>
+                  </button>
+                </div>
+
+              </div>
+              <div nz-row style="margin-top: 11px;">
+                <div nz-col nzSpan="20">
+                  <div nz-row style="padding: 0px 5px 0px 5px;">
+                    <div nz-col nzSpan="24" *ngIf="Employee_name != undefined">
+                      <span class="fontsize">Name :</span>&nbsp;&nbsp;<span class="fontsize"><b>{{ Employee_name
+                          }}</b></span>
+                    </div>
+                    <div nz-col nzSpan="14" *ngIf="emp_Designation != undefined">
+                      <span class="fontsize">Designation :</span>&nbsp;&nbsp;<span class="fontsize"><b>{{
+                          emp_Designation }}</b></span>
+                    </div>
+                    <div nz-col nzSpan="10" *ngIf="emp_dob != undefined">
+                      <span class="fontsize">DOB :</span>&nbsp;&nbsp;<span class="fontsize"><b>{{ emp_dob | date :
+                          "dd/MM/yyyy" }}</b></span>
+                    </div>
+                  </div>
+
+                  <div nz-row style="padding: 0px 5px 0px 5px;">
+                    <div nz-col nzSpan="14" *ngIf="office_name != undefined">
+                      <span class="fontsize">Office Name :</span>&nbsp;&nbsp;<span class="fontsize"><b>{{ office_name
+                          }}</b></span>
+                    </div>
+                    <div nz-col nzSpan="10" *ngIf="service_type != undefined">
+                      <span class="fontsize">Service Type :</span>&nbsp;&nbsp;<span class="fontsize"><b>{{
+                          service_type }}</b></span>
+                    </div>
+                  </div>
+
+                  <div nz-row style="padding: 0px 5px 0px 5px;">
+                    <div nz-col nzSpan="14" *ngIf="Grade_pay != undefined">
+                      <span class="fontsize">Grade Pay :</span>&nbsp;&nbsp;<span class="fontsize"><b>₹ {{ Grade_pay
+                          }}</b></span>
+                    </div>
+                    <div nz-col nzSpan="10" *ngIf="gradepay_level != undefined">
+                      <span class="fontsize">Grade Pay Level :</span>&nbsp;&nbsp;<span class="fontsize"><b>{{
+                          gradepay_level }}</b></span>
+                    </div>
+                  </div>
+
+                  <div nz-row style="padding: 0px 5px 0px 5px;">
+                    <div nz-col nzSpan="14" *ngIf="emp_address != undefined">
+                      <span class="fontsize">Present Residential Address :</span>&nbsp;&nbsp;<span class="fontsize"><b>
+                          {{ emp_address }}</b></span>
+                    </div>
+                    <div nz-col nzSpan="10" *ngIf="emp_cast != undefined">
+                      <span class="fontsize">Caste :</span>&nbsp;&nbsp;<span class="fontsize"><b>
+                          {{formatCaste(emp_cast) }}</b></span>
+                    </div>
+                    <div nz-col nzSpan="10" *ngIf="joining_date != undefined">
+                      <span class="fontsize">Joining Date :</span>&nbsp;&nbsp;<span class="fontsize"><b>
+                          {{ joining_date|date : "dd/MM/yyyy" }}</b></span>
+                    </div>
+                  </div>
+
+                  <div nz-row style="padding: 0px 5px 0px 5px;">
+                    <div nz-col nzSpan="14" *ngIf="headquarter_name != undefined">
+                      <span class="fontsize">Office Address :</span>&nbsp;&nbsp;<span class="fontsize"><b> {{
+                          headquarter_name }}</b></span>
+                    </div>
+                  </div>
+                </div>
+                <div nz-col nzSpan="4" style="text-align: center;">
+                  <div *ngIf="profilephoto!=null && profilephoto!=undefined && profilephoto!=''">
+                    <img nz-image width="100%" height="125px" nzSrc="{{ imgurl }}profileImages/{{ profilephoto }}"
+                      alt="Profile Photo">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box">
+            <div nz-col nzSpan="24">
+              <div nz-row>
+                <div nz-col nzSpan="24">
+                  <h6 style="
+                      font-size: 14px;
+                      font-weight: 500;
+                      margin-bottom: 8px;
+                    ">
+                    Official Information
+                  </h6>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Grade Pay Drawn Date</nz-form-label>
+                    <nz-date-picker name="GRADE_PAY_DRAWN_DATE" class="datesize" nzFormat="dd/MM/yyyy"
+                      [(ngModel)]="data.GRADE_PAY_DRAWN_DATE" style="width: 100%"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Proof/Letter of Grade
+                      Pay Drawn</nz-form-label>
+                    <nz-form-control *ngIf="gradepaynotnull">
+                      <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;"
+                        (click)="Gradepaydrawnletter.click()">
+                        Select File
+                        <input #Gradepaydrawnletter class="inputsize" name="GRADE_PAY_DRAWN_LETTER" type="file"
+                          accept=".pdf" (change)="onFileSelectedTransfer2($event)" style="display: none" required />
+                      </button>
+                    </nz-form-control>
+
+                    <div *ngIf="data.GRADE_PAY_DRAWN_LETTER != null" style="
+                        overflow: hidden;
+                        font-size: 11px;
+                        display: block;
+                        width: 100%;
+                        color: #1890ff;
+                        padding-left: 10px;
+                      ">
+                      {{ data.GRADE_PAY_DRAWN_LETTER }} &nbsp;&nbsp;
+                      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                        nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                        (click)="viewAssumptionPDF(data.GRADE_PAY_DRAWN_LETTER)"></span>&nbsp;&nbsp;
+                      <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                        nz-tooltip style="cursor: pointer; color: red" (click)="
+                          clearGradepayletter(
+                            data.GRADE_PAY_DRAWN_LETTER,
+                            'gradePayDrawnLetter'
+                          )
+                        "></span>
+                    </div>
+                  </nz-form-item>
+                  <div *ngIf="progressBar1">
+                    <nz-progress [nzPercent]="percent1"></nz-progress>
+                  </div>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Joining Letter</nz-form-label>
+                    <nz-form-control *ngIf="joininglettershow">
+                      <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;"
+                        (click)="JoiningLetterdisplay.click()">
+                        Select File
+                        <input #JoiningLetterdisplay class="inputsize" name="JOINING_LETTER" type="file" accept=".pdf"
+                          (change)="onFileSelectedJoiningletter($event)" style="display: none" required />
+                      </button>
+                    </nz-form-control>
+
+                    <div *ngIf="data.JOINING_LETTER != null" style="
+                        overflow: hidden;
+                        font-size: 11px;
+                        display: block;
+                        width: 100%;
+                        color: #1890ff;
+                        padding-left: 10px;
+                      ">
+                      {{ data.JOINING_LETTER }} &nbsp;&nbsp;
+                      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                        nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                        (click)="viewJoiningLetter(data.JOINING_LETTER)"></span>&nbsp;&nbsp;
+                      <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                        nz-tooltip style="cursor: pointer; color: red" (click)="
+                          clearJoiningletletter(
+                            data.JOINING_LETTER,
+                            'joiningLetter'
+                          )
+                        "></span>
+                    </div>
+                  </nz-form-item>
+                  <div *ngIf="progressBar2">
+                    <nz-progress [nzPercent]="percent2"></nz-progress>
+                  </div>
+                </div>
+              </div>
+              <div nz-row>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Superannuation Date</nz-form-label>
+                    <nz-date-picker name="SUPERANNUATION_DATE" nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate123"
+                      [nzDefaultPickerValue]="date" [(ngModel)]="data.SUPERANNUATION_DATE" style="width: 100%"
+                      class="datesize"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Pay Slip</nz-form-label>
+                    <nz-form-control *ngIf="Payslipshow">
+                      <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;"
+                        (click)="Payslipdisplay.click()">
+                        Select File
+                        <input #Payslipdisplay class="inputsize" name="PAY_SLIP" type="file" accept=".pdf"
+                          (change)="onFileSelectedPayslip($event)" style="display: none" required />
+                      </button>
+                    </nz-form-control>
+
+                    <div *ngIf="data.PAY_SLIP != null" style="
+                        overflow: hidden;
+                        font-size: 11px;
+                        display: block;
+                        width: 100%;
+                        color: #1890ff;
+                        padding-left: 10px;
+                      ">
+                      {{ data.PAY_SLIP }} &nbsp;&nbsp;
+                      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                        nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                        (click)="viewpayslip(data.PAY_SLIP)"></span>&nbsp;&nbsp;
+                      <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                        nz-tooltip style="cursor: pointer; color: red"
+                        (click)="clearpayslip(data.PAY_SLIP, 'paySlips')"></span>
+                    </div>
+                  </nz-form-item>
+                  <div *ngIf="progressBar3">
+                    <nz-progress [nzPercent]="percent3"></nz-progress>
+                  </div>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">I-Card</nz-form-label>
+                    <nz-form-control *ngIf="Icardshow">
+                      <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;"
+                        (click)="Icardupload.click()">
+                        Select File
+                        <input #Icardupload class="inputsize" name="I_CARD" type="file" accept=".pdf"
+                          (change)="onFileSelectedIcard($event)" style="display: none" required />
+                      </button>
+                    </nz-form-control>
+
+                    <div *ngIf="data.I_CARD != null" style="
+                        overflow: hidden;
+                        font-size: 11px;
+                        display: block;
+                        width: 100%;
+                        color: #1890ff;
+                        padding-left: 10px;
+                      ">
+                      {{ data.I_CARD }} &nbsp;&nbsp;
+                      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                        nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                        (click)="viewIcard(data.I_CARD)"></span>&nbsp;&nbsp;
+                      <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                        nz-tooltip style="cursor: pointer; color: red"
+                        (click)="clearIcard(data.I_CARD, 'iCards')"></span>
+                    </div>
+                  </nz-form-item>
+                  <div *ngIf="progressBar4">
+                    <nz-progress [nzPercent]="percent4"></nz-progress>
+                  </div>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span class="fontsize">Indicate the sources from which the emoluments are
+                    drawn,
+                    if not, from the Consolidated Funds of Govt. of India
+                    ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" nzUnCheckedChildren="No" name="IS_EMOLUMENTS_DRAWN" nzSize="small"
+                    [(ngModel)]="data.IS_EMOLUMENTS_DRAWN" (ngModelChange)="emolumentdrawn($event)"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 0 5px" *ngIf="data.IS_EMOLUMENTS_DRAWN">
+                <div nz-col nzSpan="24">
+                  <nz-form-label nzRequired nzNoColon class="labelsize">Details Of Sources from
+                    the emoluments are
+                    drawn.</nz-form-label>
+                </div>
+                <div nz-col nzSpan="15">
+                  <textarea rows="2" nz-input name="EMOLUMENTS_DRAWN" class="fontsize" maxlength="256"
+                    [(ngModel)]="data.EMOLUMENTS_DRAWN" required placeholder="Enter Emoluments Drawn"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" *ngIf="data != undefined">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span class="fontsize">If the Officer has joined on transfer in the Allotment
+                    Year, give details of joining at Mumbai ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" nzSize="small" nzUnCheckedChildren="No"
+                    name="JOINING_ALLOTMENT_YEAR" [(ngModel)]="data.JOINING_ALLOTMENT_YEAR"
+                    (ngModelChange)="joinallotletter($event)"></nz-switch>
+                </div>
+              </div>
+
+              <div nz-row *ngIf="data.JOINING_ALLOTMENT_YEAR">
+                <div nz-col nzSpan="12">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Proof of Joining
+                      Allotment letter</nz-form-label>
+                    <nz-form-control *ngIf="joiningAllotmentnotnull">
+                      <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;"
+                        (click)="TransferJoiningAllotment.click()">
+                        Select File
+                        <input #TransferJoiningAllotment class="inputsize" name="JOINING_ALLOTMENT_LETTER" accept=".pdf"
+                          type="file" (change)="onFileSelectedTransfer1($event)" style="display: none" required />
+                      </button>
+                    </nz-form-control>
+
+                    <div *ngIf="data.JOINING_ALLOTMENT_LETTER != null" style="
+                        overflow: hidden;
+                        font-size: 11px;
+                        display: block;
+                        width: 100%;
+                        color: #1890ff;
+                      ">
+                      {{ data.JOINING_ALLOTMENT_LETTER }} &nbsp;&nbsp;&nbsp;
+                      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                        nzTheme="outline" style="cursor: pointer; color: #1890ff" (click)="
+                          JoiningLatershow(data.JOINING_ALLOTMENT_LETTER)
+                        "></span>&nbsp;&nbsp;&nbsp;
+                      <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                        nz-tooltip style="cursor: pointer; color: red" (click)="
+                          clearAllotmentletter(
+                            data.JOINING_ALLOTMENT_LETTER,
+                            'joiningAllotmentLetter'
+                          )
+                        "></span>
+                    </div>
+                  </nz-form-item>
+                  <div *ngIf="progressBar5">
+                    <nz-progress [nzPercent]="percent5"></nz-progress>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-row>
+                <div nz-col nzSpan="24" style="margin: 0 5px">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Type of accommodation to
+                      which entitled with seniority
+                      date (vide S.R. 317– P-4)
+                    </nz-form-label>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="6">
+                  <nz-form-item>
+                    <nz-date-picker name="ACCOMMODATION_SENIORITY_DATE" nzFormat="dd/MM/yyyy"
+                      [(ngModel)]="data.ACCOMMODATION_SENIORITY_DATE" required [nzDisabledDate]="disabledDate1"
+                      style="width: 100%" class="datesize"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" *ngIf="data != undefined">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span class="fontsize">Is Spouse working in INCOME-TAX,Mumbai ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" nzSize="small" nzUnCheckedChildren="No"
+                    name="IS_SPOUSE_WORKING_IN_GOV" [(ngModel)]="data.IS_SPOUSE_WORKING_IN_GOV"
+                    (ngModelChange)="workinglatter($event)"></nz-switch>
+                </div>
+              </div>
+              <div nz-row *ngIf="data.IS_SPOUSE_WORKING_IN_GOV">
+                <div nz-col nzSpan="12">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Spouse Name</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input name="SPOUSE_NAME" required maxlength="128" placeHolder="Enter Spouse Name"
+                        [(ngModel)]="data.SPOUSE_NAME" class="inputsize" maxlength="128" required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="6">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Spouse Employee Code</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input name="SPOUSE_EMP_CODE" class="inputsize" required maxlength="12"
+                        placeHolder="Enter Spouse Employee Code" [(ngModel)]="data.SPOUSE_EMP_CODE" maxlength="12"
+                        required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="6">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Marriage Certificate</nz-form-label>
+                    <nz-form-control *ngIf="showmarriagecertificate">
+                      <button nz-button style="padding: 0px 10px; font-size: 11px;height: 27px;"
+                        (click)="Marriage.click()">
+                        Select File
+                        <input #Marriage name="MARRIAGE_CERTIFICATE" class="inputsize" accept=".pdf" type="file"
+                          (change)="Marriagecertificate($event)" style="display: none" required />
+                      </button>
+                    </nz-form-control>
+
+                    <div *ngIf="data.MARRIAGE_CERTIFICATE != null" style="
+                        overflow: hidden;
+                        font-size: 11px;
+                        display: block;
+                        width: 100%;
+                        color: #1890ff;
+                      ">
+                      {{ data.MARRIAGE_CERTIFICATE }} &nbsp;&nbsp;&nbsp;
+                      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                        nzTheme="outline" style="cursor: pointer; color: #1890ff" (click)="
+                        Marriageshow(data.MARRIAGE_CERTIFICATE)
+                        "></span>&nbsp;&nbsp;&nbsp;
+                      <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                        nz-tooltip style="cursor: pointer; color: red" (click)="
+                          clearMarriage(
+                            data.MARRIAGE_CERTIFICATE,
+                            'marriageCertificate'
+                          )
+                        "></span>
+                    </div>
+                  </nz-form-item>
+                  <div *ngIf="progressBar10">
+                    <nz-progress [nzPercent]="percent10"></nz-progress>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h6 style="
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+          ">
+              Grade Pay Wise Type of Residence
+            </h6>
+          </div>
+          <tr>
+            <td colspan="10" class="pading pdd">
+              <b class="inputsize1">PLEASE TICK THE TYPES OF ACCOMMODATION FOR WHICH YOU ARE
+                APPLYING :</b>
+            </td>
+          </tr>
+          <tr>
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%;font-size: 11px;">
+              Type of accommodation
+            </td>
+            <td nzAlign="center" colspan="1" class="pading pdd" style="width: 26%;font-size: 11px;">
+              Pay Range
+            </td>
+            <td nzAlign="center" colspan="2" rowspan="2" class="pading pdd"
+              style="width: 14%;font-size: 11px;vertical-align: middle;">
+              {{(disable1 || disable2 || disable1)?'Date of Joining':'Date of Priority'}}&nbsp;<span nz-icon
+                nzType="info-circle" nzTheme="twotone" nz-tooltip [nzTooltipTitle]="infofordateofprio"></span>
+              <ng-template #infofordateofprio>
+                <div>
+                  1) For residence type IV(Special) is the date of promotion to DCIT
+                </div>
+                <div>
+                  2) For residence type V and above date of promotion to JCIT
+                </div>
+              </ng-template>
+            </td>
+            <td nzAlign="center" colspan="2" rowspan="2" class="pading pdd"
+              style="vertical-align: middle;width: 14%;font-size: 11px;">
+              Grade Pay Level
+            </td>
+            <td nzAlign="center" colspan="2" rowspan="2" class="pading pdd"
+              style="vertical-align: middle;width: 14%;font-size: 11px;">
+              Date of Present Pay Level
+            </td>
+          </tr>
+          <tr>
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%;font-size: 11px;">
+              Type of Residence
+            </td>
+            <td nzAlign="center" colspan="1" class="pading pdd" style="width: 26%;font-size: 11px;">
+              Grade Pay (Pre-revised)
+            </td>
+          </tr>
+          <tr [ngClass]="!disable1 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <lable nz-checkbox [disabled]="!disable1" (ngModelChange)="removedat1($event)"
+                    [(ngModel)]="checklistData[0].isSelected" name="TYPE_RESIDENCE1" style="font-weight: bolder">
+                  </lable>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">I</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              <div>Rs. 1,300, Rs. 1,400 Rs. 1,600, Rs. 1,650 and Rs. 1,800</div>
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date1" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[0].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="true" nzShowSearch nzAllowClear nzPlaceHolder="Select pay level "
+                  style="width: 100%;" name="GRAD_PAY_LEVEL_ID_ABOVE_41" nzSize="small"
+                  [(ngModel)]="checklistData[0].GRAD_PAY_LEVEL_ID_ABOVE_4S" class="inputsize">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S1" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize"
+                  [(ngModel)]="checklistData[0].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable2 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox (ngModelChange)="removedat2($event)" [(ngModel)]="checklistData[1].isSelected"
+                    name="RESIDENCE_TYPE2" [disabled]="!disable2"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">II</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 1,900, Rs. 2,000 Rs. 2,400, and Rs. 2,800
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date2" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[1].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="true" nzShowSearch nzAllowClear nzPlaceHolder="Select pay level "
+                  style="width: 100%;" name="GRAD_PAY_LEVEL_ID_ABOVE_42" class="inputsize"
+                  [(ngModel)]="checklistData[1].GRAD_PAY_LEVEL_ID_ABOVE_4S" nzSize="small">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S2" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize"
+                  [(ngModel)]="checklistData[1].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable3 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable3" (ngModelChange)="removedat3($event)"
+                    [(ngModel)]="checklistData[2].isSelected" name="RESIDENCE_TYPE3"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">III</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 4,200, Rs. 4,600 and Rs. 4,800
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date3" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[2].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+
+
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="true" nzShowSearch nzAllowClear nzPlaceHolder="Select pay level "
+                  style="width: 100%;" name="GRAD_PAY_LEVEL_ID_ABOVE_43" class="inputsize"
+                  [(ngModel)]="checklistData[2].GRAD_PAY_LEVEL_ID_ABOVE_4S" nzSize="small">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S3" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" [(ngModel)]="checklistData[2].PRESENT_PAY_LEVEL_DATE_ABOVE_4S"
+                  style="width: 100%" class="datesize"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable4 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable4" (ngModelChange)="removedat4($event)"
+                    [(ngModel)]="checklistData[3].isSelected" name="RESIDENCE_TYPE4"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">IV</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 5,400, Rs. 6,600
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date4" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[3].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="true" nzShowSearch nzAllowClear nzPlaceHolder="Select pay level "
+                  style="width: 100%;" name="GRAD_PAY_LEVEL_ID_ABOVE_44" class="inputsize"
+                  [(ngModel)]="checklistData[3].GRAD_PAY_LEVEL_ID_ABOVE_4S" nzSize="small">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S4" [nzDisabled]="true" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize"
+                  [(ngModel)]="checklistData[3].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable5 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable5" (ngModelChange)="removedat5()"
+                    [(ngModel)]="checklistData[4].isSelected" name="RESIDENCE_TYPE5"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">IV(Special)</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 6,600
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date5" [nzDisabled]="!checklistData[4].isSelected" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[4].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[4].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " style="width: 100%;" class="inputsize" nzSize="small"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_4S5" [(ngModel)]="checklistData[4].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S15" [nzDisabled]="!checklistData[4].isSelected"
+                  nzFormat="dd/MM/yyyy " class="datesize" [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[4].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable6 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable6" (ngModelChange)="removedat6()"
+                    [(ngModel)]="checklistData[5].isSelected" name="RESIDENCE_TYPE6"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">V-A(D-II)</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 7,600 and Rs.8,000
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date6" class="datesize" [nzDisabled]="!checklistData[5].isSelected"
+                  nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1" [(ngModel)]="checklistData[5].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[5].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " style="width: 100%;" class="inputsize" nzSize="small"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_46" [(ngModel)]="checklistData[5].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S16" [nzDisabled]="!checklistData[5].isSelected"
+                  nzFormat="dd/MM/yyyy " class="datesize" [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[5].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable7 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable7" (ngModelChange)="removedat7()"
+                    [(ngModel)]="checklistData[6].isSelected" name="RESIDENCE_TYPE7"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">V-B(D-I)</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 8,700 and Rs. 8,900
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date7" [nzDisabled]="!checklistData[6].isSelected" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[6].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[6].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " style="width: 100%;" class="inputsize" nzSize="small"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_47" [(ngModel)]="checklistData[6].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S17" [nzDisabled]="!checklistData[6].isSelected"
+                  nzFormat="dd/MM/yyyy " class="datesize" [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[6].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable8 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable8" (ngModelChange)="removedat8()"
+                    [(ngModel)]="checklistData[7].isSelected" name="RESIDENCE_TYPE8"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">VI-A(C-II)</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 10,000
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date8" class="datesize" [nzDisabled]="!checklistData[7].isSelected"
+                  nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1" [(ngModel)]="checklistData[7].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[7].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " style="width: 100%;" class="inputsize" nzSize="small"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_48" [(ngModel)]="checklistData[7].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S18" [nzDisabled]="!checklistData[7].isSelected"
+                  nzFormat="dd/MM/yyyy " class="datesize" [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[7].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable9 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable9" (ngModelChange)="removedat9()"
+                    [(ngModel)]="checklistData[8].isSelected" name="RESIDENCE_TYPE9"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">VI-B(C-I)</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 67,000 to Rs. 74,999
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date9" [nzDisabled]="!checklistData[8].isSelected" nzFormat="dd/MM/yyyy "
+                  [nzDisabledDate]="disabledDate1" class="datesize" [(ngModel)]="checklistData[8].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[8].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " style="width: 100%;" class="inputsize" nzSize="small"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_49" [(ngModel)]="checklistData[8].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S19" class="datesize"
+                  [nzDisabled]="!checklistData[8].isSelected" nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[8].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable10 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable10" (ngModelChange)="removedat10()"
+                    [(ngModel)]="checklistData[9].isSelected" name="RESIDENCE_TYPE10"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">VII</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 75,000 to Rs. 79,999
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date10" class="datesize" [nzDisabled]="!checklistData[9].isSelected"
+                  nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1" [(ngModel)]="checklistData[9].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[9].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " style="width: 100%;" class="inputsize" nzSize="small"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_410" [(ngModel)]="checklistData[9].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S10" class="datesize"
+                  [nzDisabled]="!checklistData[9].isSelected" nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[9].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <tr [ngClass]="!disable11 ? 'none' : 'black'">
+            <td nzAlign="center" colspan="3" class="pading pdd" style="width: 13%">
+              <div nz-row>
+                <div nz-col nzSpan="4">
+                  <label nz-checkbox [disabled]="!disable11" [(ngModel)]="checklistData[10].isSelected"
+                    (ngModelChange)="removedat11()" name="RESIDENCE_TYPE11"></label>
+                </div>
+                <div nz-col nzSpan="20" style="font-size: 11px;">VIII</div>
+              </div>
+            </td>
+
+            <td nzAlign="center" colspan="1" style="width: 26%" class="pading pdd" style="font-size: 11px">
+              Rs. 80,000 and above
+            </td>
+
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="joining_date11" class="datesize" [nzDisabled]="!checklistData[10].isSelected"
+                  nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1" [(ngModel)]="checklistData[10].JOINING_DATE"
+                  style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-select [nzDisabled]="!checklistData[10].isSelected" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select pay level " nzSize="small" style="width: 100%;" class="inputsize"
+                  name="GRAD_PAY_LEVEL_ID_ABOVE_411" [(ngModel)]="checklistData[10].GRAD_PAY_LEVEL_ID_ABOVE_4S">
+                  <nz-option *ngFor="let type of gradepaydata" [nzValue]="type.ID" [nzLabel]="type.GRADE_PAY_LEVEL">
+                  </nz-option>
+                </nz-select>
+              </nz-form-item>
+            </td>
+            <td nzAlign="center" colspan="2" class="pading pdd">
+              <nz-form-item>
+                <nz-date-picker name="PRESENT_PAY_LEVEL_DATE_ABOVE_4S11" class="datesize"
+                  [nzDisabled]="!checklistData[10].isSelected" nzFormat="dd/MM/yyyy " [nzDisabledDate]="disabledDate1"
+                  [(ngModel)]="checklistData[10].PRESENT_PAY_LEVEL_DATE_ABOVE_4S" style="width: 100%"></nz-date-picker>
+              </nz-form-item>
+            </td>
+          </tr>
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <h6 style="
+                  font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0px;
+    margin-top: 10px;
+                ">
+                Particular of Government Residence
+              </h6>
+            </div>
+          </div>
+          <div nz-row class="my-box" style="padding: 0px 10px;">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span style="font-size: 11px;">Is any government residence alloted ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" name="IS_GOVERNMENT_RESIDENCE_ALLOTED"
+                    [(ngModel)]="data2.IS_GOVERNMENT_RESIDENCE_ALLOTED" nzSize="small" nzUnCheckedChildren="No"
+                    (ngModelChange)="isanygov($event)"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px" *ngIf="data2.IS_GOVERNMENT_RESIDENCE_ALLOTED">
+                <div nz-col nzSpan="24">
+                  <span style="font-size: 11px;">Allocated To :-</span>
+                </div>
+                <div nz-col nzSpan="24">
+                  <nz-radio-group style="padding: 5px" name="ALLOCATED_TO" [(ngModel)]="data2.ALLOCATED_TO"
+                    (ngModelChange)="changeinallocatedto($event)">
+                    <label nz-radio nzValue="Applicant" style="font-size: 11px;">Applicant</label>
+                    <label nz-radio nzValue="Family Member" style="font-size: 11px;">Family Member</label>
+                  </nz-radio-group>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px" *ngIf="data2.IS_GOVERNMENT_RESIDENCE_ALLOTED">
+                <div nz-col nzSpan="17">
+                  <div nz-row>
+                    <div nz-col nzSpan="24">
+                      <span style="font-size: 11px;">Allocated By :-</span>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-radio-group style="padding: 5px" name="ALLOCATED_BY" [(ngModel)]="data2.ALLOCATED_BY"
+                        (ngModelChange)="changeinallocatedBy($event)">
+                        <label nz-radio nzValue="Head Department" style="font-size: 11px;">By the Head of
+                          Department
+                        </label>
+                        <label nz-radio nzValue="By Other Govt.Department" style="font-size: 11px;">By
+                          other Government Department
+                        </label>
+                      </nz-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div nz-col nzSpan="7">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Department Name</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input name="ALLOCATED_BY_DEPARTMENT" class="inputsize" maxlength="256"
+                        [(ngModel)]="data2.ALLOCATED_BY_DEPARTMENT" required placeholder="Enter Department Name" />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div nz-row style="padding: 0 5px">
+                <div nz-col nzSpan="17">
+                  <div nz-row>
+                    <div nz-col nzSpan="24">
+                      <span style="font-size: 11px;">Is Family Member Employeed ?</span>
+                    </div>
+
+                    <div nz-col nzSpan="24" style="padding: 5px 0">
+                      <nz-switch nzCheckedChildren="Yes" name="IS_EMPLOYEED_FAMILY_MEMBER"
+                        [(ngModel)]="data2.IS_EMPLOYEED_FAMILY_MEMBER" nzSize="small" nzUnCheckedChildren="No"
+                        (ngModelChange)="fammememp($event)"></nz-switch>
+                    </div>
+                  </div>
+                </div>
+
+                <div nz-col nzSpan="7" *ngIf="data2.IS_EMPLOYEED_FAMILY_MEMBER">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Office Name of family
+                      member</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input name="OFFICE_NAME_OF_FAMILY_MEM" class="inputsize" maxlength="256"
+                        [(ngModel)]="data2.OFFICE_NAME_OF_FAMILY_MEM" required
+                        placeholder="Enter Office Name of Family Member" />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+
+              <div nz-row style="padding: 0 5px">
+                <div nz-col nzSpan="24">
+                  <div nz-row>
+                    <div nz-col nzSpan="24">
+                      <span style="font-size: 11px;">He/She stay with you ?</span>
+                    </div>
+                    <div nz-col nzSpan="24" style="padding: 5px 0">
+                      <nz-switch nzCheckedChildren="Yes" name="STAYS_WITH_YOU" nzSize="small"
+                        [(ngModel)]="data2.STAYS_WITH_YOU" nzUnCheckedChildren="No"></nz-switch>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" style="padding: 0px 10px;">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span style="font-size: 11px;">Does the applicant stay presently ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" name="IS_APPLICANT_STAY_PRESENTLY"
+                    [(ngModel)]="data2.IS_APPLICANT_STAY_PRESENTLY" nzUnCheckedChildren="No" nzSize="small"
+                    (ngModelChange)="applicantsaty($event)"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px;padding-top: 0px;" *ngIf="data2.IS_APPLICANT_STAY_PRESENTLY">
+                <div nz-col nzSpan="24">
+                  <nz-form-label nzRequired nzNoColon class="labelsize">Type of Residence</nz-form-label>
+                  <span></span>
+                </div>
+                <div nz-col nzSpan="24">
+                  <div nz-row>
+                    <div nz-col nzSpan="17">
+                      <nz-radio-group name="TYPE_RESIDENCE" style="padding: 5px" [(ngModel)]="data2.TYPE_RESIDENCE"
+                        (ngModelChange)="changeResidencetype($event)">
+                        <label style="width: 40%; padding: 3px;font-size: 11px;" nz-radio
+                          nzValue="His/Her Ownership Flat">His/Her
+                          Ownership Quarter</label>
+                        <label style="width: 45%; padding: 3px;font-size: 11px;" nz-radio
+                          nzValue="In Rented Primeses">In a rented
+                          premises in his / her own name.
+                        </label>
+                        <label style="width: 40%; padding: 3px;font-size: 11px;" nz-radio
+                          nzValue="With Other relatives/friends">With
+                          some other relatives / friends
+                        </label>
+                        <label style="width: 50%; padding: 3px;font-size: 11px;" nz-radio
+                          nzValue="In quarter from general pool/Any Other pool.">In
+                          quarter from general pool/Any Other
+                          pool.</label>
+                      </nz-radio-group>
+                    </div>
+                    <div nz-col nzSpan="7" *ngIf="data2.TYPE_RESIDENCE == 'In Rented Primeses'">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon class="labelsize">Rented Premises Name</nz-form-label>
+                        <nz-form-control>
+                          <input nz-input name="RENTED_PREMISES_NAME" class="inputsize" maxlength="256"
+                            [(ngModel)]="data2.RENTED_PREMISES_NAME" required
+                            placeholder="Enter Rented Premises Name" />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="7" *ngIf="
+                        data2.TYPE_RESIDENCE ==
+                        'In quarter from general pool/Any Other pool.'
+                      ">
+                      <nz-form-item>
+                        <nz-form-label nzRequired nzNoColon class="labelsize">Pool Name</nz-form-label>
+                        <nz-form-control>
+                          <input nz-input name="POOL_NAME" class="inputsize" maxlength="256"
+                            [(ngModel)]="data2.POOL_NAME" required placeholder="Enter Pool Name" />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" style="padding: 0px 10px;">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span style="font-size: 11px;">Does the applicant stand debarred from allowance of
+                    government accommodation ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" name="DEBARRED_ALLOTMENT" nzSize="small"
+                    [(ngModel)]="data2.DEBARRED_ALLOTMENT" nzUnCheckedChildren="No"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span style="font-size: 11px;">Has he/she surrendered/cancelled any earlier allotment
+                    ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" name="CANCELLED_ALLOTMENT" nzSize="small"
+                    [(ngModel)]="data2.CANCELLED_ALLOTMENT" nzUnCheckedChildren="No"
+                    (ngModelChange)="cancelledapplication($event)"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px;padding-top: 0px;" *ngIf="data2.CANCELLED_ALLOTMENT">
+                <div nz-col nzSpan="24">
+                  <nz-form-label nzRequired nzNoColon class="labelsize">Details</nz-form-label>
+                </div>
+                <div nz-col nzSpan="16">
+                  <textarea nz-input name="AFFIRMATIVE_INDICATE" class="inputsize"
+                    [(ngModel)]="data2.AFFIRMATIVE_INDICATE" maxlength="256" [nzAutosize]="{ minRows: 2, maxRows: 2 }"
+                    required placeholder="Enter details here"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" style="padding: 0px 10px;">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span style="font-size: 11px;">Is the officer entitled to rent free accommodation ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" name="RENT_FREE_ACCOMMODATION" nzSize="small"
+                    [(ngModel)]="data2.RENT_FREE_ACCOMMODATION" nzUnCheckedChildren="No"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="22">
+                  <span style="font-size: 11px;">Does the applicant/spouse or dependent child own's house
+                    near station in city ?</span>
+                </div>
+                <div nz-col nzSpan="2">
+                  <nz-switch nzCheckedChildren="Yes" name="APPLICANT_FAMILY" [(ngModel)]="data2.APPLICANT_FAMILY"
+                    nzUnCheckedChildren="No" (ngModelChange)="applicantfamily($event)" nzSize="small"></nz-switch>
+                </div>
+              </div>
+              <div nz-row style="padding: 5px;padding-top: 0px;" *ngIf="data2.APPLICANT_FAMILY">
+                <div nz-col nzSpan="24">
+                  <nz-form-label nzRequired nzNoColon class="labelsize">Details</nz-form-label>
+                </div>
+                <div nz-col nzSpan="16">
+                  <textarea nz-input name="STATION_DUTY_FAR_FAMILY" class="inputsize"
+                    [(ngModel)]="data2.STATION_DUTY_FAR_FAMILY" maxlength="256"
+                    [nzAutosize]="{ minRows: 2, maxRows: 2 }" required placeholder="Enter details here"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" style="padding: 0px 10px;">
+            <div nz-col nzSpan="24">
+              <div nz-row style="padding: 5px">
+                <div nz-col nzSpan="24">
+                  <span style="font-size: 11px;">Particular of surety.</span>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon class="labelsize">Permenant Post Held</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input name="PERMENANT_POST_HELD" class="inputsize" maxlength="256"
+                        [(ngModel)]="data2.PERMENANT_POST_HELD" required placeholder="Enter Permenant Post Held" />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon class="labelsize">Office to which attached</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input name="OFFICE_ATTACHED" class="inputsize" maxlength="256"
+                        [(ngModel)]="data2.OFFICE_ATTACHED" required placeholder="Enter Office to which attached" />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon class="labelsize">Does the surety subsist ?</nz-form-label>
+                    <nz-form-control style="padding-left: 5px">
+                      <nz-switch nzCheckedChildren="Yes" name="SURETY_SUBSIST" nzSize="small"
+                        [(ngModel)]="data2.SURETY_SUBSIST" nzUnCheckedChildren="No"></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row class="my-box" style="padding: 0px 10px;">
+            <div nz-col nzSpan="8">
+              <nz-form-item>
+                <nz-form-label class="labelsize">Civil List No.</nz-form-label>
+                <nz-form-control>
+                  <input nz-input name="CIVIL_LIST" class="inputsize" maxlength="256" [(ngModel)]="data2.CIVIL_LIST"
+                    placeholder="Enter Civil List No" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </nz-spin>
+      </form>
+
+      <form *ngIf="stage == 1">
+        <nz-spin [nzSpinning]="isSpinningprintform">
+          <h4 style="text-align: center; font-size: 15px">
+            Print Application Form
+          </h4>
+          <p style="text-align: center; font-size: 13px; margin-bottom: 15px">
+            Please review all the information displayed below for accuracy. Once
+            verified, you can proceed to print out the application form for the
+            next steps in the process.
+          </p>
+          <div nz-row style=" font-size: 12px; padding: 10px 30px;
+          font-family: 'Times New Roman' !important;" id="printpage" class="printsetting">
+            <div nz-col nzSpan="24"
+              style="text-align: center; font-size: 13px !important;font-family:'Times New Roman', Times, serif !important;">
+              <b>FORM FOR APPLICATION FOR OFFICERS OF INCOME-TAX DEPARTMENT FOR
+              </b>
+            </div>
+            <div nz-col nzSpan="24"
+              style="text-align: center; font-size: 13px !important; font-family:'Times New Roman', Times, serif !important;">
+              <b>ALLOTMENT OF RESIDENCE FROM THE DEPARTMENTAL POOL </b>
+            </div>
+            <div nz-col nzSpan="24" style="
+                text-align: center;
+                font-size: 13px !important;
+                font-family:'Times New Roman', Times, serif !important;
+                margin-bottom: 19px;
+              ">
+              <b>FOR THE ALLOTMENT YEAR:{{currentyear}}</b>
+            </div>
+
+            <div nz-col nzSpan="24" style="padding-left: 40px; padding-right: 40px;font-size: 12px;">
+              <table
+                style="width: 100%; font-family:'Times New Roman', Times, serif !important;border-collapse: collapse;">
+                <tbody>
+                  <tr style="page-break-inside: avoid !important;">
+                    <td rowspan="4" colspan="1" nzAlign="center" style="width: 6%;padding: 5px;border: 1px solid #000;">
+                      1 <br /><br /><br /><br /><br />
+                    </td>
+                    <td colspan="6" style="width: 94%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Full Name (In Block Letters)
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="3"
+                      style="text-align: right; width: 13%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Name
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" style="width: 50%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+
+                      <span *ngIf="firstname!=undefined && firstname!=null">
+                        {{ firstname| uppercase }}
+                      </span>
+
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="3"
+                      style="text-align: right; width: 13%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Father's Name / Middle Name
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" style="width: 50%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      <span *ngIf="middlename!=undefined && middlename!=null">
+                        {{ middlename| uppercase }}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="3"
+                      style="text-align: right; width: 13%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Surname
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" style="width: 50%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      <span *ngIf="lastname!=undefined && lastname!=null">
+                        {{ lastname| uppercase }}
+                      </span>
+
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center" style="width: 6%;padding: 5px;border: 1px solid #000;"></td>
+                    <td colspan="3" style="text-align: right;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Date of Birth
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.DOB | date : "dd/MM/yyyy" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center" style="width: 6%;padding: 5px;border: 1px solid #000;"></td>
+                    <td colspan="3" style="text-align: right;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Date of Superannuation
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.SUPERANNUATION_DATE | date : "dd/MM/yyyy" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      2 <br /><br /><br />
+                    </td>
+                    <td colspan="3" style="height: 70px;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Present Residential Address <br /><br />
+                      <br />
+                    </td>
+                    <td colspan="1" nzAlign="center"
+                      style="width: 4%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      : <br /><br />
+                      <br />
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.PRESENT_RESENDENTIAL_ADDRESS }}<br /><br />
+                      <br />
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      3<br /><br />
+                      <br />
+                    </td>
+                    <td colspan="3" style="height: 70px;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Present Office Address <br /><br />
+                      <br />
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.PRESENT_OFFICE_ADDRESS }}<br /><br />
+                      <br />
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      4
+                    </td>
+                    <td colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Designation & Particulars of Permanent / Quasi Permanent
+                      Post Held
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.DESIGNATION }} &nbsp;
+                      <span
+                        *ngIf="allodata != undefined && allodata.PERMENANT_POST_HELD!=undefined && allodata.PERMENANT_POST_HELD!=null">
+                        & {{allodata.PERMENANT_POST_HELD}}</span>
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      5
+                    </td>
+                    <td colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Whether the Officer Belongs to SC / ST
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.OFFICER_CAST }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      6 <br /><br />
+                    </td>
+                    <td colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      If the Officer has joined on transfer in the Allotment
+                      Year, give details of joining at Mumbai
+                    </td>
+
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.JOINING_ALLOTMENT_YEAR ? "Yes" : "No" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" rowspan="2" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      7 <br /><br />
+                    </td>
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (A)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Present Basic Pay & Grade Pay
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{basicpay}} &nbsp; & &nbsp;{{ allomas.GRADE_PAY
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important;">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (B)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Date from which such Grade Pay drawn
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allomas.GRADE_PAY_DRAWN_DATE | date : "dd/MM/yyyy" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      8 <br />
+                    </td>
+                    <td colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Indicate the sources from which the emoluments are drawn,
+                      if not, from the Consolidated Funds of Govt. of India
+
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allomas.IS_EMOLUMENTS_DRAWN
+                      ? allomas.EMOLUMENTS_DRAWN
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      9 <br />
+                    </td>
+                    <td colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Type of accommodation to which entitled with seniority
+                      date (vide S.R. 317-P-4)
+
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allomas != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allomas.ACCOMMODATION_SENIORITY_DATE
+                      ? (allomas.ACCOMMODATION_SENIORITY_DATE
+                      | date : "dd/MM/yyyy")
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td rowspan="1" colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      10
+                    </td>
+                    <td colspan="6" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      <b>PLEASE TICK THE TYPES OF ACCOMMODATION FOR WHICH YOU
+                        ARE APPLYING :</b>
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td nzAlign="center" colspan="3"
+                      style="width: 13%;font-size: 12px;font-weight: 500;padding: 5px;border: 1px solid #000;">
+                      Class of <br> accommodation
+                    </td>
+                    <td nzAlign="center" colspan="1"
+                      style="width: 26%;font-size: 12px;font-weight: 500;padding: 5px;border: 1px solid #000;">
+                      Pay Range
+                    </td>
+                    <td nzAlign="center" colspan="2" rowspan="2"
+                      style="width: 14%;font-size: 12px;font-weight: 500;padding: 5px;border: 1px solid #000;">
+                      Date of Joining
+                    </td>
+                    <td nzAlign="center" colspan="1" rowspan="2"
+                      style="width: 26%;font-size: 12px;font-weight: 500;padding: 5px;border: 1px solid #000;">
+                      Date from which the minimum pay Govt. Service prescribed
+                      (for the type of accommodation is drawn)
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td nzAlign="center" colspan="3"
+                      style="height: 50px;font-weight: 500;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Type of Residence
+                    </td>
+                    <td nzAlign="center" colspan="1"
+                      style="height: 50px;font-size: 12px;font-weight: 500;padding: 5px;border: 1px solid #000;">
+                      Grade Pay (Pre-revised)
+                    </td>
+                  </tr>
+
+                  <tr *ngFor="let restype of flatarrlist; let i = index" style="page-break-inside: avoid!important">
+                    <td nzAlign="center" colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;"
+                      *ngIf="restype != undefined">
+                      {{ restype.RESIDENCE_TYPE_NAME }} <br />
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 1" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 1,300, Rs. 1,400 Rs. 1,600, Rs. 1,650 and Rs. 1,800
+                    </td>
+
+                    <td nzAlign="center" colspan="1" *ngIf="restype.RESIDENCE_TYPE == 2"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 1,900, Rs. 2,000, Rs. 2,400 and Rs. 2800
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 3" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 4,200, Rs. 4,600 and Rs. 4,800
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 4" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 5,400, Rs. 6,600
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 5" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 6,600
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 6" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 7,600 and Rs.8,000
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 7" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 8,700 and Rs. 8,900
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 8" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 10,000
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 9" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 67,000 to Rs. 74,999
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 10" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 75,000 to Rs. 79,999
+                    </td>
+
+                    <td nzAlign="center" *ngIf="restype.RESIDENCE_TYPE == 11" colspan="1"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Rs. 80,000 and above
+                    </td>
+
+                    <td nzAlign="center" colspan="2" *ngIf="restype != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;;">
+                      {{ restype.JOINING_DATE | date : "dd/MM/yyyy" }}
+                    </td>
+
+                    <td nzAlign="center" colspan="1" style="padding: 5px;border: 1px solid #000;"></td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td rowspan="3" colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;;">
+                      11 <br /><br /><br /><br />
+                      <br />
+                    </td>
+                    <td colspan="6" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      <b>Particulars of the Govt. Residence, if any, allotted
+                        either to the applicant or of his / her family members:-
+                        :</b>
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (i)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      By the Head of Department
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.ALLOCATED_BY == "Head Department"
+                      ? allodata.ALLOCATED_BY_DEPARTMENT
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (ii)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      By other Government Department (Give name of the
+                      Department)
+
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.ALLOCATED_BY == "By Other Govt.Department"
+                      ? allodata.ALLOCATED_BY_DEPARTMENT
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" rowspan="2" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      12 <br /><br /><br /><br />
+                      <br /><br />
+                    </td>
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (i)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Office of family members, if employed, in Central / State
+                      Government / Public / Semi-Govt. Undertaking /
+                      Municipality/ Port Trust / LIC / Nationalised Services
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.IS_EMPLOYEED_FAMILY_MEMBER
+                      ? allodata.OFFICE_NAME_OF_FAMILY_MEM
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (ii)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      State whether the family member referred in Col. No. 12(i)
+                      stays with you
+
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.STAYS_WITH_YOU ? "Yes" : "No" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td rowspan="5" colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      13 <br /><br /><br /><br />
+                      <br /><br /><br /><br />
+
+                    </td>
+                    <td colspan="6" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      <b>Does the applicant stay presently:-</b>
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (i)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      in his / her ownership Quarter
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.TYPE_RESIDENCE == "His/Her Ownership Flat"
+                      ? "Yes"
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (ii)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      in a rented premises in his / her own name.
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.TYPE_RESIDENCE == "In Rented Primeses"
+                      ? allodata.RENTED_PREMISES_NAME
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (iii)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      with some other relatives / friends
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.TYPE_RESIDENCE ==
+                      "With Other relatives/friends"
+                      ? "Yes"
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (iv)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      in quarters from General Pool or any Other Pool
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.TYPE_RESIDENCE ==
+                      "In quarter from general pool/Any Other pool."
+                      ? allodata.POOL_NAME
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" rowspan="3" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      14 <br /><br /><br /><br />
+                      <br /><br />
+                    </td>
+                    <td colspan="1" rowspan="2" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (a)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (i) Does the applicant stand debarred from allotment of
+                      Govt. Accommodation or
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.DEBARRED_ALLOTMENT ? "Yes" : "NA" }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (ii) Has he / she surrendered / cancelled any earlier
+                      allotment .
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.CANCELLED_ALLOTMENT ? "Yes" : "NA" }}
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (b) <br /><br />
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      If reply to (i) & (ii) is affirmative, indicate the
+                      details thereof.
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.AFFIRMATIVE_INDICATE
+                      ? allodata.AFFIRMATIVE_INDICATE
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      15
+                    </td>
+                    <td colspan="3" style="height: 40px;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Is the officer entitled to rent-free accommodation
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.RENT_FREE_ACCOMMODATION ? "Yes" : "NA" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      16
+                    </td>
+                    <td colspan="3" style="height: 40px;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      Does the applicant / spouse or dependent child own a house
+                      at the station of duty. If yes, give details.
+                    </td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{
+                      allodata.APPLICANT_FAMILY
+                      ? allodata.STATION_DUTY_FAR_FAMILY
+                      : "NA"
+                      }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td rowspan="4" colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      17 <br /><br /><br /><br />
+                      <br />
+                    </td>
+                    <td colspan="6" style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      <b>Particulars of surety in case of officer not holding a
+                        Permanent / Quasi Permanent post under Central
+                        Government.
+                      </b>
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (1)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">Permanent
+                      Post held</td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.PERMENANT_POST_HELD ? allodata.PERMENANT_POST_HELD : "NA" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (2)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">Office
+                      to which attached</td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.OFFICE_ATTACHED ? allodata.OFFICE_ATTACHED : "NA" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      (3)
+                    </td>
+                    <td colspan="2" style="font-size: 12px;padding: 5px;border: 1px solid #000;">Does
+                      the surety subsist</td>
+                    <td colspan="1" nzAlign="center"
+                      style="width: 4%;font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.SURETY_SUBSIST ? "Yes" : "NA" }}
+                    </td>
+                  </tr>
+
+                  <tr style="page-break-inside: avoid!important">
+                    <td colspan="1" nzAlign="center"
+                      style="width: 6%; font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      18
+                    </td>
+                    <td colspan="3" style="font-size: 12px;padding: 5px;border: 1px solid #000;">Civil
+                      List No.</td>
+                    <td colspan="1" nzAlign="center" style="width: 4%;padding: 5px;border: 1px solid #000;">
+                      :
+                    </td>
+                    <td colspan="2" *ngIf="allodata != undefined"
+                      style="font-size: 12px;padding: 5px;border: 1px solid #000;">
+                      {{ allodata.CIVIL_LIST ? allodata.CIVIL_LIST : "-" }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div nz-col nzSpan="24"
+              style="margin-bottom: 7px; text-align: justify;padding-left: 40px; padding-right: 40px; font-family:'Times New Roman', Times, serif !important;font-size:12px !important;page-break-inside: avoid!important">
+              <table style="width: 100%;margin-top: 20px;  border-collapse: collapse;">
+                <tr>
+                  <td style="width: 15%;border: none;font-weight: 800;"><i>NOTE : </i></td>
+                  <td style="width: 75%;border: none;"><i>The date of seniority in respect of Type-I,
+                      II, III quarters
+                      shall be the date from which the applicant has been
+                      continuously in service in Central Government. The date of
+                      seniority in respect of Type-IV, Type-IV (Special) onwards
+                      shall be the date of reaching Grade Pay of Rs. 5,400/- and Rs.
+                      6,600/- respectively.
+                    </i></td>
+                </tr>
+              </table>
+            </div>
+
+            <div
+              style="padding-left: 40px; padding-right: 40px; font-family:'Times New Roman', Times, serif !important;font-size:12px !important;page-break-inside: avoid!important">
+              <div nz-row>
+                <table style="width: 100%;  border-collapse: collapse;">
+                  <tr>
+                    <td style="width: 20%;border: none;">Date : {{newdateforpreview | date : "dd/MM/yyyy"}}</td>
+                    <td style="width: 20%;border: none;text-align: right;">Name :</td>
+                    <td style="width: 60%;border: none;"><span *ngIf="allomas != undefined">{{ allomas.EMPLOYEE_NAME
+                        }}</span></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 20%;border: none;"></td>
+                    <td style="width: 20%;border: none;text-align: right;">Designation :</td>
+                    <td style="width: 60%;border: none;"><span *ngIf="allomas != undefined">{{ allomas.DESIGNATION
+                        }}</span></td>
+                  </tr>
+                  <tr>
+                    <td style="width: 20%;border: none;"></td>
+                    <td style="width: 20%;border: none;text-align: right;">Mobile No. :</td>
+                    <td style="width: 60%;border: none;"><span *ngIf="mobilen != undefined">{{mobilen}}</span></td>
+                  </tr>
+                </table>
+                <div nz-col nzSpan="24"
+                  style="margin-bottom: 10px; font-family:'Times New Roman', Times, serif !important;font-size:12px !important;">
+                  <b><u>Documents requires along with application : </u></b>
+                  <p style="margin-left: 30px">
+                    1.&nbsp;&nbsp;&nbsp;&nbsp; Latest Salary/Pay slip
+                  </p>
+                  <p style="margin-left: 30px">
+                    2.&nbsp;&nbsp;&nbsp;&nbsp; Latest Pay Fixation order
+                  </p>
+                  <p style="margin-left: 30px">
+                    3.&nbsp;&nbsp;&nbsp;&nbsp; Joining report in Central Govt.
+                    Service (applicable for Type-IV quarter)
+                  </p>
+                  <p style="margin-left: 30px">
+                    4.&nbsp;&nbsp;&nbsp;&nbsp; Joining /Assumption of Charge in
+                    Mumbai Region
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div nz-col nzSpan="24" style="text-align: center;font-weight: bold;">
+              Note : This is computer generated form, signature not required.
+            </div>
+          </div>
+        </nz-spin>
+      </form>
+    </nz-card>
+  </div>
+
+  <div class="footer">
+    <div nz-row>
+      <div nz-col nzSpan="4"></div>
+
+      <div nz-col nzSpan="10" *ngIf="stage == 1 "
+        style="margin-top: 5px;font-size: 13px;font-weight: 600; text-align: left !important;">
+        <input id="agrrrr" type="checkbox" class="form-check-input inputsize" name="agrrrr"
+          (click)="agrreconfirmation1()" style="cursor: pointer; border: 2px solid #415be2" />&nbsp; By
+        clicking Send For Verification, I agree
+        to the
+        <a style="color: #006699" (click)="termsmodal()">Terms &
+          Conditions</a>
+      </div>
+      <div nz-col nzSpan="10" *ngIf="stage != 1 "></div>
+      <div nz-col nzSpan="10">
+        <button type="button" nz-button class="ant-btn" style="margin-right: 8px;font-size: 11px;
+    height: 29px;" (click)="close()">
+          <span>Cancel</span>
+        </button>
+        <button type="button" nz-button class="ant-btn" [disabled]="disableprevious" style="margin-right: 8px;font-size: 11px;
+    height: 29px;" (click)="previous()" *ngIf="stage != 0 && stage != 1 && stage != 2">
+          <span>Previous</span>
+        </button>
+        <button type="button" nz-button class="ant-btn" [disabled]="disableprevious" style="margin-right: 8px;font-size: 11px;
+    height: 29px;" (click)="previous1()" *ngIf="stage != 0 && stage == 1">
+          <span>Previous</span>
+        </button>
+        <button type="button" *ngIf="stage == 0" style="font-size: 11px;
+    height: 29px;" class="ant-btn ant-btn-primary" [disabled]="disablenext" nz-button (click)="empSave()">
+          <span>Save & Preview</span>
+        </button>
+        <button nz-button nzType="primary" *ngIf="stage == 1" printSectionId="printpage" ngxPrint
+          [useExistingCss]="true" style="margin-right: 8px;font-size: 11px;
+      height: 29px;">
+          <span>Print Form</span>
+        </button>
+        <button type="button" *ngIf="stage == 1" class="ant-btn ant-btn-primary" [disabled]="disablenext" nz-button
+          (click)="nextUpload()" style="font-size: 11px;
+      height: 29px;">
+          <span>Send For Verification</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'PDFview'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div *ngIf="view == 1" style="height: 600px; overflow: x;">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 2" style="height: 600px; overflow: x">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 3" style="height: 600px; overflow: x">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 4" style="height: 600px; overflow: x">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 5" style="height: 600px; overflow: x">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 6" style="height: 600px; overflow: x">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="view == 7" style="height: 600px; overflow: x">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 15px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 13px; margin-bottom: 10px">
+      Are you sure want to submit your application for verification?
+    </p>
+    <p style="font-size: 11px; margin-bottom: 0px">
+      By clicking <b>Send for Verification</b> , you acknowledge that the
+      information provided in your application is accurate and complete. Once
+      submitted, you may not be able to make further changes until the
+      verification process gets completed.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules>
+    <button nz-button nzType="primary" class="btn btn-primary" style="background-color: #006699;font-size: 11px;
+    height: 29px;" (click)="Submitapplication()">
+      Send For Verification
+    </button>
+    <button nz-button nzType="default" class="btn btn-primary" style="font-size: 11px;
+    height: 29px;" (click)="cancelappliactionform()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px',
+  'padding-top': '15px',
+  'padding-right': '15px',
+  'padding-left': '15px',
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="1200" [nzVisible]="drawerVisible12"
+  [nzTitle]="drawerTitle12" (nzOnClose)="drawerClose12()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-grassemployeeupdate [drawerClose]="closeCallback12" [drawerVisible]="drawerVisible12"
+      [data]="drawerData12"></app-grassemployeeupdate>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [(nzVisible)]="Rulesandapplyterms" nzCentered="true"
+  [nzBodyStyle]="{overflow: 'auto', 'padding-left': '16px','padding-right': '10px','padding-bottom': '10px','padding-top': '10px'}"
+  nzWidth="620px" nzClosable="true" nzTitle="Terms & Conditions For Quarter Application Form"
+  (nzOnCancel)="handleOkterms()" [nzFooter]="contextofrulesterms" nzMaskClosable="false" [nzContent]="contentterms">
+  <ng-template #contentterms>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">1. Must be a current employee in Income Tax
+      Department Mumbai Office with proof.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">2. Complete and submit the form with proper
+      information, incomplete or invalid data forms may be rejected.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">3. Submit required documents (ID, Joining
+      Letter,..etc.)</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">4. Allocation based on availability and
+      eligibility as per CBDT Rules; decisions are final.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">5. Comply with residence policies; violations
+      can lead to disciplinary action or eviction.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">6. Information used for processing and managing
+      applications; handled per privacy laws.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">7. Terms can be amended; applicants will be
+      notified of changes.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">8. Submitting the form means agreeing to these
+      terms and residence policies.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">9. Once the data is submitted, you can't update
+      them.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">10. We may update these Terms at any time.
+      Review them regularly.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">11. These Terms are governed by the laws of
+      CBDT Rule.</p>
+    <p style="font-size: 13px !important;margin-bottom: 0px !important;">12. For questions, please contact us at <a
+        href="mailto:mumbai.ito.tps1@incometax.gov.in" style="color: #f68831">mumbai.ito.tps1@incometax.gov.in</a>.</p>
+  </ng-template>
+  <ng-template #contextofrulesterms>
+    <button nz-button nzType="primary" class="btn btn-primary" style="background-color: #f68831; border: none"
+      (click)="handleOkterms()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>

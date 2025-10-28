@@ -1,0 +1,482 @@
+<!-- <button nz-button nzType="primary" (click)="open()">Create</button> -->
+<!-- <nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="720"
+  [nzVisible]="visible"
+  nzTitle="Notice vacant"
+  [nzFooter]="footerTpl"
+  (nzOnClose)="close()"
+> -->
+
+<!-- <div nz-row *nzDrawerContent style="padding: 20px; text-align: justify;"> -->
+<div nz-row id="printpage">
+
+    <div nz-col nzSpan="24">
+        <div nz-row>
+            <div nz-col nzSpan="4">
+                <img width="100px" height="200px" src="assets/govtOfIndia.png" alt=" failde to show " class="image">
+            </div>
+            <div nz-col nzSpan="20" style="text-align: center; font-size: 15px;height:200px">
+                <div>भारतसरकार</div>
+                <div> Government Of India</div>
+                <div> कार्यालय, प्रधानमुख्यआयकरआयुक्त, मुंबई</div>
+                <div>OFFICE OF THE</div>
+                <div><b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX</b></div>
+                <div>3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20</div>
+                <div>(022) 22012522(DIRECT), (022)2203 9131(FAX), EXTN.2331</div>
+                <div>e-mail : <a href="mumbai.ito.hq.admin2@incometax.gov.in">
+                        mumbai.ito.hq.admin2@incometax.gov.in</a></div>
+            </div>
+        </div>
+    </div>
+    <div nz-col nzSpan="24">
+        <table>
+            <tr>
+                <td>No.MUM/Pr.CCIT/Admn.II/{{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME:
+                    ''}}/Allotment/2023-24</td>
+                <td>Date :- 04/07/2023 /05/2023.</td>
+            </tr>
+        </table> <br>
+    </div>
+
+    <div nz-col nzSpan="24" style="text-align: center; font-size: 20px; margin: 0 20px 0 20px; "><u><b>NOTICE
+                FOR ALLOTMENT OF {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}} QUARTERS</b></u> <br>
+        <br>
+    </div>
+
+    <div nz-col nzSpan="24">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        It is hereby brought to the notice of all eligible
+        officials who have
+        applied for {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}} quarters that, the following quarters
+        are
+        available for allotment:
+    </div>
+    <br> <br>
+
+    <div nz-col nzSpan="24" style="margin: 0 20px 20px 20px;">
+        <table *ngIf="flatlists.length > 0">
+            <thead>
+                <tr>
+                    <td><b>Sr. No.</b></td>
+                    <td><b>Bldg. No.</b></td>
+                    <td><b>Qtr. No.</b></td>
+                    <td><b>Floor</b></td>
+                    <td><b>Location</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of flatlists;let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{data.BUILDING_NAME}}</td>
+                    <td>{{data.NO_OF_FLATS}}</td>
+                    <td>{{data.FLOOR_NAME}}</td>
+                    <td>{{data.CITY_NAME}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div nz-col nzSpan="24" style="margin: 10px 20px 0 20px;">
+        2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        The officials who have filed application for fresh allotment of
+        quarters/change of quarters need to file their “specific preferences
+        (i.e. Quarter no./Building/Location wise, as mentioned above)” within 7
+        working days /on or before 13/07/2023 from the date of notice of
+        allotment issued (i.e., beginning from the day falling next to the
+        date
+        of notice) by this office, in order to be considered for allotment
+        of
+        quarters either in physical form in the tapal of the O/o.
+        ITO(HQ)Admn.
+        II, Mumbai, or vide mail at <u><a href="mumbai.ito.hq.admin2@incometax.gov.in.">
+                mumbai.ito.hq.admin2@incometax.gov.in.</a></u>.In case they fail to
+        file their specific preferences, they will not be
+        considered for allotment of the above quarters. The updated list of
+        applicants eligible for allotment of {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}} Quarters is
+        enclosed.
+        The waiting-cum-seniority list is updated by deleting the names of
+        the
+        officials who have not opted for any accommodation during the past
+        one
+        year. The list is updated following the provision of Rule 8 of the
+        Notification dated 18.01.2023 issued by the Central Board of Direct
+        Taxes(Department of Revenue) Ministry of Finance, New Delhi.
+    </div>
+
+    <div nz-col nzSpan="24" style="margin: 20px 20px 0 20px;">
+        3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        The officials are requested to file their objection, if any,
+        regarding
+        the said seniority list and the vacancy status of above stated
+        quarter.
+        Any omission and discrepancy in date of joining may be brought to
+        the
+        notice of the undersigned <b>within 7 working days /on or before
+            13/07/2023</b>
+        from the date of notice of allotment issued by this office directly
+        and
+        only in the O/o. the ITO (HQ) Admn. II, Mumbai, so that the same can
+        be
+        taken into consideration.
+    </div>
+    <div nz-col nzSpan="24" style="margin: 20px 20px 0 20px;">
+        4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        The entitlement for {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}} Quarters as per Rule 4 of the
+        Notification dated 18.01.2023 issued by the Central Board of Direct
+        Taxes(Department of Revenue) Ministry of Finance, New Delhi and the
+        eligibility and priority date of allotment of {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}}
+        quarters are as under :-
+        <br> <br>
+        <div style="margin: 35px;">
+            <b> (a) <u> Eligibility : </u></b>
+            <table>
+                <thead>
+                    <tr>
+                        <td> <b> Type- of Residence </b> </td>
+                        <td><b>Grade pay (Pre-revised scale)</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                            <td>Type III</td>
+                            <td>Rs.4200/-, Rs.4600/-, & Rs.4800/-</td>
+                        </tr> -->
+                    <tr>
+                        <td>{{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}}</td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 1">Rs. 1,300/-, Rs. 1,400/-
+                            Rs. 1,600/-, Rs. 1,650/-
+                            and Rs. 1,800/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 2">Rs. 1,900/-, Rs. 2,000/-,
+                            Rs. 2,400/- and Rs. 2800/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 3">Rs. 4,200/-, Rs. 4,600/- and
+                            Rs. 4,800/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 4">Rs. 5,400/-, Rs. 6,600/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 5">Rs. 6,600/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 6">Rs. 7,600/- and Rs.8,000/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 7">Rs. 8,700/- and Rs. 8,900/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 8">Rs. 10,000/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 9">Rs. 67,000/- to Rs. 74,999/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 10">Rs. 75,000/- to Rs. 79,999/-
+                        </td>
+
+                        <td *ngIf="seniority.RESIDENCE_TYPE == 11">Rs. 80,000/- and above
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br><br>
+            <b> (b)<u> Priority date : </u></b>
+
+            For {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}} category of allotment, date of priority
+            shall
+            be
+            the date of joining the Government service.
+
+        </div>
+
+    </div>
+
+    <div style="margin: 20px 20px 0 20px;">
+        5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As
+        per CBDT Residential Accommodation Allotment Rules notified on
+        18th
+        January, 2023 vide F.No. DIT(Infra)/U-I/Allotment Rules/2018-19,
+        change
+        of accommodation on medical grounds can be considered on the
+        following
+        conditions :- <br> <br>
+
+        <div style="margin-left: 50px;">
+            A) Change on medical grounds shall be given only if the allottee
+            concerned has already availed of one change in the same type of
+            accommodation admissible under these rules. <br> <br>
+
+            <div style="margin-left:50px;">
+                i) Provided that if the allottee has not already availed one
+                change, the application for change on medical grounds shall
+                be
+                referred to the Committee constituted by the concerned
+                Estate
+                Officer for the purpose.
+            </div>
+            <br> <br>
+
+            B) Requests for change on medical grounds may be entertained
+            only in
+            such cases where the allottee or a member of his/her family on
+            dependent-in-laws living with him/her, after the allotment of
+            the
+            accommodation in change has developed such diseases as may be
+            specified by the Committee constituted for the purpose by the
+            concerned Estate Officer :- <br> <br>
+            <div style="margin-left:50px;">
+                i) Provided that a medical certificate from a Head of
+                Department
+                of the Specialty or concerned disease of Government Hospital
+                indicating the nature and extent of physical handicap or
+                disease
+                and recommending such a change is furnished.
+            </div>
+            <br> <br>
+
+            C. Change from one floor to another in the same colony or from
+            one
+            colony to another colony may be allowed, if the request is
+            supported
+            by medical certificate from a board constituted for the purpose
+            from
+            Safdarjung Hospital or Dr. Ram Manohar Lohia(RML) Hospital in
+            Delhi
+            and from a board constituted for the purpose from a Government
+            hospital in places other than Delhi and the change of
+            accommodation
+            shall be given by the Estate Officer by issuing a well-reasoned
+            speaking order.
+        </div> <br> <br>
+
+        Officers/officials wishing to apply for change of accommodation on
+        medical grounds may submit their applications with attested medical
+        certificates in support of their medical grounds on or before <b><u>13/07/2023.</u></b>
+
+    </div>
+
+    <div style="margin: 20px 20px 0 20px;">
+        6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        It may be noted that, once this allotment process is completed
+        there
+        will be no carry forward of preferences. For subsequent allotment,
+        fresh
+        application with specific preferences would be required to be filed
+        by
+        the applicant.
+    </div>
+
+    <div style="margin: 20px 20px 0 20px;">
+        <b>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Further it may be noted that, if any allottee fails to accept
+            the
+            allotment of a residential accommodation within eight days from
+            the
+            date of allotment of the said accommodation, or fails to take
+            possession of that accommodation within five working days from
+            the
+            date of notice of allotment issued by this office from the date
+            of
+            receipt of the letter of authorization, he/she shall be debarred
+            to
+            apply for accommodation for a period of 3 months from the
+            date
+            of non-acceptance of allotment subject to payment of one month’s
+            normal licence fee for that type of accommodation [Rule 13 of
+            the
+            Notification dated 18.01.2023 issued by the Central Board of
+            Direct
+            Taxes(Department of Revenue) Ministry of Finance, New Delhi]. It
+            may
+            also be noted that, only one change is permissible in a
+            particular
+            type of accommodation.</b>
+    </div>
+
+    <div style="margin: 20px 20px 0 20px;">
+        8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        It may be noted that, any misrepresentation of facts in the
+        application would render in cancellation of allotment of quarter and
+        would also be liable for action under the CCS (Conduct) Rules.
+    </div>
+
+    <div style="margin: 20px 20px 0 20px;">
+        9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        The applicants are requested to submit their preferences in the
+        proforma attached alongwith this Notice.
+    </div>
+
+    <div style="margin: 20px 20px 50px 20px;">
+        10.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        This Notice and Seniority List is uploaded on the portal
+        “incometaxmumbai.gov.in” and “incometaxindia.gov.in”.
+    </div>
+
+    <div nz-col nzSpan="24" style="text-align: right;">
+        <div style="margin-right: 35px;"> <b>(Santosh Nair)</b></div>
+        <div style="margin-right: 7px;">Income-tax officer (HQ),</div>
+        <div>Administration-II, Mumbai.</div>
+
+    </div>
+
+    <P style="page-break-before: always"></P>
+    <div nz-col nzSpan="24" style="text-align: center; font-size: 20px; margin: 0 20px 0 20px; "><u><b>
+                PROFORMA FOR PREFERENCE
+            </b></u> <br> <br>
+    </div>
+    <div style="margin: 0 20px 10px 20px;">
+        <div nz-col nzSpan="24"><u>To,</u></div>
+        <div nz-col nzSpan="24">The ITO(HQ)Admin – II,</div>
+        <div nz-col nzSpan="24">Aayakar Bhavan,</div>
+        <div nz-col nzSpan="24">Mumbai.</div>
+        <br />
+        <div nz-col nzSpan="24">Sir,</div>
+    </div>
+    <br />
+    <div nz-col nzSpan="24" style="text-align: center; font-size: 16px; margin: 0 20px 0 20px; "><u>
+            Subject :- Preference for {{seniority != undefined ? seniority.RESIDENCE_TYPE_NAME: ''}} Quarters – reg.
+        </u> <br> <br>
+    </div>
+    <div nzJustify="space-between" style="margin: 0 20px 20px 20px;">
+        <table id="" style="width: 80%; margin-left: 78px; text-align: center">
+            <tr>
+                <th class="sr">Sr.No</th>
+                <th>Particulars </th>
+                <th colspan="6">Information</th>
+            </tr>
+
+            <tr>
+                <td>1.</td>
+                <td style="text-align: left;">Name</td>
+                <td colspan="6">{{emdata != undefined ? emdata.EMPLOYEE_NAME : ''}}</td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td style="text-align: left;">Designation</td>
+                <td colspan="6">{{emdata != undefined ? emdata.DESIGNATION : ''}}</td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td style="text-align: left;">Date of Joining in Govt. Service</td>
+                <td colspan="6">{{emdata != undefined ? (emdata.DATE_JOINING | date:'dd/MM/yyyy') : ''}}</td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td style="text-align: left;">Date of Birth</td>
+                <td colspan="6">{{emdata != undefined ? (emdata.DOB | date:'dd/MM/yyyy') : ''}}</td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td style="text-align: left;">Present Pay Level ( Latest Salary Slip to be enclosed)</td>
+                <td colspan="6">{{emdata != undefined ? emdata.PAY_LEVEL : ''}}</td>
+            </tr>
+            <tr>
+                <td>6.</td>
+                <td style="text-align: left;">Basic Pay</td>
+                <td colspan="6">{{emdata != undefined ? emdata.BASIC_PAY : ''}}</td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td style="text-align: left;">Place of Posting</td>
+                <td colspan="6">{{emdata != undefined ? emdata.PRESENT_RESENDENTIAL_ADDRESS : ''}}</td>
+            </tr>
+            <tr>
+                <td>8.</td>
+                <td style="text-align: left;">Mobile No.</td>
+                <td colspan="6">{{emdata != undefined ? emdata.MOBILE_NO: ''}}</td>
+            </tr>
+            <tr>
+                <th style="text-align: center;" colspan="8">Preferences</th>
+            </tr>
+            <tr>
+                <th style="text-align: center;">SrNo.</th>
+                <th style="text-align: center;">Building Name</th>
+                <th style="text-align: center;width: 150px;" colspan="2">Qtr. No.</th>
+                <th style="text-align: center;width: 150px;" colspan="2">Floor</th>
+                <th style="text-align: center;width: 150px;" colspan="2">Location</th>
+            </tr>
+            <tr *ngFor="let tab of Prefflat;let i = index">
+                <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;">{{tab.BUILDING_NAME}}</td>
+                <td style="text-align: center;" colspan="2">{{tab.NO_OF_FLATS}}</td>
+                <td style="text-align: center;" colspan="2">{{tab.FLOOR_NAME}}</td>
+                <td style="text-align: center;" colspan="2">{{tab.CITY_NAME}}</td>
+            </tr>
+        </table>
+    </div>
+    <br /><br />
+    <div nz-row>
+        <!-- <div nz-col nzSpan="">
+        </div> -->
+        <div nz-col nzSpan="24">
+            <div style="display: flex;justify-content: end;"><span style="width: 250px;text-align: right;">Signature
+                    :-</span><span style="width: 170px;text-align: left;"> ______________</span></div>
+            <div style="display: flex;justify-content: end;">
+                <span style="width: 170px;text-align: right;">Employee Name:- &nbsp;</span> <span
+                    style="width: 170px;text-align: left;">{{emdata != undefined ? emdata.EMPLOYEE_NAME:''}}</span>
+            </div>
+            <div style="display: flex;justify-content: end;">
+                <span style="width: 170px;text-align: right;"> Designation:- &nbsp; </span><span
+                    style="width: 170px;text-align: left;">{{emdata != undefined ? emdata.DESIGNATION:''}}</span>
+            </div>
+        </div>
+        <div nz-col nzSpan="24" style="margin: 0 20px 5px 20px;">
+            Enclosed :-
+        </div>
+        <div nz-col nzSpan="24">
+            1)Latest salary slip
+            <br>
+            2)Joining letter
+        </div>
+    </div>
+
+    <div nz-col nzSpan="24" style="margin: 0 20px 20px 20px;">
+        <b>Notes:-</b>
+    </div>
+    <div nz-col nzSpan="24" style="margin: 0 20px 20px 20px;">
+        <ol style="list-style-type:disc;">
+            <li>
+                Applicants are requested not to use downloaded sample proforma for filing of preference letter as this
+                proforma is for illustration purpose. Applicants are required to prepare their own preference letter in
+                word/excel format on computer as per above mentioned sample proforma for preference. The preference
+                letter
+                should be duly signed by the applicants at the end.
+            </li>
+            <br />
+            <li>
+                Specific mention of Sr. No. and Bldg. No., Quarter No. & Location should be mentioned in the preference
+                letter.
+            </li>
+            <br />
+            <li>
+                Preference letter should be physical form in the tapal of the O/o. ITO(HQ)Admn. II, Mumbai, or vide mail
+                at
+                <u><a href="mumbai.ito.hq.admin2@incometax.gov.in.">
+                        mumbai.ito.hq.admin2@incometax.gov.in.</a></u> within the date mentioned in the notice.
+            </li>
+            <br />
+            <li>
+                <b>Applicants are requested to enclosed salary slip and joining letter.</b>
+            </li>
+            <br />
+        </ol>
+    </div><br />
+</div>
+<div class="header">
+    <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+        <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+</div>
+<div class="footer">
+    <button nz-button nzType="default" style="margin-right: 8px" (click)="close()">
+        <span>Close</span>
+    </button>
+    <button nz-button nzType="primary" printSectionId="printpage" ngxPrint [useExistingCss]="true"
+        style="margin-right: 8px"><span>Print</span></button>
+
+</div>

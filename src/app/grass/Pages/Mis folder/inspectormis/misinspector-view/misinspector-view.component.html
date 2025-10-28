@@ -1,0 +1,2882 @@
+<div nz-row nzType="flex"></div>
+
+<div nz-row style="margin-top: 5px" *ngIf="
+    showCards &&
+    !showNonAcceptanceCards &&
+    !showPhysicalTechnical &&
+    !TechnicalShowdata
+  ">
+  <div nz-col nzSpan="24">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div nz-row style="display: flex; justify-content: end">
+          <div nz-col nzXs="24" nzSm="24" nzMd="4" nzLg="6" nzXl="12" style="display: flex; justify-content: flex-end">
+            <button style="margin-right: 10px" [nzType]="isFilterApplied" nz-button (click)="showFilter()" nz-tooltip
+              nzTooltipTitle="Filter ">
+              <i nz-icon nzType="filter"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzSpan="24">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div class="filter {{ filterClass }}">
+          <div class="filter-box">
+            <form nz-form>
+              <div nz-row>
+                <div nz-col nzSpan="8">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon>Select Month</nz-form-label>
+                    <nz-form-control nzErrorTip="Please Select Month">
+                      <nz-range-picker name="month" nzMode="month" [(ngModel)]="Monthrange"
+                        nzPlaceholder="Please select Month" nzFormat="MMM/yyyy"
+                        (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="7">
+                  <nz-form-item class="chsaaa">
+                    <nz-form-label nzNoColon>Residence Type</nz-form-label>
+                    <nz-form-control>
+                      <nz-select [nzMaxTagCount]="2" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Please Select Residence Type " name="Residence Type" nzMode="multiple"
+                        [(ngModel)]="RESIDENCE_TYPE_ID">
+                        <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="8" style="display: flex; gap: 10px; margin-top: 31px">
+                  <button nz-button [nzLoading]="isSpinning" nzType="primary" class="flexicons" (click)="applyFilter()">
+                    <i nz-icon nzType="filter"></i>Apply Filter
+                  </button>
+                  <button nz-button nzType="primary" class="flexicons" (click)="clearFilter()">
+                    <i nz-icon nzType="close"></i>Clear filter
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="padding: 15px"
+    *ngFor="let show of dataList; let nn = index">
+    <div class="cardstyle">
+      <div nz-row>
+        <div class="mainnam" nz-col nzSpan="16">
+          RESIDENCE {{ show["RESIDENCE_TYPE_NAME"] }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8" style="display: flex; justify-content: flex-end">
+          <span *ngIf="show['MONTH'] == 1" style="text-transform: uppercase">
+            January {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 2" style="text-transform: uppercase">
+            February {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 3" style="text-transform: uppercase">
+            March {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 4" style="text-transform: uppercase">
+            April {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 5" style="text-transform: uppercase">
+            May {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 6" style="text-transform: uppercase">
+            June {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 7" style="text-transform: uppercase">
+            July {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 8" style="text-transform: uppercase">
+            August {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 9" style="text-transform: uppercase">
+            September {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 10" style="text-transform: uppercase">
+            October {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 11" style="text-transform: uppercase">
+            November {{ show["YEAR"] }}
+          </span>
+          <span *ngIf="show['MONTH'] == 12" style="text-transform: uppercase">
+            December {{ show["YEAR"] }}
+          </span>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzXs="0" nzSm="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row>
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Total Allocated
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                {{ show.ALLOTED != null ? show.ALLOTED : "" }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzXs="0" nzSm="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row>
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Received Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                {{
+                show.RECIVED_ACCEPTANCE != null ? show.RECIVED_ACCEPTANCE : ""
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzSm="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row>
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Approved Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                {{
+                show.APPROVED_ACCEPTANCE != null
+                ? show.APPROVED_ACCEPTANCE
+                : ""
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzSm="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row>
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Rejected Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                {{
+                show.REJECTED_ACCEPTANCE != null
+                ? show.REJECTED_ACCEPTANCE
+                : ""
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center" (click)="showemployeedata(show)">
+            <div nz-row style="cursor: pointer">
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Pending Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                <span [ngStyle]="{
+                    'font-weight':
+                      show.PENDING_ACCEPTANCE != null &&
+                      show.PENDING_ACCEPTANCE > 0
+                        ? '800'
+                        : 'normal',
+                    'text-align': 'center'
+                  }">
+                  {{
+                  show.PENDING_ACCEPTANCE != null
+                  ? show.PENDING_ACCEPTANCE
+                  : ""
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row>
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Acceptance Not Received
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                {{
+                show.ACCEPTANCE_NOT_RECIVED != null
+                ? show.ACCEPTANCE_NOT_RECIVED
+                : ""
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row (click)="ViewcaretakerAcceptance(show, 'P')" style="cursor: pointer">
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Physical Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                <span [ngStyle]="{
+                    'font-weight':
+                      show.PHYSICAL_OCCUPANCY != null &&
+                      show.PHYSICAL_OCCUPANCY > 0
+                        ? '800'
+                        : 'normal',
+                    'text-align': 'center'
+                  }">
+                  {{
+                  show.PHYSICAL_OCCUPANCY != null
+                  ? show.PHYSICAL_OCCUPANCY
+                  : ""
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row (click)="ViewTechnicalcaretakeracceptance(show, 'T')" style="cursor: pointer">
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Technical Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                <span [ngStyle]="{
+                    'font-weight':
+                      show.TECHNICAL_OCCUPANCY != null &&
+                      show.TECHNICAL_OCCUPANCY > 0
+                        ? '800'
+                        : 'normal',
+                    'text-align': 'center'
+                  }">
+                  {{
+                  show.TECHNICAL_OCCUPANCY != null
+                  ? show.TECHNICAL_OCCUPANCY
+                  : ""
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzXs="0" nzMd="8" nzLg="8" nzXl="8" style="padding: 10px">
+          <div style="text-align: center">
+            <div nz-row (click)="ViewNonAcceptance(show)" style="cursor: pointer">
+              <div nz-col nzSpan="19" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  border-radius: 5px 0 0 5px;
+                  background-color: rgb(205, 205, 249);
+                  font-size: 12px;
+                ">
+                Non Acceptance
+              </div>
+              <div nz-col nzSpan="5" style="
+                  border: 1px solid blue;
+                  padding: 5px;
+                  margin-left: -1px;
+                  border-radius: 0 5px 5px 0;
+                  background-color: rgb(227, 227, 249);
+                  font-size: 12px;
+                ">
+                <span [ngStyle]="{
+                    'font-weight':
+                      show.NON_ACCEPTANCE != null && show.NON_ACCEPTANCE > 0
+                        ? '800'
+                        : 'normal',
+                    'text-align': 'center'
+                  }">
+                  {{ show.NON_ACCEPTANCE != null ? show.NON_ACCEPTANCE : "" }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+    <div class="col-12" style="text-align: center; margin-top: 5%">
+      <div v-if="loading" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngIf="dataList.length == 0 && !isRecordLoading">
+    <div class="col-3"></div>
+
+    <div class="col-18" style="margin-top: 100px">
+      <div class="card" style="width: 100%; box-shadow: none !important">
+        <div class="card-body" style="padding: 25px">
+          <div class="row">
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+              <p class="card-text subnamm" style="font-size: 26px">
+                Data Not Found
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3"></div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 5px" *ngIf="
+    !showCards &&
+    !showNonAcceptanceCards &&
+    !showPhysicalTechnical &&
+    !TechnicalShowdata
+  ">
+  <div nz-col nzSpan="2">
+    <p (click)="changebacktocards()" style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: #1890ff;
+        cursor: pointer;
+        font-size: 16px;
+      ">
+      <span nz-icon nzType="arrow-left" nzTheme="outline" style="margin-top: -10"></span>&nbsp; Back
+    </p>
+  </div>
+
+  <div nz-col nzSpan="20" style="text-align: center">
+    <h6>
+      Residence {{ RESIDENCETYPE_NAME != undefined ? RESIDENCETYPE_NAME : "" }}
+    </h6>
+  </div>
+
+  <div nz-col nzSpan="2"></div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngFor="let emplist of EmployeeAcceptancelist; let i = index" style="margin: 10px 0px">
+    <div class="cardstyle">
+      <div nz-row>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Name :&nbsp;
+          {{
+          emplist.EMPLOYEE_NAME != undefined &&
+          emplist.EMPLOYEE_NAME != null &&
+          emplist.EMPLOYEE_NAME != ""
+          ? emplist.EMPLOYEE_NAME
+          : ""
+          }}
+        </div>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Application No. :
+          {{
+          emplist.FLAT_APPLICATION_NO != undefined
+          ? emplist.FLAT_APPLICATION_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Approved Date :
+          {{
+          emplist.FLAT_APPLICATION_DATETIME != undefined
+          ? (emplist.FLAT_APPLICATION_DATETIME | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Designation :&nbsp;
+          {{
+          emplist.DESIGNATION != undefined &&
+          emplist.DESIGNATION != null &&
+          emplist.DESIGNATION != ""
+          ? emplist.DESIGNATION
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Email_ID :&nbsp;
+          {{
+          emplist.EMAIL_ID != undefined &&
+          emplist.EMAIL_ID != null &&
+          emplist.EMAIL_ID != ""
+          ? emplist.EMAIL_ID
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Mobile No. :&nbsp;
+          {{
+          emplist.MOBILE_NO != undefined &&
+          emplist.MOBILE_NO != null &&
+          emplist.MOBILE_NO != ""
+          ? emplist.MOBILE_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Date of Birth :&nbsp;
+          {{
+          emplist.DOB != undefined && emplist.DOB != null && emplist.DOB != ""
+          ? (emplist.DOB | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Cast :&nbsp;
+          {{
+          emplist.CAST != undefined &&
+          emplist.CAST != null &&
+          emplist.CAST != ""
+          ? emplist.CAST
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Gender :&nbsp;
+          {{
+          emplist.GENDER != undefined &&
+          emplist.GENDER != null &&
+          emplist.GENDER != ""
+          ? emplist.GENDER
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Joining Date :&nbsp;
+          {{
+          emplist.JOINING_DATE != undefined &&
+          emplist.JOINING_DATE != null &&
+          emplist.JOINING_DATE != ""
+          ? (emplist.JOINING_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Retirement Date :&nbsp;
+          {{
+          emplist.RETIREMENT_DATE != undefined &&
+          emplist.RETIREMENT_DATE != null &&
+          emplist.RETIREMENT_DATE != ""
+          ? (emplist.RETIREMENT_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          City :&nbsp;
+          {{
+          emplist.CITY_NAME != undefined &&
+          emplist.CITY_NAME != null &&
+          emplist.CITY_NAME != ""
+          ? emplist.CITY_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Area :&nbsp;
+          {{
+          emplist.AREA_NAME != undefined &&
+          emplist.AREA_NAME != null &&
+          emplist.AREA_NAME != ""
+          ? emplist.AREA_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Building :&nbsp;
+          {{
+          emplist.BUILDING_NAME != undefined &&
+          emplist.BUILDING_NAME != null &&
+          emplist.BUILDING_NAME != ""
+          ? emplist.BUILDING_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Quarter :&nbsp;
+          {{
+          emplist.FLAT_NAME != undefined &&
+          emplist.FLAT_NAME != null &&
+          emplist.FLAT_NAME != ""
+          ? emplist.FLAT_NAME
+          : ""
+          }}
+        </div>
+      </div>
+      <div nz-row style="margin: 15px 0px">
+        <div nz-col nzSpan="24">
+          <nz-steps nzSize="small" [nzCurrent]="CheckStepno(emplist)" [nzLabelPlacement]="'vertical'">
+            <nz-step [nzTitle]="temp1"></nz-step>
+            <nz-step [nzTitle]="temp2"></nz-step>
+            <nz-step [nzTitle]="temp3"></nz-step>
+            <nz-step [nzTitle]="temp4"></nz-step>
+            <nz-step [nzTitle]="temp5"></nz-step>
+
+            <ng-template #temp1>
+              <span style="font-size: 12px; font-weight: 500">
+                View Acceptance Form
+                <p style="font-size: 10px; font-weight: normal" *ngIf="emplist['ACCEPTANCE_LETTER_DATE_TIME'] != null">
+                  {{
+                  emplist["ACCEPTANCE_LETTER_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #temp2>
+              <span style="font-size: 12px; font-weight: 500">
+                Accept/Reject
+                <p style="font-size: 10px; font-weight: normal" *ngIf="emplist['INSPETOR_APPROVE_DATE_TIME'] != null">
+                  {{
+                  emplist["INSPETOR_APPROVE_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #temp3>
+              <span style="font-size: 12px; font-weight: 500">
+                Generate Allotment Letter
+                <p style="font-size: 10px; font-weight: normal"
+                  *ngIf="emplist['PRINT_ALLOTMENT_ORDER_DATE_TIME'] != null">
+                  {{
+                  emplist["PRINT_ALLOTMENT_ORDER_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #temp4>
+              <span style="font-size: 12px; font-weight: 500">
+                Generate Physical Occupancy Letter
+                <p style="font-size: 10px; font-weight: normal"
+                  *ngIf="emplist['PRINT_AUTHORISATION_ORDER_DATE_TIME'] != null">
+                  {{
+                  emplist["PRINT_AUTHORISATION_ORDER_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <ng-template #temp5>
+              <span style="font-size: 12px; font-weight: 500">
+                Send
+                <p style="font-size: 10px; font-weight: normal" *ngIf="
+                    emplist['AUTHORISATION_OCCUPATION_LETTER_DATE_TIME'] != null
+                  ">
+                  {{
+                  emplist["AUTHORISATION_OCCUPATION_LETTER_DATE_TIME"]
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+          </nz-steps>
+        </div>
+      </div>
+
+      <div nz-row style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px 20px;
+        ">
+        <!-- <div> -->
+        <div *ngIf="
+            emplist.INSPECTOR_STATUS == 'P' &&
+            emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 0
+          ">
+          <button nz-button nzType="primary" [disabled]="Timmerstartloop[i] <= 0 && Timmerendloop[i] <= 0"
+            (click)="ViewAF(emplist.ACCEPTANCE_LETTER, emplist)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Acceptance Form</span>
+          </button>
+        </div>
+        <div *ngIf="emplist.INSPECTOR_STATUS == 'A'">
+          <button nz-button nzType="primary" (click)="ViewAFss(emplist.ACCEPTANCE_LETTER)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Acceptance Form</span>
+          </button>
+        </div>
+
+        <div *ngIf="
+            emplist.INSPECTOR_STATUS == 'A' &&
+            emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 0
+          ">
+          <button nz-button nzType="primary" (click)="generatePOletter(emplist, i)"
+            [disabled]="Timmerstartloop[i] <= 0 && Timmerendloop[i] <= 0" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>Generate Allotment Letter</span>
+          </button>
+        </div>
+        <div *ngIf="
+            emplist.INSPECTOR_STATUS == 'A' &&
+            emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 0
+          ">
+          <button nz-button nzType="primary" (click)="generateALletter(emplist, i)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>Generate Physical Occupancy Letter</span>
+          </button>
+        </div>
+        <!-- <div
+          *ngIf="
+            emplist.INSPECTOR_STATUS == 'A' &&
+            emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 0
+          "
+        >
+          <button
+            nz-button
+            nzType="primary"
+            (click)="Uploadletters(emplist)"
+            [disabled]="Timmerstartloop[i] <= 0 && Timmerendloop[i] <= 0"
+            style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            "
+          >
+            <span>Upload Allotment & Authorization Letter</span>
+          </button>
+        </div> -->
+
+        <div *ngIf="
+            emplist.INSPECTOR_STATUS == 'A' &&
+            emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 1
+          ">
+          <button nz-button nzType="primary" (click)="ViewFAllotment(emplist.ALLOTMENT_FINAL_LETTER)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Allotment Form</span>
+          </button>
+        </div>
+
+        <div *ngIf="
+            emplist.INSPECTOR_STATUS == 'A' &&
+            emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 1
+          ">
+          <button nz-button nzType="primary" (click)="ViewFAcceptance(emplist.AUTHORISATION_OCCUPATION_LETTER)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Authorization Slip</span>
+          </button>
+        </div>
+      </div>
+
+      <div nz-row style="margin: 10px 0px">
+        <div nz-col nzSpan="24">
+          <div>
+            <p *ngIf="
+                (Timmerstartloop[i] > 0 || Timmerstartloop[i] != '') &&
+                emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 0
+              ">
+              <b>Time Starts:</b>&nbsp;&nbsp;{{ Timmerstartloop[i] }}
+            </p>
+            <p *ngIf="
+                Timmerstartloop[i] <= 0 &&
+                (Timmerendloop[i] > 0 || Timmerendloop[i] != '') &&
+                emplist.IS_ALLOTMENT_AUTHORISATION_LETTER_RECIVED == 0
+              ">
+              <b>Time Ends:</b>&nbsp;&nbsp;{{ Timmerendloop[i] }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+    <div class="col-12" style="text-align: center; margin-top: 5%">
+      <div v-if="loading" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngIf="EmployeeAcceptancelist.length == 0 && !isRecordLoading">
+    <div class="col-3"></div>
+
+    <div class="col-18" style="margin-top: 100px">
+      <div class="card" style="width: 100%; box-shadow: none !important">
+        <div class="card-body" style="padding: 25px">
+          <div class="row">
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+              <p class="card-text subnamm" style="font-size: 26px">
+                Data Not Found
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3"></div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 5px" *ngIf="
+    !showCards &&
+    !showNonAcceptanceCards &&
+    showPhysicalTechnical &&
+    !TechnicalShowdata
+  ">
+  <div nz-col nzSpan="2">
+    <p (click)="changebacktocards()" style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: #1890ff;
+        cursor: pointer;
+        font-size: 16px;
+      ">
+      <span nz-icon nzType="arrow-left" nzTheme="outline" style="margin-top: -10"></span>&nbsp; Back
+    </p>
+  </div>
+
+  <div nz-col nzSpan="20" style="text-align: center">
+    <h6>
+      Residence {{ RESIDENCETYPE_NAME != undefined ? RESIDENCETYPE_NAME : "" }}
+    </h6>
+  </div>
+
+  <div nz-col nzSpan="2"></div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngFor="let emplist of EmployeeAcceptancelist; let i = index" style="margin: 10px 0px; padding: 8px">
+    <div class="cardstyle">
+      <div nz-row>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Name :&nbsp;
+          {{
+          emplist.EMPLOYEE_NAME != undefined &&
+          emplist.EMPLOYEE_NAME != null &&
+          emplist.EMPLOYEE_NAME != ""
+          ? emplist.EMPLOYEE_NAME
+          : ""
+          }}
+        </div>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Application No. :
+          {{
+          emplist.FLAT_APPLICATION_NO != undefined
+          ? emplist.FLAT_APPLICATION_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Approved Date :
+          {{
+          emplist.FLAT_APPLICATION_DATETIME != undefined
+          ? (emplist.FLAT_APPLICATION_DATETIME | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Designation :&nbsp;
+          {{
+          emplist.DESIGNATION != undefined &&
+          emplist.DESIGNATION != null &&
+          emplist.DESIGNATION != ""
+          ? emplist.DESIGNATION
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Email_ID :&nbsp;
+          {{
+          emplist.EMAIL_ID != undefined &&
+          emplist.EMAIL_ID != null &&
+          emplist.EMAIL_ID != ""
+          ? emplist.EMAIL_ID
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Mobile No. :&nbsp;
+          {{
+          emplist.MOBILE_NO != undefined &&
+          emplist.MOBILE_NO != null &&
+          emplist.MOBILE_NO != ""
+          ? emplist.MOBILE_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Date of Birth :&nbsp;
+          {{
+          emplist.DOB != undefined && emplist.DOB != null && emplist.DOB != ""
+          ? (emplist.DOB | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Cast :&nbsp;
+          {{
+          emplist.CAST != undefined &&
+          emplist.CAST != null &&
+          emplist.CAST != ""
+          ? emplist.CAST
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Gender :&nbsp;
+          {{
+          emplist.GENDER != undefined &&
+          emplist.GENDER != null &&
+          emplist.GENDER != ""
+          ? emplist.GENDER
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Joining Date :&nbsp;
+          {{
+          emplist.JOINING_DATE != undefined &&
+          emplist.JOINING_DATE != null &&
+          emplist.JOINING_DATE != ""
+          ? (emplist.JOINING_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Retirement Date :&nbsp;
+          {{
+          emplist.RETIREMENT_DATE != undefined &&
+          emplist.RETIREMENT_DATE != null &&
+          emplist.RETIREMENT_DATE != ""
+          ? (emplist.RETIREMENT_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          City :&nbsp;
+          {{
+          emplist.CITY_NAME != undefined &&
+          emplist.CITY_NAME != null &&
+          emplist.CITY_NAME != ""
+          ? emplist.CITY_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Area :&nbsp;
+          {{
+          emplist.AREA_NAME != undefined &&
+          emplist.AREA_NAME != null &&
+          emplist.AREA_NAME != ""
+          ? emplist.AREA_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Building :&nbsp;
+          {{
+          emplist.BUILDING_NAME != undefined &&
+          emplist.BUILDING_NAME != null &&
+          emplist.BUILDING_NAME != ""
+          ? emplist.BUILDING_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Quarter :&nbsp;
+          {{
+          emplist.FLAT_NAME != undefined &&
+          emplist.FLAT_NAME != null &&
+          emplist.FLAT_NAME != ""
+          ? emplist.FLAT_NAME
+          : ""
+          }}
+        </div>
+      </div>
+
+      <div nz-row style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px 20px;
+          margin: 20px 0px;
+        ">
+        <div *ngIf="
+            emplist.PHYSICAL_OCCUPANCY_LETTER != null &&
+            emplist.PHYSICAL_OCCUPANCY_LETTER != undefined &&
+            emplist.PHYSICAL_OCCUPANCY_LETTER != '' &&
+            emplist.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&
+            (emplist.INSPECTOR_FINAL_STATUS == 'P' ||
+              emplist.INSPECTOR_FINAL_STATUS == null ||
+              emplist.INSPECTOR_FINAL_STATUS == '') &&
+            (emplist.OCCUPANCY_TYPE == 'P' || emplist.OCCUPANCY_TYPE == 'T')
+          ">
+          <button nz-button nzType="primary" (click)="
+              ViewPhysicaloccletter(emplist, emplist.PHYSICAL_OCCUPANCY_LETTER)
+            " style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View/Approve Occupancy Letter</span>
+          </button>
+        </div>
+
+        <div *ngIf="
+            emplist.PHYSICAL_OCCUPANCY_LETTER != null &&
+            emplist.PHYSICAL_OCCUPANCY_LETTER != undefined &&
+            emplist.PHYSICAL_OCCUPANCY_LETTER != '' &&
+            emplist.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&
+            (emplist.INSPECTOR_FINAL_STATUS == 'A' ||
+              emplist.INSPECTOR_FINAL_STATUS == 'R') &&
+            (emplist.OCCUPANCY_TYPE == 'P' || emplist.OCCUPANCY_TYPE == 'T')
+          ">
+          <button nz-button nzType="primary" (click)="Viewoccupancyformletter(emplist.PHYSICAL_OCCUPANCY_LETTER)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Occupancy Letter</span>
+          </button>
+        </div>
+
+        <div *ngIf="emplist.OCCUPANCY_TYPE == 'T'">
+          <button nz-button nzType="primary" (click)="viewtechnicaldetailsoccupancy(emplist)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Technical Occupancy Details</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+    <div class="col-12" style="text-align: center; margin-top: 5%">
+      <div v-if="loading" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngIf="EmployeeAcceptancelist.length == 0 && !isRecordLoading">
+    <div class="col-3"></div>
+
+    <div class="col-18" style="margin-top: 100px">
+      <div class="card" style="width: 100%; box-shadow: none !important">
+        <div class="card-body" style="padding: 25px">
+          <div class="row">
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+              <p class="card-text subnamm" style="font-size: 26px">
+                Data Not Found
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3"></div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 5px" *ngIf="
+    !showCards &&
+    !showNonAcceptanceCards &&
+    !showPhysicalTechnical &&
+    TechnicalShowdata
+  ">
+  <div nz-col nzSpan="2">
+    <p (click)="changebacktocards()" style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: #1890ff;
+        cursor: pointer;
+        font-size: 16px;
+      ">
+      <span nz-icon nzType="arrow-left" nzTheme="outline" style="margin-top: -10"></span>&nbsp; Back
+    </p>
+  </div>
+
+  <div nz-col nzSpan="20" style="text-align: center">
+    <h6>
+      Residence {{ RESIDENCETYPE_NAME != undefined ? RESIDENCETYPE_NAME : "" }}
+    </h6>
+  </div>
+
+  <div nz-col nzSpan="2"></div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngFor="let emplist of EmployeeAcceptancelist; let i = index" style="margin: 10px 0px; padding: 8px">
+    <div class="cardstyle">
+      <div nz-row>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Name :&nbsp;
+          {{
+          emplist.EMPLOYEE_NAME != undefined &&
+          emplist.EMPLOYEE_NAME != null &&
+          emplist.EMPLOYEE_NAME != ""
+          ? emplist.EMPLOYEE_NAME
+          : ""
+          }}
+        </div>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Application No. :
+          {{
+          emplist.FLAT_APPLICATION_NO != undefined
+          ? emplist.FLAT_APPLICATION_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Approved Date :
+          {{
+          emplist.FLAT_APPLICATION_DATETIME != undefined
+          ? (emplist.FLAT_APPLICATION_DATETIME | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Designation :&nbsp;
+          {{
+          emplist.DESIGNATION != undefined &&
+          emplist.DESIGNATION != null &&
+          emplist.DESIGNATION != ""
+          ? emplist.DESIGNATION
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Email_ID :&nbsp;
+          {{
+          emplist.EMAIL_ID != undefined &&
+          emplist.EMAIL_ID != null &&
+          emplist.EMAIL_ID != ""
+          ? emplist.EMAIL_ID
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Mobile No. :&nbsp;
+          {{
+          emplist.MOBILE_NO != undefined &&
+          emplist.MOBILE_NO != null &&
+          emplist.MOBILE_NO != ""
+          ? emplist.MOBILE_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Date of Birth :&nbsp;
+          {{
+          emplist.DOB != undefined && emplist.DOB != null && emplist.DOB != ""
+          ? (emplist.DOB | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Cast :&nbsp;
+          {{
+          emplist.CAST != undefined &&
+          emplist.CAST != null &&
+          emplist.CAST != ""
+          ? emplist.CAST
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Gender :&nbsp;
+          {{
+          emplist.GENDER != undefined &&
+          emplist.GENDER != null &&
+          emplist.GENDER != ""
+          ? emplist.GENDER
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Joining Date :&nbsp;
+          {{
+          emplist.JOINING_DATE != undefined &&
+          emplist.JOINING_DATE != null &&
+          emplist.JOINING_DATE != ""
+          ? (emplist.JOINING_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Retirement Date :&nbsp;
+          {{
+          emplist.RETIREMENT_DATE != undefined &&
+          emplist.RETIREMENT_DATE != null &&
+          emplist.RETIREMENT_DATE != ""
+          ? (emplist.RETIREMENT_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          City :&nbsp;
+          {{
+          emplist.CITY_NAME != undefined &&
+          emplist.CITY_NAME != null &&
+          emplist.CITY_NAME != ""
+          ? emplist.CITY_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Area :&nbsp;
+          {{
+          emplist.AREA_NAME != undefined &&
+          emplist.AREA_NAME != null &&
+          emplist.AREA_NAME != ""
+          ? emplist.AREA_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Building :&nbsp;
+          {{
+          emplist.BUILDING_NAME != undefined &&
+          emplist.BUILDING_NAME != null &&
+          emplist.BUILDING_NAME != ""
+          ? emplist.BUILDING_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Quarter :&nbsp;
+          {{
+          emplist.FLAT_NAME != undefined &&
+          emplist.FLAT_NAME != null &&
+          emplist.FLAT_NAME != ""
+          ? emplist.FLAT_NAME
+          : ""
+          }}
+        </div>
+      </div>
+
+      <div nz-row style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px 20px;
+          margin: 20px 0px;
+        ">
+        <!-- <div
+                    *ngIf="(emplist.PHYSICAL_OCCUPANCY_LETTER != null && emplist.PHYSICAL_OCCUPANCY_LETTER != undefined && emplist.PHYSICAL_OCCUPANCY_LETTER != '') && emplist.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 && ( emplist.INSPECTOR_FINAL_STATUS == 'P' ||  emplist.INSPECTOR_FINAL_STATUS == null || emplist.INSPECTOR_FINAL_STATUS == '' ) && emplist.OCCUPANCY_TYPE == 'P' ">
+                    <button nz-button nzType="primary"
+                        (click)="ViewPhysicaloccletter(emplist,emplist.PHYSICAL_OCCUPANCY_LETTER)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View/Approve Occupancy Letter</span>
+                    </button>
+                </div>
+
+                <div
+                    *ngIf="(emplist.PHYSICAL_OCCUPANCY_LETTER != null && emplist.PHYSICAL_OCCUPANCY_LETTER != undefined && emplist.PHYSICAL_OCCUPANCY_LETTER != '') && emplist.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == 1 &&  ( emplist.INSPECTOR_FINAL_STATUS == 'A' ||  emplist.INSPECTOR_FINAL_STATUS == 'R') && emplist.OCCUPANCY_TYPE == 'P'  ">
+                    <button nz-button nzType="primary"
+                        (click)="Viewoccupancyformletter(emplist.PHYSICAL_OCCUPANCY_LETTER)"
+                        style="color: white !important;border-radius: 10px;font-size: 12px;">
+                        <span>View Occupancy Letter</span>
+                    </button>
+                </div> -->
+
+        <div *ngIf="emplist.OCCUPANCY_TYPE == 'T'">
+          <button nz-button nzType="primary" (click)="ViewtechnicalAccupancy(emplist)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span *ngIf="
+                emplist.INSPECTOR_TECHNICAL_STATUS == 'P' ||
+                emplist.INSPECTOR_TECHNICAL_STATUS == '' ||
+                emplist.INSPECTOR_TECHNICAL_STATUS == null
+              ">View/Approve Technical Occupancy</span>
+            <span *ngIf="
+                emplist.INSPECTOR_TECHNICAL_STATUS == 'A' ||
+                emplist.INSPECTOR_TECHNICAL_STATUS == 'R'
+              ">View Technical Occupancy Details</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+    <div class="col-12" style="text-align: center; margin-top: 5%">
+      <div v-if="loading" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngIf="EmployeeAcceptancelist.length == 0 && !isRecordLoading">
+    <div class="col-3"></div>
+
+    <div class="col-18" style="margin-top: 100px">
+      <div class="card" style="width: 100%; box-shadow: none !important">
+        <div class="card-body" style="padding: 25px">
+          <div class="row">
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+              <p class="card-text subnamm" style="font-size: 26px">
+                Data Not Found
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3"></div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 5px" *ngIf="!showCards && showNonAcceptanceCards && !showPhysicalTechnical">
+  <div nz-col nzSpan="2">
+    <p (click)="changebacktocards()" style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: #1890ff;
+        cursor: pointer;
+        font-size: 16px;
+      ">
+      <span nz-icon nzType="arrow-left" nzTheme="outline" style="margin-top: -10"></span>&nbsp; Back
+    </p>
+  </div>
+
+  <div nz-col nzSpan="20" style="text-align: center">
+    <h6>
+      Residence {{ RESIDENCETYPE_NAME != undefined ? RESIDENCETYPE_NAME : "" }}
+    </h6>
+  </div>
+
+  <div nz-col nzSpan="2"></div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngFor="let emplist of EmployeeAcceptancelist; let i = index" style="margin: 10px 0px; padding: 8px">
+    <div class="cardstyle">
+      <div nz-row>
+        <div class="mainnam12" nz-col nzSpan="8">
+          Name :&nbsp;
+          {{
+          emplist.EMPLOYEE_NAME != undefined &&
+          emplist.EMPLOYEE_NAME != null &&
+          emplist.EMPLOYEE_NAME != ""
+          ? emplist.EMPLOYEE_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Designation :&nbsp;
+          {{
+          emplist.DESIGNATION != undefined &&
+          emplist.DESIGNATION != null &&
+          emplist.DESIGNATION != ""
+          ? emplist.DESIGNATION
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Email_ID :&nbsp;
+          {{
+          emplist.EMAIL_ID != undefined &&
+          emplist.EMAIL_ID != null &&
+          emplist.EMAIL_ID != ""
+          ? emplist.EMAIL_ID
+          : ""
+          }}
+        </div>
+
+        <div class="subnamm" nz-col nzSpan="8">
+          Mobile No. :&nbsp;
+          {{
+          emplist.MOBILE_NO != undefined &&
+          emplist.MOBILE_NO != null &&
+          emplist.MOBILE_NO != ""
+          ? emplist.MOBILE_NO
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Date of Birth :&nbsp;
+          {{
+          emplist.DOB != undefined && emplist.DOB != null && emplist.DOB != ""
+          ? (emplist.DOB | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Cast :&nbsp;
+          {{
+          emplist.CAST != undefined &&
+          emplist.CAST != null &&
+          emplist.CAST != ""
+          ? emplist.CAST
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Gender :&nbsp;
+          {{
+          emplist.GENDER != undefined &&
+          emplist.GENDER != null &&
+          emplist.GENDER != ""
+          ? emplist.GENDER
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Joining Date :&nbsp;
+          {{
+          emplist.JOINING_DATE != undefined &&
+          emplist.JOINING_DATE != null &&
+          emplist.JOINING_DATE != ""
+          ? (emplist.JOINING_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Retirement Date :&nbsp;
+          {{
+          emplist.RETIREMENT_DATE != undefined &&
+          emplist.RETIREMENT_DATE != null &&
+          emplist.RETIREMENT_DATE != ""
+          ? (emplist.RETIREMENT_DATE | date : "dd/MM/yyyy")
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          City :&nbsp;
+          {{
+          emplist.CITY_NAME != undefined &&
+          emplist.CITY_NAME != null &&
+          emplist.CITY_NAME != ""
+          ? emplist.CITY_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Area :&nbsp;
+          {{
+          emplist.AREA_NAME != undefined &&
+          emplist.AREA_NAME != null &&
+          emplist.AREA_NAME != ""
+          ? emplist.AREA_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Building :&nbsp;
+          {{
+          emplist.BUILDING_NAME != undefined &&
+          emplist.BUILDING_NAME != null &&
+          emplist.BUILDING_NAME != ""
+          ? emplist.BUILDING_NAME
+          : ""
+          }}
+        </div>
+        <div class="subnamm" nz-col nzSpan="8">
+          Quarter :&nbsp;
+          {{
+          emplist.FLAT_NAME != undefined &&
+          emplist.FLAT_NAME != null &&
+          emplist.FLAT_NAME != ""
+          ? emplist.FLAT_NAME
+          : ""
+          }}
+        </div>
+      </div>
+
+      <div nz-row style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px 20px;
+          margin: 20px 0px;
+        ">
+        <!-- <div> -->
+        <div *ngIf="
+            emplist.NON_ACCEPTANCE_INSPECTOR_STATUS == null ||
+            emplist.NON_ACCEPTANCE_INSPECTOR_STATUS == '' ||
+            emplist.NON_ACCEPTANCE_INSPECTOR_STATUS == 'P'
+          ">
+          <button nz-button nzType="primary" (click)="Viewnonacceptance(emplist.NON_ACCEPTANCE_FORM, emplist)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View/Approve Non Acceptance Form</span>
+          </button>
+        </div>
+
+        <div *ngIf="
+            emplist.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A' ||
+            emplist.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R'
+          ">
+          <button nz-button nzType="primary" (click)="ShowNonAcceptanceform(emplist.NON_ACCEPTANCE_FORM)" style="
+              color: white !important;
+              border-radius: 10px;
+              font-size: 12px;
+            ">
+            <span>View Non Acceptance Form</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width: 100%" *ngIf="isRecordLoading">
+    <div class="col-12" style="text-align: center; margin-top: 5%">
+      <div v-if="loading" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"
+    *ngIf="EmployeeAcceptancelist.length == 0 && !isRecordLoading">
+    <div class="col-3"></div>
+
+    <div class="col-18" style="margin-top: 100px">
+      <div class="card" style="width: 100%; box-shadow: none !important">
+        <div class="card-body" style="padding: 25px">
+          <div class="row">
+            <div class="col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+              <p class="card-text subnamm" style="font-size: 26px">
+                Data Not Found
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3"></div>
+  </div>
+</div>
+
+<!-- <nz-drawer [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false"
+    [nzWidth]="1200" [nzVisible]="DrawerVisiblechek"
+    [nzTitle]="DrawerVisibleTitle" (nzOnClose)="DrawerVisibleClose()"
+    (nzKeyboard)="(true)">
+    <ng-container *nzDrawerContent>
+        <app-employeeflatacceptancelist [drawerClose]="closeCallDrawerVisible"
+            [drawerVisible]="DrawerVisiblechek"
+            [data]="DrawerVisibleData"></app-employeeflatacceptancelist>
+    </ng-container>
+</nz-drawer> -->
+
+<nz-modal [(nzVisible)]="AllotmentPreview" nzTitle="Final Allotment " (nzOnCancel)="closemodal()" nzCentered="true"
+  nzClosable="false" [nzBodyStyle]="{
+    padding: '5px',
+    'font-family': 'Poppins',
+    height: '410px',
+  }" nzWidth="950px" nzMaskClosable="false" [nzFooter]="AllotmentPreviewFooter">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="isSpinningmodal">
+      <div nz-row>
+
+        <div nz-col nzSpan="24">
+          <nz-spin [nzSpinning]="IsspinningData">
+            <div class="my-box" style="height: 390px; overflow-y: auto">
+              <div id="Prntmodal">
+                <div>
+                  <table style="border-collapse: collapse;width: 100%;">
+                    <tr>
+                      <td
+                        style="width:20%;text-align: left;padding:5px 15px;border: 1px solid black;text-align: center;border-bottom: none;">
+                        <!-- <img src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                          alt="Government of India" class="image" height="200px" width="120px"> -->
+                        <img *ngIf="key==='itbuddy'"
+                          src="https://itbuddyadmin.uvtechsoft.com:9450/static/logo/govtOfIndia.png"
+                          alt="Government of India" class="image" height="200px" width="120px" />
+                        <img *ngIf="key==='incometax'"
+                          src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                          alt="Government of India" class="image" height="200px" width="120px" />
+                      </td>
+                      <td
+                        style="width:80%;text-align: left;padding:5px 10px;border: 1px solid black;text-align: center;border-bottom: none;">
+                        <div>भारत सरकार</div>
+                        <div>GOVERNMENT OF INDIA</div>
+                        <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                        <div>OFFICE OF THE</div>
+                        <div><b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX, MUMBAI</b></div>
+                        <div>
+                          3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20
+                        </div>
+                        <div>
+                          (022)2200 6385(DIRECT), (022)2209 6738, (FAX), (022)2203 9131 EXTN.2328.
+                        </div>
+                        <div>
+                          e-mail: <a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  <table style="border-collapse: collapse;width: 100%;">
+                    <tr style="font-size: 13px;">
+                      <td
+                        style="width:75%;text-align: left;padding:5px 15px;border: 1px solid black;font-weight: bold;">
+                        No. Pr.CCIT/Mum/Admn./ Qrtrs/{{
+                        empdata.RESIDENCE_TYPE_NAME != undefined
+                        ? empdata.RESIDENCE_TYPE_NAME
+                        : ""
+                        }}/{{ todaysyear != undefined ? todaysyear : "" }}-
+                        {{ nextyear != undefined ? nextyear : "" }}
+                      </td>
+                      <td
+                        style="width:15%;text-align: left;padding:5px 10px;border: 1px solid black;font-weight: bold;">
+                        Date : {{ todaysdate != undefined ? todaysdate : "" }}
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div style="
+                    margin-left: 15px;
+                    margin-top: 20px;
+                    text-align: justify;
+                  ">
+                  <div style="
+                      font-weight: bold;
+                      text-align: center;
+                      font-size: 13px;
+                      font-family: 'Times New Roman';
+                    ">
+                    Sub: ALLOTMENT OF GOVERNMENT RESIDENTIAL ACCOMMODATION
+                  </div>
+                  <div style="
+                      font-weight: bold;
+                      text-align: center;
+                      font-size: 13px;
+                      font-family: 'Times New Roman';
+                    ">
+                    FROM INCOME-TAX POOL AT MUMBAI / NEW MUMBAI
+                  </div>
+
+                  <div nz-row>
+                    <div nz-col nzSpan="24" style="
+                        font-size: 12px;
+                        font-family: 'Times New Roman';
+                        padding: 10px;
+                      ">
+                      <div>
+                        1.&nbsp;&nbsp;&nbsp;The marginally noted residence of
+                        <b>Bldg no.
+                          {{
+                          empdata.BUILDING_NAME != undefined
+                          ? empdata.BUILDING_NAME
+                          : ""
+                          }}, Quarter no.{{
+                          empdata.FLAT_NAME != undefined
+                          ? empdata.FLAT_NAME
+                          : ""
+                          }},
+                          {{
+                          empdata.CITY_NAME != undefined
+                          ? empdata.CITY_NAME
+                          : ""
+                          }},
+                          {{
+                          empdata.RESIDENCE_TYPE_NAME != undefined
+                          ? empdata.RESIDENCE_TYPE_NAME
+                          : ""
+                          }}</b>
+                        hereby allotted to
+                        <b>{{
+                          empdata.EMPLOYEE_NAME != undefined
+                          ? empdata.EMPLOYEE_NAME
+                          : ""
+                          }}</b>, Inspector with and subject to the provisions of the
+                        Revenue Allotment Rules, 1964, regarding Government
+                        residence in the I.T.Pool.
+                      </div>
+
+                      <div style="margin-top: 6px">
+                        2.&nbsp;&nbsp;&nbsp;The allottee is hereby requested to
+                        convey his/her acceptance within eight days from the
+                        date of receipt of this letter. The acceptance should be
+                        in the enclosed form and should be forwarded to the
+                        undersigned by name.
+                      </div>
+
+                      <div style="margin-top: 6px">
+                        3.&nbsp;&nbsp;&nbsp;This allotment is subject to the
+                        terms and conditions set out herein under:-
+                      </div>
+
+                      <div style="margin-top: 6px">
+                        3.1&nbsp;&nbsp;&nbsp;If the allottee fails to accept the
+                        allotment of residence within dd/mm/yyyy, the allotment
+                        shall stand cancelled and debarred to apply for
+                        accommodation for a period of 03 (three) months.
+                      </div>
+                      <div style="margin-top: 6px">
+                        3.2&nbsp;&nbsp;&nbsp;The allottee shall intimate this
+                        office in writing that he/she has taken physical
+                        possession of allotted quarter within 5 working days
+                        from the date of acceptance letter.Failure to take
+                        physical possession within 5 working days will result in
+                        cancellation of the allotted quarter and the officer
+                        will be debarred to apply for accommodation for a period
+                        of 03 (three) months.
+                      </div>
+                      <div style="margin-top: 6px">
+                        3.3&nbsp;&nbsp;&nbsp;When an allottee who is in
+                        occupation of an accommodationis allotted another
+                        accommodation and he/she occupies the new accommodation,
+                        the allotment of former accommodation shall be deemed to
+                        have been cancelled from the date of physical occupation
+                        of the new accommodation: -
+                      </div>
+                      <div style="margin-top: 6px; padding-left: 20px">
+                        i.&nbsp;&nbsp;&nbsp;Provided that such date of
+                        occupation, the allottee may, retain the former
+                        accommodation on payment of normal license fee for a
+                        period of thirty days for shifting to the newly allotted
+                        accommodation.
+                      </div>
+                      <div style="margin-top: 6px; padding-left: 20px">
+                        ii.&nbsp;&nbsp;&nbsp;Provided further that if the
+                        previous accommodation is not vacated within a period of
+                        thirty days, the allottee shall be liable to pay damage
+                        charges for use and occupation of the previous
+                        accommodation as may be determined by the Government of
+                        India from time to time with effect from 31st day from
+                        the date of physical occupation of the new accommodation
+                        and the accommodation slotted in the change shall be
+                        deemed to have been cancelled under these rules.
+                      </div>
+                      <div style="margin-top: 6px">
+                        3.4&nbsp;&nbsp;&nbsp;The allottee should abide by the
+                        guidelines laid down in the CBDT Residential Allotment
+                        rules, 2020, failure to do so will result in appropriate
+                        action as per extant rules.
+                      </div>
+
+                      <!-- <br /><br /><br /><br /> -->
+
+                      <!-- <div style="text-align: right">
+                        <div><b>(ANAND RAJ)</b></div>
+                        <div>Dy. Commissioner of Income Tax (Hq), Admin.</div>
+                        <div>
+                          For Pr. Chief Commissioner of Income-tax, Mumbai
+                        </div>
+                      </div>
+
+                      <div style="margin-top: 10px">
+                        The Gazetted Pay Bill section/Concerned DDO, with a
+                        request to take same on record and may take suitable
+                        action as deemed fit.
+                      </div>
+
+                      <div style="text-align: right;margin-top: 30px">
+                        Dy. Commissioner of Income Tax (Hq), Admin.<br />
+                        For Pr. Chief Commissioner of Income-tax, Mumbai
+                      </div> -->
+                      <!-- <div nz-row>
+                        <div nz-col nzSpan="10">
+                          <b>SEAL</b>
+                        </div>
+                        <div nz-col nzSpan="14" style="text-align: center">
+
+                          <div>Dy. Commissioner of Income-tax (HQ)</div>
+                          <div>Administration, Mumbai</div>
+                        
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+                <div nz-row>
+                  <div nz-col nzSpan="24"
+                    style="margin-top: 55px; text-align: center;font-weight: bold;font-size: 14px;">
+                    Note : This is computer generated order signature not required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nz-spin>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+  <ng-template #AllotmentPreviewFooter>
+    <button nz-button nzType="primary" [nzLoading]="pdfDownload" (click)="downloadPdf()">
+      Download
+    </button>
+    <button nz-button nzType="primary" printSectionId="Prntmodal" ngxPrint [useExistingCss]="true"
+      style="margin-right: 8px; color: white !important">
+      Print
+    </button>
+    <button nz-button nzType="primary" (click)="closemodal()" style="color: white !important">
+      Send
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="authModelVisible" nzTitle="Authorization Occupation Slip" [nzBodyStyle]="{ height: '440px' }"
+  nzWidth="1000px" (nzOnCancel)="authhandleCancel()" [nzFooter]="modalFooter" nzCentered="true" nzMaskClosable="false"
+  nzClosable="true">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-spin [nzSpinning]="IsspinningData">
+          <div nz-row class="my-box" style="
+              height: 390px;
+              overflow-y: auto;
+              font-family: 'Times New Roman', Times, serif;
+            ">
+            <div nz-col nzSpan="24" style="padding: 0px 10px">
+              <div id="excel-table">
+                <div style="
+                    margin-right: 2%;
+                    margin-left: 50px;
+                    font-family: 'Times New Roman', Times, serif;
+                    font-size: 13px;
+                  ">
+                  <div nz-row>
+                    <div nz-col nzSpan="8"><br /></div>
+                    <div nz-col nzSpan="8"><br /></div>
+                    <div nz-col nzSpan="8">
+                      <div style="text-align: center">
+                        Pr. Chief Commissioner of Income tax
+                      </div>
+                      <div style="text-align: center">
+                        366, Aayakar Bhawan, Mumbai
+                      </div>
+                      <div style="text-align: center">
+                        Date: {{ todaysdate1 != undefined ? todaysdate1 : "" }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div nz-row style="margin-top: 25px">
+                    <div nz-col nzSpan="5"></div>
+                    <div nz-col nzSpan="14">
+                      <h5 style="
+                          text-align: center;
+                          font-size: 13px;
+                          font-family: 'Times New Roman', Times, serif !important;
+                        ">
+                        <b><u>AUTHORISATION/ OCCUPATION SLIP</u></b>
+                      </h5>
+                    </div>
+                    <div nz-col nzSpan="5"></div>
+                  </div>
+
+                  <div nz-row style="margin-top: 15px">
+                    <div nz-col nzSpan="1"></div>
+
+                    <div nz-col nzSpan="22" style="
+                        text-align: justify;
+                        font-size: 12px;
+                        font-family: 'Times New Roman', Times, serif !important;
+                      ">
+                      <p>
+                        &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; On Possession of
+                        <b>Bldg no.
+                          {{
+                          authdata.BUILDING_NAME != undefined
+                          ? authdata.BUILDING_NAME
+                          : ""
+                          }}, Quarter no.{{
+                          authdata.FLAT_NAME != undefined
+                          ? authdata.FLAT_NAME
+                          : ""
+                          }},
+                          {{
+                          authdata.CITY_NAME != undefined
+                          ? authdata.CITY_NAME
+                          : ""
+                          }},
+                          {{
+                          authdata.RESIDENCE_TYPE_NAME != undefined
+                          ? authdata.RESIDENCE_TYPE_NAME
+                          : ""
+                          }}</b>
+                        be handed over to the allottee within named:<b>{{
+                          authdata.EMPLOYEE_NAME != undefined
+                          ? authdata.EMPLOYEE_NAME
+                          : ""
+                          }},
+                          {{
+                          authdata.DESIGNATION != undefined
+                          ? authdata.DESIGNATION
+                          : ""
+                          }}</b>
+                        of the Income Tax department, Mumbai, whose specimen
+                        signature is appended herein below. This authorisation
+                        is valid upto: 08/08/2023 Specimen Signature of the
+                        allottee:
+                      </p>
+                    </div>
+
+                    <div nz-col nzSpan="1"></div>
+                  </div>
+
+                  <br />
+
+                  <!-- (Santosh Nair) -->
+                  <div style="
+                      display: flex;
+                      font-size: 12px;
+                      font-family: 'Times New Roman', Times, serif !important;
+                    " nz-row>
+                    <div nz-col nzSpan="2"></div>
+                    <div nz-col nzSpan="11" style="width: 100%">
+                      <p><b>SEAL</b></p>
+                    </div>
+                    <!-- <div nz-col nzSpan="11"
+                                            style="width: 100%;">
+                                            <div>
+                                                <p
+                                                    style="text-align: center;"><b
+                                                        *ngIf="NAME1 != undefined && NAME1 != null && NAME1 != ''">({{
+                                                        NAME1 != undefined &&
+                                                        NAME1 !=
+                                                        null && NAME1 != ""
+                                                        ? NAME1
+                                                        : ""
+                                                        }})</b>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p style="text-align: center;">
+                                                    <b
+                                                        *ngIf="POST1 != undefined && POST1 != null && POST1 != ''">{{
+                                                        POST1 != undefined &&
+                                                        POST1 !=
+                                                        null && POST1 != ""
+                                                        ? POST1
+                                                        : ""
+                                                        }}</b>
+                                                </p>
+                                            </div>
+
+                                        </div> -->
+                    <!-- <div nz-col nzSpan="2"></div> -->
+                  </div>
+                  <br />
+
+                  <div nz-row style="
+                      font-size: 12px;
+                      font-family: 'Times New Roman', Times, serif !important;
+                    ">
+                    <div nz-col nzSpan="2"></div>
+
+                    <div nz-col nzSpan="20">
+                      <p>Copy to:</p>
+                    </div>
+                  </div>
+
+                  <div nz-row style="
+                      font-size: 12px;
+                      font-family: 'Times New Roman', Times, serif !important;
+                    ">
+                    <div nz-col nzSpan="2"></div>
+                    <div nz-col nzSpan="22">
+                      <ul>
+                        <li>
+                          The Executive/ Assistance/ Junior Engineer (Civil)<br />MCD,
+                          CPWD, Mumbai
+                        </li>
+                        <li>The Caretaker, Income tax Quarter, Mumbai.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <br />
+
+                  <!-- <div nz-row style="display: flex;">
+                                        <div nz-col nzSpan="2"></div>
+                                        <div nz-col nzSpan="11"
+                                            style="width: 100%;"></div>
+                                        <div nz-col nzSpan="11"
+                                            style="width: 100%;">
+                                            <div>
+                                                <p
+                                                    style="text-align: center;"><b
+                                                        *ngIf="NAME2 != undefined && NAME2 != null && NAME2 != ''">({{
+                                                        NAME2 != undefined &&
+                                                        NAME2 !=
+                                                        null && NAME2 != ""
+                                                        ? NAME2
+                                                        : ""
+                                                        }})</b>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    style="text-align: center;">
+                                                    <b
+                                                        *ngIf="POST2 != undefined && POST2 != null && POST2 != ''">{{
+                                                        POST2 != undefined &&
+                                                        POST2 !=
+                                                        null && POST2 != ""
+                                                        ? POST2
+                                                        : ""
+                                                        }}</b>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div> -->
+                </div>
+                <div nz-row>
+                  <div nz-col nzSpan="24"
+                    style="margin-top: 55px; text-align: center;font-weight: bold;font-size: 14px;">
+                    Note : This is computer generated order signature not required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-spin>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <span>
+      <button nz-button nzType="default" (click)="authhandleCancel()" style="margin-right: 8px"
+        [nzLoading]="loadingRecords">
+        Close
+      </button>
+    </span>
+    <span>
+      <button nz-button nzType="default" printSectionId="excel-table" ngxPrint style="margin-right: 8px"
+        [useExistingCss]="true">
+        Print
+      </button>
+      <!-- <button nz-button nzType="default" printSectionId="excel-table"
+                ngxPrint style="margin-right: 8px;" [useExistingCss]="true"
+                [disabled]="(SIGNATURE_ID1 == null || SIGNATURE_ID1 == undefined ||SIGNATURE_ID1 == '') || (SIGNATURE_ID2 == null || SIGNATURE_ID2 == undefined ||SIGNATURE_ID2 == '')">
+                Print
+            </button> -->
+    </span>
+    <span>
+      <button nz-button nzType="primary" [nzLoading]="authopenpdfRecords" (click)="authopenpdf()"
+        style="margin-right: 8px">
+        Download
+      </button>
+    </span>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="AcceptRejectModal" nzCentered="true" nzTitle="Reject Remark"
+  [nzBodyStyle]="{ padding: '0px 5px' }" nzWidth="570px" nzClosable="true" (nzOnCancel)="Cancelmodal()"
+  [nzFooter]="contextofrules2" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24" style="padding: 5px">
+        <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+        <nz-form-item>
+          <nz-form-control nzRequired nzErrorTip>
+            <textarea required maxlength="512" placeHolder="Enter The Remark" style="width: 100%; height: 100%"
+              [(ngModel)]="INSPECTOR_REMARK" name="REASON" [nzAutosize]="{ minRows: 3, maxRows: 3 }"
+              nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #contextofrules2>
+    <button nz-button nzType="default" class="btn btn-primary" (click)="Cancelmodal()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinningReject"
+      style="background-color: red" (click)="RejectAcceptance()">
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Uploadfiles" nzTitle="Upload Allotment & Authorization Letter"
+  (nzOnCancel)="Uploadmodalclose()" nzCentered="true" nzClosable="true" [nzBodyStyle]="{
+    padding: '5px',
+    'font-family': 'Poppins',
+  }" nzWidth="600px" nzMaskClosable="false" [nzFooter]="UploadFooter">
+  <ng-container *nzModalContent>
+    <form>
+      <nz-spin [nzSpinning]="IsspinningUploaddata">
+        <div nz-row>
+          <div nz-col nzSpan="12" style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              padding: 0px 15px;
+            ">
+            <nz-form-item style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+              ">
+              <nz-form-label nzRequired nzNoColon>Upload Allotment Letter</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Upload Signed Copy PDF" *ngIf="joininglettershow">
+                <a style="padding: 0px 10px; font-size: 12px" (click)="Allocationletter.click()">
+                  Upload Allotment Letter here
+                  <input #Allocationletter name="AllocationLetter" type="file" (change)="onFileApplicationform($event)"
+                    style="display: none" required />
+                </a>
+              </nz-form-control>
+
+              <div *ngIf="ALLOTMENT_FINAL_LETTER != null" style="
+                  overflow: hidden;
+                  font-size: 13px;
+                  text-align: center;
+                  color: #1890ff;
+                  padding-left: 10px;
+                ">
+                {{ ALLOTMENT_FINAL_LETTER }} &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="viewAllocationLetter(ALLOTMENT_FINAL_LETTER)"></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red" (click)="
+                    clearAllocationletter(
+                      ALLOTMENT_FINAL_LETTER,
+                      'allotmentFinalLetter'
+                    )
+                  "></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar1" style="width: 200px">
+              <nz-progress [nzPercent]="percent1"></nz-progress>
+            </div>
+          </div>
+
+          <div nz-col nzSpan="12" style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              padding: 0px 15px;
+            ">
+            <nz-form-item style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+              ">
+              <nz-form-label nzRequired nzNoColon>Upload Authorization Letter</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Upload Signed Copy PDF" *ngIf="joininglettershow1">
+                <a style="padding: 0px 10px; font-size: 12px" (click)="Authorization.click()">
+                  Upload Authorization Letter here
+                  <input #Authorization name="Authorization" type="file" (change)="onFileApplicationform1($event)"
+                    style="display: none" required />
+                </a>
+              </nz-form-control>
+
+              <div *ngIf="AUTHORISATION_OCCUPATION_LETTER != null" style="
+                  overflow: hidden;
+                  font-size: 13px;
+                  text-align: center;
+                  color: #1890ff;
+                  padding-left: 10px;
+                ">
+                {{ AUTHORISATION_OCCUPATION_LETTER }}
+                &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff" (click)="
+                    viewAuthorizationLetter(AUTHORISATION_OCCUPATION_LETTER)
+                  "></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red" (click)="
+                    clearAuthorizationletter(
+                      AUTHORISATION_OCCUPATION_LETTER,
+                      'authorisationOccupationLetter'
+                    )
+                  "></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar2" style="width: 200px">
+              <nz-progress [nzPercent]="percent2"></nz-progress>
+            </div>
+          </div>
+        </div>
+        <div nz-row>
+          <!-- <div nz-col nzSpan="6">
+                    </div> -->
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon *ngIf="
+                  RESIDENCE_ID == 1 || RESIDENCE_ID == 2 || RESIDENCE_ID == 3;
+                  else elseBlock111111
+                ">Select Send Caretaker DateTime</nz-form-label>
+              <ng-template #elseBlock111111>
+                <nz-form-label nzRequired nzNoColon>Select Last Date of Occupancy</nz-form-label></ng-template>
+              <nz-form-control>
+                <nz-date-picker style="width: 90%" nzFormat="dd/MM/yyyy" [(ngModel)]="SEND_TO_CARETAKER_END_DATE_TIME"
+                  [nzDisabledDate]="disabledDate11" name="SEND_TO_CARETAKER_END_DATE_TIME"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Non Acceptance End DateTime</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker style="width: 90%" nzFormat="dd/MM/yyyy" [(ngModel)]="NONACCEPTANCE_END_DATETIME"
+                  [nzDisabledDate]="DisableNonAcceptance" name="NONACCEPTANCE_END_DATETIME"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </nz-spin>
+    </form>
+  </ng-container>
+  <ng-template #UploadFooter>
+    <button nz-button nzType="default" (click)="Uploadmodalclose()">
+      Close
+    </button>
+
+    <button nz-button nzType="primary" (click)="Openconfirmation()">
+      Submit
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- <nz-modal
+    [(nzVisible)]="Uploadconfirmmodal"
+    nzCentered="true"
+    [nzBodyStyle]="{ padding: '16px' }"
+    nzWidth="570px"
+    nzClosable="false"
+    (nzOnCancel)="CancelUploadconfirm()"
+    [nzFooter]="Uploadconfirmmodalfooter"
+    nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <p
+            style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+            *Please note that changes cannot be made after Submitted.
+        </p>
+
+    </ng-container>
+
+    <ng-template #Uploadconfirmmodalfooter>
+        <button
+            nz-button
+            nzType="default"
+            class="btn btn-primary"
+            (click)="CancelUploadconfirm()">
+            No
+        </button>
+
+        <button
+            nz-button
+            nzType="primary"
+            class="btn btn-primary"
+            [nzLoading]="isSpinningAccept"
+            style="background-color: #006699"
+            (click)="Submituploadfiles()">
+            Yes
+        </button>
+    </ng-template>
+</nz-modal> -->
+
+<nz-modal [(nzVisible)]="Uploadconfirmmodal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="Uploadconfirmmodalfooter" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">Are you sure want to Submit Allotment & Authorization
+      Letter?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <!-- ALLOTMENT_FINAL_LETTER
+AUTHORISATION_OCCUPATION_LETTER
+SEND_TO_CARETAKER_END_DATE_TIME -->
+      <b>Allotment Letter:</b> {{ ALLOTMENT_FINAL_LETTER }} &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff" (click)="viewAllotmentLettershow(ALLOTMENT_FINAL_LETTER)"></span>
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Authorization Letter:</b> {{ AUTHORISATION_OCCUPATION_LETTER }}
+      &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff"
+        (click)="viewAuthorizationlettershow(AUTHORISATION_OCCUPATION_LETTER)"></span>
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Send To Caretaker End DateTime :</b>
+      {{ SEND_TO_CARETAKER_END_DATE_TIME | date : "dd/MM/yyyy" }} &nbsp;
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px">
+      <b>Non Acceptance End DateTime :</b>
+      {{ NONACCEPTANCE_END_DATETIME | date : "dd/MM/yyyy" }} &nbsp;
+    </p>
+    <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Submitted.
+    </p>
+  </ng-container>
+
+  <ng-template #Uploadconfirmmodalfooter>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="Submituploadfiles()">
+      Yes
+    </button>
+
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="CancelUploadconfirm()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="printOrderModalVisible" nzMaskClosable="false" nzClosable="true"
+  [nzContent]="printOrderModalContent" [nzTitle]="'PDFview'" (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <div *ngIf="view == 1" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <button nz-button nzType="primary" (click)="OpenRejectModal()">
+      Reject
+    </button>
+    <button nz-button nzType="primary" (click)="AcceptAcceptance()">
+      Approve
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="VisibleOccupancyLetter" nzMaskClosable="false" nzClosable="true"
+  [nzContent]="VisibleOccupancyLetterContent" [nzTitle]="'PDFview'" (nzOnCancel)="VisibleOccupancyLetterContentCancel()"
+  [nzFooter]="OccupancyLetterContentFooter">
+  <ng-template #VisibleOccupancyLetterContent>
+    <div *ngIf="view11 == 1" style="height: 600px; overflow: auto">
+      <iframe [src]="viewPdfSafe12" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #OccupancyLetterContentFooter>
+    <button nz-button nzType="default" (click)="VisibleOccupancyLetterContentCancel()">
+      Close
+    </button>
+
+    <button nz-button nzType="primary" (click)="RejectOccupancyLetter()">
+      Reject
+    </button>
+    <button nz-button nzType="primary" (click)="ApproveOccupancyLetter()">
+      Approve
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- <nz-modal
+    [(nzVisible)]="OccupancyConfirm"
+    nzCentered="true"
+    [nzBodyStyle]="{ padding: '16px' }"
+    nzWidth="570px"
+    nzClosable="false"
+    (nzOnCancel)="CancelOccupancyConfirm()"
+    [nzFooter]="Occupancyconfirmmodalfooter"
+    nzMaskClosable="false">
+    <ng-container *nzModalContent>
+        <p
+            style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+            *Please note that changes cannot be made after Approved.
+        </p>
+
+    </ng-container>
+
+    <ng-template #Occupancyconfirmmodalfooter>
+        <button
+            nz-button
+            nzType="default"
+            class="btn btn-primary"
+            (click)="CancelOccupancyConfirm()">
+            No
+        </button>
+
+        <button
+            nz-button
+            nzType="primary"
+            class="btn btn-primary"
+            [nzLoading]="isSpinningAccept"
+            style="background-color: #006699"
+            (click)="Occupancyconfimok()">
+            Yes
+        </button>
+    </ng-template>
+</nz-modal> -->
+
+<nz-modal [(nzVisible)]="OccupancyConfirm" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="Occupancyconfirmmodalfooter" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">Are you sure want to Approve this Physical Acceptance
+      Form?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Approved.
+    </p>
+  </ng-container>
+
+  <ng-template #Occupancyconfirmmodalfooter>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="Occupancyconfimok()">
+      Yes
+    </button>
+
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="CancelOccupancyConfirm()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="TechnicalModal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="true" [nzTitle]="'Technical Occupancy Details'" (nzOnCancel)="CancelTechnicalModal()"
+  [nzFooter]="TechnicalModalmmodalfooter" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <p *ngIf="
+        tecnicaloccdatta != undefined &&
+        tecnicaloccdatta != null &&
+        tecnicaloccdatta != ''
+      " style="font-size: 14px">
+      <span><b>Technical Occupancy Remark : </b></span> &nbsp;
+      {{ tecnicaloccdatta.TECHNICAL_REMARK }}
+    </p>
+    <p *ngIf="
+        tecnicaloccdatta != undefined &&
+        tecnicaloccdatta != null &&
+        tecnicaloccdatta != ''
+      " style="font-size: 14px">
+      <span><b>Technical Occupancy Date : </b></span> &nbsp;
+      {{ tecnicaloccdatta.TECHNICAL_TAKEN_DATE_TIME | date : "dd/MM/yyyy" }}
+    </p>
+    <p *ngIf="
+        tecnicaloccdatta != undefined &&
+        tecnicaloccdatta != null &&
+        tecnicaloccdatta != ''
+      " style="font-size: 14px">
+      <span><b>Technical Occupancy Remaining days :</b></span> &nbsp;
+      {{ getdateee(tecnicaloccdatta.TECHNICAL_TAKEN_DATE_TIME) }} Days
+    </p>
+  </ng-container>
+
+  <ng-template #TechnicalModalmmodalfooter>
+    <button nz-button nzType="default" class="btn btn-primary" (click)="CancelTechnicalModal()">
+      close
+    </button>
+    <button nz-button nzType="primary" *ngIf="
+        tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == 'P' ||
+        tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == null ||
+        tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == ''
+      " class="btn btn-primary" (click)="RejectTechnicalModal()">
+      Reject
+    </button>
+    <button nz-button nzType="primary" *ngIf="
+        tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == 'P' ||
+        tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == null ||
+        tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == ''
+      " class="btn btn-primary" (click)="ApproveTechnicalModal()">
+      Approve
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="TechnicalModal22" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="true" [nzTitle]="'Technical Occupancy Details'" (nzOnCancel)="CancelTechnicalModal22()"
+  [nzFooter]="TechnicalModalmmodalfooter11" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <p *ngIf="tecoccy != undefined && tecoccy != null && tecoccy != ''" style="font-size: 14px">
+      <span><b>Technical Occupancy Remark : </b></span> &nbsp;
+      {{ tecoccy.TECHNICAL_REMARK }}
+    </p>
+    <p *ngIf="tecoccy != undefined && tecoccy != null && tecoccy != ''" style="font-size: 14px">
+      <span><b>Technical Occupancy Date : </b></span> &nbsp;
+      {{ tecoccy.TECHNICAL_TAKEN_DATE_TIME | date : "dd/MM/yyyy" }}
+    </p>
+    <p *ngIf="tecoccy != undefined && tecoccy != null && tecoccy != ''" style="font-size: 14px">
+      <span><b>Technical Occupancy Remaining days :</b></span> &nbsp;
+      {{ getdateee(tecoccy.TECHNICAL_TAKEN_DATE_TIME) }} Days
+    </p>
+  </ng-container>
+
+  <ng-template #TechnicalModalmmodalfooter11>
+    <button nz-button nzType="default" class="btn btn-primary" (click)="CancelTechnicalModal22()">
+      close
+    </button>
+    <!-- <button
+            nz-button
+            nzType="primary"
+            *ngIf="(tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == 'P' || tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == null || tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == '')"
+            class="btn btn-primary"
+            (click)="RejectTechnicalModal()">
+            Reject
+        </button>
+        <button
+            nz-button
+            nzType="primary"
+            *ngIf="(tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == 'P' || tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == null || tecnicaloccdatta.INSPECTOR_TECHNICAL_STATUS == '')"
+            class="btn btn-primary"
+            (click)="ApproveTechnicalModal()">
+            Approve
+        </button> -->
+  </ng-template>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="nonacceptancemodel" nzMaskClosable="false" nzClosable="true"
+  [nzContent]="printOrderModalContent12" [nzTitle]="'PDFview'" (nzOnCancel)="nonacceptancemodelcancel()"
+  [nzFooter]="printOrderModalFooter11">
+  <ng-template #printOrderModalContent12>
+    <div *ngIf="view122 == 2" style="height: 600px; overflow: auto">
+      <iframe [src]="ViewNonAcceptanceform" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    </div>
+  </ng-template>
+  <ng-template #printOrderModalFooter11>
+    <button nz-button nzType="default" (click)="nonacceptancemodelcancel()">
+      Close
+    </button>
+    <button nz-button nzType="primary" (click)="nonacceptanceRejectModal()">
+      Reject
+    </button>
+    <button nz-button nzType="primary" (click)="nonacceptanceAcceptModal()">
+      Approve
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="NonAcceptanceConfirmmodal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px" nzClosable="false" (nzOnCancel)="CancelNonAcceptanceConfirm()" [nzFooter]="NonAcceptanceConfirmfooter"
+  nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">Are you sure want to Approve
+    </span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Approved.
+    </p>
+  </ng-container>
+
+  <ng-template #NonAcceptanceConfirmfooter>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinningAccept"
+      style="background-color: #006699" (click)="NonAcceptanceConfirmok()">
+      Yes
+    </button>
+
+    <button nz-button nzType="default" class="btn btn-primary" [nzLoading]="isSpinningAccept"
+      (click)="CancelNonAcceptanceConfirm()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="NonAcceptanceRejectRemark" nzCentered="true" nzTitle="Reject Remark"
+  [nzBodyStyle]="{ padding: '0px 5px' }" nzWidth="570px" nzClosable="true"
+  (nzOnCancel)="NonAcceptanceRejectRemarkmodal()" [nzFooter]="NonAcceptanceRejectRemarkmodalFooter"
+  nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24" style="padding: 5px">
+        <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+        <nz-form-item>
+          <nz-form-control nzRequired nzErrorTip>
+            <textarea required maxlength="512" placeHolder="Enter The Remark" style="width: 100%; height: 100%"
+              [(ngModel)]="INSPECTOR_REMARK_REJECT" name="INSPECTOR_REMARK_REJECT"
+              [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #NonAcceptanceRejectRemarkmodalFooter>
+    <button nz-button nzType="default" class="btn btn-primary" (click)="NonAcceptanceRejectRemarkmodal()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinningReject"
+      style="background-color: red" (click)="NonAcceptanceRejectSend()">
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="ApprovependingAcceptance" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="ApprovependingAcceptanceModalfooter" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">Are you sure want to Approve this Acceptance Form?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Approved.
+    </p>
+  </ng-container>
+
+  <ng-template #ApprovependingAcceptanceModalfooter>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="ApprovependingAcceptanceAccept()">
+      Yes
+    </button>
+
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="cancelApprovependingAcceptance()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Rejectaccupancyremark" nzCentered="true" nzTitle="Reject Remark"
+  [nzBodyStyle]="{ padding: '0px 5px' }" nzWidth="570px" nzClosable="true" (nzOnCancel)="Rejectaccupancymodal()"
+  [nzFooter]="contextofrules212" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24" style="padding: 5px">
+        <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+        <nz-form-item>
+          <nz-form-control nzRequired nzErrorTip>
+            <textarea required maxlength="512" placeHolder="Enter The Remark" style="width: 100%; height: 100%"
+              [(ngModel)]="REJECT_OCCUPANCY_REMARK" name="RejectOccupancyRemark"
+              [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #contextofrules212>
+    <button nz-button nzType="default" class="btn btn-primary" (click)="Rejectaccupancymodal()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinningReject"
+      style="background-color: red" (click)="Rejectoccuancyconfirm()">
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="TechnicalOccupancyconfirmmodal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="570px" nzClosable="false" [nzFooter]="TechnicalOccupancyconfirmmodalfooter" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 18px; font-weight: 500">Are you sure want to Approve this Technical Occupancy?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 14px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Approved.
+    </p>
+  </ng-container>
+
+  <ng-template #TechnicalOccupancyconfirmmodalfooter>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="technicaloccupancyok()">
+      Yes
+    </button>
+
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinning"
+      style="background-color: #006699" (click)="technicaloccupancyno()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="TechnicalOccupRemark" nzCentered="true" nzTitle="Reject Remark"
+  [nzBodyStyle]="{ padding: '0px 5px' }" nzWidth="570px" nzClosable="true"
+  (nzOnCancel)="TechnicalOccupRemarkRejectmodal()" [nzFooter]="TechnicalOccupRemarkRejectmodalFooter"
+  nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzSpan="24" style="padding: 5px">
+        <nz-form-label style="padding: 0px 10px" nzRequired nzNoColon>Remark:</nz-form-label>
+        <nz-form-item>
+          <nz-form-control nzRequired nzErrorTip>
+            <textarea required maxlength="512" placeHolder="Enter The Remark" style="width: 100%; height: 100%"
+              [(ngModel)]="TECHNICAL_OCCUPANCY_REMARK" name="TECHNICAL_OCCUPANCY_REMARK"
+              [nzAutosize]="{ minRows: 3, maxRows: 3 }" nz-input></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #TechnicalOccupRemarkRejectmodalFooter>
+    <button nz-button nzType="default" class="btn btn-primary" (click)="TechnicalOccupRemarkRejectmodal()">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" class="btn btn-primary" [nzLoading]="isSpinningReject"
+      style="background-color: red" (click)="RejectTechnicalOccupanyok()">
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="POPreview" nzTitle="Physical Occupancy Preview" (nzOnCancel)="closemodal()" nzCentered="true"
+  nzClosable="false" [nzBodyStyle]="{
+    padding: '5px',
+    'font-family': 'Poppins',
+    height: '410px',
+  }" nzWidth="950px" nzMaskClosable="false" [nzFooter]="POPreviewFooter">
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="isSpinningmodal">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-spin [nzSpinning]="IsspinningData">
+            <div class="my-box" style="height: 390px; overflow-y: auto">
+              <div id="Prntmodal111">
+                <div>
+                  <table style="border-collapse: collapse;width: 100%;">
+                    <tr>
+                      <td
+                        style="width:20%;text-align: left;padding:5px 15px;border: 1px solid black;text-align: center;border-bottom: none;">
+                        <img src="https://www.incometaxmumbai.gov.in/employeecorner/assets/logo.png"
+                          alt="Government of India" class="image" height="200px" width="120px">
+                      </td>
+                      <td
+                        style="width:80%;text-align: left;padding:5px 10px;border: 1px solid black;text-align: center;border-bottom: none;">
+                        <div>भारत सरकार</div>
+                        <div>GOVERNMENT OF INDIA</div>
+                        <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                        <div>OFFICE OF THE</div>
+                        <div><b>PRINCIPAL CHIEF COMMISSIONER OF INCOME-TAX, MUMBAI</b></div>
+                        <div>
+                          3RD FLOOR, AAYAKAR BHAVAN, MAHARSHI KARVE ROAD, MUMBAI-20
+                        </div>
+                        <div>
+                          (022)2200 6385(DIRECT), (022)2209 6738, (FAX), (022)2203 9131 EXTN.2328.
+                        </div>
+                        <div>
+                          e-mail: <a>mumbai.dcit.hq.admin@incometax.gov.in</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  <table style="border-collapse: collapse;width: 100%;">
+                    <tr style="font-size: 13px;">
+                      <td
+                        style="width:75%;text-align: left;padding:5px 15px;border: 1px solid black;font-weight: bold;">
+                        No. Pr.CCIT/Mum/Admn./ Qrtrs/{{
+                        empdata.RESIDENCE_TYPE_NAME != undefined
+                        ? empdata.RESIDENCE_TYPE_NAME
+                        : ""
+                        }}/{{ todaysyear != undefined ? todaysyear : "" }}-
+                        {{ nextyear != undefined ? nextyear : "" }}
+                      </td>
+                      <td
+                        style="width:15%;text-align: left;padding:5px 10px;border: 1px solid black;font-weight: bold;">
+                        Date : {{ todaysdate != undefined ? todaysdate : "" }}
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                  To<br />
+                  Shri/Smt./Ms.<br />
+
+                  Ma'am/Sir,
+                </div>
+                <div style="padding-left: 20px">
+                  Sub: Taking Physical possession of Government accommodation at
+                  …………. -reg.
+                </div>
+                <div style="text-align: center;margin-bottom: 10px">*****</div>
+
+                <div style="padding-left: 20px">Please refer to the above.</div>
+                <div style="margin-bottom: 10px;">
+                  2.&nbsp;&nbsp;&nbsp;As per records available in this office, it is observed
+                  that government accommodation at ………………….. was allotted to you
+                  vide letter ……………. dated ……….. for which you have filed
+                  acceptance letter on……….
+                </div>
+                <div>
+                  3.&nbsp;&nbsp;&nbsp;In this regard, kindly note that the last date of taking physical possession is
+                  ……….You are requested to submit an intimation of physical possession by the above-mentioned date.
+                  Kindly also note that if you fail to take the physical possession of the allotted quarter by the
+                  above-mentioned date, your allotment is liable to be cancelled.
+                </div>
+
+                <div nz-row>
+                  <div nz-col nzSpan="24"
+                    style="margin-top: 55px; text-align: center;font-weight: bold;font-size: 14px;">
+                    Note : This is computer generated order signature not required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nz-spin>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+  <ng-template #POPreviewFooter>
+    <button nz-button nzType="primary" [nzLoading]="pdfDownload" (click)="downloadPdf()">
+      Download
+    </button>
+    <button nz-button nzType="primary" printSectionId="Prntmodal" ngxPrint [useExistingCss]="true"
+      style="margin-right: 8px; color: white !important">
+      Print
+    </button>
+    <button nz-button nzType="primary" (click)="closemodal()" style="color: white !important">
+      Send
+    </button>
+  </ng-template>
+</nz-modal>

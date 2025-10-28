@@ -1,0 +1,147 @@
+<div class="my-boxxxxxxx">
+  <form nz-form #aboutPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Title</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Title is required">
+              <angular-editor [config]="editorConfig" name="title" [(ngModel)]="data.TITLE"></angular-editor>
+              <small style="color: red" *ngIf="data.TITLE != undefined">
+                {{data.TITLE.length}}/256
+              </small>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Description</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Description is required">
+              <!-- <textarea nz-input rows="2" name="description" [(ngModel)]="data.DESCRIPTION" required ></textarea> -->
+              <angular-editor [config]="editorConfig2" name="description"
+                [(ngModel)]="data.DESCRIPTION"></angular-editor>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Vision</nz-form-label>
+            <nz-form-control nzHasFeedback>
+              <!-- <textarea nz-input rows="2" name="description" [(ngModel)]="data.DESCRIPTION" required ></textarea> -->
+              <angular-editor [config]="editorConfig3" name="Vision" [(ngModel)]="data.VISION"></angular-editor>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-form-item>
+            <nz-form-label nzNoColon>Mission</nz-form-label>
+            <nz-form-control nzHasFeedback>
+              <!-- <textarea nz-input rows="2" name="description" [(ngModel)]="data.DESCRIPTION" required ></textarea> -->
+              <angular-editor [config]="editorConfig4" name="Mission" [(ngModel)]="data.MISSION"></angular-editor>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+      <div nz-row>
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Image
+            </nz-form-label>
+            <br>
+            <span *ngIf="data.IMG_URL == ''">
+              <span style="color: red; font-size: 10px !important; margin-left: 5px">
+                ( Image Must Be 370px Height And 450px Width )
+              </span>
+            </span>
+            <nz-form-control nzHasFeedback nzErrorTip="Image is required">
+              <button nz-button style="height: 28px; padding: 0px 7px; font-size: 12px" (click)="inputFile.click()">
+                Choose File
+                <input #inputFile type="file" accept="image/*" (change)="onFileSelectedIMAGE_URL($event)"
+                  (click)="inputFile.value = ''" value="" style="display: none" />
+              </button>
+
+              <span *ngIf="data.IMG_URL != ''">
+                <button (click)="clear(data.IMG_URL,'about')" [nzSize]="'default'" nz-button style="margin-left: 10px">
+
+                  <nz-badge>
+                    <i style="font-size: 15px; color: red" nz-icon nzType="delete"></i>
+                  </nz-badge>
+
+                </button>
+              </span>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div *ngIf="fileDataIMAGE_URL != null">
+            <img width="100%" style="margin-left: 10px;height: 200px;" [src]="image" />
+          </div>
+          <!-- <div nz-row> -->
+          <div *ngIf="fileDataIMAGE_URL == null && data.IMG_URL != ''" style=" margin-top: 10px">
+            <img src="{{ imgurl }}about/{{ data.IMG_URL }}" width="100%" style="height: 200px;" />
+          </div>
+          <!-- </div> -->
+
+        </div>
+
+        <div nz-col nzSpan="4">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon>Is On Home</nz-form-label>
+            <nz-form-control>
+              <nz-switch style="padding-left: 15px" name="isonhome" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.IS_ON_HOME"></nz-switch></nz-form-control></nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="5">
+          <nz-form-item>
+            <nz-form-label nzRequired nzNoColon>Sequence No</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Sequence No is required">
+              <input nz-input name="bannerseq" maxlength="6" style="width: 100%" [(ngModel)]="data.SEQUENCE_NO"
+                (keypress)="omit($event)" required />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="3">
+          <nz-form-item>
+            <nz-form-label style="padding-left: 15px" nzNoColon>Status</nz-form-label>
+            <nz-form-control>
+              <nz-switch style="padding-left: 15px" name="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                [(ngModel)]="data.STATUS"></nz-switch></nz-form-control></nz-form-item>
+        </div>
+      </div>
+
+    </nz-spin>
+  </form>
+</div>
+<div class="footer">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+    (click)="save(false,aboutPage)">
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+        <a (click)="save(true,aboutPage)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false,aboutPage)">
+    <span>Update & close</span>
+  </button>
+</div>

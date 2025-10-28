@@ -1,0 +1,409 @@
+<!-- <nz-layout class="app-layout"> -->
+<nz-layout class="app-layout" *ngIf="isLogedIn && showsidebar && roleId != 2" style="overflow-x: hidden !important;">
+  <!-- *ngIf="getfullwidth()" -->
+  <nz-sider class="menu-sidebar" *ngIf="getfullwidth()" nzCollapsible nzWidth="256px" nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <h1 style="font-family: 'Courier New', Courier, monospace; font-size: 18px;margin-left: 0px;">
+        {{ isCollapsed ? "" : (USERNAME | uppercase) }}
+      </h1>
+    </div>
+    <ul nz-menu nzMode="inline" nzTheme="dark">
+      <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+
+      <ng-template #menuTpl let-menus>
+        <ng-container *ngFor="let menu of menus">
+          <li *ngIf="!menu.children" nz-menu-item [nzPaddingLeft]="menu.level * 24" [nzDisabled]="menu.disabled"
+            nzMatchRouter>
+            <a [routerLink]="[menu.link]"><i nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></i>{{ isCollapsed ? "" :
+              menu.title }}
+            </a>
+          </li>
+
+          <li *ngIf="menu.children" nz-submenu [nzPaddingLeft]="menu.level * 24" [nzOpen]="menu.open"
+            [nzTitle]="menu.title" [nzIcon]="menu.icon" [nzDisabled]="menu.disabled">
+            <ul>
+              <ng-container *ngTemplateOutlet="
+                  menuTpl;
+                  context: { $implicit: menu.children }
+                "></ng-container>
+            </ul>
+          </li>
+          <!-- <li>
+              <a routerLink="/memoverify">Leave Master</a>
+            </li> -->
+        </ng-container>
+      </ng-template>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="ant-layout-header">
+      <!-- <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+        </span>
+        <div style="display: flex;gap: 5px;">
+          <span style="margin-right: 25px;">
+            <button nzType="primary" nzShape="circle" [routerLink]="['']" nzTooltipTitle="Home"
+              nzTooltipPlacement="bottom" nz-button nz-tooltip><span nz-icon nzType="home" class="anticon"
+                nzTheme="outline"></span></button>
+          </span>
+        </div>
+      </div> -->
+
+      <div nz-row class="app-header">
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+          <!-- *ngIf="getfullwidth(); else elseiconblock;" -->
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed" *ngIf="getfullwidth(); else elseiconblock">
+            <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+          </span>
+          <ng-template #elseiconblock>
+            <span style="color: #006699; font-weight: 600; font-size: 17px" nz-tooltip nzTooltipTitle="Back"
+              nzTooltipPlacement="top">
+              <img src="assets/aykarlogo.png" alt="logo" style="height: 47px; margin-left: 20px" />
+              Government Residential Accommodation Allotment System
+            </span>
+          </ng-template>
+        </div>
+
+        <div nz-col nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10"
+          style="display: flex; justify-content: flex-end; align-items: center">
+          <button nzType="primary" nzShape="circle" [routerLink]="['']" nzTooltipTitle="Home"
+            nzTooltipPlacement="bottom" nz-button nz-tooltip style="
+              margin-right: 10px;
+              background-color: white !important;
+              border: none;
+              box-shadow: none;
+            ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" viewBox="0 0 26 20" fill="none">
+              <path
+                d="M12.6553 5.18853L4.33368 11.9683V19.2856C4.33368 19.4751 4.40976 19.6568 4.54519 19.7908C4.68063 19.9247 4.86431 20 5.05584 20L10.1137 19.9871C10.3046 19.9861 10.4874 19.9104 10.622 19.7766C10.7567 19.6427 10.8323 19.4615 10.8323 19.2727V14.9994C10.8323 14.81 10.9084 14.6283 11.0438 14.4943C11.1792 14.3603 11.3629 14.2851 11.5544 14.2851H14.4431C14.6346 14.2851 14.8183 14.3603 14.9538 14.4943C15.0892 14.6283 15.1653 14.81 15.1653 14.9994V19.2696C15.165 19.3636 15.1834 19.4567 15.2196 19.5436C15.2558 19.6306 15.3089 19.7096 15.376 19.7761C15.4431 19.8427 15.5228 19.8955 15.6106 19.9316C15.6983 19.9676 15.7924 19.9862 15.8874 19.9862L20.9435 20C21.135 20 21.3187 19.9247 21.4542 19.7908C21.5896 19.6568 21.6657 19.4751 21.6657 19.2856V11.9634L13.3459 5.18853C13.2481 5.11054 13.1262 5.06801 13.0006 5.06801C12.8749 5.06801 12.7531 5.11054 12.6553 5.18853ZM25.8001 9.79663L22.0268 6.71995V0.535774C22.0268 0.393678 21.9697 0.257402 21.8681 0.156925C21.7665 0.0564476 21.6288 0 21.4851 0H18.9575C18.8139 0 18.6761 0.0564476 18.5746 0.156925C18.473 0.257402 18.4159 0.393678 18.4159 0.535774V3.77765L14.375 0.488894C13.9872 0.173224 13.5005 0.000631028 12.9983 0.000631028C12.4961 0.000631028 12.0095 0.173224 11.6217 0.488894L0.196564 9.79663C0.141719 9.84147 0.0963433 9.89656 0.0630297 9.95876C0.0297162 10.021 0.0091177 10.089 0.0024112 10.1591C-0.00429529 10.2292 0.00302166 10.2999 0.023944 10.3671C0.0448663 10.4344 0.0789839 10.497 0.124347 10.5512L1.2753 11.9353C1.32054 11.9897 1.37619 12.0347 1.43905 12.0678C1.50192 12.101 1.57077 12.1215 1.64166 12.1282C1.71256 12.135 1.7841 12.1279 1.8522 12.1072C1.92031 12.0866 1.98363 12.0529 2.03854 12.008L12.6553 3.35796C12.7531 3.27998 12.8749 3.23745 13.0006 3.23745C13.1262 3.23745 13.2481 3.27998 13.3459 3.35796L23.9631 12.008C24.0179 12.0529 24.0811 12.0867 24.1491 12.1074C24.2171 12.1281 24.2886 12.1353 24.3594 12.1287C24.4303 12.122 24.4991 12.1016 24.562 12.0687C24.6248 12.0357 24.6805 11.9909 24.7259 11.9366L25.8768 10.5525C25.9221 10.498 25.9561 10.4351 25.9768 10.3675C25.9974 10.3 26.0044 10.229 25.9973 10.1588C25.9902 10.0886 25.9691 10.0204 25.9352 9.95824C25.9014 9.89609 25.8554 9.84117 25.8001 9.79663Z"
+                fill="#006699" />
+            </svg>
+          </button>
+          <button nzType="primary" nzShape="circle" (click)="console()" nzTooltipTitle="Profile"
+            nzTooltipPlacement="bottom" nz-button nz-tooltip style="
+              margin-right: 10px;
+              background-color: white !important;
+              border: none;
+              box-shadow: none;
+            ">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path
+                  d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
+                  stroke="#006699" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M11.0007 14.3333C13.3018 14.3333 15.1673 12.4679 15.1673 10.1667C15.1673 7.86548 13.3018 6 11.0007 6C8.69946 6 6.83398 7.86548 6.83398 10.1667C6.83398 12.4679 8.69946 14.3333 11.0007 14.3333Z"
+                  stroke="#006699" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M4.3125 18.4378C4.93949 17.2028 5.89621 16.1656 7.07661 15.4411C8.257 14.7165 9.61498 14.333 11 14.333C12.385 14.333 13.743 14.7165 14.9234 15.4411C16.1038 16.1656 17.0605 17.2028 17.6875 18.4378"
+                  stroke="#006699" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </button>
+          <button nzType="primary" nzShape="circle" (click)="getNotification()" nzTooltipTitle="Notification"
+            nzTooltipPlacement="bottom" nz-button nz-tooltip style="
+              margin-right: 10px;
+              background-color: white !important;
+              border: none;
+              box-shadow: none;
+            ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
+              <path
+                d="M8.99998 20.0005C8.20434 20.0005 7.44128 19.6763 6.87868 19.0992C6.31607 18.5222 6 17.7396 6 16.9235C6 16.7195 6.07902 16.5239 6.21967 16.3796C6.36032 16.2353 6.55108 16.1543 6.75 16.1543H11.25C11.4489 16.1543 11.6397 16.2353 11.7803 16.3796C11.921 16.5239 12 16.7195 12 16.9235C12 17.7396 11.6839 18.5222 11.1213 19.0992C10.5587 19.6763 9.79563 20.0005 8.99998 20.0005ZM7.70249 17.6928C7.83435 17.9259 8.02361 18.1194 8.25132 18.2539C8.47903 18.3885 8.7372 18.4593 8.99998 18.4593C9.26277 18.4593 9.52094 18.3885 9.74865 18.2539C9.97636 18.1194 10.1656 17.9259 10.2975 17.6928H7.70249Z"
+                fill="#006699" />
+              <path
+                d="M10.5 3.07692H7.5C7.30108 3.07692 7.11032 2.99588 6.96967 2.85162C6.82902 2.70736 6.75 2.51171 6.75 2.30769C6.75 1.69565 6.98705 1.10868 7.40901 0.675907C7.83096 0.243131 8.40325 0 8.99999 0C9.59672 0 10.169 0.243131 10.591 0.675907C11.0129 1.10868 11.25 1.69565 11.25 2.30769C11.25 2.51171 11.171 2.70736 11.0303 2.85162C10.8897 2.99588 10.6989 3.07692 10.5 3.07692Z"
+                fill="#006699" />
+              <path
+                d="M17.2499 17.6919H0.749998C0.551086 17.6919 0.360322 17.6109 0.219671 17.4666C0.079019 17.3224 1.58329e-06 17.1267 1.58329e-06 16.9227C-0.000656163 16.054 0.203631 15.198 0.595426 14.4278C0.987222 13.6576 1.55489 12.996 2.24999 12.4996V8.46116C2.24995 6.63302 2.95493 4.87906 4.21107 3.58205C5.46722 2.28504 7.17256 1.55027 8.95496 1.53809H9.03746C10.8277 1.53809 12.5445 2.26748 13.8104 3.56581C15.0763 4.86414 15.7874 6.62505 15.7874 8.46116V12.4996C16.4756 13.0003 17.036 13.6637 17.4211 14.4336C17.8063 15.2036 18.0048 16.0574 17.9999 16.9227C17.9999 17.1267 17.9209 17.3224 17.7802 17.4666C17.6396 17.6109 17.4488 17.6919 17.2499 17.6919ZM1.57499 16.1535H16.4249C16.3187 15.6202 16.1033 15.1161 15.793 14.6745C15.4827 14.2329 15.0846 13.864 14.6249 13.5919C14.5105 13.5242 14.4155 13.4266 14.3497 13.3091C14.2838 13.1915 14.2494 13.0582 14.2499 12.9227V8.46116C14.2499 7.03307 13.6968 5.66348 12.7122 4.65367C11.7277 3.64385 10.3923 3.07655 8.99996 3.07655C7.60758 3.07655 6.27223 3.64385 5.28766 4.65367C4.3031 5.66348 3.74998 7.03307 3.74998 8.46116V12.9227C3.75051 13.0582 3.7161 13.1915 3.65025 13.3091C3.5844 13.4266 3.48944 13.5242 3.37498 13.5919C2.91532 13.864 2.51718 14.2329 2.20689 14.6745C1.8966 15.1161 1.68122 15.6202 1.57499 16.1535Z"
+                fill="#006699" />
+            </svg>
+          </button>
+          <button nzType="primary" nzShape="circle" class="vv" data-bs-toggle="modal" data-bs-target="#changepasss"
+            nzTooltipTitle="Change Password" nzTooltipPlacement="bottom" nz-button nz-tooltip style="
+              margin-right: 10px;
+              background-color: white !important;
+              border: none;
+              box-shadow: none;
+            ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M2.77672 6.63658C0.263131 6.63658 -0.00223708 7.27765 1.40579e-05 9.73017C0.00200035 11.7038 0.00014984 13.6774 0.00014984 15.6509C0.00014984 20.8349 0.265784 19.9188 7.47551 19.9188C16.1392 19.9188 14.938 21.5937 14.9491 9.73017C14.9515 7.26878 14.6701 6.63658 12.172 6.63658C11.982 4.43904 12.455 3.68609 11.2301 1.93475C9.44936 -0.611495 5.5733 -0.676853 3.71783 1.93099C2.49785 3.64574 2.96701 4.4736 2.77672 6.63658ZM3.68115 13.1833L2.3502 13.1852C2.5295 13.5895 3.87078 14.854 4.11205 15.0534C4.71668 14.5619 5.42247 13.6101 5.95242 13.2127L4.61405 13.1784C4.69244 11.9179 5.21894 11.2338 5.92408 10.7709C7.0756 10.0147 7.65493 10.3355 8.81917 10.6278L9.39388 9.98407C7.97513 8.65701 3.82192 9.34407 3.68115 13.1833ZM8.99913 13.1829H10.2595C10.3854 14.3658 9.59264 15.2386 8.99529 15.6012C7.66394 16.4093 7.36812 15.946 6.13012 15.7706L5.48537 16.4687C7.01257 16.9776 7.87078 17.414 9.46949 16.425C10.728 15.6464 10.8843 14.9473 11.2926 13.1829L12.6141 13.1731C12.3455 12.7679 11.1471 11.4919 10.6809 11.2874C10.4479 11.6211 10.1691 11.8548 9.86807 12.1601C9.69208 12.3385 9.59489 12.4309 9.41797 12.609C9.13129 12.8976 9.16148 12.8198 8.99913 13.1829ZM4.59207 6.62408L10.3542 6.63524C10.4241 5.47333 10.4837 4.07164 9.96103 3.21729C8.77295 1.27513 6.04035 1.40584 4.99065 3.21971C4.48733 4.0894 4.53434 5.45154 4.59207 6.62408Z"
+                fill="#006699" />
+            </svg>
+          </button>
+          <button nzType="primary" nzShape="circle" class="vv" data-bs-toggle="modal" data-bs-target="#rolemapmod"
+            *ngIf="this.roledata.length > 1" nzTooltipTitle="Change Role" nzTooltipPlacement="bottom" nz-button
+            nz-tooltip style="
+              margin-right: 10px;
+              background-color: white !important;
+              border: none;
+              box-shadow: none;
+            ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.52757 9.40907C3.61243 9.55232 3.07645 9.88923 2.83232 10.662C2.57732 11.4678 2.66609 12.4428 2.8937 13.225C3.06747 13.8239 3.35414 14.485 3.73427 14.967C3.81832 15.0735 3.85042 15.0712 3.84711 15.2408C3.83955 15.6602 3.39426 15.762 3.02074 15.8869C2.65194 16.0098 2.27087 16.1423 1.90726 16.2747C1.14275 16.5522 0.468932 16.7888 0.206383 17.4909C-0.0250008 18.1105 -0.221922 19.3847 0.551087 19.6844C1.65417 20.1118 4.81279 19.977 6.1704 19.9888C7.10065 19.9968 8.08897 19.9907 9.00647 19.8931C9.41541 19.8498 9.84513 19.8041 10.1983 19.6363C10.8151 19.3432 10.6559 17.9701 10.3769 17.3717C9.97973 16.5178 8.44171 16.1729 7.45809 15.8298C7.14549 15.721 6.6072 15.5165 6.82725 15.0679C6.87211 14.9765 7.17856 14.6231 7.38869 14.1702C7.99029 12.8734 8.41054 10.5103 7.06474 9.72902C6.41639 9.35299 5.38275 9.27572 4.52757 9.40907ZM2.59478 5.67563C2.40495 5.57998 1.45063 4.5843 1.16164 4.29733C1.01667 4.15314 0.849524 3.85108 0.645529 4.07774C0.589336 4.33926 0.588833 5.43013 0.70783 5.62427L2.37288 7.29284C3.35413 8.28192 3.15958 8.27956 4.18522 7.26692C4.42133 7.03319 5.75815 5.74349 5.84409 5.59034C5.94514 5.40987 5.94893 4.25021 5.88329 4.04475C5.71707 3.81433 5.2066 4.46319 4.91761 4.75111C4.75422 4.91367 4.62249 5.04656 4.45863 5.20865C4.29289 5.37217 4.14978 5.57338 3.94247 5.67469C3.93114 5.10641 3.94061 4.53058 3.93966 3.96135C3.93919 3.32756 3.95571 2.95577 4.30373 2.55713C5.09988 1.6458 6.2535 2.21456 7.188 1.97424C7.25317 1.79471 7.34242 0.924369 7.17006 0.757559C7.03123 0.623263 6.12645 0.681217 5.87854 0.681217C4.83306 0.680746 4.43502 0.78253 3.72671 1.27212C2.27607 2.27581 2.61887 4.06408 2.59478 5.67563ZM13.9864 14.7008C13.9864 16.3147 13.8627 16.3552 14.9549 15.2663C15.1206 15.1009 15.8229 14.3644 15.9546 14.2946L15.9536 15.6583C15.9536 16.3077 16.0079 16.8387 15.6684 17.3104C15.0961 18.1063 14.0639 17.9503 13.0533 17.9508C12.5542 17.9508 12.6411 18.1657 12.6411 18.8635C12.6406 19.3687 12.8035 19.2909 13.4703 19.2904L14.2627 19.2909C16.0457 19.2848 17.2971 18.0978 17.2971 16.3242L17.3051 14.2927L18.6934 15.6498C18.8521 15.8068 18.9706 16.0377 19.2346 15.959C19.2955 15.5443 19.2652 15.1202 19.2657 14.7008C19.2657 14.2974 18.9489 14.0991 18.7449 13.8917L17.4227 12.5464C17.3047 12.4291 17.1866 12.3527 17.0699 12.2331C16.5675 11.7175 16.5534 11.8891 15.8965 12.5431L14.538 13.8927C14.342 14.0868 13.9864 14.2998 13.9864 14.7008ZM14.1748 0.027176C13.1988 0.111052 12.6194 0.408863 12.2907 1.07846C11.7448 2.191 12.1618 4.13005 12.8305 5.22468C12.9471 5.41599 13.0123 5.48714 13.1393 5.66479C13.8467 6.65292 10.4052 6.68639 9.68081 7.92333C9.36395 8.46428 9.18075 9.89112 9.71954 10.2445C10.4949 10.7534 14.0686 10.6441 15.2222 10.6441C16.2318 10.6437 18.3657 10.6715 19.32 10.3821C19.8088 10.2337 19.8801 10.074 19.9708 9.53535C20.0879 8.83701 19.8603 7.814 19.1604 7.39933C17.9761 6.69769 16.2729 6.57707 16.1614 5.97957C16.1109 5.70862 16.3768 5.52578 16.6393 5.04184C16.9675 4.43822 17.2631 3.56034 17.3165 2.75598C17.4614 0.578493 16.3031 -0.157069 14.1748 0.027176Z"
+                fill="#006699" />
+            </svg>
+          </button>
+          <button (click)="logout()" nzType="primary" nzShape="circle" nzTooltipTitle="Logout"
+            nzTooltipPlacement="bottom" nz-button nz-tooltip style="
+              margin-right: 25px;
+              background-color: white !important;
+              border: none;
+              box-shadow: none;
+            ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
+              <path
+                d="M10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 2.81829e-06 10 2.81829e-06C11.5527 -0.00116364 13.0842 0.359775 14.4729 1.05414C15.8617 1.74851 17.0693 2.75718 18 4H15.29C14.1352 2.98176 12.7112 2.31836 11.1887 2.0894C9.66625 1.86044 8.11007 2.07566 6.70689 2.70922C5.30371 3.34277 4.11315 4.36776 3.27807 5.66119C2.44299 6.95462 1.99887 8.46153 1.999 10.0011C1.99913 11.5407 2.4435 13.0475 3.27879 14.3408C4.11409 15.6341 5.30482 16.6589 6.7081 17.2922C8.11139 17.9255 9.66761 18.1405 11.19 17.9113C12.7125 17.6821 14.1364 17.0184 15.291 16H18.001C17.0702 17.243 15.8624 18.2517 14.4735 18.9461C13.0846 19.6405 11.5528 20.0013 10 20ZM17 14V11H9V9H17V6L22 10L17 14Z"
+                fill="#006699" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content style="height: 80vh; overflow-y: auto; background: #fff !important">
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
+
+<nz-layout class="app-layout" *ngIf="isLogedIn && !showsidebar && roleId == 2">
+  <nz-layout style="background-color: white">
+    <app-headersteps></app-headersteps>
+    <nz-layout>
+      <nz-content class="vbv" style="
+          margin: 0px;
+          height: 80vh;
+          overflow-y: auto;
+          background: #fff !important;
+        ">
+        <div class="inner-content">
+          <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+    </nz-layout>
+    <nz-footer style="text-align: center">
+      Copyright 2023
+      <a href="https://www.uvtechsoft.com/" target="_blank">UjjVilas Technologies & Software Pvt. Ltd.</a>
+      All rights reserved.
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px'
+  }" [nzClosable]="true" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="450" [nzVisible]="drawerVisible"
+  [nzTitle]="drawerTitle" (nzOnClose)="drawerClose()" (nzKeyboard)="(true)">
+  <ng-container *nzDrawerContent>
+    <app-notificationlist [drawerClose]="closeCallback" [drawerVisible]="drawerVisible"
+      [data]="drawerData"></app-notificationlist>
+  </ng-container>
+</nz-drawer>
+
+<div class="modal fade" id="changepasss" tabindex="-1" aria-labelledby="changepasssd" aria-hidden="true"
+  data-bs-backdrop="static" data-bs-keyboard="false" style="overflow-x: hidden; overflow-y: auto">
+  <div class="modal-dialog" style="max-width: 315px !important">
+    <div class="modal-content">
+      <div class="modal-header" style="padding-top: 10px; padding-bottom: 10px">
+        <h5 class="modal-title" style="margin-bottom: 0px">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="closeModal()"></button>
+        <button type="button" style="display: none" #closechangeppp class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="
+          border-bottom: 4px groove #006699;
+          border-top: 4px groove #006699;
+          padding: 0px;
+        ">
+        <div class="form-box" style="padding: 1rem 1rem 1rem">
+          <div>
+            <form action="#">
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">
+                  Old Password</label>
+                <div class="input-group">
+                  <input autocomplete="off" [type]="pass3 ? 'text' : 'password'" autocomplete="off" type="password"
+                    class="form-control" [(ngModel)]="changepass.PASSWORD" placeholder="Enter Old Password"
+                    name="pasccs" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showpass3()" [ngClass]="{
+                        'bi bi-eye': !pass3,
+                        'bi bi-eye-slash': pass3
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">New Password</label>
+                <div class="input-group mb-0">
+                  <input autocomplete="off" [type]="pass4 ? 'text' : 'password'" [(ngModel)]="changepass.NEW_PASSWORD"
+                    class="form-control" placeholder="Enter New Password" name="cpass" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showpass4()" [ngClass]="{
+                        'bi bi-eye': !pass4,
+                        'bi bi-eye-slash': pass4
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 10px">
+                <label class="inpTitle" style="margin-bottom: 5px">Retype New Password</label>
+                <div class="input-group mb-0">
+                  <input autocomplete="off" [type]="pass11 ? 'text' : 'password'" [(ngModel)]="RETYPE_PASSWORD"
+                    class="form-control" placeholder="Retype New Password" name="cpass" required />
+                  <div class="input-group-append">
+                    <span style="
+                        padding: 11px;
+                        line-height: 1;
+                        border-radius: 0px;
+                        border-top-right-radius: 0.375rem;
+                        border-bottom-right-radius: 0.375rem;
+                      " toggle="#password-field" (click)="showp()" [ngClass]="{
+                        'bi bi-eye': !pass11,
+                        'bi bi-eye-slash': pass11
+                      }" class="fa input-group-text"></span>
+                  </div>
+                </div>
+                <span style="font-weight: 400; font-size: 11px; margin-top: 7px">
+                  *Enter minimum 8 alphanumeric characters with special
+                  symbols.</span>
+              </div>
+              <div class="mt-4" style="text-align: center; margin-top: 20px !important">
+                <button *ngIf="!otpSpinning" (click)="changepasss()" class="btn btn-primary px-4 validate" style="
+                    background-color: #006699 !important;
+                    width: 100%;
+                    color: white;
+                  ">
+                  Change Password <i class="icon-long-arrow-right"></i>
+                </button>
+                <div *ngIf="otpSpinning">
+                  <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a style="display: none" #rolemapmod data-bs-toggle="modal" data-bs-target="#rolemapmod">nvghv</a>
+<div class="modal fade" id="rolemapmod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="basicD" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 700px !important">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row" style="justify-content: center">
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+            <h3 class="modal-title" style="margin-bottom: 10px; color: #0c1538; font-size: 22px">
+              Please select your role
+            </h3>
+          </div>
+
+          <div class="section_our_solution">
+            <div class="row" style="justify-content: center">
+              <div class="col-lg-4 col-md-4 col-sm-12" *ngFor="let role of roledata">
+                <div class="our_solution_category" (click)="changerole(role)"
+                  style="margin-bottom: 24px; cursor: pointer">
+                  <div class="solution_cards_box">
+                    <div class="solution_card">
+                      <div class="hover_color_bubble"></div>
+                      <div class="so_top_icon" style="text-align: center">
+                        <svg enable-background="new -27 23 101 100" height="100px" id="malecostume_1_" version="1.1"
+                          height="100%" viewBox="-27 23 101 100" width="100%" xml:space="preserve"
+                          xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+                          xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <g>
+                            <g>
+                              <circle cx="23" cy="73" fill="#F5EEE5" r="50" />
+                              <g>
+                                <defs>
+                                  <circle cx="23" cy="73" id="SVGID_1_" r="50" />
+                                </defs>
+                                <clipPath id="SVGID_2_">
+                                  <use overflow="visible" xlink:href="#SVGID_1_" />
+                                </clipPath>
+                                <path clip-path="url(#SVGID_2_)"
+                                  d="M38,98.9l27.9,7.7c3.2,1.1,5.7,3.5,7.1,6.6v9.8H-27v-9.8      c1.3-3.1,3.9-5.5,7.1-6.6L8,98.9V84h30V98.9z"
+                                  fill="#D4B08C" />
+                                <g clip-path="url(#SVGID_2_)">
+                                  <defs>
+                                    <path
+                                      d="M38,98.9l27.9,7.7c3.2,1.1,5.7,3.5,7.1,6.6v9.8H-27v-9.8c1.3-3.1,3.9-5.5,7.1-6.6L8,98.9V84h30V98.9z"
+                                      id="SVGID_3_" />
+                                  </defs>
+                                  <clipPath id="SVGID_4_">
+                                    <use overflow="visible" xlink:href="#SVGID_3_" />
+                                  </clipPath>
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#1E1E23"
+                                    points="23.2,103 16,103 11.2,98 -27,98 -27,123 23.2,123 73.3,123        73.3,98 35.2,98 30.4,103      " />
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#C1CAD4"
+                                    points="23,103 24,103 38.7,95.3 32.9,124.2 23,123.1 13.1,124.2 7.3,95.3        22,103      " />
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#216DD9"
+                                    points="20.5,112 25.5,112 29.5,124 16.5,124      " />
+                                  <polygon clip-path="url(#SVGID_4_)" fill="#249CF2"
+                                    points="12.5,103 33.5,103 25.5,112 20.5,112      " />
+                                  <path clip-path="url(#SVGID_4_)"
+                                    d="M38.5,93l-14.4,10l10.8,11L39,94L38.5,93z M7.5,93l14.4,10l-10.8,11L7,94       L7.5,93z"
+                                    fill="#FFFFFF" />
+                                </g>
+                              </g>
+                              <path
+                                d="M23,97c-1.5,0-3.5-0.3-4.8-0.9c-1.6-0.7-7.2-4.6-9.1-6.3c-2.5-2.3-3.8-5.1-4.2-10S3,57.5,3,53.5     C3,47.8,8.1,39,23,39l0,0l0,0l0,0l0,0C37.9,39,43,47.8,43,53.5c0,4-1.5,21.5-1.9,26.4s-1.6,7.7-4.2,10c-1.9,1.7-7.6,5.6-9.1,6.3     C26.5,96.7,24.5,97,23,97L23,97z"
+                                fill="#F2CEA5" />
+                              <path
+                                d="M30,83l-14,0c-0.4,0-0.6,0.4-0.4,0.8c1.3,2.3,3.7,3.5,6.7,3.7c3.1,0.2,6.5-1.3,8.1-3.7     C30.6,83.5,30.4,83,30,83z"
+                                fill="#A3705F" />
+                              <circle cx="32" cy="68" fill="#262626" r="2" />
+                              <circle cx="14" cy="68" fill="#262626" r="2" />
+                              <path d="M8,65c0,0,1.1-3,6.1-3c3.4,0,5.4,1.5,6.4,3" fill="none" stroke="#CC9872"
+                                stroke-width="2" />
+                              <path d="M38.1,65c0,0-1.1-3-6.1-3c-4.8,0-7,3-7,5c0,1.9,0,9,0,9" fill="none"
+                                stroke="#BB8660" stroke-width="2" />
+                              <path
+                                d="M41.8,71.2c0,0,0.8-6.3,3.7-7.2c0.4-1.8,1.5-7,1.5-9.9s-0.3-5.7-1.9-8.1c-1.8-2.6-5.6-4.1-7.6-4.1     c-2.3,1.4-7.7,4.6-9.4,6.5c-0.9,1,0.4,1.8,0.4,1.8s1.2-0.5,1.7-0.6c2.5-0.7,8-1.2,9.7,1.3C42,53.9,42,62.7,42,64     C42,65.2,41.8,71.2,41.8,71.2z"
+                                fill="#D98C21" />
+                              <path
+                                d="M0.5,64c2.9,1,3.7,7.2,3.7,7.2S4,65.2,4,64c0-1.6,0.2-9.1,3.4-12.7c3.6-4,8.4-5.3,11.1-3.5     c1.4,0.9,6.1,5.5,11.1,1.7c3-2.3,8.5-7.5,8.5-7.5s-2.9-8.9-16.1-7.9c-5.6,0.5-11.8-0.9-11.8-0.9s-0.1,2.5,0.9,3.8     C2.8,39.4,0.1,45.4-0.7,50c-0.2,0.9-0.3,1.8-0.3,2.7c0,0.5,0,1,0,1.4C-1,57,0.1,62.1,0.5,64z"
+                                fill="#E6A422" />
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                      <div class="solu_title" style="text-align: center">
+                        <h4>{{ role.ROLE_NAME }}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

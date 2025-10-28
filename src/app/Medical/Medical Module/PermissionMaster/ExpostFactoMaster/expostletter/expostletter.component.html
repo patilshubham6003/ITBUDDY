@@ -1,0 +1,1834 @@
+<!-- ///////////////////////////////////////////////////////////////////////// -->
+<div>
+  <form nz-form #refExpoPermissionPage="ngForm">
+    <nz-spin [nzSpinning]="isSpinning">
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+          <div class="my-box" style="height: 78vh; overflow-y: auto">
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <div>
+                  <!-- <nz-form-item>
+                
+                    <nz-radio-group
+                      [(ngModel)]="data.PAY_BILL"
+                      name="radiogaz"
+                    >
+                      <label nz-radio nzValue="NonGazPay">Welfare & S.G </label>
+                      <label nz-radio nzValue="GazPay">Gaz Pay Bill</label>
+                    </nz-radio-group>
+                  </nz-form-item> -->
+
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Signature</nz-form-label
+                      >
+                      <nz-form-control>
+                        <nz-select
+                          name="userid"
+                          [(ngModel)]="data.SIGNATURE_ID"
+                          nzAllowClear
+                          nzShowSearch
+                          nzPlaceHolder="Choose Signature"
+                          (ngModelChange)="signature($event)"
+                        >
+                          <nz-option
+                            *ngFor="let user of Signaturearray"
+                            [nzValue]="user.ID"
+                            [nzLabel]="user.NAME"
+                          >
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="20">
+                <nz-form-item>
+                  <nz-form-label nzNoColon>Signature 1</nz-form-label>
+                  <nz-form-control>
+                    <nz-select
+                      name="EXPOST_LETTER_SIGNATURE_1"
+                      [(ngModel)]="
+                        expostLetterSignatureData.EXPOST_LETTER_SIGNATURE_1
+                      "
+                      nzAllowClear
+                      nzShowSearch
+                      nzPlaceHolder="Choose Signature"
+                      (ngModelChange)="signature2($event)"
+                    >
+                      <nz-option
+                        *ngFor="let user of Signaturearray1"
+                        [nzValue]="user.ID"
+                        [nzLabel]="user.NAME"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-item style="padding: 0px !important">
+                  <nz-form-label nzNoColon></nz-form-label>
+                  <nz-form-control>
+                    <button
+                      nz-button
+                      nzType="primary"
+                      (click)="opensignature()"
+                    >
+                      <i nz-icon nzType="plus"></i>
+                    </button>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon
+                    >Relationship with Applicant</nz-form-label
+                  >
+                  <nz-form-control
+                    nzErrorTip="Please Select Correct Relationship with Applicant"
+                  >
+                    <!-- <input nz-input autocomplete="off" name="Relation" type="text"
+                      [(ngModel)]="data2.RELATION_WITH_PATIENT" placeHolder="Enter Relation" required /> -->
+                    <nz-select
+                      nzShowSearch
+                      nzAllowClear
+                      nzPlaceHolder="Select Relationship with Applicant"
+                      [(ngModel)]="data.RELATION_WITH_PATIENT"
+                      name="relation"
+                      required
+                    >
+                      <!-- <nz-option *ngFor="let relatives of relativeArray;" [nzValue]="relatives"
+                      [nzLabel]="relatives"></nz-option> -->
+                      <nz-option nzLabel="Self" nzValue="Self"></nz-option>
+                      <nz-option nzLabel="Mother" nzValue="Mother"></nz-option>
+                      <nz-option nzLabel="Father" nzValue="Father"></nz-option>
+                      <nz-option
+                        nzLabel="Brother"
+                        nzValue="Brother"
+                      ></nz-option>
+                      <nz-option nzLabel="Sister" nzValue="Sister"></nz-option>
+                      <nz-option
+                        nzLabel="Daughter"
+                        nzValue="Daughter"
+                      ></nz-option>
+                      <nz-option nzLabel="Son" nzValue="Son"></nz-option>
+                      <nz-option nzLabel="Wife" nzValue="Wife"></nz-option>
+                      <nz-option
+                        nzLabel="Husband"
+                        nzValue="Husband"
+                      ></nz-option>
+                      <!-- <nz-option nzLabel="Grand-Mother" nzValue="Grand-Mother" ></nz-option>
+                          <nz-option nzLabel="Grand-Father" nzValue="Grand-Father"></nz-option> -->
+                      <nz-option
+                        nzLabel="Father-In-Law"
+                        nzValue="Father-In-Law"
+                      ></nz-option>
+                      <nz-option
+                        nzLabel="Mother-In-Law"
+                        nzValue="Mother-In-Law"
+                      ></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>Header</nz-form-label>
+
+                  <nz-form-control>
+                    <angular-editor
+                      style="resize: none; color: black"
+                      name="LETTER_HEADER"
+                      maxlength="256"
+                      [(ngModel)]="data.LETTER_HEADER"
+                      [config]="editorConfigHeader"
+                    ></angular-editor>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon>
+                    Ex-post Facto Permission Number</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Permission Number is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="permissionno"
+                      nz-input
+                      placeholder="Enter Permission Number"
+                      type="text"
+                      maxlength="60"
+                      [(ngModel)]="data.PERMISSION_NO"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon>
+                    Employee Name
+                  </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Employee Name is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="nameeng"
+                      nz-input
+                      disabled="true"
+                      placeholder="Enter Employee Name "
+                      type="text"
+                      [(ngModel)]="data.EMPLOYEE_NAME"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon>
+                    Employee Name in Hindi</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Employee Name in Hindi is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="namehindi"
+                      nz-input
+                      placeholder="Enter Employee Name in Hindi"
+                      type="text"
+                      [(ngModel)]="data.EMPLOYEE_NAME_HN"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon>
+                    Patient Name
+                  </nz-form-label>
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Patient Name is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="patientName"
+                      nz-input
+                      disabled="true"
+                      placeholder="Enter Patient Name "
+                      type="text"
+                      [(ngModel)]="data.PATIENT_NAME"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col nzSpan="24">
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon>
+                    Patient Name in Hindi</nz-form-label
+                  >
+
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Patient Name in Hindi is required"
+                  >
+                    <input
+                      style="width: 100%"
+                      name="Patientnamehindi"
+                      nz-input
+                      placeholder="Enter Patient Name in Hindi"
+                      type="text"
+                      [(ngModel)]="data.PATIENT_NAME_HN"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <!-- <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="12"
+              >
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon
+                    >Treatement Permission Start Date
+                  </nz-form-label>
+
+                  <nz-form-control>
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/yyyy"
+                      name="expostartdate"
+                      [(ngModel)]="data.TREATMENT_START_DATE"
+                    >
+                    </nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="12"
+              >
+                <nz-form-item
+                  style="
+                    display: inline-block;
+                    margin-bottom: 5px;
+                    width: -webkit-fill-available;
+                    padding: 0px 10px;
+                  "
+                >
+                  <nz-form-label nzRequired nzNoColon
+                    >Treatement Permission End Date
+                  </nz-form-label>
+
+                  <nz-form-control>
+                    <nz-date-picker
+                      style="width: 100%"
+                      nzFormat="dd/MM/yyyy"
+                      name="expoenddate"
+                      [(ngModel)]="data.TREATMENT_END_DATE"
+                    >
+                    </nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div> -->
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>
+                    Expost Facto Permission Sentense
+                  </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Sentense"
+                  >
+                    <textarea
+                      maxlength="256"
+                      nz-input
+                      style="width: 100%"
+                      rows="3"
+                      name="permissionsentense"
+                      [(ngModel)]="data.EXPOST_FACTO_PERMISSION_SENTENSE"
+                      placeholder="Enter Expost Facto Permission Sentense"
+                      required
+                    ></textarea>
+                    <h6
+                      style="color: red; font-size: 0.67rem; font-weight: 400"
+                      *ngIf="data.EXPOST_FACTO_PERMISSION_SENTENSE != undefined"
+                    >
+                      {{ data.EXPOST_FACTO_PERMISSION_SENTENSE.length }}/2500
+                    </h6>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row>
+              <div
+                nz-col
+                nzXs="24"
+                nzSm="24"
+                nzMd="24"
+                nzLg="24"
+                nzXl="24"
+                nzSpan="24"
+              >
+                <nz-form-item>
+                  <nz-form-label nzRequired nzNoColon>
+                    Expost Facto Permission Sentense In Hindi
+                  </nz-form-label>
+                  <nz-form-control
+                    nzHasFeedback
+                    nzErrorTip="Please Enter Valid Sentense In Hindi"
+                  >
+                    <textarea
+                      maxlength="256"
+                      nz-input
+                      style="width: 100%"
+                      rows="3"
+                      name="permissionsentensehindi"
+                      placeholder="Enter Expost Facto Permission Sentense In Hindi"
+                      [(ngModel)]="data.EXPOST_FACTO_PERMISSION_SENTENSE_HN"
+                      required
+                    ></textarea>
+                    <h6
+                      style="color: red; font-size: 0.67rem; font-weight: 400"
+                      *ngIf="
+                        data.EXPOST_FACTO_PERMISSION_SENTENSE_HN != undefined
+                      "
+                    >
+                      {{ data.EXPOST_FACTO_PERMISSION_SENTENSE_HN.length }}/2500
+                    </h6>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div *ngFor="let data of HospitalMapping; let i = index">
+              <div class="my-box">
+                <div nz-row>
+                  <div nz-col nzSpan="24">
+                    <nz-form-item>
+                      <nz-form-label nzNoColon>
+                        Name of Hospital
+                      </nz-form-label>
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Hospital is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="NAMENAME{{ i }}"
+                          nz-input
+                          placeholder="Enter name in english"
+                          autocomplete="off"
+                          type="text"
+                          disabled="true"
+                          [(ngModel)]="data.NAME"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Name of Hospital(in hindi)</nz-form-label
+                      >
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Hospital(in hindi) is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          nz-input
+                          placeholder="Enter name of Hospital in hindi"
+                          autocomplete="off"
+                          name="NAME_HN{{ i }}"
+                          type="text"
+                          [(ngModel)]="data.NAME_HN"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzNoColon
+                        >Address of Hospital
+                      </nz-form-label>
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Name of Address is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          name="ADDRESS{{ i }}"
+                          nz-input
+                          placeholder="Enter Address in english"
+                          autocomplete="off"
+                          type="text"
+                          [(ngModel)]="data.ADDRESS"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div nz-row>
+                  <div
+                    nz-col
+                    nzXs="24"
+                    nzSm="24"
+                    nzMd="24"
+                    nzLg="24"
+                    nzXl="24"
+                    nzSpan="24"
+                  >
+                    <nz-form-item>
+                      <nz-form-label nzRequired nzNoColon
+                        >Address of Hospital(in hindi)</nz-form-label
+                      >
+
+                      <nz-form-control
+                        nzHasFeedback
+                        nzErrorTip="Address of Hospital(in hindi) is required"
+                      >
+                        <input
+                          style="width: 100%"
+                          nz-input
+                          placeholder="Enter Address of Hospital in hindi"
+                          autocomplete="off"
+                          name="ADDRESS_HN{{ i }}"
+                          type="text"
+                          [(ngModel)]="data.ADDRESS_HN"
+                        />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+                <div>
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon
+                      >Show In Order</nz-form-label
+                    >
+                    <nz-form-control>
+                      <nz-switch
+                        name="IS_VISIBLE_IN_ORDER{{ i }}"
+                        nzCheckedChildren="Yes"
+                        nzUnCheckedChildren="No"
+                        [(ngModel)]="HospitalMapping[i].IS_VISIBLE_IN_ORDER"
+                      ></nz-switch>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div nz-row *ngIf="data.HOSPITAL_TYPE == 'E'">
+        <div
+          nz-col
+          nzXs="24"
+          nzSm="24"
+          nzMd="24"
+          nzLg="24"
+          nzXl="24"
+          nzSpan="24"
+        >
+          <nz-form-item>
+            <nz-form-label nzNoColon>Name of Hospital </nz-form-label>
+        
+            <nz-form-control
+              nzHasFeedback
+              nzErrorTip="Name of patient is required"
+            >
+              <input
+                style="width: 100%"
+                name="EMPANELLED_HOSPITAL_NAME"
+                nz-input
+                placeholder="Enter name in english"
+                autocomplete="off"
+                type="text"
+                disabled="true"
+                [(ngModel)]="data.EMPANELLED_HOSPITAL_NAME"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        </div> -->
+
+            <!-- <div nz-row>
+                      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+                          <nz-form-item>
+                              <nz-form-label  nzNoColon>Amount (in words)</nz-form-label>
+        
+                              <nz-form-control nzHasFeedback nzErrorTip="City Name is required">
+                                  <input style="width: 100%;" nz-input placeholder="Enter Amount"
+                                      autocomplete="off"  name="amountinwords" type="text"
+                                      [(ngModel)]="amountinwords" />
+                              </nz-form-control>
+                          </nz-form-item>
+                      </div>
+                     
+                  </div>
+                  <div nz-row>
+                      <div  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" nzSpan="24">
+                          <nz-form-item>
+                              <nz-form-label nzRequired nzNoColon>Amount (in hindi)</nz-form-label>
+        
+                              <nz-form-control nzHasFeedback nzErrorTip="City Name is required">
+                                  <input style="width: 100%;" nz-input placeholder="Enter amount in hindi"
+                                      autocomplete="off" name="amountinwordsh"  type="text"
+                                      [(ngModel)]="amountinwordsh" />
+                              </nz-form-control>
+                          </nz-form-item>
+                      </div>
+                  </div> -->
+          </div>
+        </div>
+
+        <div
+          nz-col
+          nzXs="16"
+          nzSm="16"
+          nzMd="16"
+          nzLg="16"
+          nzXl="16"
+          class="my-box"
+        >
+          <div
+            style="
+              font-family: Arial, Helvetica, sans-serif !important;
+              height: 78vh;
+              overflow-y: auto;
+            "
+          >
+            <!-- <div nz-row>
+                <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                  <div style="margin-left: 530%; text-align: center">
+                    <img
+                      src="assets/govtOfIndia.png"
+                      alt=""
+                      height="130px"
+                      width="100px"
+                    />
+                  </div>
+                </div>
+  
+                <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                  <div
+                    style="
+                      width: 100%;
+                      text-align: center;
+                      font-weight: bold;
+                      margin-top: 20%;
+                    "
+                  >
+                    <div>भारत सरकार</div>
+                    <div style="text-transform: uppercase">
+                      Government Of India
+                    </div>
+                    <div>कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई</div>
+                    <div style="text-transform: uppercase">Office Of The</div>
+                    <div>Commissioner of Income-Tax (Admin. & TPS)</div>
+  
+                    <div style="text-transform: uppercase">
+                      3<sup>rd</sup> Floor, aayakar bhavan, Maharshi Karve Road,
+                      Mumbai-400020
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+            <div nz-row>
+              <div
+                style="border: 1px solid"
+                nz-col
+                nzXs="4"
+                nzSm="4"
+                nzMd="4"
+                nzLg="4"
+                nzXl="4"
+              >
+                <div style="text-align: center; padding: 36px 9px 9px 9px">
+                  <img
+                    src="assets/govtOfIndia.png"
+                    alt=""
+                    height="140px"
+                    width="100%"
+                  />
+                </div>
+              </div>
+              <!-- <div
+                  style="
+                    border-bottom: 1px solid;
+                    border-top: 1px solid;
+                    border-right: 1px solid;
+                  "
+                  nz-col
+                  nzXs="1"
+                  nzSm="1"
+                  nzMd="1"
+                  nzLg="1"
+                  nzXl="1"
+                ></div> -->
+              <div
+                style="
+                  border-bottom: 1px solid;
+                  border-top: 1px solid;
+                  border-right: 1px solid;
+                "
+                nz-col
+                nzXs="20"
+                nzSm="20"
+                nzMd="20"
+                nzLg="20"
+                nzXl="20"
+              >
+                <div style="width: 100%; text-align: center; font-weight: bold">
+                  <div>भारत सरकार</div>
+                  <div style="text-transform: uppercase" class="family">
+                    Government Of India
+                  </div>
+                  <span [innerHtml]="data.LETTER_HEADER"> </span>
+                  <div>Email: {{ mailId }}</div>
+                  <!-- <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                  <div style="text-transform: uppercase" class="family">
+                    OFFICE OF THE
+                  </div>
+                  <div style="text-transform: uppercase" class="family">
+                    PRINCIPAL CHIEF COMMISSIONER OF INCOME TAX,
+                  </div>
+                  <div class="family" style="text-transform: uppercase">
+                    MUMBAI
+                  </div> -->
+                  <!-- <div>
+                      तीसरी मंजिल, आयकर भवन, महर्षी कर्वे रोड, मुंबई -20
+                    </div> -->
+                  <!-- <div style="text-transform: uppercase" class="family">
+                    3<sup style="text-transform: lowercase">rd</sup> Floor,
+                    aayakar bhavan, Maharshi Karve Road, Mumbai - 400020
+                  </div>
+                  <div>
+                    (022) - 22016691/22077187 / Fax: 022- 22079273/22077187
+                  </div>
+                  <div class="family">
+                    Email:
+                    <span *ngIf="data.SIGNATURE_ID == 2">
+                      mumbai.ito.gpbs2@incometax.gov.in
+                    </span>
+                    <span *ngIf="data.SIGNATURE_ID == 3">
+                      mumbai.ito.hq.pers@incometax.gov.in
+                    </span> -->
+                  <!-- <span *ngIf="userId != 18 && userId != 48">
+                        mumbai.ito.hq.pers@incometax.gov.in</span
+                      > -->
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                width: 100%;
+                padding: 5px;
+                font-size: 13px;
+                border-bottom: 1px solid;
+                border-left: 1px solid;
+                border-right: 1px solid;
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="17">{{ data.PERMISSION_NO }}</div>
+                <div nz-col nzSpan="1"></div>
+                <div nz-col nzSpan="6">
+                  दिनांक
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <!-- {{ orderdata.ORDER_DATE | date : "dd MMM yyyy" }} -->
+              </div>
+            </div>
+
+            <div style="margin-left: 47%; margin-top: 25px">
+              <p>
+                <b><u>कार्योत्तर अनुमति</u></b>
+              </p>
+            </div>
+            <div style="margin-left: 40%; margin-top: -13px">
+              <p>
+                <b><u>EX POST FACTO PERMISSION</u></b>
+              </p>
+            </div>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <b> {{ data.EMPLOYEE_NAME_HN }} {{ data.DESIGNATION }},</b>
+              ने दिनांक {{ data.LETTER_DATE | date : "dd/MM/yyyy" }} को अपने
+              पत्रानुसार
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME_HN }} ,{{ data.ADDRESS_HN }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+
+              में दिनांक
+              <b> {{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              से
+              <b> {{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+
+              को अपनी
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father'"
+                  >उनके पिता</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Father'
+                        "
+                        >उनके दादाजी</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Wife'"
+                  >उनकी पत्नी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Husband'"
+                  >उनके पती</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Son'"
+                  >उनका बेटा</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Daughter'"
+                  >उनकी बेटी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Sister'"
+                  >उनकी बहन</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Brother'"
+                  >उनके भाई</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'"
+                  >उनकी मां</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Mother'
+                        "
+                        >उनकी दादी मां</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                  >उनके ससुर</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                  >उनकी सासू मां</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT != 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+              </span>
+
+              &nbsp;
+              <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'"> स्वयं </span>
+              के लिए
+              {{ data.NATURE_OF_TREATMENT }} के लिए कार्योतर अनुमति हेतु अनुरोध
+              किया था।
+            </p>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <b>{{ data.EMPLOYEE_NAME }}&nbsp;, {{ data.DESIGNATION }},</b>
+              vide his/her letter dated
+              {{ data.LETTER_DATE | date : "dd/MM/yyyy" }} has requested for
+              ex-post facto permission for medical expenses incurred for
+              {{ data.NATURE_OF_TREATMENT }} treatment from
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME }} ,{{ data.ADDRESS }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+              from
+              <b>{{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              to
+              <b>{{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+              <!-- for his -->
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                for his/her {{ data.RELATION_WITH_PATIENT }}
+                {{ data.PATIENT_NAME }}.</span
+              >
+
+              <!-- &nbsp; for&nbsp;{{ data.NATURE_OF_TREATMENT }}
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'">
+                  of Self</span
+                > -->
+            </p>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+              <b>{{ data.EXPOST_FACTO_PERMISSION_SENTENSE_HN }}</b> उनके द्वारा
+              पूर्व अनुमति लेने में असफलता के स्पष्टीकरण को ध्यान में रखते हुए
+              और स्वास्थ मंत्रालय एवं कुटुंब कल्याण सीजीएचएस (पॉलिसी) डिवीजन, नई
+              दिल्ली द्वारा जारी कार्यालय ज्ञापन सं
+              1967/2013/DEL/CGHS/SZ/D52/CGHS (P) दिनांक 30.12.2014 के अनुसार
+              मुझमें निहित शक्तियों का प्रयोग कराते हुए
+              <b> {{ data.EMPLOYEE_NAME_HN }} {{ data.DESIGNATION }}, </b>
+              को में दिनांक
+              <b>{{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              से
+              <b>{{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+              तक
+
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME_HN }} ,{{ data.ADDRESS_HN }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">और</span> -->
+                </span>
+              </span>
+              में
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father'"
+                  >उनके पिता</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Father'
+                        "
+                        >उनके दादाजी</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Wife'"
+                  >उनकी पत्नी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Husband'"
+                  >उनके पती</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Son'"
+                  >उनका बेटा</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Daughter'"
+                  >उनकी बेटी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Sister'"
+                  >उनकी बहन</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Brother'"
+                  >उनके भाई</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'"
+                  >उनकी मां</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Mother'
+                        "
+                        >उनकी दादी मां</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                  >उनके ससुर</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                  >उनकी सासू मां</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT != 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+              </span>
+
+              &nbsp;
+              <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'"> स्वयं </span>
+              के लिए किए गए {{ data.NATURE_OF_TREATMENT }} उपचार के लिए
+              एतद्दवारा कार्योंतर अनुमति प्रदान की जाती है।
+            </p>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+              <b>{{ data.EXPOST_FACTO_PERMISSION_SENTENSE }}</b> Considering the
+              explanation given by the applicant for failure to seek prior
+              permission and in exercise of powers vested in me vide Office
+              Memorandum No. 1967/2013/DEL/CGHS/SZ/D52/CGHS (P) dated 30.12.2014
+              issued by Ministry of Health & Family Welfare, CGHS (Policy)
+              Division, New Delhi, ex-post facto permission is hereby granted to
+              <b>{{ data.EMPLOYEE_NAME }}&nbsp;, {{ data.DESIGNATION }},</b>
+              for {{ data.NATURE_OF_TREATMENT }}treatment from
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME }} ,{{ data.ADDRESS }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+              from
+              <b>{{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              to
+              <b>{{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+              for his
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                for his/her {{ data.RELATION_WITH_PATIENT }}
+                {{ data.PATIENT_NAME }}.</span
+              >
+              <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'">
+                for his/her {{ data.RELATION_WITH_PATIENT }}
+                {{ data.PATIENT_NAME }}.</span
+              >
+
+              <!-- &nbsp; for&nbsp;{{ data.NATURE_OF_TREATMENT }}
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'">
+                  of Self</span
+                >. -->
+            </p>
+
+            <p style="text-align: justify">
+              चिकित्सा व्ययों की अदायगी सीजीएचएस द्वारा अनुमोदित दरों या उनके
+              द्वारा किए गये खर्च मे से जो भी न्यूनतम हो के अनुसार होगी।
+            </p>
+
+            <p style="text-align: justify">
+              The reimbursement of medical expenditure would be restricted to
+              CGHS rates or actual expenditure, whichever is less.
+            </p>
+
+            <p style="text-align: justify">
+              The English version of the order will prevail in case of any
+              variation in Hindi & English Version.
+            </p>
+            <br />
+            <div nz-row>
+              <div nz-col nzSpan="10"></div>
+
+              <div
+                nz-col
+                nzSpan="14"
+                style="text-align: center; padding-top: 60px"
+              >
+                <span>
+                  <!-- <div style="font-weight: bold">(विनय सिन्हा)</div>
+                  <div style="font-weight: bold">(Vinay Sinha)</div>
+                  <div>आयकर आयुक्त (प्रशासन एवं करदाता सेवा),मुंबई</div>
+                  <div>Commissioner of Income Tax (Admin. & TPS),Mumbai</div> -->
+                  <div *ngIf="NAME_HN2" style="font-weight: bold">
+                    ({{ NAME_HN2 }})
+                  </div>
+                  <div *ngIf="SIGNNAME2" style="font-weight: bold">
+                    ({{ SIGNNAME2 }})
+                  </div>
+                  <div *ngIf="POST2_HIN">{{ POST2_HIN }}</div>
+                  <div *ngIf="POST2">{{ POST2 }}</div>
+                </span>
+              </div>
+            </div>
+
+            <div style="margin-top: 60px">
+              प्रतिलिपि : आवेदक
+              <b> {{ data.EMPLOYEE_NAME_HN }} {{ data.DESIGNATION }}</b>
+            </div>
+            <div>को कार्यालय,{{ data.OFFICE_NAME }}</div>
+            <div style="margin-top: 5px">
+              <u>Copy to:</u>
+            </div>
+            <div>
+              <b> {{ data.EMPLOYEE_NAME }} {{ data.DESIGNATION }}</b>
+            </div>
+            <div>{{ data.OFFICE_NAME }}.</div>
+
+            <div nz-row>
+              <div nz-col nzSpan="10"></div>
+
+              <div nz-col nzSpan="14" style="text-align: center">
+                <!-- <span *ngIf="SECTION_TYPE == 'welfare'"> -->
+                <!-- <div style="font-weight: bold">(सुहास एस सालसकर)</div>
+                    <div style="font-weight: bold">(Suhas S Salaskar)</div> -->
+                <!-- <div style="font-weight: bold">(रीतेश कुमार)</div>
+                    <div style="font-weight: bold">(Ritesh Kumar)</div>
+                    <div>आयकर अधिकारी (मुख्‍यालय)</div>
+                    <div>Income Tax Officer(HQ)</div>
+                    <div>वेल्फेयर & कर्मचारी शिकायत, मुंबई</div>
+                    <div>Welfare & S.G, Mumbai</div>
+                  </span> -->
+
+                <!-- <span *ngIf="SECTION_TYPE == 'gazpay'">
+                    <div style="font-weight: bold">(जितेंद्र रा चांदेकर)</div>
+                    <div style="font-weight: bold">(Jitendra R Chandekar)</div>
+                    <div>आयकर अधिकारी</div>
+                    <div>Income Tax Officer</div>
+                    <div>राजपत्रित वेतन बिल अनुभाग II, मुंबई</div>
+                    <div>Gazetted Pay Bill Section II Personnel, Mumbai</div>
+                  </span> -->
+                <div style="font-weight: bold">
+                  <span *ngIf="NAME_HN"> ({{ NAME_HN }}) </span>
+                </div>
+                <div style="font-weight: bold">
+                  <span *ngIf="NAME"> ({{ NAME }}) </span>
+                </div>
+                <div>{{ POST_HN }}</div>
+                <div>{{ POST }}</div>
+                <div>{{ OFFICE_NAME_HN }}</div>
+                <div>{{ OFFICE_NAME }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      class="ant-btn"
+      style="margin-right: 8px"
+      (click)="close()"
+    >
+      <span>Cancel</span>
+    </button>
+
+    <button
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="Save()"
+    >
+      <span *ngIf="!isAdmin">Save & Preview</span>
+      <span *ngIf="isAdmin">Preview</span>
+    </button>
+    <!-- <button nz-button nzType="primary"  (click)="pakagedata()">
+                        Save and Next
+                    </button> -->
+
+    <!-- <button
+                  type="button"
+                  class="ant-btn ant-btn-primary"
+                  nz-button
+                  (click)="openPrintOrderModal()"
+                >
+                  <span>Preview</span>
+                </button> -->
+  </div>
+  <div class="header">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <i nz-icon nzType="close" nzTheme="outline"></i>
+    </button>
+  </div>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="' Ex Post Facto Permission Letter'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div style="height: 450px; overflow: auto">
+        <div id="printOrderModal">
+          <div>
+            <!-- <div nz-row>
+                <div nz-col nzXs="2" nzSm="2" nzMd="2" nzLg="2" nzXl="2">
+                  <div style="margin-left: 530%; text-align: center">
+                    <img
+                      src="assets/govtOfIndia.png"
+                      alt=""
+                      height="130px"
+                      width="100px"
+                    />
+                  </div>
+                </div>
+  
+                <div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="22">
+                  <div
+                    style="
+                      width: 100%;
+                      text-align: center;
+                      font-weight: bold;
+                      margin-top: 20%;
+                    "
+                  >
+                    <div>भारत सरकार</div>
+                    <div style="text-transform: uppercase">
+                      Government Of India
+                    </div>
+                    <div>कार्यालय , आयकर आयुक्त (प्रशासन एवं टीपीएस), मुंबई</div>
+                    <div style="text-transform: uppercase">Office Of The</div>
+                    <div>Commissioner of Income-Tax (Admin. & TPS)</div>
+  
+                    <div style="text-transform: uppercase">
+                      3<sup>rd</sup> Floor, aayakar bhavan, Maharshi Karve Road,
+                      Mumbai-400020
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+            <div nz-row>
+              <div
+                style="border: 1px solid"
+                nz-col
+                nzXs="4"
+                nzSm="4"
+                nzMd="4"
+                nzLg="4"
+                nzXl="4"
+              >
+                <div style="text-align: center; padding: 36px 9px 9px 9px">
+                  <img
+                    src="assets/govtOfIndia.png"
+                    alt=""
+                    height="140px"
+                    width="100%"
+                  />
+                </div>
+              </div>
+              <!-- <div
+                  style="
+                    border-bottom: 1px solid;
+                    border-top: 1px solid;
+                    border-right: 1px solid;
+                  "
+                  nz-col
+                  nzXs="1"
+                  nzSm="1"
+                  nzMd="1"
+                  nzLg="1"
+                  nzXl="1"
+                ></div> -->
+              <div
+                style="
+                  border-bottom: 1px solid;
+                  border-top: 1px solid;
+                  border-right: 1px solid;
+                "
+                nz-col
+                nzXs="20"
+                nzSm="20"
+                nzMd="20"
+                nzLg="20"
+                nzXl="20"
+              >
+                <div style="width: 100%; text-align: center; font-weight: bold">
+                  <div>भारत सरकार</div>
+                  <div style="text-transform: uppercase" class="family">
+                    Government Of India
+                  </div>
+                  <span [innerHtml]="data.LETTER_HEADER"> </span>
+                  <div>Email: {{ mailId }}</div>
+                  <!-- <div>कार्यालय, प्रधान मुख्य आयकर आयुक्त, मुंबई</div>
+                  <div style="text-transform: uppercase" class="family">
+                    OFFICE OF THE
+                  </div>
+                  <div style="text-transform: uppercase" class="family">
+                    PRINCIPAL CHIEF COMMISSIONER OF INCOME TAX,
+                  </div>
+                  <div class="family" style="text-transform: uppercase">
+                    MUMBAI
+                  </div> -->
+                  <!-- <div>
+                      तीसरी मंजिल, आयकर भवन, महर्षी कर्वे रोड, मुंबई -20
+                    </div> -->
+                  <!-- <div style="text-transform: uppercase" class="family">
+                    3<sup style="text-transform: lowercase">rd</sup> Floor,
+                    aayakar bhavan, Maharshi Karve Road, Mumbai - 400020
+                  </div>
+                  <div>
+                    (022) - 22016691/22077187 / Fax: 022- 22079273/22077187
+                  </div>
+                  <div class="family">
+                    Email:
+                    <span *ngIf="data.SIGNATURE_ID == 2">
+                      mumbai.ito.gpbs2@incometax.gov.in
+                    </span>
+                    <span *ngIf="data.SIGNATURE_ID == 3">
+                      mumbai.ito.hq.pers@incometax.gov.in
+                    </span> -->
+                  <!-- <span *ngIf="userId != 18 && userId != 48">
+                        mumbai.ito.hq.pers@incometax.gov.in</span
+                      > -->
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                width: 100%;
+                padding: 5px;
+                font-size: 13px;
+                border-bottom: 1px solid;
+                border-left: 1px solid;
+                border-right: 1px solid;
+              "
+            >
+              <div nz-row>
+                <div nz-col nzSpan="17">{{ data.PERMISSION_NO }}</div>
+                <div nz-col nzSpan="1"></div>
+                <div nz-col nzSpan="6">
+                  दिनांक
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <!-- {{ orderdata.ORDER_DATE | date : "dd MMM yyyy" }} -->
+              </div>
+            </div>
+
+            <div style="margin-left: 47%; margin-top: 25px">
+              <p>
+                <b><u>कार्योत्तर अनुमति</u></b>
+              </p>
+            </div>
+            <div style="margin-left: 40%; margin-top: -13px">
+              <p>
+                <b><u>EX POST FACTO PERMISSION</u></b>
+              </p>
+            </div>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <b> {{ data.EMPLOYEE_NAME_HN }} {{ data.DESIGNATION }},</b>
+              ने दिनांक {{ data.LETTER_DATE | date : "dd/MM/yyyy" }} को अपने
+              पत्रानुसार
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME_HN }} ,{{ data.ADDRESS_HN }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+
+              में दिनांक
+              <b> {{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              से
+              <b> {{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+
+              को अपनी
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father'"
+                  >उनके पिता</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Father'
+                        "
+                        >उनके दादाजी</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Wife'"
+                  >उनकी पत्नी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Husband'"
+                  >उनके पती</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Son'"
+                  >उनका बेटा</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Daughter'"
+                  >उनकी बेटी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Sister'"
+                  >उनकी बहन</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Brother'"
+                  >उनके भाई</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'"
+                  >उनकी मां</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Mother'
+                        "
+                        >उनकी दादी मां</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                  >उनके ससुर</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                  >उनकी सासू मां</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT != 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+              </span>
+
+              &nbsp;
+              <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'"> स्वयं </span>
+              के लिए
+              {{ data.NATURE_OF_TREATMENT }} के लिए कार्योतर अनुमति हेतु अनुरोध
+              किया था।
+            </p>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <b>{{ data.EMPLOYEE_NAME }}&nbsp;, {{ data.DESIGNATION }},</b>
+              vide his/her letter dated
+              {{ data.LETTER_DATE | date : "dd/MM/yyyy" }} has requested for
+              ex-post facto permission for medical expenses incurred for
+              {{ data.NATURE_OF_TREATMENT }} treatment from
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME }} ,{{ data.ADDRESS }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+              from
+              <b>{{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              to
+              <b>{{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+              <!-- for his -->
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                for his/her {{ data.RELATION_WITH_PATIENT }}
+                {{ data.PATIENT_NAME }}.</span
+              >
+
+              <!-- &nbsp; for&nbsp;{{ data.NATURE_OF_TREATMENT }}
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'">
+                  of Self</span
+                > -->
+            </p>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+              <b>{{ data.EXPOST_FACTO_PERMISSION_SENTENSE_HN }}</b> उनके द्वारा
+              पूर्व अनुमति लेने में असफलता के स्पष्टीकरण को ध्यान में रखते हुए
+              और स्वास्थ मंत्रालय एवं कुटुंब कल्याण सीजीएचएस (पॉलिसी) डिवीजन, नई
+              दिल्ली द्वारा जारी कार्यालय ज्ञापन सं
+              1967/2013/DEL/CGHS/SZ/D52/CGHS (P) दिनांक 30.12.2014 के अनुसार
+              मुझमें निहित शक्तियों का प्रयोग कराते हुए
+              <b> {{ data.EMPLOYEE_NAME_HN }} {{ data.DESIGNATION }}, </b>
+              को में दिनांक
+              <b>{{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              से
+              <b>{{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+              तक
+
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME_HN }} ,{{ data.ADDRESS_HN }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">और</span> -->
+                </span>
+              </span>
+              में
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father'"
+                  >उनके पिता</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Father'
+                        "
+                        >उनके दादाजी</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Wife'"
+                  >उनकी पत्नी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Husband'"
+                  >उनके पती</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Son'"
+                  >उनका बेटा</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Daughter'"
+                  >उनकी बेटी</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Sister'"
+                  >उनकी बहन</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Brother'"
+                  >उनके भाई</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'"
+                  >उनकी मां</span
+                >
+                <!-- <span
+                        *ngIf="
+                          data.RELATION_WITH_PATIENT == 'Grand-Mother'
+                        "
+                        >उनकी दादी मां</span
+                      > -->
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Father-In-Law'"
+                  >उनके ससुर</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother-In-Law'"
+                  >उनकी सासू मां</span
+                >
+                <span *ngIf="data.RELATION_WITH_PATIENT != 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Mother'">
+                  &nbsp;{{ data.PATIENT_NAME_HN }}
+                </span>
+              </span>
+
+              &nbsp;
+              <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'"> स्वयं </span>
+              के लिए किए गए {{ data.NATURE_OF_TREATMENT }} उपचार के लिए
+              एतद्दवारा कार्योंतर अनुमति प्रदान की जाती है।
+            </p>
+
+            <p style="text-align: justify">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.
+              <b>{{ data.EXPOST_FACTO_PERMISSION_SENTENSE }}</b> Considering the
+              explanation given by the applicant for failure to seek prior
+              permission and in exercise of powers vested in me vide Office
+              Memorandum No. 1967/2013/DEL/CGHS/SZ/D52/CGHS (P) dated 30.12.2014
+              issued by Ministry of Health & Family Welfare, CGHS (Policy)
+              Division, New Delhi, ex-post facto permission is hereby granted to
+              <b>{{ data.EMPLOYEE_NAME }}&nbsp;, {{ data.DESIGNATION }},</b>
+              for {{ data.NATURE_OF_TREATMENT }}treatment from
+              <span *ngFor="let data of HospitalMapping; let k = index">
+                <span *ngIf="data.IS_VISIBLE_IN_ORDER == true">
+                  {{ data.NAME }} ,{{ data.ADDRESS }},{{
+                    data.TYPE == "E"
+                      ? "[Empanelled]"
+                      : data.TYPE == "NE"
+                      ? "[Non Empanelled]"
+                      : data.TYPE == "G"
+                      ? "Government"
+                      : ""
+                  }}
+                  <span *ngIf="HospitalMapping.length - 2 != k">,</span>
+                  <!-- <span *ngIf="HospitalMapping.length - 2 == k">and</span> -->
+                </span>
+              </span>
+              from
+              <b>{{ data.TREATMENT_START_DATE | date : "dd/MM/yyyy" }}</b>
+              to
+              <b>{{ data.TREATMENT_END_DATE | date : "dd/MM/yyyy" }}</b>
+              for his
+              <span *ngIf="data.RELATION_WITH_PATIENT != 'Self'">
+                for his/her {{ data.RELATION_WITH_PATIENT }}
+                {{ data.PATIENT_NAME }}.</span
+              >
+              <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'">
+                for his/her {{ data.RELATION_WITH_PATIENT }}
+                {{ data.PATIENT_NAME }}.</span
+              >
+
+              <!-- &nbsp; for&nbsp;{{ data.NATURE_OF_TREATMENT }}
+                <span *ngIf="data.RELATION_WITH_PATIENT == 'Self'">
+                  of Self</span
+                >. -->
+            </p>
+
+            <p style="text-align: justify">
+              चिकित्सा व्ययों की अदायगी सीजीएचएस द्वारा अनुमोदित दरों या उनके
+              द्वारा किए गये खर्च मे से जो भी न्यूनतम हो के अनुसार होगी।
+            </p>
+
+            <p style="text-align: justify">
+              The reimbursement of medical expenditure would be restricted to
+              CGHS rates or actual expenditure, whichever is less.
+            </p>
+
+            <p style="text-align: justify">
+              The English version of the order will prevail in case of any
+              variation in Hindi & English Version.
+            </p>
+            <br />
+            <div nz-row>
+              <div nz-col nzSpan="10"></div>
+
+              <div
+                nz-col
+                nzSpan="14"
+                style="text-align: center; padding-top: 60px"
+              >
+                <span>
+                  <!-- <div style="font-weight: bold">(विनय सिन्हा)</div>
+                  <div style="font-weight: bold">(Vinay Sinha)</div>
+                  <div>आयकर आयुक्त (प्रशासन एवं करदाता सेवा),मुंबई</div>
+                  <div>Commissioner of Income Tax (Admin. & TPS),Mumbai</div> -->
+                  <div *ngIf="NAME_HN2" style="font-weight: bold">
+                    ({{ NAME_HN2 }})
+                  </div>
+                  <div *ngIf="SIGNNAME2" style="font-weight: bold">
+                    ({{ SIGNNAME2 }})
+                  </div>
+                  <div *ngIf="POST2_HIN">{{ POST2_HIN }}</div>
+                  <div *ngIf="POST2">{{ POST2 }}</div>
+                </span>
+              </div>
+            </div>
+
+            <div style="margin-top: 60px">
+              प्रतिलिपि : आवेदक
+              <b> {{ data.EMPLOYEE_NAME_HN }} {{ data.DESIGNATION }}</b>
+            </div>
+            <div>को कार्यालय,{{ data.OFFICE_NAME }}</div>
+            <div style="margin-top: 5px">
+              <u>Copy to:</u>
+            </div>
+            <div>
+              <b> {{ data.EMPLOYEE_NAME }} {{ data.DESIGNATION }}</b>
+            </div>
+            <div>{{ data.OFFICE_NAME }}.</div>
+
+            <div nz-row>
+              <div nz-col nzSpan="10"></div>
+
+              <div nz-col nzSpan="14" style="text-align: center">
+                <!-- <span *ngIf="SECTION_TYPE == 'welfare'"> -->
+                <!-- <div style="font-weight: bold">(सुहास एस सालसकर)</div>
+                    <div style="font-weight: bold">(Suhas S Salaskar)</div> -->
+                <!-- <div style="font-weight: bold">(रीतेश कुमार)</div>
+                    <div style="font-weight: bold">(Ritesh Kumar)</div>
+                    <div>आयकर अधिकारी (मुख्‍यालय)</div>
+                    <div>Income Tax Officer(HQ)</div>
+                    <div>वेल्फेयर & कर्मचारी शिकायत, मुंबई</div>
+                    <div>Welfare & S.G, Mumbai</div>
+                  </span>
+  
+                  <span *ngIf="SECTION_TYPE == 'gazpay'">
+                    <div style="font-weight: bold">(जितेंद्र रा चांदेकर)</div>
+                    <div style="font-weight: bold">(Jitendra R Chandekar)</div>
+                    <div>आयकर अधिकारी</div>
+                    <div>Income Tax Officer</div>
+                    <div>राजपत्रित वेतन बिल अनुभाग II, मुंबई</div>
+                    <div>Gazetted Pay Bill Section II Personnel, Mumbai</div>
+                  </span> -->
+                <div style="font-weight: bold">
+                  <span *ngIf="NAME_HN"> ({{ NAME_HN }}) </span>
+                </div>
+                <div style="font-weight: bold">
+                  <span *ngIf="NAME"> ({{ NAME }}) </span>
+                </div>
+
+                <div>{{ POST_HN }}</div>
+                <div>{{ POST }}</div>
+                <div>{{ OFFICE_NAME_HN }}</div>
+                <div>{{ OFFICE_NAME }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="printOrderModal"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button nz-button nzType="primary" (click)="generatePDF()">Download</button>
+  </ng-template>
+</nz-modal>
+
+<!-- ///////////////////////////////////////////////////////////////////////// -->
+<!-- TREATEMENT_PERMISSION_END_DATE
+TREATEMENT_PERMISSION_START_DATE -->
+
+<div *ngIf="drawerVisiblesign">
+  <nz-drawer
+    [nzBodyStyle]="{
+      height: 'calc(100% - 55px)',
+      overflow: 'auto',
+      'padding-bottom': '53px'
+    }"
+    [nzClosable]="false"
+    [nzMask]="true"
+    [nzMaskClosable]="false"
+    [nzWidth]="450"
+    [nzVisible]="drawerVisiblesign"
+    [nzTitle]="'Add Signature'"
+    (nzOnClose)="drawerClosesign()"
+    (nzKeyboard)="(true)"
+  >
+    <ng-container *nzDrawerContent>
+      <app-addsignaturemaster
+        [drawerClose]="closeCallbacksign"
+      ></app-addsignaturemaster>
+    </ng-container>
+  </nz-drawer>
+</div>

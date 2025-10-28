@@ -1,0 +1,904 @@
+<div class="container">
+    <div nz-row style="margin-bottom: 20px;">
+        <div nz-col nzSpan="11">
+            <span style="color: #006699;font-weight: 600;cursor: pointer;" nz-tooltip nzTooltipTitle="Back"
+                nzTooltipPlacement="top" (click)="show()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="20px" viewBox="0 0 512 512" fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                    <g id="SVGRepo_iconCarrier">
+                        <title>ionicons-v5-a</title>
+                        <polyline points="244 400 100 256 244 112"
+                            style="fill:none;stroke:#006699;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px" />
+                        <line x1="120" y1="256" x2="412" y2="256"
+                            style="fill:none;stroke:#006699;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px" />
+                    </g>
+                </svg>&nbsp;Back
+            </span>
+        </div>
+        <div nz-col nzSpan="7">
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-range-picker [nzRanges]="ranges" name="month" nzMode="month" nzAllowClear="false"
+                        [(ngModel)]="Monthrange" nzPlaceholder="Select Month" nzFormat="MMM/yyyy"
+                        (ngModelChange)="onChangemonth($event)"></nz-range-picker>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6">
+            <nz-form-item style="padding-right: 0px;">
+                <nz-form-control>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Residence Type" name="Residence Type"
+                        [(ngModel)]="RESIDENCE_TYPE_IDD" (ngModelChange)="onResidencechange($event)">
+                        <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID" [nzLabel]="type.TYPE">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Seniority Count</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.SEN_COUNT?cardcounts.SEN_COUNT:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13">
+                                <!-- Objections :
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.SEN_OBJ_COUNT?cardcounts.SEN_OBJ_COUNT:'0'}}
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                                class="bi bi-people-fill iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Vacant Quarters</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.VACANT_COUNT?cardcounts.VACANT_COUNT:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+                            <i class="bi bi-building-fill iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Filled Preferences</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.PREF_COUNT?cardcounts.PREF_COUNT:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                                class="bi bi-arrow-down-up iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Total Allotment</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.ALLOTED_COUNT?cardcounts.ALLOTED_COUNT:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13">
+                                <!-- Objections :
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.ALLOTMENT_OBJ_COUNT?cardcounts.ALLOTMENT_OBJ_COUNT:'0'}}
+                                </span> -->
+                            </p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                                class="bi bi-building-fill-check iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info" style="margin-bottom: 0px;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Acceptance</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.RECIVED_ACCEPTANCE?cardcounts.RECIVED_ACCEPTANCE:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="iconhe"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" fill="#ffffff" height="25px" width="30px"
+                                version="1.1" id="Capa_1" viewBox="0 0 226.834 226.834" xml:space="preserve"
+                                stroke="#ffffff">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M80.197,44.939v-9.746c0-1.761,1.433-3.193,3.193-3.193h60.053c1.761,0,3.193,1.433,3.193,3.193v9.746 c0,1.761-1.433,3.193-3.193,3.193H83.391C81.63,48.133,80.197,46.7,80.197,44.939z M131.841,17c-0.768-9.5-8.729-17-18.424-17 S95.761,7.5,94.993,17H131.841z M192.309,55.334v151.333c0,11.12-9.047,20.167-20.167,20.167H54.692 c-11.12,0-20.167-9.047-20.167-20.167V55.334c0-11.12,9.047-20.167,20.167-20.167h10.506c0,0.009-0.001,0.018-0.001,0.026v9.746 c0,10.032,8.162,18.193,18.193,18.193h60.053c10.032,0,18.193-8.161,18.193-18.193v-9.746c0-0.009-0.001-0.018-0.001-0.026h10.506 C183.262,35.167,192.309,44.214,192.309,55.334z M88.183,143.449c-3.526-2.173-8.147-1.077-10.32,2.449l-7.092,11.504l-3.661-2.884 c-3.252-2.563-7.97-2.002-10.532,1.252c-2.563,3.255-2.002,7.97,1.252,10.533l10.271,8.089c1.332,1.049,2.969,1.607,4.64,1.607 c0.436,0,0.875-0.038,1.311-0.115c2.105-0.374,3.952-1.629,5.074-3.449l11.506-18.666C92.806,150.243,91.709,145.623,88.183,143.449 z M88.183,89.449c-3.526-2.174-8.147-1.076-10.32,2.449l-7.092,11.504l-3.661-2.884c-3.252-2.562-7.97-2.002-10.532,1.252 c-2.563,3.255-2.002,7.97,1.252,10.533l10.271,8.089c1.332,1.049,2.969,1.607,4.64,1.607c0.436,0,0.875-0.038,1.311-0.115 c2.105-0.374,3.952-1.629,5.074-3.449L90.632,99.77C92.806,96.243,91.709,91.623,88.183,89.449z M165.858,168.5 c0-4.143-3.357-7.5-7.5-7.5h-49c-4.142,0-7.5,3.357-7.5,7.5s3.358,7.5,7.5,7.5h49C162.501,176,165.858,172.643,165.858,168.5z M165.858,114.5c0-4.143-3.357-7.5-7.5-7.5h-49c-4.142,0-7.5,3.357-7.5,7.5s3.358,7.5,7.5,7.5h49 C162.501,122,165.858,118.643,165.858,114.5z" />
+                                </g>
+
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info" style="margin-bottom: 0px;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Non-Acceptance</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.REJECTED_ACCEPTANCE?cardcounts.REJECTED_ACCEPTANCE:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                                class="bi bi-x-circle-fill iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info" style="margin-bottom: 0px;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Auto Barred</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.AUTO_BARRED_COUNT?cardcounts.AUTO_BARRED_COUNT:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                                class="fa fa-shopping-cart iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info" style="margin-bottom: 0px;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Physical Possession</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.PHYSICAL_OCCUPANCY?cardcounts.PHYSICAL_OCCUPANCY:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i
+                                class="bi bi-check-circle-fill iconhe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card radius-10 border-start border-0 border-3 border-info" style="margin-bottom: 0px;">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="mb-0 text-secondary">Renovation Requests</p>
+                            <h4 class="my-1 text-info">
+                                <span *ngIf="cardcounts!=undefined">
+                                    {{cardcounts.RENOVATION?cardcounts.RENOVATION:'0'}}
+                                </span>
+                            </h4>
+                            <p class="mb-0 font-13"></p>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="iconhe" width="25px" height="30px"
+                                viewBox="0 0 24 24" fill="none" stroke="#ffffff">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <g id="SVGRepo_iconCarrier">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M3.13861 8.5856C3.10395 8.79352 3.07799 8.98444 3.05852 9.15412C2.89911 9.20305 2.72733 9.2683 2.55279 9.35557C2.18416 9.53989 1.78511 9.83206 1.48045 10.2891C1.17162 10.7523 1 11.325 1 12C1 12.675 1.17162 13.2477 1.48045 13.7109C1.78511 14.1679 2.18416 14.4601 2.55279 14.6444C2.72733 14.7317 2.89911 14.7969 3.05852 14.8459C3.07798 15.0156 3.10395 15.2065 3.13861 15.4144C3.27452 16.2299 3.54822 17.3325 4.10557 18.4472C4.66489 19.5658 5.51956 20.7149 6.8203 21.5821C8.1273 22.4534 9.82502 23 12 23C14.175 23 15.8727 22.4534 17.1797 21.5821C18.4804 20.7149 19.3351 19.5658 19.8944 18.4472C20.4518 17.3325 20.7255 16.2299 20.8614 15.4144C20.896 15.2065 20.922 15.0156 20.9415 14.8459C21.1009 14.7969 21.2727 14.7317 21.4472 14.6444C21.8158 14.4601 22.2149 14.1679 22.5196 13.7109C22.8284 13.2477 23 12.675 23 12C23 11.325 22.8284 10.7523 22.5196 10.2891C22.2149 9.83206 21.8158 9.53989 21.4472 9.35557C21.2727 9.2683 21.1009 9.20305 20.9415 9.15412C20.922 8.98444 20.896 8.79352 20.8614 8.5856C20.7255 7.77011 20.4518 6.6675 19.8944 5.55278C19.3351 4.43416 18.4804 3.28511 17.1797 2.41795C15.8727 1.54662 14.175 1 12 1C9.82502 1 8.1273 1.54662 6.8203 2.41795C5.51957 3.28511 4.66489 4.43416 4.10558 5.55279C3.54822 6.6675 3.27452 7.77011 3.13861 8.5856ZM18.9025 15H5.09753C5.20639 15.692 5.43305 16.63 5.89443 17.5528C6.33511 18.4342 6.98044 19.2851 7.9297 19.9179C8.8727 20.5466 10.175 21 12 21C13.825 21 15.1273 20.5466 16.0703 19.9179C17.0196 19.2851 17.6649 18.4342 18.1056 17.5528C18.5669 16.63 18.7936 15.692 18.9025 15ZM18.9025 9H18C17.4477 9 17 9.44771 17 10C17 10.5523 17.4477 11 18 11H20C20.3084 11.012 20.6759 11.1291 20.8554 11.3984C20.9216 11.4977 21 11.675 21 12C21 12.325 20.9216 12.5023 20.8554 12.6016C20.6759 12.8709 20.3084 12.988 20 13H4C3.69155 12.988 3.32414 12.8709 3.14455 12.6016C3.07838 12.5023 3 12.325 3 12C3 11.675 3.07838 11.4977 3.14455 11.3984C3.32414 11.1291 3.69155 11.012 4 11H6C6.55228 11 7 10.5523 7 10C7 9.44771 6.55228 9 6 9H5.09753C5.20639 8.30804 5.43306 7.36996 5.89443 6.44721C6.33512 5.56584 6.98044 4.71489 7.92971 4.08205C8.24443 3.87224 8.59917 3.68195 9 3.52152V6C9 6.55228 9.44771 7 10 7C10.5523 7 11 6.55228 11 6V3.04872C11.3146 3.01691 11.6476 3 12 3C12.3524 3 12.6854 3.01691 13 3.04872V6C13 6.55228 13.4477 7 14 7C14.5523 7 15 6.55228 15 6V3.52152C15.4008 3.68195 15.7556 3.87224 16.0703 4.08205C17.0196 4.71489 17.6649 5.56584 18.1056 6.44721C18.5669 7.36996 18.7936 8.30804 18.9025 9Z"
+                                        fill="#ffffff" />
+                                </g>
+
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div nz-row nzGutter="24">
+        <!-- pie chart -->
+        <div nz-col nzSpan="12">
+            <nz-spin [nzSpinning]="loadingpieRecords">
+                <div id="chartpie" class="cardshadowss">
+                    <div style="display: flex" nz-row>
+                        <div nz-col nzSpan="24">
+                            <h2 class="forntsizes">
+                                Quarters Summary
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="pie" style="padding-bottom: 10px;">
+                        <apx-chart *ngIf="chartOptions3 && (Totalflats>0)" [series]="chartOptions3.series"
+                            [chart]="chartOptions3.chart" [labels]="chartOptions3.labels"
+                            [legend]="chartOptions3.legend" [responsive]="chartOptions3.responsive"
+                            [colors]="chartOptions3.colors">
+                        </apx-chart>
+                    </div>
+                    <div *ngIf="Totalflats==0" style=" height: 266px;">
+                        <div style="text-align: center;">
+                            <br />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="140" height="100">
+                                <defs>
+                                    <linearGradient x1="52.348%" y1="74.611%" x2="52.348%" y2="-17.635%" id="a">
+                                        <stop stop-color="#DEDEDE" stop-opacity="0" offset="0%" />
+                                        <stop stop-color="#A9A9A9" stop-opacity=".3" offset="100%" />
+                                    </linearGradient>
+                                    <linearGradient x1="44.79%" y1="100%" x2="44.79%" y2="0%" id="b">
+                                        <stop stop-color="#FFF" stop-opacity="0" offset="0%" />
+                                        <stop stop-color="#96A1C5" stop-opacity=".373" offset="100%" />
+                                    </linearGradient>
+                                    <linearGradient x1="50%" y1="100%" x2="50%" y2="-19.675%" id="c">
+                                        <stop stop-color="#FFF" stop-opacity="0" offset="0%" />
+                                        <stop stop-color="#919191" stop-opacity=".15" offset="100%" />
+                                    </linearGradient>
+                                    <linearGradient x1="50%" y1="0%" x2="50%" y2="44.95%" id="d">
+                                        <stop stop-color="#5389F5" offset="0%" />
+                                        <stop stop-color="#416FDC" offset="100%" />
+                                    </linearGradient>
+                                    <linearGradient x1="63.345%" y1="100%" x2="63.345%" y2="-5.316%" id="e">
+                                        <stop stop-color="#DCE9FF" offset="0%" />
+                                        <stop stop-color="#B6CFFF" offset="100%" />
+                                    </linearGradient>
+                                    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="f">
+                                        <stop stop-color="#7CA5F7" offset="0%" />
+                                        <stop stop-color="#C4D6FC" offset="100%" />
+                                    </linearGradient>
+                                </defs>
+                                <g transform="translate(-1.866 .364)" fill="none" fill-rule="evenodd">
+                                    <path
+                                        d="M27.94 14.864c1.326-4.192 2.56-6.802 3.7-7.831 3.157-2.848 7.522-1.298 8.45-1.076 3.26.782 2.2-4.364 4.997-5.41 1.864-.697 3.397.155 4.6 2.556C50.752.863 52.375-.163 54.556.02c3.272.277 4.417 11.328 8.913 8.909 4.497-2.42 10.01-2.973 12.365.623.509.778.704-.429 4.166-4.55C83.462.88 86.914-.936 93.996 1.464c3.22 1.09 5.868 4.045 7.947 8.864 0 6.878 5.06 10.95 15.178 12.213 15.179 1.895 3.397 18.214-15.178 22.993-18.576 4.78-61.343 7.36-84.551-4.716C1.92 32.769 5.436 24.117 27.939 14.864z"
+                                        fill="url(#a)" opacity=".8" />
+                                    <ellipse fill="url(#b)" cx="66" cy="69.166" rx="27.987" ry="6.478" />
+                                    <path
+                                        d="M113.25 77.249c-21.043 5.278-92.87-.759-100.515-3.516-3.721-1.343-7.075-3.868-10.061-7.576a2.822 2.822 0 0 1 2.198-4.593h125.514c2.605 6.938-3.107 12.166-17.136 15.685z"
+                                        fill="url(#c)" opacity=".675" />
+                                    <g fill-rule="nonzero">
+                                        <path
+                                            d="M43.396 12.098L33.825.906a2.434 2.434 0 0 0-1.837-.86h-20.58c-.706 0-1.377.324-1.837.86L0 12.098v6.144h43.396v-6.144z"
+                                            fill="url(#d)" transform="translate(44.08 39.707)" />
+                                        <path
+                                            d="M40.684 18.468L32.307 8.72a2.136 2.136 0 0 0-1.622-.725H12.711c-.617 0-1.22.256-1.622.725l-8.377 9.748v5.354h37.972v-5.354z"
+                                            fill="url(#e)" transform="translate(44.08 39.707)" />
+                                        <path
+                                            d="M43.396 25.283c0 .853-.384 1.62-.99 2.134l-.123.1a2.758 2.758 0 0 1-1.67.56H2.784c-.342 0-.669-.062-.971-.176l-.15-.06A2.802 2.802 0 0 1 0 25.282V12.165h10.529c1.163 0 2.1.957 2.1 2.118v.015c0 1.162.948 2.099 2.111 2.099h13.916a2.113 2.113 0 0 0 2.111-2.107c0-1.166.938-2.125 2.1-2.125h10.53z"
+                                            fill="url(#f)" transform="translate(44.08 39.707)" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <p style="
+                font-weight: bold;
+                color: #666666;
+                font-size: medium;
+                text-align: center;
+              ">
+                            Data not Found
+                        </p>
+                    </div>
+                </div>
+            </nz-spin>
+        </div>
+        <!-- timeline -->
+        <div nz-col nzSpan="12">
+            <div class="cardshadowss">
+                <nz-spin [nzSpinning]="isSpinningTrue">
+                    <div style="display: flex" nz-row>
+                        <div nz-col nzSpan="16">
+                            <h2 class="forntsizes">
+                                Timeline For Monthly Process
+                            </h2>
+                        </div>
+                        <!-- <div nz-col nzSpan="14" style="align-items: end;">
+                            <nz-form-item style="padding: 8px 0px 0px 0px;">
+                            <nz-form-control>
+                                <nz-select nzShowSearch nzAllowClear="false" nzPlaceHolder="Select Residence Type"
+                                    name="ResidencetimeType" [(ngModel)]="RESIDENCE_TYPE_IDD1"
+                                    (ngModelChange)="onResidencechange1()">
+                                    <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.ID"
+                                        [nzLabel]="type.TYPE">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                        </div> -->
+                        <div nz-col nzSpan="8" style="text-align: end;">
+                            <nz-form-item style="padding: 8px 10px 0px 0px;">
+                                <nz-form-control>
+                                    <nz-date-picker name="monthtime" nzMode="month" nzAllowClear="false"
+                                        [(ngModel)]="Monthrange1" nzPlaceholder="Select Month" nzFormat="MMM/yyyy"
+                                        (ngModelChange)="onChangemonth1($event)"></nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+                        <div nz-col nzSpan="24" style="margin-top: 10px;" *ngIf="dataListForTimelineCount>0">
+                            <nz-timeline>
+                                <nz-timeline-item nzColor="green">
+                                    <p class="pmargin">Draft Seniority</p>
+                                    <span class="spanstyle"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.PUBLISH_DATE_TIME != undefined">
+                                        {{dataListForTimeline.PUBLISH_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                    </span>
+                                    <p class="spanstyle pmargin"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.OBJ_START_DATE_TIME != undefined && dataListForTimeline.OBJ_END_DATE_TIME != undefined">
+                                        Objection
+                                        Period :
+                                        <span class="spanstyle"
+                                            *ngIf="dataListForTimeline!=undefined && dataListForTimeline.OBJ_START_DATE_TIME != undefined && dataListForTimeline.OBJ_END_DATE_TIME != undefined">
+                                            {{dataListForTimeline.OBJ_START_DATE_TIME | date : "dd/MM/yyyy HH:mm"}} -
+                                            {{dataListForTimeline.OBJ_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                        </span>
+                                    </p>
+                                </nz-timeline-item>
+                                <nz-timeline-item nzColor="green">
+                                    <p class="pmargin">Vacancy Notice</p>
+                                    <span class="spanstyle"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.VACANCY_DATE_TIME != undefined">
+                                        {{dataListForTimeline.VACANCY_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                    </span>
+                                </nz-timeline-item>
+                                <nz-timeline-item nzColor="green">
+                                    <p class="pmargin">Final Seniority</p>
+                                    <span class="spanstyle"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.FINAL_SEN_PUBLISH_DATE_TIME != undefined">
+                                        {{dataListForTimeline.FINAL_SEN_PUBLISH_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                    </span>
+                                    <p class="spanstyle pmargin"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.PREFERENCE_END_DATE_TIME != undefined && dataListForTimeline.PREFERENCE_END_DATE_TIME != undefined">
+                                        Preference Period :
+                                        <span class="spanstyle"
+                                            *ngIf="dataListForTimeline!=undefined && dataListForTimeline.PREFERENCE_END_DATE_TIME != undefined && dataListForTimeline.PREFERENCE_END_DATE_TIME != undefined">
+                                            {{dataListForTimeline.PREFERENCE_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                            -
+                                            {{dataListForTimeline.PREFERENCE_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                        </span>
+                                    </p>
+                                </nz-timeline-item>
+                                <nz-timeline-item nzColor="green">
+                                    <p class="pmargin">Draft Allotment</p>
+                                    <span class="spanstyle"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.DRAFT_ALLOTMENT_PUBLISH_DATE != undefined">
+                                        {{dataListForTimeline.DRAFT_ALLOTMENT_PUBLISH_DATE | date : "dd/MM/yyyy HH:mm"}}
+                                    </span>
+                                    <p class="spanstyle pmargin"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.ALL_START_DATETIME != undefined && dataListForTimeline.ALL_END_DATETIME != undefined">
+                                        Objection Period :
+                                        <span class="spanstyle"
+                                            *ngIf="dataListForTimeline!=undefined && dataListForTimeline.ALL_START_DATETIME != undefined && dataListForTimeline.ALL_END_DATETIME != undefined">
+                                            {{dataListForTimeline.ALL_START_DATETIME | date : "dd/MM/yyyy HH:mm"}} -
+                                            {{dataListForTimeline.ALL_END_DATETIME | date : "dd/MM/yyyy HH:mm"}}
+                                        </span>
+                                    </p>
+                                </nz-timeline-item>
+                                <nz-timeline-item nzColor="green">
+                                    <p class="pmargin">Final Allotment</p>
+                                    <span class="spanstyle"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.FINAL_ALLOTMENT_PUBLISH_DATE != undefined">
+                                        {{dataListForTimeline.FINAL_ALLOTMENT_PUBLISH_DATE | date : "dd/MM/yyyy HH:mm"}}
+                                    </span>
+                                    <p class="spanstyle pmargin"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.ACCEPTANCE_START_DATE_TIME != undefined && dataListForTimeline.ACCEPTANCE_END_DATE_TIME != undefined">
+                                        Acceptance Period :
+                                        <span
+                                            *ngIf="dataListForTimeline!=undefined && dataListForTimeline.ACCEPTANCE_START_DATE_TIME != undefined && dataListForTimeline.ACCEPTANCE_END_DATE_TIME != undefined">
+                                            {{dataListForTimeline.ACCEPTANCE_START_DATE_TIME | date : "dd/MM/yyyy
+                                            HH:mm"}} -
+                                            {{dataListForTimeline.ACCEPTANCE_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                        </span>
+                                    </p>
+                                </nz-timeline-item>
+                                <nz-timeline-item nzColor="green">
+                                    <p class="pmargin"> Acceptance</p>
+                                    <span class="spanstyle"
+                                        *ngIf="dataListForTimeline!=undefined && dataListForTimeline.ACCEPTANCE_END_DATE_TIME != undefined">
+                                        {{dataListForTimeline.ACCEPTANCE_END_DATE_TIME | date : "dd/MM/yyyy HH:mm"}}
+                                    </span>
+                                </nz-timeline-item>
+                            </nz-timeline>
+                        </div>
+
+                        <div nz-col nzSpan="24" style="margin-top: 0px; height: 272px;"
+                            *ngIf="dataListForTimelineCount==0">
+                            <div style="text-align: center;">
+                                <br />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="140" height="100">
+                                    <defs>
+                                        <linearGradient x1="52.348%" y1="74.611%" x2="52.348%" y2="-17.635%" id="a">
+                                            <stop stop-color="#DEDEDE" stop-opacity="0" offset="0%" />
+                                            <stop stop-color="#A9A9A9" stop-opacity=".3" offset="100%" />
+                                        </linearGradient>
+                                        <linearGradient x1="44.79%" y1="100%" x2="44.79%" y2="0%" id="b">
+                                            <stop stop-color="#FFF" stop-opacity="0" offset="0%" />
+                                            <stop stop-color="#96A1C5" stop-opacity=".373" offset="100%" />
+                                        </linearGradient>
+                                        <linearGradient x1="50%" y1="100%" x2="50%" y2="-19.675%" id="c">
+                                            <stop stop-color="#FFF" stop-opacity="0" offset="0%" />
+                                            <stop stop-color="#919191" stop-opacity=".15" offset="100%" />
+                                        </linearGradient>
+                                        <linearGradient x1="50%" y1="0%" x2="50%" y2="44.95%" id="d">
+                                            <stop stop-color="#5389F5" offset="0%" />
+                                            <stop stop-color="#416FDC" offset="100%" />
+                                        </linearGradient>
+                                        <linearGradient x1="63.345%" y1="100%" x2="63.345%" y2="-5.316%" id="e">
+                                            <stop stop-color="#DCE9FF" offset="0%" />
+                                            <stop stop-color="#B6CFFF" offset="100%" />
+                                        </linearGradient>
+                                        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="f">
+                                            <stop stop-color="#7CA5F7" offset="0%" />
+                                            <stop stop-color="#C4D6FC" offset="100%" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g transform="translate(-1.866 .364)" fill="none" fill-rule="evenodd">
+                                        <path
+                                            d="M27.94 14.864c1.326-4.192 2.56-6.802 3.7-7.831 3.157-2.848 7.522-1.298 8.45-1.076 3.26.782 2.2-4.364 4.997-5.41 1.864-.697 3.397.155 4.6 2.556C50.752.863 52.375-.163 54.556.02c3.272.277 4.417 11.328 8.913 8.909 4.497-2.42 10.01-2.973 12.365.623.509.778.704-.429 4.166-4.55C83.462.88 86.914-.936 93.996 1.464c3.22 1.09 5.868 4.045 7.947 8.864 0 6.878 5.06 10.95 15.178 12.213 15.179 1.895 3.397 18.214-15.178 22.993-18.576 4.78-61.343 7.36-84.551-4.716C1.92 32.769 5.436 24.117 27.939 14.864z"
+                                            fill="url(#a)" opacity=".8" />
+                                        <ellipse fill="url(#b)" cx="66" cy="69.166" rx="27.987" ry="6.478" />
+                                        <path
+                                            d="M113.25 77.249c-21.043 5.278-92.87-.759-100.515-3.516-3.721-1.343-7.075-3.868-10.061-7.576a2.822 2.822 0 0 1 2.198-4.593h125.514c2.605 6.938-3.107 12.166-17.136 15.685z"
+                                            fill="url(#c)" opacity=".675" />
+                                        <g fill-rule="nonzero">
+                                            <path
+                                                d="M43.396 12.098L33.825.906a2.434 2.434 0 0 0-1.837-.86h-20.58c-.706 0-1.377.324-1.837.86L0 12.098v6.144h43.396v-6.144z"
+                                                fill="url(#d)" transform="translate(44.08 39.707)" />
+                                            <path
+                                                d="M40.684 18.468L32.307 8.72a2.136 2.136 0 0 0-1.622-.725H12.711c-.617 0-1.22.256-1.622.725l-8.377 9.748v5.354h37.972v-5.354z"
+                                                fill="url(#e)" transform="translate(44.08 39.707)" />
+                                            <path
+                                                d="M43.396 25.283c0 .853-.384 1.62-.99 2.134l-.123.1a2.758 2.758 0 0 1-1.67.56H2.784c-.342 0-.669-.062-.971-.176l-.15-.06A2.802 2.802 0 0 1 0 25.282V12.165h10.529c1.163 0 2.1.957 2.1 2.118v.015c0 1.162.948 2.099 2.111 2.099h13.916a2.113 2.113 0 0 0 2.111-2.107c0-1.166.938-2.125 2.1-2.125h10.53z"
+                                                fill="url(#f)" transform="translate(44.08 39.707)" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <p style="
+                    font-weight: bold;
+                    color: #666666;
+                    font-size: medium;
+                    text-align: center;
+                  ">
+                                Data not Found
+                            </p>
+                        </div>
+                    </div>
+                </nz-spin>
+            </div>
+        </div>
+    </div>
+    <!-- column chart -->
+    <div nz-row>
+        <div nz-col nzSpan="24">
+            <nz-spin [nzSpinning]="isSpinningTrueForBar">
+                <div class="cardshadowss">
+                    <div style="display: flex" nz-row>
+                        <div nz-col nzSpan="24">
+                            <h2 class="forntsizes">
+                                Applications Status
+                            </h2>
+                        </div>
+                        <div nz-col nzSpan="24">
+                            <div
+                                *ngIf="dataListForBar!=undefined && chartOptions!=undefined && chartOptions.series!=undefined">
+                                <apx-chart id="chartsss" [series]="chartOptions.series" [chart]="chartOptions.chart"
+                                    [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                                    [responsive]="chartOptions.responsive" [xaxis]="chartOptions.xaxis"
+                                    [yaxis]="chartOptions.yaxis" [legend]="chartOptions.legend"
+                                    [fill]="chartOptions.fill"></apx-chart>
+                            </div>
+                            <div *ngIf="isBarCountEmpty" style="margin-top: 60px">
+                                <nz-empty [nzNotFoundImage]="imagecontec" [nzNotFoundContent]="contentTpl43"
+                                    [nzNotFoundFooter]="footerTpl43" style="margin-top: 38px">
+                                    <ng-template #contentTpl43>
+                                        <span> Data Not Found</span>
+                                    </ng-template>
+                                    <ng-template #footerTpl43>
+                                    </ng-template>
+                                    <ng-template #imagecontec>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="130" height="80">
+                                            <defs>
+                                                <linearGradient x1="52.348%" y1="74.611%" x2="52.348%" y2="-17.635%"
+                                                    id="a">
+                                                    <stop stop-color="#DEDEDE" stop-opacity="0" offset="0%" />
+                                                    <stop stop-color="#A9A9A9" stop-opacity=".3" offset="100%" />
+                                                </linearGradient>
+                                                <linearGradient x1="44.79%" y1="100%" x2="44.79%" y2="0%" id="b">
+                                                    <stop stop-color="#FFF" stop-opacity="0" offset="0%" />
+                                                    <stop stop-color="#96A1C5" stop-opacity=".373" offset="100%" />
+                                                </linearGradient>
+                                                <linearGradient x1="50%" y1="100%" x2="50%" y2="-19.675%" id="c">
+                                                    <stop stop-color="#FFF" stop-opacity="0" offset="0%" />
+                                                    <stop stop-color="#919191" stop-opacity=".15" offset="100%" />
+                                                </linearGradient>
+                                                <linearGradient x1="50%" y1="0%" x2="50%" y2="44.95%" id="d">
+                                                    <stop stop-color="#5389F5" offset="0%" />
+                                                    <stop stop-color="#416FDC" offset="100%" />
+                                                </linearGradient>
+                                                <linearGradient x1="63.345%" y1="100%" x2="63.345%" y2="-5.316%" id="e">
+                                                    <stop stop-color="#DCE9FF" offset="0%" />
+                                                    <stop stop-color="#B6CFFF" offset="100%" />
+                                                </linearGradient>
+                                                <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="f">
+                                                    <stop stop-color="#7CA5F7" offset="0%" />
+                                                    <stop stop-color="#C4D6FC" offset="100%" />
+                                                </linearGradient>
+                                            </defs>
+                                            <g transform="translate(-1.866 .364)" fill="none" fill-rule="evenodd">
+                                                <path
+                                                    d="M27.94 14.864c1.326-4.192 2.56-6.802 3.7-7.831 3.157-2.848 7.522-1.298 8.45-1.076 3.26.782 2.2-4.364 4.997-5.41 1.864-.697 3.397.155 4.6 2.556C50.752.863 52.375-.163 54.556.02c3.272.277 4.417 11.328 8.913 8.909 4.497-2.42 10.01-2.973 12.365.623.509.778.704-.429 4.166-4.55C83.462.88 86.914-.936 93.996 1.464c3.22 1.09 5.868 4.045 7.947 8.864 0 6.878 5.06 10.95 15.178 12.213 15.179 1.895 3.397 18.214-15.178 22.993-18.576 4.78-61.343 7.36-84.551-4.716C1.92 32.769 5.436 24.117 27.939 14.864z"
+                                                    fill="url(#a)" opacity=".8" />
+                                                <ellipse fill="url(#b)" cx="66" cy="69.166" rx="27.987" ry="6.478" />
+                                                <path
+                                                    d="M113.25 77.249c-21.043 5.278-92.87-.759-100.515-3.516-3.721-1.343-7.075-3.868-10.061-7.576a2.822 2.822 0 0 1 2.198-4.593h125.514c2.605 6.938-3.107 12.166-17.136 15.685z"
+                                                    fill="url(#c)" opacity=".675" />
+                                                <g fill-rule="nonzero">
+                                                    <path
+                                                        d="M43.396 12.098L33.825.906a2.434 2.434 0 0 0-1.837-.86h-20.58c-.706 0-1.377.324-1.837.86L0 12.098v6.144h43.396v-6.144z"
+                                                        fill="url(#d)" transform="translate(44.08 39.707)" />
+                                                    <path
+                                                        d="M40.684 18.468L32.307 8.72a2.136 2.136 0 0 0-1.622-.725H12.711c-.617 0-1.22.256-1.622.725l-8.377 9.748v5.354h37.972v-5.354z"
+                                                        fill="url(#e)" transform="translate(44.08 39.707)" />
+                                                    <path
+                                                        d="M43.396 25.283c0 .853-.384 1.62-.99 2.134l-.123.1a2.758 2.758 0 0 1-1.67.56H2.784c-.342 0-.669-.062-.971-.176l-.15-.06A2.802 2.802 0 0 1 0 25.282V12.165h10.529c1.163 0 2.1.957 2.1 2.118v.015c0 1.162.948 2.099 2.111 2.099h13.916a2.113 2.113 0 0 0 2.111-2.107c0-1.166.938-2.125 2.1-2.125h10.53z"
+                                                        fill="url(#f)" transform="translate(44.08 39.707)" />
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </ng-template>
+                                </nz-empty>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nz-spin>
+        </div>
+    </div>
+    <!-- Rennovation Request Table -->
+    <div nz-row style="margin-bottom: 30px;">
+        <div nz-col nzSpan="24">
+            <div class="cardshadowss">
+                <div style="display: flex" nz-row>
+                    <div nz-col nzSpan="12">
+                        <h2 class="forntsizes">
+                            Renovation Requests
+                        </h2>
+                    </div>
+                    <div nz-col nzSpan="12" style="    text-align: end;">
+                        <nz-form-item style="margin-right: 0px;padding: 8px 0px 0px 0px;">
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="max-width: 300px">
+                                <input type="text" name="searchTextd" nz-input placeholder="Search Records"
+                                    [(ngModel)]="searchText" (keydown.enter)="onKeypressEvent($event)" />
+                            </nz-input-group>
+                            <ng-template #suffixIconButton>
+                                <button nz-button nzType="primary" id="buttonss" (click)="searchRennovation(true)"
+                                    nzSearch>
+                                    <i nz-icon nzType="search"></i>
+                                </button>
+                            </ng-template>
+                        </nz-form-item>
+                    </div>
+                </div>
+                <nz-table class="my-scroll no-wrap1" nzSize="small" nzBordered #langMasterTable nzShowSizeChanger
+                    [nzFrontPagination]="false" [nzData]="dataList" [nzLoading]="loadingRecords"
+                    [nzTotal]="totalRecords" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+                    (nzPageIndexChange)="searchRennovation()" style="white-space: pre-line;"
+                    (nzPageSizeChange)="searchRennovation()" [nzScroll]="{ y: '60vh', x: '3500px' }"
+                    (nzQueryParams)="sortForRennovation($event)">
+                    <thead>
+                        <tr>
+                            <th nzWidth="130px" nzColumnKey="{{ 'FLAT_APPLICATION_NO' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Application No.
+                            </th>
+                            <th nzWidth="130px" nzColumnKey="{{ 'RENOVATION_RESQUEST_DATETIME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Request Datetime
+                            </th>
+                            <th nzWidth="200px" style="font-weight: bold; text-align: center"
+                                nzColumnKey="{{ 'EMPLOYEE_NAME' }}" [nzSortFn]="true">
+                                Employee Name
+                            </th>
+                            <th nzWidth="100px" style="font-weight: bold; text-align: center"
+                                nzColumnKey="{{ 'EMPLOYEE_CODE' }}" [nzSortFn]="true">
+                                Employee Code
+                            </th>
+                            <th nzWidth="200px" nzColumnKey="{{ 'DESIGNATION' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Designation
+                            </th>
+                            <th nzWidth="200px" nzColumnKey="{{ 'EMAIL_ID' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Email ID
+                            </th>
+                            <th nzWidth="100px" nzColumnKey="{{ 'MOBILE_NO' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Mobile No.
+                            </th>
+                            <th nzWidth="180px" nzColumnKey="{{ 'CITY_NAME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                City
+                            </th>
+                            <th nzWidth="180px" nzColumnKey="{{ 'AREA_NAME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Area
+                            </th>
+                            <th nzWidth="150px" nzColumnKey="{{ 'BUILDING_NAME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Building Name
+                            </th>
+                            <th nzWidth="100px" nzColumnKey="{{ 'FLAT_NAME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Quarter Name
+                            </th>
+                            <th nzWidth="200px" nzColumnKey="{{ 'RENOVATION_REMARK' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Renovation Request Remark
+                            </th>
+                            <th nzWidth="150px" nzColumnKey="{{ 'RENOVATION_ATTACHEMENTS' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Request Attachment
+                            </th>
+                            <th nzWidth="200px" nzColumnKey="{{ 'RENOVATION_REJECTION_REMARK' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Approval / Rejection Remark
+                            </th>
+                            <th nzWidth="150px" nzColumnKey="{{ 'RENOVATION_APPROVED_DATETIME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Approval / Rejection Datetime
+                            </th>
+                            <th nzWidth="150px" nzColumnKey="{{ 'RENOVATION_COMPLETION_DATETIME' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Renovation Completion Datetime
+                            </th>
+                            <th nzWidth="80px" nzColumnKey="{{ 'RENOVATION_STATUS' }}" [nzSortFn]="true"
+                                style="font-weight: bold; text-align: center">
+                                Status
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of langMasterTable.data; let n = index">
+                            <td style="text-align: center;">
+                                <span *ngIf="data.FLAT_APPLICATION_NO != null">
+                                    <span *ngIf="data.FLAT_APPLICATION_NO.length >= 20" nz-popover
+                                        [nzPopoverContent]="data.FLAT_APPLICATION_NO" nzPopoverPlacement="topLeft">
+                                        {{
+                                        data["FLAT_APPLICATION_NO"] == null
+                                        ? "-"
+                                        : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                                        }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+                                    </span>
+                                    <span *ngIf="data.FLAT_APPLICATION_NO.length < 20">
+                                        {{
+                                        data["FLAT_APPLICATION_NO"] == null
+                                        ? "-"
+                                        : (data.FLAT_APPLICATION_NO | slice : 0 : 20)
+                                        }}{{ data.FLAT_APPLICATION_NO.length > 20 ? "..." : "" }}
+                                    </span>
+                                </span>
+                                <span *ngIf="data.FLAT_APPLICATION_NO == null">-</span>
+                            </td>
+                            <td style="text-align: center">
+                                {{ data["RENOVATION_RESQUEST_DATETIME"] ? (data["RENOVATION_RESQUEST_DATETIME"] |
+                                date :
+                                "dd/MM/yyyy HH:mm"): "-" }}
+                            </td>
+                            <td>
+                                <span *ngIf="data.EMPLOYEE_NAME != null">
+                                    <span *ngIf="data.EMPLOYEE_NAME.length >= 30" nz-popover
+                                        [nzPopoverContent]="data.EMPLOYEE_NAME" nzPopoverPlacement="topLeft">
+                                        {{
+                                        data["EMPLOYEE_NAME"] == null
+                                        ? "-"
+                                        : (data.EMPLOYEE_NAME | slice : 0 : 30)
+                                        }}{{ data.EMPLOYEE_NAME.length > 30 ? "..." : "" }}
+                                    </span>
+                                    <span *ngIf="data.EMPLOYEE_NAME.length < 30">
+                                        {{
+                                        data["EMPLOYEE_NAME"] == null
+                                        ? "-"
+                                        : (data.EMPLOYEE_NAME | slice : 0 : 30)
+                                        }}{{ data.EMPLOYEE_NAME.length > 30 ? "..." : "" }}
+                                    </span>
+                                </span>
+                                <span *ngIf="data.EMPLOYEE_NAME == null">-</span>
+                            </td>
+                            <td style="text-align: center">
+                                {{ data["EMPLOYEE_CODE"] ? data["EMPLOYEE_CODE"] : "-" }}
+                            </td>
+                            <td>
+                                <span *ngIf="data.DESIGNATION != null">
+                                    <span *ngIf="data.DESIGNATION.length >= 30" nz-popover
+                                        [nzPopoverContent]="data.DESIGNATION" nzPopoverPlacement="topLeft">
+                                        {{
+                                        data["DESIGNATION"] == null
+                                        ? "-"
+                                        : (data.DESIGNATION | slice : 0 : 30)
+                                        }}{{ data.DESIGNATION.length > 30 ? "..." : "" }}
+                                    </span>
+                                    <span *ngIf="data.DESIGNATION.length < 30">
+                                        {{
+                                        data["DESIGNATION"] == null
+                                        ? "-"
+                                        : (data.DESIGNATION | slice : 0 : 30)
+                                        }}{{ data.DESIGNATION.length > 30 ? "..." : "" }}
+                                    </span>
+                                </span>
+                                <span *ngIf="data.DESIGNATION == null">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="data.EMAIL_ID != null">
+                                    <span *ngIf="data.EMAIL_ID.length >= 30" nz-popover
+                                        [nzPopoverContent]="data.EMAIL_ID" nzPopoverPlacement="topLeft">
+                                        {{
+                                        data["EMAIL_ID"] == null
+                                        ? "-"
+                                        : (data.EMAIL_ID | slice : 0 : 30)
+                                        }}{{ data.EMAIL_ID.length > 30 ? "..." : "" }}
+                                    </span>
+                                    <span *ngIf="data.EMAIL_ID.length < 30">
+                                        {{
+                                        data["EMAIL_ID"] == null
+                                        ? "-"
+                                        : (data.EMAIL_ID | slice : 0 : 30)
+                                        }}{{ data.EMAIL_ID.length > 30 ? "..." : "" }}
+                                    </span>
+                                </span>
+                                <span *ngIf="data.EMAIL_ID == null">-</span>
+                            </td>
+                            <td class="textOverflow" style="text-align: center">
+                                {{ data["MOBILE_NO"] ? data["MOBILE_NO"] : "-" }}
+                            </td>
+                            <td class="textOverflow" style="text-align: center">
+                                {{ data["CITY_NAME"] ? data["CITY_NAME"] : "-" }}
+                            </td>
+                            <td class="textOverflow" style="text-align: center">
+                                {{ data["AREA_NAME"] ? data["AREA_NAME"] : "-" }}
+                            </td>
+                            <td class="textOverflow" style="text-align: center">
+                                {{ data["BUILDING_NAME"] ? data["BUILDING_NAME"] : "-" }}
+                            </td>
+                            <td class="textOverflow" style="text-align: center">
+                                {{ data["FLAT_NAME"] ? data["FLAT_NAME"] : "-" }}
+                            </td>
+                            <td>
+                                <span *ngIf="data.RENOVATION_REMARK != null">
+                                    <span *ngIf="data.RENOVATION_REMARK.length >= 30" nz-popover
+                                        [nzPopoverContent]="data.RENOVATION_REMARK" nzPopoverPlacement="topLeft">
+                                        {{
+                                        data["RENOVATION_REMARK"] == null
+                                        ? "-"
+                                        : (data.RENOVATION_REMARK | slice : 0 : 30)
+                                        }}{{ data.RENOVATION_REMARK.length > 30 ? "..." : "" }}
+                                    </span>
+                                    <span *ngIf="data.RENOVATION_REMARK.length < 30">
+                                        {{
+                                        data["RENOVATION_REMARK"] == null
+                                        ? "-"
+                                        : (data.RENOVATION_REMARK | slice : 0 : 30)
+                                        }}{{ data.RENOVATION_REMARK.length > 30 ? "..." : "" }}
+                                    </span>
+                                </span>
+                                <span *ngIf="data.RENOVATION_REMARK == null">-</span>
+                            </td>
+                            <td style="text-align: center">
+                                <span (click)="applnformshow(data.RENOVATION_ATTACHEMENTS)" style="cursor: pointer;"
+                                    *ngIf="(data.RENOVATION_ATTACHEMENTS!=undefined && data.RENOVATION_ATTACHEMENTS!=null && data.RENOVATION_ATTACHEMENTS!=''); else elseblockattach">
+                                    {{data.RENOVATION_ATTACHEMENTS? data.RENOVATION_ATTACHEMENTS:"_"}} <span nz-icon
+                                        nzType="eye" nzTheme="twotone"></span>
+                                </span>
+                                <ng-template #elseblockattach>
+                                    _
+                                </ng-template>
+                            </td>
+                            <td>
+                                <span *ngIf="data.RENOVATION_REJECTION_REMARK != null">
+                                    <span *ngIf="data.RENOVATION_REJECTION_REMARK.length >= 30" nz-popover
+                                        [nzPopoverContent]="data.RENOVATION_REJECTION_REMARK"
+                                        nzPopoverPlacement="topLeft">
+                                        {{
+                                        data["RENOVATION_REJECTION_REMARK"] == null
+                                        ? "-"
+                                        : (data.RENOVATION_REJECTION_REMARK | slice : 0 : 30)
+                                        }}{{ data.RENOVATION_REJECTION_REMARK.length > 30 ? "..." : "" }}
+                                    </span>
+                                    <span *ngIf="data.RENOVATION_REJECTION_REMARK.length < 30">
+                                        {{
+                                        data["RENOVATION_REJECTION_REMARK"] == null
+                                        ? "-"
+                                        : (data.RENOVATION_REJECTION_REMARK | slice : 0 : 30)
+                                        }}{{ data.RENOVATION_REJECTION_REMARK.length > 30 ? "..." : "" }}
+                                    </span>
+                                </span>
+                                <span *ngIf="data.RENOVATION_REJECTION_REMARK == null">-</span>
+                            </td>
+                            <td style="text-align: center">
+                                {{ data["RENOVATION_APPROVED_DATETIME"] ? (data["RENOVATION_APPROVED_DATETIME"] |
+                                date :
+                                "dd/MM/yyyy HH:mm"): "-" }}
+                            </td>
+                            <td style="text-align: center">
+                                {{ data["RENOVATION_COMPLETION_DATETIME"] ? (data["RENOVATION_COMPLETION_DATETIME"]
+                                |
+                                date :
+                                "dd/MM/yyyy HH:mm"): "-" }}
+                            </td>
+                            <td class="textOverflow" style="text-align: center">
+                                <span
+                                    *ngIf="data.RENOVATION_STATUS !=undefined && data.RENOVATION_STATUS=='A'">Approved</span>
+                                <span
+                                    *ngIf="data.RENOVATION_STATUS !=undefined && data.RENOVATION_STATUS=='R'">Rejected</span>
+                                <span
+                                    *ngIf="data.RENOVATION_STATUS !=undefined && data.RENOVATION_STATUS=='P'">Pending</span>
+                                <span
+                                    *ngIf="data.RENOVATION_STATUS !=undefined && data.RENOVATION_STATUS==null">-</span>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1408 @@
+<!-- <button nz-button nzType="primary" (click)="open()">Open</button> -->
+
+<!-- <nz-drawer [nzClosable]="true" nzTitle="Nature of Taxes" [nzVisible]="visible" nzPlacement="right" [nzWidth]="1110"
+    (nzOnClose)="close()">
+    <ng-container *nzDrawerContent style="padding-right: 0;">
+ 
+    </ng-container>
+
+
+
+
+</nz-drawer> -->
+<!-- *ngFor="let data of HospitalMapping; let i = index" -->
+<div *ngIf="LTC7data != undefined">
+  <form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="8" nzXl="8" nzSpan="8">
+          <div class="my-box">
+            <div *ngFor="let data of formdata7; let k = index">
+              <div
+                nz-row
+                style="
+                  height: 417px;
+                  overflow-y: scroll;
+                  border-bottom: 1px solid;
+                  margin-bottom: 30px;
+                "
+              >
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Claimed by officer</nz-form-label>
+
+                    <nz-form-control
+                      nzAddOnBefore="₹"
+                      nzHasFeedback
+                      nzErrorTip="Claimed by officer is required"
+                    >
+                      <input
+                        style="width: 100%"
+                        name="FAIR_PAID_DUPLICATE{{ k }}"
+                        nz-input
+                        placeholder="Enter Claimed by officer"
+                        autocomplete="off"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.FAIR_PAID_DUPLICATE"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <!-- <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Base Fare</nz-form-label>
+
+                    <nz-form-control
+                      nzAddOnBefore="₹"
+                      nzHasFeedback
+                      nzErrorTip="Base Fare is required"
+                    >
+                      <input
+                        style="width: 100%"
+                        name="JOURNEY_CLAIMED_AMOUNT{{ k }}"
+                        nz-input
+                        placeholder="Enter Base Fare"
+                        autocomplete="off"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.JOURNEY_CLAIMED_AMOUNT"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div> -->
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>Allowed </nz-form-label>
+
+                    <nz-form-control
+                      nzAddOnBefore="₹"
+                      nzHasFeedback
+                      nzErrorTip="Allowed is required"
+                    >
+                      <input
+                        style="width: 100%"
+                        name="BaseFare{{ k }}"
+                        nz-input
+                        placeholder="Enter Allowed "
+                        autocomplete="off"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.FAIR_PAID"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>No of passenger</nz-form-label>
+
+                    <nz-form-control
+                      nzAddOnBefore="₹"
+                      nzHasFeedback
+                      nzErrorTip="No of passenger is required"
+                    >
+                      <input
+                        style="width: 100%"
+                        name="NO_OF_FAIRS{{ k }}"
+                        nz-input
+                        placeholder="Enter No of passenger "
+                        autocomplete="off"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.NO_OF_FAIRS"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="24" style="display: none">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>AMOUNT_WITH_TAX </nz-form-label>
+
+                    <nz-form-control
+                      nzAddOnBefore="₹"
+                      nzHasFeedback
+                      nzErrorTip="AMOUNT_WITH_TAX is required"
+                    >
+                      <input
+                        style="width: 100%"
+                        name="AMOUNT_WITH_TAX{{ k }}"
+                        nz-input
+                        placeholder="Enter AMOUNT_WITH_TAX "
+                        autocomplete="off"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.AMOUNT_WITH_TAX"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzSpan="24" style="display: none">
+                  <nz-form-item>
+                    <nz-form-label nzNoColon>AMOUNT_WITH_TAX </nz-form-label>
+
+                    <nz-form-control
+                      nzAddOnBefore="₹"
+                      nzHasFeedback
+                      nzErrorTip="AMOUNT_WITH_TAX is required"
+                    >
+                      <input
+                        style="width: 100%"
+                        name="TOTAL_BASE_ALLOWED{{ k }}"
+                        nz-input
+                        placeholder="Enter AMOUNT_WITH_TAX "
+                        autocomplete="off"
+                        type="text"
+                        (keypress)="omit($event)"
+                        [(ngModel)]="data.TOTAL_BASE_ALLOWED"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="12">
+                  <div style="text-align: center; font-weight: 800">
+                    Claimed
+                  </div>
+                  <div nz-row>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Cute/rcs</nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Cute/rcs fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Cute{{ k }}"
+                            nz-input
+                            placeholder="Enter Cute/rcs fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.CUTE_RCS_FEES_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Development</nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Development fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Development{{ k }}"
+                            nz-input
+                            placeholder="Enter Development fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.DEVELOPEMENT_FEES_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >User Development</nz-form-label
+                        >
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="User Development fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="User{{ k }}"
+                            nz-input
+                            placeholder="Enter User Development fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.USER_DEVELOPEMENT_FEES_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >Aviation Security</nz-form-label
+                        >
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Aviation Security fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Aviation{{ k }}"
+                            nz-input
+                            placeholder="Enter Aviation Security fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.AVIATION_SECURITY_FEES_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>GST</nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="GST Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="gst{{ k }}"
+                            nz-input
+                            placeholder="Enter GST Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.GST_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >Airport Security</nz-form-label
+                        >
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Airport Security fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Airport{{ k }}"
+                            nz-input
+                            placeholder="Enter Airport Security fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.AIRPORT_SECURITY_FEES_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Regional</nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Regional Connectivity fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Regional{{ k }}"
+                            nz-input
+                            placeholder="Enter Regional Connectivity fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="
+                              data.REGIONAL_CONNECTIVITY_FEES_CLAIMED
+                            "
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >Passenger Service</nz-form-label
+                        >
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Passenger Service fees Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Passenger{{ k }}"
+                            nz-input
+                            placeholder="Enter Passenger Service fees Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.PASSENGER_SERVICES_FEES_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Others</nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Others Claimed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="other{{ k }}"
+                            nz-input
+                            placeholder="Enter Others Claimed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.OTHERS_CLAIMED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Total </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Total is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="CLAIMED_TOTAL{{ k }}"
+                            nz-input
+                            disabled
+                            placeholder="Enter Total"
+                            type="text"
+                            [(ngModel)]="data.CLAIMED_TOTAL"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </div>
+                </div>
+                <div nz-col nzSpan="12">
+                  <div style="text-align: center; font-weight: 800">
+                    Allowed
+                  </div>
+                  <div nz-row>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Cute/rcs </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Cute/rcs fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Cutea{{ k }}"
+                            nz-input
+                            placeholder="Enter Cute/rcs fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.CUTE_RCS_FEES_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Development </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Development fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Developmenta{{ k }}"
+                            nz-input
+                            placeholder="Enter Development fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.DEVELOPEMENT_FEES_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >User Development
+                        </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="User Development fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Usera{{ k }}"
+                            nz-input
+                            placeholder="Enter User Development fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.USER_DEVELOPEMENT_FEES_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >Aviation Security
+                        </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Aviation Security fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Aviationa{{ k }}"
+                            nz-input
+                            placeholder="Enter Aviation Security fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.AVIATION_SECURITY_FEES_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>GST </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="GST Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="gsta{{ k }}"
+                            nz-input
+                            placeholder="Enter GST Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.GST_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >Airport Security
+                        </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Airport Security fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Airporta{{ k }}"
+                            nz-input
+                            placeholder="Enter Airport Security fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.AIRPORT_SECURITY_FEES_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Regional</nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Regional Connectivity fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Regionala{{ k }}"
+                            nz-input
+                            placeholder="Enter Regional Connectivity fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="
+                              data.REGIONAL_CONNECTIVITY_FEES_ALLOWED
+                            "
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon
+                          >Passenger Service
+                        </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Passenger Service fees Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="Passengera{{ k }}"
+                            nz-input
+                            placeholder="Enter Passenger Service fees Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.PASSENGER_SERVICES_FEES_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Others </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Others Allowed is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="othera{{ k }}"
+                            nz-input
+                            placeholder="Enter Others Allowed"
+                            autocomplete="off"
+                            type="text"
+                            (keypress)="omit($event)"
+                            [(ngModel)]="data.OTHERS_ALLOWED"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="24">
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Total </nz-form-label>
+
+                        <nz-form-control
+                          nzAddOnBefore="₹"
+                          nzHasFeedback
+                          nzErrorTip="Total is required"
+                        >
+                          <input
+                            style="width: 100%"
+                            name="ALLOWED_TOTAL{{ k }}"
+                            nz-input
+                            disabled
+                            placeholder="Enter Total"
+                            type="text"
+                            [(ngModel)]="data.ALLOWED_TOTAL"
+                          />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          nz-col
+          nzXs="16"
+          nzSm="16"
+          nzMd="16"
+          nzLg="16"
+          nzXl="16"
+          nzSpan="16"
+        >
+          <div class="my-box">
+            <div
+              nz-row
+              [nzGutter]="10"
+              style="padding-left: 7%; margin-right: 2%; font-size: 13px"
+            >
+              <div
+                nz-col
+                nzXs="16"
+                nzSm="16"
+                nzMd="16"
+                nzLg="16"
+                nzXl="16"
+                nzSpan="16"
+              >
+                <p>
+                  NAME OF THE OFFICER : <b>{{ LTC7data.EMPLOYEE_NAME }}</b>
+                </p>
+              </div>
+              <div
+                style="text-align: right"
+                nz-col
+                nzXs="8"
+                nzSm="8"
+                nzMd="8"
+                nzLg="8"
+                nzXl="8"
+                nzSpan="8"
+              >
+                <p>
+                  Pay Level : <b>{{ LTC7data.GRADE_PAY_LEVEL }}</b>
+                </p>
+              </div>
+            </div>
+
+            <div
+              style="padding-left: 7%; margin-right: 2%; font-size: 13px"
+              *ngFor="let data of formdata7; let k = index"
+            >
+              <!-- <div *ngIf="data.TRAVEL_MODE_NAME == 'Air'"> -->
+              <div nz-row [nzGutter]="10">
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p>
+                    <b>{{ data.DEPARTURE_FROM }} </b>TO
+                    <b style="text-decoration: underline">{{
+                      data.ARRIVAL_TO
+                    }}</b>
+                  </p>
+                </div>
+                <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p style="text-align: right">
+                    No of Passengers :<b> {{ data.NO_OF_FAIRS }} </b>
+                  </p>
+                </div>
+                <!-- <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p style="text-align: right">
+                    No of Passengers :<b> {{ passenger }} </b>
+                  </p>
+                </div> -->
+              </div>
+              <div nz-row [nzGutter]="10">
+                <div
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p>
+                    <span *ngIf="k == 0">A) </span>
+                    <span *ngIf="k == 1">C)</span>
+                    <span *ngIf="k == 2">E)</span>
+                    <span *ngIf="k == 3">G)</span>
+                    <span *ngIf="k == 4">I)</span>
+                    <span *ngIf="k == 5">K)</span>
+                    <span *ngIf="k == 6">M)</span>
+                    <span *ngIf="k == 7">O)</span>
+                    <span *ngIf="k == 8">Q)</span>
+                    <span *ngIf="k == 9">S)</span>
+                    <span *ngIf="k == 10">U)</span>
+                    <span *ngIf="k == 11">W)</span>
+                    <span *ngIf="k == 12">Y)</span>
+                    Base Fare :
+                    <!-- Base Fare : <b>{{ data.FAIR_PAID }}</b> -->
+                  </p>
+                </div>
+                <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <table style="width: 100%; margin-bottom: 15px">
+                    <tr>
+                      <!-- <th>Base Fare</th> -->
+                      <th>Claimed by officer</th>
+                      <th>ALLOWED</th>
+                    </tr>
+                    <tr>
+                      <td>{{ data.FAIR_PAID_DUPLICATE }}</td>
+                      <td>{{ data.FAIR_PAID }}</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p>
+                    Pay Level : <b>{{ LTC7data.GRADE_PAY_LEVEL }}</b>
+                  </p>
+                </div> -->
+              </div>
+
+              <table style="width: 100%">
+                <thead>
+                  <tr>
+                    <th style="text-align: left">SR.NO.</th>
+                    <th style="text-align: left">NATURE OF TAXES</th>
+                    <th style="text-align: left">Claimed by officer</th>
+                    <th style="text-align: left">ALLOWED</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <TR>
+                    <TD style="text-align: right"> 1</TD>
+                    <TD style="text-align: left"> CUTE/RCS FEES</TD>
+                    <TD style="text-align: right">{{
+                      data.CUTE_RCS_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.CUTE_RCS_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 2</TD>
+                    <TD style="text-align: left"> DEVELOPMENT FEES</TD>
+                    <TD style="text-align: right">{{
+                      data.DEVELOPEMENT_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.DEVELOPEMENT_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 3</TD>
+                    <TD style="text-align: left"> USER DEVELOPMENT FEES</TD>
+                    <TD style="text-align: right">{{
+                      data.USER_DEVELOPEMENT_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.USER_DEVELOPEMENT_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 4</TD>
+                    <TD style="text-align: left"> AVIATION SECURITY FEES</TD>
+                    <TD style="text-align: right">{{
+                      data.AVIATION_SECURITY_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.AVIATION_SECURITY_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 5</TD>
+                    <TD style="text-align: left"> GST</TD>
+                    <TD style="text-align: right">{{ data.GST_CLAIMED }}</TD>
+                    <TD style="text-align: right">{{ data.GST_ALLOWED }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 6</TD>
+                    <TD style="text-align: left"> AIRPORT SECURITY FEES</TD>
+                    <TD style="text-align: right">{{
+                      data.AIRPORT_SECURITY_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.AIRPORT_SECURITY_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 7</TD>
+                    <TD style="text-align: left">
+                      REGIONAL CONNECTIVITY FEES</TD
+                    >
+                    <TD style="text-align: right">{{
+                      data.REGIONAL_CONNECTIVITY_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.REGIONAL_CONNECTIVITY_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 8</TD>
+                    <TD style="text-align: left"> PASSENGER SERVICE FEES</TD>
+                    <TD style="text-align: right">{{
+                      data.PASSENGER_SERVICES_FEES_CLAIMED
+                    }}</TD>
+                    <TD style="text-align: right">{{
+                      data.PASSENGER_SERVICES_FEES_ALLOWED
+                    }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right"> 9</TD>
+                    <TD style="text-align: left"> OTHERS</TD>
+                    <TD style="text-align: right">{{ data.OTHERS_CLAIMED }}</TD>
+                    <TD style="text-align: right">{{ data.OTHERS_ALLOWED }}</TD>
+                  </TR>
+                  <TR>
+                    <TD style="text-align: right">
+                      <span *ngIf="k == 0">B) </span>
+                      <span *ngIf="k == 1">D)</span>
+                      <span *ngIf="k == 2">F)</span>
+                      <span *ngIf="k == 3">H)</span>
+                      <span *ngIf="k == 4">J)</span>
+                      <span *ngIf="k == 5">L)</span>
+                      <span *ngIf="k == 6">N)</span>
+                      <span *ngIf="k == 7">P)</span>
+                      <span *ngIf="k == 8">R)</span>
+                      <span *ngIf="k == 9">T)</span>
+                      <span *ngIf="k == 10">V)</span>
+                      <span *ngIf="k == 11">X)</span>
+                      <span *ngIf="k == 12">Z)</span>
+                    </TD>
+                    <TD style="text-align: left"><b>TOTAL</b></TD>
+                    <TD style="text-align: right"
+                      ><b>{{ data.CLAIMED_TOTAL }}</b></TD
+                    >
+                    <TD style="text-align: right"
+                      ><b>{{ data.ALLOWED_TOTAL }}</b></TD
+                    >
+                  </TR>
+                </tbody>
+              </table>
+              <p style="margin-right: 5%; text-align: right">
+                <!-- <i>GST is 5% & 12% on economy and business class.</i> -->
+
+                <!-- <b style="margin-top: 2px" >
+                 Total : {{ data.ALLOWED_TOTAL }}</b
+                > -->
+                <b style="margin-top: 2px; display: none"
+                  >Total : {{ gettotal(k) }}</b
+                >
+                <b style="margin-top: 2px; display: none"
+                  >Total : {{ gettotalclaimed(k) }}</b
+                >
+                <b style="margin-top: 2px; display: none"
+                  >Total : {{ gettotalallowedandbase(k) }}</b
+                >
+                <b style="margin-top: 2px; display: none"
+                  >Total : {{ gettotal1(k) }}</b
+                >
+              </p>
+              <!-- </div> -->
+            </div>
+
+            <div style="padding-left: 7%">
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <table style="width: 100%">
+                    <tr *ngFor="let data of formdata7; let m = index">
+                      <th style="width: 75px">
+                        <span *ngIf="m == 0">A + B </span>
+                        <span *ngIf="m == 1">C + D</span>
+                        <span *ngIf="m == 2">E + F</span>
+                        <span *ngIf="m == 3">G + H</span>
+                        <span *ngIf="m == 4">I + J</span>
+                        <span *ngIf="m == 5">m + L</span>
+                        <span *ngIf="m == 6">M + N</span>
+                        <span *ngIf="m == 7">O + P</span>
+                        <span *ngIf="m == 8">Q + R</span>
+                        <span *ngIf="m == 9">S + T</span>
+                        <span *ngIf="m == 10">U + V</span>
+                        <span *ngIf="m == 11">W + X</span>
+                        <span *ngIf="m == 12">Y + Z</span>
+                      </th>
+                      <th>{{ data.TOTAL_BASE_ALLOWED }}</th>
+                    </tr>
+                    <tr>
+                      <th><b>Total</b></th>
+                      <th>{{ getalltabestotal() }}</th>
+                    </tr>
+                  </table>
+                </div>
+                <div nz-col nzSpan="12"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+  <div class="footer">
+    <button
+      type="button"
+      nz-button
+      (click)="close()"
+      class="ant-btn"
+      style="margin-right: 8px"
+    >
+      <span>Cancel</span>
+    </button>
+    <button
+      *ngIf="!isAdmin"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="save()"
+      [nzLoading]="loadingRecords"
+    >
+      <span>Save & Preview</span>
+    </button>
+
+    <button
+      *ngIf="isAdmin"
+      type="button"
+      class="ant-btn ant-btn-primary"
+      nz-button
+      (click)="previewOnly()"
+      [nzLoading]="loadingRecords"
+    >
+      <span>Preview</span>
+    </button>
+  </div>
+</div>
+<!-- </div> -->
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Calculation'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto" *ngIf="LTC7data != undefined">
+        <div id="nature">
+          <div style="width: 700px; padding: 3px; margin-left: 30px">
+            <form *ngIf="LTC7data != undefined">
+              <div
+                nz-row
+                [nzGutter]="10"
+                style="
+                  padding-left: 7%;
+                  margin-right: 2%;
+                  font-size: 15px !important;
+                "
+              >
+                <div
+                  nz-col
+                  nzXs="16"
+                  nzSm="16"
+                  nzMd="16"
+                  nzLg="16"
+                  nzXl="16"
+                  nzSpan="16"
+                >
+                  <p>
+                    NAME OF THE OFFICER : <b>{{ LTC7data.EMPLOYEE_NAME }}</b>
+                  </p>
+                </div>
+                <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="8"
+                  nzSm="8"
+                  nzMd="8"
+                  nzLg="8"
+                  nzXl="8"
+                  nzSpan="8"
+                >
+                  <p>
+                    Pay Level : <b>{{ LTC7data.GRADE_PAY_LEVEL }}</b>
+                  </p>
+                </div>
+              </div>
+
+              <div
+                style="
+                  padding-left: 7%;
+                  margin-right: 2%;
+                  font-size: 14px;
+                  padding-top: 20px;
+                "
+                *ngFor="let data of formdata7; let k = index"
+              >
+                <!-- <div *ngIf="data.TRAVEL_MODE_NAME == 'Air'"> -->
+                <div nz-row [nzGutter]="10">
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                  >
+                    <p>
+                      <b>{{ data.DEPARTURE_FROM }} </b>TO
+                      <b style="text-decoration: underline">{{
+                        data.ARRIVAL_TO
+                      }}</b>
+                    </p>
+                  </div>
+                  <div
+                    style="text-align: right"
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                  >
+                    <p style="text-align: right">
+                      No of Passengers :<b> {{ data.NO_OF_FAIRS }} </b>
+                    </p>
+                  </div>
+                  <!-- <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p style="text-align: right">
+                    No of Passengers :<b> {{ passenger }} </b>
+                  </p>
+                </div> -->
+                </div>
+                <div nz-row [nzGutter]="10">
+                  <div
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                  >
+                    <p>
+                      <span *ngIf="k == 0">A) </span>
+                      <span *ngIf="k == 1">C)</span>
+                      <span *ngIf="k == 2">E)</span>
+                      <span *ngIf="k == 3">G)</span>
+                      <span *ngIf="k == 4">I)</span>
+                      <span *ngIf="k == 5">K)</span>
+                      <span *ngIf="k == 6">M)</span>
+                      <span *ngIf="k == 7">O)</span>
+                      <span *ngIf="k == 8">Q)</span>
+                      <span *ngIf="k == 9">S)</span>
+                      <span *ngIf="k == 10">U)</span>
+                      <span *ngIf="k == 11">W)</span>
+                      <span *ngIf="k == 12">Y)</span>
+                      Base Fare :
+                      <!-- Base Fare : <b>{{ data.FAIR_PAID }}</b> -->
+                    </p>
+                  </div>
+                  <div
+                    style="text-align: right"
+                    nz-col
+                    nzXs="12"
+                    nzSm="12"
+                    nzMd="12"
+                    nzLg="12"
+                    nzXl="12"
+                    nzSpan="12"
+                  >
+                    <table style="width: 100%; margin-bottom: 15px">
+                      <tr>
+                        <!-- <th>Base Fare</th> -->
+                        <th>Claimed by officer</th>
+                        <th>ALLOWED</th>
+                      </tr>
+                      <tr>
+                        <td>{{ data.FAIR_PAID_DUPLICATE }}</td>
+                        <td>{{ data.FAIR_PAID }}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <!-- <div
+                  style="text-align: right"
+                  nz-col
+                  nzXs="12"
+                  nzSm="12"
+                  nzMd="12"
+                  nzLg="12"
+                  nzXl="12"
+                  nzSpan="12"
+                >
+                  <p>
+                    Pay Level : <b>{{ LTC7data.GRADE_PAY_LEVEL }}</b>
+                  </p>
+                </div> -->
+                </div>
+
+                <table style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th style="text-align: left">SR.NO.</th>
+                      <th style="text-align: left">NATURE OF TAXES</th>
+                      <th style="text-align: left">Claimed by officer</th>
+                      <th style="text-align: left">ALLOWED</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <TR>
+                      <TD style="text-align: right"> 1</TD>
+                      <TD style="text-align: left"> CUTE/RCS FEES</TD>
+                      <TD style="text-align: right">{{
+                        data.CUTE_RCS_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.CUTE_RCS_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 2</TD>
+                      <TD style="text-align: left"> DEVELOPMENT FEES</TD>
+                      <TD style="text-align: right">{{
+                        data.DEVELOPEMENT_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.DEVELOPEMENT_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 3</TD>
+                      <TD style="text-align: left"> USER DEVELOPMENT FEES</TD>
+                      <TD style="text-align: right">{{
+                        data.USER_DEVELOPEMENT_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.USER_DEVELOPEMENT_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 4</TD>
+                      <TD style="text-align: left"> AVIATION SECURITY FEES</TD>
+                      <TD style="text-align: right">{{
+                        data.AVIATION_SECURITY_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.AVIATION_SECURITY_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 5</TD>
+                      <TD style="text-align: left"> GST</TD>
+                      <TD style="text-align: right">{{ data.GST_CLAIMED }}</TD>
+                      <TD style="text-align: right">{{ data.GST_ALLOWED }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 6</TD>
+                      <TD style="text-align: left"> AIRPORT SECURITY FEES</TD>
+                      <TD style="text-align: right">{{
+                        data.AIRPORT_SECURITY_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.AIRPORT_SECURITY_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 7</TD>
+                      <TD style="text-align: left">
+                        REGIONAL CONNECTIVITY FEES</TD
+                      >
+                      <TD style="text-align: right">{{
+                        data.REGIONAL_CONNECTIVITY_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.REGIONAL_CONNECTIVITY_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 8</TD>
+                      <TD style="text-align: left"> PASSENGER SERVICE FEES</TD>
+                      <TD style="text-align: right">{{
+                        data.PASSENGER_SERVICES_FEES_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.PASSENGER_SERVICES_FEES_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right"> 9</TD>
+                      <TD style="text-align: left"> OTHERS</TD>
+                      <TD style="text-align: right">{{
+                        data.OTHERS_CLAIMED
+                      }}</TD>
+                      <TD style="text-align: right">{{
+                        data.OTHERS_ALLOWED
+                      }}</TD>
+                    </TR>
+                    <TR>
+                      <TD style="text-align: right">
+                        <span *ngIf="k == 0">B) </span>
+                        <span *ngIf="k == 1">D)</span>
+                        <span *ngIf="k == 2">F)</span>
+                        <span *ngIf="k == 3">H)</span>
+                        <span *ngIf="k == 4">J)</span>
+                        <span *ngIf="k == 5">L)</span>
+                        <span *ngIf="k == 6">N)</span>
+                        <span *ngIf="k == 7">P)</span>
+                        <span *ngIf="k == 8">R)</span>
+                        <span *ngIf="k == 9">T)</span>
+                        <span *ngIf="k == 10">V)</span>
+                        <span *ngIf="k == 11">X)</span>
+                        <span *ngIf="k == 12">Z)</span>
+                      </TD>
+                      <TD style="text-align: left"><b>TOTAL</b></TD>
+                      <TD style="text-align: right"
+                        ><b>{{ data.CLAIMED_TOTAL }}</b></TD
+                      >
+                      <TD style="text-align: right"
+                        ><b>{{ data.ALLOWED_TOTAL }}</b></TD
+                      >
+                    </TR>
+                  </tbody>
+                </table>
+                <p style="margin-right: 5%; text-align: right">
+                  <!-- <i>GST is 5% & 12% on economy and business class.</i> -->
+
+                  <!-- <b style="margin-top: 2px" >
+                 Total : {{ data.ALLOWED_TOTAL }}</b
+                > -->
+                  <!-- <b style=" margin-top: 2px; display: none"
+                  >Total : {{ gettotal(k) }}</b
+                >
+                <b style=" margin-top: 2px; display: none"
+                  >Total : {{ gettotalclaimed(k) }}</b
+                >
+                <b style=" margin-top: 2px; display: none"
+                  >Total : {{ gettotalallowedandbase(k) }}</b
+                >
+                <b style=" margin-top: 2px; display: none"
+                  >Total : {{ gettotal1(k) }}</b
+                > -->
+                </p>
+                <!-- </div> -->
+              </div>
+
+              <div style="padding-left: 7%">
+                <div nz-row>
+                  <div nz-col nzSpan="12">
+                    <table style="width: 100%">
+                      <tr *ngFor="let data of formdata7; let m = index">
+                        <th style="width: 75px">
+                          <span *ngIf="m == 0">A + B </span>
+                          <span *ngIf="m == 1">C + D</span>
+                          <span *ngIf="m == 2">E + F</span>
+                          <span *ngIf="m == 3">G + H</span>
+                          <span *ngIf="m == 4">I + J</span>
+                          <span *ngIf="m == 5">m + L</span>
+                          <span *ngIf="m == 6">M + N</span>
+                          <span *ngIf="m == 7">O + P</span>
+                          <span *ngIf="m == 8">Q + R</span>
+                          <span *ngIf="m == 9">S + T</span>
+                          <span *ngIf="m == 10">U + V</span>
+                          <span *ngIf="m == 11">W + X</span>
+                          <span *ngIf="m == 12">Y + Z</span>
+                        </th>
+                        <th
+                          style="text-align: right; padding: 0px 10px 0px 0px"
+                        >
+                          {{ data.TOTAL_BASE_ALLOWED }}
+                        </th>
+                      </tr>
+                      <tr>
+                        <th><b>Total</b></th>
+                        <th
+                          style="text-align: right; padding: 0px 10px 0px 0px"
+                        >
+                          {{ getalltabestotal() }}
+                        </th>
+                      </tr>
+                    </table>
+                  </div>
+                  <div nz-col nzSpan="12"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="nature"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button nz-button nzType="primary" (click)="openpdf()">Download</button>
+  </ng-template>
+</nz-modal>

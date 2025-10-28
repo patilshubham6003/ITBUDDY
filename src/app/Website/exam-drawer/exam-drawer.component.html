@@ -1,0 +1,93 @@
+<div>
+    <form nz-form #myForm="ngForm">
+      <nz-spin [nzSpinning]="isSpinning">
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzRequired nzNoColon>Exam Name</nz-form-label>
+              <nz-input-group>
+                <nz-select name="EXAM_ID" nzShowSearch  nzAllowClear style="width: 100%"
+                  nzPlaceHolder="Select Exam Name" [(ngModel)]="data.EXAM_ID" required>
+                  <nz-option *ngFor="let exam of exams" [nzValue]="exam.ID" [nzLabel]="exam.NAME">
+                  </nz-option>
+                </nz-select>
+              </nz-input-group>
+            </nz-form-item>
+          </div>
+        </div>
+  
+        <div nz-row>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Date of Passing (As per relevant order)</nz-form-label>
+  
+              <nz-form-control nzHasFeedback nzErrorTip="Date of Passing required">
+                <nz-date-picker name="PASSING_DATE" nzPlaceHolder="Passing Date" style="width: 100%"
+                                  [nzFormat]="'dd/MM/yyyy'" [nzDisabledDate]="disabledPassingDate" [(ngModel)]="data.PASSING_DATE">
+                              </nz-date-picker>
+                <!-- <input nz-input name="PASSING_DATE" placeHolder="DD/MM/YYYY" autocomplete="off" autofill="off"
+                  pattern="\d{2}/\d{2}/\d{4}" (input)="onDOB($event, 'FD')"
+                  (keypress)="_commonFunctionService.omit($event)" [(ngModel)]="data.PASSING_DATE" maxlength="10" />
+                <span *ngIf="data.PASSING_DATE">
+                  <small style="color: red; font-weight: normal" *ngIf="showInvalidDateError(data.PASSING_DATE)">
+                    Invalid Date
+                  </small> -->
+                <!-- </span> -->
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+  
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Whether Concession taken?</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+                <nz-switch name="IS_CONCESSION" nzCheckedChildren="Y" nzUnCheckedChildren="N"
+                  [(ngModel)]="data.IS_CONCESSION">
+                </nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label nzNoColon>Whether Gracemarks Given?</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Input is required">
+                <nz-switch name="IS_GRACEMARKS" nzCheckedChildren="Y" nzUnCheckedChildren="N"
+                  [(ngModel)]="data.IS_GRACEMARKS">
+                </nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+         
+        </div>
+      </nz-spin>
+    </form>
+    <div class="footer">
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <button type="button" nz-button (click)="close(myForm)" class="ant-btn" style="margin-right: 8px">
+            <span>Cancel</span>
+          </button>
+  
+          <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown
+            [nzDropdownMenu]="menu" (click)="save(false, myForm)">
+            <span>Save & Close</span>
+          </button>
+  
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+                <a style="color: white" (click)="save(true, myForm)">Save & New</a>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+  
+          <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+            (click)="save(false, myForm)">
+            <span>Update & close</span>
+          </button>
+        </div>
+      </div>
+  
+  
+    </div>
+  </div>

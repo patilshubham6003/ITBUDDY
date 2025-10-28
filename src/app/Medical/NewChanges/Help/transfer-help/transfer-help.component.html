@@ -1,0 +1,443 @@
+
+<div nz-row style="background-color: aliceblue;">
+
+    <div nz-col nzSpan="24">
+        <div nz-row class="header">
+            <div nz-col nzSpan="20">
+                <h4 style="margin: 10px 0 0 20px;  font-style: normal;"> Fill
+                    Application Details </h4>
+            </div>
+            <div nz-col nzSpan="4"
+                style="display: flex;justify-content: flex-end;">
+                <button nz-button nzType="default" (click)="logout()"
+                    nzShape="circle"
+                    style="background-color: #AFEEEE; margin: 9px 25px 0 0;"
+                    nzTooltipTitle="Logout" nzTooltipPlacement="top"
+                    nz-tooltip>
+                    <i nz-icon nzType="logout" style="margin-bottom: 5px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div nzSpan="24" style=" height:600px; margin: 50px 20px 0 20px; ">
+        <div id="carouselExampleDark" class="carousel carousel-dark slide"
+            data-bs-touch="false" data-bs-interval="false"
+            style=" box-shadow: 2px 2px 2px 2px #F8F8F8;" *ngIf="loggedin">
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div nz-row nzGutter="8">
+
+                        <div nz-col nzSpan="6">
+                            <img
+                                nz-image
+                                width="200px"
+                                height="500px"
+                                nzSrc=".\assets\MicrosoftTeams-image (5).png"
+                                alt=" failde to show "
+                                class="image">
+                        </div>
+
+                        <div nz-col nzSpan="18" style="color:black; ">
+                            <p style="margin: 10px;">
+                                1111111111111111
+                                Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque!</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div nz-row nzGutter="8">
+
+                        <div nz-col nzSpan="12">
+                            <img nz-image
+                                width="90%"
+                                height="500px"
+                                nzSrc=".\assets\step1.png"
+                                alt=" failde to show "
+                                class="image">
+                        </div>
+                        <div nz-col nzSpan="12"
+                            style="color:black; height: 450px; overflow-y: auto; ">
+                            <div
+                                style="margin: 10px 10px 10px 0; font-style: normal;">
+                                <div
+                                    style="font-size: 20px; margin-bottom: 20px;">
+                                    <h5>Applicant Information Form</h5></div>
+                                <div style="  font-size: 15px;">Please Complete
+                                    the
+                                    following details for
+                                    accurate
+                                    record-keeping
+                                    and communication purposes. Your information
+                                    is
+                                    confidential and
+                                    will only be used as required.
+                                    <div style="margin: 10px 0 10px 0;">
+                                        <b> 1. Employee Name</b> : Please
+                                        provide
+                                        your full
+                                        legel name.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>2. Select Employee Designation</b> :
+                                        Enter your
+                                        job title or designation.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>3. Designation : </b> If your
+                                        designation
+                                        is not listed, please
+                                        enter it here.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 4. Office Name </b>: Enter the
+                                        official
+                                        name of your workplace.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 5. DDO Of The Official </b>: Enter
+                                        DDO
+                                        of the official.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 6. Employee Code</b> : Enter your
+                                        unique
+                                        employee identification
+                                        code.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>7. Basic Pay</b> : Enter your monthly
+                                        basic pay amount in
+                                        Indian
+                                        Rupees (₹).
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 8. Email ID</b> : Enter your current
+                                        email address for
+                                        communication purposes.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>9. Mobile Number</b> : Enter your
+                                        active
+                                        mobile number.
+                                    </div>
+                                    <div>
+                                        <b>10. Beneficiary Type : </b> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choose
+                                        the appropriate
+                                        beneficiary type from the options below
+                                        :
+                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - CGHS: Central Government Health Scheme
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - CS(MA): Central Services (Medical
+                                        Attendance)
+                                    </div>
+
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+
+                    <div nz-row nzGutter="8">
+
+                        <div nz-col nzSpan="12">
+                            <img nz-image
+                                width="90%"
+                                height="500px"
+                                nzSrc=".\assets\step2.png"
+                                alt=" failde to show "
+                                class="image">
+                        </div>
+
+                        <div nz-col nzSpan="12"
+                            style="color:black; height: 450px; overflow-y: auto;">
+                            <div style="margin: 20px; font-style: normal;">
+                                <div
+                                    style="margin-bottom: 20px; font-size: 20px;">
+                                    <h5> Claim Information Form </h5></div>
+                                <div style="margin-bottom: 10px; ">
+                                    Please provide accurate and complete details
+                                    for
+                                    processing your claim.
+                                    This information is crucial for ensuring
+                                    timely
+                                    and
+                                    accurate reimbursement.
+                                    Follow these steps to fill out the claim
+                                    information:
+                                    <div style="margin:20px 0 10px 0; ">
+                                        <b>1. Relationship with Applicant :</b>
+                                        Indicate
+                                        your relationship with the
+                                        applicant
+                                        (patient), such as self, spouse, child,
+                                        etc.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 2. Patient Name :</b> Enter the full
+                                        name of the
+                                        patient
+                                        (applicant).
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>3. Patient CGHS Beneficiary Number :</b>
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Enter the CGHS beneficiary number
+                                        assigned
+                                        to
+                                        the patient.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>4. Nature Of Treatment/Test :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Specify the nature of the treatment or
+                                        test
+                                        undergone by the patient (e.g., "CANCER").
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>5. Treatment Start Date</b> : <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Enter the date when the treatment or
+                                        test
+                                        started
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>6. Treatment End Date :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Enter the date when the treatment or
+                                        test
+                                        ended.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>7. Bill Filling Date :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Enter the date when the bill for the
+                                        treatment
+                                        or test was filled in the office.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 8. Is Advance Taken? :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Indicate whether an advance payment
+                                        was
+                                        taken
+                                        for the treatment (Yes/No).
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>9. Hospital Type :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Choose the appropriate hospital type
+                                        from
+                                        the
+                                        options provided. (Empanelled /Non
+                                        empanelled)
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>10. Hospital Name :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Enter the name of the hospital where
+                                        the
+                                        treatment or test was conducted.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>11. Hospital Address :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Enter the complete address of the
+                                        hospital.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>12. Accreditations :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Indicate if the hospital is
+                                        non-empanelled,
+                                        and provide accreditation details if
+                                        applicable.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>13. Bank Details :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        -Enter bank details
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>14. Ward Entitlement :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Select the type of ward entitlement
+                                        (Pvt.,
+                                        Semi Pvt., General) for the treatment.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>15. Treatment Type :</b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Specify whether the treatment is for
+                                        OPD
+                                        (Outpatient Department) or indoor
+                                        treatment.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b>16. OPD Treatment / Test Entitled :</b>
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Indicate the entitled OPD treatment or
+                                        test.
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <b> 17. Indoor Treatment : </b> <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        - Provide details of indoor treatment,
+                                        if
+                                        applicable.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+
+                    <div nz-row nzGutter="8">
+
+                        <div nz-col nzSpan="8">
+                            <img nz-image
+                                width="400px"
+                                height="500px"
+                                nzSrc=".\assets\MicrosoftTeams-image (5).png"
+                                alt=" failde to show "
+                                class="image">
+                        </div>
+
+                        <div nz-col nzSpan="16" style="color:black;">
+                            <p style="margin: 10px;">
+                                44444444444444444444
+                                Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque! Lorem
+                                ipsum
+                                dolor
+                                sit amet
+                                consectetur adipisicing elit. Inventore animi
+                                dignissimos ipsam excepturi quaerat magni
+                                voluptates,
+                                reiciendis, sequi esse repellat harum et,
+                                numquam
+                                optio
+                                obcaecati! Iusto nulla quia dolorem neque!
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <button style="color: black;" class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"
+                    style="margin-left: -176px;"></span>
+
+            </button>
+
+            <button style="color: black;" class="carousel-control-next"
+                type="button" data-bs-target="#carouselExampleDark"
+                data-bs-slide="next" (click)="nextSlide()">
+                <span class="carousel-control-next-icon"
+                    style="margin-right: -140px;"></span>
+
+            </button>
+        </div>
+    </div>
+</div>

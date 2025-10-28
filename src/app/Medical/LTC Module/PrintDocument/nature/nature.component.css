@@ -1,0 +1,26 @@
+table,
+td,
+th {
+  border: 1px solid black;
+}
+
+td,
+th {
+  padding-left: 1%;
+  text-align: center;
+}
+
+nz-form-item {
+  display: inline-block;
+  margin-bottom: 5px;
+  width: -webkit-fill-available;
+  padding: 0px 10px;
+}
+
+.record {
+  /* Styles for each record */
+}
+
+.record:nth-child(2n + 3) {
+  page-break-after: always;
+}

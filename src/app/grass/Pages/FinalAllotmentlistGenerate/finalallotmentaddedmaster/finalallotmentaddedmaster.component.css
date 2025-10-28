@@ -1,0 +1,72 @@
+.formname {
+    color: rgba(0, 0, 0, .85);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+}
+.chsaaa{
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+  nz-form-item{
+    display: inline-block;
+    margin-bottom: 5px;
+    width: -webkit-fill-available;
+    padding: 0px 10px;
+  }
+
+
+.flexicons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    border-top: 1px solid rgb(232, 232, 232);
+    padding: 10px 16px;
+    text-align: right;
+    right: 0px;
+  }
+  .tablestyle,.tablestyle th, .tablestyle td{
+    border: 1px solid black;
+  }
+ 
+  nz-progress{
+    width: 200px;
+  }
+
+  @media print {
+    tr {
+      page-break-inside: avoid;
+    }
+    th, td {
+      /* padding: 5px; */
+      border: 1px solid #000;
+    }
+  }
+
+
+  @media print {
+    .table12{
+      text-align: center; 
+      width:100%;
+    }
+    tr {
+      page-break-inside: avoid;
+    }
+    th, td {
+      /* padding: 5px; */
+      border: 1px solid #000;
+    }
+  }
+
+  p{
+    margin-bottom: 0px !important;
+  }

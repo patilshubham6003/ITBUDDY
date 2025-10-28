@@ -1,0 +1,179 @@
+<nz-spin [nzSpinning]="isSpinning">
+  <div nz-row [nzGutter]="6" class="my-box">
+    <div nz-col nzSpan="12">
+
+      <nz-table [nzData]="flatlists" [nzFrontPagination]="false" [nzScroll]="{ y: '390px' }" nzBordered
+        [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th nzWidth="120px" style="text-align: center;font-weight: 600;">
+              Action
+            </th>
+            <th style="text-align: center;font-weight: 600;">
+              Available Quarters &nbsp;&nbsp;<nz-tag [nzColor]="'magenta'"> Count : {{flatlists.length}} </nz-tag>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of flatlists;let i = index">
+            <td style="white-space: pre-line;text-align: center;margin: auto 0px;">
+              <button nz-button nzTooltipTitle="Add" nzTooltipPlacement="top" nz-tooltip nzType="default"
+                nzShape="circle" (click)="Addtonexttable(data)"
+                style="color: #47a7ff; border: solid 1px #47a7ff; margin: 5px;">
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+              </button>
+            </td>
+            <td style="white-space: pre-line;text-align: center;">
+              <div style="width: 100%;height: 100%;text-align: left;padding: 0px 10px;font-size: 12px;">
+                <span style="font-weight: 600;">City :&nbsp;</span> {{data.CITY_NAME}} <br>
+                <span style="font-weight: 600;">Area :&nbsp;</span> {{data.AREA_NAME}} <br>
+                <span style="font-weight: 600;">Block :&nbsp;</span> {{data.BLOCK_NAME}} <br>
+                <span style="font-weight: 600;">Building :&nbsp;</span> {{data.BUILDING_NAME}} <br>
+                <span style="font-weight: 600;">Floor :&nbsp;</span> {{data.FLOOR_NAME}} <br>
+                <span style="font-weight: 600;">Quarter Name :&nbsp;</span> {{data.FLAT_NAME}} <br>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-table cdkDropList (cdkDropListDropped)="onDrop($event)" [nzScroll]="{ y: '390px' }" [nzData]="arrayofflat"
+        #editRowTable [nzFrontPagination]="false" nzBordered [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th nzWidth="90px" style="text-align: center;font-weight: 600;">Action</th>
+            <th style="text-align: center;font-weight: 600;">Quarter Preferences &nbsp;&nbsp;<nz-tag
+                [nzColor]="'magenta'">
+                Count : {{arrayofflat.length}} </nz-tag></th>
+            <th nzWidth="140px" style="text-align: center;font-weight: 600;">Preference No</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data1 of editRowTable.data;let i = index" cdkDrag class="grabbable">
+            <td style="white-space: pre-line;text-align: center;margin: auto 0px;">
+              <div style="display: flex;justify-content: center;align-items: center;flex-direction: row;gap: 5px;">
+                <button nz-button nzType="default" nzShape="circle" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip (click)="removefromtable(data1)"
+                  style="color: #47a7ff; border: solid 1px #47a7ff; margin: 5px;">
+                  <i nz-icon nzType="close" nzTheme="outline"></i>
+                </button>
+                <div style="display: flex;justify-content: center;align-items: center;flex-direction: row;gap: 5px;"
+                  class="buttonclassid">
+                  <span nz-icon nzType="arrow-up" nzTheme="outline" *ngIf="i !== 0"></span>
+                  <span nz-icon nzType="arrow-down" nzTheme="outline" *ngIf="i !== arrayofflat.length - 1"></span>
+                </div>
+              </div>
+            </td>
+            <td style="white-space: pre-line;text-align: center;">
+              <div style="width: 100%;height: 100%;text-align: left;padding: 0px 10px; font-size: 12px;">
+                <span style="font-weight: 600;">City :&nbsp;</span> {{data1.CITY_NAME}} <br>
+                <span style="font-weight: 600;">Area :&nbsp;</span> {{data1.AREA_NAME}} <br>
+                <span style="font-weight: 600;">Block :&nbsp;</span> {{data1.BLOCK_NAME}} <br>
+                <span style="font-weight: 600;">Building :&nbsp;</span> {{data1.BUILDING_NAME}} <br>
+                <span style="font-weight: 600;">Floor :&nbsp;</span> {{data1.FLOOR_NAME}} <br>
+                <span style="font-weight: 600;">Quarter Name :&nbsp;</span> {{data1.FLAT_NAME}} <br>
+              </div>
+            </td>
+            <td style="white-space: pre-line;text-align: center;">
+              {{data1.PREFERNCE_NO}}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-spin>
+
+
+<div class="header">
+  <button type="button" nz-button (click)="close()" class="ant-btn" style="margin-right: 8px">
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>
+
+<div class="footer">
+  <button type="button" nz-button (click)="close()" *ngIf="submittrue" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button style="margin-right: 8px"
+    [nzLoading]="preferenceSpinning" (click)="SavePreference()" *ngIf="submittrue">
+    <span>Save & Close</span>
+  </button>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button style="margin-right: 8px"
+    *ngIf="arrayofflat.length > 0" (click)="Openform()">
+    <span>Print Preferences Form</span>
+  </button>
+
+  <button type="button" class="ant-btn ant-btn-primary" nz-button style="margin-right: 8px" [nzLoading]="submitprefspin"
+    (click)="Submitpreference()" *ngIf="submittrue && arrayofflat.length > 0">
+    <span>Submit Preferences</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button *ngIf="!submittrue" (click)="close()">
+    <span>Close</span>
+  </button>
+</div>
+
+
+<nz-modal [(nzVisible)]="RejectRemark" nzTitle="Upload Quarter Preference Form" nzCentered="true" nzOkText="Submit"
+  nzCancelText="Close" [nzBodyStyle]="{'padding':'5px','font-family': 'Poppins'}" nzWidth="600px"
+  (nzOnCancel)="CancleRemark()" (nzOnOk)="SubmitRemark()" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+
+    <nz-spin [nzSpinning]="SpinningRejection">
+      <div nz-row>
+
+        <div nz-col nzSpan="12" style="padding: 5px;">
+          <nz-form-label nzRequired nzNoColon>Upload Preferences Form:</nz-form-label>
+          <nz-form-item>
+            <nz-form-control nzHasFeedback nzErrorTip="PDF File is required" *ngIf="attachment1">
+              <button nz-button style="padding: 0px 10px; font-size: 12px" (click)="Attachmentonepdf.click()">
+                Select File
+                <input #Attachmentonepdf name="FLAT_PREFRENCE_URL" [(ngModel)]="FLAT_PREFRENCE_URL" type="file"
+                  (change)="onFileATTACHMENT1($event)" style="display: none" required />
+              </button>
+            </nz-form-control>
+
+            <div *ngIf="FLAT_PREFRENCE_URL != null"
+              style="overflow: hidden; font-size: 13px;display: block;width: 100%;color: #1890ff;padding-left: 5px;">
+              {{ FLAT_PREFRENCE_URL }} &nbsp;&nbsp; <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top"
+                nz-tooltip nzType="eye" nzTheme="outline" style="cursor: pointer;color: #1890ff;"
+                (click)="viewAssumptionAttached(FLAT_PREFRENCE_URL)"></span>&nbsp;&nbsp;
+              <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                nz-tooltip style="cursor: pointer;color: red;" (click)="ATTACHMENT1clear()"></span>
+            </div>
+          </nz-form-item>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-container>
+</nz-modal>
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="AttachedpdfsVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="Attachedpdfs" [nzTitle]="'PDFview'" (nzOnCancel)="AttachedpdfsCancel()" [nzFooter]="AttachedpdfsFooter">
+  <ng-template #Attachedpdfs>
+
+    <div *ngIf="view1==11" style="height: 600px; overflow: auto">
+      <iframe [src]="viewattachedpdf" style="width:1150px; height:600px;" frameborder="0"></iframe>
+    </div>
+
+  </ng-template>
+  <ng-template #AttachedpdfsFooter>
+    <button nz-button nzType="default" (click)="AttachedpdfsCancel()">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="840" [nzVisible]="noticevacancyvisible"
+  [nzTitle]="noticeVacancytitle" (nzOnClose)="noticevacancyClose()" (nzKeyboard)="true">
+  <ng-container *nzDrawerContent>
+    <app-notice-vacant [drawerClose]="closenoticevacancyform" [drawerVisible]="noticevacancyvisible"
+      [employeedata1]="employeedata" [Senioritydata1]="Senioritydata"
+      [arrayofflatsdata]="arrayofflatslist"></app-notice-vacant>
+  </ng-container>
+</nz-drawer>

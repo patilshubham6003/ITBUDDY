@@ -1,0 +1,100 @@
+<app-headermenu *ngIf="!isSpinning" (getAllFilter)="AllFilters()"></app-headermenu>
+<div class="row" style="width: 100%" *ngIf="isSpinning">
+  <div class="col-12" style="text-align: center; margin-top: 10%">
+    <div v-if="loading" class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+</div>
+<main *ngIf="!isSpinning" id="main">
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="breadcrumb-hero" style="padding: 10px 0;">
+      <div class="container">
+        <div class="breadcrumb-hero">
+          <h2 style="font-weight: 500;color: white;">Contact Us</h2>
+          <ol>
+            <li><a routerLink="/" style="text-decoration: None;color: white;">Home</a></li>
+            <li>Contact Us </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="contact" style="padding-top: 40px;padding-bottom: 45px;">
+    <div class="container" style="max-width: 90vw !important;">
+      <div>
+        <iframe style="border:0; width: 100%; height: 270px;" *ngIf="url!=undefined" [src]="url" frameborder="0"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-lg-4" data-aos="fade-right">
+          <div class="info">
+            <div class="address">
+              <i class="bi bi-geo-alt"></i>
+              <h4 style="font-weight: 500;">Location:</h4>
+              <p *ngIf="contactMaster!=undefined" style="text-align: justify;">{{contactMaster.ADDRESS}}</p>
+            </div>
+
+            <div class="email">
+              <i class="bi bi-envelope"></i>
+              <h4 style="font-weight: 500;">Email:</h4>
+              <p *ngIf="contactMaster!=undefined">{{contactMaster.EMAIL_ID}}</p>
+            </div>
+
+            <div class="phone">
+              <i class="bi bi-phone"></i>
+              <h4 style="font-weight: 500;">Contact No:</h4>
+              <p *ngIf="contactMaster!=undefined">{{contactMaster.CONTACT_NO}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left">
+          <div class="section-title" style="padding-bottom: 0px;">
+            <h4 style="font-size: 20px;font-weight: 400;">If you want to know more. Reach out to us for further
+              information and
+              assistance.</h4>
+          </div>.
+          <form #addContact="ngForm" class="php-email-form">
+            <div class="row">
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12 form-group">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Please Enter Your Name"
+                  required [(ngModel)]="newContact.EMPLOYEE_NAME" (keypress)="alphaonly($event)">
+              </div>
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12 form-group mt-3 mt-md-0">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Please Enter Your Email"
+                  required [(ngModel)]="newContact.EMAIL_ID" [pattern]="emailpattern">
+              </div>
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12 form-group mt-3 mt-md-0">
+                <input type="text" class="form-control" name="mobile" id="cmobile"
+                  placeholder="Please Enter Your Mobile Number" required maxlength="10"
+                  [(ngModel)]="newContact.MOBILE_NO" (keypress)="omit($event)">
+              </div>
+              <div class="col-md-6 col-xl-6 col-lg-6 col-12 col-sm-12 form-group mt-3 mt-md-0">
+                <input type="text" class="form-control" name="subject" [(ngModel)]="newContact.SUBJECT"
+                  placeholder="Please Enter Subject" (keypress)="alphaonly($event)" required>
+              </div>
+              <div class="col-md-12 col-xl-12 col-lg-12 col-12 col-sm-12 form-group mt-3 mt-md-0">
+                <textarea class="form-control" cols="30" name="Message" placeholder="Please Enter Your Message / Query"
+                  [(ngModel)]="newContact.MESSAGE" rows="3" required (keypress)="alphaonly($event)" required></textarea>
+              </div>
+            </div>
+            <div class="text-center">
+              <button *ngIf="!loaded" type="submit" (click)="onsubmit(addContact)">Send Message</button>
+              <div *ngIf="loaded">
+                <div class="spinner-border text-success" role="status">
+                  <span class="visually-hidden">Loading</span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<app-footer *ngIf="!isSpinning"></app-footer>

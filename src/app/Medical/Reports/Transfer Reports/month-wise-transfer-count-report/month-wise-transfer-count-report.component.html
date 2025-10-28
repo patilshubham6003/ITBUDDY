@@ -1,0 +1,58 @@
+<nz-spin [nzSpinning]="isLoading">
+  <div
+    style="
+      border: 1px solid grey;
+      border-radius: 5px;
+      margin-top: 20px;
+      padding-left: 10px;
+      padding-top: 10px;
+    "
+  >
+    <div nz-row nzType="flex">
+      <div
+        nz-col
+        nzSpan="24"
+        nzXs="24"
+        nzSm="24"
+        nzMd="4"
+        nzLg="6"
+        nzXl="20"
+        nzAlign="right"
+        style="display: flex; justify-content: flex-start"
+      >
+        <div class="formname">Month Wise Transfer Application</div>
+      </div>
+      <div
+        nz-col
+        nzSpan="24"
+        nzXs="24"
+        nzSm="24"
+        nzMd="4"
+        nzLg="6"
+        nzXl="4"
+        nzAlign="right"
+        style="display: flex; justify-content: flex-end"
+      >
+        <nz-date-picker
+          nzMode="month"
+          [(ngModel)]="date"
+          name="date"
+          [nzDisabledDate]="disabledDate"
+          (ngModelChange)="onChange($event)"
+        ></nz-date-picker>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+
+  <div style="text-align: center" id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [dataLabels]="chartOptions.dataLabels"
+      [plotOptions]="chartOptions.plotOptions"
+      [title]="chartOptions.title"
+    ></apx-chart>
+  </div>
+</nz-spin>

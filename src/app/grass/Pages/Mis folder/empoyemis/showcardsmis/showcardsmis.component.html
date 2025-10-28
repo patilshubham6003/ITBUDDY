@@ -1,0 +1,3901 @@
+<div nz-row>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+    <div class="formname" style="text-align: center">
+      <h6 style="font-size: 15px;
+      margin-bottom: 0px;">MIS</h6>
+    </div>
+    <p style="text-align: center; font-size: 13px;
+    margin-bottom: 13px;">
+      The MIS process for the employee portal streamlines the management and
+      processing of allocated Quarters. This system empowers employees to
+      efficiently handle various aspects of the allocation process, including
+      Acceptance, Rejection, Allocation and Authorization Letter generation by
+      the Inspector, and management of Physical or Technical Occupancy processes
+      by the Caretaker, culminating in the final Quarter allocation.
+    </p>
+  </div>
+</div>
+<div class="row" style="margin-top: 5px">
+  <div class="col-lg-3">
+    <div style="box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1); border-radius: 6px">
+      <div class="sidebar" style="
+          margin: 0px;
+          box-shadow: none;
+          border: 0.5px solid #dee2e6;
+          padding: 5px 10px 5px 10px;
+          border-radius: 6px 6px 0px 0px;
+        ">
+        <h3 class="sidebar-title" style="
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 0px;
+          ">
+          <span style="font-size: 13px;align-self: center;">Filter</span>
+          <span style="cursor: pointer"><a (click)="applyFilter()" style="
+                padding: 1px 5px;
+                font-size: 11px;
+                background-color: #006699;
+                border: none;
+              " class="btn btn-primary">Apply</a>&nbsp; &nbsp;<a (click)="clearFilter()" class="btn btn-primary" style="
+                padding: 1px 5px;
+                font-size: 11px;
+                font-weight: 500;
+                color: black;
+                background-color: white;
+                border: 1px solid #006699;
+              ">Clear</a></span>
+        </h3>
+      </div>
+      <div class="sidebar" style="
+          margin: 0px;
+          box-shadow: none;
+          padding: 11px;
+          border-left: 0.5px solid #dee2e6;
+          border-radius: 0px 0px 6px 6px;
+          border-right: 0.5px solid #dee2e6;
+          border-bottom: 1px solid #dee2e6;
+        ">
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button nzSize="small" class="accordion-button collapsed" style="
+                  padding: 8px;
+                  font-size: 12px;
+                  font-weight: 500;
+                  background-color: #f1f2f57a;
+                " type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                aria-controls="collapseTwo">
+                <span style="font-size: 12px;">Residence Type</span>
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body" style="padding: 10px">
+                <h3 class="sidebar-title" style="
+                    font-size: 11px;
+                    font-weight: 500;
+                    display: flex;
+                    justify-content: end;
+                  " *ngIf="
+                    joinedResidencetype != '' && joinedResidencetype != null
+                  ">
+                  <span (click)="clearFilterresidencetype()" style="
+                      cursor: pointer;
+                      font-weight: 500;
+                      font-size: 11px;
+                      color: #006699;
+                    ">Reset</span>
+                </h3>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please Select Residence Type " name="Residence Type"
+                  nzMode="multiple" [(ngModel)]="RESIDENCE_TYPE_ID" class="optiongroup" nzSize="small"
+                  (ngModelChange)="changetostring($event)" style="width: 100%">
+                  <nz-option *ngFor="let type of ResidenceTypelist" [nzValue]="type.RESIDENCE_TYPE_ID"
+                    [nzLabel]="type.RESIDENCE_TYPE_NAME">
+                  </nz-option>
+                </nz-select>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+              <button nzSize="small" class="accordion-button collapsed" style="
+                  padding: 8px;
+                  font-size: 12px;
+                  font-weight: 500;
+                  background-color: #f1f2f57a;
+                " type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
+                aria-controls="collapseThree">
+                Month
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body fscroll" style="padding: 10px">
+                <h3 class="sidebar-title" style="
+                    font-size: 12px;
+                    font-weight: 500;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                  ">
+                  <span style="font-size: 11px;">From Month</span>
+                  <span (click)="clearFilterfrommonth()" *ngIf="frommonth" style="
+                      cursor: pointer;
+                      font-weight: 500;
+                      font-size: 11px;
+                      color: #006699;
+                    ">Reset</span>
+                </h3>
+                <div class="sidebar-item categories" style="margin-bottom: 11px">
+                  <nz-date-picker nzMode="month" class="datesize" nzFormat="MMM"
+                    nzPlaceholder="Please select From Month" style="width: 100%" name="month1"
+                    [(ngModel)]="selectFromMonth" (ngModelChange)="formmonthchange($event)"></nz-date-picker>
+                </div>
+                <h3 class="sidebar-title" style="
+                    font-size: 12px;
+                    font-weight: 500;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                  ">
+                  <span style="font-size: 11px;">To Month</span>
+                  <span (click)="clearFiltertomonth()" *ngIf="tomonth" style="
+                      cursor: pointer;
+                      font-weight: 500;
+                      font-size: 11px;
+                      color: #006699;
+                    ">Reset</span>
+                </h3>
+                <div class="sidebar-item categories" style="margin-bottom: 6px">
+                  <nz-date-picker nzMode="month" nzFormat="MMM" nzPlaceholder="Please select To Month"
+                    style="width: 100%" class="datesize" [(ngModel)]="selectToMonth"
+                    (ngModelChange)="tomonthchange($event)" name="month2"></nz-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingfour">
+              <button nzSize="small" class="accordion-button collapsed" style="
+                  padding: 8px;
+                  font-size: 12px;
+                  font-weight: 500;
+                  background-color: #f1f2f57a;
+                " type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false"
+                aria-controls="collapsefour">
+                Year
+              </button>
+            </h2>
+            <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingfour"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body fscroll" style="padding: 10px">
+                <h3 class="sidebar-title" style="
+                    font-size: 12px;
+                    font-weight: 500;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                  ">
+                  <span style="font-size: 11px;">Year</span>
+                  <span (click)="clearFilterYear()" *ngIf="yearfilter" style="
+                      cursor: pointer;
+                      font-weight: 500;
+                      font-size: 11px;
+                      color: #006699;
+                    ">Reset</span>
+                </h3>
+                <div class="sidebar-item categories" style="margin-bottom: 6px">
+                  <nz-date-picker nzMode="year" class="datesize" nzFormat="yyyy" nzPlaceholder="Please select Year"
+                    style="width: 100%" [(ngModel)]="selectyear" (ngModelChange)="yearchange($event)"
+                    name="year1"></nz-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9" style="padding-right: 0px">
+    <!-- <div class="row"> -->
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-bottom: 10px" *ngIf="altrue">
+      <button nzSize="small" nz-button (click)="backtopre()" nzType="primary" style="
+         padding: 1px 1px;
+    border-radius: 12px;
+    text-align: center;
+    color: #ffffff !important;
+    width: 58px;
+    font-size: 11px;
+        ">
+        Back
+      </button>
+    </div>
+    <div *ngIf="allocatf">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngFor="let show of dataList; let i = index">
+        <div class="cardstyle" style="margin-top: 0px; margin-bottom: 20px" *ngIf="
+            show.INSPECTOR_STATUS != 'A' &&
+            (show.RESIDENCE_TYPE_ID == 1 ||
+              show.RESIDENCE_TYPE_ID == 2 ||
+              show.RESIDENCE_TYPE_ID == 3)
+          ">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin-bottom: 5px">
+              <div nz-row style="
+                  background-color: #fff;
+                  position: relative;
+                  width: 100%;
+                  cursor: pointer;
+                  padding: 4px 10px;
+                  border: 1px solid #efefef;
+                  border-radius: 10px;
+                ">
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    font-weight: 700;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  RESIDENCE {{ show.RESIDENCE_TYPE_NAME }}
+                </div>
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    text-align: right;
+                    font-weight: 500;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  <span *ngIf="show.MONTH == 1">JANUARY</span>
+                  <span *ngIf="show.MONTH == 2">FEBRUARY</span>
+                  <span *ngIf="show.MONTH == 3">MARCH</span>
+                  <span *ngIf="show.MONTH == 4">APRIL</span>
+                  <span *ngIf="show.MONTH == 5">MAY</span>
+                  <span *ngIf="show.MONTH == 6">JUNE</span>
+                  <span *ngIf="show.MONTH == 7">JULY</span>
+                  <span *ngIf="show.MONTH == 8">AUGUST</span>
+                  <span *ngIf="show.MONTH == 9">SEPTEMBER</span>
+                  <span *ngIf="show.MONTH == 10">OCTOBER</span>
+                  <span *ngIf="show.MONTH == 11">NOVEMBER</span>
+                  <span *ngIf="show.MONTH == 12">DECEMBER</span>
+                  {{ show.YEAR }}
+                </div>
+              </div>
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              City Name : {{ show.CITY_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Area Name : {{ show.AREA_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Building Name : {{ show.BUILDING_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Quarter Details : {{ show.FLAT_NAME }}, {{ show.FLOOR_NAME }}
+            </div>
+          </div>
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            ">
+            <!-- [nzCurrent]="show.STEP_NO + 1" -->
+            <nz-steps nzSize="small" [nzCurrent]="checkstep(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  Acceptance Form
+                  <p style="font-size: 9px;" *ngIf="dataList != undefined">
+                    {{
+                    show.ACCEPTANCE_LETTER_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1"> </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  Print Form
+                  <p style="font-size: 9px;" *ngIf="dataList != undefined">
+                    {{ show.PRINT_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss" }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="print"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600">
+                  Upload & Submit
+                  <p style="font-size: 9px;" *ngIf="dataList != undefined">
+                    {{
+                    show.UPLOAD_SUBMITE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="sendtocaret"></nz-step>
+              <ng-template #sendtocaret>
+                <!-- *ngIf="dataList!=undefined && show.INSPECTOR_STATUS!='A' && show.INSPECTOR_STATUS!='R' && show.TAKEN_STATUS!='R' && show.TAKEN_STATUS!='O'" -->
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.INSPECTOR_STATUS != 'A' &&
+                    show.INSPECTOR_STATUS != 'R'
+                  ">
+                  Pending For Verification
+                  <p style="font-size: 9px;" *ngIf="dataList != undefined">
+                    {{
+                    show.SEND_TO_CARETAKER_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="show.INSPECTOR_STATUS == 'A'">
+                  Approved
+                  <p style="font-size: 9px;" *ngIf="dataList != undefined">
+                    {{
+                    show.INSPETOR_APPROVE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="show.INSPECTOR_STATUS == 'R'">
+                  Rejected
+                  <p style="font-size: 9px;" *ngIf="dataList != undefined">
+                    {{
+                    show.INSPETOR_APPROVE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+          <div nz-row nzSpan="24" style="align-self: center; text-align: center; margin-top: 10px"
+            *ngIf="show.TAKEN_STATUS != 'O'">
+            <div nz-col nzXs="24" nzSm="12" nzMd="4" nzLg="4" nzXl="4" *ngIf="
+                show.STEP_NO != null &&
+                show.IS_ACCEPTANCE_LETTER_SUBMITTED != 1 &&
+                show.UPLOAD_SUBMITE_DATE_TIME == null
+              ">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="Continuestatus(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Continue
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="Continuestatus(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  width: 88%;
+                ">
+                Continue
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" *ngIf="
+                show.STEP_NO == null &&
+                show.TAKEN_STATUS != 'R' &&
+                show.TAKEN_STATUS != 'O'
+              ">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Fill Acceptance Forms
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  width: 88%;
+                ">
+                Fill Acceptance Forms
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6"
+              *ngIf="show.TAKEN_STATUS == 'A' && show.STEP_NO == null">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+    width: 85%;
+    border-radius: 12px;
+    text-align: center;
+    color: #ffffff !important;
+                ">
+                Fill Acceptance Form
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  padding: 0px 1px;
+    width: 85%;
+                ">
+                Fill Acceptance Form
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="4" nzLg="4" nzXl="4" *ngIf="show.TAKEN_STATUS == 'P'">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add1()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Rejected
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add1()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  width: 88%;
+                ">
+                Reject
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngIf="show.ALLOTMENT_FINAL_LETTER != null">
+              <button nzSize="small" nz-button (click)="viewAFL(show.ALLOTMENT_FINAL_LETTER)" nzType="primary" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Allotment Final Letter
+              </button>
+            </div>
+            <!-- <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8"
+              *ngIf="show.AUTHORISATION_OCCUPATION_LETTER != null">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"
+                style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Authorisation Occupation Letter
+              </button>
+            </div> -->
+          </div>
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-top: 10px; text-align: left"
+            *ngIf="
+              show.IS_ACCEPTANCE_LETTER_SUBMITTED != 1 &&
+              show.TAKEN_STATUS == 'P'
+            ">
+            <p *ngIf="Timmerstartloop[i] > 0 || Timmerstartloop[i] != ''" style="margin-bottom: 0px" class="inputsize">
+              <b class="inputsize">Quarter Acceptance Ends In :</b> {{ Timmerendloop[i] }}
+            </p>
+          </div>
+          <div class="subnamm" nz-col nzSpan="24" *ngIf="dataList != undefined && show.INSPECTOR_STATUS == 'R'"
+            style="color: red" class="inputsize">
+            <b class="inputsize">Rejection Remark :</b> {{ show.INSPECTOR_REMARK }}
+          </div>
+          <div class="subnamm" nz-col nzSpan="24" *ngIf="
+              dataList != undefined &&
+              (show.TAKEN_STATUS == 'R' || show.TAKEN_STATUS == 'O')
+            " style="color: red" class="inputsize">
+            <b class="inputsize">Rejection Remark :</b> Rejected
+          </div>
+        </div>
+        <div class="cardstyle" style="margin-top: 0px; margin-bottom: 20px"
+          *ngIf="show.INSPECTOR_STATUS != 'A' && show.RESIDENCE_TYPE_ID > 3">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin-bottom: 5px">
+              <div nz-row style="
+                  background-color: #fff;
+                  position: relative;
+                  width: 100%;
+                  cursor: pointer;
+                  padding: 4px 10px;
+                  border: 1px solid #efefef;
+                  border-radius: 10px;
+                ">
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    font-weight: 700;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  RESIDENCE {{ show.RESIDENCE_TYPE_NAME }}
+                </div>
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    text-align: right;
+                    font-weight: 500;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  <span *ngIf="show.MONTH == 1">JANUARY</span>
+                  <span *ngIf="show.MONTH == 2">FEBRUARY</span>
+                  <span *ngIf="show.MONTH == 3">MARCH</span>
+                  <span *ngIf="show.MONTH == 4">APRIL</span>
+                  <span *ngIf="show.MONTH == 5">MAY</span>
+                  <span *ngIf="show.MONTH == 6">JUNE</span>
+                  <span *ngIf="show.MONTH == 7">JULY</span>
+                  <span *ngIf="show.MONTH == 8">AUGUST</span>
+                  <span *ngIf="show.MONTH == 9">SEPTEMBER</span>
+                  <span *ngIf="show.MONTH == 10">OCTOBER</span>
+                  <span *ngIf="show.MONTH == 11">NOVEMBER</span>
+                  <span *ngIf="show.MONTH == 12">DECEMBER</span>
+                  {{ show.YEAR }}
+                </div>
+              </div>
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              City Name : {{ show.CITY_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Area Name : {{ show.AREA_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Building Name : {{ show.BUILDING_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Quarter Details : {{ show.FLAT_NAME }}, {{ show.FLOOR_NAME }}
+            </div>
+          </div>
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            ">
+            <!-- [nzCurrent]="show.STEP_NO + 1" -->
+            <nz-steps nzSize="small" [nzCurrent]="checkstep(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  Acceptance Form
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.ACCEPTANCE_LETTER_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1"> </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  Print Form
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{ show.PRINT_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss" }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="print"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600">
+                  Upload & Submit
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.UPLOAD_SUBMITE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="sendtocaret"></nz-step>
+              <ng-template #sendtocaret>
+                <!-- *ngIf="dataList!=undefined && show.INSPECTOR_STATUS!='A' && show.INSPECTOR_STATUS!='R' && show.TAKEN_STATUS!='R' && show.TAKEN_STATUS!='O'" -->
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.INSPECTOR_STATUS != 'A' &&
+                    show.INSPECTOR_STATUS != 'R'
+                  ">
+                  Pending For Verification
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SEND_TO_CARETAKER_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="show.INSPECTOR_STATUS == 'A'">
+                  Approved
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.INSPETOR_APPROVE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="show.INSPECTOR_STATUS == 'R'">
+                  Rejected
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.INSPETOR_APPROVE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+          <div nz-row nzSpan="24" style="align-self: center; text-align: center; margin-top: 10px"
+            *ngIf="show.TAKEN_STATUS != 'O'">
+            <div nz-col nzXs="24" nzSm="12" nzMd="4" nzLg="4" nzXl="4" *ngIf="
+                show.STEP_NO != null &&
+                show.IS_ACCEPTANCE_LETTER_SUBMITTED != 1 &&
+                show.UPLOAD_SUBMITE_DATE_TIME == null
+              ">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="Continuestatus(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Continue
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="Continuestatus(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  width: 88%;
+                ">
+                Continue
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" *ngIf="
+                show.STEP_NO == null &&
+                show.TAKEN_STATUS != 'R' &&
+                show.TAKEN_STATUS != 'O'
+              ">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Fill Acceptance Forms
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  width: 88%;
+                ">
+                Fill Acceptance Forms
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6"
+              *ngIf="show.TAKEN_STATUS == 'A' && show.STEP_NO == null">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+    width: 85%;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                ">
+                Fill Acceptance Form
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add()" style="
+                  padding: 0px 1px;
+    width: 85%;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                ">
+                Fill Acceptance Form
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="4" nzLg="4" nzXl="4" *ngIf="show.TAKEN_STATUS == 'P'">
+              <button nzSize="small" nz-button nzType="primary" *ngIf="!showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add1()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Rejected
+              </button>
+              <button nzSize="small" nz-button nzType="primary" *ngIf="showw(i)" (click)="setid(show)"
+                [disabled]="showw(i)" (click)="add1()" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #a49f9f !important;
+                  width: 88%;
+                ">
+                Rejected
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8" *ngIf="show.ALLOTMENT_FINAL_LETTER != null">
+              <button nzSize="small" nz-button (click)="viewAFL(show.ALLOTMENT_FINAL_LETTER)" nzType="primary" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Allotment Final Letter
+              </button>
+            </div>
+            <!-- <div nz-col nzXs="24" nzSm="12" nzMd="8" nzLg="8" nzXl="8"
+              *ngIf="show.AUTHORISATION_OCCUPATION_LETTER != null">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"
+                style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Authorisation Occupation Letter
+              </button>
+            </div> -->
+          </div>
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-top: 10px; text-align: left"
+            *ngIf="
+              show.IS_ACCEPTANCE_LETTER_SUBMITTED != 1 &&
+              show.TAKEN_STATUS == 'P'
+            ">
+            <p *ngIf="Timmerstartloop[i] > 0 || Timmerstartloop[i] != ''" style="margin-bottom: 0px" class="inputsize">
+              <b class="inputsize">Quarter Acceptance Ends In :</b> {{ Timmerendloop[i] }}
+            </p>
+          </div>
+          <div class="subnamm" nz-col nzSpan="24" *ngIf="dataList != undefined && show.INSPECTOR_STATUS == 'R'"
+            style="color: red" class="inputsize">
+            <b class="inputsize">Rejection Remark :</b> {{ show.INSPECTOR_REMARK }}
+          </div>
+          <div class="subnamm" nz-col nzSpan="24" *ngIf="
+              dataList != undefined &&
+              (show.TAKEN_STATUS == 'R' || show.TAKEN_STATUS == 'O')
+            " style="color: red" class="inputsize">
+            <b class="inputsize">Rejection Remark :</b> Rejected
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="allocatf">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" *ngFor="let show of dataList; let i = index">
+        <div class="cardstyle" style="margin-top: 0px; margin-bottom: 20px" *ngIf="show.INSPECTOR_STATUS == 'A'">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin-bottom: 5px">
+              <div nz-row style="
+                  background-color: #fff;
+                  position: relative;
+                  width: 100%;
+                  cursor: pointer;
+                  padding: 4px 10px;
+                  border: 1px solid #efefef;
+                  border-radius: 10px;
+                ">
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    font-weight: 700;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  RESIDENCE {{ show.RESIDENCE_TYPE_NAME }}
+                </div>
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    text-align: right;
+                    font-weight: 500;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  <span *ngIf="show.MONTH == 1">JANUARY</span>
+                  <span *ngIf="show.MONTH == 2">FEBRUARY</span>
+                  <span *ngIf="show.MONTH == 3">MARCH</span>
+                  <span *ngIf="show.MONTH == 4">APRIL</span>
+                  <span *ngIf="show.MONTH == 5">MAY</span>
+                  <span *ngIf="show.MONTH == 6">JUNE</span>
+                  <span *ngIf="show.MONTH == 7">JULY</span>
+                  <span *ngIf="show.MONTH == 8">AUGUST</span>
+                  <span *ngIf="show.MONTH == 9">SEPTEMBER</span>
+                  <span *ngIf="show.MONTH == 10">OCTOBER</span>
+                  <span *ngIf="show.MONTH == 11">NOVEMBER</span>
+                  <span *ngIf="show.MONTH == 12">DECEMBER</span>
+                  {{ show.YEAR }}
+                </div>
+              </div>
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              City Name : {{ show.CITY_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Area Name : {{ show.AREA_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Building Name : {{ show.BUILDING_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Quarter Details : {{ show.FLAT_NAME }}, {{ show.FLOOR_NAME }}
+            </div>
+          </div>
+
+          <!-- physical -->
+          <nz-steps nzSize="small" [nzCurrent]="checkstep1(show, i)" [nzLabelPlacement]="'vertical'" *ngIf="
+              dataList != undefined &&
+              show.IS_PHYSICALLY_FLAT_AVAILABLE != 1 &&
+              show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null
+            ">
+            <nz-step [nzDescription]="application" (click)="viewAccl(show.ACCEPTANCE_LETTER)"></nz-step>
+            <ng-template #application>
+              <span style="font-size: 10px; font-weight: 600">
+                View Acceptance Form
+              </span>
+            </ng-template>
+            <nz-step [nzDescription]="applicationinfo1" (click)="viewallocation(show.ALLOTMENT_FINAL_LETTER)">
+            </nz-step>
+            <ng-template #applicationinfo1>
+              <span style="font-size: 10px; font-weight: 600">
+                View Allocation Letter
+              </span>
+            </ng-template>
+            <!-- <nz-step [nzDescription]="print" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"></nz-step> -->
+            <!-- <ng-template #print>
+              <span style="font-size: 10px; font-weight: 600">
+                View Authorization Order
+              </span>
+            </ng-template> -->
+            <nz-step [nzDescription]="sendtocaretaker" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null
+              "></nz-step>
+            <ng-template #sendtocaretaker>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  show.RESIDENCE_TYPE_ID == 1 ||
+                  show.RESIDENCE_TYPE_ID == 2 ||
+                  show.RESIDENCE_TYPE_ID == 2
+                ">
+                Send To Caretaker
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.SEND_TO_CARETAKER_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="show.RESIDENCE_TYPE_ID > 3">
+                Select occupancy type
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.SEND_TO_CARETAKER_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <nz-step [nzDescription]="Occupancytype" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null
+              "></nz-step>
+            <ng-template #Occupancytype>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  dataList != undefined &&
+                  show.OCCUPANCY_TYPE != 'P' &&
+                  show.OCCUPANCY_TYPE != 'T'
+                ">
+                Occupancy Type
+              </span>
+              <span style="font-size: 10px; font-weight: 600"
+                *ngIf="dataList != undefined && show.OCCUPANCY_TYPE == 'P'">
+                physical reminder letter
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.SEND_TO_CARETAKER_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+              <span style="font-size: 10px; font-weight: 600"
+                *ngIf="dataList != undefined && show.OCCUPANCY_TYPE == 'T'">
+                Technical Occupancy
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.SEND_TO_CARETAKER_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <nz-step [nzDescription]="Occupancyinspectorstatus" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null
+              "></nz-step>
+            <ng-template #Occupancyinspectorstatus>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  dataList != undefined &&
+                  show.INSPECTOR_FINAL_STATUS != 'R' &&
+                  show.INSPECTOR_FINAL_STATUS != 'A' &&
+                  show.INSPECTOR_TECHNICAL_STATUS != 'R' &&
+                  show.INSPECTOR_TECHNICAL_STATUS != 'A'
+                ">
+                Pending For Verification
+              </span>
+              <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                  (dataList != undefined &&
+                    show.INSPECTOR_FINAL_STATUS == 'R') ||
+                  show.INSPECTOR_TECHNICAL_STATUS == 'R'
+                ">
+                Rejected
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.INSPECTOR_FINAL_ACTION_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  (dataList != undefined &&
+                    show.INSPECTOR_FINAL_STATUS == 'A') ||
+                  show.INSPECTOR_TECHNICAL_STATUS == 'A'
+                ">
+                Approved
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.INSPECTOR_FINAL_ACTION_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+          </nz-steps>
+
+          <!-- technical -->
+          <nz-steps nzSize="small" [nzCurrent]="checkstepphysical1(show, i)" [nzLabelPlacement]="'vertical'" *ngIf="
+              show.IS_PHYSICALLY_FLAT_AVAILABLE == 1 &&
+              show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null
+            ">
+            <nz-step [nzDescription]="application" (click)="viewAccl(show.ACCEPTANCE_LETTER)"></nz-step>
+            <ng-template #application>
+              <span style="font-size: 10px; font-weight: 600">
+                View Acceptance Form
+              </span>
+            </ng-template>
+            <nz-step [nzDescription]="applicationinfo1" (click)="viewallocation(show.ALLOTMENT_FINAL_LETTER)">
+            </nz-step>
+            <ng-template #applicationinfo1>
+              <span style="font-size: 10px; font-weight: 600">
+                View Allocation Letter
+              </span>
+            </ng-template>
+            <!-- <nz-step [nzDescription]="print" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"></nz-step>
+            <ng-template #print>
+              <span style="font-size: 10px; font-weight: 600">
+                View Authorization Order
+              </span>
+            </ng-template> -->
+            <nz-step [nzDescription]="sendtocaretaker" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null
+              "></nz-step>
+            <ng-template #sendtocaretaker>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  show.RESIDENCE_TYPE_ID == 1 ||
+                  show.RESIDENCE_TYPE_ID == 2 ||
+                  show.RESIDENCE_TYPE_ID == 2
+                ">
+                Send To Caretaker
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.SEND_TO_CARETAKER_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="show.RESIDENCE_TYPE_ID > 3">
+                Select occupancy type
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.SEND_TO_CARETAKER_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+            <nz-step [nzDescription]="Occupancytypepppp"></nz-step>
+            <ng-template #Occupancytypepppp>
+              <span style="font-size: 10px; font-weight: 600">
+                Upload physical reminder letter
+              </span>
+            </ng-template>
+            <nz-step [nzDescription]="Occupancyinspectorstatusff"></nz-step>
+            <ng-template #Occupancyinspectorstatusff>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  dataList != undefined &&
+                  show.INSPECTOR_FINAL_STATUS != 'R' &&
+                  show.INSPECTOR_FINAL_STATUS != 'A'
+                ">
+                Pending For Verification
+              </span>
+              <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                  dataList != undefined && show.INSPECTOR_FINAL_STATUS == 'R'
+                ">
+                Rejected
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.INSPECTOR_FINAL_ACTION_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+              <span style="font-size: 10px; font-weight: 600" *ngIf="
+                  dataList != undefined && show.INSPECTOR_FINAL_STATUS == 'A'
+                ">
+                Approved
+                <p style="font-size: 9px" *ngIf="dataList != undefined">
+                  {{
+                  show.INSPECTOR_FINAL_ACTION_DATE_TIME
+                  | date : "dd/MM/yyyy HH:mm:ss"
+                  }}
+                </p>
+              </span>
+            </ng-template>
+          </nz-steps>
+
+          <!-- Non-Acceptance Steps -->
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME != null &&
+              show.SEND_TO_CARETAKER_DATE_TIME == null &&
+              show.NON_ACCEPTANCE_INSPECTOR_STATUS != 'R' &&
+              show.NON_ACCEPTANCE_INSPECTOR_STATUS != 'A'
+            ">
+            <nz-steps nzSize="small" [nzCurrent]="checkstepnon1(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application" (click)="viewAccl(show.ACCEPTANCE_LETTER)"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Acceptance Form
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1" (click)="viewallocation(show.ALLOTMENT_FINAL_LETTER)">
+              </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Allocation Letter
+                </span>
+              </ng-template>
+              <!-- <nz-step [nzDescription]="print" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Authorization Order
+                </span>
+              </ng-template> -->
+
+              <nz-step [nzDescription]="nonacceptanceforms" *ngIf="
+                  show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME != null &&
+                  show.SEND_TO_CARETAKER_DATE_TIME == null
+                "></nz-step>
+              <ng-template #nonacceptanceforms>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Non-Acceptance Pending For Verification
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A'
+                  ">
+                  Approved
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R'
+                  ">
+                  Rejectd
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <!-- Non-Acceptance Steps If rejected -->
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R' &&
+              show.SEND_TO_CARETAKER_DATE_TIME == null
+            ">
+            <nz-steps nzSize="small" [nzCurrent]="checkstepnon2(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application" (click)="viewAccl(show.ACCEPTANCE_LETTER)"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Acceptance Form
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1" (click)="viewallocation(show.ALLOTMENT_FINAL_LETTER)">
+              </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Allocation Letter
+                </span>
+              </ng-template>
+              <!-- <nz-step [nzDescription]="print" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Authorization Order
+                </span>
+              </ng-template> -->
+
+              <nz-step [nzDescription]="nonacceptanceforms" *ngIf="
+                  show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME != null &&
+                  show.SEND_TO_CARETAKER_DATE_TIME == null
+                "></nz-step>
+              <ng-template #nonacceptanceforms>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Non-Acceptance Pending For Verification
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A'
+                  ">
+                  Approved
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R'
+                  ">
+                  Rejectd
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <!-- Non-Acceptance Steps If approved -->
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A' &&
+              show.SEND_TO_CARETAKER_DATE_TIME == null
+            ">
+            <nz-steps nzSize="small" [nzCurrent]="checkstepnon2(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application" (click)="viewAccl(show.ACCEPTANCE_LETTER)"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Acceptance Form
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1" (click)="viewallocation(show.ALLOTMENT_FINAL_LETTER)">
+              </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Allocation Letter
+                </span>
+              </ng-template>
+              <!-- <nz-step [nzDescription]="print" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600">
+                  View Authorization Order
+                </span>
+              </ng-template> -->
+
+              <nz-step [nzDescription]="nonacceptanceforms" *ngIf="
+                  show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME != null &&
+                  show.SEND_TO_CARETAKER_DATE_TIME == null
+                "></nz-step>
+              <ng-template #nonacceptanceforms>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Non-Acceptance Pending For Verification
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A'
+                  ">
+                  Approved
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R'
+                  ">
+                  Rejectd
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <div nz-row nzSpan="24" style="align-self: center; margin-top: 10px">
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewAccl(show.ACCEPTANCE_LETTER)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                View Acceptance Form
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px" *ngIf="
+                dataList != undefined && show.ALLOTMENT_FINAL_LETTER != null
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewallocation(show.ALLOTMENT_FINAL_LETTER)"
+                style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                View Allocation Letter
+              </button>
+            </div>
+            <!-- <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.AUTHORISATION_OCCUPATION_LETTER != null
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewAOL(show.AUTHORISATION_OCCUPATION_LETTER)"
+                style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                View Authorization Order
+              </button>
+            </div> -->
+            <!-- *ngIf="dataList!=undefined && show.ALLOTMENT_FINAL_LETTER!=null && show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME==null && show.SEND_TO_CARETAKER_DATE_TIME==null && (Timmerstartloop2[i] > 0 || Timmerstartloop2[i] != '')" -->
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" id="myButton" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.ALLOTMENT_FINAL_LETTER != null &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null &&
+                show.SEND_TO_CARETAKER_DATE_TIME == null &&
+                !shownonacceptanceb &&
+                show.NON_ACCEPTANCE_PRINT_DATE_TIME == null
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="sendtoc11(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Non-Acceptance
+              </button>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" id="myButton" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.ALLOTMENT_FINAL_LETTER != null &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null &&
+                show.SEND_TO_CARETAKER_DATE_TIME == null &&
+                !shownonacceptanceb &&
+                show.NON_ACCEPTANCE_PRINT_DATE_TIME != null
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="nonacceptanceDrawer(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Non-Acceptance
+              </button>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" id="myButton" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R' &&
+                show.SEND_TO_CARETAKER_DATE_TIME == null &&
+                !shownonacceptanceb
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="nonacceptanceDrawer(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Non-Acceptance
+              </button>
+            </div>
+
+            <!-- [disabled]="!isButtonEnabled" -->
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.ALLOTMENT_FINAL_LETTER != null &&
+                
+                show.SEND_TO_CARETAKER_DATE_TIME == null &&
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null &&  ( show.RESIDENCE_TYPE_ID == 1 ||
+                  show.RESIDENCE_TYPE_ID == 2 ||
+                  show.RESIDENCE_TYPE_ID == 3)
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="sendtoc(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Send To Caretaker
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.ALLOTMENT_FINAL_LETTER != null &&
+                show.SEND_TO_CARETAKER_DATE_TIME == null && 
+                show.OCCUPANCY_TYPE == null && 
+                show.NON_ACCEPTANCE_FORM_SUBMITTED_DATE_TIME == null && show.RESIDENCE_TYPE_ID >3
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="selectocuu(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Accept occupancy Letter
+              </button>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                show.ALLOTMENT_FINAL_LETTER != null &&
+                show.SEND_TO_CARETAKER_DATE_TIME == null &&
+                show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R' && ( show.RESIDENCE_TYPE_ID == 1 ||
+                  show.RESIDENCE_TYPE_ID == 2 ||
+                  show.RESIDENCE_TYPE_ID == 3)
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="sendtoc(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Send To Caretaker
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="margin-top: 10px"
+              *ngIf="dataList != undefined && show.OCCUPANCY_TYPE == 'T' && (show.RESIDENCE_TYPE_ID == 1 || show.RESIDENCE_TYPE_ID == 2 || show.RESIDENCE_TYPE_ID == 3)">
+              <button nzSize="small" nz-button nzType="primary" (click)="checktoccu(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Technical Occupancy
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="7" nzLg="7" nzXl="7" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                (show.OCCUPANCY_TYPE == 'P' ||
+                  show.IS_PHYSICALLY_FLAT_AVAILABLE == 1) &&
+                show.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == '1' &&
+                show.PHYSICAL_OCCUPANCY_LETTER != null
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewPAL(show.PHYSICAL_OCCUPANCY_LETTER)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                View physical reminder letter
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="7" nzLg="7" nzXl="7" style="margin-top: 10px" *ngIf="
+                dataList != undefined && show.OCCUPANCY_TYPE=='T' &&
+                show.TECHNICAL_OCCUPANCY_LETTER != null
+              ">
+              <button nzSize="small" nz-button nzType="primary"
+                (click)="viewFinalFileUrl1(show.TECHNICAL_OCCUPANCY_LETTER)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                View Certificate
+              </button>
+            </div>
+            <div nz-col nzXs="24" nzSm="12" nzMd="9" nzLg="9" nzXl="9" style="margin-top: 10px" *ngIf="
+                dataList != undefined &&
+                (show.OCCUPANCY_TYPE == 'P' ||
+                  show.IS_PHYSICALLY_FLAT_AVAILABLE == 1) &&
+                show.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED == '0' && (show.RESIDENCE_TYPE_ID == 1 || show.RESIDENCE_TYPE_ID == 2 || show.RESIDENCE_TYPE_ID == 3)
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="Showoccupancylater(show)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                Print & Upload physical reminder letter
+              </button>
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red">
+              <b>Non-Acceptance Rejection Remark :</b>
+              {{ show.NON_ACCEPTANCE_INSPECTOR_REMARK }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'R'
+              " style="text-align: left; margin-top: 0px; color: red">
+              <b>Non-Acceptance Rejection Datetime :</b>
+              {{
+              show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+              | date : "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A'
+              " style="text-align: left; margin-top: 10px; color: green">
+              <b>Non-Acceptance Approval Remark :</b> Approved
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined &&
+                show.NON_ACCEPTANCE_INSPECTOR_STATUS == 'A'
+              " style="text-align: left; margin-top: 0px; color: green">
+              <b>Non-Acceptance Approval Datetime :</b>
+              {{
+              show.NON_ACCEPTANCE_INSPECTOR_APPROVED_DATE_TIME
+              | date : "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.INSPECTOR_FINAL_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red">
+              <b>physical reminder Rejection Remark :</b>
+              {{ show.INSPECTOR_FINAL_REMARK }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.INSPECTOR_FINAL_STATUS == 'R'
+              " style="text-align: left; margin-top: 0px; color: red">
+              <b>Physical reminder Rejection Datetime :</b>
+              {{
+              show.INSPECTOR_FINAL_ACTION_DATE_TIME
+              | date : "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.INSPECTOR_TECHNICAL_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red">
+              <b>Technical Occupancy Rejection Remark :</b>
+              {{ show.INSPECTOR_TECHNICAL_REMARK }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="totalRecords == 0 && !loadingRecords && altrue" style="width: 100%">
+      <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+        style="text-align: center; height: 130px; margin-top: 58px">
+        <h3 style="color: #006699;font-size: 20px;">Data Not Found</h3>
+      </div>
+    </div>
+    <div class="row" style="width: 100%" *ngIf="loadingRecords">
+      <div class="col-12" style="text-align: center; margin-top: 0px">
+        <div v-if="loading" class="spinner">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+      </div>
+    </div>
+    <!-- 3 accept reject cards -->
+    <div class="row" *ngIf="!altrue && !loadingRecords">
+      <div class="col-6">
+        <div class="card radius-10 border-start border-0 border-3 border-info" style="cursor: pointer"
+          (click)="getallocatedflats()">
+          <div class="card-body" style="padding: 10px;height: 150px;">
+            <div class="row">
+              <div class="col-2" style="align-items: center; display: flex">
+                <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white"
+                  style="background: #0dcaf0 !important">
+                  <i class="fa fa-check"></i>
+                </div>
+              </div>
+              <div class="col-10" style="padding-left: 0px;">
+                <div>
+                  <p class="mb-0" style="font-size: 12px;">Allocated Quarters</p>
+                  <p class="mb-0 text-secondary" style="font-size: 11px;text-align: justify;">
+                    This section offers an overview of all successfully
+                    allocated Quarters to eligible applicants, enabling employees
+                    to review and facilitate acceptance processes. The
+                    platform's streamlined interface enhances management
+                    efficiency and promotes a transparent workflow.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card radius-10 border-start border-0 border-3 border-success" style="cursor: pointer"
+          (click)="getacceptedflats()">
+          <div class="card-body" style="padding: 10px;height: 150px;">
+            <div class="row">
+              <div class="col-2" style="align-items: center; display: flex">
+                <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white"
+                  style="background: #15ca20 !important">
+                  <i class="fa fa-thumbs-up"></i>
+                </div>
+              </div>
+              <div class="col-10" style="padding-left: 0px;">
+                <div>
+                  <p class="mb-0" style="font-size: 12px;">Accepted Quarters</p>
+                  <p class="mb-0 text-secondary" style="font-size: 11px;text-align: justify;">
+                    This section provides a concise and easily accessible list
+                    of all successfully accepted Quarters. Within this menu,
+                    employees can effortlessly view the details of each accepted
+                    Quarter. It serves as a comprehensive directory to keep track
+                    of the Quarters that have been successfully allocated.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card radius-10 border-start border-0 border-3 border-danger" style="cursor: pointer"
+          (click)="getrejectedflats()">
+          <div class="card-body" style="padding: 10px;">
+            <div class="row">
+              <div class="col-2" style="align-items: center; display: flex">
+                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white"
+                  style="background: #fd3550 !important">
+                  <i class="fa fa-times"></i>
+                </div>
+              </div>
+              <div class="col-10" style="padding-left: 0px;">
+                <div>
+                  <p class="mb-0" style="font-size: 12px;">Rejected Quarters</p>
+                  <p class="mb-0 text-secondary" style="font-size: 11px;text-align: justify;">
+                    This section compiles Quarters that did not meet the criteria
+                    for allocation during the initial allocation process.
+                    Employees have the option to view these rejected Quarters .
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- accepted cards -->
+    <div *ngIf="acceptf && !loadingRecords">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-bottom: 20px"
+        *ngFor="let show of dataList; let i = index">
+        <div class="cardstyle" style="margin-top: 0px; padding: 10px">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin-bottom: 5px">
+              <div nz-row style="
+                  background-color: #fff;
+                  position: relative;
+                  width: 100%;
+                  cursor: pointer;
+                  padding: 4px 10px;
+                  border: 1px solid #efefef;
+                  border-radius: 10px;
+                ">
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    font-weight: 700;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  RESIDENCE {{ show.RESIDENCE_TYPE_NAME }}
+                </div>
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    text-align: right;
+                    font-weight: 500;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  <span *ngIf="show.MONTH == 1">JANUARY</span>
+                  <span *ngIf="show.MONTH == 2">FEBRUARY</span>
+                  <span *ngIf="show.MONTH == 3">MARCH</span>
+                  <span *ngIf="show.MONTH == 4">APRIL</span>
+                  <span *ngIf="show.MONTH == 5">MAY</span>
+                  <span *ngIf="show.MONTH == 6">JUNE</span>
+                  <span *ngIf="show.MONTH == 7">JULY</span>
+                  <span *ngIf="show.MONTH == 8">AUGUST</span>
+                  <span *ngIf="show.MONTH == 9">SEPTEMBER</span>
+                  <span *ngIf="show.MONTH == 10">OCTOBER</span>
+                  <span *ngIf="show.MONTH == 11">NOVEMBER</span>
+                  <span *ngIf="show.MONTH == 12">DECEMBER</span>
+                  {{ show.YEAR }}
+                </div>
+              </div>
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Application Datetime :
+              {{
+              show.FLAT_APPLICATION_DATETIME | date : "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Application No. : {{ show.FLAT_APPLICATION_NO }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Application Approved Datetime :
+              {{ show.APP_APPROVED_DATETIME | date : "dd/MM/yyyy HH:mm:ss" }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Final Seniorty Publish Datetime :
+              {{
+              show.FINAL_SENIORITY_PUBLISH_DATE_TIME
+              | date : "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Final Allotment No. : {{ show.SEQUENCE_NO }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Final Allotment Datetime :
+              {{ show.ALLOTMENT_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss" }}
+            </div>
+
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              City Name : {{ show.CITY_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Area Name : {{ show.AREA_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Building Name : {{ show.BUILDING_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Quarter Details : {{ show.FLAT_NAME }}, {{ show.FLOOR_NAME }}
+            </div>
+          </div>
+
+          <div nz-col nzSpan="24" style="align-self: center; margin-top: 5px; margin-bottom: 5px" *ngIf="
+              dataList != undefined &&
+              show.IS_LIVING == 1 &&
+              show.SURRENDER_FORM_SUBMITTED_DATE_TIME != null &&
+              show.APPLIED_FOR_CHANGE_DATE_TIME != null
+            ">
+            <div class="tab-wrap">
+              <input type="radio" id="tab1" name="tabGroup1" class="tab" checked (click)="onesectionclick()" />
+              <label for="tab1" class="inputsize">View Change Quarter Status</label>
+              <input type="radio" id="tab2" name="tabGroup1" class="tab" (click)="twosectionclick()" />
+              <label for="tab2" class="inputsize">View Surrender Quarter Status</label>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              dataList != undefined &&
+              show.IS_LIVING == 1 &&
+              changeswitch &&
+              show.SURRENDER_FORM_SUBMITTED_DATE_TIME != null &&
+              show.APPLIED_FOR_CHANGE_DATE_TIME != null
+            ">
+            <!-- *ngIf="showchangestepstrue" -->
+            <nz-steps nzSize="small" [nzCurrent]="checkstepchange(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  Change Print Form
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.CHANGE_PRINT_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1"> </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  Upload & Submit
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.APPLIED_FOR_CHANGE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="print"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.CHANGE_INSPECTOR_STATUS != 'A' &&
+                    show.CHANGE_INSPECTOR_STATUS != 'R'
+                  ">
+                  Pending For Verification
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: green" *ngIf="
+                    dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'A'
+                  ">
+                  Approved
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.CHANGE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'R'
+                  ">
+                  Rejected
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.CHANGE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <!-- Only change form submitted -->
+
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              dataList != undefined &&
+              show.IS_LIVING == 1 &&
+              show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null &&
+              show.APPLIED_FOR_CHANGE_DATE_TIME != null
+            ">
+            <!-- *ngIf="showchangestepstrue" -->
+            <nz-steps nzSize="small" [nzCurrent]="checkstepchange(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  Change Print Form
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.CHANGE_PRINT_DATE_TIME | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1"> </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  Upload & Submit
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.APPLIED_FOR_CHANGE_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="print"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.CHANGE_INSPECTOR_STATUS != 'A' &&
+                    show.CHANGE_INSPECTOR_STATUS != 'R'
+                  ">
+                  Pending For Verification
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: green" *ngIf="
+                    dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'A'
+                  ">
+                  Approved
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.CHANGE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'R'
+                  ">
+                  Rejected
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.CHANGE_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <!-- Both forms submitted -->
+
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              dataList != undefined &&
+              show.IS_LIVING == 1 &&
+              surrenderswitch &&
+              show.SURRENDER_FORM_SUBMITTED_DATE_TIME != null &&
+              show.APPLIED_FOR_CHANGE_DATE_TIME != null
+            ">
+            <!-- *ngIf="showsurrenderstepstrue" -->
+            <nz-steps nzSize="small" [nzCurrent]="checkstepsurrender(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  Surrender Print Form
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_PRINT_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1"> </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  Upload & Submit
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="print"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS != 'A' &&
+                    show.SURRENDER_CARETAKER_STATUS != 'R' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'A' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'A' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME != null
+                  ">
+                  Approved By Caretaker
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME != null
+                  ">
+                  Rejected By Caretaker
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+
+              <nz-step [nzDescription]="surrenderprint"></nz-step>
+              <ng-template #surrenderprint>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS != 'A' &&
+                    show.SURRENDER_INSPECTOR_STATUS != 'R' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Inspector
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Inspector
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'A' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'A' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME != null
+                  ">
+                  Approved By Inspector
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME != null
+                  ">
+                  Rejected By Inspector
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <!-- Only surrender form submitted -->
+
+          <div nz-col nzSpan="24" style="
+              align-self: center;
+              text-align: center;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            " *ngIf="
+              dataList != undefined &&
+              show.IS_LIVING == 1 &&
+              show.SURRENDER_FORM_SUBMITTED_DATE_TIME != null &&
+              show.APPLIED_FOR_CHANGE_DATE_TIME == null
+            ">
+            <!-- *ngIf="showsurrenderstepstrue" -->
+            <nz-steps nzSize="small" [nzCurrent]="checkstepsurrender(show, i)" [nzLabelPlacement]="'vertical'">
+              <nz-step [nzDescription]="application"></nz-step>
+              <ng-template #application>
+                <span style="font-size: 10px; font-weight: 600">
+                  Surrender Print Form
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_PRINT_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="applicationinfo1"> </nz-step>
+              <ng-template #applicationinfo1>
+                <span style="font-size: 10px; font-weight: 600">
+                  Upload & Submit
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+              <nz-step [nzDescription]="print"></nz-step>
+              <ng-template #print>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS != 'A' &&
+                    show.SURRENDER_CARETAKER_STATUS != 'R' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'A' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'A' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME != null
+                  ">
+                  Approved By Caretaker
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R' &&
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME != null
+                  ">
+                  Rejected By Caretaker
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_CARETAKER_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+
+              <nz-step [nzDescription]="surrenderprint"></nz-step>
+              <ng-template #surrenderprint>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS != 'A' &&
+                    show.SURRENDER_INSPECTOR_STATUS != 'R' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Inspector
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Inspector
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'A' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME == null
+                  ">
+                  Send To Caretaker
+                </span>
+                <span style="font-size: 10px; font-weight: 600" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'A' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME != null
+                  ">
+                  Approved By Inspector
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+                <span style="font-size: 10px; font-weight: 600; color: red" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R' &&
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME != null
+                  ">
+                  Rejected By Inspector
+                  <p style="font-size: 9px" *ngIf="dataList != undefined">
+                    {{
+                    show.SURRENDER_INSPECTOR_APPROVED_DATE_TIME
+                    | date : "dd/MM/yyyy HH:mm:ss"
+                    }}
+                  </p>
+                </span>
+              </ng-template>
+            </nz-steps>
+          </div>
+
+          <!-- steps end -->
+
+          <div nz-row style="align-self: center; text-align: center; margin-top: 10px"
+            *ngIf="dataList != undefined && show.IS_LIVING == 1">
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" style="text-align: left" *ngIf="
+                dataList != undefined && show.PHYSICAL_OCCUPANCY_LETTER != null
+              ">
+              <button nzSize="small" nz-button nzType="primary" (click)="viewPAL(show.PHYSICAL_OCCUPANCY_LETTER)" style="
+                  padding: 0px 1px;
+                  border-radius: 12px;
+                  text-align: center;
+                  color: #ffffff !important;
+                  width: 88%;
+                ">
+                View Occupancy Letter
+              </button>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" *ngIf="
+                dataList != undefined &&
+                show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null &&
+                show.CHANGE_INSPECTOR_STATUS != 'R' &&
+                show.SURRENDER_CARETAKER_STATUS != 'R' &&
+                show.SURRENDER_INSPECTOR_STATUS != 'R'
+              ">
+              <div nz-row>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.APPLIED_FOR_CHANGE_DATE_TIME == null &&
+                    show.CHANGE_PRINT_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="sendtocchangefconfirmationfoot(show)"
+                    style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Change Quarter
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.APPLIED_FOR_CHANGE_DATE_TIME == null &&
+                    show.CHANGE_PRINT_DATE_TIME != null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="openchangeflatdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Change Quarter
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'R'
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="openchangeflatdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-Apply For Change Quarter
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" *ngIf="
+                dataList != undefined &&
+                (show.CHANGE_INSPECTOR_STATUS == 'R' ||
+                  show.SURRENDER_CARETAKER_STATUS == 'R' ||
+                  show.SURRENDER_INSPECTOR_STATUS == 'R')
+              ">
+              <div nz-row>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.APPLIED_FOR_CHANGE_DATE_TIME == null &&
+                    show.CHANGE_PRINT_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="sendtocchangefconfirmationfoot(show)"
+                    style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Change Quarter
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.APPLIED_FOR_CHANGE_DATE_TIME == null &&
+                    show.CHANGE_PRINT_DATE_TIME != null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="openchangeflatdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Change Quarter
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.CHANGE_INSPECTOR_STATUS == 'R' &&
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="openchangeflatdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-Apply For Change Quarter
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.CHANGE_INSPECTOR_STATUS == 'R' &&
+                    (show.SURRENDER_CARETAKER_STATUS == 'R' ||
+                      show.SURRENDER_INSPECTOR_STATUS == 'R')
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="openchangeflatdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-Apply For Change Quarter
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" *ngIf="
+                dataList != undefined &&
+                show.APPLIED_FOR_CHANGE_DATE_TIME == null &&
+                show.CHANGE_INSPECTOR_STATUS != 'R' &&
+                show.SURRENDER_CARETAKER_STATUS != 'R' &&
+                show.SURRENDER_INSPECTOR_STATUS != 'R'
+              ">
+              <div nz-row>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null &&
+                    show.SURRENDER_PRINT_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawerconf(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null &&
+                    show.SURRENDER_PRINT_DATE_TIME != null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R'
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-apply Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R'
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-apply Surrender
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzXs="24" nzSm="12" nzMd="6" nzLg="6" nzXl="6" *ngIf="
+                dataList != undefined &&
+                (show.CHANGE_INSPECTOR_STATUS == 'R' ||
+                  show.SURRENDER_CARETAKER_STATUS == 'R' ||
+                  show.SURRENDER_INSPECTOR_STATUS == 'R')
+              ">
+              <div nz-row>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null &&
+                    show.SURRENDER_PRINT_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawerconf(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_FORM_SUBMITTED_DATE_TIME == null &&
+                    show.SURRENDER_PRINT_DATE_TIME != null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R' &&
+                    show.CHANGE_INSPECTOR_STATUS == 'R'
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-apply Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_INSPECTOR_STATUS == 'R' &&
+                    show.APPLIED_FOR_CHANGE_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-apply Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R' &&
+                    show.CHANGE_INSPECTOR_STATUS == 'R'
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-apply Surrender
+                  </button>
+                </div>
+                <div nz-col nzSpan="24" style="text-align: left" *ngIf="
+                    dataList != undefined &&
+                    show.SURRENDER_CARETAKER_STATUS == 'R' &&
+                    show.APPLIED_FOR_CHANGE_DATE_TIME == null
+                  ">
+                  <button nzSize="small" nz-button nzType="primary" (click)="surrenderdrawer(show)" style="
+                      padding: 0px 1px;
+                      border-radius: 12px;
+                      text-align: center;
+                      color: #ffffff !important;
+                      width: 88%;
+                    ">
+                    Re-apply Surrender
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.SURRENDER_INSPECTOR_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red" class="inputsize">
+              <b class="inputsize">Surrender Form Rejection Remark:</b>
+              {{ show.SURRENDER_INSPECTOR_REMARK }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.SURRENDER_CARETAKER_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red" class="inputsize">
+              <b class="inputsize">Surrender Form Rejection Remark:</b>
+              {{ show.SURRENDER_CARETAKER_REMARK }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red" class="inputsize">
+              <b class="inputsize">Change of Accommodation Form Rejection Remark:</b>
+              {{ show.CHANGE_INSPECTOR_REMARK }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'R'
+              " style="text-align: left; margin-top: 10px; color: red" class="inputsize">
+              <b class="inputsize">Change of Accommodation Form Rejection Datetime:</b>
+              {{
+              show.CHANGE_INSPECTOR_APPROVED_DATE_TIME | date : "dd/MM/yyyy"
+              }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'A'
+              " style="text-align: left; margin-top: 10px; color: green" class="inputsize">
+              <b class="inputsize">Change of Accommodation Form Approval Remark:</b> Change of
+              Accommodation Form Approved
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="
+                dataList != undefined && show.CHANGE_INSPECTOR_STATUS == 'A'
+              " style="text-align: left; margin-top: 10px; color: green" class="inputsize">
+              <b class="inputsize">Change of Accommodation Form Acceptance Datetime:</b>
+              {{
+              show.CHANGE_INSPECTOR_APPROVED_DATE_TIME | date : "dd/MM/yyyy"
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rejected cards -->
+    <div *ngIf="rejectf && !loadingRecords">
+      <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="margin-bottom: 20px"
+        *ngFor="let show of dataList; let i = index">
+        <div class="cardstyle" style="margin-top: 0px;padding: 10px;">
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin-bottom: 5px">
+              <div nz-row style="
+                  background-color: #fff;
+                  position: relative;
+                  width: 100%;
+                  cursor: pointer;
+                  padding: 4px 10px;
+                  border: 1px solid #efefef;
+                  border-radius: 10px;
+                ">
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    font-weight: 700;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  RESIDENCE {{ show.RESIDENCE_TYPE_NAME }}
+                </div>
+                <div style="
+                    color: #000;
+                    font-size: 11px;
+                    text-align: right;
+                    font-weight: 500;
+                    line-height: normal;
+                  " nz-col nzSpan="12" *ngIf="dataList != undefined">
+                  <span *ngIf="show.MONTH == 1">JANUARY</span>
+                  <span *ngIf="show.MONTH == 2">FEBRUARY</span>
+                  <span *ngIf="show.MONTH == 3">MARCH</span>
+                  <span *ngIf="show.MONTH == 4">APRIL</span>
+                  <span *ngIf="show.MONTH == 5">MAY</span>
+                  <span *ngIf="show.MONTH == 6">JUNE</span>
+                  <span *ngIf="show.MONTH == 7">JULY</span>
+                  <span *ngIf="show.MONTH == 8">AUGUST</span>
+                  <span *ngIf="show.MONTH == 9">SEPTEMBER</span>
+                  <span *ngIf="show.MONTH == 10">OCTOBER</span>
+                  <span *ngIf="show.MONTH == 11">NOVEMBER</span>
+                  <span *ngIf="show.MONTH == 12">DECEMBER</span>
+                  {{ show.YEAR }}
+                </div>
+              </div>
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              City Name : {{ show.CITY_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Area Name : {{ show.AREA_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Building Name : {{ show.BUILDING_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="12" *ngIf="dataList != undefined">
+              Quarter Details : {{ show.FLAT_NAME }}, {{ show.FLOOR_NAME }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="dataList != undefined && show.INSPECTOR_STATUS == 'R'"
+              style="color: red">
+              Rejection Remark : {{ show.INSPECTOR_REMARK }}
+            </div>
+            <div class="subnamm" nz-col nzSpan="24" *ngIf="dataList != undefined && show.TAKEN_STATUS == 'R'"
+              style="color: red">
+              Rejection Remark : Rejected
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-drawer [nzBodyStyle]="{
+    height: 'calc(100% - 55px)',
+    overflow: 'auto',
+    'padding-bottom': '53px',
+    'padding-top': '20px',
+    'padding-right': '0px',
+    'padding-left': '0px',
+  }" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="dwisth" [nzVisible]="drawerVisible"
+  (nzOnClose)="drawerClose()" (nzKeyboard)="(true)" [nzTitle]="drawerTitle">
+  <ng-container *nzDrawerContent>
+    <app-misdrawerforaccept [drawerClose]="closeCallback" [data]="storeacceptcarddata"
+      [employerecordfilled]="isdetailsfilled" [stage]="stages123" [empid]="employeedata"
+      [isdraweropendedggg]="isdraweropended">
+    </app-misdrawerforaccept>
+  </ng-container>
+</nz-drawer>
+
+<nz-modal [(nzVisible)]="Rulesandapply" nzCentered="true" nzTitle="Terms & Conditions" (nzOnCancel)="closeterms()"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '25px' }" nzWidth="1000px" nzClosable="true"
+  [nzFooter]="contextofrules" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <ul style="list-style: decimal" class="ruleslist inputsize">
+      <li>
+        "Accommodation" or "CBDT pool accommodation" or "departmental pool
+        accommodation" means the residential buildings made available to CBDT
+        including residential accommodation hired by the CBDT for occupation by
+        officers and other staff employed in the offices under the
+        administrative control of CBDT.
+      </li>
+      <li>
+        "Allotment" means the grant of licence to occupy a residence in
+        accordance with the provisions of these Rules,
+      </li>
+      <li>
+        "Allotment of garage" means the grant of a licence to occupy a garage in
+        accordance with the provisions of these rules;
+      </li>
+      <li>
+        "Board" means the Central Board of Direct Tax constituted under the
+        Central Boards of Revenue Act, 1963;
+      </li>
+      <li>
+        "Class in relation to a residence" means the class of that residence as
+        is for the time being specified in Rule 4 Table 1;
+      </li>
+      <li>
+        "Damages" means a compensation to be levied in multiples of licence fee
+        in the event of unauthorized occupation or subletting or misuse of whole
+        or anypart of accommodation or garages by the occupant of the
+        accommodation or garages;
+      </li>
+      <li>"Department" means CBDT and its subordinate offices.</li>
+      <li>
+        "Directorate of Estates" means Office of the Directorate of Estates and
+        Estates Offices under the Central Public Works Department, which
+        discharge the functions of the Directorate of Estates in respect of
+        accommodation;
+      </li>
+      <li>"Duty" does not include any other leave except casual leave;</li>
+      <li>"Eligible office" means an office to which these rules apply.</li>
+      <li>
+        "Eligible type of accommodation" in relation to an employee means the
+        type of accommodation to which he is eligible under these rules;
+      </li>
+      <li>
+        "Employee" means an employee appointed by Government of India for
+        working in CBDT and its subordinate offices whose salary is drawn from
+        the Consolidated fund of India;
+      </li>
+      <li>
+        the Pr. CCIT of the region "Estate officer" means
+        concerned/Pr.DGIT(Training) or the officer nominated by the Pr.CCIT to
+        exercise the powers of the Estate Officer for the specified stations;
+      </li>
+      <li>
+        "Family" means the wife or husband of allottee, as the case may be, and
+        children, step children, legally adopted children, parents, brothers or
+        sisters as ordinarily reside with and are dependent on the allottee;
+      </li>
+      <li>
+        "Government" means the Central Government unless the context otherwise
+        requires;
+      </li>
+      <li>
+        "Guest" means a casual visitor staying temporarily with the allottee.
+      </li>
+      <li>
+        "Immediate relations" mean relationship such as Grandfather,
+        Grandmother, Grandsons, Granddaughters, Father-in-law, Mother-in-law,
+        Son-in-law, Daughter-in-law and include relationship established by
+        legal adoption;
+      </li>
+      <li>
+        "Licence fee" means a fee payable monthly in respect of the
+        accommodation allotted under these rules;
+      </li>
+      <li>
+        "Municipality" includes a municipal corporation, a municipal committee,
+        board or municipal council, a town area committee, a notified area
+        committee, a Cantonment Board;
+      </li>
+      <li>
+        "Municipal limit" means city or town limit as declared by the concerned
+        State or Union territory Government;
+      </li>
+      <li>
+        "Misuse", in relation to an allotment, means an accommodation or a
+        servant quarter or a garage being used by allottee himself or by his
+        family members or immediate relations staying with him for the purpose
+        other than the purposes provided under these rules;
+      </li>
+      <li>
+        "Non family station" includes :-
+        <ul>
+          <li>
+            North Eastern Region, Sikkim, Andaman & Nicobar Islands and
+            Lakshadweep, State of Jammu & Kashmir
+          </li>
+          <li>
+            Left Wing Extremist (LWE) areas, as declared by Ministry of Home
+            Affairs from time to time.
+          </li>
+        </ul>
+      </li>
+      <li>
+        "Own house" means a building or part thereof meant for residential
+        purposes and owned by the allottee or by any member of his family;
+      </li>
+      <li>
+        "Residential accommodation" means a covered structure or part thereof
+        whether permanent or semi-permanent or temporary, which has at least a
+        living room and a lavatory with or without kitchen;
+      </li>
+      <li>
+        "Special licence fee" means a licence fee charged from allottees for
+        short period or temporary allotment of accommodation or charged from
+        other ineligible offices or organization for allotment of accommodation
+        on special purposes;
+      </li>
+      <li>
+        "Subletting" means letting out of a residential accommodation for
+        employees under CBDT, partly or wholly by an allottee to any person
+        outside allottee's family and immediate relations;
+      </li>
+      <li>
+        "Surrender of accommodation" means vacation of accommodation after
+        physical occupation of the accommodationsmy the allottee on his own
+        volition during the allotment period;
+      </li>
+      <li>
+        "Temporary transfer" means a transfer of allottee to another place,
+        which involves an absence for a period not exceeding four months from
+        the place where the accommodation is allotted;
+      </li>
+      <li>
+        "Transfer" means a transfer from the present working place where the
+        accommodation is allotted to any other working place and includes a
+        transfer to service under a State Government or a Union territory
+        administration and includes deputation to a post in an office or
+        organization.
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #contextofrules>
+    <button nzSize="small" style="font-size: 11px;" nz-button nzType="primary"
+      (click)="termsandconditions(storeacceptcarddata)">
+      I Agree
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="Rulesandapply1" nzCentered="true" nzTitle="Terms & Conditions" (nzOnCancel)="closeterms1()"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '25px' }" nzWidth="1000px" nzClosable="true"
+  [nzFooter]="contextofrulesreject" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <ul style="list-style: decimal" class="ruleslist inputsize">
+      <li>
+        "Accommodation" or "CBDT pool accommodation" or "departmental pool
+        accommodation" means the residential buildings made available to CBDT
+        including residential accommodation hired by the CBDT for occupation by
+        officers and other staff employed in the offices under the
+        administrative control of CBDT.
+      </li>
+      <li>
+        "Allotment" means the grant of licence to occupy a residence in
+        accordance with the provisions of these Rules,
+      </li>
+      <li>
+        "Allotment of garage" means the grant of a licence to occupy a garage in
+        accordance with the provisions of these rules;
+      </li>
+      <li>
+        "Board" means the Central Board of Direct Tax constituted under the
+        Central Boards of Revenue Act, 1963;
+      </li>
+      <li>
+        "Class in relation to a residence" means the class of that residence as
+        is for the time being specified in Rule 4 Table 1;
+      </li>
+      <li>
+        "Damages" means a compensation to be levied in multiples of licence fee
+        in the event of unauthorized occupation or subletting or misuse of whole
+        or anypart of accommodation or garages by the occupant of the
+        accommodation or garages;
+      </li>
+      <li>"Department" means CBDT and its subordinate offices.</li>
+      <li>
+        "Directorate of Estates" means Office of the Directorate of Estates and
+        Estates Offices under the Central Public Works Department, which
+        discharge the functions of the Directorate of Estates in respect of
+        accommodation;
+      </li>
+      <li>"Duty" does not include any other leave except casual leave;</li>
+      <li>"Eligible office" means an office to which these rules apply.</li>
+      <li>
+        "Eligible type of accommodation" in relation to an employee means the
+        type of accommodation to which he is eligible under these rules;
+      </li>
+      <li>
+        "Employee" means an employee appointed by Government of India for
+        working in CBDT and its subordinate offices whose salary is drawn from
+        the Consolidated fund of India;
+      </li>
+      <li>
+        the Pr. CCIT of the region "Estate officer" means
+        concerned/Pr.DGIT(Training) or the officer nominated by the Pr.CCIT to
+        exercise the powers of the Estate Officer for the specified stations;
+      </li>
+      <li>
+        "Family" means the wife or husband of allottee, as the case may be, and
+        children, step children, legally adopted children, parents, brothers or
+        sisters as ordinarily reside with and are dependent on the allottee;
+      </li>
+      <li>
+        "Government" means the Central Government unless the context otherwise
+        requires;
+      </li>
+      <li>
+        "Guest" means a casual visitor staying temporarily with the allottee.
+      </li>
+      <li>
+        "Immediate relations" mean relationship such as Grandfather,
+        Grandmother, Grandsons, Granddaughters, Father-in-law, Mother-in-law,
+        Son-in-law, Daughter-in-law and include relationship established by
+        legal adoption;
+      </li>
+      <li>
+        "Licence fee" means a fee payable monthly in respect of the
+        accommodation allotted under these rules;
+      </li>
+      <li>
+        "Municipality" includes a municipal corporation, a municipal committee,
+        board or municipal council, a town area committee, a notified area
+        committee, a Cantonment Board;
+      </li>
+      <li>
+        "Municipal limit" means city or town limit as declared by the concerned
+        State or Union territory Government;
+      </li>
+      <li>
+        "Misuse", in relation to an allotment, means an accommodation or a
+        servant quarter or a garage being used by allottee himself or by his
+        family members or immediate relations staying with him for the purpose
+        other than the purposes provided under these rules;
+      </li>
+      <li>
+        "Non family station" includes :-
+        <ul>
+          <li>
+            North Eastern Region, Sikkim, Andaman & Nicobar Islands and
+            Lakshadweep, State of Jammu & Kashmir
+          </li>
+          <li>
+            Left Wing Extremist (LWE) areas, as declared by Ministry of Home
+            Affairs from time to time.
+          </li>
+        </ul>
+      </li>
+      <li>
+        "Own house" means a building or part thereof meant for residential
+        purposes and owned by the allottee or by any member of his family;
+      </li>
+      <li>
+        "Residential accommodation" means a covered structure or part thereof
+        whether permanent or semi-permanent or temporary, which has at least a
+        living room and a lavatory with or without kitchen;
+      </li>
+      <li>
+        "Special licence fee" means a licence fee charged from allottees for
+        short period or temporary allotment of accommodation or charged from
+        other ineligible offices or organization for allotment of accommodation
+        on special purposes;
+      </li>
+      <li>
+        "Subletting" means letting out of a residential accommodation for
+        employees under CBDT, partly or wholly by an allottee to any person
+        outside allottee's family and immediate relations;
+      </li>
+      <li>
+        "Surrender of accommodation" means vacation of accommodation after
+        physical occupation of the accommodationsmy the allottee on his own
+        volition during the allotment period;
+      </li>
+      <li>
+        "Temporary transfer" means a transfer of allottee to another place,
+        which involves an absence for a period not exceeding four months from
+        the place where the accommodation is allotted;
+      </li>
+      <li>
+        "Transfer" means a transfer from the present working place where the
+        accommodation is allotted to any other working place and includes a
+        transfer to service under a State Government or a Union territory
+        administration and includes deputation to a post in an office or
+        organization.
+      </li>
+    </ul>
+  </ng-container>
+
+  <ng-template #contextofrulesreject>
+    <button nzSize="small" nz-button nzType="primary" (click)="reject(storeacceptcarddata)"
+      [nzLoading]="rejectflatLoading" style="font-size: 11px;">
+      Reject
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="sendforveri" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="470px"
+  nzClosable="false" [nzFooter]="contextofrulesss" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Are you sure want to send the acceptance form to the Caretaker
+      ?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata != undefined" class="inputsize">
+      <b>Allocation Letter :</b>{{ storeacceptcarddata.ALLOTMENT_FINAL_LETTER }} &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff"
+        (click)="viewallocation(storeacceptcarddata.ALLOTMENT_FINAL_LETTER)"></span>
+    </p>
+    <!-- <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata != undefined" class="inputsize">
+      <b>Authorization Letter :</b>{{ storeacceptcarddata.AUTHORISATION_OCCUPATION_LETTER }} &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff"
+        (click)="viewAOL(storeacceptcarddata.AUTHORISATION_OCCUPATION_LETTER)"></span>
+    </p> -->
+    <p style="font-size: 11px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after send the acceptance form.
+    </p>
+  </ng-container>
+  <ng-template #contextofrulesss>
+    <button nzSize="small" nz-button *ngIf="!loadsendto" nzType="primary" class="btn btn-primary"
+      style="background-color: #006699; border-radius: 12px;font-size: 11px;"
+      (click)="sendtoccaretaker(storeacceptcarddata)">
+      Send To Caretaker
+    </button>
+    <button nzSize="small" nz-button *ngIf="loadsendto" [nzLoading]="loadsendto" nzType="primary"
+      class="btn btn-primary" style="background-color: #006699; border-radius: 12px;font-size: 11px;">
+      Send To Caretaker
+    </button>
+    <button nzSize="small" nz-button nzType="primary" [nzLoading]="loadsendto" class="btn btn-primary" style="
+        background-color: white !important;
+        border-radius: 12px;
+        color: #006699; font-size: 11px;
+        font-weight: 500;
+      " (click)="cancelsendtoc()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-drawer [nzBodyStyle]="{
+  height: 'calc(100% - 55px)',
+  overflow: 'auto',
+  'padding-bottom': '53px',
+  'padding-top': '20px',
+  'padding-right': '0px',
+  'padding-left': '0px',
+}" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="dwisth" [nzVisible]="drawerVisible1"
+  (nzOnClose)="drawerClose1()" (nzKeyboard)="(true)" [nzTitle]="drawerTitle1">
+  <ng-container *nzDrawerContent>
+    <app-changeflatdrawer [drawerClose]="closeCallback1" [data]="drawerData1" [datastatic]="drawerData1"
+      [empid]="employeedata1" [stage]="stageschange" [isdraweropendedggg]="isdraweropended1">
+    </app-changeflatdrawer>
+  </ng-container>
+</nz-drawer>
+<nz-drawer [nzBodyStyle]="{
+  height: 'calc(100% - 55px)',
+  overflow: 'auto',
+  'padding-bottom': '53px',
+  'padding-top': '20px',
+  'padding-right': '0px',
+  'padding-left': '0px',
+}" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="dwisth" [nzVisible]="drawerVisiblenon"
+  (nzOnClose)="drawerClosenon()" (nzKeyboard)="(true)" [nzTitle]="drawerTitlenon">
+  <ng-container *nzDrawerContent>
+    <app-nonacceptanceamp [drawerClose]="closeCallbacknon" [data]="drawerDatanonsss" [dataass]="drawerDatanonsss"
+      [empid]="employeedatanon" [stage]="stageschangenon" [isdraweropendedggg]="isdraweropendednon">
+    </app-nonacceptanceamp>
+  </ng-container>
+</nz-drawer>
+<nz-drawer [nzBodyStyle]="{
+  height: 'calc(100% - 55px)',
+  overflow: 'auto',
+  'padding-bottom': '53px',
+  'padding-top': '20px',
+  'padding-right': '0px',
+  'padding-left': '0px',
+}" [nzClosable]="false" [nzMask]="true" [nzMaskClosable]="false" [nzWidth]="dwisth"
+  [nzVisible]="drawerVisiblesurrender" (nzOnClose)="drawerClosesurrender()" (nzKeyboard)="(true)"
+  [nzTitle]="drawerTitlesurrender">
+  <ng-container *nzDrawerContent>
+    <app-surrenderformemp [drawerClose]="closeCallbacksurrender" [data]="drawerDatasurrender"
+      [dataass]="drawerDatasurrender" [empid]="employeedatasurrender" [stage]="stageschangesurrender"
+      [isdraweropendedggg]="isdraweropendedsurrender">
+    </app-surrenderformemp>
+  </ng-container>
+</nz-drawer>
+<nz-modal [(nzVisible)]="printupload" [nzWidth]="1000"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '20px' }" nzMaskClosable="false" nzClosable="true"
+  nzTitle="Physical Occupancy Form" [nzFooter]="FooterCloseess" (nzOnCancel)="cancelcaretakervacationmodal()"
+  nzOkText="View PDF">
+  <ng-container *nzModalContent>
+    <div nz-row class="my-box" *ngIf="!opennexttab">
+      <div nz-col nzSpan="24">
+        <div id="printpageform1" *ngIf="storeacceptcarddata != undefined">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <div style="
+                  text-align: center;
+                  line-height: 10px;
+                  font-size: 12px;
+                  font-weight: bold;
+                ">
+                <div>
+                  <p>Government of India</p>
+                </div>
+                <div>
+                  <p>Ministry of Housing and Urban Affairs</p>
+                </div>
+                <div>
+                  <p>Central Public Works Department</p>
+                </div>
+                <div>
+                  <p>CPWDSewa</p>
+                </div>
+                <div>
+                  <p style="font-size: 18px">Physical Occupation Report</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24" style="margin: 10px 0px">
+              <div style="text-align: center; line-height: 10px; font-weight: bold">
+                <div>
+                  <p style="font-size: 18px">Quarter Details</p>
+                </div>
+              </div>
+            </div>
+            <div nz-col nzSpan="24" style="padding: 5px 15px">
+              <table style="width: 100%; margin-bottom: 20px" class="tableborders">
+                <tr>
+                  <th style="text-align: center">Qtr No.</th>
+                  <th style="text-align: center">Type</th>
+                  <th style="text-align: center">Sector</th>
+                  <th style="text-align: center">Block</th>
+                  <th style="text-align: center">Floor</th>
+                  <th style="text-align: center">Pool</th>
+                  <th style="text-align: center">Locality</th>
+                  <th style="text-align: center">DOEHID</th>
+                </tr>
+                <tr>
+                  <td style="text-align: center">
+                    {{ storeacceptcarddata.FLAT_NAME }}
+                  </td>
+                  <td style="text-align: center">
+                    {{ storeacceptcarddata.RESIDENCE_TYPE_NAME }}
+                  </td>
+                  <td style="text-align: center">-</td>
+                  <td style="text-align: center">-</td>
+                  <td style="text-align: center">
+                    {{ storeacceptcarddata.FLOOR_NAME }}
+                  </td>
+                  <td style="text-align: center">Income Tax Pool</td>
+                  <td style="text-align: center">
+                    {{ storeacceptcarddata.AREA_NAME }}
+                  </td>
+                  <td style="text-align: center">999999</td>
+                </tr>
+              </table>
+              <table style="width: 100%; margin-bottom: 20px" class="tableborders">
+                <tr>
+                  <th style="text-align: center; width: 35px" class="rotate" rowSpan="6">
+                    Allottee Details
+                  </th>
+                  <th style="text-align: left">Name</th>
+                  <td style="text-align: left">
+                    {{ storeacceptcarddata.EMPLOYEE_NAME }}
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Designation</th>
+                  <td style="text-align: left">
+                    {{ storeacceptcarddata.DESIGNATION }}
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">ID Card No.</th>
+                  <td style="text-align: left">
+                    {{ storeacceptcarddata.EMPLOYEE_CODE }}
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Mobile</th>
+                  <td style="text-align: left">
+                    {{ storeacceptcarddata.MOBILE_NO }}
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Email</th>
+                  <td style="text-align: left">
+                    {{ storeacceptcarddata.EMAIL_ID }}
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Department</th>
+                  <td style="text-align: left">
+                    {{ storeacceptcarddata.DDO_OF_THE_OFFICIAL }}
+                  </td>
+                </tr>
+              </table>
+              <table style="width: 100%; margin-bottom: 20px" class="tableborders">
+                <tr>
+                  <th style="text-align: center; width: 35px" class="rotate" rowSpan="7">
+                    Allotment Details
+                  </th>
+                  <th style="text-align: left">Allotment ID</th>
+                  <td style="text-align: left">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Date of Allotment</th>
+                  <td style="text-align: left">
+                    {{
+                    storeacceptcarddata.ALLOTMENT_DATE_TIME
+                    | date : "dd/MM/yyyy"
+                    }}
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Authority Slip No.</th>
+                  <td style="text-align: left">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Slip Issued Date</th>
+                  <td style="text-align: left">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Date of Technical Occupation</th>
+                  <td style="text-align: left">
+                    <span *ngIf="
+                        storeacceptcarddata.TECHNICAL_REMARK != undefined &&
+                        storeacceptcarddata.TECHNICAL_REMARK != '' &&
+                        storeacceptcarddata.TECHNICAL_REMARK != null
+                      ">{{
+                      storeacceptcarddata.TECHNICAL_TAKEN_DATE_TIME
+                      | date : "dd/MM/yyyy"
+                      }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Date of Habitable</th>
+                  <td style="text-align: left">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left">Date of Physical Occupation</th>
+                  <td style="text-align: left">
+                    {{
+                    storeacceptcarddata.PHYSICAL_TAKEN_DATE_TIME
+                    | date : "dd/MM/yyyy"
+                    }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col nzSpan="24" style="padding: 30px 0px">
+              <div style="text-align: center; line-height: 10px; font-size: 15px">
+                <div>
+                  <p style="font-weight: bold">
+                    Physical Condition of the House
+                  </p>
+                </div>
+                <div>
+                  <p>Forenoon/Afternoon : Afternoon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div nz-row style="
+              margin: 70px 0px;
+              page-break-inside: avoid;
+              font-weight: bold;
+            ">
+            <div nz-col nzSpan="8" style="padding: 2px 10px">
+              Date:{{ cureeentdate | date : "dd/MM/yyyy" }}
+            </div>
+            <div nz-col nzSpan="2"></div>
+            <div nz-col nzSpan="14" style="text-align: left">
+              Signature of Allottee/Representative
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div nz-col nzSpan="24" style="margin: 0 5px; text-align: center" *ngIf="opennexttab">
+      <h4 style="text-align: center; font-size: 15px">
+        Upload the Signed Copy of Form
+      </h4>
+      <p style="text-align: center; margin-bottom: 10px; font-size: 13px;">
+        Kindly upload the signed copy of the form that was printed in the last
+        stage and submit your form for verification.
+      </p>
+      <nz-form-item class="ddd">
+        <nz-form-label nzRequired nzNoColon class="labelsize">Upload Signed Copy</nz-form-label>
+        <nz-form-control nzHasFeedback nzErrorTip="Upload Signed Copy PDF" *ngIf="
+            storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER == null ||
+            storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER == '' ||
+            storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER == undefined
+          ">
+          <button nz-button style="font-size: 11px;" nzSize="small" (click)="FinalFileUrl.click()">
+            Select File
+            <input #FinalFileUrl name="FINAL_FILE_URL" type="file" accept=".pdf"
+              (change)="FinalFileUrlUpload($event, storeacceptcarddata)" style="display: none" required />
+          </button>
+        </nz-form-control>
+        <div *ngIf="
+            storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER != null &&
+            storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER != '' &&
+            storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER != undefined
+          " style="
+            overflow: hidden;
+            font-size: 11px;
+            margin: auto;
+            width: 100%;
+            color: #1890ff;
+            padding-left: 10px;
+          ">
+          {{ storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER }} &nbsp;&nbsp;
+          <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+            style="cursor: pointer; color: #1890ff" (click)="
+              viewFinalFileUrl(storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER)
+            "></span>&nbsp;&nbsp;
+          <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top" nz-tooltip
+            style="cursor: pointer; color: red" (click)="
+              clearFinalFileUrl(
+                storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER,
+                'physicalOccupancyLetter',
+                storeacceptcarddata
+              )
+            "></span>
+        </div>
+      </nz-form-item>
+      <div nz-row>
+        <div nz-col nzSpan="8"></div>
+        <div nz-col nzSpan="8">
+          <div *ngIf="progressBar1">
+            <nz-progress [nzPercent]="percent1"></nz-progress>
+          </div>
+        </div>
+        <div nz-col nzSpan="8"></div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #FooterCloseess>
+    <button nzSize="small" nz-button nzType="default" [nzLoading]="loadphysical"
+      (click)="cancelcaretakervacationmodal()" style="margin-right: 0px;font-size: 11px;">
+      Close
+    </button>
+    <button nzSize="small" nz-button *ngIf="!opennexttab" style="font-size: 11px;" nzType="primary"
+      (click)="downloadPdfdraft()">
+      Download
+    </button>
+    <button nzSize="small" nz-button nzType="primary" *ngIf="!opennexttab" printSectionId="printpageform1" ngxPrint
+      [useExistingCss]="true" style="margin-right: 0px; color: white !important;font-size: 11px;">
+      Print
+    </button>
+    <button nzSize="small" nz-button nzType="primary" *ngIf="!opennexttab" (click)="opennectdata()"
+      style="margin-right: 8px; color: white !important;font-size: 11px;">
+      Save & Next
+    </button>
+    <button nzSize="small" nz-button *ngIf="opennexttab" nzType="primary" (click)="dataprevious()"
+      [nzLoading]="loadphysical" style="margin-right: 8px; color: white !important;font-size: 11px;">
+      Previous
+    </button>
+    <button nzSize="small" nz-button *ngIf="opennexttab" nzType="primary" [nzLoading]="loadphysical"
+      (click)="submitoccupancyletterconfirmations(storeacceptcarddata)"
+      style="margin-right: 8px; color: white !important;font-size: 11px;">
+      Submit
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- Confirmation for physical occupancy submit -->
+<nz-modal [(nzVisible)]="pppOccupancyconfirmmodal" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px"
+  nzClosable="false" [nzFooter]="pppOccupancyconfirmmodalfooter" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Are you sure want to submit this physical occupancy form for
+      verification?</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 11px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after approved.
+    </p>
+  </ng-container>
+
+  <ng-template #pppOccupancyconfirmmodalfooter>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary" [nzLoading]="loadphysical"
+      style="background-color: #006699;font-size: 11px;" (click)="submitoccupancyletter(storeacceptcarddata)">
+      Submit
+    </button>
+
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" [nzLoading]="loadphysical"
+      (click)="cancelcaretakervacationmodal1()">
+      Cancel
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="checktoccuboole" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="470px"
+  nzClosable="true" [nzFooter]="checkcanceltoccuboole" (nzOnCancel)="cancelchecktoccu()" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Technical Occupancy Details</span>
+    <hr style="margin: 8px 0" />
+    <div nz-row>
+      <div class="subnamm" nz-col nzSpan="24" *ngIf="
+          storeacceptcarddata != undefined &&
+          storeacceptcarddata.OCCUPANCY_TYPE == 'T'
+        " style="color: black; text-align: left; margin-top: 10px">
+        <b>Technical Occupancy Remark :</b>
+        {{ storeacceptcarddata.TECHNICAL_REMARK }}
+      </div>
+      <div class="subnamm" nz-col nzSpan="24" *ngIf="
+          storeacceptcarddata != undefined &&
+          storeacceptcarddata.OCCUPANCY_TYPE == 'T'
+        " style="color: black; text-align: left; margin-top: 10px">
+        <b>Technical Occupancy Datetime :</b>
+        {{
+        storeacceptcarddata.TECHNICAL_TAKEN_DATE_TIME
+        | date : "dd/MM/yyyy HH:mm:ss"
+        }}
+      </div>
+      <div class="subnamm" nz-col nzSpan="24" *ngIf="
+          storeacceptcarddata != undefined &&
+          storeacceptcarddata.OCCUPANCY_TYPE == 'T'
+        " style="color: black; text-align: left; margin-top: 10px">
+        <b>Technical Occupancy Remaining days :</b>
+        {{ getdateee(storeacceptcarddata.TECHNICAL_TAKEN_DATE_TIME) }} Days
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #checkcanceltoccuboole>
+    <button nzSize="small" nz-button nzType="default" [nzLoading]="loadphysical" (click)="cancelchecktoccu()"
+      style="margin-right: 8px;font-size: 11px;">
+      Close
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- Non-Acceptance form confirmation -->
+<nz-modal [(nzVisible)]="nonacceptanceconfirmation" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="410px" nzClosable="false" [nzFooter]="nonacceptanceconfirmationfoot" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 15px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 12px; margin-bottom: 10px; font-weight: 500">
+      Are you sure want to apply for non-acceptance?
+    </p>
+  </ng-container>
+
+  <ng-template #nonacceptanceconfirmationfoot>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="nonacceptanceDrawer(storeacceptcarddata)">
+      Yes
+    </button>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="cancelnonacceptanceDrawer()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- Change form confirmation -->
+<nz-modal [(nzVisible)]="changefconfirmation" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="410px"
+  nzClosable="false" [nzFooter]="changefconfirmationfoot" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 15px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 12px; margin-bottom: 10px; font-weight: 500">
+      Are you sure want to apply for change Quarter?
+    </p>
+  </ng-container>
+
+  <ng-template #changefconfirmationfoot>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="openchangeflatdrawer(storeacceptcarddata)">
+      Yes
+    </button>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="cancelchangefconfirmationfoot()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+<!-- Surrender form confirmation -->
+<nz-modal [(nzVisible)]="surrenderformconfirmation" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }"
+  nzWidth="410px" nzClosable="false" [nzFooter]="surrenderformfoot" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <h5 style="font-size: 15px;">Confirmation</h5>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 12px; margin-bottom: 10px; font-weight: 500">
+      Are you sure want to apply for surrender of alloted Quarter?
+    </p>
+  </ng-container>
+
+  <ng-template #surrenderformfoot>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="surrenderdrawer(storeacceptcarddata)">
+      Yes
+    </button>
+    <button nzSize="small" nz-button nzType="primary" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="cancelsurrenderformfoot()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+<nz-modal [(nzVisible)]="selectoccupancy" [nzWidth]="500"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '14px' }" nzMaskClosable="false" nzClosable="true"
+  nzTitle="Select Occupancy" [nzFooter]="FooterCloseess11" (nzOnCancel)="canceloccupancy()">
+  <ng-container *nzModalContent>
+    <div *ngIf="storeacceptcarddata != undefined">
+      <div nz-row>
+        <div nz-col nzSpan="24" style="margin-bottom: 0px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Select Occupancy</nz-form-label>
+            <nz-form-control>
+              <nz-radio-group [(ngModel)]="storeacceptcarddata.OCCUPANCY_TYPE" name="OCCUPANCY_TYPE"
+                (ngModelChange)="onOccupancyTypeChange($event)" class="inputsize" nzSize="small">
+                <label nz-radio nzValue="P" class="inputsize">Physical</label>
+                <label nz-radio nzValue="T" class="inputsize">Technical</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'T'" style="margin-bottom: 0px;">
+          <div nz-col nzSpan="24" style="margin: 0 5px">
+            <nz-form-item class="ddd">
+              <nz-form-label nzNoColon class="labelsize">Upload Certificate</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Upload Signed Copy PDF"
+                *ngIf="storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER==null || storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER=='' || storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER==undefined">
+
+                <input name="FINAL_FILE_URL11" nzSize="small" style="font-size: 11px;" type="file"
+                  (change)="FinalFileUrlUpload11($event,storeacceptcarddata)" required />
+
+              </nz-form-control>
+
+              <div
+                *ngIf="storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER!=null && storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER!='' && storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER!=undefined"
+                style="
+                overflow: hidden;
+                font-size: 11px;
+                margin: auto;
+                width: 100%;
+                color: #1890ff;
+                padding-left: 10px;
+              ">
+                {{ storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER }} &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="viewFinalFileUrl1(storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER)"></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red"
+                  (click)="clearFinalFileUrl1(storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER,'technicalOccupancyLetter',storeacceptcarddata)"></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar1">
+              <nz-progress [nzPercent]="percent1"></nz-progress>
+            </div>
+          </div>
+
+        </div>
+
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'T'" style="margin-bottom: 0px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Technical Remark</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Technical Remark">
+              <textarea nz-input placeholder="Enter Technical Remark" nzSize="small" style="font-size: 11px;"
+                [(ngModel)]="storeacceptcarddata.TECHNICAL_REMARK" name="TECHNICAL_REMARK"
+                [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'T'" style="margin-bottom: 0px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Please mention the tentative completion
+              date.</nz-form-label>
+            <nz-form-control nzErrorTip="Please Select Technical Date">
+              <nz-date-picker nzFormat="dd/MM/yyyy" class="datesize"
+                [(ngModel)]="storeacceptcarddata.TECHNICAL_TAKEN_DATE_TIME"
+                name="TECHNICAL_TAKEN_DATE_TIME"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'" style="margin-bottom: 0px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Select Actual physical ocupation Date</nz-form-label>
+            <nz-form-control nzErrorTip="Please Select Actual physical occupation Date">
+              <nz-date-picker nzFormat="dd/MM/yyyy" class="datesize"
+                [(ngModel)]="storeacceptcarddata.PHYSICAL_TAKEN_DATE_TIME"
+                name="PHYSICAL_TAKEN_DATE_TIME"></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'"
+          style="margin-bottom: 0px;font-size: 11px;">
+          <button nzSize="small" nz-button nzType="primary" (click)="opencaretakervacationmodal()">
+            Genrate Physical Occupancy letter
+          </button>
+        </div>
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'" style="margin-bottom: 0px;">
+          <div nz-col nzSpan="24" style="margin: 0 5px">
+            <nz-form-item class="ddd">
+              <nz-form-label nzRequired nzNoColon class="labelsize">Upload Signed Copy</nz-form-label>
+              <nz-form-control nzHasFeedback nzErrorTip="Upload Signed Copy PDF"
+                *ngIf="storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER==null || storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER=='' || storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER==undefined">
+
+                <input name="FINAL_FILE_URL1" nzSize="small" style="font-size: 11px;" type="file"
+                  (change)="FinalFileUrlUpload1($event,storeacceptcarddata)" required />
+
+              </nz-form-control>
+
+              <div
+                *ngIf="storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER!=null && storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER!='' && storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER!=undefined"
+                style="
+                  overflow: hidden;
+                  font-size: 11px;
+                  margin: auto;
+                  width: 100%;
+                  color: #1890ff;
+                  padding-left: 10px;
+                ">
+                {{ storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER }} &nbsp;&nbsp;
+                <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye"
+                  nzTheme="outline" style="cursor: pointer; color: #1890ff"
+                  (click)="viewFinalFileUrl(storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER)"></span>&nbsp;&nbsp;
+                <span nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="Remove" nzTooltipPlacement="top"
+                  nz-tooltip style="cursor: pointer; color: red"
+                  (click)="clearFinalFileUrl(storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER,'physicalOccupancyLetter',storeacceptcarddata)"></span>
+              </div>
+            </nz-form-item>
+            <div *ngIf="progressBar1">
+              <nz-progress [nzPercent]="percent1"></nz-progress>
+            </div>
+          </div>
+
+        </div>
+        <div nz-col nzSpan="24" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'" style="margin-bottom: 0px;">
+          <nz-form-item class="ddd">
+            <nz-form-label nzRequired nzNoColon class="labelsize">Remark</nz-form-label>
+            <nz-form-control nzErrorTip="Please Enter Deduction Remark">
+              <textarea nz-input placeholder="Enter deduction Remark" nzSize="small" style="font-size: 11px;"
+                [(ngModel)]="storeacceptcarddata.DEDUCTION_REMARK" name="DEDUCTION_REMARK"
+                [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #FooterCloseess11>
+    <button nzSize="small" type="button" [nzLoading]="loadingRecords" nz-button (click)="canceloccupancy()"
+      class="ant-btn" style="margin-right: 8px;font-size: 11px;">
+      <span>Cancel</span>
+    </button>
+    <button nzSize="small" type="button" style="font-size: 11px;" [nzLoading]="loadingRecords"
+      (click)="approveeee(storeacceptcarddata)" class="ant-btn ant-btn-primary" nz-button>
+      <span>Save & Close</span>
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="caretakervacationmodal" [nzWidth]="1000"
+  [nzBodyStyle]="{ height: '400px', overflow: 'auto', padding: '20px' }" nzMaskClosable="false" nzClosable="true"
+  nzTitle="View Physical Occupancy" [nzFooter]="FooterClosee" (nzOnCancel)="cancelcaretakervacationmodal22()"
+  nzOkText="View PDF">
+  <ng-container *nzModalContent>
+    <div nz-row class="my-box">
+      <div nz-col nzSpan="24">
+        <div id="printpageform1" *ngIf="storeacceptcarddata!=undefined">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <div
+                style="text-align:center;line-height: 10px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;font-weight: bold;">
+                <div>
+                  <p>Government of India</p>
+                </div>
+                <div>
+                  <p>Ministry of Housing and Urban Affairs</p>
+                </div>
+                <div>
+                  <p>Central Public Works Department</p>
+                </div>
+                <div>
+                  <p>CPWDSewa</p>
+                </div>
+                <div>
+                  <p style="font-size:13px;">Physical Occupation
+                    Report</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="24"
+              style="margin:5px 0px;font-size:13px;font-family: 'Times New Roman', Times, serif !important;">
+              <div style="text-align:center;line-height: 10px;font-weight: bold;">
+                <div>
+                  <p style="font-size:13px;">Quarter Details</p>
+                </div>
+              </div>
+            </div>
+
+            <div nz-col nzSpan="24" style="padding:5px 15px">
+              <table
+                style="width:100%;margin-bottom:20px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;"
+                class="tableborders">
+                <tr>
+                  <th style="text-align: center;">Qtr No</th>
+                  <th style="text-align: center;">Type</th>
+                  <th style="text-align: center;">Sector</th>
+                  <th style="text-align: center;">Block</th>
+                  <th style="text-align: center;">Floor</th>
+                  <th style="text-align: center;">Pool</th>
+                  <th style="text-align: center;">Locality</th>
+                  <th style="text-align: center;">DOEHID</th>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">{{storeacceptcarddata.FLAT_NAME}}</td>
+                  <td style="text-align: center;">{{storeacceptcarddata.RESIDENCE_TYPE_NAME}}</td>
+                  <td style="text-align: center;">-</td>
+                  <td style="text-align: center;">-</td>
+                  <td style="text-align: center;">{{storeacceptcarddata.FLOOR_NAME}}</td>
+                  <td style="text-align: center;">Income Tax Pool</td>
+                  <td style="text-align: center;">{{storeacceptcarddata.AREA_NAME}}</td>
+                  <td style="text-align: center;">999999</td>
+                </tr>
+              </table>
+
+              <table
+                style="width:100%;margin-bottom:20px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;"
+                class="tableborders">
+                <tr>
+                  <th style="text-align: center;width: 35px;" class="rotate" rowSpan="6"> <span>Allottee Details</span>
+                  </th>
+                  <th style="text-align: left;">Name</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.EMPLOYEE_NAME}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Designation</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.DESIGNATION}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">ID Card No.</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.EMPLOYEE_CODE}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Mobile</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.MOBILE_NO}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Email</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.EMAIL_ID}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Department</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.DDO_OF_THE_OFFICIAL}}</td>
+                </tr>
+              </table>
+
+              <table
+                style="width:100%;margin-bottom:20px;font-size:12px;font-family: 'Times New Roman', Times, serif !important;"
+                class="tableborders">
+                <tr>
+                  <th style="text-align: center;width: 35px;" class="rotate" rowSpan="7"><span>Allotment Details</span>
+                  </th>
+                  <th style="text-align: left;">Allotment ID</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Allotment</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.ALLOTMENT_DATE_TIME
+                    | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Authority Slip No.</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Slip Issued Date</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Technical Occupation</th>
+                  <td style="text-align: left;">
+                    <span
+                      *ngIf="storeacceptcarddata.TECHNICAL_REMARK != undefined && storeacceptcarddata.TECHNICAL_REMARK != '' && storeacceptcarddata.TECHNICAL_REMARK != null">{{storeacceptcarddata.TECHNICAL_TAKEN_DATE_TIME
+                      | date: 'dd/MM/yyyy'}}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Habitable</th>
+                  <td style="text-align: left;">-</td>
+                </tr>
+                <tr>
+                  <th style="text-align: left;">Date of Physical Occupation</th>
+                  <td style="text-align: left;">{{storeacceptcarddata.PHYSICAL_TAKEN_DATE_TIME
+                    | date: 'dd/MM/yyyy'}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="24" style="padding:15px 0px">
+              <div
+                style="text-align:center;line-height: 10px;font-size:12px;;font-family: 'Times New Roman', Times, serif !important;">
+                <div>
+                  <p style="font-weight: bold;">Physical Condition of the
+                    House</p>
+                </div>
+                <div>
+                  <p>Forenoon/Afternoon : Afternoon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div nz-row
+            style="margin: 40px 0px;page-break-inside: avoid;font-weight: bold;font-size:12px;;font-family: 'Times New Roman', Times, serif !important;">
+            <div nz-col nzSpan="8" style="padding: 2px 10px;">Date:{{cureeentdate
+              | date: 'dd/MM/yyyy'}} </div>
+            <div nz-col nzSpan="8"></div>
+            <div nz-col nzSpan="8" style="text-align: left;">Signature of
+              Allottee/Representative</div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #FooterClosee>
+    <button nzSize="small" nz-button nzType="default" (click)="cancelcaretakervacationmodal22()"
+      style="margin-right: 8px;font-size: 11px;">Close</button>
+
+    <button nzSize="small" style="font-size: 11px;" nz-button nzType="primary" [nzLoading]="pdfDownloaddraft"
+      (click)="downloadPdfdraft111()">
+      Download
+    </button>
+
+    <button nzSize="small" nz-button nzType="primary" printSectionId="printpageform1" ngxPrint [useExistingCss]="true"
+      style="margin-right: 8px; color: white !important;font-size: 11px;">
+      Print
+    </button>
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="accpt" nzCentered="true" [nzBodyStyle]="{ padding: '16px' }" nzWidth="570px" nzClosable="false"
+  [nzFooter]="contextofrules1" nzMaskClosable="false">
+  <ng-container *nzModalContent>
+    <span style="font-size: 15px; font-weight: 500">Are you sure want to submit</span>
+    <hr style="margin: 8px 0" />
+    <p style="font-size: 11px; margin-bottom: 10px">
+      <b>Employee Name :</b> {{ storeacceptcarddata.EMPLOYEE_NAME }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px">
+      <b>City Name :</b> {{ storeacceptcarddata.CITY_NAME }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px">
+      <b>Area Name :</b> {{ storeacceptcarddata.AREA_NAME }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px">
+      <b>Bulding Name :</b> {{ storeacceptcarddata.BUILDING_NAME }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px">
+      <b>Quarter Name :</b> {{ storeacceptcarddata.FLAT_NAME }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px">
+      <b>Occupancy Type:</b> <span *ngIf="storeacceptcarddata.OCCUPANCY_TYPE=='T'">Technical</span>
+      <span *ngIf="storeacceptcarddata.OCCUPANCY_TYPE=='P'">Physical</span>
+    </p>
+
+    <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'">
+      <b>Is Physical Occupancy letter is signed :</b> <span
+        *ngIf="storeacceptcarddata.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==0">No</span>
+      <span *ngIf="storeacceptcarddata.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1">Yes</span>
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'">
+      <b>Remark :</b> {{ storeacceptcarddata.DEDUCTION_REMARK }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'T'">
+      <b>Technical Date :</b> {{ storeacceptcarddata.TECHNICAL_TAKEN_DATE_TIME | date:
+      'dd-MM-yyyy' }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P'">
+      <b>Technical Date :</b> {{ storeacceptcarddata.PHYSICAL_TAKEN_DATE_TIME | date:
+      'dd-MM-yyyy' }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px" *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'T'">
+      <b>Technical Remark :</b> {{ storeacceptcarddata.TECHNICAL_REMARK }}
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px"
+      *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P' && storeacceptcarddata.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1 && storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER != null && storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER != '' && storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER != undefined">
+      <b>Physical Occupancy letter :</b>{{ storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER
+      }} &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff"
+        (click)="viewFinalFileUrl(storeacceptcarddata.PHYSICAL_OCCUPANCY_LETTER)"></span>
+    </p>
+    <p style="font-size: 11px; margin-bottom: 10px"
+      *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'T' && storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER != null && storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER != '' && storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER != undefined">
+      <b>Certificate :</b>{{ storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER
+      }} &nbsp;
+      <span nz-icon nzTooltipTitle="Preview" nzTooltipPlacement="top" nz-tooltip nzType="eye" nzTheme="outline"
+        style="cursor: pointer; color: #1890ff"
+        (click)="viewFinalFileUrl1(storeacceptcarddata.TECHNICAL_OCCUPANCY_LETTER)"></span>
+    </p>
+
+    <p *ngIf="storeacceptcarddata.OCCUPANCY_TYPE == 'P' && storeacceptcarddata.IS_PHYSICAL_OCCUPANCY_LETTER_SIGNED==1"
+      style="font-size: 11px; margin-bottom: 10px; color: red; font-weight: 500">
+      *Please note that changes cannot be made after Accepting.
+    </p>
+  </ng-container>
+
+  <ng-template #contextofrules1>
+    <button nzSize="small" nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="approveupdate(storeacceptcarddata)">
+      Yes
+    </button>
+    <button nzSize="small" nz-button nzType="primary" [nzLoading]="loadingRecords" class="btn btn-primary"
+      style="background-color: #006699;font-size: 11px;" (click)="cancel()">
+      No
+    </button>
+  </ng-template>
+</nz-modal>
+
+
+
+
+
+
+
+<nz-modal [nzWidth]="1200" [(nzVisible)]="viewphysicaloccupancyModalVisible" nzMaskClosable="false" nzClosable="false"
+  [nzContent]="printOrderModalContent" [nzTitle]="'View Physical Occupancy Letter'" [nzFooter]="printOrderModalFooter">
+  <ng-template #printOrderModalContent>
+    <!-- <div *ngIf="view == 1" style="height: 600px; overflow: auto"> -->
+    <iframe [src]="viewpdfphysical" style="width: 1150px; height: 600px" frameborder="0"></iframe>
+    <!-- </div> -->
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+    <!-- <button nz-button nzType="primary" (click)="rejectphysical(storeacceptcarddata)">
+      Reject
+    </button> -->
+    <button nz-button nzType="primary" (click)="approvephysical(storeacceptcarddata)">
+      Take
+    </button>
+  </ng-template>
+</nz-modal>

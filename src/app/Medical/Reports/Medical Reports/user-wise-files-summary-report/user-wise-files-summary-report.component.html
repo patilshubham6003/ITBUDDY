@@ -1,0 +1,249 @@
+<div nz-row nzType="flex">
+  <div nz-col nzXs="24" nzSm="24" nzMd="20" nzLg="20" nzXl="12">
+    <div class="formname">{{ formTitle }}</div>
+  </div>
+
+  <div
+    nz-col
+    nzXs="24"
+    nzSm="24"
+    nzMd="4"
+    nzLg="6"
+    nzXl="12"
+    style="display: flex; justify-content: flex-end"
+  >
+    <form nz-form [nzLayout]="'inline'">
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Excel"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzType="primary"
+          (click)="importInExcel()"
+          [nzLoading]="exportLoading"
+        >
+          <i nz-icon nzType="file-excel" nzTheme="outline"></i>
+        </button>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button
+          nz-button
+          nzTooltipTitle="Filter"
+          nzTooltipPlacement="top"
+          nz-tooltip
+          [nzType]="isFilterApplied"
+          (click)="showFilter()"
+        >
+          <i nz-icon nzType="filter"></i>
+        </button>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            (keyup)="keyup($event)"
+            (keydown.enter)="onKeypressEvent($event)"
+            nz-input
+            placeholder="Search"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button
+            nz-button
+            nzType="primary"
+            id="button"
+            (click)="search(true)"
+            nzSearch
+          >
+            <i nz-icon nzType="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <div class="filter {{ filterClass }}">
+      <div class="filter-box">
+        <form nz-form>
+          <div nz-row nzGutter="8">
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-top: 1px; width: 100%">
+                <nz-form-label nzNoColon>Select Date</nz-form-label>
+                <nz-range-picker
+                  name="date"
+                  nzFormat="dd MMM yyyy"
+                  [(ngModel)]="DATE"
+                >
+                </nz-range-picker>
+              </nz-form-item>
+            </div>
+
+            <div nz-col nzSpan="8">
+              <nz-form-item style="margin-left: 10px; margin-top: 33px">
+                <button
+                  style="margin-right: 10px"
+                  nz-button
+                  [nzLoading]="isSpinning"
+                  nzType="primary"
+                  (click)="applyFilter()"
+                  nzJustify="end"
+                >
+                  <i nz-icon nzType="filter"></i>Apply filter
+                </button>
+                <button nz-button nzType="primary" (click)="clearFilter()">
+                  <!-- <i nz-icon nzType="filter"></i>Clear Filter -->
+                  <i nz-icon nzType="close-circle" nzTheme="outline"></i>Clear
+                  filter
+                </button>
+              </nz-form-item>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-table
+      id="excel-table"
+      class="my-scroll no-wrap1"
+      nzBordered
+      #table
+      nzShowSizeChanger
+      [nzFrontPagination]="false"
+      [nzData]="dataList"
+      [nzLoading]="loadingRecords"
+      [nzTotal]="totalRecords"
+      [(nzPageIndex)]="pageIndex"
+      [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="search()"
+      [nzSize]="'small'"
+      (nzPageSizeChange)="search()"
+      (nzQueryParams)="sort($event)"
+      [nzScroll]="{ x: '1500px', y: '420px' }"
+    >
+      <thead nzSingleSort>
+        <tr>
+          <th
+            nzWidth="100px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'CREATOR_NAME' }}"
+            [nzSortFn]="true"
+          >
+            User Name
+          </th>
+          <th
+            nzWidth="80px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'CREATOR_ROLE' }}"
+            [nzSortFn]="true"
+          >
+            Role Name
+          </th>
+          <th
+            nzWidth="70px"
+            nzColumnKey="{{ 'CREATED' }}"
+            [nzSortFn]="true"
+            style="font-weight: bold; text-align: center"
+          >
+            Created
+          </th>
+
+          <th
+            nzWidth="80px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'TRANSFERED' }}"
+            [nzSortFn]="true"
+          >
+            Transfered to other
+          </th>
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'PENDING_AT_ME' }}"
+            [nzSortFn]="true"
+          >
+            Pending at my desk
+          </th>
+          <th
+            nzWidth="90px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'PENDING_AT_OTHERS' }}"
+            [nzSortFn]="true"
+          >
+            Pending at other desk
+          </th>
+
+          <th
+            nzWidth="70px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'IN_ADVANCE' }}"
+            [nzSortFn]="true"
+          >
+            In Advanced
+          </th>
+
+          <th
+            nzWidth="50px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'IN_FINAL' }}"
+            [nzSortFn]="true"
+          >
+            In Final
+          </th>
+
+          <th
+            nzWidth="50px"
+            style="font-weight: bold; text-align: center"
+            nzColumnKey="{{ 'CLOSED' }}"
+            [nzSortFn]="true"
+          >
+            Closed
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of table.data">
+          <td style="white-space: pre-line" align="center">
+            {{ data["CREATOR_NAME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["CREATOR_ROLE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["CREATED"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["TRANSFERED"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["PENDING_AT_ME"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["PENDING_AT_OTHERS"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["IN_ADVANCE"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["IN_FINAL"] }}
+          </td>
+          <td style="white-space: pre-line" align="center">
+            {{ data["CLOSED"] }}
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

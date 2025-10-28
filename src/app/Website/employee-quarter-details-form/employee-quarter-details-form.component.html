@@ -1,0 +1,346 @@
+<div>
+  <div class="limiter">
+    <div class="container-login100" style="margin-bottom: 90px">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 wraper-login100">
+          <div style="
+              margin-bottom: -10px;
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+            ">
+            <div style="text-align: center">
+              <img src="assets/govtOfIndia.png" alt="logo" height="50" />
+            </div>
+            <div style="text-align: center">
+              <span class="GRAASTitle">
+                Government Residence Accommodation Allocation System</span><br /><span class="GRAASSubTitle"> Income Tax
+                - Mumbai </span>
+            </div>
+            <div><img src="assets/aykarlogo.png" alt="logo" height="50" /></div>
+          </div>
+          <hr />
+          <form style="margin-top: -10px">
+            <div style="margin-bottom: 8px">
+              <span class="particularText">
+                Our website features a comprehensive form for collecting
+                personal information of employees and their allocated quarters,
+                ensuring efficient management and record-keeping of
+                accommodation details.</span>
+            </div>
+            <div class="my-box">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <h6 style="
+                      font-size: 13px;
+                      font-weight: 500;
+                      margin-bottom: 2px;
+                    ">
+                    Personal Information
+                  </h6>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">
+                      Name</nz-form-label>
+                    <nz-form-control nzErrorTip="Please Enter Name">
+                      <input nz-input name="demo1name" class="inputsize" required maxlength="128"
+                        placeHolder="Enter Name" (keypress)="alphaOnly($event)" [(ngModel)]="data.EMPLOYEE_NAME"
+                        maxlength="128" required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Email ID</nz-form-label>
+                    <nz-form-control nzErrorTip="Please Enter Valid Email">
+                      <input nz-input autocomplete="off" class="inputsize" name="Emailid" type="text"
+                        [(ngModel)]="data.EMAIL_ID" placeHolder="Enter Email ID" required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Designation</nz-form-label>
+                    <nz-form-control nzHasFeedback nzErrorTip="Select Designation">
+                      <nz-select nzShowSearch nzAllowClear class="inputsize" nzSize="small"
+                        [nzLoading]="loadDesignation" nzPlaceHolder="Select Designation" name="DESIGNATION"
+                        [(ngModel)]="data.DESIGNATION_ID" required>
+                        <nz-option *ngFor="let desg of Designationtypes" [nzValue]="desg.ID" [nzLabel]="desg.NAME">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Mobile No.</nz-form-label>
+                    <nz-form-control nzErrorTip="Enter Mobile No">
+                      <input nz-input autocomplete="off" class="inputsize" name="MobileNo" (keypress)="omit($event)"
+                        type="text" maxlength="10" [(ngModel)]="data.MOBILE_NO" placeHolder="Enter Mobile No."
+                        required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Date of Birth</nz-form-label>
+                    <nz-date-picker [nzDefaultPickerValue]="date" class="datesize" nzFormat="dd/MM/yyyy" name="DOB"
+                      [nzDisabledDate]="disabledDate" [(ngModel)]="data.DOB" style="width: 100%"
+                      (paste)="parsePastedDate($event)" (input)="onDateInputChange($event)"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Employee Code</nz-form-label>
+                    <nz-form-control nzErrorTip="Enter Employee Code ">
+                      <input nz-input autocomplete="off" maxlength="16" name="EmployeeCode"
+                        [(ngModel)]="data.EMPLOYEE_CODE" class="inputsize" type="text" placeHolder="Employee Code"
+                        required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Caste</nz-form-label>
+                    <nz-form-control>
+                      <nz-select name="CAST" [(ngModel)]="data.CAST" class="inputsize" nzSize="small" nzAllowClear
+                        nzShowSearch nzPlaceHolder="Select Caste">
+                        <nz-option [nzValue]="'SC'" [nzLabel]="'Scheduled Caste'"></nz-option>
+                        <nz-option [nzValue]="'ST'" [nzLabel]="'Scheduled Tribes'"></nz-option>
+                        <nz-option [nzValue]="'GN'" [nzLabel]="'General'"></nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Gender</nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group [(ngModel)]="data.GENDER" name="gender" nzSize="small">
+                        <label nz-radio nzValue="Male" class="inputsize">Male</label>
+                        <label nz-radio nzValue="Female" class="inputsize">Female</label>
+                        <label nz-radio nzValue="Other" class="inputsize">Other</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+            <div class="my-box">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <h6 style="
+                      font-size: 13px;
+                      font-weight: 500;
+                      margin-bottom: 2px;
+                    ">
+                    Other Information
+                  </h6>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Grade Pay Level</nz-form-label>
+                    <nz-form-control nzHasFeedback nzErrorTip="Select Grade Pay Level">
+                      <nz-select nzShowSearch nzAllowClear class="inputsize" nzSize="small"
+                        nzPlaceHolder="Select Grade Pay Level" name="GRASS_GRADE_PAY"
+                        [(ngModel)]="data.GRAD_PAY_LEVEL_ID" required>
+                        <nz-option *ngFor="let type of ResidenceType" [nzValue]="type.ID"
+                          [nzLabel]="type.GRADE_PAY_LEVEL">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Basic Pay</nz-form-label>
+                    <nz-form-control nzErrorTip="Enter Basic Pay">
+                      <input nz-input autocomplete="off" class="inputsize" name="BASIC_PAY" (keypress)="omit($event)"
+                        type="text" maxlength="10" [(ngModel)]="data.BASIC_PAY" placeHolder="Enter Basic Pay"
+                        required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Joining Date</nz-form-label>
+                    <nz-date-picker name="JOINING_DATE" class="datesize" placeholder="Joining Date"
+                      nzFormat="dd/MM/yyyy" [(ngModel)]="data.JOINING_DATE" style="width: 100%"
+                      (paste)="parsePastedDate1($event)" (input)="onDateInputChange1($event)"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Floor Name</nz-form-label>
+                    <nz-form-control nzHasFeedback nzErrorTip="Enter Floor Name">
+                      <input nz-input class="inputsize" placeHolder="Enter Floor Name" name="FLOOR_ID"
+                        [(ngModel)]="data.FLOOR_ID" [(ngModel)]="data.FLOOR_ID" maxlength="128" required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Quarter Name</nz-form-label>
+                    <nz-form-control nzHasFeedback nzErrorTip="Enter Quarter Name">
+                      <input nz-input class="inputsize" placeHolder="Enter Quarter Name" name="FLAT_ID"
+                        [(ngModel)]="data.FLAT_ID" [(ngModel)]="data.FLAT_ID" maxlength="128" required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Civil List No.</nz-form-label>
+                    <nz-form-control nzErrorTip="Enter Civil List No.">
+                      <input nz-input autocomplete="off" maxlength="50" name="CIVIL_LIST" [(ngModel)]="data.CIVIL_LIST"
+                        class="inputsize" type="text" placeHolder="Enter Civil List No." required />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Applied Residence Type</nz-form-label>
+                    <nz-form-control>
+                      <nz-select name="Applied" nzShowSearch class="inputsize" nzAllowClear style="width: 100%"
+                        nzPlaceHolder="Select Residence Type" nzSize="small"
+                        [(ngModel)]="data.APPLIED_RESIDENCE_TYPE_ID" [nzMaxTagCount]="2" nzMode="multiple">
+                        <nz-option *ngFor="let rank of ResidenceType111" [nzValue]="rank.ID" [nzLabel]="rank.TYPE">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Residence Type</nz-form-label>
+                    <nz-form-control>
+                      <nz-select name="RecidencejhhType" nzShowSearch class="inputsize" nzAllowClear style="width: 100%"
+                        nzPlaceHolder="Select Residence Type" nzSize="small" [(ngModel)]="data.RESIDENCE_TYPE_ID">
+                        <nz-option *ngFor="let rank of ResidenceType111" [nzValue]="rank.ID" [nzLabel]="rank.TYPE">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding" *ngIf="isResidenceTypeValid()">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Present Pay Level Date</nz-form-label>
+                    <nz-date-picker name="PRESENT_PAY_LEVEL_DATE" class="datesize" [nzDisabledDate]="disabledDate2222"
+                      placeholder="Present Pay Level Date" nzFormat="dd/MM/yyyy" (paste)="parsePastedDate2($event)"
+                      (input)="onDateInputChange2($event)" [(ngModel)]="data.PRESENT_PAY_LEVEL_DATE"
+                      style="width: 100%"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding" *ngIf="isResidenceTypeValid()">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Allotment Date</nz-form-label>
+                    <nz-date-picker name="ALLOTMENT_DATE_TIME" nzFormat="dd/MM/yyyy" (paste)="parsePastedDate3($event)"
+                      (input)="onDateInputChange3($event)" placeholder="Allotment Date" class="datesize"
+                      [(ngModel)]="data.ALLOTMENT_DATE_TIME" style="width: 100%"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding" *ngIf="isResidenceTypeValid()">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Date Of Priority</nz-form-label>
+                    <nz-date-picker name="DATE_OF_PRIORITY" nzFormat="dd/MM/yyyy" placeholder="Date Of
+                                        Priority" (paste)="parsePastedDate4($event)"
+                      (input)="onDateInputChange4($event)" class="datesize" [(ngModel)]="data.DATE_OF_PRIORITY"
+                      style="width: 100%"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding" *ngIf="isResidenceTypeValid()">
+                  <nz-form-item style="padding-right: 10px">
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Retirement Date</nz-form-label>
+                    <nz-date-picker name="RETIREMENT_DATE" nzFormat="dd/MM/yyyy" (paste)="parsePastedDate5($event)"
+                      (input)="onDateInputChange5($event)" class="datesize" placeholder="Retirement Date"
+                      [nzDisabledDate]="disabledDate2222" [(ngModel)]="data.RETIREMENT_DATE"
+                      style="width: 100%"></nz-date-picker>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Occupancy Type</nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group [(ngModel)]="data.OCCUPANCY_TYPE" name="OCCUPANCY_TYPE" nzSize="small">
+                        <label nz-radio nzValue="P" class="inputsize">Physical</label>
+                        <label nz-radio nzValue="T" class="inputsize">Technical</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 colsspadding">
+                  <nz-form-item>
+                    <nz-form-label nzRequired nzNoColon class="labelsize">Allotment Time</nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group [(ngModel)]="data.CHECK_CONDITION" name="CHECK_CONDITION" nzSize="small">
+                        <label nz-radio nzValue="1" class="inputsize">First</label>
+                        <label nz-radio nzValue="2" class="inputsize">Second</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="text-align: center">
+                <button nz-button nzType="primary" class="btn" [nzLoading]="loadForms" nzSize="small" (click)="save()">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a style="display: none" #formsubmitedsuccessfully data-bs-toggle="modal"
+  data-bs-target="#formsubmitedsuccessfully">nvghv</a>
+<div class="modal fade" id="formsubmitedsuccessfully" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="basicD" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div>
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="green" class="bi bi-check2-circle"
+              viewBox="0 0 16 16">
+              <path
+                d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+              <path
+                d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+            </svg>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12" style="text-align: center">
+            <h3 class="modal-title" style="font-size: 21px; color: #006699">
+              Thank you
+            </h3>
+            <h5 style="
+                font-size: 15px;
+                text-align: center;
+                margin-top: 11px;
+                font-weight: 400;
+                margin-bottom: 0px;
+              ">
+              Your Quarter Details has been submitted successfully
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" style="
+            background-color: #006699;
+            border: none;
+            margin: 0px;
+            padding: 5px 20px;
+          " class="btn btn-secondary" data-bs-dismiss="modal" (click)="cloderegistermodakl()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,169 @@
+<div>
+  <form nz-form #InvestigationPage="ngForm">
+    <div nz-row nzGutter="5">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>City Name </nz-form-label>
+
+          <nz-form-control nzHasFeedback nzErrorTip="Please Select City Name">
+            <nz-select nzShowSearch nzAllowClear [(ngModel)]="data.CITY_ID" nzErrorTip="Please Select City"
+              nzPlaceHolder="Please Select City " name="cityid" required>
+              <nz-option *ngFor="let role of city " [nzValue]="role.ID" [nzLabel]="role.NAME">
+              </nz-option>
+
+            </nz-select>
+          </nz-form-control>
+
+        </nz-form-item>
+
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Schedule No</nz-form-label>
+
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Schedule No">
+            <input nz-input maxlength="64" autocomplete="off" name="NAByyH" type="text" placeHolder="Schedule Number"
+              [(ngModel)]="data.SCHEDULE_NO" required />
+          </nz-form-control>
+
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Category Name</nz-form-label>
+
+          <nz-form-control nzErrorTip="Please Select Category Name">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Category Name" name="category"
+              [(ngModel)]="data.INVESTIGATION_CATEGORY_ID ">
+              <nz-option nzValue="0" nzLabel="None"></nz-option>
+              <nz-option *ngFor="let role of category " [nzValue]="role.ID" [nzLabel]="role.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+
+        <nz-form-item>
+
+          <nz-form-label nzRequired nzNoColon>Short Code</nz-form-label>
+
+
+
+
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Short Code">
+
+            <input nz-input maxlength="64" autocomplete="off" name="NAByyyH" type="text" placeHolder="Short Code"
+              [(ngModel)]="data.SHORT_CODE" required />
+
+          </nz-form-control>
+
+
+
+        </nz-form-item>
+
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Investigation/ Procedure Name</nz-form-label>
+
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Investigation/ Procedure Name is Required">
+            <input nz-input autocomplete="off" name="procedure" type="text" placeHolder="Enter Name"
+              [(ngModel)]="data.NAME" required />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Rate for NABH</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rate for NABH">
+            <nz-input-group nzAddOnBefore="₹">
+              <input nz-input (keypress)="omit($event)" autocomplete="off" name="NABH" type="text"
+                placeHolder="NABH Rate" [(ngModel)]="data.NABH_AMOUNT" required />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Rate for Non NABH</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rate for Non NABH">
+            <nz-input-group nzAddOnBefore="₹">
+              <input nz-input autocomplete="off" (keypress)="omit($event)" name="NONNABH" type="text"
+                placeHolder="Non NABH Rate" [(ngModel)]="data.NON_NABH_AMOUNT" required />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon>Rate for Super Speciality</nz-form-label>
+          <nz-form-control nzHasFeedback nzErrorTip="Please Enter Rate for Super Speciality">
+            <nz-input-group nzAddOnBefore="₹">
+              <input nz-input autocomplete="off" (keypress)="omit($event)" name="superspecial" type="text"
+                placeHolder="Super Speciality Rate" [(ngModel)]="data.SUPER_SPECIALITY_AMOUNT" required />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Notification/Memorandum Name</nz-form-label>
+
+          <nz-form-control nzErrorTip="Please Select Property Name">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Memorandum Name" required name="memo"
+              [(ngModel)]="data.NOTIFICATION_MEMORAMDUM_ID">
+              <nz-option *ngFor="let role of memonotification" [nzValue]="role.ID" [nzLabel]="role.NAME">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzNoColon>Pricelist Name</nz-form-label>
+          <nz-form-control nzErrorTip="Please Enter Pricelist Name">
+            <nz-input-group>
+              <input nz-input autocomplete="off" maxlength="128" name="pricelistname" type="text"
+                placeHolder="Price List name" [(ngModel)]="data.PRICELIST_NAME" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<div class="footer">
+  <button type="button" nz-button (click)="close(InvestigationPage)" class="ant-btn" style="margin-right: 8px">
+    <span>Cancel</span>
+  </button>
+  <button type="button" class="ant-btn ant-btn-primary" *ngIf="!data.ID" nz-button nz-dropdown [nzDropdownMenu]="menu"
+    [nzLoading]="isSpinning" (click)="save(false,InvestigationPage)">
+    <span>Save & Close</span>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menuc" style="border-radius: 4px; background-color: #40a9ff">
+        <a style="color: white" (click)="save(true,InvestigationPage)">Save & New</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+  <button type="button" class="ant-btn ant-btn-primary" nz-button [nzLoading]="isSpinning" *ngIf="data.ID"
+    (click)="save(false,InvestigationPage)">
+    <span>Update & Close</span>
+  </button>
+
+ 
+</div>
+
+<div class="header">
+  <button type="button" nz-button (click)="close(InvestigationPage)" class="ant-btn" style="margin-right: 8px">
+    <i nz-icon nzType="close" nzTheme="outline"></i>
+  </button>
+</div>

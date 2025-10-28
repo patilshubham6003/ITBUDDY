@@ -1,0 +1,255 @@
+<main id="main" style="margin-top: 0px;">
+    <section id="services" class="about1"
+        style="padding-top: 0px;background-color: #f2f2f2 !important;padding-bottom: 18px;">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up" style="padding-bottom: 40px;padding-top: 40px;">
+                <h2 style="padding-bottom: 0px; margin-bottom: 0px">Downloads</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-12 cl-sm-12 col-xl-4 col-lg-4">
+                    <div class="card m-b-30">
+                        <div class="card-header" style="background-color: #006699 !important;color: white!important;">
+                            <div class="row align-items-center">
+                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12">
+                                    <h5 class="card-title mb-0" style="color: white;">Circulars</h5>
+                                </div>
+                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                                    style="align-self: center;margin-top: 10px;">
+                                    <div class="input-group">
+                                        <input autocomplete="off" placeholder="Search Circulars" class="form-control"
+                                            name="searccch" (keyup)="searchBlogs(searchText)" [(ngModel)]="searchText"
+                                            style="border-radius: 0px" />
+
+                                        <div class="input-group-append">
+                                            <span *ngIf="!showx" style="
+                                            padding: 11px;
+                                            border-radius: 0px;
+                                            cursor: pointer;
+                                          " class="fa input-group-text bi bi-search"
+                                                (click)="searchBlogs(searchText)"></span>
+                                            <span *ngIf="showx" style="
+                                            padding: 11px;
+                                            border-radius: 0px;
+                                            cursor: pointer;
+                                          " class="fa input-group-text bi bi-x" (click)="searchBlogs1()"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body fscroll">
+                            <div class="product-file-type">
+                                <ul class="list-unstyled" *ngIf="typeC!=undefined">
+                                    <li class="media mb-3" *ngFor="let data of typeC">
+                                        <div class="row">
+                                            <div class="col-xl-10 col-10 col-md-10 col-sm-10"
+                                                style="align-self: center;">
+                                                <div class="media-body">
+                                                    <h5 class="font-16 mb-1" style="font-size: 15px;font-weight: 400;">
+                                                        <a target="_blank" *ngIf="typeC!=undefined"
+                                                            href="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}"
+                                                            style="color: black;" class="limit1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="22"
+                                                                height="22" fill="red" class="bi bi-filetype-pdf"
+                                                                viewBox="0 0 16 16">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z" />
+                                                            </svg> &nbsp;<img *ngIf="data.IS_LATEST==1"
+                                                                src="assets/img/newgif.gif"
+                                                                alt="new">&nbsp;{{data.TITLE}}<i
+                                                                class="feather icon-download-cloud float-right"></i></a>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-2 col-md-2 col-sm-2" style="text-align: center;">
+                                                <a target="_blank"
+                                                    href="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                        fill="#006699" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                        <path
+                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                                    </svg></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li *ngIf="tvcount1==0" style="text-align: center;">
+                                        <h5 style="font-weight: 400;margin-top: 90px;"> No Circulars Available</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-footer__events">
+                            <a *ngIf="tvcount1>0" class="btn btnloadm" (click)="storeserviceiC(servtitle)">View More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 cl-sm-12 col-xl-4 col-lg-4">
+                    <div class="card m-b-30">
+                        <div class="card-header" style="background-color: #006699 !important;color: white!important;">
+                            <div class="row align-items-center">
+                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12">
+                                    <h5 class="card-title mb-0" style="color: white;">Manuals</h5>
+                                </div>
+                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                                    style="align-self: center;margin-top: 10px;">
+                                    <div class="input-group">
+                                        <input autocomplete="off" placeholder="Search Manuals" class="form-control"
+                                            name="search1" (keyup)="searchBlogs12(searchText1)"
+                                            [(ngModel)]="searchText1" style="border-radius: 0px" />
+
+                                        <div class="input-group-append">
+                                            <span *ngIf="!showx1" style="
+                                            padding: 11px;
+                                            border-radius: 0px;
+                                            cursor: pointer;
+                                          " class="fa input-group-text bi bi-search"
+                                                (click)="searchBlogs12(searchText1)"></span>
+                                            <span *ngIf="showx1" style="
+                                            padding: 11px;
+                                            border-radius: 0px;
+                                            cursor: pointer;
+                                          " class="fa input-group-text bi bi-x" (click)="searchBlogs11()"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body fscroll">
+                            <div class="product-file-type">
+                                <ul class="list-unstyled">
+                                    <li class="media mb-3" *ngFor="let data of typeM">
+                                        <div class="row">
+                                            <div class="col-xl-10 col-10 col-md-10 col-sm-10"
+                                                style="align-self: center;">
+                                                <div class="media-body">
+                                                    <h5 class="font-16 mb-1" style="font-size: 15px; font-weight: 400;">
+                                                        <a target="_blank" *ngIf="typeM!=undefined"
+                                                            href="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}"
+                                                            style="color: black;" class="limit1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="22"
+                                                                height="22" fill="red" class="bi bi-filetype-pdf"
+                                                                viewBox="0 0 16 16">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z" />
+                                                            </svg> &nbsp;<img *ngIf="data.IS_LATEST==1"
+                                                                src="assets/img/newgif.gif"
+                                                                alt="new">&nbsp;{{data.TITLE}}<i
+                                                                class="feather icon-download-cloud float-right"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-2 col-2 col-md-2 col-sm-2" style="text-align: center;">
+                                                <a target="_blank"
+                                                    href="{{ retrieveimgUrl }}downloadFile/{{data.FILE_URL}}"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                        fill="#006699" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                        <path
+                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                                    </svg></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li *ngIf="tvcount2==0" style="text-align: center;">
+                                        <h5 style="font-weight: 400;margin-top: 90px;"> No Manuals Available</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-footer__events">
+                            <a *ngIf="tvcount2>0" class="btn btnloadm" (click)="storeserviceiM(servtitle)">View More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12 cl-sm-12 col-xl-4 col-lg-4">
+                    <div class="card m-b-30">
+                        <div class="card-header" style="background-color: #006699 !important;color: white!important;">
+                            <div class="row align-items-center">
+                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12">
+                                    <h5 class="card-title mb-0" style="color: white;">Traning Videos</h5>
+                                </div>
+                                <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12"
+                                    style="align-self: center;margin-top: 10px;">
+                                    <div class="input-group">
+                                        <input autocomplete="off" placeholder="Search Traning Videos"
+                                            class="form-control" name="search11" (keyup)="searchBlogs111(searchText111)"
+                                            [(ngModel)]="searchText111" style="border-radius: 0px" />
+
+                                        <div class="input-group-append">
+                                            <span *ngIf="!showx11" style="
+                                            padding: 11px;
+                                            border-radius: 0px;
+                                            cursor: pointer;
+                                          " class="fa input-group-text bi bi-search"
+                                                (click)="searchBlogs111(searchText111)"></span>
+                                            <span *ngIf="showx11" style="
+                                            padding: 11px;
+                                            border-radius: 0px;
+                                            cursor: pointer;
+                                          " class="fa input-group-text bi bi-x" (click)="searchBlogs1111()"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body fscroll">
+                            <div class="product-file-type">
+                                <ul class="list-unstyled">
+                                    <li class="media" *ngFor="let data of typeTV" style="margin-bottom: 5px;">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-12 col-md-12 col-sm-12"
+                                                style="align-self: center;">
+                                                <div class="media-body">
+                                                    <div class="row" *ngIf="typeTV!=undefined">
+                                                        <div class="col-3"><a href="{{ retrieveimgUrl }}downloadFile/{{
+                                                            data.FILE_URL
+                                                          }}" target="_blank">
+                                                                <img *ngIf="typeTV!=undefined"
+                                                                    src="{{retrieveimgUrl}}downloadVideo/{{data.VIDEO_THUMBNAIL}}"
+                                                                    alt="imf" class="imghh">
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <div class="row">
+                                                                <div class="col-12" style="padding-left: 0px;"><a href="{{ retrieveimgUrl }}downloadFile/{{
+                                                                    data.FILE_URL
+                                                                  }}" target="_blank">
+                                                                        <h4 style="font-size: 15px; font-weight: 400; color: black; line-height: 1.4;"
+                                                                            class="limit" *ngIf="typeTV!=undefined">
+                                                                            {{data.TITLE}}</h4>
+                                                                        <span *ngIf="typeTV!=undefined"
+                                                                            style="color: #006699;"><img
+                                                                                *ngIf="data.IS_LATEST==1"
+                                                                                src="assets/img/newgif.gif"
+                                                                                alt="new">&nbsp;{{data.CREATED_MODIFIED_DATE
+                                                                            | date:'dd/MM/yyyy'}}</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li *ngIf="tvcount==0" style="text-align: center;">
+                                        <h5 style="font-weight: 400;margin-top: 90px;"> No Videos Available</h5>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-footer__events">
+                            <a *ngIf="tvcount>0" class="btn btnloadm" (click)="storeserviceiTV(servtitle)">View More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

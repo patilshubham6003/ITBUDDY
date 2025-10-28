@@ -1,0 +1,496 @@
+<div *ngIf="LTC5data != undefined">
+  <form nz-form>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div nz-row [nzGutter]="10">
+        <div nz-col nzXs="6" nzSm="6" nzMd="6" nzLg="6" nzXl="6" nzSpan="6">
+          <div class="my-box" style="height: 75vh">
+            <!-- <div
+                      nz-col
+                      nzXs="24"
+                      nzSm="24"
+                      nzMd="24"
+                      nzLg="24"
+                      nzXl="24"
+                      nzSpan="24"
+                    >
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Destination</nz-form-label>
+        
+                        <nz-input-group>
+                          <input
+                            type="text"
+                            autocomplete="off"
+                            name="Destination"
+                            nz-input
+                            placeholder="Enter Destination"
+                            [(ngModel)]="LTC5data.DESTINATION"
+                          />
+                        </nz-input-group>
+                      </nz-form-item>
+                    </div> -->
+
+            <!-- <div
+                      nz-col
+                      nzXs="24"
+                      nzSm="24"
+                      nzMd="24"
+                      nzLg="24"
+                      nzXl="24"
+                      nzSpan="24"
+                    >
+                      <nz-form-item>
+                        <nz-form-label nzNoColon>Remark</nz-form-label>
+        
+                        <nz-input-group>
+                          <textarea
+                            type="text"
+                            autocomplete="off"
+                            name="Remark"
+                            nz-input
+                            placeholder="Enter Remark"
+                            [(ngModel)]="LTC5data.CALCULATION_REMARK"
+                          ></textarea>
+                        </nz-input-group>
+                      </nz-form-item>
+                    </div> -->
+            <div
+              nz-col
+              nzXs="24"
+              nzSm="24"
+              nzMd="24"
+              nzLg="24"
+              nzXl="24"
+              nzSpan="24"
+            >
+              <nz-form-item>
+                <nz-form-label nzNoColon>Remark</nz-form-label>
+                <angular-editor
+                  style="resize: none; color: black"
+                  name="paragraph_text22"
+                  [(ngModel)]="LTC5data.CALCULATION_SHEET_REMARK"
+                  [config]="editorConfigPara"
+                ></angular-editor>
+                <!-- <nz-input-group>
+                          <textarea
+                            type="text"
+                            autocomplete="off"
+                            name="Remark2"
+                            nz-input
+                            placeholder="Enter Remark"
+                            [(ngModel)]="LTC5data.CALCULATION_SHEET_REMARK"
+                          ></textarea>
+                        </nz-input-group> -->
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+        <div
+          nz-col
+          nzSpan="18"
+          class="my-box"
+          style="
+            height: 75vh;
+            overflow-y: scroll;
+            font-size: 15px !important;
+            font-family: Bookman Old Style;
+          "
+        >
+          <div *ngIf="LTC5data != undefined">
+            <h2><u>Calculation Sheet</u></h2>
+            <p style="margin-bottom: 0px">
+              Name : <b>{{ LTC5data.EMPLOYEE_NAME }}</b>
+            </p>
+            <p style="margin-bottom: 0px">
+              Designation : <b>{{ LTC5data.DESIGNATION }}</b>
+            </p>
+            <p style="margin-bottom: 0px">
+              Pay level : <b>{{ getlevel(LTC5data.GRADE_PAY_LEVEL) }}</b>
+            </p>
+
+            <div nz-row>
+              <div nz-col nzSpan="12">
+                <p *ngIf="LTC5data.IS_DESTINATION_EDIT == 1">
+                  Destination :{{ LTC5data.DESTIONATION_REMARK }}
+                </p>
+                <p
+                  style="margin-bottom: 0px"
+                  *ngIf="LTC5data.IS_DESTINATION_EDIT == 0"
+                >
+                  <!-- Destination :<b> {{ LTC5data.DESTINATION }}</b> -->
+                  Destination :<b>
+                    <span *ngIf="destinationList.length > 0">
+                      <ng-container
+                        *ngFor="
+                          let item of destinationList;
+                          let last = last;
+                          let i = index
+                        "
+                      >
+                        {{ item }}
+                        <ng-container
+                          *ngIf="destinationList.length > 1 && !last"
+                        >
+                          <ng-container
+                            *ngIf="destinationList.length === 2 && i === 0"
+                          >
+                            and
+                          </ng-container>
+                          <ng-container
+                            *ngIf="
+                              destinationList.length > 2 &&
+                              i < destinationList.length - 2
+                            "
+                            >,
+                          </ng-container>
+                          <ng-container
+                            *ngIf="
+                              destinationList.length > 2 &&
+                              i === destinationList.length - 2
+                            "
+                          >
+                            and
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </span></b
+                  >
+                </p>
+              </div>
+              <div nz-col nzSpan="12" style="text-align: right">
+                <p style="margin-bottom: 0px">
+                  {{ LTC5data.ORDER_YEAR }} : <b>{{ LTC5data.BLOCK_YEAR }}</b>
+                </p>
+              </div>
+            </div>
+            <table style="width: 100%; margin-top: 40px">
+              <thead>
+                <tr>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Mode of travel</th>
+                  <th>No. of Passengers</th>
+                  <th>Amount claimed with taxes/ fees (in Rs.)n</th>
+                  <th>Base fare allowed for all passengers (in Rs.)</th>
+                  <th>Taxes allowed (in Rs.)</th>
+                  <th>Amount granted with taxes (in Rs.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of formdata7; let k = index">
+                  <td style="text-align: center">{{ data.DEPARTURE_FROM }}</td>
+                  <td style="text-align: center">{{ data.ARRIVAL_TO }}</td>
+                  <td style="text-align: center">
+                    {{ data.TRAVEL_MODE_NAME }}
+                  </td>
+                  <td style="text-align: center">{{ data.NO_OF_FAIRS }}</td>
+                  <td
+                    *ngIf="k == 0"
+                    [attr.rowspan]="remarkCount"
+                    style="text-align: center"
+                  >
+                    <!-- {{ data.JOURNEY_CLAIMED_AMOUNT }} -->
+                    {{ getclaimedamount() }}
+                  </td>
+                  <td style="text-align: center">{{ data.FAIR_PAID }}</td>
+                  <td style="text-align: center">{{ data.ALLOWED_TOTAL }}</td>
+
+                  <td style="text-align: center">
+                    {{ data.AMOUNT_WITH_TAX }}/-
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="7" style="text-align: right">Total</td>
+                  <td style="text-align: center">
+                    <b>{{ amount }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" style="text-align: right">
+                    Advance LTC Claimed
+                  </td>
+                  <td style="text-align: center">
+                    <b> {{ LTC5data.AMOUNT_OF_ADVANCE }}/-</b>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" style="text-align: right">Net Amount</td>
+                  <td style="text-align: center">
+                    <b>{{ namount }}/-</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <span
+              *ngIf="
+                LTC5data.CALCULATION_SHEET_REMARK != undefined &&
+                LTC5data.CALCULATION_SHEET_REMARK != null
+              "
+            >
+              <p
+                *ngIf="LTC5data.CALCULATION_SHEET_REMARK.length <= 100"
+                style="margin-top: 10px; font-size: 13px"
+              >
+                <b [innerHtml]="LTC5data.CALCULATION_SHEET_REMARK"> </b>
+                <!-- <b> {{ LTC5data.CALCULATION_SHEET_REMARK }} </b> -->
+              </p>
+              <p
+                *ngIf="LTC5data.CALCULATION_SHEET_REMARK.length > 100"
+                style="margin-top: 10px; font-size: 12px"
+              >
+                <b [innerHtml]="LTC5data.CALCULATION_SHEET_REMARK"> </b>
+                <!-- <b> {{ LTC5data.CALCULATION_SHEET_REMARK }} </b> -->
+              </p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </form>
+</div>
+
+<div class="footer">
+  <button
+    type="button"
+    nz-button
+    (click)="close()"
+    class="ant-btn"
+    style="margin-right: 8px"
+  >
+    <span>Cancel</span>
+  </button>
+  <button
+    *ngIf="!isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="save()"
+    [nzLoading]="loadingRecords"
+  >
+    <span>Save & Preview</span>
+  </button>
+  <button
+    *ngIf="isAdmin"
+    type="button"
+    class="ant-btn ant-btn-primary"
+    nz-button
+    (click)="openPrintModal()"
+    [nzLoading]="loadingRecords"
+  >
+    <span>Preview</span>
+  </button>
+</div>
+
+<nz-modal
+  [nzWidth]="getwidth()"
+  [(nzVisible)]="printOrderModalVisible"
+  nzMaskClosable="false"
+  nzClosable="false"
+  [nzContent]="printOrderModalContent"
+  [nzTitle]="'Calculation Sheet'"
+  (nzOnCancel)="printOrderModalCancel()"
+  [nzFooter]="printOrderModalFooter"
+>
+  <ng-template #printOrderModalContent>
+    <nz-spin [nzSpinning]="loadingRecords">
+      <div style="height: 450px; overflow: auto; font-size: 14px !important">
+        <div id="calculation">
+          <br /><br />
+          <div
+            style="
+              width: 820px;
+              padding: 3px;
+              font-size: 15px !important;
+              font-family: Bookman Old Style;
+              margin-left: 35px;
+            "
+          >
+            <div>
+              <div style="padding-left: 7%; margin-right: 2%">
+                <div style="font-weight: 1000; font-size: 16px !important">
+                  <u>Calculation Sheet</u>
+                </div>
+                <p style="margin-bottom: 0px">
+                  Name : <b>{{ LTC5data.EMPLOYEE_NAME }}</b>
+                </p>
+                <p style="margin-bottom: 0px">
+                  Designation : <b>{{ LTC5data.DESIGNATION }}</b>
+                </p>
+                <p style="margin-bottom: 0px">
+                  Pay level : <b>{{ getlevel(LTC5data.GRADE_PAY_LEVEL) }}</b>
+                </p>
+
+                <div nz-row>
+                  <div nz-col nzSpan="12">
+                    <p *ngIf="LTC5data.IS_DESTINATION_EDIT == 1">
+                      Destination : {{ LTC5data.DESTIONATION_REMARK }}
+                    </p>
+                    <p
+                      style="margin-bottom: 0px"
+                      *ngIf="LTC5data.IS_DESTINATION_EDIT == 0"
+                    >
+                      <!-- Destination :<b> {{ LTC5data.DESTINATION }}</b> -->
+                      Destination :<b>
+                        <span *ngIf="destinationList.length > 0">
+                          <ng-container
+                            *ngFor="
+                              let item of destinationList;
+                              let last = last;
+                              let i = index
+                            "
+                          >
+                            {{ item }}
+                            <ng-container
+                              *ngIf="destinationList.length > 1 && !last"
+                            >
+                              <ng-container
+                                *ngIf="destinationList.length === 2 && i === 0"
+                              >
+                                and
+                              </ng-container>
+                              <ng-container
+                                *ngIf="
+                                  destinationList.length > 2 &&
+                                  i < destinationList.length - 2
+                                "
+                                >,
+                              </ng-container>
+                              <ng-container
+                                *ngIf="
+                                  destinationList.length > 2 &&
+                                  i === destinationList.length - 2
+                                "
+                              >
+                                and
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                        </span></b
+                      >
+                    </p>
+                  </div>
+                  <div nz-col nzSpan="12" style="text-align: right">
+                    <p style="margin-bottom: 0px">
+                      {{ LTC5data.ORDER_YEAR }} :
+                      <b>{{ LTC5data.BLOCK_YEAR }}</b>
+                    </p>
+                  </div>
+                </div>
+                <table style="width: 100%; margin-top: 40px">
+                  <thead>
+                    <tr>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Mode of travel</th>
+                      <th>No. of Passengers</th>
+                      <th>Amount claimed with taxes/ fees (in Rs.)n</th>
+                      <th>Base fare allowed for all passengers (in Rs.)</th>
+                      <th>Taxes allowed (in Rs.)</th>
+                      <th>Amount granted with taxes (in Rs.)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of formdata7; let k = index">
+                      <td style="text-align: center">
+                        {{ data.DEPARTURE_FROM }}
+                      </td>
+                      <td style="text-align: center">{{ data.ARRIVAL_TO }}</td>
+                      <td style="text-align: center">
+                        {{ data.TRAVEL_MODE_NAME }}
+                      </td>
+                      <td style="text-align: center">{{ data.NO_OF_FAIRS }}</td>
+                      <td
+                        *ngIf="k == 0"
+                        [attr.rowspan]="remarkCount"
+                        style="text-align: center"
+                      >
+                        <!-- {{ data.JOURNEY_CLAIMED_AMOUNT }} -->
+                        {{ getclaimedamount() }}
+                      </td>
+                      <td style="text-align: center">{{ data.FAIR_PAID }}</td>
+                      <td style="text-align: center">
+                        {{ data.ALLOWED_TOTAL }}
+                      </td>
+
+                      <td style="text-align: center">
+                        {{ data.AMOUNT_WITH_TAX }}/-
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="7" style="text-align: right">Total</td>
+                      <td style="text-align: center">
+                        <b>{{ amount }}/-</b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="7" style="text-align: right">
+                        Advance LTC Claimed
+                      </td>
+                      <td style="text-align: center">
+                        <b> {{ LTC5data.AMOUNT_OF_ADVANCE }}/-</b>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="7" style="text-align: right">Net Amount</td>
+                      <td style="text-align: center">
+                        <b>{{ namount }}/-</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <span
+                  *ngIf="
+                    LTC5data.CALCULATION_SHEET_REMARK != undefined &&
+                    LTC5data.CALCULATION_SHEET_REMARK != null
+                  "
+                >
+                  <p
+                    *ngIf="LTC5data.CALCULATION_SHEET_REMARK.length <= 100"
+                    style="margin-top: 10px; font-size: 13px"
+                  >
+                    <b [innerHtml]="LTC5data.CALCULATION_SHEET_REMARK"> </b>
+                    <!-- <b> {{ LTC5data.CALCULATION_SHEET_REMARK }} </b> -->
+                  </p>
+                  <p
+                    *ngIf="LTC5data.CALCULATION_SHEET_REMARK.length > 100"
+                    style="margin-top: 10px; font-size: 12px"
+                  >
+                    <b [innerHtml]="LTC5data.CALCULATION_SHEET_REMARK"> </b>
+                    <!-- <b> {{ LTC5data.CALCULATION_SHEET_REMARK }} </b> -->
+                  </p>
+                </span>
+                <br /><br /><br /><br /><br /><br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nz-spin>
+  </ng-template>
+  <ng-template #printOrderModalFooter>
+    <button nz-button nzType="default" (click)="printOrderModalCancel()">
+      Close
+    </button>
+
+    <button
+      nz-button
+      nzType="default"
+      [useExistingCss]="true"
+      printSectionId="calculation"
+      ngxPrint
+    >
+      Print
+    </button>
+
+    <button
+      nz-button
+      nzType="primary"
+      [nzLoading]="pdfDownload"
+      (click)="openpdf()"
+    >
+      Download
+    </button>
+  </ng-template>
+</nz-modal>
